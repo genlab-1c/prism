@@ -1,0 +1,20 @@
+# Прехуки PRISM. Установка: pre-commit install (ставит и pre-commit, и commit-msg хуки).
+default_install_hook_types: [pre-commit, commit-msg]
+
+repos:
+  # Проверка формата сообщения коммита (Conventional Commits, правила в .cz.toml)
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.16.3
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+
+  # Базовая гигиена файлов перед коммитом
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace      # лишние пробелы в конце строк
+      - id: end-of-file-fixer        # перевод строки в конце файла
+      - id: check-yaml               # валидность YAML (editions/, metric/, tasks/)
+      - id: check-merge-conflict     # забытые маркеры конфликтов
+      - id: check-added-large-files  # случайные большие файлы (>500 КБ)
