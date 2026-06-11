@@ -1,0 +1,10 @@
+# Параметры генерации (run-config) — ТОЛЬКО числовые ручки.
+# Отделено от: определений задач (tasks/), каталога моделей (generation/models.yaml),
+# текста промптов (generation/prompts.yaml).
+
+defaults:
+  max_tokens: 4096
+  model_params:
+    claude: { temperature: 0.0, runs: 1 }        # claude без seed — число прогонов задаём явно
+    gpt:    { temperature: 0.1, seeds: [178] }   # длина seeds = число прогонов
+    gemini: { temperature: 0.1, seeds: [178] }
