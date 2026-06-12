@@ -1,0 +1,14 @@
+# A8: палиндром, без учёта регистра и пробелов; пустая строка — палиндром.
+entry_point_patterns:
+  - "\\w*Палиндром\\w*"
+tests:
+  - args: ["топот"]
+    expected: true
+  - args: ["привет"]
+    expected: false
+  - args: [""]
+    expected: true
+  - args: ["А роза упала на лапу Азора"]
+    expected: true
+  - args: ["1С"]
+    expected: false

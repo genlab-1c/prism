@@ -94,6 +94,17 @@ def test_value_nested_array():
     assert any("Новый Массив" in s and s.startswith("М_1") for s in stmts)
 
 
+def test_value_table():
+    """Маркер __table__ → ТаблицаЗначений (колонки + строки через Установить)."""
+    stmts, expr = meaning._value(
+        {"__table__": {"columns": ["К1", "К2"], "rows": [["а", 1]]}}, "Т")
+    assert expr == "Т"
+    assert "Т = Новый ТаблицаЗначений;" in stmts
+    assert 'Т.Колонки.Добавить("К1");' in stmts
+    assert any(".Добавить();" in s for s in stmts)
+    assert any(".Установить(1, 1);" in s for s in stmts)
+
+
 # ── интеграция: OneScript ────────────────────────────────────────────────────
 
 SORT_TESTS = TaskTests(

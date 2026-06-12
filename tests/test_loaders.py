@@ -118,7 +118,7 @@ def test_score_for_higher_is_better(proto):
 # ── задачи ───────────────────────────────────────────────────────────────────
 
 def test_tasks_loaded(tasks):
-    assert [t.id for t in tasks] == ["A1", "A2", "A3", "A4", "A5"]
+    assert [t.id for t in tasks] == ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"]
 
 
 def test_tasks_category_filter():
@@ -126,23 +126,17 @@ def test_tasks_category_filter():
     assert load_tasks(category="B") == []          # B пока не мигрирована
 
 
-def test_tasks_a1_a4_testable(tasks):
-    """У A1–A4 есть скрытые тесты; ось M исполнима."""
+def test_all_a_tasks_testable(tasks):
+    """У всех задач A есть скрытые тесты и паттерны entry point (A5 — через __table__)."""
     for t in tasks:
-        if t.id in {"A1", "A2", "A3", "A4"}:
-            assert t.testable, t.id
-            assert t.tests.entry_point_patterns, f"{t.id}: нет паттернов entry point"
+        assert t.testable, t.id
+        assert t.tests.entry_point_patterns, f"{t.id}: нет паттернов entry point"
 
 
-def test_tasks_a5_pending(tasks):
-    a5 = next(t for t in tasks if t.id == "A5")
-    assert not a5.testable
-    assert a5.m_testing == "pending_harness"
-
-
-def test_tasks_a1_has_canonical(tasks):
-    a1 = next(t for t in tasks if t.id == "A1")
-    assert a1.canonical is not None and a1.canonical.exists()
+def test_all_a_tasks_have_canonical(tasks):
+    """У каждой задачи A есть эталон (его когерентность проверяет prism check)."""
+    for t in tasks:
+        assert t.canonical is not None and t.canonical.exists(), t.id
 
 
 # ── издание и генерация ──────────────────────────────────────────────────────
