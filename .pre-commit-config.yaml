@@ -9,12 +9,16 @@ repos:
       - id: commitizen
         stages: [commit-msg]
 
-  # Базовая гигиена файлов перед коммитом
+  # Базовая гигиена файлов перед коммитом.
+  # results/ — канонический снимок эксперимента (промпты, ответы, разметка): форматтеры
+  # его НЕ трогают, иначе байтовый дрейф данных. check-yaml/конфликты безопасны везде.
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace      # лишние пробелы в конце строк
+        exclude: ^results/
       - id: end-of-file-fixer        # перевод строки в конце файла
+        exclude: ^results/
       - id: check-yaml               # валидность YAML (editions/, metric/, tasks/)
       - id: check-merge-conflict     # забытые маркеры конфликтов
       - id: check-added-large-files  # случайные большие файлы (>500 КБ)

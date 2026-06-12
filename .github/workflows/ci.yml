@@ -1,0 +1,45 @@
+name: CI
+
+# Fast-ярус: на каждый push и PR. Линт + гигиена + юнит-тесты без инструментов.
+# Интеграционные тесты (M через OneScript, S/O через BSL LS) и когерентность эталонов
+# гейтятся skipif по наличию инструмента — здесь их нет, поэтому они сами пропускаются.
+# Тяжёлый full-ярус (с инструментами в образе prism-tools) добавим отдельно.
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  fast:
+    name: lint + unit (без инструментов)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: pyproject.toml
+
+      - name: Установка пакета и dev-зависимостей
+        run: pip install -e ".[dev]"
+
+      - name: Кеш окружений pre-commit
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: Ruff (линт)
+        run: ruff check .
+
+      - name: Гигиена файлов (pre-commit; commitizen — стадия commit-msg, здесь не запускается)
+        run: pre-commit run --all-files --show-diff-on-failure
+
+      - name: Юнит-тесты (интеграция M/S/O скипнется — инструментов нет)
+        run: pytest -q
