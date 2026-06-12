@@ -66,7 +66,9 @@ class L1Axis(BaseModel):
 
     reachable_scores: list[int]
     bands: dict[int, str]
-    thresholds: list[dict] | None = None              # машиночитаемые банды (M)
+    thresholds: list[dict] | None = None              # машиночитаемые банды (M: доля; S: число причин)
+    cluster_gap: int | None = None                    # S: соседние ParseError ≤N строк = одна причина
+    compile_blocker_codes: list[str] | None = None    # S: не-ParseError диагностики «не скомпилируется»
     weights: dict[str, float] | None = None           # только у O
     applies_to: list[str] | None = None               # только у P
 
@@ -192,27 +194,6 @@ def load_generation(root: Path = PRISM) -> Generation:
     )
 
 
-# ── расчёт Q ─────────────────────────────────────────────────────────────────
-
-# Имя скорера в издании → буква оси конституции
-SCORER_TO_AXIS = {"syntax": "S", "meaning": "M", "optimization": "O", "platform": "P"}
-
-
-def compute_q(scores: dict[str, int | None], category: str,
-              constitution: Constitution) -> float | None:
-    """Q = среднее по ПРИМЕНИМЫМ осям (formula: mean_of_applicable).
-
-    scores: {ось: балл | None}. None = ось не измерена (нет инструмента) —
-    исключается из среднего, как и неприменимые к категории (см. гейтинг L1).
-    """
-    assert constitution.q_formula == "mean_of_applicable", constitution.q_formula
-    applicable = constitution.applicable_axes(category)
-    measured = [scores[a] for a in applicable if scores.get(a) is not None]
-    if not measured:
-        return None
-    return round(sum(measured) / len(measured), 2)
-
-
 # ── внутреннее ───────────────────────────────────────────────────────────────
 
 def _read(path: Path) -> dict:
@@ -247,9 +228,6 @@ def main() -> None:
         if t.m_testing:
             flags.append(f"m_testing={t.m_testing}")
         print(f"  {t.id} [{t.category}/{t.difficulty}] {t.name} — {', '.join(flags)}")
-
-    demo = compute_q({"S": 10, "M": 8, "O": 6, "P": None}, "A", const)
-    print(f"проба Q (кат. A, S=10 M=8 O=6, P=N/A): {demo}  (ожидаем 8.0)")
 
 
 if __name__ == "__main__":

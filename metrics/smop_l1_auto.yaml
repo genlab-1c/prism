@@ -24,6 +24,17 @@ axes:
       4:  "4–6"
       2:  ">6"
       0:  "нарушена парность конструкций (структура разрушена)"
+    # машиночитаемая форма bands — её читает скорер (harness/score/syntax.py):
+    # n = кластеры ParseError + compile-блокеры; пороги сверху вниз, первый подходящий.
+    # Нарушенная парность → 0 минуя пороги (pre_check, структура разрушена).
+    thresholds:
+      - { max_causes: 0, score: 10 }
+      - { max_causes: 1, score: 8 }
+      - { max_causes: 3, score: 6 }
+      - { max_causes: 6, score: 4 }
+      - { gt_causes: 6, score: 2 }
+    cluster_gap: 3                      # соседние ParseError ≤N строк = одна корневая причина
+    compile_blocker_codes: [ProcedureReturnsValue]   # не-ParseError диагностики «не скомпилируется»
 
   M:
     instrument:
@@ -68,6 +79,14 @@ axes:
       6:  "w ≤ 3"
       4:  "w ≤ 6"
       2:  "w > 6"
+    # машиночитаемая форма bands — её читает скорер (harness/score/optimization.py):
+    # w = взвешенная сумма сработавших диагностик; пороги сверху вниз, первый подходящий
+    thresholds:
+      - { max_weight: 0, score: 10 }
+      - { max_weight: 1, score: 8 }
+      - { max_weight: 3, score: 6 }
+      - { max_weight: 6, score: 4 }
+      - { gt_weight: 6, score: 2 }
 
   P:
     # для категории A = N/A (см. конституцию)

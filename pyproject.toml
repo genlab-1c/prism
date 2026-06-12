@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prism-bench"
+version = "0.1.0"                       # v1.0.0 зарезервирован за первым публичным релизом исполняемого бенчмарка
+description = "PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP: Syntax · Meaning · Optimization · Platform)"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Danila Andreev", email = "ads4.nr@mail.ru" }
+]
+keywords = [
+    "llm", "benchmark", "1c", "1c-enterprise", "code-generation", "smop",
+    "evaluation", "bsl", "onescript", "ai", "code-quality",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Quality Assurance",
+    "Topic :: Software Development :: Testing",
+]
+requires-python = ">=3.10"             # код идёт на 3.10 (future-annotations); хост сейчас 3.10.x. Соседние подпроекты целятся в 3.11 — выровнять при слиянии в core
+
+# Харнесс по факту импортов: стдлиб + два пакета. Адаптеров генерации (requests/aiohttp)
+# здесь пока нет — generation/ это YAML-контракты, не код вызова моделей.
+dependencies = [
+    "PyYAML>=6.0.1",
+    "pydantic>=2.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+]
+
+[project.urls]
+"Research Paper" = "https://github.com/4dand/1c-ai-codegen-research-paper"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["harness*"]                  # пакет — harness/ (+ harness.execute, harness.score); tasks/tests/tools не пакеты
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]                      # чтобы `from harness...` резолвился без запуска строго из корня
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
