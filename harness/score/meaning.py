@@ -9,7 +9,9 @@
  5. Балл — по thresholds оси M из протокола L1 (порогов в коде нет).
     Не скомпилировался / не исполнился → 0 (execution-based: нет подтверждённого смысла).
 
-Гейтинг: нет tools/onescript → ось «не измерена» (score=None), НЕ ноль.
+Исполнение — через раннер (harness/execute/runner.py): local (хост, разработка)
+или docker (песочница: без сети, лимиты; CI и недоверенные кандидаты).
+Гейтинг: инструмент раннера недоступен → ось «не измерена» (score=None), НЕ ноль.
 
 Семантика сравнения: Массив — поэлементно рекурсивно; Структура — по ПОДМНОЖЕСТВУ
 ключей expected (кандидат может класть дополнительные поля); null → Неопределено.
@@ -19,16 +21,14 @@
 from __future__ import annotations
 
 import re
-import subprocess
 from pathlib import Path
 
 from pydantic import BaseModel
 
-from harness.loaders import PRISM, ProtocolL1, TaskTests
+from harness.execute.runner import Runner, get_runner
+from harness.loaders import ProtocolL1, TaskTests
 
-OSCRIPT = PRISM / "tools" / "onescript" / "bin" / "oscript"
 FUNC_RE = re.compile(r"^\s*Функция\s+([\wа-яА-ЯёЁ]+)\s*\(", re.MULTILINE | re.IGNORECASE)
-TIMEOUT_S = 15
 
 
 class MeaningResult(BaseModel):
@@ -42,9 +42,9 @@ class MeaningResult(BaseModel):
     errors: list[str] = []
 
 
-def available() -> bool:
-    """Гейтинг инструмента: есть ли OneScript (tools/get-onescript.sh)."""
-    return OSCRIPT.exists()
+def available(runner: Runner | None = None) -> bool:
+    """Гейтинг инструмента: доступен ли раннер (local: oscript; docker: образ)."""
+    return (runner or get_runner()).available()
 
 
 def band(passed: int, total: int, executed: bool, protocol: ProtocolL1) -> int:
@@ -76,12 +76,17 @@ def detect_entry_point(code: str, patterns: list[str]) -> str | None:
 
 
 def score_m(candidate_code: str, tests: TaskTests, protocol: ProtocolL1,
-            work_dir: Path, name: str = "candidate") -> MeaningResult:
-    """Прогнать кейсы tests для кода кандидата; вернуть балл M по протоколу."""
+            work_dir: Path, name: str = "candidate",
+            runner: Runner | None = None) -> MeaningResult:
+    """Прогнать кейсы tests для кода кандидата; вернуть балл M по протоколу.
+
+    runner — режим исполнения (по умолчанию из env PRISM_RUNNER: local | docker).
+    """
+    runner = runner or get_runner()
     total = len(tests.tests)
-    if not available():
+    if not runner.available():
         return MeaningResult(score=None, total=total,
-                             errors=["oscript не установлен — ./tools/get-onescript.sh"])
+                             errors=[runner.unavailable_reason()])
 
     entry = detect_entry_point(candidate_code, tests.entry_point_patterns)
     if entry is None:
@@ -92,21 +97,18 @@ def score_m(candidate_code: str, tests: TaskTests, protocol: ProtocolL1,
     harness_path.parent.mkdir(parents=True, exist_ok=True)
     harness_path.write_text(build_harness(candidate_code, entry, tests.tests),
                             encoding="utf-8")
-    try:
-        proc = subprocess.run([str(OSCRIPT), str(harness_path)],
-                              capture_output=True, text=True, timeout=TIMEOUT_S)
-    except subprocess.TimeoutExpired:
+    res = runner.run_os(harness_path)
+    if res.timed_out:
         return MeaningResult(score=band(0, total, False, protocol), total=total,
-                             entry_point=entry, errors=[f"таймаут исполнения ({TIMEOUT_S}с)"])
+                             entry_point=entry, errors=["таймаут исполнения"])
 
-    out = proc.stdout
-    if "PRISM_BEGIN" not in out:            # модуль не скомпилировался OneScript'ом
+    if "PRISM_BEGIN" not in res.stdout:     # модуль не скомпилировался OneScript'ом
         return MeaningResult(
             score=band(0, total, False, protocol), total=total, entry_point=entry,
-            errors=[f"compile_error: {(proc.stderr or out)[-400:].strip()}"])
+            errors=[f"compile_error: {(res.stderr or res.stdout)[-400:].strip()}"])
 
-    passed = len(re.findall(r"^PRISM_PASS ", out, re.MULTILINE))
-    errors = [line[:200] for line in out.splitlines()
+    passed = len(re.findall(r"^PRISM_PASS ", res.stdout, re.MULTILINE))
+    errors = [line[:200] for line in res.stdout.splitlines()
               if line.startswith(("PRISM_FAIL", "PRISM_ERR"))]
     return MeaningResult(score=band(passed, total, True, protocol), executed=True,
                          passed=passed, total=total, entry_point=entry, errors=errors)
