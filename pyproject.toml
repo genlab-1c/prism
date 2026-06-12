@@ -41,6 +41,13 @@ dependencies = [
 dev = [
     "pytest>=8.0.0",
 ]
+docs = [
+    "mkdocs-material>=9.5",
+    # mkdocstrings[python] — добавить, когда захотим автодок из докстрингов скореров
+]
+
+[project.scripts]
+prism = "harness.cli:main"
 
 [project.urls]
 "Research Paper" = "https://github.com/4dand/1c-ai-codegen-research-paper"

@@ -1,0 +1,38 @@
+site_name: PRISM
+site_description: Исполняемый бенчмарк кодогенерации 1С (методика SMOP — Syntax · Meaning · Optimization · Platform)
+docs_dir: docs
+use_directory_urls: true
+
+theme:
+  name: material
+  language: ru
+  palette:
+    - scheme: default
+      primary: indigo
+      toggle: { icon: material/weather-night, name: Тёмная тема }
+    - scheme: slate
+      primary: indigo
+      toggle: { icon: material/weather-sunny, name: Светлая тема }
+  features:
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - content.code.copy
+    - search.suggest
+    - toc.follow
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+
+nav:
+  - Обзор: index.md
+  - Архитектура и поток данных: architecture.md
+  - CLI (prism): cli.md

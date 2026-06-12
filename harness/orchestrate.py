@@ -20,7 +20,6 @@ SCORERS — единственное место, куда подключаетс
 
 from __future__ import annotations
 
-import argparse
 import json
 import re
 from dataclasses import dataclass
@@ -243,33 +242,27 @@ def print_summary(result: dict, experiment_path: Path) -> None:
             print(line)
 
 
-# ── CLI ───────────────────────────────────────────────────────────────────────
+# ── прогон + отчёт (зовётся из CLI: prism score) ──────────────────────────────
 
-def _newest_experiment() -> Path:
+def newest_experiment() -> Path:
+    """Свежайший experiment_A_*.json из results/ (по сортировке имени = по дате)."""
     runs = sorted((PRISM / "results").glob("experiment_A_*.json"))
     if not runs:
         raise SystemExit("в results/ нет experiment_A_*.json")
     return runs[-1]
 
 
-def main() -> None:
-    ap = argparse.ArgumentParser(description="Авто-оценка L1 готовых генераций по изданию.")
-    ap.add_argument("--experiment", type=Path, default=None,
-                    help="путь к experiment_*.json (по умолчанию свежайший experiment_A_*)")
-    ap.add_argument("--edition", default="core", help="издание из editions/ (по умолчанию core)")
-    ap.add_argument("--out", type=Path, default=None,
-                    help="куда писать (по умолчанию results/auto/<exp>_auto_l1.json)")
-    args = ap.parse_args()
-
-    experiment_path = args.experiment or _newest_experiment()
+def score_report(experiment_path: Path, edition_name: str = "core",
+                 out_path: Path | None = None) -> Path:
+    """Прогнать издание по эксперименту, записать результат, напечатать сводку."""
     runner = get_runner()
     if not runner.available():
         print(f"⚠ раннер {runner.name} недоступен: {runner.unavailable_reason()}")
         print("  ось M выйдет «не измерена» (score=None) для всех кандидатов.")
 
-    result = run(experiment_path, args.edition, runner)
+    result = run(experiment_path, edition_name, runner)
 
-    out_path = args.out or (PRISM / "results" / "auto"
+    out_path = out_path or (PRISM / "results" / "auto"
                             / f"{result['experiment_id']}_auto_l1.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -279,7 +272,4 @@ def main() -> None:
           f"раннер {result['runner']} · синтаксис {analyzer} · протокол L1 v{result['protocol_version']}\n")
     print_summary(result, experiment_path)
     print(f"\n→ {out_path.relative_to(PRISM)}")
-
-
-if __name__ == "__main__":
-    main()
+    return out_path

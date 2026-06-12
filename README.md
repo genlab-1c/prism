@@ -56,11 +56,15 @@ docker build -t prism-onescript -f docker/onescript.Dockerfile .
 `PRISM_JAVA` при нестандартном. Любой инструмент недоступен → его ось «не измерена»
 (`score=None`), а не нулём — `compute_q` исключает её из среднего.
 
-**Прогон авто-оценки** существующих генераций (без новой генерации):
+**Точка входа** `prism` (после `pip install -e`):
 
 ```bash
-python3 -m harness.orchestrate                    # свежий experiment_A_*, издание core → results/auto/
+prism check                       # целостность: контракты, задания, эталоны, инструменты
+prism score                       # авто-оценка L1 свежих генераций по изданию core → results/auto/
+prism score --edition core --experiment results/experiment_A_20260301_125458.json
 ```
+
+Без установки — `python3 -m harness.cli <команда>`.
 
 ## Что дальше (зрелая версия)
 
