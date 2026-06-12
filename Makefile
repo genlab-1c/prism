@@ -1,11 +1,17 @@
 # Парадная дверь PRISM. `make` без аргументов — список целей.
 #
-# Две дороги до инструментов осей:
-#   make tools   — поставить на ХОСТ (bootstrap-скрипты tools/*.sh) → режим local
-#   make images  — собрать DOCKER-образы инструментов            → режим docker
-# Режим выбирается на прогоне через env:
-#   PRISM_RUNNER=local|docker  (ось M, OneScript)
-#   PRISM_BSL=local|docker     (оси S/O, BSL LS)
+# ДВЕ НЕЗАВИСИМЫЕ ОСИ:
+#   1) ХАРНЕСС — всегда через pip/venv (make venv). Сам харнесс не докеризуется.
+#   2) ИНСТРУМЕНТЫ осей — ЛИБО на хост (make tools), ЛИБО в docker (make images).
+#      Это АЛЬТЕРНАТИВЫ, не шаги по порядку. Что использовать — выбирается на прогоне.
+#
+# Готовые рецепты установки:
+#   make setup         — харнесс + инструменты на ХОСТ          (прогон в режиме local)
+#   make setup-docker  — харнесс + docker-образы инструментов   (прогон в режиме docker)
+#
+# Прогон: режим инструментов задаёт MODE (или env PRISM_RUNNER / PRISM_BSL напрямую):
+#   make check              — local (по умолчанию)
+#   make score MODE=docker  — инструменты крутятся в контейнерах
 
 VENV  ?= .venv
 PY    := $(VENV)/bin/python
@@ -15,14 +21,22 @@ PRISM := $(VENV)/bin/prism
 ONESCRIPT_IMAGE := prism-onescript:2.0.1
 BSL_LS_IMAGE    := prism-bsl-ls:0.29.0
 
+# MODE=docker — короткий тумблер обоих режимов сразу. Не задан → берётся env (или local).
+ifdef MODE
+export PRISM_RUNNER := $(MODE)
+export PRISM_BSL    := $(MODE)
+endif
+
 .DEFAULT_GOAL := help
-.PHONY: help setup venv tools images image-onescript image-bsl-ls check score test lint clean
+.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls check score test lint clean
 
 help:  ## показать этот список
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
 		| awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
 
-setup: venv tools  ## всё для локальной разработки: окружение + инструменты на хост
+setup: venv tools  ## харнесс (pip) + инструменты на ХОСТ → прогон local
+
+setup-docker: venv images  ## харнесс (pip) + docker-образы инструментов → прогон MODE=docker
 
 venv: $(VENV)  ## python-окружение (.venv) с пакетом и dev-зависимостями
 
@@ -31,7 +45,7 @@ $(VENV): pyproject.toml
 	$(PIP) install -q -e ".[dev]"
 	@touch $(VENV)
 
-tools:  ## поставить инструменты осей на хост (OneScript + BSL LS) — те же bootstrap-скрипты
+tools:  ## инструменты осей на ХОСТ (OneScript + BSL LS) — те же bootstrap-скрипты
 	./tools/get-onescript.sh
 	./tools/get-bsl-ls.sh
 
@@ -43,10 +57,10 @@ image-onescript:  ## образ песочницы M (OneScript)
 image-bsl-ls:  ## образ инструмента S/O (BSL LS на JRE 21)
 	docker build -t $(BSL_LS_IMAGE) -f docker/bsl-ls.Dockerfile .
 
-check: venv  ## целостность: контракты, задания, эталоны, инструменты
+check: venv  ## целостность: контракты, задания, эталоны, инструменты (MODE=docker — в контейнерах)
 	$(PRISM) check
 
-score: venv  ## авто-оценка L1 (EXP=<файл> и/или EDITION=<имя> — опционально)
+score: venv  ## авто-оценка L1 (MODE=docker; EXP=<файл> и/или EDITION=<имя> — опционально)
 	$(PRISM) score $(if $(EXP),--experiment $(EXP)) $(if $(EDITION),--edition $(EDITION))
 
 test: venv  ## тесты (интеграционные сами скипнутся без инструментов)
