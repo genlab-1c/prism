@@ -8,8 +8,10 @@ venv/
 .coverage
 htmlcov/
 
-# Инструменты-бинари (тяжёлые, ставятся локально): BSL LS jar, OneScript, YAXUNIT, 1С
-tools/
+# Инструменты-бинари (тяжёлые, ставятся локально): BSL LS jar, OneScript, YAXUNIT, 1С.
+# Сами бинари не коммитятся — в git идут только bootstrap-скрипты установки.
+tools/*
+!tools/get-*.sh
 
 # Рабочие артефакты прогонов (промежуточные; канонические результаты — в results/)
 work/

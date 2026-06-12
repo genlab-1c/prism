@@ -66,6 +66,7 @@ class L1Axis(BaseModel):
 
     reachable_scores: list[int]
     bands: dict[int, str]
+    thresholds: list[dict] | None = None              # машиночитаемые банды (M)
     weights: dict[str, float] | None = None           # только у O
     applies_to: list[str] | None = None               # только у P
 
