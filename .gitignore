@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Инструменты-бинари (тяжёлые, ставятся локально): BSL LS jar, OneScript, YAXUNIT, 1С
+tools/
+
+# Рабочие артефакты прогонов (промежуточные; канонические результаты — в results/)
+work/
+
+# Секреты и окружение
+.env
+*.env
+!*.env.example
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
