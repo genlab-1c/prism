@@ -31,7 +31,9 @@ from harness.loaders import (
     load_tasks,
 )
 from harness.score.meaning import score_m
+from harness.score.optimization import score_o
 from harness.score.quality import SCORER_TO_AXIS
+from harness.score.syntax import score_s
 
 # Статусы пунктов: ok — норма; warn — деградация (не ошибка); fail — нарушение; skip — не проверяли
 Item = tuple[str, str]            # (status, text)
@@ -136,21 +138,42 @@ def _check_canonicals() -> Section:
     runner = get_runner()
     if not runner.available():
         return {"title": "Когерентность эталонов",
-                "items": [("skip", f"пропуск: {runner.unavailable_reason()}")]}
+                "items": [("skip", f"пропуск (M — гейт): {runner.unavailable_reason()}")]}
+
+    work = Path(tempfile.mkdtemp(prefix="prism_check_"))
+    diags = _canonical_diagnostics(tasks, work)   # S/O — батч BSL LS, {id: [диагностики]} или None
 
     items: list[Item] = []
-    work = Path(tempfile.mkdtemp(prefix="prism_check_"))
     for t in tasks:
         code = t.canonical.read_text(encoding="utf-8")
-        res = score_m(code, t.tests, proto, work / t.id, name=f"canon_{t.id}", runner=runner)
-        if res.executed and res.passed == res.total and res.score == 10:
-            items.append(("ok", f"{t.id}: эталон прошёл {res.passed}/{res.total} → M=10"))
+        # M — ЖЁСТКИЙ гейт: эталон обязан пройти свои тесты на 100%
+        m = score_m(code, t.tests, proto, work / t.id, name=f"canon_{t.id}", runner=runner)
+        gate = m.executed and m.passed == m.total and m.score == 10
+        m_txt = (f"M=10 ({m.passed}/{m.total})" if gate
+                 else f"M={m.score} ({m.passed}/{m.total}) — {m.errors[:1]}")
+        # S/O — пока только показываем, не гейтим (эталон ожидаем образцовым)
+        if diags is None:
+            so_txt = "S/O: BSL LS недоступен"
         else:
-            items.append(("fail", f"{t.id}: эталон прошёл {res.passed}/{res.total}, "
-                                  f"M={res.score} — {res.errors[:1]}"))
+            s, _ = score_s(diags.get(t.id, []), proto, code)
+            o, _ = score_o(diags.get(t.id, []), proto)
+            so_txt = f"S={s} · O={o}"
+        items.append(("ok" if gate else "fail", f"{t.id}: эталон {m_txt} · {so_txt}"))
     if not items:
         items.append(("warn", "нет задач с эталоном и тестами для проверки"))
     return {"title": "Когерентность эталонов", "items": items}
+
+
+def _canonical_diagnostics(tasks, work: Path) -> dict | None:
+    """Один батч BSL LS по всем эталонам → {id: диагностики}. None — анализатор недоступен."""
+    if not bsl_ls.available():
+        return None
+    src = work / "_bslls" / "src"
+    src.mkdir(parents=True, exist_ok=True)
+    for t in tasks:
+        (src / f"{t.id}.bsl").write_text(t.canonical.read_text(encoding="utf-8"), encoding="utf-8")
+    report = bsl_ls.analyze(src, work / "_bslls" / "out")
+    return {t.id: report.get(f"{t.id}.bsl", []) for t in tasks}
 
 
 # ── 4. доступность инструментов по осям ──────────────────────────────────────
