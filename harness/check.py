@@ -69,15 +69,18 @@ def _check_contracts() -> Section:
         items.append(("fail", f"оси протокола {set(proto.axes)} ≠ конституции {set(const.axes)}"))
 
     for axis in proto.axes:
+        scoring = proto.scoring(axis)
+        if not {r.score for r in scoring.table} <= set(const.valid_scores):
+            items.append(("fail", f"ось {axis}: балл в scoring.table вне шкалы"))
+        if scoring.direction not in {"lower_is_better", "higher_is_better"}:
+            items.append(("fail", f"ось {axis}: неизвестное direction {scoring.direction!r}"))
         if not set(proto.reachable(axis)) <= set(const.valid_scores):
-            items.append(("fail", f"ось {axis}: reachable вне шкалы"))
-        if not set(proto.bands(axis)) <= set(proto.reachable(axis)):
-            items.append(("fail", f"ось {axis}: банда ведёт в недостижимое значение"))
+            items.append(("fail", f"ось {axis}: достижимые баллы вне шкалы"))
     weights = proto.o_weights()
     if weights and all(w > 0 for w in weights.values()):
-        items.append(("ok", f"ось O: белый список весов ({len(weights)} кодов), все > 0"))
+        items.append(("ok", f"ось O: white_list ({len(weights)} кодов), все веса > 0"))
     else:
-        items.append(("fail", "ось O: пустой или неположительный белый список весов"))
+        items.append(("fail", "ось O: пустой или неположительный white_list"))
 
     # издания: их скореры — из известных
     for path in sorted((PRISM / "editions").glob("*.yaml")):

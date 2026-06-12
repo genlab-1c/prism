@@ -77,21 +77,42 @@ def test_l1_reachable_subset_of_scale(const, proto):
         assert set(proto.reachable(axis)) <= set(const.valid_scores), axis
 
 
-def test_l1_bands_within_reachable(proto):
-    """Каждая банда ведёт в достижимое значение своей оси."""
+def test_l1_scoring_scores_in_scale(const, proto):
+    """Каждый балл в scoring.table — из общей шкалы."""
     for axis in proto.axes:
-        assert set(proto.bands(axis)) <= set(proto.reachable(axis)), axis
+        assert {r.score for r in proto.scoring(axis).table} <= set(const.valid_scores), axis
+
+
+def test_l1_direction_valid(proto):
+    for axis in proto.axes:
+        assert proto.scoring(axis).direction in {"lower_is_better", "higher_is_better"}, axis
 
 
 def test_l1_o_weights_positive(proto):
     weights = proto.o_weights()
-    assert weights, "белый список O пуст"
+    assert weights, "white_list O пуст"
     assert all(w > 0 for w in weights.values())
 
 
 def test_l1_o_unreachable_zero(proto):
     """Машина не ставит O=0 — это суждение Уровня 2 (см. протокол)."""
     assert 0 not in proto.reachable("O")
+
+
+# ── единый движок score_for (обе оси направления) ────────────────────────────
+
+def test_score_for_lower_is_better(proto):
+    """S: меньше причин → выше балл; else-строка для >6."""
+    s = proto.scoring("S")
+    assert [s.score_for(n) for n in (0, 1, 2, 3, 6, 7)] == [10, 8, 6, 6, 4, 2]
+
+
+def test_score_for_higher_is_better(proto):
+    """M: больше доля → выше балл; exclusive >0 и хвостовой else=0."""
+    m = proto.scoring("M")
+    assert [m.score_for(x) for x in (1.0, 0.9, 0.6, 0.5)] == [10, 8, 6, 4]
+    assert m.score_for(0.001) == 2          # > 0% (exclusive)
+    assert m.score_for(0.0) == 0            # else: 0% / не исполнился
 
 
 # ── задачи ───────────────────────────────────────────────────────────────────

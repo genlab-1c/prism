@@ -1,13 +1,11 @@
-"""Загрузчики данных бенчмарка: YAML-контракты → Pydantic-модели.
+"""
+Загрузчики данных бенчмарка: YAML-контракты → Pydantic-модели.
 
-Принцип (docs/architecture.md): код читает данные, данные не живут в коде.
 Скореры берут банды из metrics/smop_l1_auto.yaml, раннер — оси из конституции
 и издания, задачи — из tasks/<категория>/<id>/. Здесь нет ни одного порога.
 
 Pydantic валидирует структуру YAML при загрузке: битый контракт падает сразу
 с понятной ошибкой, а не глубоко в скорере.
-
-Самопроверка (грузит всё и печатает сводку):  python3 -m harness.loaders
 """
 
 from __future__ import annotations
@@ -17,14 +15,14 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel, ConfigDict, Field
 
-PRISM = Path(__file__).resolve().parents[1]          # корень репозитория
+PRISM = Path(__file__).resolve().parents[1]
 
 
 # ── метрика: конституция ─────────────────────────────────────────────────────
 
 class AxisSpec(BaseModel):
     """Блок одной оси в metrics/smop.yaml."""
-    model_config = ConfigDict(extra="allow")          # measures/excludes/… — справочные
+    model_config = ConfigDict(extra="allow")
 
     name: str
     name_en: str
@@ -60,16 +58,47 @@ def load_constitution(root: Path = PRISM) -> Constitution:
 
 # ── метрика: протокол L1 ─────────────────────────────────────────────────────
 
-class L1Axis(BaseModel):
-    """Блок оси в metrics/smop_l1_auto.yaml (банды, достижимые значения, веса)."""
-    model_config = ConfigDict(extra="allow")          # instrument/signal/… — справочные
+class ScoringRule(BaseModel):
+    """Строка таблицы scoring.table: порог → балл (см. шапку smop_l1_auto.yaml)."""
+    model_config = ConfigDict(populate_by_name=True)
 
-    reachable_scores: list[int]
-    bands: dict[int, str]
-    thresholds: list[dict] | None = None              # машиночитаемые банды (M: доля; S: число причин)
+    score: int
+    bound: float | None = None                        # граница сравнения (нет у хвостовой строки)
+    exclusive: bool = False                           # строгое сравнение (< / >)
+    is_else: bool = Field(False, alias="else")        # хвост «во всех прочих случаях»
+
+
+class Scoring(BaseModel):
+    """Единая таблица балла оси: сигнал → балл. Заменяет прежние bands+thresholds."""
+    model_config = ConfigDict(extra="allow")          # unit/floor_note/recall_rule — справочные
+
+    direction: str                                    # lower_is_better | higher_is_better
+    table: list[ScoringRule]
+
+    def score_for(self, signal: float) -> int:
+        """Балл по сигналу: строки сверху вниз, первый подходящий порог."""
+        higher = self.direction == "higher_is_better"
+        for rule in self.table:
+            if rule.is_else:
+                return rule.score
+            if higher:
+                hit = signal > rule.bound if rule.exclusive else signal >= rule.bound
+            else:
+                hit = signal < rule.bound if rule.exclusive else signal <= rule.bound
+            if hit:
+                return rule.score
+        return self.table[-1].score                   # подстраховка, если нет else-строки
+
+
+class L1Axis(BaseModel):
+    """Блок оси в metrics/smop_l1_auto.yaml: таблица балла + параметры инструмента."""
+    model_config = ConfigDict(extra="allow")          # instrument/signal/measures — справочные
+
+    scoring: Scoring | None = None
+    pre_check: dict | None = None                     # эскейп в 0 минуя таблицу (S, P)
     cluster_gap: int | None = None                    # S: соседние ParseError ≤N строк = одна причина
     compile_blocker_codes: list[str] | None = None    # S: не-ParseError диагностики «не скомпилируется»
-    weights: dict[str, float] | None = None           # только у O
+    white_list: dict[str, float] | None = None        # O: код диагностики BSL LS → вес
     applies_to: list[str] | None = None               # только у P
 
 
@@ -79,16 +108,23 @@ class ProtocolL1(BaseModel):
     axes: dict[str, L1Axis]
     version: str
 
-    def bands(self, axis: str) -> dict[int, str]:
-        return self.axes[axis].bands
+    def scoring(self, axis: str) -> Scoring:
+        s = self.axes[axis].scoring
+        assert s, f"у оси {axis} нет блока scoring в протоколе L1"
+        return s
 
     def reachable(self, axis: str) -> list[int]:
-        return self.axes[axis].reachable_scores
+        """Достижимые баллы = score из таблицы (+ 0, если у оси есть pre_check)."""
+        a = self.axes[axis]
+        scores = {r.score for r in a.scoring.table}
+        if a.pre_check:
+            scores.add(0)
+        return sorted(scores)
 
     def o_weights(self) -> dict[str, float]:
-        weights = self.axes["O"].weights
-        assert weights, "у оси O в протоколе L1 должен быть белый список weights"
-        return weights
+        wl = self.axes["O"].white_list
+        assert wl, "у оси O в протоколе L1 должен быть white_list"
+        return wl
 
 
 def load_protocol_l1(root: Path = PRISM) -> ProtocolL1:
@@ -199,36 +235,3 @@ def load_generation(root: Path = PRISM) -> Generation:
 def _read(path: Path) -> dict:
     with open(path, encoding="utf-8") as f:
         return yaml.safe_load(f)
-
-
-# ── самопроверка ─────────────────────────────────────────────────────────────
-
-def main() -> None:
-    const = load_constitution()
-    proto = load_protocol_l1()
-    tasks = load_tasks()
-    edition = load_edition("core")
-    gen = load_generation()
-
-    print(f"конституция v{const.version}: оси {list(const.axes)}, "
-          f"шкала {const.valid_scores}, Q={const.q_formula}")
-    print(f"  применимо к A: {const.applicable_axes('A')}  |  "
-          f"к B: {const.applicable_axes('B')}")
-    print(f"протокол L1 v{proto.version}: "
-          f"S reachable {proto.reachable('S')}, O веса: {len(proto.o_weights())} шт.")
-    print(f"издание {edition.name}: mode={edition.mode}, context={edition.context}, "
-          f"scorers={edition.scorers}")
-    print(f"моделей в каталоге: {len(gen.models)} ({', '.join(gen.models)}); "
-          f"system-промптов: {list(gen.prompts)}")
-    print(f"задач: {len(tasks)}")
-    for t in tasks:
-        flags = [f"тестов: {len(t.tests.tests)}" if t.testable else "БЕЗ ТЕСТОВ"]
-        if t.canonical:
-            flags.append("эталон есть")
-        if t.m_testing:
-            flags.append(f"m_testing={t.m_testing}")
-        print(f"  {t.id} [{t.category}/{t.difficulty}] {t.name} — {', '.join(flags)}")
-
-
-if __name__ == "__main__":
-    main()

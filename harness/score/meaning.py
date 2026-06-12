@@ -48,18 +48,10 @@ def available(runner: Runner | None = None) -> bool:
 
 
 def band(passed: int, total: int, executed: bool, protocol: ProtocolL1) -> int:
-    """Доля прошедших → балл по thresholds оси M из протокола L1."""
-    thresholds = protocol.axes["M"].thresholds
-    assert thresholds, "у оси M в протоколе L1 должны быть thresholds (машиночитаемые банды)"
+    """Доля прошедших → балл оси M. Гард: не исполнился / нет тестов → 0 минуя таблицу."""
     if not executed or total == 0:
         return 0
-    share = passed / total
-    for rule in thresholds:
-        if "min_share" in rule and share >= rule["min_share"]:
-            return rule["score"]
-        if "gt_share" in rule and share > rule["gt_share"]:
-            return rule["score"]
-    return 0
+    return protocol.scoring("M").score_for(passed / total)
 
 
 def detect_entry_point(code: str, patterns: list[str]) -> str | None:

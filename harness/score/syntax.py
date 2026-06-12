@@ -29,18 +29,6 @@ _PAIRS = (
 )
 
 
-def band(n_causes: int, protocol: ProtocolL1) -> int:
-    """Число корневых причин → балл по thresholds оси S из протокола L1."""
-    thresholds = protocol.axes["S"].thresholds
-    assert thresholds, "у оси S в протоколе L1 должны быть thresholds (машиночитаемые банды)"
-    for rule in thresholds:
-        if "max_causes" in rule and n_causes <= rule["max_causes"]:
-            return rule["score"]
-        if "gt_causes" in rule and n_causes > rule["gt_causes"]:
-            return rule["score"]
-    return 0
-
-
 def score_s(diagnostics: list[dict], protocol: ProtocolL1,
             module_text: str | None = None) -> tuple[int, dict]:
     """S = компилируемость: парность + кластеры ParseError + compile-блокеры → балл."""
@@ -54,7 +42,7 @@ def score_s(diagnostics: list[dict], protocol: ProtocolL1,
     blockers = [d for d in diagnostics if d["code"] in blocker_codes]
     n = clusters + len(blockers)
 
-    score = 0 if not balanced else band(n, protocol)
+    score = 0 if not balanced else protocol.scoring("S").score_for(n)   # pre_check → 0 минуя таблицу
     detail = {
         "root_causes": n,
         "parse_error_clusters": clusters,

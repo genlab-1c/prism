@@ -19,23 +19,11 @@ from __future__ import annotations
 from harness.loaders import ProtocolL1
 
 
-def band(weight: float, protocol: ProtocolL1) -> int:
-    """Взвешенная сумма антипаттернов → балл по thresholds оси O из протокола L1."""
-    thresholds = protocol.axes["O"].thresholds
-    assert thresholds, "у оси O в протоколе L1 должны быть thresholds (машиночитаемые банды)"
-    for rule in thresholds:
-        if "max_weight" in rule and weight <= rule["max_weight"]:
-            return rule["score"]
-        if "gt_weight" in rule and weight > rule["gt_weight"]:
-            return rule["score"]
-    return min(protocol.reachable("O"))          # машина не даёт O=0
-
-
 def score_o(diagnostics: list[dict], protocol: ProtocolL1) -> tuple[int, dict]:
-    """O-авто = «отсутствие известных perf/арх-антипаттернов» (белый список из протокола)."""
+    """O-авто = «отсутствие известных perf/арх-антипаттернов» (white_list из протокола)."""
     weights = protocol.o_weights()
     hits = [d for d in diagnostics if d["code"] in weights]
     w = sum(weights[d["code"]] for d in hits)
     detail = {"weighted": w, "count": len(hits),
               "codes": sorted({d["code"] for d in hits})}
-    return band(w, protocol), detail
+    return protocol.scoring("O").score_for(w), detail   # else-строка таблицы = пол 2, не 0

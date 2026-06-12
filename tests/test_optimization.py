@@ -28,7 +28,7 @@ def diag(code: str, line: int = 1) -> dict:
     (0, 10), (1, 8), (2, 6), (3, 6), (3.5, 4), (6, 4), (7, 2), (100, 2),
 ])
 def test_band_from_protocol(proto, w, expected):
-    assert o.band(w, proto) == expected
+    assert proto.scoring("O").score_for(w) == expected
 
 
 # ── score_o на синтетических диагностиках ────────────────────────────────────

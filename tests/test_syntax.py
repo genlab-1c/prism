@@ -34,7 +34,7 @@ def diag(code: str, line: int, severity: str = "error") -> dict:
     (0, 10), (1, 8), (2, 6), (3, 6), (4, 4), (6, 4), (7, 2), (99, 2),
 ])
 def test_band_from_protocol(proto, n, expected):
-    assert syntax.band(n, proto) == expected
+    assert proto.scoring("S").score_for(n) == expected
 
 
 # ── score_s на синтетических диагностиках ────────────────────────────────────
