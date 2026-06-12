@@ -163,8 +163,7 @@ def _check_instruments() -> Section:
     else:
         items.append(("warn", f"M (meaning): {runner.unavailable_reason()} — ось не измеряется"))
     if bsl_ls.available():
-        items.append(("ok", f"S/O (syntax/optimization): BSL LS {bsl_ls.VERSION} · "
-                            f"{bsl_ls.java_bin()} ✓"))
+        items.append(("ok", f"S/O (syntax/optimization): {bsl_ls.describe()} ✓"))
     else:
         items.append(("warn", f"S/O: {bsl_ls.unavailable_reason()} — оси не измеряются"))
     items.append(("skip", "P (platform): категория B, ещё не реализована"))

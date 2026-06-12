@@ -1,0 +1,14 @@
+# Контекст сборки образа prism. Инструменты ставятся ВНУТРИ образа bootstrap-скриптами,
+# поэтому локальный tools/ (там симлинк на jar) в контекст не тащим.
+.git
+tools/
+work/
+results/auto/
+site/
+.venv
+venv
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/

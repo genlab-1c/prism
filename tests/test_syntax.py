@@ -84,6 +84,24 @@ def test_parity_ignores_keywords_in_strings(proto):
     assert det["balanced"] and s == 10
 
 
+# ── выбор режима инструмента (без docker) ────────────────────────────────────
+
+def test_get_analyzer_local_by_default(monkeypatch):
+    monkeypatch.delenv("PRISM_BSL", raising=False)
+    assert bsl_ls.get_analyzer().name == "local"
+
+
+def test_get_analyzer_docker_by_env(monkeypatch):
+    monkeypatch.setenv("PRISM_BSL", "docker")
+    analyzer = bsl_ls.get_analyzer()
+    assert analyzer.name == "docker" and "prism-bsl-ls" in analyzer.image
+
+
+def test_get_analyzer_unknown_mode_rejected():
+    with pytest.raises(ValueError):
+        bsl_ls.get_analyzer("nope")
+
+
 # ── интеграция: BSL LS ───────────────────────────────────────────────────────
 
 requires_bsl = pytest.mark.skipif(
