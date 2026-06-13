@@ -21,6 +21,7 @@ import tempfile
 from pathlib import Path
 
 from harness.execute import bsl_ls
+from harness.execute.onec import runner as onec
 from harness.execute.runner import get_runner
 from harness.loaders import (
     PRISM,
@@ -114,6 +115,9 @@ def _check_tasks() -> Section:
     for t in tasks:
         if t.category not in {"A", "B"}:
             items.append(("fail", f"{t.id}: недопустимая категория {t.category!r}"))
+        if t.category == "B":
+            items.extend(_check_task_b(t))
+            continue
         if not (t.entry_point and t.signature and t.prompt):
             items.append(("fail", f"{t.id}: пустое обязательное поле (entry_point/signature/prompt)"))
         if t.testable:
@@ -130,21 +134,38 @@ def _check_tasks() -> Section:
     return {"title": "Контракты заданий", "items": items}
 
 
+def _check_task_b(t) -> list[Item]:
+    """Контракт B-задачи: prompt + паттерны + полный комплект исполнения."""
+    items: list[Item] = []
+    if not (t.prompt and t.entry_point_patterns):
+        items.append(("fail", f"{t.id}: пустое обязательное поле (prompt/entry_point_patterns)"))
+    missing = [f for f in ("config_spec.yaml", "fixtures.yaml", "tests.bsl")
+               if not (t.dir / f).exists()]
+    if missing:
+        items.append(("warn", f"{t.id}: нет {', '.join(missing)} — исполнение B не собрано"))
+    else:
+        items.append(("ok", f"{t.id}: комплект B (спека базы, фикстуры, проверки) на месте"))
+    return items
+
+
 # ── 3. когерентность эталонов (эталон проходит свои тесты) ────────────────────
 
 def _check_canonicals() -> Section:
     proto = load_protocol_l1()
     tasks = [t for t in load_tasks() if t.canonical and t.testable]
+    tasks_a = [t for t in tasks if t.category == "A"]
+    tasks_b = [t for t in tasks if t.category == "B"]
     runner = get_runner()
-    if not runner.available():
-        return {"title": "Когерентность эталонов",
-                "items": [("skip", f"пропуск (M — гейт): {runner.unavailable_reason()}")]}
-
-    work = Path(tempfile.mkdtemp(prefix="prism_check_"))
-    diags = _canonical_diagnostics(tasks, work)   # S/O — батч BSL LS, {id: [диагностики]} или None
 
     items: list[Item] = []
-    for t in tasks:
+    work = Path(tempfile.mkdtemp(prefix="prism_check_"))
+
+    # — категория A: OneScript
+    if not runner.available():
+        items.append(("skip", f"кат. A: пропуск (M — гейт): {runner.unavailable_reason()}"))
+        tasks_a = []
+    diags = _canonical_diagnostics(tasks_a, work)  # S/O — батч BSL LS, {id: [диагностики]} или None
+    for t in tasks_a:
         code = t.canonical.read_text(encoding="utf-8")
         # M — ЖЁСТКИЙ гейт: эталон обязан пройти свои тесты на 100%
         m = score_m(code, t.tests, proto, work / t.id, name=f"canon_{t.id}", runner=runner)
@@ -159,6 +180,22 @@ def _check_canonicals() -> Section:
             o, _ = score_o(diags.get(t.id, []), proto)
             so_txt = f"S={s} · O={o}"
         items.append(("ok" if gate else "fail", f"{t.id}: эталон {m_txt} · {so_txt}"))
+
+    # — категория B: исполнение против синтетической базы (тот же жёсткий гейт)
+    if tasks_b and not onec.available():
+        items.append(("skip", f"кат. B: пропуск (M/P — гейт): {onec.unavailable_reason()}"))
+        tasks_b = []
+    for t in tasks_b:
+        code = t.canonical.read_text(encoding="utf-8-sig")
+        run = onec.run_candidate(code, t.dir, work / t.id, t.entry_point_patterns)
+        gate = (run.status == "ok" and run.total > 0
+                and run.passed == run.total and not run.platform_errors)
+        txt = (f"M=10 ({run.passed}/{run.total}) · P чисто" if gate
+               else f"{run.status}: {run.passed}/{run.total}"
+                    f"{' · платформенные ошибки: ' + str(run.platform_errors) if run.platform_errors else ''}"
+                    f"{' · ' + (run.log or run.infra_detail)[:120] if not gate else ''}")
+        items.append(("ok" if gate else "fail", f"{t.id}: эталон (1С) {txt}"))
+
     if not items:
         items.append(("warn", "нет задач с эталоном и тестами для проверки"))
     return {"title": "Когерентность эталонов", "items": items}
@@ -189,5 +226,8 @@ def _check_instruments() -> Section:
         items.append(("ok", f"S/O (syntax/optimization): {bsl_ls.describe()} ✓"))
     else:
         items.append(("warn", f"S/O: {bsl_ls.unavailable_reason()} — оси не измеряются"))
-    items.append(("skip", "P (platform): категория B, ещё не реализована"))
+    if onec.available():
+        items.append(("ok", f"M/P кат. B (1С): docker-образ {onec.DOCKER_IMAGE} ✓"))
+    else:
+        items.append(("warn", f"M/P кат. B: {onec.unavailable_reason()}"))
     return {"title": "Инструменты по осям", "items": items}

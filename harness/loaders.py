@@ -142,23 +142,38 @@ class TaskTests(BaseModel):
 
 
 class Task(BaseModel):
-    """Одна задача: tasks/<категория>/<id>/ (task.yaml [+ tests.yaml] [+ canonical.bsl])."""
+    """Одна задача: tasks/<категория>/<id>/.
+
+    Категория A: task.yaml (entry_point, signature) + tests.yaml + canonical.bsl —
+    исполняется в OneScript. Категория B: task.yaml (entry_point_patterns,
+    expected_objects) + config_spec.yaml + fixtures.yaml + tests.bsl + canonical.bsl —
+    исполняется против синтетической базы 1С (harness/execute/onec).
+    """
 
     id: str
     name: str
     category: str                    # "A" | "B"
     difficulty: str
-    entry_point: str
-    signature: str
     prompt: str
     dir: Path
-    tests: TaskTests | None = None
+    entry_point: str | None = None           # A: имя функции эталона
+    signature: str | None = None             # A: точная сигнатура
+    entry_point_patterns: list[str] = Field(default_factory=list)   # B: детекция функции
+    expected_objects: list[str] = Field(default_factory=list)       # B: сид оси P
+    tests: TaskTests | None = None           # A: скрытые кейсы (tests.yaml)
     canonical: Path | None = None    # эталон, если есть
     m_testing: str | None = None     # пометка вроде pending_harness
 
     @property
     def testable(self) -> bool:
-        """Есть ли у задачи скрытые тесты (ось M исполнима)."""
+        """Есть ли у задачи скрытые тесты (ось M исполнима).
+
+        A — кейсы tests.yaml; B — полный комплект исполнения (спека базы,
+        фикстуры, проверки tests.bsl).
+        """
+        if self.category == "B":
+            return all((self.dir / f).exists()
+                       for f in ("config_spec.yaml", "fixtures.yaml", "tests.bsl"))
         return self.tests is not None and bool(self.tests.tests)
 
 

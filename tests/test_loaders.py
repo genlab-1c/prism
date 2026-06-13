@@ -118,23 +118,38 @@ def test_score_for_higher_is_better(proto):
 # ── задачи ───────────────────────────────────────────────────────────────────
 
 def test_tasks_loaded(tasks):
-    assert [t.id for t in tasks] == ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"]
+    a_ids = [t.id for t in tasks if t.category == "A"]
+    b_ids = [t.id for t in tasks if t.category == "B"]
+    assert a_ids == ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"]
+    assert "B1" in b_ids
 
 
 def test_tasks_category_filter():
     assert all(t.category == "A" for t in load_tasks(category="A"))
-    assert load_tasks(category="B") == []          # B пока не мигрирована
+    b = load_tasks(category="B")
+    assert b and all(t.category == "B" for t in b)
 
 
 def test_all_a_tasks_testable(tasks):
     """У всех задач A есть скрытые тесты и паттерны entry point (A5 — через __table__)."""
     for t in tasks:
+        if t.category != "A":
+            continue
         assert t.testable, t.id
         assert t.tests.entry_point_patterns, f"{t.id}: нет паттернов entry point"
 
 
+def test_b_tasks_execution_kit(tasks):
+    """У задач B — полный комплект исполнения (спека базы, фикстуры, проверки) + паттерны."""
+    for t in tasks:
+        if t.category != "B":
+            continue
+        assert t.testable, f"{t.id}: нет комплекта config_spec/fixtures/tests.bsl"
+        assert t.entry_point_patterns, f"{t.id}: нет паттернов entry point"
+
+
 def test_all_a_tasks_have_canonical(tasks):
-    """У каждой задачи A есть эталон (его когерентность проверяет prism check)."""
+    """У каждой задачи есть эталон (его когерентность проверяет prism check)."""
     for t in tasks:
         assert t.canonical is not None and t.canonical.exists(), t.id
 

@@ -157,8 +157,9 @@ def test_wrong_logic_partial(proto, tmp_path):
 # ── валидация эталонов: canonical обязан проходить свои тесты ────────────────
 
 @requires_oscript
-@pytest.mark.parametrize("task", [t for t in load_tasks() if t.canonical and t.testable],
-                         ids=lambda t: t.id)
+@pytest.mark.parametrize("task", [t for t in load_tasks()
+                                  if t.canonical and t.testable and t.category == "A"],
+                         ids=lambda t: t.id)   # B-эталоны гоняет prism check (исполнение в 1С)
 def test_canonical_passes_own_tests(proto, tmp_path, task):
     code = task.canonical.read_text(encoding="utf-8")
     r = meaning.score_m(code, task.tests, proto, tmp_path, f"canon_{task.id}")

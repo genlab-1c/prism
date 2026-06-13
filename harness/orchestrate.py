@@ -26,6 +26,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from harness.execute import bsl_ls
+from harness.execute.onec import runner as onec
 from harness.execute.runner import Runner, get_runner
 from harness.loaders import (
     PRISM,
@@ -37,8 +38,10 @@ from harness.loaders import (
     load_protocol_l1,
     load_tasks,
 )
+from harness.score.meaning import band as m_band
 from harness.score.meaning import score_m
 from harness.score.optimization import score_o
+from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
 from harness.score.syntax import score_s
 
@@ -49,13 +52,25 @@ FENCE_RE = re.compile(r"```(?:[\wа-яА-Я+]+)?\s*\n(.*?)```", re.DOTALL)
 class Instruments:
     """Контекст инструментов для скореров одного кандидата.
 
-    runner — раннер OneScript (ось M). diagnostics — диагностики BSL LS этого
-    кандидата для осей S/O (None = анализатор недоступен → ось «не измерена»;
-    [] = файл чист). Каждый скорер берёт из контекста только нужное ему.
+    runner — раннер OneScript (ось M кат. A). diagnostics — диагностики BSL LS
+    этого кандидата для осей S/O (None = анализатор недоступен → ось «не
+    измерена»; [] = файл чист). onec_run — кэш результата исполнения в 1С для
+    категории B: ОДИН прогон, из него и M (passed/total), и P (платформенные
+    ошибки). Каждый скорер берёт из контекста только нужное ему.
     """
 
     runner: Runner | None = None
     diagnostics: list[dict] | None = None
+    onec_run: onec.OneCRunResult | None = None
+
+
+def _onec_run_for(task: Task, code: str, work_dir: Path,
+                  instr: Instruments) -> onec.OneCRunResult | None:
+    """Исполнение кандидата B против синтетической базы — один раз на кандидата."""
+    if instr.onec_run is None and onec.available():
+        instr.onec_run = onec.run_candidate(
+            code, task.dir, work_dir / "onec", task.entry_point_patterns)
+    return instr.onec_run
 
 
 # ── извлечение кода кандидата ─────────────────────────────────────────────────
@@ -75,6 +90,16 @@ def _score_meaning(task: Task, code: str, protocol: ProtocolL1,
                    work_dir: Path, instr: Instruments) -> tuple[int | None, dict]:
     if not task.testable:
         return None, {"reason": "нет скрытых тестов — ось M не исполнима"}
+    if task.category == "B":                        # исполнение в 1С (синтетическая база)
+        if not onec.available():
+            return None, {"reason": onec.unavailable_reason()}
+        run = _onec_run_for(task, code, work_dir, instr)
+        if run.status in ("infra_error", "no_result"):    # инфраструктура → «не измерено»
+            return None, {"reason": f"исполнение не состоялось ({run.status})",
+                          "infra_detail": run.infra_detail[:300]}
+        # no_entry / candidate_error — вина кандидата → floor 0 (как в кат. A)
+        executed = run.status == "ok" and run.total > 0
+        return m_band(run.passed, run.total, executed, protocol), run.model_dump()
     res = score_m(code, task.tests, protocol, work_dir, name="cand", runner=instr.runner)
     return res.score, res.model_dump(exclude={"score"})
 
@@ -93,7 +118,19 @@ def _score_optimization(task: Task, code: str, protocol: ProtocolL1,
     return score_o(instr.diagnostics, protocol)
 
 
-SCORERS = {"S": _score_syntax, "M": _score_meaning, "O": _score_optimization}   # P — Уровень 2 для B
+def _score_platform(task: Task, code: str, protocol: ProtocolL1,
+                    work_dir: Path, instr: Instruments) -> tuple[int | None, dict]:
+    """P из ТОГО ЖЕ прогона 1С, что и M (кэш instr.onec_run): один запуск, два сигнала."""
+    if not task.testable:
+        return None, {"reason": "нет комплекта исполнения — ось P не исполнима"}
+    if not onec.available():
+        return None, {"reason": onec.unavailable_reason()}
+    run = _onec_run_for(task, code, work_dir, instr)
+    return score_p(run, protocol)
+
+
+SCORERS = {"S": _score_syntax, "M": _score_meaning,
+           "O": _score_optimization, "P": _score_platform}
 
 # Оси, чей инструмент — батч BSL LS (диагностики считаются один раз на прогон)
 BSL_AXES = {"S", "O"}
