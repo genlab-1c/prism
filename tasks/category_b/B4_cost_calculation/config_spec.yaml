@@ -1,0 +1,22 @@
+# Синтетическая конфигурация под B4: партионный регистр остатков
+# (Количество + Стоимость) — средневзвешенная себестоимость.
+
+catalogs:
+  Номенклатура:
+    hierarchical: true
+  Склады:
+    hierarchical: false
+
+documents:
+  ПоступлениеТоваров:
+    registers: [ПартииТоваров]
+
+accumulation_registers:
+  ПартииТоваров:
+    register_type: Balance
+    dimensions:
+      Склад: { type: СправочникСсылка.Склады }
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Количество: { type: Число, length: 15, precision: 3 }
+      Стоимость: { type: Число, length: 15, precision: 2 }

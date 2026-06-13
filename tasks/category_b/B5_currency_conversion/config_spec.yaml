@@ -1,0 +1,27 @@
+# Синтетическая конфигурация под B5: курсы валют (периодический регистр сведений)
+# + документ с табличной частью «Товары» для пересчёта.
+
+catalogs:
+  Номенклатура:
+    hierarchical: false
+  Валюты:
+    hierarchical: false
+
+documents:
+  ЗаказКлиента:
+    tabular_sections:
+      Товары:
+        attributes:
+          Номенклатура: { type: СправочникСсылка.Номенклатура }
+          Количество: { type: Число, length: 15, precision: 3 }
+          Цена: { type: Число, length: 15, precision: 2 }
+          Сумма: { type: Число, length: 15, precision: 2 }
+
+information_registers:
+  КурсыВалют:
+    periodicity: Day
+    dimensions:
+      Валюта: { type: СправочникСсылка.Валюты }
+    resources:
+      Курс: { type: Число, length: 15, precision: 4 }
+      Кратность: { type: Число, length: 10, precision: 0 }

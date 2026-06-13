@@ -1,0 +1,27 @@
+# Синтетическая конфигурация под B2: цены номенклатуры (периодический регистр
+# сведений) + документ с табличной частью «Товары».
+
+catalogs:
+  Номенклатура:
+    hierarchical: true
+  ВидыЦен:
+    hierarchical: false
+
+documents:
+  РеализацияТоваров:
+    tabular_sections:
+      Товары:
+        attributes:
+          Номенклатура: { type: СправочникСсылка.Номенклатура }
+          Количество: { type: Число, length: 15, precision: 3 }
+          Цена: { type: Число, length: 15, precision: 2 }
+          Сумма: { type: Число, length: 15, precision: 2 }
+
+information_registers:
+  ЦеныНоменклатуры:
+    periodicity: Day
+    dimensions:
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+      ВидЦен: { type: СправочникСсылка.ВидыЦен }
+    resources:
+      Цена: { type: Число, length: 15, precision: 2 }
