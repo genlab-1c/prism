@@ -1,0 +1,112 @@
+"""Генерация BSL-фикстур из fixtures.yaml задачи категории B.
+
+fixtures.yaml (декларативно) → текст BSL-процедур для модуля «Тесты»:
+
+    СоздатьФикстуры()  — создаёт элементы/группы справочников, движения регистров
+                         накопления и записи регистров сведений
+    Спр(Справочник, Наименование) — поиск ссылки (используется и проверками задачи)
+
+Приёмы — проверенные прогоном:
+ - движения регистра накопления: документ-регистратор + НаборЗаписей с
+   Отбор.Регистратор (без регистратора стандартный регистр не записать);
+ - записи независимого регистра сведений: МенеджерЗаписи (регистратор не нужен);
+ - значение-дата в YAML (date) → Дата(ГГГГ,ММ,ДД) — для Период/Дата документа;
+ - значение "$регистратор" в поле записи РН → ссылка на документ-регистратор
+   этой записи (измерение «Партия» в FIFO-задачах).
+"""
+
+from __future__ import annotations
+
+import datetime
+
+
+def _bsl_str(s: str) -> str:
+    return '"' + str(s).replace('"', '""') + '"'
+
+
+def _bsl_value(value, var_names: dict[str, str]) -> str:
+    """Значение поля записи → выражение BSL (ссылка/число/дата/строка)."""
+    if isinstance(value, str) and value in var_names:
+        return var_names[value]
+    if isinstance(value, (datetime.date, datetime.datetime)):
+        return f"Дата({value.year}, {value.month}, {value.day})"
+    if isinstance(value, bool):
+        return "Истина" if value else "Ложь"
+    if isinstance(value, (int, float)):
+        return str(value)
+    return _bsl_str(value)
+
+
+def generate_fixtures_module(fixtures: dict) -> str:
+    """fixtures.yaml (dict) → BSL: Спр() + СоздатьФикстуры()."""
+    lines: list[str] = []
+
+    # — универсальный поиск ссылки (нужен и проверкам задачи)
+    lines += [
+        "Функция Спр(ИмяСправочника, Наименование) Экспорт",
+        "\tВозврат Справочники[ИмяСправочника].НайтиПоНаименованию(Наименование, Истина);",
+        "КонецФункции",
+        "",
+    ]
+
+    body: list[str] = []
+    var_names: dict[str, str] = {}   # ref → имя переменной BSL
+
+    # — справочники: элементы и группы, иерархия по parent (порядок YAML = родители раньше)
+    for cat_name, items in (fixtures.get("catalogs") or {}).items():
+        for item in items:
+            ref = item["ref"]
+            var = f"Ф_{ref}"
+            var_names[ref] = var
+            kind = "СоздатьГруппу" if item.get("isFolder") else "СоздатьЭлемент"
+            body.append(f"\t{var}Об = Справочники.{cat_name}.{kind}();")
+            body.append(f"\t{var}Об.Наименование = {_bsl_str(item['Наименование'])};")
+            parent = item.get("parent")
+            if parent:
+                pvar = var_names.get(parent)
+                if pvar is None:
+                    raise ValueError(f"fixtures: parent «{parent}» объявлен позже ребёнка «{ref}» — "
+                                     f"родители должны идти раньше в YAML")
+                body.append(f"\t{var}Об.Родитель = {pvar};")
+            body.append(f"\t{var}Об.Записать(); {var} = {var}Об.Ссылка;")
+            body.append("")
+
+    # — движения регистров накопления: документ-регистратор + набор записей.
+    #   Поле «Период» (date в YAML) задаёт и дату документа — порядок партий FIFO;
+    #   «$регистратор» в значении поля → ссылка на документ этой записи.
+    for reg_name, block in (fixtures.get("register_records") or {}).items():
+        registrar = block.get("registrar")
+        if not registrar:
+            raise ValueError(f"fixtures: у регистра «{reg_name}» не задан registrar — "
+                             f"движения без документа-регистратора не записываются")
+        for rec in block.get("records", []):
+            period = _bsl_value(rec["Период"], var_names) if "Период" in rec else "ТекущаяДата()"
+            body.append(f"\tДок = Документы.{registrar}.СоздатьДокумент();")
+            body.append(f"\tДок.Дата = {period}; Док.Записать();")
+            body.append(f"\tНабор = РегистрыНакопления.{reg_name}.СоздатьНаборЗаписей();")
+            body.append("\tНабор.Отбор.Регистратор.Установить(Док.Ссылка);")
+            body.append(f"\tЗ = Набор.Добавить(); З.Регистратор = Док.Ссылка; З.Период = {period};")
+            for field, value in rec.items():
+                if field == "Период":
+                    continue
+                if value == "$регистратор":
+                    body.append(f"\tЗ.{field} = Док.Ссылка;")
+                else:
+                    body.append(f"\tЗ.{field} = {_bsl_value(value, var_names)};")
+            body.append("\tНабор.Записать();")
+            body.append("")
+
+    # — записи независимых регистров сведений: МенеджерЗаписи, регистратор не нужен
+    for reg_name, records in (fixtures.get("info_records") or {}).items():
+        for rec in records:
+            body.append(f"\tМЗ = РегистрыСведений.{reg_name}.СоздатьМенеджерЗаписи();")
+            for field, value in rec.items():
+                body.append(f"\tМЗ.{field} = {_bsl_value(value, var_names)};")
+            body.append("\tМЗ.Записать();")
+            body.append("")
+
+    lines.append("Процедура СоздатьФикстуры() Экспорт")
+    # объявление переменных не нужно — в BSL присваивание объявляет локальную
+    lines += body if body else ["\t// фикстур нет"]
+    lines.append("КонецПроцедуры")
+    return "\n".join(lines) + "\n"
