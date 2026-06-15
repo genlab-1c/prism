@@ -30,11 +30,12 @@ classifiers = [
 ]
 requires-python = ">=3.10"             # код идёт на 3.10 (future-annotations); хост сейчас 3.10.x. Соседние подпроекты целятся в 3.11 — выровнять при слиянии в core
 
-# Харнесс по факту импортов: стдлиб + два пакета. Адаптеров генерации (requests/aiohttp)
-# здесь пока нет — generation/ это YAML-контракты, не код вызова моделей.
+# Харнесс по факту импортов: стдлиб + PyYAML/pydantic + requests (боевой HTTP-транспорт
+# слоя адаптеров генерации; в тестах транспорт инъектируется, requests не нужен).
 dependencies = [
     "PyYAML>=6.0.1",
     "pydantic>=2.5.0",
+    "requests>=2.31",
 ]
 
 [project.optional-dependencies]
