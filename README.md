@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://github.com/genlab-1c/prism/actions/workflows/ci.yml"><img src="https://github.com/genlab-1c/prism/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/coverage-72%25-yellowgreen" alt="coverage 72%">
+  <img src="https://img.shields.io/badge/coverage-80%25-green" alt="coverage 80%">
   <a href="https://github.com/genlab-1c/prism/stargazers"><img src="https://img.shields.io/github/stars/genlab-1c/prism?style=flat&logo=github" alt="stars"></a>
 </p>
 <p align="center">
