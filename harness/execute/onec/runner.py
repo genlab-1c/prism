@@ -58,6 +58,8 @@ class OneCRunResult(BaseModel):
     log: str = ""                   # хвост result.txt: FAIL'ы и исключения тестов
     platform_errors: list[str] = []  # сработавшие маркеры платформенных ошибок
     platform_error_tests: int = 0   # сколько тестов упало именно платформенной ошибкой
+    compile_error_lines: list[int] = []  # строки ошибок компиляции модуля кандидата (ось S)
+    compile_errors: list[str] = []  # тексты ошибок компилятора (диагностика)
     entry_point: str | None = None
     infra_detail: str = ""          # диагностика инфраструктурных падений
 
@@ -158,62 +160,66 @@ def run_candidate(candidate_code: str, task_dir: Path, work_dir: Path,
     assemble_run_config(task_dir, candidate_code, entry,
                         empty_cfg, work_dir / "run-cfg")
 
-    # 3) база + загрузка + прогон (один вызов контейнера, права чинятся внутри).
-    # На шаге ENTERPRISE — свой timeout: битый кандидат может повесить клиент
-    # модальным окном ошибки компиляции; зависание = чей-то дефект, режем за 90с,
-    # причину различает _classify_no_result (CheckModules).
+    # 3) база + компиляция (S) + исполнение (M/P) — один вызов контейнера.
+    # /CheckModules даёт ось S (ошибки модуля КодКандидата); если кандидат не
+    # компилируется — ENTERPRISE не запускаем (быстрее и честно: M/P = 0).
+    # На ENTERPRISE свой timeout 90: чужой дефект не должен висеть.
+    # CheckModules проверяет конфигурацию БД → строго ПОСЛЕ UpdateDBCfg; оба
+    # безусловно после успешного load (через ;), чтобы ошибки кандидата всплыли,
+    # даже если UpdateDBCfg споткнулся. ENTERPRISE — только при чистой компиляции.
     script = (
-        f"rm -rf /work/ib /work/result.txt; "
+        f"rm -rf /work/ib /work/result.txt /work/check.log; "
         f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib;Locale=ru_RU;' >/dev/null 2>&1 && "
         f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
-        f"/LoadConfigFromFiles /work/run-cfg /Out /work/load.log >/dev/null 2>&1 && "
+        f"/LoadConfigFromFiles /work/run-cfg /Out /work/load.log >/dev/null 2>&1 && {{ "
         f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
-        f"/UpdateDBCfg /Out /work/upd.log >/dev/null 2>&1 && "
+        f"/UpdateDBCfg /Out /work/upd.log >/dev/null 2>&1; "
+        f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
+        f"/CheckModules -Server /Out /work/check.log >/dev/null 2>&1; "
+        f"if grep -q 'КодКандидата' /work/check.log 2>/dev/null; then true; else "
         f"timeout 90 xvfb-run-1c {ONEC_BIN} ENTERPRISE /IBConnectionString 'File=/work/ib;' "
-        f"/C ПрогонТеста >/dev/null 2>&1; "
+        f"/C ПрогонТеста >/dev/null 2>&1; fi; }}; "
         f"chmod -R a+rwX /work 2>/dev/null; true"
     )
+    timed_out = False
     try:
         _in_container(work_dir, script, STEP_TIMEOUT_S * 3)
     except subprocess.TimeoutExpired:
-        return _classify_no_result(work_dir, entry, context="таймаут прогона в контейнере")
+        timed_out = True
 
-    # 4) результат
-    result_file = work_dir / "result.txt"
-    if not result_file.exists():
-        return _classify_no_result(work_dir, entry)
-
-    return parse_result(result_file.read_text(encoding="utf-8-sig", errors="replace"), entry)
-
-
-def _classify_no_result(work_dir: Path, entry: str | None,
-                        context: str = "result.txt не создан") -> OneCRunResult:
-    """Прогон не дал result.txt (или завис): вина кандидата или инфраструктуры?
-
-    Различаем компиляцией: /CheckModules по загруженной конфе. Ошибки в модуле
-    «КодКандидата» → candidate_error (балл 0 честен — некомпилирующийся кандидат
-    не должен выпадать из Q как «не измеренный»; зависание клиента модальным
-    окном ошибки компиляции — тот же случай). Иначе — no_result: похоже на
-    инфраструктуру → None («не измерено»).
-    """
-    try:
-        res = _in_container(work_dir, (
-            f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
-            f"/CheckModules -Server /Out /work/check.log >/dev/null 2>&1; "
-            f"chmod a+r /work/check.log 2>/dev/null; cat /work/check.log 2>/dev/null"
-        ), STEP_TIMEOUT_S)
-        check_log = res.stdout
-    except subprocess.TimeoutExpired:
-        check_log = ""
-    if "КодКандидата" in check_log:
+    # ось S — ошибки компиляции модуля кандидата (компилятор 1С, не статика)
+    lines, errors = _parse_compile_log(_read(work_dir / "check.log"))
+    if lines:                                    # не компилируется → вина кандидата
         return OneCRunResult(status="candidate_error", entry_point=entry,
-                             log=check_log[:500],
-                             infra_detail=f"модуль кандидата не компилируется ({context})")
-    load_log = (work_dir / "load.log").read_text(encoding="utf-8-sig", errors="replace") \
-        if (work_dir / "load.log").exists() else ""
+                             compile_error_lines=lines, compile_errors=errors[:5],
+                             log="; ".join(errors[:3])[:500],
+                             infra_detail="модуль кандидата не компилируется")
+
+    # компилируется → M/P из result.txt
+    result_file = work_dir / "result.txt"
+    if result_file.exists():
+        return parse_result(result_file.read_text(encoding="utf-8-sig", errors="replace"), entry)
+
+    detail = "таймаут прогона" if timed_out else "result.txt не создан"
     return OneCRunResult(status="no_result", entry_point=entry,
-                         infra_detail=f"{context}; check: {check_log[:200]}; "
-                                      f"load.log: {load_log[:200]}")
+                         infra_detail=f"{detail}; load.log: {_read(work_dir / 'load.log')[:200]}")
+
+
+# лог /CheckModules: «{ОбщийМодуль.КодКандидата.Модуль(строка,колонка)}: Сообщение»
+_COMPILE_RE = re.compile(r"\{ОбщийМодуль\.КодКандидата\.Модуль\((\d+)(?:,\s*\d+)?\)\}\s*:?\s*(.*)")
+
+
+def _read(path: Path) -> str:
+    return path.read_text(encoding="utf-8-sig", errors="replace") if path.exists() else ""
+
+
+def _parse_compile_log(text: str) -> tuple[list[int], list[str]]:
+    """Из лога /CheckModules → (строки ошибок модуля кандидата, тексты ошибок)."""
+    lines, errors = [], []
+    for m in _COMPILE_RE.finditer(text or ""):
+        lines.append(int(m.group(1)))
+        errors.append(m.group(2).strip()[:200])
+    return lines, errors
 
 
 def parse_result(text: str, entry: str | None = None) -> OneCRunResult:

@@ -197,10 +197,11 @@ def _check_canonicals() -> Section:
     for t in tasks_b:
         code = t.canonical.read_text(encoding="utf-8-sig")
         run = onec.run_candidate(code, t.dir, work / t.id, t.entry_point_patterns)
-        gate = (run.status == "ok" and run.total > 0
-                and run.passed == run.total and not run.platform_errors)
-        txt = (f"M=10 ({run.passed}/{run.total}) · P чисто" if gate
+        gate = (run.status == "ok" and run.total > 0 and run.passed == run.total
+                and not run.platform_errors and not run.compile_error_lines)
+        txt = (f"S=10 · M=10 ({run.passed}/{run.total}) · P чисто" if gate
                else f"{run.status}: {run.passed}/{run.total}"
+                    f"{' · компиляция: ' + str(run.compile_errors[:1]) if run.compile_error_lines else ''}"
                     f"{' · платформенные ошибки: ' + str(run.platform_errors) if run.platform_errors else ''}"
                     f"{' · ' + (run.log or run.infra_detail)[:120] if not gate else ''}")
         items.append(("ok" if gate else "fail", f"{t.id}: эталон (1С) {txt}"))
@@ -236,7 +237,7 @@ def _check_instruments() -> Section:
     else:
         items.append(("warn", f"S/O: {bsl_ls.unavailable_reason()} — оси не измеряются"))
     if onec.available():
-        items.append(("ok", f"M/P кат. B (1С): docker-образ {onec.DOCKER_IMAGE} ✓"))
+        items.append(("ok", f"S/M/P кат. B (1С): docker-образ {onec.DOCKER_IMAGE} ✓"))
     else:
         items.append(("warn", f"M/P кат. B: {onec.unavailable_reason()}"))
     return {"title": "Инструменты по осям", "items": items}

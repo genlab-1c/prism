@@ -43,7 +43,7 @@ from harness.score.meaning import score_m
 from harness.score.optimization import score_o
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
-from harness.score.syntax import score_s
+from harness.score.syntax import _cluster_lines, score_s
 
 FENCE_RE = re.compile(r"```(?:[\wа-яА-Я+]+)?\s*\n(.*?)```", re.DOTALL)
 
@@ -106,6 +106,17 @@ def _score_meaning(task: Task, code: str, protocol: ProtocolL1,
 
 def _score_syntax(task: Task, code: str, protocol: ProtocolL1,
                   work_dir: Path, instr: Instruments) -> tuple[int | None, dict]:
+    if task.category == "B":                        # S(B) — компилятор 1С (/CheckModules)
+        if not onec.available():
+            return None, {"reason": onec.unavailable_reason()}
+        run = _onec_run_for(task, code, work_dir, instr)
+        if run.status in ("infra_error", "no_result"):
+            return None, {"reason": f"исполнение не состоялось ({run.status})"}
+        gap = protocol.axes["S"].cluster_gap or 3   # соседние ошибки = одна корневая причина
+        clusters = _cluster_lines(sorted(run.compile_error_lines), gap)
+        return protocol.scoring("S").score_for(clusters), {
+            "root_causes": clusters, "instrument": "1С /CheckModules",
+            "errors": run.compile_errors}
     if instr.diagnostics is None:
         return None, {"reason": f"BSL LS недоступен — {bsl_ls.unavailable_reason()}"}
     return score_s(instr.diagnostics, protocol, code)
