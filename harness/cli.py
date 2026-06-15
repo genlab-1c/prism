@@ -1,8 +1,9 @@
 """Точка входа пользователя: `prism <команда>`.
 
 Тонкий диспетчер — бизнес-логики тут нет, только разбор аргументов и вызов:
-  prism score   — авто-оценка L1 готовых генераций по изданию → results/auto/
-  prism check   — целостность: контракты метрики, задания, эталоны, инструменты
+  prism generate — сгенерировать код кандидатов моделями по изданию → results/
+  prism score    — авто-оценка L1 готовых генераций по изданию → results/auto/
+  prism check    — целостность: контракты метрики, задания, эталоны, инструменты
 
 Зарегистрирован как консольный скрипт в pyproject ([project.scripts] prism).
 Запуск без установки:  python3 -m harness.cli <команда>
@@ -17,6 +18,17 @@ from pathlib import Path
 from harness import check, orchestrate
 
 _GLYPH = {"ok": "✓", "warn": "⚠", "fail": "✗", "skip": "·"}
+
+
+def cmd_generate(args: argparse.Namespace) -> int:
+    from harness.generate.run import GenerationRunner
+
+    exp = GenerationRunner().run_experiment(
+        args.category, model_keys=args.models, task_ids=args.tasks, edition_name=args.edition)
+    print(f"→ results/{exp.experiment_name}.json  "
+          f"({exp.tasks_count} задач × {len(exp.models_used)} моделей · "
+          f"токенов {exp.total_tokens} · ${exp.total_cost:.4f})")
+    return 0
 
 
 def cmd_score(args: argparse.Namespace) -> int:
@@ -41,6 +53,13 @@ def cmd_check(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     ap = argparse.ArgumentParser(prog="prism", description="PRISM — бенчмарк кодогенерации 1С.")
     sub = ap.add_subparsers(dest="command", required=True)
+
+    ge = sub.add_parser("generate", help="генерация кода кандидатов моделями по изданию")
+    ge.add_argument("--category", required=True, choices=["A", "B"], help="категория задач")
+    ge.add_argument("--edition", default="core", help="издание из editions/ (по умолчанию core)")
+    ge.add_argument("--models", nargs="*", default=None, help="ключи моделей (по умолчанию все)")
+    ge.add_argument("--tasks", nargs="*", default=None, help="id задач (по умолчанию все категории)")
+    ge.set_defaults(func=cmd_generate)
 
     sc = sub.add_parser("score", help="авто-оценка L1 готовых генераций по изданию")
     sc.add_argument("--experiment", type=Path, default=None,

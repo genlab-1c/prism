@@ -1,8 +1,13 @@
-# ИЗДАНИЕ CORE (базовое): одиночная генерация, MCP для метаданных категории B,
-# все четыре оси SMOP, ранжирование по Q.
+# ИЗДАНИЕ CORE (базовое): одна кодогенерация на прогон, агентный сбор метаданных
+# для категории B, все четыре оси SMOP, ранжирование по Q.
+# Каждое поле потребляется кодом (правило «нет мёртвых строк в конфигах»):
+#   mode             → harness/generate/run.py (поддержан single-shot)
+#   context          → harness/generate/run.py (доставка метаданных B: agentic)
+#   scorers          → harness/orchestrate.py (какие оси считать)
+#   leaderboard_view → harness/orchestrate.py (ранжирование сводки prism score)
 
 name: core
-mode: single-shot                    # одна генерация на задачу (не agentic-цикл)
-context: mcp                         # кат. B достаёт метаданные запросом к синтетической базе; кат. A MCP не нужен
-scorers: [syntax, meaning, optimization, platform]   # фактически считается scorers ∩ applies_to: для кат. A платформа = N/A, не 0
+mode: single-shot                    # одна кодогенерация на прогон (не agentic-цикл кодогенерации)
+context: agentic                     # кат. B: модель сама навигирует метаданные инструментами; кат. A контекст не нужен
+scorers: [syntax, meaning, optimization, platform]   # фактически scorers ∩ applies_to: для кат. A платформа = N/A, не 0
 leaderboard_view: quality            # ранжирование по интегральному баллу Q

@@ -7,6 +7,9 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
+
+import pytest
 
 from harness.generate.hashing import compare_hashes, compute_hash, normalize_code
 from harness.generate.run import GenerationRunner
@@ -80,3 +83,50 @@ def test_seeds_used_for_seed_capable_model():
     runner = GenerationRunner(adapter_factory=lambda key, entry: ScriptedAdapter([_res(content=CODE)]))
     exp = runner.run_experiment("A", model_keys=["gpt"], task_ids=["A1"], write=False)
     assert exp.task_results[0].runs[0].seed == 178
+
+
+# ── потребление полей издания/модели (правило «нет мёртвых строк») ──────────────
+
+def _entry(**caps):
+    from harness.loaders import ModelAccess, ModelEntry
+    return ModelEntry(id="m", name="M", vendor="v",
+                      access=ModelAccess(adapter="openrouter"), capabilities=caps)
+
+
+def test_context_mode_must_be_agentic():
+    from harness.loaders import load_tasks
+    runner = GenerationRunner(adapter_factory=lambda k, e: ScriptedAdapter([]))
+    task = next(t for t in load_tasks(category="B"))
+    with pytest.raises(NotImplementedError):
+        runner._gather_context(task, _entry(supports_tools=True), ScriptedAdapter([]), "flat")
+
+
+def test_supports_tools_gates_agentic_context():
+    from harness.loaders import load_tasks
+    runner = GenerationRunner(adapter_factory=lambda k, e: ScriptedAdapter([]))
+    task = next(t for t in load_tasks(category="B"))
+    # без поддержки инструментов навигация невозможна → контекст пустой, адаптер не зовётся
+    ctx = runner._gather_context(task, _entry(supports_tools=False, context_window=1000),
+                                 ScriptedAdapter([]), "agentic")
+    assert ctx.success and ctx.objects_loaded == []
+
+
+def test_cli_generate_parses():
+    from harness.cli import build_parser
+    args = build_parser().parse_args(["generate", "--category", "B", "--models", "claude"])
+    assert args.command == "generate" and args.category == "B"
+    assert args.edition == "core" and args.models == ["claude"]
+
+
+def test_leaderboard_view_ranks_models(capsys):
+    from harness.orchestrate import print_summary
+    result = {"leaderboard_view": "quality", "tasks": [
+        {"task_id": "B1", "model_id": "a", "model_name": "Alpha",
+         "runs": [{"run_index": 0, "scores": {"S": 10, "M": 10, "O": 10, "P": 10, "Q": 10.0}, "detail": {}}]},
+        {"task_id": "B1", "model_id": "b", "model_name": "Beta",
+         "runs": [{"run_index": 0, "scores": {"S": 10, "M": 0, "O": 6, "P": 0, "Q": 4.0}, "detail": {}}]},
+    ]}
+    print_summary(result, Path("/nonexistent.json"))
+    out = capsys.readouterr().out
+    assert "Лидерборд" in out
+    assert out.index("Alpha") < out.index("Beta")          # Alpha (Q̄=10) выше Beta (Q̄=4)

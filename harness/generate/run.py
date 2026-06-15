@@ -20,10 +20,10 @@ from pathlib import Path
 
 import yaml
 
-from harness.loaders import PRISM, ModelEntry, Task, load_generation, load_tasks
+from harness.loaders import PRISM, ModelEntry, Task, load_edition, load_generation, load_tasks
 
 from .adapters.base import Adapter
-from .context import AgenticContextLoader, SpecMetadataProvider
+from .context import AgenticContextLoader, ContextResult, SpecMetadataProvider
 from .hashing import compare_hashes, compute_hash
 from .results import DeterminismResult, ExperimentResult, RunResult, TaskResult
 from .types import ChatMessage
@@ -51,7 +51,12 @@ class GenerationRunner:
 
     # ── публичный API ────────────────────────────────────────────────────────
     def run_experiment(self, category: str, model_keys: list[str] | None = None,
-                       task_ids: list[str] | None = None, write: bool = True) -> ExperimentResult:
+                       task_ids: list[str] | None = None, edition_name: str = "core",
+                       write: bool = True) -> ExperimentResult:
+        edition = load_edition(edition_name)
+        if edition.mode != "single-shot":           # издание.mode — одна кодогенерация на прогон
+            raise NotImplementedError(f"издание {edition_name}: mode={edition.mode!r} не реализован "
+                                      f"(поддержан single-shot)")
         tasks = [t for t in load_tasks(category=category)
                  if task_ids is None or t.id in task_ids]
         keys = model_keys or list(self.models)
@@ -68,7 +73,7 @@ class GenerationRunner:
                 entry = self.models.get(key)
                 if entry is None:
                     continue
-                exp.task_results.append(self._run_pair(task, key, entry, category))
+                exp.task_results.append(self._run_pair(task, key, entry, category, edition.context))
 
         exp.calculate_totals()
         if write:
@@ -76,15 +81,16 @@ class GenerationRunner:
         return exp
 
     # ── одна пара (задача, модель) ─────────────────────────────────────────────
-    def _run_pair(self, task: Task, key: str, entry: ModelEntry, category: str) -> TaskResult:
+    def _run_pair(self, task: Task, key: str, entry: ModelEntry, category: str,
+                  context_mode: str) -> TaskResult:
         adapter = self.adapter_factory(key, entry)
         tr = TaskResult(task_id=task.id, task_name=task.name,
                         model_id=entry.id, model_name=entry.name)
 
-        # контекст метаданных (агентный режим) — только для B
+        # доставка метаданных для B задаётся изданием (edition.context)
         context_text = ""
         if category == "B":
-            ctx = self._load_context(task, entry, adapter)
+            ctx = self._gather_context(task, entry, adapter, context_mode)
             context_text = ctx.context_text
             tr.context_loaded = bool(ctx.objects_loaded)
             tr.context_objects = ctx.objects_loaded
@@ -120,12 +126,19 @@ class GenerationRunner:
         return tr
 
     # ── вспомогательное ────────────────────────────────────────────────────────
-    def _load_context(self, task: Task, entry: ModelEntry, adapter: Adapter):
+    def _gather_context(self, task: Task, entry: ModelEntry, adapter: Adapter, context_mode: str):
+        if context_mode != "agentic":               # издание core — agentic; прочие режимы — план
+            raise NotImplementedError(f"context={context_mode!r} не реализован (поддержан agentic)")
+        # без поддержки инструментов навигация по метаданным невозможна → без контекста
+        if not entry.capabilities.get("supports_tools"):
+            return ContextResult(success=True)
         spec = yaml.safe_load((task.dir / "config_spec.yaml").read_text(encoding="utf-8"))
         if self.distractors:
             from harness.synthconfig import add_distractors
             spec = add_distractors(spec, **self.distractors)
-        loader = AgenticContextLoader(adapter, SpecMetadataProvider(spec), entry.id)
+        budget = int(entry.capabilities.get("context_window", 15000))   # бюджет контекста — из окна модели
+        loader = AgenticContextLoader(adapter, SpecMetadataProvider(spec), entry.id,
+                                      max_context_chars=budget)
         return loader.load(task.prompt)
 
     def _build_messages(self, category: str, task_prompt: str, context_text: str) -> list[ChatMessage]:

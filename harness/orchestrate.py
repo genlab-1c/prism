@@ -222,6 +222,7 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
         "experiment_id": exp_id,
         "evaluator_id": "auto_l1",                  # против expert_01 в экспертной разметке
         "edition": edition.name,
+        "leaderboard_view": edition.leaderboard_view,   # как ранжировать сводку (см. print_summary)
         "runner": runner.name,
         "syntax_analyzer": f"bsl-ls {bsl_ls.VERSION}" if diags_by_file is not None else None,
         "protocol_version": protocol.version,
@@ -288,6 +289,25 @@ def print_summary(result: dict, experiment_path: Path) -> None:
                 line += (f"   {_fmt(e.get('S')):>6} {_fmt(e.get('M')):>6} "
                          f"{_fmt(e.get('Q')):>6}  {m_info}")
             print(line)
+
+    if result.get("leaderboard_view") == "quality":
+        print_leaderboard(result)
+
+
+def print_leaderboard(result: dict) -> None:
+    """Ранжирование моделей по среднему Q (издание.leaderboard_view = quality)."""
+    by_model: dict[str, list[float]] = {}
+    for t in result["tasks"]:
+        for r in t["runs"]:
+            q = r["scores"].get("Q")
+            if q is not None:
+                by_model.setdefault(t["model_name"], []).append(q)
+    if not by_model:
+        return
+    print("\nЛидерборд (средний Q):")
+    ranked = sorted(((sum(v) / len(v), name) for name, v in by_model.items()), reverse=True)
+    for i, (avg, name) in enumerate(ranked, 1):
+        print(f"  {i}. {name:<18} Q̄ = {avg:.2f}  (n={len(by_model[name])})")
 
 
 # ── прогон + отчёт (зовётся из CLI: prism score) ──────────────────────────────

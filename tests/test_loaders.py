@@ -159,7 +159,7 @@ def test_all_a_tasks_have_canonical(tasks):
 def test_edition_core():
     core = load_edition("core")
     assert core.mode == "single-shot"
-    assert core.context == "mcp"
+    assert core.context == "agentic"        # кат. B: агентный сбор метаданных
     assert set(core.scorers) <= set(SCORER_TO_AXIS), "неизвестный скорер в издании"
 
 
