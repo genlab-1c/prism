@@ -41,5 +41,5 @@ jobs:
       - name: Гигиена файлов (pre-commit; commitizen — стадия commit-msg, здесь не запускается)
         run: pre-commit run --all-files --show-diff-on-failure
 
-      - name: Юнит-тесты (интеграция M/S/O скипнется — инструментов нет)
-        run: pytest -q
+      - name: Юнит-тесты + покрытие (интеграция M/S/O скипнется — инструментов нет)
+        run: pytest -q --cov=harness --cov-report=term

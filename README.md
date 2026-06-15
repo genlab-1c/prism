@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/assets/lockdark.png" alt="PRISM — многомерная оценка генерации кода 1С с помощью ИИ" width="520">
+  <img src="docs/assets/lockdark.png" alt="PRISM — многомерная оценка генерации кода 1С с помощью ИИ" width="420">
 </p>
 
 <h1 align="center">PRISM</h1>
@@ -9,6 +9,17 @@
   Объективная оценка нейросетей по методике <b>SMOP</b> — Syntax · Meaning · Optimization · Platform.
 </p>
 
+<p align="center">
+  <a href="https://github.com/genlab-1c/prism/actions/workflows/ci.yml"><img src="https://github.com/genlab-1c/prism/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <img src="https://img.shields.io/badge/coverage-72%25-yellowgreen" alt="coverage 72%">
+  <a href="https://github.com/genlab-1c/prism/stargazers"><img src="https://img.shields.io/github/stars/genlab-1c/prism?style=flat&logo=github" alt="stars"></a>
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/задач_в_банке-13-success" alt="задач: 13">
+  <img src="https://img.shields.io/badge/тест--кейсов-46-blue" alt="тест-кейсов: 46">
+  <img src="https://img.shields.io/badge/генераций_в_датасете-30-blue" alt="генераций: 30">
+  <img src="https://img.shields.io/badge/нейросетей-3-blue" alt="нейросетей: 3">
+</p>
 <p align="center">
   <img src="https://img.shields.io/badge/1С:Предприятие-8.3-red" alt="1С:Предприятие 8.3">
   <img src="https://img.shields.io/badge/метрика-SMOP-blueviolet" alt="SMOP">
