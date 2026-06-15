@@ -12,10 +12,10 @@ SCORERS — единственное место, куда подключаетс
 Если рядом лежит экспертный файл (results/evaluations/<exp>_expert_*.json), сводка
 печатает дельту авто↔эксперт по M и Q — первая проверка согласованности.
 
-Запуск:
-  python3 -m harness.orchestrate                       # свежайший experiment_A_*.json, издание core
-  python3 -m harness.orchestrate --experiment results/experiment_A_20260301_125458.json
-  PRISM_RUNNER=docker python3 -m harness.orchestrate   # скоринг в песочнице
+Запуск (CLI prism, см. cli.py):
+  prism score                                            # свежайший experiment_A_*.json, издание core
+  prism score --experiment results/experiment_B_20260301_130327.json
+  PRISM_RUNNER=docker prism score                        # ось M кат. A в песочнице
 """
 
 from __future__ import annotations
@@ -308,5 +308,22 @@ def score_report(experiment_path: Path, edition_name: str = "core",
     print(f"издание {result['edition']} × {experiment_path.name}\n"
           f"раннер {result['runner']} · синтаксис {analyzer} · протокол L1 v{result['protocol_version']}\n")
     print_summary(result, experiment_path)
+    print()
+    print_tag_profiles(result)
     print(f"\n→ {out_path.relative_to(PRISM)}")
     return out_path
+
+
+def print_tag_profiles(result: dict) -> None:
+    """Срезы качества по тегам — по каждой модели (где модель сильнее/слабее)."""
+    from harness.stats.tags import format_tag_profile, tag_profile
+
+    tasks_by_id = {t.id: t for t in load_tasks()}
+    by_model: dict[tuple, list] = {}
+    for t in result["tasks"]:
+        by_model.setdefault((t["model_id"], t["model_name"]), []).append(t)
+    print("── срезы по тегам (M̄ — логика, P̄ — платформа; n — задач; модель-vs-модель) ──")
+    for (_mid, mname), groups in by_model.items():
+        prof = tag_profile(groups, tasks_by_id)
+        if prof:
+            print(format_tag_profile(mname, prof))

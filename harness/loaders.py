@@ -163,6 +163,7 @@ class Task(BaseModel):
     tests: TaskTests | None = None           # A: скрытые кейсы (tests.yaml)
     canonical: Path | None = None    # эталон, если есть
     m_testing: str | None = None     # пометка вроде pending_harness
+    tags: dict[str, list[str]] = Field(default_factory=dict)   # измерение → теги (срезы анализа)
 
     @property
     def testable(self) -> bool:
@@ -194,6 +195,45 @@ def load_tasks(root: Path = PRISM, category: str | None = None) -> list[Task]:
             canonical=canonical_path if canonical_path.exists() else None,
         ))
     return tasks
+
+
+# ── словарь тегов (контролируемый, для срезов анализа) ───────────────────────
+
+class TagDimension(BaseModel):
+    """Измерение тегов: значения + мультизначность + применимость к категории."""
+
+    multi: bool = True
+    values: list[str]
+    applies_to: list[str] | None = None        # None = ко всем категориям
+
+
+class TagsVocab(BaseModel):
+    """tasks/tags.yaml — закрытый словарь тегов по измерениям."""
+
+    dimensions: dict[str, TagDimension]
+    version: str
+
+    def validate_task_tags(self, tags: dict[str, list[str]], category: str) -> list[str]:
+        """Ошибки тегов задачи против словаря (пусто = валидно)."""
+        errors = []
+        for dim, values in (tags or {}).items():
+            spec = self.dimensions.get(dim)
+            if spec is None:
+                errors.append(f"неизвестное измерение тегов {dim!r}")
+                continue
+            if spec.applies_to and category not in spec.applies_to:
+                errors.append(f"измерение {dim!r} неприменимо к категории {category}")
+            if not spec.multi and len(values) > 1:
+                errors.append(f"измерение {dim!r} одно­значно, а задано {values}")
+            for v in values:
+                if v not in spec.values:
+                    errors.append(f"{dim}: неизвестный тег {v!r}")
+        return errors
+
+
+def load_tags_vocab(root: Path = PRISM) -> TagsVocab:
+    doc = _read(root / "tasks" / "tags.yaml")
+    return TagsVocab(dimensions=doc["dimensions"], version=doc["meta"]["version"])
 
 
 # ── издание и генерация ──────────────────────────────────────────────────────

@@ -29,6 +29,7 @@ from harness.loaders import (
     load_edition,
     load_generation,
     load_protocol_l1,
+    load_tags_vocab,
     load_tasks,
 )
 from harness.score.meaning import score_m
@@ -108,13 +109,21 @@ def _check_tasks() -> Section:
     items: list[Item] = []
     try:
         tasks = load_tasks()
+        vocab = load_tags_vocab()
     except Exception as e:                                  # noqa: BLE001
-        return {"title": "Контракты заданий", "items": [("fail", f"загрузка задач: {e}")]}
+        return {"title": "Контракты заданий", "items": [("fail", f"загрузка задач/тегов: {e}")]}
 
     items.append(("ok", f"загружено задач: {len(tasks)} ({', '.join(t.id for t in tasks)})"))
+    items.append(("ok", f"словарь тегов v{vocab.version}: измерения {list(vocab.dimensions)}"))
+    untagged = [t.id for t in tasks if not t.tags]
+    if untagged:
+        items.append(("warn", f"без тегов (нет срезов анализа): {', '.join(untagged)}"))
     for t in tasks:
         if t.category not in {"A", "B"}:
             items.append(("fail", f"{t.id}: недопустимая категория {t.category!r}"))
+        tag_errors = vocab.validate_task_tags(t.tags, t.category)
+        for err in tag_errors:
+            items.append(("fail", f"{t.id}: теги — {err}"))
         if t.category == "B":
             items.extend(_check_task_b(t))
             continue
