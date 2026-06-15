@@ -75,6 +75,24 @@ def unavailable_reason() -> str:
     return f"нет docker или образа {DOCKER_IMAGE} (учебная 1С) — категория B пропущена"
 
 
+def _empty_cfg_cache() -> Path | None:
+    """Выгрузка пустой конфигурации — общий кэш (work/_onec/empty-cfg)."""
+    from harness.loaders import PRISM
+    cache_root = PRISM / "work" / "_onec"
+    cache = cache_root / "empty-cfg"
+    if (cache / "Configuration.xml").exists():
+        return cache
+    cache_root.mkdir(parents=True, exist_ok=True)
+    res = _in_container(cache_root, (
+        f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib0;Locale=ru_RU;' >/dev/null 2>&1; "
+        f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib0;' "
+        f"/DumpConfigToFiles /work/empty-cfg >/dev/null 2>&1; "
+        f"chmod -R a+rwX /work/empty-cfg /work/ib0 2>/dev/null; "
+        f"test -f /work/empty-cfg/Configuration.xml && echo OK || echo FAIL"
+    ), STEP_TIMEOUT_S * 2)
+    return cache if "OK" in res.stdout else None
+
+
 def _in_container(work_dir: Path, script: str, timeout: int) -> subprocess.CompletedProcess:
     """Выполнить shell-скрипт в контейнере платформы с примонтированным work_dir.
 
@@ -125,19 +143,16 @@ def run_candidate(candidate_code: str, task_dir: Path, work_dir: Path,
 
     work_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1) пустая конфа-базис: выгрузка из свежей ИБ (кэшируется в work_dir)
+    # 1) пустая конфа-базис: выгружается платформой ОДИН раз на машину
+    #    (общий кэш в work/), в work_dir кандидата попадает копией — иначе
+    #    каждый кандидат платит ~50с за идентичную выгрузку.
     empty_cfg = work_dir / "empty-cfg"
     if not (empty_cfg / "Configuration.xml").exists():
-        res = _in_container(work_dir, (
-            f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib0;Locale=ru_RU;' >/dev/null 2>&1; "
-            f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib0;' "
-            f"/DumpConfigToFiles /work/empty-cfg >/dev/null 2>&1; "
-            f"chmod -R a+rwX /work/empty-cfg /work/ib0 2>/dev/null; "
-            f"test -f /work/empty-cfg/Configuration.xml && echo OK || echo FAIL"
-        ), STEP_TIMEOUT_S * 2)
-        if "OK" not in res.stdout:
+        cache = _empty_cfg_cache()
+        if cache is None:
             return OneCRunResult(status="infra_error", entry_point=entry,
-                                 infra_detail=f"не удалось выгрузить пустую конфигурацию: {res.stdout[-300:]} {res.stderr[-300:]}")
+                                 infra_detail="не удалось выгрузить пустую конфигурацию (кэш)")
+        shutil.copytree(cache, empty_cfg, dirs_exist_ok=True)
 
     # 2) сборка прогонной конфы (на хосте, чистый Python)
     assemble_run_config(task_dir, candidate_code, entry,
