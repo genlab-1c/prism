@@ -24,7 +24,7 @@ from pydantic import BaseModel
 
 DOCKER_IMAGE = "prism-onec:latest"
 ONEC_BIN = "/opt/1cv8t/x86_64/8.3.27.1508/1cv8t"
-STEP_TIMEOUT_S = 180          # на каждый шаг ДИЗАЙНЕРА/клиента
+STEP_TIMEOUT_S = 180          # на каждый шаг конфигуратора (DESIGNER) или клиента 1С
 RESULT_RE = re.compile(r"PASSED=(\d+);TOTAL=(\d+);?(.*)", re.DOTALL)
 
 # Маркеры платформенной ошибки в логе теста — сигнал оси P (ошибка обращения

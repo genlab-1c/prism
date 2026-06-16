@@ -61,7 +61,7 @@ class GenerationRunner:
                  pricing: PriceTable | None = None):
         self.adapter_factory = adapter_factory
         self.results_dir = results_dir or (PRISM / "results")
-        self.distractors = distractors          # {n_registers,...} | None — раздувание схемы (стог)
+        self.distractors = distractors          # {n_registers,...} | None — добавить шумовые объекты в схему
         self.max_cost = max_cost
         self.retries = retries
         self.retry_base_delay = retry_base_delay

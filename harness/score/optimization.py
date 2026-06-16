@@ -26,4 +26,4 @@ def score_o(diagnostics: list[dict], protocol: ProtocolL1) -> tuple[int, dict]:
     w = sum(weights[d["code"]] for d in hits)
     detail = {"weighted": w, "count": len(hits),
               "codes": sorted({d["code"] for d in hits})}
-    return protocol.scoring("O").score_for(w), detail   # else-строка таблицы = пол 2, не 0
+    return protocol.scoring("O").score_for(w), detail   # нижняя граница O = 2, не 0: машина видит лишь короткий список антипаттернов

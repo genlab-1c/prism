@@ -69,7 +69,7 @@ class ScoringRule(BaseModel):
 
 
 class Scoring(BaseModel):
-    """Единая таблица балла оси: сигнал → балл. Заменяет прежние bands+thresholds."""
+    """Таблица балла оси: сигнал → балл (единственный источник порогов для оси)."""
     model_config = ConfigDict(extra="allow")          # unit/floor_note/recall_rule — справочные
 
     direction: str                                    # lower_is_better | higher_is_better
@@ -95,7 +95,7 @@ class L1Axis(BaseModel):
     model_config = ConfigDict(extra="allow")          # instrument/signal/measures — справочные
 
     scoring: Scoring | None = None
-    pre_check: dict | None = None                     # эскейп в 0 минуя таблицу (S, P)
+    pre_check: dict | None = None                     # сразу 0 в обход таблицы баллов (оси S, P)
     cluster_gap: int | None = None                    # S: соседние ParseError ≤N строк = одна причина
     compile_blocker_codes: list[str] | None = None    # S: не-ParseError диагностики «не скомпилируется»
     white_list: dict[str, float] | None = None        # O: код диагностики BSL LS → вес
