@@ -39,3 +39,4 @@ nav:
   - Честные границы: validity.md
   - Как запустить: cli.md
   - Архитектура: architecture.md
+  - Ключевые решения: decisions.md
