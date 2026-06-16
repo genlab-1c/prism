@@ -12,6 +12,7 @@
 <p align="center">
   <a href="https://github.com/genlab-1c/prism/actions/workflows/ci.yml"><img src="https://github.com/genlab-1c/prism/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/coverage-80%25-green" alt="coverage 80%">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
   <a href="https://github.com/genlab-1c/prism/stargazers"><img src="https://img.shields.io/github/stars/genlab-1c/prism?style=flat&logo=github" alt="stars"></a>
 </p>
 <p align="center">
@@ -171,6 +172,20 @@ PRISM вырос из научной работы «Эксперименталь
 кода для доменно-специфичных платформ (на примере 1С:Предприятие 8)» (Андреев Д.С.,
 март 2026) — [репозиторий статьи](https://github.com/4dand/1c-ai-codegen-research-paper).
 Концепт методики SMOP оттуда переработан в исполняемый бенчмарк.
+
+## Цитирование
+
+Если PRISM пригодился в исследовании или продукте — сошлитесь на проект. Машиночитаемые
+метаданные лежат в [`CITATION.cff`](CITATION.cff) (GitHub покажет кнопку
+«Cite this repository»).
+
+> Андреев Д. С. PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP). 2026.
+> https://github.com/genlab-1c/prism
+
+## Лицензия
+
+[MIT](LICENSE) — свободно используйте, изменяйте и распространяйте, сохраняя уведомление
+об авторстве.
 
 ---
 
