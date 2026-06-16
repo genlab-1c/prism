@@ -95,3 +95,20 @@ def test_unrequested_axis_skipped(const, proto, tmp_path, monkeypatch):
         task, "x", {"S", "O", "P"}, const, proto, tmp_path, NO_INSTRUMENTS)
     assert scores["M"] is None
     assert scores["Q"] is None
+
+
+# ── провал генерации (success=False) → N/A, а не 0 ───────────────────────────
+
+def test_failed_generation_is_na_not_zero(const):
+    """Упавший вызов (напр. 404) не должен скориться как «модель выдала плохой код»."""
+    r = {"success": False, "error": "HTTP 404: unknown model", "run_index": 0}
+    na = orchestrate._failed_generation_run(r, const.axes)
+    assert na is not None
+    assert all(na["scores"][a] is None for a in const.axes)   # все оси «не измерено»
+    assert na["scores"]["Q"] is None
+    assert "404" in na["detail"]["M"]["reason"]
+
+
+def test_successful_or_legacy_run_scored_normally(const):
+    assert orchestrate._failed_generation_run({"success": True}, const.axes) is None
+    assert orchestrate._failed_generation_run({}, const.axes) is None   # легаси без поля — оцениваем

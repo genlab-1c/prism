@@ -61,6 +61,22 @@ def _concurrency() -> int:
         return int(env)
     return min(4, os.cpu_count() or 1)
 
+
+def _failed_generation_run(r: dict, axes) -> dict | None:
+    """Прогон с провалившейся генерацией (success=False) → N/A по всем осям, а НЕ 0.
+
+    Сетевой/доступовый сбой (например 404 «unknown model») не должен топить балл модели,
+    будто она «выдала плохой код»: это «не измерено». Прогоны без поля success (легаси)
+    считаем валидными → возврат None (оцениваем как обычно).
+    """
+    if r.get("success") is False:
+        reason = (r.get("error") or "генерация не удалась")[:200]
+        scores: dict = {a: None for a in axes}
+        scores["Q"] = None
+        return {"scores": scores, "bands": {"M": None, "P": None},
+                "detail": {a: {"reason": f"генерация не удалась: {reason}"} for a in axes}}
+    return None
+
 FENCE_RE = re.compile(r"```(?:[\wа-яА-Я+]+)?\s*\n(.*?)```", re.DOTALL)
 
 
@@ -240,6 +256,11 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     # в исходном порядке records, чтобы вывод оставался детерминированным.
     def _score_rec(rec: dict) -> dict:
         tr, r = rec["tr"], rec["r"]
+        na = _failed_generation_run(r, constitution.axes)
+        if na is not None:                          # генерация прогона не удалась → N/A, не 0
+            return {"key": (tr["task_id"], tr["model_id"]), "tr": tr,
+                    "run": {"run_index": r["run_index"],
+                            "response_hash": r.get("response_hash"), **na}}
         diags = None if diags_by_file is None else diags_by_file.get(rec["fname"], [])
         instr = Instruments(runner=runner, diagnostics=diags)
         work_dir = work_root / tr["task_id"] / tr["model_id"].replace("/", "_") / f"run{r['run_index']}"
