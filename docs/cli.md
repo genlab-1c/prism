@@ -104,7 +104,7 @@ prism check
 
 ```bash
 prism score                                          # свежайший experiment_A_*, издание core
-prism score --edition core --experiment results/experiment_A_20260301_125458.json
+prism score --edition core --experiment results/experiment_A_<timestamp>.json
 prism score --out /tmp/my_eval.json
 ```
 

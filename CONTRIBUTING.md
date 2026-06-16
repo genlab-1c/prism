@@ -62,7 +62,7 @@ make lint         # ruff + pre-commit, как в CI
 
 **`task.yaml`** — условие:
 ```yaml
-id: A9
+id: A99                     # свободный id (проверьте, что не занят в tasks/category_a/)
 name: Краткое имя задачи
 category: A
 difficulty: easy            # easy | medium | hard
