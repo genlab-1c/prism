@@ -85,8 +85,9 @@ def extract_code(response: str) -> str:
 #
 # Контракт: (task, code, protocol, work_dir, instr) → (score|None, detail).
 # None = ось не измерена (нет инструмента/тестов). Сюда подключаются O/P.
-# Для M и P score — ПЛАВНЫЙ (доля × 10, лидербордный); ступенька для сверки с
-# экспертом кладётся в detail["band"] и поднимается в run["bands"] (см. score_candidate).
+# Для M и P score — ПЛАВНЫЙ (доля × 10, лидербордный); ступенька (дискретная ступень
+# шкалы 0..10) для сверки с экспертом кладётся в detail["band"] и поднимается в
+# run["bands"] (см. score_candidate).
 
 def _score_meaning(task: Task, code: str, protocol: ProtocolL1,
                    work_dir: Path, instr: Instruments) -> tuple[float | None, dict]:
@@ -235,7 +236,7 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
             "run_index": r["run_index"],
             "response_hash": r.get("response_hash"),
             "scores": scores,                       # M/P плавные — лидерборд
-            "bands": {a: detail.get(a, {}).get("band") for a in ("M", "P")},  # проекция для сверки с L2
+            "bands": {a: detail.get(a, {}).get("band") for a in ("M", "P")},  # ступеньки для сверки с экспертной разметкой (уровень L2)
             "detail": detail,
         })
 
