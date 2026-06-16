@@ -8,6 +8,8 @@
 
 name: core
 mode: single-shot                    # одна кодогенерация на прогон (не agentic-цикл кодогенерации)
-context: agentic                     # кат. B: модель сама навигирует метаданные инструментами; кат. A контекст не нужен
+context: agentic                     # кат. B: модель САМА собирает метаданные инструментами (function calling) —
+                                     # нужна модель с supports_tools=true; без tools контекст пуст и P низкая.
+                                     # кат. A контекст не нужен
 scorers: [syntax, meaning, optimization, platform]   # фактически scorers ∩ applies_to: для кат. A платформа = N/A, не 0
 leaderboard_view: quality            # ранжирование по интегральному баллу Q

@@ -163,6 +163,11 @@ make setup-docker      # харнесс + docker-образы инструмен
    (есть готовые: OpenAI-совместимый, GigaChat, YandexGPT) + регистрация в `registry.py`.
 4. API-ключ — в переменную окружения (в репозиторий ключи не идут).
 
+> **Для категории B нужна модель с `supports_tools: true`** — там модель сама собирает
+> метаданные базы вызовами инструментов (function calling). Без поддержки инструментов она
+> не увидит схему и провалит ось Платформа. Tool-модели: OpenRouter (Claude/GPT/Gemini/
+> DeepSeek…), GigaChat. YandexGPT — пока без tools (годится для категории A).
+
 Прогон: `prism generate --category A --models <ключ>` → `prism score`.
 
 ---
