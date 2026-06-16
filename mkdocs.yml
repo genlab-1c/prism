@@ -34,7 +34,8 @@ markdown_extensions:
 
 nav:
   - Обзор: index.md
-  - Состояние бенчмарка: status.md
-  - Границы и валидность: validity.md
-  - Архитектура и поток данных: architecture.md
-  - CLI (prism): cli.md
+  - Как это работает: how-it-works.md
+  - Что умеет сейчас: status.md
+  - Честные границы: validity.md
+  - Как запустить: cli.md
+  - Архитектура: architecture.md

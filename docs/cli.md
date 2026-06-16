@@ -1,8 +1,31 @@
-# CLI — `prism`
+# Как запустить
 
-Единая точка входа. После `pip install -e .` доступна команда `prism`; без установки —
-`python3 -m harness.cli <команда>`. Диспетчер тонкий: бизнес-логика в `harness/orchestrate.py`
-и `harness/check.py`.
+Вся работа с бенчмарком идёт через одну команду — `prism`. На этой странице — установка
+и три команды, которые покрывают весь цикл.
+
+!!! note "Три команды, и всё"
+    | Команда | Что делает |
+    |---------|------------|
+    | `prism generate` | попросить модели написать код по задачам |
+    | `prism check` | проверить, что бенчмарк цел: задания, эталоны, инструменты |
+    | `prism score` | оценить готовый код по осям S·M·O·P |
+
+## Установка
+
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev]"          # харнесс: PyYAML + pydantic, dev — pytest
+
+./tools/get-onescript.sh         # ось M (кат. A): исполнение тестов в OneScript
+./tools/get-bsl-ls.sh            # оси S/O: статический анализатор BSL LS (нужна java 21+)
+
+# оси M/P категории B: учебная 1С headless в Docker (дистрибутив 1С приносишь сам,
+# в репозиторий и образы он не попадает — см. docker/onec.Dockerfile):
+docker build -f docker/onec.Dockerfile -t prism-onec tools/1ce-training
+```
+
+После `pip install -e .` доступна команда `prism`; без установки — то же самое через
+`python3 -m harness.cli <команда>`.
 
 ## `prism generate`
 
