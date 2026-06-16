@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "Если вы используете PRISM в исследовании или продукте — пожалуйста, сошлитесь на проект."
+title: "PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP)"
+abstract: >-
+  PRISM измеряет качество кода 1С:Предприятие (BSL), сгенерированного нейросетями,
+  по четырём осям SMOP — Syntax, Meaning, Optimization, Platform — через реальное
+  исполнение: компилятор, скрытые тесты и запуск против синтетической базы 1С.
+type: software
+authors:
+  - family-names: Andreev
+    given-names: Danila
+    email: ads4.nr@mail.ru
+version: "0.1.0"
+license: MIT
+repository-code: "https://github.com/genlab-1c/prism"
+keywords:
+  - benchmark
+  - 1c-enterprise
+  - bsl
+  - code-generation
+  - llm
+  - smop
+  - evaluation
+references:
+  - type: article
+    title: "Экспериментальная оценка эффективности ИИ в генерации кода для доменно-специфичных платформ (на примере 1С:Предприятие 8)"
+    authors:
+      - family-names: Андреев
+        given-names: Д. С.
+    year: 2026
+    url: "https://github.com/4dand/1c-ai-codegen-research-paper"
