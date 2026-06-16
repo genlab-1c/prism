@@ -21,7 +21,9 @@ SCORERS — единственное место, куда подключаетс
 from __future__ import annotations
 
 import json
+import os
 import re
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -44,6 +46,20 @@ from harness.score.optimization import score_o
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
 from harness.score.syntax import _cluster_lines, score_s
+
+
+def _concurrency() -> int:
+    """Сколько кандидатов считать параллельно (env PRISM_CONCURRENCY; по умолчанию ≤4).
+
+    На БАЛЛЫ не влияет — только на скорость: кандидаты независимы (свой work_dir,
+    контейнер B изолирован --network=none). Память: B-прогон поднимает 1С-клиент,
+    поэтому при нехватке RAM снизьте число — нехватка проявится как «не измерено»
+    (None), а НЕ как неверный балл.
+    """
+    env = os.environ.get("PRISM_CONCURRENCY")
+    if env and env.isdigit() and int(env) > 0:
+        return int(env)
+    return min(4, os.cpu_count() or 1)
 
 FENCE_RE = re.compile(r"```(?:[\wа-яА-Я+]+)?\s*\n(.*?)```", re.DOTALL)
 
@@ -219,26 +235,41 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     # Фаза 1: один батч BSL LS на всех кандидатов (старт JVM дорог) → {имя: диагностики}
     diags_by_file = _batch_diagnostics(records, requested, work_root)
 
-    # Фаза 2: скоринг по осям, группировка по (задача, модель) как в экспертной схеме
-    groups: dict[tuple, dict] = {}
-    for rec in records:
+    # Фаза 2: скоринг по осям. Кандидаты независимы → считаем параллельно (на баллы
+    # не влияет: оценка из ответа модели, не из порядка/скорости). Результат собираем
+    # в исходном порядке records, чтобы вывод оставался детерминированным.
+    def _score_rec(rec: dict) -> dict:
         tr, r = rec["tr"], rec["r"]
         diags = None if diags_by_file is None else diags_by_file.get(rec["fname"], [])
         instr = Instruments(runner=runner, diagnostics=diags)
         work_dir = work_root / tr["task_id"] / tr["model_id"].replace("/", "_") / f"run{r['run_index']}"
         scores, detail = score_candidate(
             rec["task"], rec["code"], requested, constitution, protocol, work_dir, instr)
-        key = (tr["task_id"], tr["model_id"])
-        group = groups.setdefault(key, {
+        return {
+            "key": (tr["task_id"], tr["model_id"]), "tr": tr,
+            "run": {
+                "run_index": r["run_index"],
+                "response_hash": r.get("response_hash"),
+                "scores": scores,                       # M/P плавные — лидерборд
+                "bands": {a: detail.get(a, {}).get("band") for a in ("M", "P")},  # ступеньки для сверки с экспертом (L2)
+                "detail": detail,
+            },
+        }
+
+    workers = _concurrency()
+    if workers > 1 and len(records) > 1:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            scored = list(pool.map(_score_rec, records))    # map сохраняет порядок входа
+    else:
+        scored = [_score_rec(rec) for rec in records]
+
+    groups: dict[tuple, dict] = {}
+    for res in scored:                                       # сборка в порядке records
+        tr = res["tr"]
+        group = groups.setdefault(res["key"], {
             "task_id": tr["task_id"], "model_id": tr["model_id"],
             "model_name": tr["model_name"], "runs": []})
-        group["runs"].append({
-            "run_index": r["run_index"],
-            "response_hash": r.get("response_hash"),
-            "scores": scores,                       # M/P плавные — лидерборд
-            "bands": {a: detail.get(a, {}).get("band") for a in ("M", "P")},  # ступеньки для сверки с экспертной разметкой (уровень L2)
-            "detail": detail,
-        })
+        group["runs"].append(res["run"])
 
     return {
         "experiment_id": exp_id,

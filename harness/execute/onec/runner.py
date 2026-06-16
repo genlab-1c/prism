@@ -14,9 +14,11 @@
 
 from __future__ import annotations
 
+import os
 import re
 import shutil
 import subprocess
+import threading
 import uuid
 from pathlib import Path
 
@@ -77,6 +79,9 @@ def unavailable_reason() -> str:
     return f"нет docker или образа {DOCKER_IMAGE} (учебная 1С) — категория B пропущена"
 
 
+_empty_cfg_lock = threading.Lock()
+
+
 def _empty_cfg_cache() -> Path | None:
     """Выгрузка пустой конфигурации — общий кэш (work/_onec/empty-cfg)."""
     from harness.loaders import PRISM
@@ -84,15 +89,18 @@ def _empty_cfg_cache() -> Path | None:
     cache = cache_root / "empty-cfg"
     if (cache / "Configuration.xml").exists():
         return cache
-    cache_root.mkdir(parents=True, exist_ok=True)
-    res = _in_container(cache_root, (
-        f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib0;Locale=ru_RU;' >/dev/null 2>&1; "
-        f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib0;' "
-        f"/DumpConfigToFiles /work/empty-cfg >/dev/null 2>&1; "
-        f"chmod -R a+rwX /work/empty-cfg /work/ib0 2>/dev/null; "
-        f"test -f /work/empty-cfg/Configuration.xml && echo OK || echo FAIL"
-    ), STEP_TIMEOUT_S * 2)
-    return cache if "OK" in res.stdout else None
+    with _empty_cfg_lock:                            # под параллелизмом общий кэш собираем
+        if (cache / "Configuration.xml").exists():   # один раз (двойная проверка под замком)
+            return cache
+        cache_root.mkdir(parents=True, exist_ok=True)
+        res = _in_container(cache_root, (
+            f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib0;Locale=ru_RU;' >/dev/null 2>&1; "
+            f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib0;' "
+            f"/DumpConfigToFiles /work/empty-cfg >/dev/null 2>&1; "
+            f"chmod -R a+rwX /work/empty-cfg /work/ib0 2>/dev/null; "
+            f"test -f /work/empty-cfg/Configuration.xml && echo OK || echo FAIL"
+        ), STEP_TIMEOUT_S * 2)
+        return cache if "OK" in res.stdout else None
 
 
 def _in_container(work_dir: Path, script: str, timeout: int) -> subprocess.CompletedProcess:
@@ -102,9 +110,17 @@ def _in_container(work_dir: Path, script: str, timeout: int) -> subprocess.Compl
     сам контейнер продолжал бы жить зомби и душить следующие прогоны — добиваем явно.
     """
     name = f"prism-onec-{uuid.uuid4().hex[:12]}"
+    # Лимиты ресурсов контейнера — опционально через env (полезно при параллельных
+    # прогонах, чтобы 1С-клиенты не выели всю память). По умолчанию НЕ заданы →
+    # поведение бит-в-бит как раньше. Нехватка лимита = «не измерено», не неверный балл.
+    limits: list[str] = []
+    if os.environ.get("PRISM_ONEC_MEMORY"):
+        limits += ["--memory", os.environ["PRISM_ONEC_MEMORY"]]
+    if os.environ.get("PRISM_ONEC_CPUS"):
+        limits += ["--cpus", os.environ["PRISM_ONEC_CPUS"]]
     try:
         return subprocess.run(
-            ["docker", "run", "--rm", "--name", name, "--network=none",
+            ["docker", "run", "--rm", "--name", name, "--network=none", *limits,
              "-v", f"{work_dir}:/work", DOCKER_IMAGE, "bash", "-lc", script],
             capture_output=True, text=True, timeout=timeout)
     except subprocess.TimeoutExpired:
