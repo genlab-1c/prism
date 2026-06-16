@@ -58,7 +58,8 @@ class GenerationRunner:
                  concurrency: int | None = None, max_cost: float | None = None,
                  retries: int = 3, retry_base_delay: float = 2.0,
                  sleep: Callable[[float], None] = time.sleep, verbose: bool = False,
-                 pricing: PriceTable | None = None):
+                 pricing: PriceTable | None = None,
+                 models: dict | None = None, params: dict | None = None):
         self.adapter_factory = adapter_factory
         self.results_dir = results_dir or (PRISM / "results")
         self.distractors = distractors          # {n_registers,...} | None — добавить шумовые объекты в схему
@@ -68,9 +69,9 @@ class GenerationRunner:
         self._sleep = sleep
         self.verbose = verbose
         self.pricing = pricing or load_pricing()
-        gen = load_generation()
-        self.models = gen.models
-        self.params = gen.params
+        gen = load_generation()                  # каталог/параметры можно переопределить (тесты)
+        self.models = models if models is not None else gen.models
+        self.params = params if params is not None else gen.params
         self.prompts = gen.prompts               # {категория: system-текст}
         self.concurrency = concurrency or int(self.params.get("concurrency", 4))
         # лимиты параллелизма на канал доступа (GigaChat/Yandex строже облака)
@@ -135,6 +136,10 @@ class GenerationRunner:
                 if sem:
                     sem.release()
             meter.add(tr.total_cost)
+            if not any(r.success for r in tr.runs):   # ни один прогон не удался (сеть/доступ) →
+                err = tr.runs[0].error if tr.runs else "нет прогонов"   # как исключение: не пишем,
+                self._progress(f"⚠ {task.id}×{key}: генерация не удалась ({err}) — пара останется для resume")
+                return (task.id, key), None           # resume повторит; в эксперимент не попадёт
             if write:
                 self._write_part(parts_dir, task.id, key, tr)
             self._progress(f"✓ {task.id}×{key}  (${meter.spent:.4f} всего)")

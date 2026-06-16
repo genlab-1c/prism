@@ -14,6 +14,7 @@ import pytest
 from harness.generate.hashing import compare_hashes, compute_hash, normalize_code
 from harness.generate.run import GenerationRunner
 from harness.generate.types import LLMResult, ToolCall
+from harness.loaders import ModelAccess, ModelEntry
 
 
 def _tc(call_id: str, tool: str, **args) -> ToolCall:
@@ -22,6 +23,26 @@ def _tc(call_id: str, tool: str, **args) -> ToolCall:
 
 def _res(content="", tool_calls=None, tokens=10):
     return LLMResult(success=True, content=content, tool_calls=tool_calls, tokens_total=tokens)
+
+
+# Тестовый каталог моделей — тесты не зависят от живого generation/models.yaml
+# (claude — без seed, gpt — с seed, чтобы покрыть обе ветки).
+_TEST_MODELS = {
+    "claude": ModelEntry(id="test/claude", name="Claude", vendor="anthropic",
+                         access=ModelAccess(adapter="openrouter"),
+                         capabilities={"supports_seed": False, "supports_tools": True}),
+    "gpt": ModelEntry(id="test/gpt", name="GPT", vendor="openai",
+                      access=ModelAccess(adapter="openrouter"),
+                      capabilities={"supports_seed": True, "supports_tools": True}),
+}
+_TEST_PARAMS = {"max_tokens": 4096, "concurrency": 4,
+                "model_params": {"claude": {"temperature": 0.0, "runs": 1},
+                                 "gpt": {"temperature": 0.1, "seeds": [178]}}}
+
+
+def _runner(**kw) -> GenerationRunner:
+    """GenerationRunner с тестовым каталогом — независимо от живого generation/."""
+    return GenerationRunner(models=_TEST_MODELS, params=_TEST_PARAMS, **kw)
 
 
 class ScriptedAdapter:
@@ -58,7 +79,7 @@ def test_category_b_end_to_end(monkeypatch):
         _res(tool_calls=[_tc("3", "finish_research", summary="беру ТоварыНаСкладах")]),
         _res(content=CODE),
     ]
-    runner = GenerationRunner(adapter_factory=lambda key, entry: ScriptedAdapter(script))
+    runner = _runner(adapter_factory=lambda key, entry: ScriptedAdapter(script))
     exp = runner.run_experiment("B", model_keys=["claude"], task_ids=["B1"], write=False)
 
     assert exp.tasks_count == 1 and len(exp.task_results) == 1
@@ -71,7 +92,7 @@ def test_category_b_end_to_end(monkeypatch):
 
 
 def test_category_a_no_context():
-    runner = GenerationRunner(adapter_factory=lambda key, entry: ScriptedAdapter([_res(content=CODE)]))
+    runner = _runner(adapter_factory=lambda key, entry: ScriptedAdapter([_res(content=CODE)]))
     exp = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1"], write=False)
     tr = exp.task_results[0]
     assert tr.context_loaded is False and tr.context_objects == []
@@ -80,7 +101,7 @@ def test_category_a_no_context():
 
 def test_seeds_used_for_seed_capable_model():
     # gpt: supports_seed=true, seeds=[178] → seed уходит в прогон
-    runner = GenerationRunner(adapter_factory=lambda key, entry: ScriptedAdapter([_res(content=CODE)]))
+    runner = _runner(adapter_factory=lambda key, entry: ScriptedAdapter([_res(content=CODE)]))
     exp = runner.run_experiment("A", model_keys=["gpt"], task_ids=["A1"], write=False)
     assert exp.task_results[0].runs[0].seed == 178
 
@@ -95,7 +116,7 @@ def _entry(**caps):
 
 def test_context_mode_must_be_agentic():
     from harness.loaders import load_tasks
-    runner = GenerationRunner(adapter_factory=lambda k, e: ScriptedAdapter([]))
+    runner = _runner(adapter_factory=lambda k, e: ScriptedAdapter([]))
     task = next(t for t in load_tasks(category="B"))
     with pytest.raises(NotImplementedError):
         runner._gather_context(task, _entry(supports_tools=True), ScriptedAdapter([]), "flat")
@@ -103,7 +124,7 @@ def test_context_mode_must_be_agentic():
 
 def test_supports_tools_gates_agentic_context():
     from harness.loaders import load_tasks
-    runner = GenerationRunner(adapter_factory=lambda k, e: ScriptedAdapter([]))
+    runner = _runner(adapter_factory=lambda k, e: ScriptedAdapter([]))
     task = next(t for t in load_tasks(category="B"))
     # без поддержки инструментов навигация невозможна → контекст пустой, адаптер не зовётся
     ctx = runner._gather_context(task, _entry(supports_tools=False, context_window=1000),
@@ -135,7 +156,7 @@ class CountingAdapter:
 
 
 def test_checkpoint_writes_parts_and_final(tmp_path):
-    runner = GenerationRunner(adapter_factory=lambda k, e: CountingAdapter([]),
+    runner = _runner(adapter_factory=lambda k, e: CountingAdapter([]),
                               results_dir=tmp_path)
     exp = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"])
     assert (tmp_path / f"{exp.experiment_name}.json").exists()         # финал собран
@@ -145,7 +166,7 @@ def test_checkpoint_writes_parts_and_final(tmp_path):
 
 def test_resume_skips_completed_pairs(tmp_path):
     calls: list[str] = []
-    runner = GenerationRunner(adapter_factory=lambda k, e: CountingAdapter(calls),
+    runner = _runner(adapter_factory=lambda k, e: CountingAdapter(calls),
                               results_dir=tmp_path)
     exp = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"])
     assert len(calls) == 2                                             # обе пары сгенерены
@@ -159,7 +180,7 @@ def test_resume_skips_completed_pairs(tmp_path):
 
 def test_max_cost_cap_skips_all(tmp_path):
     calls: list[str] = []
-    runner = GenerationRunner(adapter_factory=lambda k, e: CountingAdapter(calls),
+    runner = _runner(adapter_factory=lambda k, e: CountingAdapter(calls),
                               results_dir=tmp_path, max_cost=0.0)
     exp = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"])
     assert calls == [] and exp.task_results == []                     # кап=0 → ни одного вызова
