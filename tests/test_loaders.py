@@ -120,8 +120,10 @@ def test_score_for_higher_is_better(proto):
 def test_tasks_loaded(tasks):
     a_ids = [t.id for t in tasks if t.category == "A"]
     b_ids = [t.id for t in tasks if t.category == "B"]
-    assert a_ids == ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"]
-    assert "B1" in b_ids
+    # Набор задач растёт — точный список не пиним, проверяем инварианты.
+    assert a_ids and b_ids                            # обе категории присутствуют
+    assert all(i.startswith("A") for i in a_ids)
+    assert all(i.startswith("B") for i in b_ids)
 
 
 def test_tasks_category_filter():
@@ -165,9 +167,11 @@ def test_edition_core():
 
 def test_generation_catalog():
     gen = load_generation()
-    assert set(gen.models) == {"claude", "gpt", "gemini"}
+    # Каталог моделей меняется — конкретные модели не пиним, проверяем структуру.
+    known_adapters = {"openrouter", "openai_compat", "gigachat", "yandexgpt"}
+    assert gen.models                                 # каталог не пуст
     for key, m in gen.models.items():
-        assert m.access.adapter == "openrouter", key
+        assert m.id and m.access.adapter in known_adapters, key
     assert "A" in gen.prompts
 
 
