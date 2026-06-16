@@ -118,6 +118,53 @@ def test_cli_generate_parses():
     assert args.edition == "core" and args.models == ["claude"]
 
 
+# ── чекпойнт / resume / кап стоимости (write=True во временную папку) ──────────
+
+class CountingAdapter:
+    """Адаптер-счётчик: фиксирует число вызовов chat в общий список."""
+    name = "counting"
+    supports_seed = False
+    supports_tools = False
+
+    def __init__(self, counter):
+        self._counter = counter
+
+    def chat(self, model_id, messages, **kw):
+        self._counter.append(model_id)
+        return _res(content=CODE)
+
+
+def test_checkpoint_writes_parts_and_final(tmp_path):
+    runner = GenerationRunner(adapter_factory=lambda k, e: CountingAdapter([]),
+                              results_dir=tmp_path)
+    exp = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"])
+    assert (tmp_path / f"{exp.experiment_name}.json").exists()         # финал собран
+    parts = list((tmp_path / f"{exp.experiment_name}.parts").glob("*.json"))
+    assert {p.stem for p in parts} == {"A1__claude", "A2__claude"}     # чекпойнт на пару
+
+
+def test_resume_skips_completed_pairs(tmp_path):
+    calls: list[str] = []
+    runner = GenerationRunner(adapter_factory=lambda k, e: CountingAdapter(calls),
+                              results_dir=tmp_path)
+    exp = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"])
+    assert len(calls) == 2                                             # обе пары сгенерены
+
+    calls.clear()
+    again = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"],
+                                  resume=exp.experiment_name)
+    assert calls == []                                                # всё готово → сети нет
+    assert len(again.task_results) == 2                               # но результат полный
+
+
+def test_max_cost_cap_skips_all(tmp_path):
+    calls: list[str] = []
+    runner = GenerationRunner(adapter_factory=lambda k, e: CountingAdapter(calls),
+                              results_dir=tmp_path, max_cost=0.0)
+    exp = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"])
+    assert calls == [] and exp.task_results == []                     # кап=0 → ни одного вызова
+
+
 def test_leaderboard_view_ranks_models(capsys):
     from harness.orchestrate import print_summary
     result = {"leaderboard_view": "quality", "tasks": [

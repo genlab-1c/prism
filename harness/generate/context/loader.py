@@ -53,6 +53,8 @@ class ContextResult(BaseModel):
     iterations: int = 0
     tool_calls: int = 0
     tokens: int = 0
+    tokens_input: int = 0             # для учёта стоимости агентного сбора (кат. B)
+    tokens_output: int = 0
     error: str | None = None
 
 
@@ -82,9 +84,12 @@ class AgenticContextLoader:
             res.iterations = it + 1
             out = self.adapter.chat(self.model_id, messages, temperature=0.0, tools=tools)
             res.tokens += out.tokens_total
+            res.tokens_input += out.tokens_input
+            res.tokens_output += out.tokens_output
             if not out.success:
                 return ContextResult(success=False, error=out.error, iterations=res.iterations,
-                                     tokens=res.tokens)
+                                     tokens=res.tokens, tokens_input=res.tokens_input,
+                                     tokens_output=res.tokens_output)
             if not out.tool_calls:
                 break                                   # модель не зовёт инструменты — закончили
 

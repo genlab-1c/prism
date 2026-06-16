@@ -23,8 +23,21 @@ _GLYPH = {"ok": "✓", "warn": "⚠", "fail": "✗", "skip": "·"}
 def cmd_generate(args: argparse.Namespace) -> int:
     from harness.generate.run import GenerationRunner
 
-    exp = GenerationRunner().run_experiment(
-        args.category, model_keys=args.models, task_ids=args.tasks, edition_name=args.edition)
+    runner = GenerationRunner(concurrency=args.concurrency, max_cost=args.max_cost,
+                              retries=args.retries, verbose=True)
+
+    if args.dry_run:                                  # предполётная оценка стоимости, без сети
+        est = runner.estimate(args.category, model_keys=args.models, task_ids=args.tasks)
+        print(f"≈ {est['pairs']} пар · ${est['total']:.4f} (грубая верхняя оценка, "
+              f"цены на {est['as_of'] or '—'})")
+        for mid, cost in est["by_model"].items():
+            print(f"    {mid}: ${cost:.4f}")
+        if est["unknown_price"]:
+            print(f"  ⚠ нет цены (бюджет недосчитан): {', '.join(est['unknown_price'])}")
+        return 0
+
+    exp = runner.run_experiment(args.category, model_keys=args.models, task_ids=args.tasks,
+                                edition_name=args.edition, resume=args.resume)
     print(f"→ results/{exp.experiment_name}.json  "
           f"({exp.tasks_count} задач × {len(exp.models_used)} моделей · "
           f"токенов {exp.total_tokens} · ${exp.total_cost:.4f})")
@@ -59,6 +72,16 @@ def build_parser() -> argparse.ArgumentParser:
     ge.add_argument("--edition", default="core", help="издание из editions/ (по умолчанию core)")
     ge.add_argument("--models", nargs="*", default=None, help="ключи моделей (по умолчанию все)")
     ge.add_argument("--tasks", nargs="*", default=None, help="id задач (по умолчанию все категории)")
+    ge.add_argument("--resume", default=None, metavar="EXP_NAME",
+                    help="дозапустить эксперимент по имени: пропустить готовые пары")
+    ge.add_argument("--concurrency", type=int, default=None,
+                    help="параллельных пар задача×модель (по умолчанию из params.yaml)")
+    ge.add_argument("--max-cost", dest="max_cost", type=float, default=None,
+                    metavar="USD", help="кап стоимости: новые пары не запускать сверх порога")
+    ge.add_argument("--retries", type=int, default=3,
+                    help="повторов при транзиентном сбое сети (по умолчанию 3)")
+    ge.add_argument("--dry-run", action="store_true",
+                    help="только предполётная оценка стоимости, без вызовов сети")
     ge.set_defaults(func=cmd_generate)
 
     sc = sub.add_parser("score", help="авто-оценка L1 готовых генераций по изданию")

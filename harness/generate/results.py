@@ -66,7 +66,8 @@ class TaskResult(BaseModel):
     def calculate_aggregates(self) -> None:
         ok = [r for r in self.runs if r.success]
         self.total_tokens = sum(r.tokens_total for r in self.runs)
-        self.total_cost = sum(r.cost_total for r in self.runs)
+        # стоимость = кодогенерация + агентный сбор контекста (кат. B)
+        self.total_cost = sum(r.cost_total for r in self.runs) + self.context_analysis_cost
         self.avg_time = round(sum(r.elapsed_time for r in ok) / len(ok), 3) if ok else 0.0
 
 

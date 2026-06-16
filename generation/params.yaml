@@ -4,6 +4,7 @@
 
 defaults:
   max_tokens: 4096
+  concurrency: 4                                 # параллельных пар (задача×модель); I/O-bound
   model_params:
     claude: { temperature: 0.0, runs: 1 }        # claude без seed — число прогонов задаём явно
     gpt:    { temperature: 0.1, seeds: [178] }   # длина seeds = число прогонов
