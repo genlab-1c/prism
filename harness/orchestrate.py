@@ -39,7 +39,7 @@ from harness.loaders import (
     load_tasks,
 )
 from harness.score.meaning import band as m_band
-from harness.score.meaning import score_m
+from harness.score.meaning import fine_m, score_m
 from harness.score.optimization import score_o
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
@@ -85,9 +85,11 @@ def extract_code(response: str) -> str:
 #
 # Контракт: (task, code, protocol, work_dir, instr) → (score|None, detail).
 # None = ось не измерена (нет инструмента/тестов). Сюда подключаются O/P.
+# Для M и P score — ПЛАВНЫЙ (доля × 10, лидербордный); ступенька для сверки с
+# экспертом кладётся в detail["band"] и поднимается в run["bands"] (см. score_candidate).
 
 def _score_meaning(task: Task, code: str, protocol: ProtocolL1,
-                   work_dir: Path, instr: Instruments) -> tuple[int | None, dict]:
+                   work_dir: Path, instr: Instruments) -> tuple[float | None, dict]:
     if not task.testable:
         return None, {"reason": "нет скрытых тестов — ось M не исполнима"}
     if task.category == "B":                        # исполнение в 1С (синтетическая база)
@@ -99,9 +101,13 @@ def _score_meaning(task: Task, code: str, protocol: ProtocolL1,
                           "infra_detail": run.infra_detail[:300]}
         # no_entry / candidate_error — вина кандидата → floor 0 (как в кат. A)
         executed = run.status == "ok" and run.total > 0
-        return m_band(run.passed, run.total, executed, protocol), run.model_dump()
+        return (fine_m(run.passed, run.total, executed),
+                {**run.model_dump(), "band": m_band(run.passed, run.total, executed, protocol)})
     res = score_m(code, task.tests, protocol, work_dir, name="cand", runner=instr.runner)
-    return res.score, res.model_dump(exclude={"score"})
+    if res.score is None:                           # ось не измерена (нет раннера)
+        return None, res.model_dump(exclude={"score"})
+    return (fine_m(res.passed, res.total, res.executed),
+            {**res.model_dump(exclude={"score"}), "band": res.score})
 
 
 def _score_syntax(task: Task, code: str, protocol: ProtocolL1,
@@ -130,14 +136,23 @@ def _score_optimization(task: Task, code: str, protocol: ProtocolL1,
 
 
 def _score_platform(task: Task, code: str, protocol: ProtocolL1,
-                    work_dir: Path, instr: Instruments) -> tuple[int | None, dict]:
-    """P из ТОГО ЖЕ прогона 1С, что и M (кэш instr.onec_run): один запуск, два сигнала."""
+                    work_dir: Path, instr: Instruments) -> tuple[float | None, dict]:
+    """P из ТОГО ЖЕ прогона 1С, что и M (кэш instr.onec_run): один запуск, два сигнала.
+
+    Возвращает ПЛАВНУЮ оценку (чистая доля × 10) для лидерборда; ступенька score_p
+    (для сверки с экспертом) кладётся в detail["band"].
+    """
     if not task.testable:
         return None, {"reason": "нет комплекта исполнения — ось P не исполнима"}
     if not onec.available():
         return None, {"reason": onec.unavailable_reason()}
     run = _onec_run_for(task, code, work_dir, instr)
-    return score_p(run, protocol)
+    band, detail = score_p(run, protocol)
+    if band is None:
+        return None, detail
+    share = detail.get("clean_share")
+    fine = round(share * 10, 1) if share is not None else float(band)
+    return fine, {**detail, "band": band}
 
 
 SCORERS = {"S": _score_syntax, "M": _score_meaning,
@@ -152,7 +167,12 @@ BSL_AXES = {"S", "O"}
 def score_candidate(task: Task, code: str, requested: set[str],
                     constitution: Constitution, protocol: ProtocolL1,
                     work_dir: Path, instr: Instruments) -> tuple[dict, dict]:
-    """Все оси для одного кода → (scores {ось: балл|None, Q}, detail {ось: …})."""
+    """Все оси для одного кода → (scores {ось: балл|None, Q}, detail {ось: …}).
+
+    scores[M], scores[P] — ПЛАВНЫЕ (доля × 10); scores[S], scores[O] — ступеньки.
+    Q усредняет их как есть → лидерборд в полном разрешении. Ступеньки M/P для
+    сверки с экспертом лежат в detail[ось]["band"] (поднимаются в run["bands"]).
+    """
     applicable = set(constitution.applicable_axes(task.category))
     scores: dict[str, int | None] = {}
     detail: dict[str, dict] = {}
@@ -214,7 +234,8 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
         group["runs"].append({
             "run_index": r["run_index"],
             "response_hash": r.get("response_hash"),
-            "scores": scores,
+            "scores": scores,                       # M/P плавные — лидерборд
+            "bands": {a: detail.get(a, {}).get("band") for a in ("M", "P")},  # проекция для сверки с L2
             "detail": detail,
         })
 
@@ -269,7 +290,7 @@ def _fmt(v) -> str:
 
 def print_summary(result: dict, experiment_path: Path) -> None:
     expert = _expert_index(experiment_path)
-    head = f"{'задача':<6} {'модель':<16} {'S':>3} {'M':>3} {'O':>3} {'P':>3} {'Q':>5}"
+    head = f"{'задача':<6} {'модель':<16} {'S':>3} {'M':>5} {'O':>3} {'P':>5} {'Q':>5}"
     if expert:
         head += f"   {'S·эксп':>6} {'M·эксп':>6} {'Q·эксп':>6}  M-детали"
     print(head)
@@ -279,8 +300,8 @@ def print_summary(result: dict, experiment_path: Path) -> None:
         for r in t["runs"]:
             s = r["scores"]
             line = (f"{t['task_id']:<6} {model:<16} "
-                    f"{_fmt(s['S']):>3} {_fmt(s['M']):>3} {_fmt(s['O']):>3} "
-                    f"{_fmt(s['P']):>3} {_fmt(s['Q']):>5}")
+                    f"{_fmt(s['S']):>3} {_fmt(s['M']):>5} {_fmt(s['O']):>3} "
+                    f"{_fmt(s['P']):>5} {_fmt(s['Q']):>5}")
             if expert:
                 e = expert.get((t["task_id"], t["model_id"], r["run_index"]), {})
                 md = r["detail"].get("M", {})

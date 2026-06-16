@@ -76,6 +76,17 @@ def test_q_aggregates_only_measured(const, proto, tmp_path, monkeypatch):
     assert scores["Q"] == 10.0
 
 
+def test_fine_score_flows_to_continuous_q(const, proto, tmp_path, monkeypatch):
+    """M плавный (8.0) проходит в scores как есть и даёт непрерывный Q — без округления."""
+    monkeypatch.setitem(orchestrate.SCORERS, "M", lambda *a: (8.0, {"band": 6}))
+    task = make_task(tmp_path, category="A")
+    scores, detail = orchestrate.score_candidate(
+        task, "x", ALL_AXES, const, proto, tmp_path, NO_INSTRUMENTS)
+    assert scores["M"] == 8.0                         # плавная оценка, не ступенька
+    assert detail["M"]["band"] == 6                   # ступенька сохранена для сверки с L2
+    assert scores["Q"] == 8.0                         # Q по единственной измеренной оси M
+
+
 def test_unrequested_axis_skipped(const, proto, tmp_path, monkeypatch):
     """Издание не просит M → ось не считается, даже если скорер есть."""
     monkeypatch.setitem(orchestrate.SCORERS, "M", lambda *a: (10, {}))

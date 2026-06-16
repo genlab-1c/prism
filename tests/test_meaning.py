@@ -49,6 +49,24 @@ def test_band_zero_total_is_zero(proto):
     assert meaning.band(0, 0, executed=True, protocol=proto) == 0
 
 
+# ── fine_m: плавная оценка (лидербордная) — доля × 10, без мёртвых зон ────────
+
+@pytest.mark.parametrize("passed,total,expected", [
+    (5, 5, 10.0),   # 100%
+    (4, 5, 8.0),    # 80% → плавно 8.0 (ступенька была бы 6 — вот снятая мёртвая зона)
+    (3, 5, 6.0),    # 60%
+    (1, 3, 3.3),    # 33.3% → ступенька 2, плавно 3.3
+    (0, 4, 0.0),    # 0%
+])
+def test_fine_m_is_share_times_ten(passed, total, expected):
+    assert meaning.fine_m(passed, total, executed=True) == expected
+
+
+def test_fine_m_not_executed_is_zero():
+    assert meaning.fine_m(4, 4, executed=False) == 0.0
+    assert meaning.fine_m(0, 0, executed=True) == 0.0
+
+
 # ── детект entry point ───────────────────────────────────────────────────────
 
 CODE_TWO_FUNCS = """

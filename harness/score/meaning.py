@@ -48,10 +48,27 @@ def available(runner: Runner | None = None) -> bool:
 
 
 def band(passed: int, total: int, executed: bool, protocol: ProtocolL1) -> int:
-    """Доля прошедших → балл оси M. Гард: не исполнился / нет тестов → 0 минуя таблицу."""
+    """Доля прошедших → СТУПЕНЬКА оси M (0..10 через одну).
+
+    Это проекция плавного сигнала на 6-ступенчатую шкалу — нужна ТОЛЬКО для сверки
+    с экспертом (κ auto↔expert), который иной шкалы не имеет. На лидерборд идёт
+    плавная оценка (см. fine_m). Гард: не исполнился / нет тестов → 0 минуя таблицу.
+    """
     if not executed or total == 0:
         return 0
     return protocol.scoring("M").score_for(passed / total)
+
+
+def fine_m(passed: int, total: int, executed: bool) -> float:
+    """Плавная оценка M на шкале 0..10 = доля прошедших × 10 (хранимая, лидербордная).
+
+    Машина мерит долю напрямую и не загоняет её в ступеньки — это снимает мёртвые
+    зоны 6-балльной шкалы (напр. 4/5=80% даёт 8.0, а не округляется до ступеньки 6).
+    Гард тот же, что у band: не исполнился / нет тестов → 0.0 (нет подтверждённого смысла).
+    """
+    if not executed or total == 0:
+        return 0.0
+    return round(passed / total * 10, 1)
 
 
 def detect_entry_point(code: str, patterns: list[str]) -> str | None:
