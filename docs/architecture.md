@@ -34,15 +34,18 @@ prism/
 ├─ metrics/            конституция SMOP + протоколы L1 (авто) / L2 (эксперт)
 ├─ tasks/              задачи: category_a/<id>/{task,tests,canonical}, category_b/…
 ├─ editions/           конфиг-профили прогона (core; позже ctx)
-├─ generation/         models (каталог) / params (числа) / prompts (system-тексты)
+├─ generation/         models (каталог) / params (числа) / prompts / pricing (датир. цены)
 │
 │  КОД (харнесс; переезжает из core-bench и prism-concept)
 ├─ harness/
-│  ├─ run.py           CLI: prism run --edition core --model <ключ>
-│  ├─ generate/        батч-генерация
+│  ├─ cli.py           CLI: prism generate | score | check (диспетчер тонкий)
+│  ├─ generate/        батч-генерация: чекпойнт на пару + resume, ретраи, бюджет, пул потоков
 │  │  ├─ adapters/     каналы доступа к LLM: openrouter, openai_compat (Ollama/vLLM),
-│  │  │                gigachat, yandexgpt, … — один контракт generate() на всех
-│  │  └─ context/      MCP-загрузчик метаданных (категория B, context: mcp)
+│  │  │                gigachat, yandexgpt, … — один контракт chat() на всех
+│  │  ├─ context/      агентный сбор метаданных (категория B, context: agentic)
+│  │  ├─ retry.py      повтор транзиентных сбоев сети с бэкоффом
+│  │  ├─ pricing.py    стоимость по датированной таблице (generation/pricing.yaml)
+│  │  └─ budget.py     живой счётчик + кап + предполётная оценка
 │  ├─ score/           L1-скореры S/M/O/P — пороги читают из metrics/smop_l1_auto.yaml
 │  ├─ execute/         песочницы: onescript/ (кат. A), onec/ (кат. B, синтетическая конфа)
 │  ├─ stats/           согласие L1↔L2: каппа Коэна, доверительные интервалы
@@ -64,7 +67,8 @@ prism/
 editions/core.yaml + generation/* + tasks/**
         │
         ▼  harness/generate  ── адаптер из models.yaml (access.adapter);
-        │                       категория B: MCP → синтетическая база метаданных
+        │                       категория B: агентный сбор метаданных из спеки;
+        │                       чекпойнт на пару (.parts/) → resume, ретраи, бюджет, пул потоков
    код кандидатов → results/ (с хешами)
         │
         ▼  harness/score     ── банды из metrics/smop_l1_auto.yaml;
@@ -106,6 +110,10 @@ bootstrap-скрипты (`tools/get-*.sh`) с пиновыми версиями
   адаптером (`access`). Добавить провайдера = один файл-адаптер + запись в каталоге.
 - **Задача = условие + проверка.** prompt живёт рядом со скрытыми тестами в `tasks/<id>/`;
   параметры генерации — отдельно (`generation/`).
+- **Операционная надёжность ⟂ метрика.** Чекпойнт/resume, ретраи, параллелизм, учёт
+  стоимости — слой поверх; на баллы SMOP не влияет (метрика считается из ответа модели,
+  а не из того, как и почём он получен). Цены волатильны → датированной таблицей
+  (`generation/pricing.yaml`), не в каталоге моделей.
 - **Два уровня оценки.** L1 (машина) строит лидерборд; L2 (эксперт) калибрует L1 и даёт
   Verified-подмножество. Протоколы разные, конституция общая — см. `metrics/smop.yaml`.
   Границы конструкта, где объективность ещё не заработана (категория B, κ на одном
