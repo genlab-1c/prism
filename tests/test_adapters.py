@@ -140,7 +140,42 @@ def test_yandexgpt_request_format_and_parse():
     assert body["messages"][1] == {"role": "user", "text": "сделай функцию"}   # формат text
     assert body["completionOptions"]["temperature"] == 0.3
     assert t.calls[0]["headers"]["Authorization"] == "Api-Key K"
-    assert a.supports_seed is False and a.supports_tools is False
+    assert a.supports_seed is False and a.supports_tools is True
+
+
+def test_yandexgpt_tools_request_and_toolcall_parse():
+    """Function calling: tools в формат Yandex, ответный toolCallList → tool_calls."""
+    t = FakeTransport([ok({"result": {"alternatives": [{"message": {"role": "assistant",
+        "toolCallList": {"toolCalls": [{"functionCall": {"name": "get_object_structure",
+                                        "arguments": {"name": "Справочник.Номенклатура"}}}]}}}],
+        "usage": {"inputTextTokens": "5", "completionTokens": "3", "totalTokens": "8"}}})])
+    a = YandexGPTAdapter(api_key="K", folder_id="fld", transport=t)
+    tools = [{"type": "function", "function": {"name": "get_object_structure",
+              "description": "структура", "parameters": {"type": "object", "properties": {}}}}]
+    r = a.chat("aliceai-llm/latest", MSGS, tools=tools)
+    body = t.calls[0]["json"]
+    assert body["tools"] == [{"function": tools[0]["function"]}]   # OpenAI → формат Yandex
+    assert "tool_choice" not in body                              # строкой ломает Yandex
+    assert r.tool_calls and r.tool_calls[0].name == "get_object_structure"
+    assert json.loads(r.tool_calls[0].arguments_raw) == {"name": "Справочник.Номенклатура"}
+
+
+def test_yandexgpt_serializes_tool_messages():
+    """assistant-с-вызовами и tool-результат → нативные toolCallList / toolResultList."""
+    t = FakeTransport([ok({"result": {"alternatives": [{"message": {"role": "assistant",
+                          "text": "ок"}}], "usage": {}}})])
+    a = YandexGPTAdapter(api_key="K", folder_id="fld", transport=t)
+    msgs = [
+        ChatMessage.user("задача"),
+        ChatMessage.assistant("", tool_calls=[ToolCall(function={"name": "f", "arguments": '{"x": 1}'})]),
+        ChatMessage.tool_response("результат", tool_call_id="1", name="f"),
+    ]
+    a.chat("aliceai-llm/latest", msgs)
+    sent = t.calls[0]["json"]["messages"]
+    assert sent[1] == {"role": "assistant", "toolCallList": {"toolCalls": [
+        {"functionCall": {"name": "f", "arguments": {"x": 1}}}]}}      # arguments — ОБЪЕКТ
+    assert sent[2] == {"role": "assistant", "toolResultList": {"toolResults": [
+        {"functionResult": {"name": "f", "content": "результат"}}]}}
 
 
 # ── registry ────────────────────────────────────────────────────────────────────
