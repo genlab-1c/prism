@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "prism-bench"
-version = "0.1.0"                       # v1.0.0 зарезервирован за первым публичным релизом исполняемого бенчмарка
+version = "1.0.0"                       # первый публичный релиз исполняемого бенчмарка
 description = "PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP: Syntax · Meaning · Optimization · Platform)"
 readme = "README.md"
 license = { text = "MIT" }

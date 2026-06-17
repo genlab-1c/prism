@@ -11,15 +11,23 @@
 
 <p align="center">
   <a href="https://github.com/genlab-1c/prism/actions/workflows/ci.yml"><img src="https://github.com/genlab-1c/prism/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <img src="https://img.shields.io/badge/coverage-80%25-green" alt="coverage 80%">
+  <img src="https://img.shields.io/badge/coverage-82%25-green" alt="coverage 82%">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/версия-1.0.0-success" alt="версия 1.0.0">
   <a href="https://github.com/genlab-1c/prism/stargazers"><img src="https://img.shields.io/github/stars/genlab-1c/prism?style=flat&logo=github" alt="stars"></a>
 </p>
 <p align="center">
-  <img src="https://img.shields.io/badge/1С:Предприятие-8.3-red" alt="1С:Предприятие 8.3">
+  <img src="https://img.shields.io/badge/задач-40-success" alt="задач: 40">
+  <img src="https://img.shields.io/badge/тест--кейсов-194-blue" alt="тест-кейсов: 194">
+  <img src="https://img.shields.io/badge/генераций_в_прогоне-200-blue" alt="генераций: 200">
+  <img src="https://img.shields.io/badge/в_лидерборде-5_моделей-blue" alt="в лидерборде 5 моделей">
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/1С:Предприятие-8.3.27.1508-red" alt="1С 8.3.27.1508">
+  <img src="https://img.shields.io/badge/BSL_LS-0.29.0-informational" alt="BSL LS 0.29.0">
+  <img src="https://img.shields.io/badge/OneScript-2.0.1-informational" alt="OneScript 2.0.1">
+  <img src="https://img.shields.io/badge/Python-3.10.12-informational" alt="Python 3.10.12">
   <img src="https://img.shields.io/badge/метрика-SMOP-blueviolet" alt="SMOP">
-  <img src="https://img.shields.io/badge/BSL·OneScript·Python-informational" alt="стек">
-  <img src="https://img.shields.io/badge/статус-alpha-orange" alt="статус: alpha">
 </p>
 
 ---
@@ -171,7 +179,33 @@ PRISM отвечает на этот вопрос числом, а не мнен
 >
 > Главное — **вектор**, а не одно число; **Q** вторичен (грубое ранжирование). Это первый
 > авто-прогон Уровня 1 (одна генерация на задачу, дешёвые модели) — границы применимости в
-> [`docs/validity.md`](docs/validity.md); полные срезы по навыкам даёт `prism score`.
+> [`docs/validity.md`](docs/validity.md).
+
+### Профиль по навыкам — с чем модели справляются лучше, а с чем хуже
+
+**Категория A — средний балл Смысла (M̄) по навыкам:**
+
+| Модель | строки | числа | коллекции | алгоритм |
+|--------|:---:|:---:|:---:|:---:|
+| **DeepSeek V4-Flash** | **8.1** | **6.9** | **7.0** | **8.3** |
+| Alice AI LLM | 3.6 | 6.2 | 2.9 | 5.5 |
+| Gemini 2.5 Flash Lite | 4.6 | 4.6 | 2.5 | 5.2 |
+| GLM-4.7 Flash | 3.9 | 6.4 | 2.9 | 4.6 |
+| Qwen3-235B-A22B | 3.2 | 1.2 | 4.4 | 3.3 |
+
+**Категория B — средний балл Платформы (P̄) по конструкциям 1С:**
+
+| Модель | вирт. таблица | регистр накопл. | срез последних | таб. часть | иерархия |
+|--------|:---:|:---:|:---:|:---:|:---:|
+| **DeepSeek V4-Flash** | **5.0** | **5.0** | 3.3 | 3.3 | **10.0** |
+| GLM-4.7 Flash | 1.4 | 1.4 | 3.3 | 3.3 | 0.0 |
+| Alice AI LLM | 0.0 | 0.0 | 0.0 | 0.0 | 5.0 |
+| Qwen3-235B-A22B | 0.0 | 0.0 | 1.1 | 1.1 | 0.0 |
+| Gemini 2.5 Flash Lite | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+
+Видно **с чем именно** у модели лучше и хуже: DeepSeek ровно силён в алгоритмах, строках и
+коллекциях (A) и единственный держит платформу 1С (B); все проседают на коллекциях; Gemini
+на платформе нулевой. Читать модель-vs-модель на одних и тех же задачах.
 
 ## Структура репозитория
 
