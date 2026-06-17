@@ -39,11 +39,17 @@ INFOREG_TYPES = [("InformationRegisterRecord", "Record"), ("InformationRegisterM
                  ("InformationRegisterRecordSet", "RecordSet"), ("InformationRegisterRecordKey", "RecordKey"),
                  ("InformationRegisterRecordManager", "RecordManager")]
 # ENUM_TYPES — проверено боем: задача B16 грузит перечисление в реальную 1С и проходит
-# эталон на 100% (make check). CONST_TYPES — пока НЕ откалибровано (нет задачи с константой);
-# LoadConfigFromFiles обычно досоздаёт недостающее, но перед первой боевой константой стоит
-# сверить с DumpConfigToFiles реальной константы (возможен ещё ConstantManager).
+# эталон на 100% (make check).
+#
+# CONST_TYPES — ⚠️ КОНСТАНТЫ ПОКА НЕ ЗАГРУЖАЮТСЯ. LoadConfigFromFiles отвергает любой
+# опробованный набор GeneratedType: один Manager → «отсутствует один или более типов
+# объекта Constant»; два Manager → «тип содержит не уникальное значение»; Manager + второй
+# тип в любой валидной категории (ValueManager/Object/Ref/List/Record*/Selection/…) → снова
+# «отсутствует». Точный набор чёрным ящиком не выводится и в образе платформы отсутствует —
+# нужен реальный DumpConfigToFiles константы для калибровки. До этого `constants:` в
+# config_spec приведёт к незагружаемой базе (задачи с константой не добавлять).
 ENUM_TYPES = [("EnumRef", "Ref"), ("EnumManager", "Manager"), ("EnumList", "List")]
-CONST_TYPES = [("ConstantValueManager", "Manager")]
+CONST_TYPES = [("ConstantManager", "Manager"), ("ConstantValueManager", "ValueManager")]
 
 
 def _u() -> str:
