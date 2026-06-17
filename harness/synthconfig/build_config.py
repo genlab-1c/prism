@@ -38,6 +38,12 @@ INFOREG_TYPES = [("InformationRegisterRecord", "Record"), ("InformationRegisterM
                  ("InformationRegisterSelection", "Selection"), ("InformationRegisterList", "List"),
                  ("InformationRegisterRecordSet", "RecordSet"), ("InformationRegisterRecordKey", "RecordKey"),
                  ("InformationRegisterRecordManager", "RecordManager")]
+# NB: наборы GeneratedType ниже — по знанию формата, НЕ откалиброваны реальной выгрузкой
+# (перечисления/константы в прогонах ещё не грузились). LoadConfigFromFiles обычно досоздаёт
+# недостающие типы, но перед боевым использованием стоит сверить с DumpConfigToFiles реального
+# перечисления/константы (возможен ещё EnumSelection у Enum и ConstantManager у Constant).
+ENUM_TYPES = [("EnumRef", "Ref"), ("EnumManager", "Manager"), ("EnumList", "List")]
+CONST_TYPES = [("ConstantValueManager", "Manager")]
 
 
 def _u() -> str:
@@ -55,18 +61,22 @@ def _syn(name: str, ind: str = "\t\t\t") -> str:
             f'<v8:content>{name}</v8:content></v8:item>\n{ind}</Synonym>\n')
 
 
-def catalog_xml(name: str, hierarchical: bool = False, attributes: dict | None = None) -> str:
-    """Справочник: иерархия (опц.) + произвольные реквизиты (опц.).
+def catalog_xml(name: str, hierarchical: bool = False, attributes: dict | None = None,
+                tabular_sections: dict | None = None) -> str:
+    """Справочник: иерархия (опц.) + реквизиты (опц.) + табличные части (опц.).
 
-    attributes — как у документа: {Имя: {type, length, precision}}; реквизит группе
-    тоже доступен (по умолчанию ДляЭлемента — достаточно для задач). Тип реквизита —
-    через _type_xml (Число/Строка/Дата/СправочникСсылка/ДокументСсылка).
+    attributes — {Имя: {type, length, precision}}; тип через _type_xml (Число/Строка/
+    Дата/Булево/СправочникСсылка/ДокументСсылка/ПеречислениеСсылка/составной).
+    tabular_sections — {Имя: {attributes: {...}}} (напр. справочник-спецификация
+    с ТЧ Материалы) — для разузлования/упаковок без документа.
     """
     types = "".join(_gt(p, name, c) for p, c in CATALOG_TYPES)
     hier = ('\t\t\t<Hierarchical>true</Hierarchical>\n'
             '\t\t\t<HierarchyType>HierarchyFoldersAndItems</HierarchyType>\n'
             if hierarchical else '\t\t\t<Hierarchical>false</Hierarchical>\n')
     attrs = "".join(_field("Attribute", n, s) for n, s in (attributes or {}).items())
+    attrs += "".join(_tabular_section_xml(name, ts, spec.get("attributes", {}), "Catalog")
+                     for ts, spec in (tabular_sections or {}).items())
     child_block = f'\t\t<ChildObjects>\n{attrs}\t\t</ChildObjects>\n' if attrs else '\t\t<ChildObjects/>\n'
     return (HDR + f'\t<Catalog uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n\t\t<Properties>\n'
             f'\t\t\t<Name>{name}</Name>\n{_syn(name)}{hier}'
@@ -74,32 +84,45 @@ def catalog_xml(name: str, hierarchical: bool = False, attributes: dict | None =
             '\t\t\t<CodeType>String</CodeType>\n\t\t</Properties>\n' + child_block + '\t</Catalog>\n</MetaDataObject>\n')
 
 
+def _one_type_inner(t: str, spec: dict, i2: str) -> str:
+    """Один член типа: строка <v8:Type> (+ квалификаторы для примитивов).
+
+    Ссылки: СправочникСсылка.X / ДокументСсылка.X / ПеречислениеСсылка.X.
+    Примитивы: Число {length, precision} / Строка {length} / Дата / Булево.
+    """
+    if t.startswith("СправочникСсылка."):
+        return f"{i2}<v8:Type>cfg:CatalogRef.{t.split('.', 1)[1]}</v8:Type>\n"
+    if t.startswith("ДокументСсылка."):
+        return f"{i2}<v8:Type>cfg:DocumentRef.{t.split('.', 1)[1]}</v8:Type>\n"
+    if t.startswith("ПеречислениеСсылка."):
+        return f"{i2}<v8:Type>cfg:EnumRef.{t.split('.', 1)[1]}</v8:Type>\n"
+    if t == "Булево":
+        return f"{i2}<v8:Type>xs:boolean</v8:Type>\n"
+    if t == "Число":
+        return (f"{i2}<v8:Type>xs:decimal</v8:Type>\n{i2}<v8:NumberQualifiers>\n"
+                f"{i2}\t<v8:Digits>{spec.get('length', 15)}</v8:Digits>\n"
+                f"{i2}\t<v8:FractionDigits>{spec.get('precision', 0)}</v8:FractionDigits>\n"
+                f"{i2}\t<v8:AllowedSign>Any</v8:AllowedSign>\n{i2}</v8:NumberQualifiers>\n")
+    if t == "Строка":
+        return (f"{i2}<v8:Type>xs:string</v8:Type>\n{i2}<v8:StringQualifiers>\n"
+                f"{i2}\t<v8:Length>{spec.get('length', 100)}</v8:Length>\n"
+                f"{i2}\t<v8:AllowedLength>Variable</v8:AllowedLength>\n{i2}</v8:StringQualifiers>\n")
+    if t == "Дата":
+        return (f"{i2}<v8:Type>xs:dateTime</v8:Type>\n{i2}<v8:DateQualifiers>\n"
+                f"{i2}\t<v8:DateFractions>DateTime</v8:DateFractions>\n{i2}</v8:DateQualifiers>\n")
+    raise ValueError(f"неподдерживаемый тип в спеке: {t}")
+
+
 def _type_xml(spec: dict, ind: str = "\t\t\t\t") -> str:
     """Тип реквизита/измерения/ресурса из YAML-спеки.
 
-    Поддержано (то, что нужно B1–B5): СправочникСсылка.X / ДокументСсылка.X,
-    Число {length, precision}, Строка {length}, Дата.
+    `type` — строка ИЛИ список строк (составной тип: несколько <v8:Type> в одном
+    <Type>, под `ВЫРАЗИТЬ(... КАК ...)`). Члены — см. _one_type_inner.
     """
     t = spec.get("type", "Число")
     i2 = ind + "\t"
-    if t.startswith("СправочникСсылка."):
-        inner = f"{i2}<v8:Type>cfg:CatalogRef.{t.split('.', 1)[1]}</v8:Type>\n"
-    elif t.startswith("ДокументСсылка."):
-        inner = f"{i2}<v8:Type>cfg:DocumentRef.{t.split('.', 1)[1]}</v8:Type>\n"
-    elif t == "Число":
-        inner = (f"{i2}<v8:Type>xs:decimal</v8:Type>\n{i2}<v8:NumberQualifiers>\n"
-                 f"{i2}\t<v8:Digits>{spec.get('length', 15)}</v8:Digits>\n"
-                 f"{i2}\t<v8:FractionDigits>{spec.get('precision', 0)}</v8:FractionDigits>\n"
-                 f"{i2}\t<v8:AllowedSign>Any</v8:AllowedSign>\n{i2}</v8:NumberQualifiers>\n")
-    elif t == "Строка":
-        inner = (f"{i2}<v8:Type>xs:string</v8:Type>\n{i2}<v8:StringQualifiers>\n"
-                 f"{i2}\t<v8:Length>{spec.get('length', 100)}</v8:Length>\n"
-                 f"{i2}\t<v8:AllowedLength>Variable</v8:AllowedLength>\n{i2}</v8:StringQualifiers>\n")
-    elif t == "Дата":
-        inner = (f"{i2}<v8:Type>xs:dateTime</v8:Type>\n{i2}<v8:DateQualifiers>\n"
-                 f"{i2}\t<v8:DateFractions>DateTime</v8:DateFractions>\n{i2}</v8:DateQualifiers>\n")
-    else:
-        raise ValueError(f"неподдерживаемый тип в спеке: {t}")
+    members = t if isinstance(t, list) else [t]
+    inner = "".join(_one_type_inner(m, spec, i2) for m in members)
     return f"{ind}<Type>\n{inner}{ind}</Type>\n"
 
 
@@ -146,12 +169,17 @@ def information_register_xml(name: str, dimensions: dict, resources: dict,
             f'\t\t<ChildObjects>\n{childs}\t\t</ChildObjects>\n\t</InformationRegister>\n</MetaDataObject>\n')
 
 
-def _tabular_section_xml(doc_name: str, ts_name: str, attributes: dict) -> str:
-    """Табличная часть документа: свой InternalInfo (TabularSection + Row) + атрибуты."""
-    types = (f'\t\t\t\t<xr:GeneratedType name="DocumentTabularSection.{doc_name}.{ts_name}" category="TabularSection">\n'
+def _tabular_section_xml(owner_name: str, ts_name: str, attributes: dict,
+                         owner_kind: str = "Document") -> str:
+    """Табличная часть: свой InternalInfo (TabularSection + Row) + атрибуты.
+
+    owner_kind — Document | Catalog (определяет имена GeneratedType, напр.
+    CatalogTabularSection.Спецификации.Материалы).
+    """
+    types = (f'\t\t\t\t<xr:GeneratedType name="{owner_kind}TabularSection.{owner_name}.{ts_name}" category="TabularSection">\n'
              f'\t\t\t\t\t<xr:TypeId>{_u()}</xr:TypeId>\n\t\t\t\t\t<xr:ValueId>{_u()}</xr:ValueId>\n'
              f'\t\t\t\t</xr:GeneratedType>\n'
-             f'\t\t\t\t<xr:GeneratedType name="DocumentTabularSectionRow.{doc_name}.{ts_name}" category="TabularSectionRow">\n'
+             f'\t\t\t\t<xr:GeneratedType name="{owner_kind}TabularSectionRow.{owner_name}.{ts_name}" category="TabularSectionRow">\n'
              f'\t\t\t\t\t<xr:TypeId>{_u()}</xr:TypeId>\n\t\t\t\t\t<xr:ValueId>{_u()}</xr:ValueId>\n'
              f'\t\t\t\t</xr:GeneratedType>\n')
     attrs = "".join(_field("Attribute", n, s, "\t\t\t\t") for n, s in attributes.items())
@@ -184,6 +212,30 @@ def document_xml(name: str, registers: list[str] | None = None, attributes: dict
             '\t\t</Properties>\n' + child_block + '\t</Document>\n</MetaDataObject>\n')
 
 
+def enum_xml(name: str, values: list[str]) -> str:
+    """Перечисление: предопределённые значения (фикстуры не нужны).
+
+    values — список имён значений; в коде они доступны как
+    Перечисления.<Имя>.<Значение> (для статусов/видов операций).
+    """
+    types = "".join(_gt(p, name, c) for p, c in ENUM_TYPES)
+    vals = "".join(
+        f'\t\t\t<EnumValue uuid="{_u()}">\n\t\t\t\t<Properties>\n\t\t\t\t\t<Name>{v}</Name>\n'
+        f'{_syn(v, chr(9) * 5)}\t\t\t\t</Properties>\n\t\t\t</EnumValue>\n' for v in values)
+    child_block = f'\t\t<ChildObjects>\n{vals}\t\t</ChildObjects>\n' if vals else '\t\t<ChildObjects/>\n'
+    return (HDR + f'\t<Enum uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n\t\t<Properties>\n'
+            f'\t\t\t<Name>{name}</Name>\n{_syn(name)}\t\t</Properties>\n'
+            + child_block + '\t</Enum>\n</MetaDataObject>\n')
+
+
+def constant_xml(name: str, type_spec: dict) -> str:
+    """Константа: единственное значение конфигурации (базовая валюта/организация и т.п.)."""
+    types = "".join(_gt(p, name, c) for p, c in CONST_TYPES)
+    return (HDR + f'\t<Constant uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n\t\t<Properties>\n'
+            f'\t\t\t<Name>{name}</Name>\n{_syn(name)}' + _type_xml(type_spec, "\t\t\t")
+            + '\t\t</Properties>\n\t</Constant>\n</MetaDataObject>\n')
+
+
 def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
     """Собрать дерево LoadConfigFromFiles из spec поверх выгрузки пустой конфы.
 
@@ -199,16 +251,29 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
     child = []
     for folder in ("Catalogs", "Documents", "AccumulationRegisters", "InformationRegisters"):
         (out_cfg / folder).mkdir(exist_ok=True)
+    if spec.get("constants"):
+        (out_cfg / "Constants").mkdir(exist_ok=True)
+    if spec.get("enums"):
+        (out_cfg / "Enums").mkdir(exist_ok=True)
 
+    # порядок в Configuration.xml — канонический 1С: Константы, Справочники, Документы,
+    # Перечисления, РегистрыНакопления, РегистрыСведений
+    for nm, value in spec.get("constants", {}).items():
+        (out_cfg / "Constants" / f"{nm}.xml").write_text(constant_xml(nm, value), encoding="utf-8")
+        child.append(f"\t\t\t<Constant>{nm}</Constant>")
     for nm, cat in spec.get("catalogs", {}).items():
         (out_cfg / "Catalogs" / f"{nm}.xml").write_text(
-            catalog_xml(nm, cat.get("hierarchical", False), cat.get("attributes", {})), encoding="utf-8")
+            catalog_xml(nm, cat.get("hierarchical", False), cat.get("attributes", {}),
+                        cat.get("tabular_sections", {})), encoding="utf-8")
         child.append(f"\t\t\t<Catalog>{nm}</Catalog>")
     for nm, doc in spec.get("documents", {}).items():
         (out_cfg / "Documents" / f"{nm}.xml").write_text(
             document_xml(nm, doc.get("registers", []), doc.get("attributes", {}),
                          doc.get("tabular_sections", {})), encoding="utf-8")
         child.append(f"\t\t\t<Document>{nm}</Document>")
+    for nm, values in spec.get("enums", {}).items():
+        (out_cfg / "Enums" / f"{nm}.xml").write_text(enum_xml(nm, values), encoding="utf-8")
+        child.append(f"\t\t\t<Enum>{nm}</Enum>")
     for nm, reg in spec.get("accumulation_registers", {}).items():
         (out_cfg / "AccumulationRegisters" / f"{nm}.xml").write_text(
             accumreg_xml(nm, reg.get("dimensions", {}), reg.get("resources", {}),

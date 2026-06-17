@@ -100,6 +100,16 @@ def render_schema(spec: dict) -> str:
     """Текст метаданных конфигурации — контекст для модели (детерминированный порядок)."""
     lines = ["Метаданные конфигурации:"]
 
+    if spec.get("constants"):
+        lines.append("\nКонстанты:")
+        for name in sorted(spec["constants"]):
+            lines.append(f"- Константа.{name} ({_t(spec['constants'][name])})")
+
+    if spec.get("enums"):
+        lines.append("\nПеречисления:")
+        for name in sorted(spec["enums"]):
+            lines.append(f"- Перечисление.{name}: {', '.join(spec['enums'][name])}")
+
     if spec.get("catalogs"):
         lines.append("\nСправочники:")
         for name in sorted(spec["catalogs"]):
@@ -108,6 +118,9 @@ def render_schema(spec: dict) -> str:
             lines.append(f"- Справочник.{name}{hier}")
             for attr, t in cat.get("attributes", {}).items():
                 lines.append(f"    Реквизит: {attr} ({_t(t)})")
+            for ts, ts_spec in cat.get("tabular_sections", {}).items():
+                cols = ", ".join(f"{a} ({_t(t)})" for a, t in ts_spec.get("attributes", {}).items())
+                lines.append(f"    Табличная часть {ts}: {cols}")
 
     if spec.get("documents"):
         lines.append("\nДокументы:")
@@ -148,8 +161,10 @@ def render_schema(spec: dict) -> str:
 
 def _t(type_spec: dict) -> str:
     t = type_spec.get("type", "Число")
+    if isinstance(t, list):                      # составной тип → нужен ВЫРАЗИТЬ(... КАК ...)
+        return "составной (" + ", ".join(t) + ")"
     if t == "Число":
         return f"Число {type_spec.get('length', 15)}.{type_spec.get('precision', 0)}"
     if t == "Строка":
         return f"Строка {type_spec.get('length', 100)}"
-    return t
+    return t                                      # Дата / Булево / СправочникСсылка.X / ПеречислениеСсылка.X

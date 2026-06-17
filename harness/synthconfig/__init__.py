@@ -12,7 +12,8 @@
 Публичный интерфейс:
     build(spec, empty_cfg, out_cfg)          — собрать дерево конфигурации из спеки
     catalog_xml / accumreg_xml /
-    information_register_xml / document_xml  — XML отдельных объектов
+    information_register_xml / document_xml /
+    enum_xml / constant_xml                   — XML отдельных объектов
     add_distractors(spec, ...)               — нарастить схему дистракторами (по seed)
     render_schema(spec)                      — текст схемы для контекста модели
 """
@@ -23,7 +24,9 @@ from .build_config import (
     accumreg_xml,
     build,
     catalog_xml,
+    constant_xml,
     document_xml,
+    enum_xml,
     information_register_xml,
 )
 from .synth import add_distractors, render_schema
@@ -34,6 +37,8 @@ __all__ = [
     "accumreg_xml",
     "information_register_xml",
     "document_xml",
+    "enum_xml",
+    "constant_xml",
     "add_distractors",
     "render_schema",
 ]
