@@ -8,6 +8,7 @@
 """
 from __future__ import annotations
 
+import datetime
 import xml.etree.ElementTree as ET
 
 from harness.execute.onec.fixtures_gen import generate_fixtures_module
@@ -18,6 +19,7 @@ from harness.synthconfig import (
     constant_xml,
     document_xml,
     enum_xml,
+    information_register_xml,
     render_schema,
 )
 from harness.synthconfig.build_config import _type_xml
@@ -98,6 +100,41 @@ def test_constant_xml():
     assert "<Constant uuid=" in xml
     assert "<Name>БазоваяВалюта</Name>" in xml
     assert "<v8:Type>cfg:CatalogRef.Валюты</v8:Type>" in xml
+
+
+# ── подчинённый регистр сведений (write_mode RecorderSubordinate) ────────────
+
+def test_information_register_write_mode():
+    indep = information_register_xml("Цены", {"Н": {"type": "СправочникСсылка.Номенклатура"}},
+                                     {"Цена": {"type": "Число"}})
+    assert "<WriteMode>Independent</WriteMode>" in indep
+    sub = information_register_xml("Цены", {"Н": {"type": "СправочникСсылка.Номенклатура"}},
+                                   {"Цена": {"type": "Число"}}, write_mode="RecorderSubordinate")
+    assert "<WriteMode>RecorderSubordinate</WriteMode>" in sub
+
+
+def test_document_records_information_register():
+    xml = document_xml("УстановкаЦен", info_registers=["ЦеныДокументом"])
+    assert '<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.ЦеныДокументом</xr:Item>' in xml
+
+
+def test_fixtures_subordinate_info_register_via_registrar():
+    bsl = generate_fixtures_module({
+        "catalogs": {"Номенклатура": [{"ref": "Т1", "Наименование": "Товар А"}]},
+        "info_register_records": {"ЦеныДокументом": {"registrar": "УстановкаЦен", "records": [
+            {"Период": datetime.date(2026, 1, 1), "Номенклатура": "Т1", "Цена": 100}]}}})
+    assert "Документы.УстановкаЦен.СоздатьДокумент();" in bsl
+    assert "РегистрыСведений.ЦеныДокументом.СоздатьНаборЗаписей();" in bsl
+    assert "Набор.Отбор.Регистратор.Установить(Док.Ссылка);" in bsl
+    assert "З.Цена = 100;" in bsl
+    assert "ВидДвижения" not in bsl                # у РС вида движения нет
+
+
+def test_render_subordinate_info_register():
+    spec = {"information_registers": {"Цены": {"write_mode": "RecorderSubordinate",
+            "dimensions": {"Н": {"type": "СправочникСсылка.Номенклатура"}},
+            "resources": {"Цена": {"type": "Число"}}}}}
+    assert "подчинён регистратору" in render_schema(spec)
 
 
 # ── build(): дерево + инъекция в Configuration.xml ───────────────────────────

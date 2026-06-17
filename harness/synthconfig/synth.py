@@ -152,7 +152,9 @@ def render_schema(spec: dict) -> str:
             reg = spec["information_registers"][name]
             dims = ", ".join(f"{d} ({_t(t)})" for d, t in reg.get("dimensions", {}).items())
             ress = ", ".join(f"{r} ({_t(t)})" for r, t in reg.get("resources", {}).items())
-            lines.append(f"- РегистрСведений.{name} (периодический: {reg.get('periodicity', 'Day')}, независимый)")
+            mode = ("подчинён регистратору — пишется проведением документа"
+                    if reg.get("write_mode") == "RecorderSubordinate" else "независимый")
+            lines.append(f"- РегистрСведений.{name} (периодический: {reg.get('periodicity', 'Day')}, {mode})")
             lines.append(f"    Измерения: {dims}")
             lines.append(f"    Ресурсы: {ress}")
 

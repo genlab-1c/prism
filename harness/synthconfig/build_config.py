@@ -157,11 +157,14 @@ def accumreg_xml(name: str, dimensions: dict, resources: dict,
 
 
 def information_register_xml(name: str, dimensions: dict, resources: dict,
-                             periodicity: str = "Day") -> str:
-    """Независимый периодический РегистрСведений (СрезПоследних без регистратора).
+                             periodicity: str = "Day", write_mode: str = "Independent") -> str:
+    """РегистрСведений.
 
     periodicity: Day/Month/Year/Second; для непериодического — Nonperiodical
     (но тогда СрезПоследних недоступен).
+    write_mode: Independent (запись напрямую МенеджеромЗаписи, СрезПоследних) |
+    RecorderSubordinate (подчинён регистратору — пишется проведением документа,
+    как «цена установлена документом УстановкаЦен»).
     """
     types = "".join(_gt(p, name, c) for p, c in INFOREG_TYPES)
     childs = "".join(_field("Resource", n, s) for n, s in resources.items())
@@ -169,7 +172,7 @@ def information_register_xml(name: str, dimensions: dict, resources: dict,
     return (HDR + f'\t<InformationRegister uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n'
             f'\t\t<Properties>\n\t\t\t<Name>{name}</Name>\n{_syn(name)}'
             f'\t\t\t<InformationRegisterPeriodicity>{periodicity}</InformationRegisterPeriodicity>\n'
-            '\t\t\t<WriteMode>Independent</WriteMode>\n'
+            f'\t\t\t<WriteMode>{write_mode}</WriteMode>\n'
             '\t\t\t<MainFilterOnPeriod>false</MainFilterOnPeriod>\n'
             '\t\t</Properties>\n'
             f'\t\t<ChildObjects>\n{childs}\t\t</ChildObjects>\n\t</InformationRegister>\n</MetaDataObject>\n')
@@ -196,11 +199,18 @@ def _tabular_section_xml(owner_name: str, ts_name: str, attributes: dict,
 
 
 def document_xml(name: str, registers: list[str] | None = None, attributes: dict | None = None,
-                 tabular_sections: dict | None = None) -> str:
-    """Документ: регистратор (RegisterRecords) + шапочные реквизиты + табличные части."""
+                 tabular_sections: dict | None = None, info_registers: list[str] | None = None) -> str:
+    """Документ: регистратор (RegisterRecords) + шапочные реквизиты + табличные части.
+
+    registers — регистры накопления, по которым документ делает движения;
+    info_registers — подчинённые регистры сведений (write_mode RecorderSubordinate),
+    которые документ записывает проведением.
+    """
     types = "".join(_gt(p, name, c) for p, c in DOC_TYPES)
     items = "".join(f'\t\t\t\t<xr:Item xsi:type="xr:MDObjectRef">AccumulationRegister.{r}</xr:Item>\n'
                     for r in (registers or []))
+    items += "".join(f'\t\t\t\t<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.{r}</xr:Item>\n'
+                     for r in (info_registers or []))
     reg_block = (f'\t\t\t<RegisterRecords>\n{items}\t\t\t</RegisterRecords>\n'
                  if items else '\t\t\t<RegisterRecords/>\n')
     childs = "".join(_field("Attribute", n, s) for n, s in (attributes or {}).items())
@@ -275,7 +285,8 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
     for nm, doc in spec.get("documents", {}).items():
         (out_cfg / "Documents" / f"{nm}.xml").write_text(
             document_xml(nm, doc.get("registers", []), doc.get("attributes", {}),
-                         doc.get("tabular_sections", {})), encoding="utf-8")
+                         doc.get("tabular_sections", {}), doc.get("info_registers", [])),
+            encoding="utf-8")
         child.append(f"\t\t\t<Document>{nm}</Document>")
     for nm, values in spec.get("enums", {}).items():
         (out_cfg / "Enums" / f"{nm}.xml").write_text(enum_xml(nm, values), encoding="utf-8")
@@ -288,7 +299,8 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
     for nm, reg in spec.get("information_registers", {}).items():
         (out_cfg / "InformationRegisters" / f"{nm}.xml").write_text(
             information_register_xml(nm, reg.get("dimensions", {}), reg.get("resources", {}),
-                                     reg.get("periodicity", "Day")), encoding="utf-8")
+                                     reg.get("periodicity", "Day"),
+                                     reg.get("write_mode", "Independent")), encoding="utf-8")
         child.append(f"\t\t\t<InformationRegister>{nm}</InformationRegister>")
 
     conf = out_cfg / "Configuration.xml"

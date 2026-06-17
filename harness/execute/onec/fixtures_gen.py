@@ -132,6 +132,27 @@ def generate_fixtures_module(fixtures: dict) -> str:
             body.append("\tМЗ.Записать();")
             body.append("")
 
+    # — записи ПОДЧИНЁННОГО регистра сведений (write_mode RecorderSubordinate): пишутся
+    #   проведением документа → как у накопления, набор записей с Отбор.Регистратор,
+    #   но без ВидДвижения. «Период» задаёт и дату документа-регистратора.
+    for reg_name, block in (fixtures.get("info_register_records") or {}).items():
+        registrar = block.get("registrar")
+        if not registrar:
+            raise ValueError(f"fixtures: у подчинённого РС «{reg_name}» не задан registrar")
+        for rec in block.get("records", []):
+            period = _bsl_value(rec["Период"], var_names) if "Период" in rec else "ТекущаяДата()"
+            body.append(f"\tДок = Документы.{registrar}.СоздатьДокумент();")
+            body.append(f"\tДок.Дата = {period}; Док.Записать();")
+            body.append(f"\tНабор = РегистрыСведений.{reg_name}.СоздатьНаборЗаписей();")
+            body.append("\tНабор.Отбор.Регистратор.Установить(Док.Ссылка);")
+            body.append(f"\tЗ = Набор.Добавить(); З.Регистратор = Док.Ссылка; З.Период = {period};")
+            for field, value in rec.items():
+                if field == "Период":
+                    continue
+                body.append(f"\tЗ.{field} = {_bsl_value(value, var_names)};")
+            body.append("\tНабор.Записать();")
+            body.append("")
+
     # — константы: единственное значение конфигурации (базовая валюта/организация)
     for name, value in (fixtures.get("constants") or {}).items():
         body.append(f"\tКонстанты.{name}.Установить({_bsl_value(value, var_names)});")
