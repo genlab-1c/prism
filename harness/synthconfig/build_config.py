@@ -55,15 +55,23 @@ def _syn(name: str, ind: str = "\t\t\t") -> str:
             f'<v8:content>{name}</v8:content></v8:item>\n{ind}</Synonym>\n')
 
 
-def catalog_xml(name: str, hierarchical: bool = False) -> str:
+def catalog_xml(name: str, hierarchical: bool = False, attributes: dict | None = None) -> str:
+    """Справочник: иерархия (опц.) + произвольные реквизиты (опц.).
+
+    attributes — как у документа: {Имя: {type, length, precision}}; реквизит группе
+    тоже доступен (по умолчанию ДляЭлемента — достаточно для задач). Тип реквизита —
+    через _type_xml (Число/Строка/Дата/СправочникСсылка/ДокументСсылка).
+    """
     types = "".join(_gt(p, name, c) for p, c in CATALOG_TYPES)
     hier = ('\t\t\t<Hierarchical>true</Hierarchical>\n'
             '\t\t\t<HierarchyType>HierarchyFoldersAndItems</HierarchyType>\n'
             if hierarchical else '\t\t\t<Hierarchical>false</Hierarchical>\n')
+    attrs = "".join(_field("Attribute", n, s) for n, s in (attributes or {}).items())
+    child_block = f'\t\t<ChildObjects>\n{attrs}\t\t</ChildObjects>\n' if attrs else '\t\t<ChildObjects/>\n'
     return (HDR + f'\t<Catalog uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n\t\t<Properties>\n'
             f'\t\t\t<Name>{name}</Name>\n{_syn(name)}{hier}'
             '\t\t\t<CodeLength>9</CodeLength>\n\t\t\t<DescriptionLength>50</DescriptionLength>\n'
-            '\t\t\t<CodeType>String</CodeType>\n\t\t</Properties>\n\t\t<ChildObjects/>\n\t</Catalog>\n</MetaDataObject>\n')
+            '\t\t\t<CodeType>String</CodeType>\n\t\t</Properties>\n' + child_block + '\t</Catalog>\n</MetaDataObject>\n')
 
 
 def _type_xml(spec: dict, ind: str = "\t\t\t\t") -> str:
@@ -193,7 +201,8 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
         (out_cfg / folder).mkdir(exist_ok=True)
 
     for nm, cat in spec.get("catalogs", {}).items():
-        (out_cfg / "Catalogs" / f"{nm}.xml").write_text(catalog_xml(nm, cat.get("hierarchical", False)), encoding="utf-8")
+        (out_cfg / "Catalogs" / f"{nm}.xml").write_text(
+            catalog_xml(nm, cat.get("hierarchical", False), cat.get("attributes", {})), encoding="utf-8")
         child.append(f"\t\t\t<Catalog>{nm}</Catalog>")
     for nm, doc in spec.get("documents", {}).items():
         (out_cfg / "Documents" / f"{nm}.xml").write_text(

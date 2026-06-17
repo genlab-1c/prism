@@ -103,8 +103,11 @@ def render_schema(spec: dict) -> str:
     if spec.get("catalogs"):
         lines.append("\nСправочники:")
         for name in sorted(spec["catalogs"]):
-            hier = " (иерархический: группы и элементы)" if spec["catalogs"][name].get("hierarchical") else ""
+            cat = spec["catalogs"][name]
+            hier = " (иерархический: группы и элементы)" if cat.get("hierarchical") else ""
             lines.append(f"- Справочник.{name}{hier}")
+            for attr, t in cat.get("attributes", {}).items():
+                lines.append(f"    Реквизит: {attr} ({_t(t)})")
 
     if spec.get("documents"):
         lines.append("\nДокументы:")
