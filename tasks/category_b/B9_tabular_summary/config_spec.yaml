@@ -1,0 +1,14 @@
+# Синтетическая конфигурация под B9: документ-заказ с табличной частью «Товары».
+
+catalogs:
+  Номенклатура:
+    hierarchical: false
+
+documents:
+  ЗаказПокупателя:
+    tabular_sections:
+      Товары:
+        attributes:
+          Номенклатура: { type: СправочникСсылка.Номенклатура }
+          Количество: { type: Число, length: 15, precision: 3 }
+          Сумма: { type: Число, length: 15, precision: 2 }
