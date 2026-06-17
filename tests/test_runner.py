@@ -46,6 +46,7 @@ def test_factory_unknown_mode():
 # ── local ────────────────────────────────────────────────────────────────────
 
 @requires_local
+@pytest.mark.slow
 def test_local_runs(tmp_path):
     script = tmp_path / "hello.os"
     script.write_text(HELLO, encoding="utf-8")
@@ -54,6 +55,7 @@ def test_local_runs(tmp_path):
 
 
 @requires_local
+@pytest.mark.slow
 def test_local_timeout(tmp_path):
     script = tmp_path / "loop.os"
     script.write_text("Пока Истина Цикл КонецЦикла;", encoding="utf-8")
@@ -64,6 +66,7 @@ def test_local_timeout(tmp_path):
 # ── docker (песочница) ───────────────────────────────────────────────────────
 
 @requires_docker
+@pytest.mark.slow
 def test_docker_runs_same_as_local(tmp_path):
     script = tmp_path / "hello.os"
     script.write_text(HELLO, encoding="utf-8")
@@ -72,6 +75,7 @@ def test_docker_runs_same_as_local(tmp_path):
 
 
 @requires_docker
+@pytest.mark.slow
 def test_docker_no_network(tmp_path):
     """Сеть в песочнице отрезана: HTTP-запрос изнутри обязан упасть."""
     script = tmp_path / "net.os"

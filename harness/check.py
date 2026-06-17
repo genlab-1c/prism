@@ -43,11 +43,14 @@ Item = tuple[str, str]            # (status, text)
 Section = dict                    # {"title": str, "items": list[Item]}
 
 
-def run_checks() -> tuple[list[Section], bool]:
+def run_checks(only: set[str] | None = None, category: str | None = None) -> tuple[list[Section], bool]:
+    """Контракты + задания всегда (дёшево); прогон эталонов в песочнице (дорого)
+    можно сузить: only — id задач, category — A|B. Это экспресс-режим под итерации
+    над одной задачей (prism check --task B17), чтобы не ждать все эталоны."""
     sections = [
         _check_contracts(),
         _check_tasks(),
-        _check_canonicals(),
+        _check_canonicals(only, category),
         _check_instruments(),
     ]
     ok = not any(st == "fail" for s in sections for st, _ in s["items"])
@@ -166,9 +169,13 @@ def _check_task_b(t) -> list[Item]:
 
 # ── 3. когерентность эталонов (эталон проходит свои тесты) ────────────────────
 
-def _check_canonicals() -> Section:
+def _check_canonicals(only: set[str] | None = None, category: str | None = None) -> Section:
     proto = load_protocol_l1()
     tasks = [t for t in load_tasks() if t.canonical and t.testable]
+    if only:
+        tasks = [t for t in tasks if t.id in only]
+    if category:
+        tasks = [t for t in tasks if t.category == category]
     tasks_a = [t for t in tasks if t.category == "A"]
     tasks_b = [t for t in tasks if t.category == "B"]
     runner = get_runner()

@@ -110,6 +110,7 @@ requires_bsl = pytest.mark.skipif(
 
 
 @requires_bsl
+@pytest.mark.slow
 def test_integration_clean_and_broken(proto, tmp_path):
     src = tmp_path / "src"
     src.mkdir()

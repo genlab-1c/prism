@@ -64,7 +64,8 @@ def cmd_tasks(args: argparse.Namespace) -> int:
 
 
 def cmd_check(args: argparse.Namespace) -> int:
-    sections, ok = check.run_checks()
+    only = set(args.task) if args.task else None
+    sections, ok = check.run_checks(only=only, category=args.category)
     for s in sections:
         print(f"\n{s['title']}")
         for status, text in s["items"]:
@@ -106,6 +107,10 @@ def build_parser() -> argparse.ArgumentParser:
     sc.set_defaults(func=cmd_score)
 
     ch = sub.add_parser("check", help="проверка целостности контрактов, заданий, эталонов")
+    ch.add_argument("--task", nargs="*", default=None, metavar="ID",
+                    help="экспресс: прогнать эталоны только этих задач (напр. --task B17)")
+    ch.add_argument("--category", default=None, choices=["A", "B"],
+                    help="экспресс: прогнать эталоны только этой категории")
     ch.set_defaults(func=cmd_check)
 
     tk = sub.add_parser("tasks", help="пересобрать видимый банк задач (tasks/README.md) из task.yaml")

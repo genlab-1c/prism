@@ -152,12 +152,14 @@ GOOD_SORT = """
 
 
 @requires_oscript
+@pytest.mark.slow
 def test_good_candidate_full_score(proto, tmp_path):
     r = meaning.score_m(GOOD_SORT, SORT_TESTS, proto, tmp_path, "good")
     assert r.executed and (r.passed, r.total) == (2, 2) and r.score == 10
 
 
 @requires_oscript
+@pytest.mark.slow
 def test_broken_candidate_zero(proto, tmp_path):
     r = meaning.score_m("Функция Сортировка(А)\n    Возврат А;\n// нет КонецФункции",
                         SORT_TESTS, proto, tmp_path, "broken")
@@ -165,6 +167,7 @@ def test_broken_candidate_zero(proto, tmp_path):
 
 
 @requires_oscript
+@pytest.mark.slow
 def test_wrong_logic_partial(proto, tmp_path):
     """Возвращает вход как есть: пустой массив пройдёт (1/2), сортировка — нет."""
     code = "Функция Сортировка(А) Экспорт\n    Возврат А;\nКонецФункции"
@@ -175,6 +178,7 @@ def test_wrong_logic_partial(proto, tmp_path):
 # ── валидация эталонов: canonical обязан проходить свои тесты ────────────────
 
 @requires_oscript
+@pytest.mark.slow
 @pytest.mark.parametrize("task", [t for t in load_tasks()
                                   if t.canonical and t.testable and t.category == "A"],
                          ids=lambda t: t.id)   # B-эталоны гоняет prism check (исполнение в 1С)

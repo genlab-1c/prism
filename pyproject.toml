@@ -63,6 +63,12 @@ include = ["harness*"]                  # пакет — harness/ (+ harness.exe
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]                      # чтобы `from harness...` резолвился без запуска строго из корня
+markers = [
+    # тесты, поднимающие реальные инструменты (OneScript/BSL LS/Docker-1С) — десятки секунд
+    # и минуты. `make test-fast` (pytest -m "not slow") их пропускает для быстрой итерации;
+    # полный `make test` гоняет всё.
+    "slow: интеграция с реальной песочницей (1С/OneScript/BSL LS) — медленно",
+]
 
 [tool.ruff]
 line-length = 100

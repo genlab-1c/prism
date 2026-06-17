@@ -28,7 +28,7 @@ export PRISM_BSL    := $(MODE)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls check score test lint clean tasks-index
+.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls check score test test-fast lint clean tasks-index
 
 help:  ## показать этот список
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
@@ -57,8 +57,8 @@ image-onescript:  ## образ песочницы M (OneScript)
 image-bsl-ls:  ## образ инструмента S/O (BSL LS на JRE 21)
 	docker build -t $(BSL_LS_IMAGE) -f docker/bsl-ls.Dockerfile .
 
-check: venv  ## целостность: контракты, задания, эталоны, инструменты (MODE=docker — в контейнерах)
-	$(PRISM) check
+check: venv  ## целостность (TASK=B17 или CAT=B — экспресс: прогнать эталоны только их)
+	$(PRISM) check $(if $(TASK),--task $(TASK)) $(if $(CAT),--category $(CAT))
 
 tasks-index: venv  ## пересобрать видимый банк задач (tasks/README.md) из task.yaml
 	$(PRISM) tasks
@@ -66,8 +66,11 @@ tasks-index: venv  ## пересобрать видимый банк задач 
 score: venv  ## авто-оценка L1 (MODE=docker; EXP=<файл> и/или EDITION=<имя> — опционально)
 	$(PRISM) score $(if $(EXP),--experiment $(EXP)) $(if $(EDITION),--edition $(EDITION))
 
-test: venv  ## тесты (интеграционные сами скипнутся без инструментов)
+test: venv  ## все тесты (интеграционные с реальной 1С/OneScript — минуты)
 	$(PY) -m pytest -q
+
+test-fast: venv  ## экспресс: только быстрые тесты, без реальной песочницы (секунды)
+	$(PY) -m pytest -q -m "not slow"
 
 lint: venv  ## ruff + pre-commit (как в CI)
 	$(VENV)/bin/ruff check .

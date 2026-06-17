@@ -6,7 +6,13 @@ run_checks на РЕАЛЬНЫХ контрактах репозитория: н
 
 from __future__ import annotations
 
+import pytest
+
 from harness import check, cli
+
+# run_checks/cli check поднимают реальную песочницу (эталоны A в OneScript, B в Docker-1С)
+# → медленно. Помечаем модуль slow: `make test-fast` его пропускает, полный `make test` гоняет.
+pytestmark = pytest.mark.slow
 
 
 def test_run_checks_no_failures():
