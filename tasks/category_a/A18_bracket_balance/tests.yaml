@@ -1,0 +1,26 @@
+# Скрытые тест-кейсы A18 (ось M). Харнесс вызывает entry_point(args) в OneScript
+# и сравнивает с expected (deep-equal; структуры — по подмножеству ключей).
+entry_point_patterns:        # приоритетные регэкспы поиска функции в коде кандидата
+  - "Скобк\\w*"
+  - "\\w*Сбалансир\\w*"
+tests:
+  - args: ["()"]
+    expected: true
+  - args: ["()[]{}"]
+    expected: true
+  - args: ["([{}])"]
+    expected: true
+  - args: ["(]"]
+    expected: false
+  - args: ["([)]"]
+    expected: false
+  - args: ["("]
+    expected: false
+  - args: [")("]
+    expected: false
+  - args: [""]
+    expected: true
+  - args: ["a(b)c[d]"]
+    expected: true
+  - args: ["(("]
+    expected: false

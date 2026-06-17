@@ -1,0 +1,20 @@
+# A21: анаграммы; без учёта регистра и пробелов; пустые строки — анаграммы.
+# Харнесс вызывает entry_point(args) в OneScript и сравнивает с expected (deep-equal).
+entry_point_patterns:        # приоритетные регэкспы поиска функции в коде кандидата
+  - "\\w*Анаграмм\\w*"
+  - "Являются\\w*"
+tests:
+  - args: ["листок", "слиток"]
+    expected: true
+  - args: ["кот", "ток"]
+    expected: true
+  - args: ["кот", "кит"]
+    expected: false
+  - args: ["abc", "cab"]
+    expected: true
+  - args: ["aabb", "ab"]
+    expected: false
+  - args: ["Тяпка", "пятка"]
+    expected: true
+  - args: ["", ""]
+    expected: true
