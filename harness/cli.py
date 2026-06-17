@@ -4,6 +4,7 @@
   prism generate — сгенерировать код кандидатов моделями по изданию → results/
   prism score    — авто-оценка L1 готовых генераций по изданию → results/auto/
   prism check    — целостность: контракты метрики, задания, эталоны, инструменты
+  prism tasks    — пересобрать видимый банк задач (tasks/README.md) из task.yaml
 
 Зарегистрирован как консольный скрипт в pyproject ([project.scripts] prism).
 Запуск без установки:  python3 -m harness.cli <команда>
@@ -47,6 +48,18 @@ def cmd_generate(args: argparse.Namespace) -> int:
 def cmd_score(args: argparse.Namespace) -> int:
     experiment = args.experiment or orchestrate.newest_experiment()
     orchestrate.score_report(experiment, args.edition, args.out)
+    return 0
+
+
+def cmd_tasks(args: argparse.Namespace) -> int:
+    from harness.loaders import load_tasks
+    from harness.report import catalog
+
+    path = catalog.write()
+    tasks = load_tasks()
+    a = sum(t.category == "A" for t in tasks)
+    print(f"→ {path.relative_to(path.parents[1])}  "
+          f"(банк задач пересобран: {len(tasks)} задач — A: {a}, B: {len(tasks) - a})")
     return 0
 
 
@@ -94,6 +107,9 @@ def build_parser() -> argparse.ArgumentParser:
 
     ch = sub.add_parser("check", help="проверка целостности контрактов, заданий, эталонов")
     ch.set_defaults(func=cmd_check)
+
+    tk = sub.add_parser("tasks", help="пересобрать видимый банк задач (tasks/README.md) из task.yaml")
+    tk.set_defaults(func=cmd_tasks)
 
     return ap
 

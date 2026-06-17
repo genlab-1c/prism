@@ -28,7 +28,7 @@ export PRISM_BSL    := $(MODE)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls check score test lint clean
+.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls check score test lint clean tasks-index
 
 help:  ## показать этот список
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
@@ -59,6 +59,9 @@ image-bsl-ls:  ## образ инструмента S/O (BSL LS на JRE 21)
 
 check: venv  ## целостность: контракты, задания, эталоны, инструменты (MODE=docker — в контейнерах)
 	$(PRISM) check
+
+tasks-index: venv  ## пересобрать видимый банк задач (tasks/README.md) из task.yaml
+	$(PRISM) tasks
 
 score: venv  ## авто-оценка L1 (MODE=docker; EXP=<файл> и/или EDITION=<имя> — опционально)
 	$(PRISM) score $(if $(EXP),--experiment $(EXP)) $(if $(EDITION),--edition $(EDITION))

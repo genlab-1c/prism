@@ -23,6 +23,7 @@ from pathlib import Path
 from harness.execute import bsl_ls
 from harness.execute.onec import runner as onec
 from harness.execute.runner import get_runner
+from harness.report import catalog
 from harness.loaders import (
     PRISM,
     load_constitution,
@@ -140,6 +141,12 @@ def _check_tasks() -> Section:
         else:
             reason = f" ({t.m_testing})" if t.m_testing else ""
             items.append(("warn", f"{t.id}: без скрытых тестов — ось M не исполнима{reason}"))
+
+    # видимый банк задач (tasks/README.md) не должен отставать от task.yaml
+    if catalog.is_current():
+        items.append(("ok", "банк задач (tasks/README.md) актуален"))
+    else:
+        items.append(("fail", "банк задач (tasks/README.md) устарел — пересоберите: make tasks-index"))
     return {"title": "Контракты заданий", "items": items}
 
 
