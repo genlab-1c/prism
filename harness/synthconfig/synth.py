@@ -121,6 +121,9 @@ def render_schema(spec: dict) -> str:
             for ts, ts_spec in cat.get("tabular_sections", {}).items():
                 cols = ", ".join(f"{a} ({_t(t)})" for a, t in ts_spec.get("attributes", {}).items())
                 lines.append(f"    Табличная часть {ts}: {cols}")
+            if cat.get("predefined"):
+                names = ", ".join(i if isinstance(i, str) else i["name"] for i in cat["predefined"])
+                lines.append(f"    Предопределённые: {names}")
 
     if spec.get("documents"):
         lines.append("\nДокументы:")

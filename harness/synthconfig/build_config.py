@@ -252,6 +252,30 @@ def constant_xml(name: str, type_spec: dict) -> str:
             + '\t\t</Properties>\n\t</Constant>\n</MetaDataObject>\n')
 
 
+def predefined_xml(items: list) -> str:
+    """Предопределённые элементы справочника → Catalogs/<Имя>/Ext/Predefined.xml.
+
+    items — имена (строки) или {name, folder: bool}. Атрибут version="2.20" обязателен —
+    иначе LoadConfigFromFiles ругается на несовпадение версии формата.
+
+    ⚠️ ЧАСТИЧНО: XML загружается без ошибок, НО в headless-прогоне предопределённый
+    элемент не инстанцируется — обращение Справочники.<Имя>.<Предопределённый> даёт
+    «Поле объекта не обнаружено». Не хватает инициализации предопределённых данных при
+    обновлении ИБ (или иного флага в метаданных). До решения задачи с предопределёнными
+    элементами не загрузятся (нужен реальный дамп справочника с предопределёнными ИЛИ
+    шаг инициализации в runner после UpdateDBCfg).
+    """
+    rows = ""
+    for it in items:
+        name = it if isinstance(it, str) else it["name"]
+        folder = isinstance(it, dict) and it.get("folder", False)
+        rows += (f'\t<Item>\n\t\t<Name>{name}</Name>\n\t\t<Description>{name}</Description>\n'
+                 f'\t\t<IsFolder>{"true" if folder else "false"}</IsFolder>\n\t</Item>\n')
+    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<PredefinedData xmlns="http://v8.1c.ru/8.3/data/enterprise/current-config" '
+            f'version="2.20">\n{rows}</PredefinedData>\n')
+
+
 def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
     """Собрать дерево LoadConfigFromFiles из spec поверх выгрузки пустой конфы.
 
@@ -282,6 +306,10 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
             catalog_xml(nm, cat.get("hierarchical", False), cat.get("attributes", {}),
                         cat.get("tabular_sections", {})), encoding="utf-8")
         child.append(f"\t\t\t<Catalog>{nm}</Catalog>")
+        if cat.get("predefined"):                  # предопределённые → Catalogs/<имя>/Ext/Predefined.xml
+            ext = out_cfg / "Catalogs" / nm / "Ext"
+            ext.mkdir(parents=True, exist_ok=True)
+            (ext / "Predefined.xml").write_text(predefined_xml(cat["predefined"]), encoding="utf-8")
     for nm, doc in spec.get("documents", {}).items():
         (out_cfg / "Documents" / f"{nm}.xml").write_text(
             document_xml(nm, doc.get("registers", []), doc.get("attributes", {}),

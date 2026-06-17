@@ -37,8 +37,8 @@ def _bsl_value(value, var_names: dict[str, str]) -> str:
     """Значение поля записи → выражение BSL (ссылка/перечисление/булево/число/дата/строка)."""
     if isinstance(value, str) and value in var_names:
         return var_names[value]
-    if isinstance(value, str) and value.startswith("Перечисления."):
-        return value                       # уже валидное BSL: Перечисления.Имя.Значение
+    if isinstance(value, str) and (value.startswith("Перечисления.") or value.startswith("Справочники.")):
+        return value                       # готовое BSL: Перечисления.X.Y / Справочники.X.Предопределённый
     if isinstance(value, (datetime.date, datetime.datetime)):
         return f"Дата({value.year}, {value.month}, {value.day})"
     if isinstance(value, bool):

@@ -20,6 +20,7 @@ from harness.synthconfig import (
     document_xml,
     enum_xml,
     information_register_xml,
+    predefined_xml,
     render_schema,
 )
 from harness.synthconfig.build_config import _type_xml
@@ -135,6 +136,16 @@ def test_render_subordinate_info_register():
             "dimensions": {"Н": {"type": "СправочникСсылка.Номенклатура"}},
             "resources": {"Цена": {"type": "Число"}}}}}
     assert "подчинён регистратору" in render_schema(spec)
+
+
+# ── предопределённые элементы (частично: XML грузится; runtime-инициализация — TODO) ──
+
+def test_predefined_xml_format():
+    xml = predefined_xml(["Основной", {"name": "Услуги", "folder": True}])
+    assert 'version="2.20"' in xml                  # обязательно — иначе несовпадение формата
+    assert "<Name>Основной</Name>" in xml
+    assert "<Name>Услуги</Name>" in xml and "<IsFolder>true</IsFolder>" in xml
+    ET.fromstring(xml)                              # well-formed
 
 
 # ── build(): дерево + инъекция в Configuration.xml ───────────────────────────

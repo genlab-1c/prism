@@ -28,6 +28,7 @@ from .build_config import (
     document_xml,
     enum_xml,
     information_register_xml,
+    predefined_xml,
 )
 from .synth import add_distractors, render_schema
 
@@ -39,6 +40,7 @@ __all__ = [
     "document_xml",
     "enum_xml",
     "constant_xml",
+    "predefined_xml",
     "add_distractors",
     "render_schema",
 ]
