@@ -38,10 +38,10 @@ INFOREG_TYPES = [("InformationRegisterRecord", "Record"), ("InformationRegisterM
                  ("InformationRegisterSelection", "Selection"), ("InformationRegisterList", "List"),
                  ("InformationRegisterRecordSet", "RecordSet"), ("InformationRegisterRecordKey", "RecordKey"),
                  ("InformationRegisterRecordManager", "RecordManager")]
-# NB: наборы GeneratedType ниже — по знанию формата, НЕ откалиброваны реальной выгрузкой
-# (перечисления/константы в прогонах ещё не грузились). LoadConfigFromFiles обычно досоздаёт
-# недостающие типы, но перед боевым использованием стоит сверить с DumpConfigToFiles реального
-# перечисления/константы (возможен ещё EnumSelection у Enum и ConstantManager у Constant).
+# ENUM_TYPES — проверено боем: задача B16 грузит перечисление в реальную 1С и проходит
+# эталон на 100% (make check). CONST_TYPES — пока НЕ откалибровано (нет задачи с константой);
+# LoadConfigFromFiles обычно досоздаёт недостающее, но перед первой боевой константой стоит
+# сверить с DumpConfigToFiles реальной константы (возможен ещё ConstantManager).
 ENUM_TYPES = [("EnumRef", "Ref"), ("EnumManager", "Manager"), ("EnumList", "List")]
 CONST_TYPES = [("ConstantValueManager", "Manager")]
 
