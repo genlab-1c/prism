@@ -15,37 +15,59 @@
 # отдельной датированной таблицей (generation/pricing.yaml) или из API провайдера.
 
 models:
-  claude:
-    id: "anthropic/claude-opus-4.5"
-    name: "Claude Opus 4.5"
-    vendor: anthropic
+  alice:
+    id: "aliceai-llm/latest"        # Yandex Cloud Foundation Models → gpt://<folder>/aliceai-llm/latest
+    name: "Alice AI LLM"
+    vendor: yandex
+    access:
+      adapter: yandexgpt
+    capabilities:
+      context_window: 32000
+      supports_seed: false
+      supports_tools: true          # Alice умеет function calling → агентный сбор метаданных в кат. B
+
+  gemini:
+    id: "google/gemini-2.5-flash-lite"   # через OpenRouter, дёшево, с tools
+    name: "Gemini 2.5 Flash Lite"
+    vendor: google
+    access:
+      adapter: openrouter
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
+  deepseek:
+    id: "deepseek/deepseek-v4-flash"     # через OpenRouter, дёшево, с tools
+    name: "DeepSeek V4-Flash"
+    vendor: deepseek
+    access:
+      adapter: openrouter
+    capabilities:
+      context_window: 163840
+      supports_seed: false
+      supports_tools: true
+
+  qwen:
+    id: "qwen/qwen3-235b-a22b-2507"      # через OpenRouter, большой MoE дёшево, с tools
+    name: "Qwen3-235B-A22B"
+    vendor: alibaba
+    access:
+      adapter: openrouter
+    capabilities:
+      context_window: 262144
+      supports_seed: false
+      supports_tools: true
+
+  glm:
+    id: "z-ai/glm-4.7-flash"             # через OpenRouter, дёшево, с tools
+    name: "GLM-4.7 Flash"
+    vendor: zhipu
     access:
       adapter: openrouter
     capabilities:
       context_window: 200000
       supports_seed: false
-      supports_tools: true
-
-  gpt:
-    id: "openai/gpt-5.2-codex"
-    name: "GPT-5.2 Codex"
-    vendor: openai
-    access:
-      adapter: openrouter
-    capabilities:
-      context_window: 400000
-      supports_seed: true
-      supports_tools: true
-
-  gemini:
-    id: "google/gemini-3-flash-preview"
-    name: "Gemini 3 Flash"
-    vendor: google
-    access:
-      adapter: openrouter
-    capabilities:
-      context_window: 1048576
-      supports_seed: true
       supports_tools: true
 
 # Примеры будущих записей (раскомментировать при подключении адаптера):
