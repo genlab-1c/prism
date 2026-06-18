@@ -1,21 +1,17 @@
-# Парадная дверь PRISM. `make` без аргументов — список целей.
+# PRISM — установка и разработка. `make` без аргументов — список целей.
 #
-# ДВЕ НЕЗАВИСИМЫЕ ОСИ:
-#   1) ХАРНЕСС — всегда через uv (make venv → uv sync). Сам харнесс не докеризуется.
-#   2) ИНСТРУМЕНТЫ осей — ЛИБО на хост (make tools), ЛИБО в docker (make images).
-#      Это АЛЬТЕРНАТИВЫ, не шаги по порядку. Что использовать — выбирается на прогоне.
+# ДВА ИНСТРУМЕНТА, НЕ ПУТАТЬ:
+#   • make  — ПОСТАВИТЬ и РАЗРАБАТЫВАТЬ (окружение, инструменты осей, тесты, линт).
+#   • prism — ПОЛЬЗОВАТЬСЯ бенчмарком (prism leaderboard / score / check / generate).
+#             У prism свой --help и флаги; make флаги НЕ принимает. `prism` без аргументов
+#             печатает шпаргалку. Совет: `source .venv/bin/activate` → зовите prism напрямую.
 #
 # Окружение управляет uv (https://docs.astral.sh/uv/): `uv sync` собирает .venv из
-# pyproject.toml (рантайм + dev-группа), `uv run <cmd>` запускает в нём, авто-синхронизируясь.
-# Нет uv? → curl -LsSf https://astral.sh/uv/install.sh | sh
+# pyproject.toml, `uv run <cmd>` запускает в нём. Нет uv? → curl -LsSf https://astral.sh/uv/install.sh | sh
 #
 # Готовые рецепты установки:
-#   make setup         — харнесс (uv) + инструменты на ХОСТ          (прогон в режиме local)
-#   make setup-docker  — харнесс (uv) + docker-образы инструментов   (прогон в режиме docker)
-#
-# Прогон: режим инструментов задаёт MODE (или env PRISM_RUNNER / PRISM_BSL напрямую):
-#   make check              — local (по умолчанию)
-#   make score MODE=docker  — инструменты крутятся в контейнерах
+#   make setup         — окружение + инструменты осей на ХОСТ          (прогон prism в режиме local)
+#   make setup-docker  — окружение + docker-образы инструментов        (prism ... --runner docker)
 
 UV    ?= uv
 VENV  ?= .venv
@@ -23,60 +19,54 @@ VENV  ?= .venv
 ONESCRIPT_IMAGE := prism-onescript:2.0.1
 BSL_LS_IMAGE    := prism-bsl-ls:0.29.0
 
-# MODE=docker — короткий тумблер обоих режимов сразу. Не задан → берётся env (или local).
+# MODE=docker — тумблер песочниц для `make test` (интеграция в контейнерах вместо хоста).
+# Для самих прогонов prism песочница выбирается флагом: prism ... --runner/--bsl docker.
 ifdef MODE
 export PRISM_RUNNER := $(MODE)
 export PRISM_BSL    := $(MODE)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls check score test test-fast lint clean tasks-index
+.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls test test-fast lint clean
 
 help:  ## показать этот список
-	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) \
-		| awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}'
+	@echo "Пользоваться бенчмарком — командой prism (свой --help и флаги):"
+	@echo "    prism                       шпаргалка: что делать"
+	@echo "    prism leaderboard           посмотреть результаты (мгновенно)"
+	@echo "    prism score | check | generate    оценить / проверить / сгенерировать"
+	@echo "    prism <команда> --help      все флаги команды"
+	@echo ""
+	@echo "make — установка и разработка (флаги make НЕ принимает; параметр как VAR=значение):"
+	@awk 'BEGIN{FS=":.*?## "} \
+		/^##@/{printf "\n  \033[1m%s\033[0m\n", substr($$0,5); next} \
+		/^[a-zA-Z_-]+:.*?## /{printf "    \033[36m%-16s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-setup: venv tools  ## харнесс (uv) + инструменты на ХОСТ → прогон local
+##@ Установка
+setup: venv tools  ## окружение (uv) + инструменты осей на ХОСТ → прогон prism в режиме local
+setup-docker: venv images  ## окружение (uv) + docker-образы инструментов → prism ... --runner docker
 
-setup-docker: venv images  ## харнесс (uv) + docker-образы инструментов → прогон MODE=docker
-
-venv: $(VENV)  ## python-окружение (.venv) с пакетом и dev-зависимостями (uv sync)
-
-$(VENV): pyproject.toml
-	$(UV) sync
-	@touch $(VENV)
-
-tools:  ## инструменты осей на ХОСТ (OneScript + BSL LS) — те же bootstrap-скрипты
+##@ Инструменты осей
+tools:  ## OneScript + BSL LS на ХОСТ (bootstrap-скрипты)
 	./tools/get-onescript.sh
 	./tools/get-bsl-ls.sh
-
 images: image-onescript image-bsl-ls  ## собрать оба docker-образа инструментов
-
 image-onescript:  ## образ песочницы M (OneScript)
 	docker build -t $(ONESCRIPT_IMAGE) -f docker/onescript.Dockerfile .
-
 image-bsl-ls:  ## образ инструмента S/O (BSL LS на JRE 21)
 	docker build -t $(BSL_LS_IMAGE) -f docker/bsl-ls.Dockerfile .
 
-check: venv  ## целостность (TASK=B17 или CAT=B — экспресс: прогнать эталоны только их)
-	$(UV) run prism check $(if $(TASK),--task $(TASK)) $(if $(CAT),--category $(CAT))
-
-tasks-index: venv  ## пересобрать видимый банк задач (tasks/README.md) из task.yaml
-	$(UV) run prism tasks
-
-score: venv  ## авто-оценка L1 (MODE=docker; EXP=<файл> и/или EDITION=<имя> — опционально)
-	$(UV) run prism score $(if $(EXP),--experiment $(EXP)) $(if $(EDITION),--edition $(EDITION))
-
-test: venv  ## все тесты параллельно -n auto (интеграционные с реальной 1С/OneScript — минуты)
+##@ Разработка
+venv: $(VENV)  ## python-окружение (.venv) — uv sync
+$(VENV): pyproject.toml
+	$(UV) sync
+	@touch $(VENV)
+test: venv  ## все тесты параллельно -n auto (интеграция с реальной 1С/OneScript — минуты; MODE=docker)
 	$(UV) run pytest -q -n auto
-
 test-fast: venv  ## экспресс: только быстрые тесты, без реальной песочницы (секунды)
 	$(UV) run pytest -q -m "not slow"
-
 lint: venv  ## ruff (check + format) + pre-commit (как в CI)
 	$(UV) run ruff check .
 	$(UV) run ruff format --check .
 	$(UV) run pre-commit run --all-files
-
 clean:  ## убрать venv, рабочие и build-артефакты (данные results/ не трогает)
 	rm -rf $(VENV) site build *.egg-info .pytest_cache .ruff_cache work

@@ -1,6 +1,6 @@
 <!-- СГЕНЕРИРОВАНО `prism tasks` — НЕ ПРАВИТЬ РУКАМИ.
      Источник правды — tasks/category_*/<id>/task.yaml.
-     Пересобрать: make tasks-index (свежесть гейтит make check). -->
+     Пересобрать: prism tasks (свежесть гейтит prism check). -->
 
 # Банк задач PRISM
 

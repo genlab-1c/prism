@@ -5,7 +5,7 @@
 руками не правится — источник правды остаётся в task.yaml (правило репо: данные
 не живут в прозе, проза собирается из данных).
 
-  prism tasks      — пересобрать (или make tasks-index)
+  prism tasks      — пересобрать банк
   prism check      — гейтит свежесть (банк не должен отставать от task.yaml)
 """
 
@@ -45,7 +45,7 @@ def render(root: Path = PRISM) -> str:
     out: list[str] = []
     out.append("<!-- СГЕНЕРИРОВАНО `prism tasks` — НЕ ПРАВИТЬ РУКАМИ.")
     out.append("     Источник правды — tasks/category_*/<id>/task.yaml.")
-    out.append("     Пересобрать: make tasks-index (свежесть гейтит make check). -->")
+    out.append("     Пересобрать: prism tasks (свежесть гейтит prism check). -->")
     out.append("")
     out.append("# Банк задач PRISM")
     out.append("")

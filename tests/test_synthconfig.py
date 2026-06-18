@@ -4,7 +4,7 @@
 перечисления, константы — на трёх слоях: XML схемы (build_config), BSL-фикстуры
 (fixtures_gen) и текст схемы для модели (synth.render_schema). Корректность XML
 относительно реального LoadConfigFromFiles проверяется уже исполнением задачи в 1С
-(make check MODE=docker) — здесь гейтятся структура и проводка значений.
+(prism check --runner docker) — здесь гейтятся структура и проводка значений.
 """
 
 from __future__ import annotations

@@ -61,7 +61,7 @@ INFOREG_TYPES = [
     ("InformationRegisterRecordManager", "RecordManager"),
 ]
 # ENUM_TYPES — проверено боем: задача B16 грузит перечисление в реальную 1С и проходит
-# эталон на 100% (make check).
+# эталон на 100% (prism check).
 #
 # CONST_TYPES — ⚠️ КОНСТАНТЫ ПОКА НЕ ЗАГРУЖАЮТСЯ. LoadConfigFromFiles отвергает любой
 # опробованный набор GeneratedType: один Manager → «отсутствует один или более типов
