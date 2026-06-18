@@ -4,6 +4,9 @@ name: CI
 # Интеграционные тесты (M через OneScript, S/O через BSL LS) и когерентность эталонов
 # гейтятся skipif по наличию инструмента — здесь их нет, поэтому они сами пропускаются.
 # Тяжёлый full-ярус (с инструментами в образе prism-tools) добавим отдельно.
+#
+# Окружение ставит uv (astral-sh/setup-uv): `uv sync` собирает .venv из pyproject.toml
+# (рантайм + dev-группа), `uv run` запускает инструменты в нём. См. Makefile / docs/cli.md.
 
 on:
   push:
@@ -20,14 +23,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Установка uv (+ кеш зависимостей)
+        uses: astral-sh/setup-uv@v6
         with:
+          enable-cache: true
           python-version: "3.11"
-          cache: pip
-          cache-dependency-path: pyproject.toml
 
-      - name: Установка пакета и dev-зависимостей
-        run: pip install -e ".[dev]"
+      - name: Синхронизация окружения (пакет + dev-группа)
+        run: uv sync
 
       - name: Кеш окружений pre-commit
         uses: actions/cache@v4
@@ -36,10 +39,13 @@ jobs:
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Ruff (линт)
-        run: ruff check .
+        run: uv run ruff check .
+
+      - name: Ruff format (проверка форматирования)
+        run: uv run ruff format --check .
 
       - name: Гигиена файлов (pre-commit; commitizen — стадия commit-msg, здесь не запускается)
-        run: pre-commit run --all-files --show-diff-on-failure
+        run: uv run pre-commit run --all-files --show-diff-on-failure
 
       - name: Юнит-тесты + покрытие (интеграция M/S/O скипнется — инструментов нет)
-        run: pytest -q --cov=harness --cov-report=term
+        run: uv run pytest -q --cov=harness --cov-report=term

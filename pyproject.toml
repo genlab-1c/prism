@@ -32,16 +32,24 @@ requires-python = ">=3.10"             # код идёт на 3.10 (future-annot
 
 # Харнесс по факту импортов: стдлиб + PyYAML/pydantic + requests (боевой HTTP-транспорт
 # слоя адаптеров генерации; в тестах транспорт инъектируется, requests не нужен).
+#   pydantic-settings — типизированная загрузка ключей API из окружения/.env (авто-подхват);
+#   rich — таблицы сводки (score) и прогресс-бар генерации (generate) в терминале.
 dependencies = [
     "PyYAML>=6.0.1",
     "pydantic>=2.5.0",
+    "pydantic-settings>=2.2",
     "requests>=2.31",
+    "rich>=13.7",
 ]
 
-[project.optional-dependencies]
+# Зависимости разработки — PEP 735 dependency-groups (нативно для uv, НЕ extras пакета):
+# `uv sync` ставит группу dev по умолчанию; docs — по запросу: `uv sync --group docs`.
+[dependency-groups]
 dev = [
     "pytest>=8.0.0",
     "pytest-cov>=5.0",
+    "pytest-randomly>=3.15",     # рандомный порядок тестов — ловит утечку состояния между ними
+    "pytest-xdist>=3.6",         # параллельный прогон (pytest -n auto) — режет минуты интеграции
     "ruff>=0.6",
     "pre-commit>=3.7",
 ]
@@ -73,3 +81,29 @@ markers = [
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.ruff.format]
+# ruff format заменяет black: единый стиль кода, гоняется в make lint / pre-commit / CI.
+quote-style = "double"
+
+[tool.ruff.lint]
+# E/F/W — pycodestyle+pyflakes (база); I — isort (порядок импортов); B — bugbear (ловушки);
+# UP — pyupgrade (современный синтаксис под target-version); S — flake8-bandit (безопасность,
+# заменяет отдельный bandit).
+select = ["E", "F", "W", "I", "B", "UP", "S"]
+# E501 (длина строки) намеренно не линтуем: при ruff format длину держит ФОРМАТТЕР,
+# а линтер только дублировал бы нытьём про строки, которые форматтер не вправе разбить.
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Тесты: assert — их рабочий инструмент; ET.fromstring парсит СВОЙ сгенерированный XML.
+"tests/**" = ["S101", "S314"]
+# Контрактные инварианты формы конфига (их же валидирует make check) — это assert по делу.
+"harness/loaders.py" = ["S101"]
+"harness/score/quality.py" = ["S101"]
+# Дистракторы — детерминированный ГПСЧ по seed, не криптография.
+"harness/synthconfig/synth.py" = ["S311"]
+# Песочницы осей легитимно шелятся во внешние инструменты (docker/oscript/java/1cv8) —
+# аргументы формируются из доверенных констант/конфигов, не из пользовательского ввода.
+"harness/execute/**" = ["S603", "S607"]
+"harness/generate/transport.py" = ["S113"]
