@@ -21,18 +21,24 @@
 
 ## С чего начать (любой контрибьютор)
 
+Окружение управляет [uv](https://docs.astral.sh/uv/) — поставьте его, если ещё нет:
+`curl -LsSf https://astral.sh/uv/install.sh | sh`.
+
 ```bash
 git clone https://github.com/genlab-1c/prism && cd prism
-make setup        # .venv + инструменты осей на хост (OneScript + BSL LS)
+make setup        # uv sync (.venv) + инструменты осей на хост (OneScript + BSL LS)
 make check        # целостность: контракты метрики, задания, эталоны, инструменты
 make test         # тесты харнесса (интеграционные сами скипнутся без инструментов)
 ```
+
+`make setup` под капотом — `uv sync`; без make то же самое: `uv sync`, дальше любая команда
+через `uv run` (напр. `uv run prism check`).
 
 Если `make check` зелёный — окружение готово. Перед коммитом ставится `pre-commit`
 (хуки уже описаны в `.pre-commit-config.yaml`):
 
 ```bash
-.venv/bin/pre-commit install
+uv run pre-commit install
 make lint         # ruff + pre-commit, как в CI
 ```
 

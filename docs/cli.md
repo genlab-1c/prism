@@ -12,9 +12,12 @@
 
 ## Установка
 
+Окружение управляет [uv](https://docs.astral.sh/uv/) — единый менеджер Python/зависимостей.
+Нет uv? Поставьте одной строкой: `curl -LsSf https://astral.sh/uv/install.sh | sh`.
+
 ```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"          # харнесс: PyYAML + pydantic, dev — pytest
+uv sync                          # харнесс (PyYAML + pydantic) + dev-группа (pytest, ruff…) в .venv
+                                 # .venv uv создаёт и поддерживает сам; группа docs — uv sync --group docs
 
 ./tools/get-onescript.sh         # ось M (кат. A): исполнение тестов в OneScript
 ./tools/get-bsl-ls.sh            # оси S/O: статический анализатор BSL LS (нужна java 21+)
@@ -24,8 +27,10 @@ pip install -e ".[dev]"          # харнесс: PyYAML + pydantic, dev — py
 docker build -f docker/onec.Dockerfile -t prism-onec tools/1ce-training
 ```
 
-После `pip install -e .` доступна команда `prism`; без установки — то же самое через
-`python3 -m harness.cli <команда>`.
+Команды запускаются через `uv run` (он сам поддерживает окружение в актуальном состоянии):
+`uv run prism <команда>`. То же без установки пакета — `uv run python -m harness.cli <команда>`.
+Активировали `.venv` (`source .venv/bin/activate`) — можно звать `prism` напрямую.
+Всё то же одной целью: `make setup` (= `uv sync` + инструменты осей).
 
 ## `prism generate`
 
@@ -52,7 +57,9 @@ prism generate --category A --tasks A1 A2            # выбор задач
 | `--retries N` | `3` | повторов при транзиентном сбое сети |
 | `--dry-run` | — | только предполётная оценка стоимости, без вызовов сети |
 
-Нужны ключи API в окружении (см. `harness/generate/adapters/registry.py`).
+Нужны ключи API: задайте их в окружении или в `.env` (копия `.env.example`) — он
+подхватывается автоматически (pydantic-settings, см. `harness/settings.py`). Какой ключ
+нужен для модели — по `access.adapter` в `generation/models.yaml`.
 
 ### Операционная надёжность (прогон на сотнях задач)
 
