@@ -27,6 +27,7 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
+from rich.align import Align
 from rich.table import Table
 
 from harness.execute import bsl_ls
@@ -48,7 +49,7 @@ from harness.score.optimization import score_o
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
 from harness.score.syntax import _cluster_lines, score_s
-from harness.ui import console
+from harness.ui import console, progress_bar
 
 
 def _concurrency() -> int:
@@ -320,11 +321,18 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
         }
 
     workers = _concurrency()
-    if workers > 1 and len(records) > 1:
-        with ThreadPoolExecutor(max_workers=workers) as pool:
-            scored = list(pool.map(_score_rec, records))  # map сохраняет порядок входа
-    else:
-        scored = [_score_rec(rec) for rec in records]
+    with progress_bar("оценка кандидатов", len(records)) as advance:
+        if workers > 1 and len(records) > 1:
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                scored = []
+                for res in pool.map(_score_rec, records):  # map сохраняет порядок входа
+                    scored.append(res)
+                    advance()
+        else:
+            scored = []
+            for rec in records:
+                scored.append(_score_rec(rec))
+                advance()
 
     groups: dict[tuple, dict] = {}
     for res in scored:  # сборка в порядке records
@@ -426,31 +434,60 @@ def print_summary(result: dict, experiment_path: Path) -> None:
                 )
                 row += [_fmt(e.get("S")), _fmt(e.get("M")), _fmt(e.get("Q")), m_info]
             table.add_row(*row)
-    console.print(table)
-
-    if result.get("leaderboard_view") == "quality":
-        print_leaderboard(result)
+    console.print(Align.center(table))
 
 
 def print_leaderboard(result: dict) -> None:
-    """Ранжирование моделей по среднему Q (издание.leaderboard_view = quality)."""
-    by_model: dict[str, list[float]] = {}
+    """Ранжирование моделей по Q̄ + средние по осям S·M·O·P (по модели).
+
+    n — число оценённых прогонов (где Q измерена). Средние берутся по измеренным
+    значениям оси (None — «не измерено» — в среднее не входит; нет ни одного → «—»).
+    """
+    axes = ("S", "M", "O", "P", "Q")
+    by_model: dict[str, dict[str, list[float]]] = {}
     for t in result["tasks"]:
         for r in t["runs"]:
-            q = r["scores"].get("Q")
-            if q is not None:
-                by_model.setdefault(t["model_name"], []).append(q)
+            s = r["scores"]
+            if s.get("Q") is None:
+                continue
+            bucket = by_model.setdefault(t["model_name"], {a: [] for a in axes})
+            for a in axes:
+                if s.get(a) is not None:
+                    bucket[a].append(s[a])
     if not by_model:
         return
-    table = Table(title="Лидерборд (средний Q)", title_style="bold", header_style="bold")
+
+    def avg(vals: list[float], prec: int = 1) -> str:
+        return f"{sum(vals) / len(vals):.{prec}f}" if vals else "—"
+
+    table = Table(
+        title="Лидерборд — средние баллы по моделям",
+        title_style="bold",
+        header_style="bold",
+    )
     table.add_column("#", justify="right")
     table.add_column("модель")
-    table.add_column("Q̄", justify="right")
+    for col in ("S̄", "M̄", "Ō", "P̄"):
+        table.add_column(col, justify="right")
+    table.add_column("Q̄", justify="right", style="bold")  # ключ ранжирования
     table.add_column("n", justify="right")
-    ranked = sorted(((sum(v) / len(v), name) for name, v in by_model.items()), reverse=True)
-    for i, (avg, name) in enumerate(ranked, 1):
-        table.add_row(str(i), name, f"{avg:.2f}", str(len(by_model[name])))
-    console.print(table)
+    ranked = sorted(
+        by_model.items(),
+        key=lambda kv: sum(kv[1]["Q"]) / len(kv[1]["Q"]) if kv[1]["Q"] else -1.0,
+        reverse=True,
+    )
+    for i, (name, b) in enumerate(ranked, 1):
+        table.add_row(
+            str(i),
+            name,
+            avg(b["S"]),
+            avg(b["M"]),
+            avg(b["O"]),
+            avg(b["P"]),
+            avg(b["Q"], 2),
+            str(len(b["Q"])),
+        )
+    console.print(Align.center(table))
 
 
 # ── прогон + отчёт (зовётся из CLI: prism score) ──────────────────────────────
@@ -464,10 +501,54 @@ def newest_experiment() -> Path:
     return runs[-1]
 
 
+def newest_auto() -> Path:
+    """Последняя по времени авто-оценка L1 из results/auto/ (для `prism leaderboard`).
+
+    По mtime, а не по имени: across A/B «свежая» — та, что посчитана последней, а не
+    та, чьё имя позже по алфавиту.
+    """
+    runs = list((PRISM / "results" / "auto").glob("*_auto_l1.json"))
+    if not runs:
+        raise SystemExit("в results/auto/ нет оценок L1 — сначала запустите `prism score`")
+    return max(runs, key=lambda p: p.stat().st_mtime)
+
+
+def print_report(result: dict, experiment_path: Path, full: bool = False) -> None:
+    """Сводка по готовому L1-результату: лидерборд (всегда) + детали по --full.
+
+    По умолчанию — только компактный лидерборд (быстро глянуть, кто впереди). full —
+    добавить построчную таблицу S·M·O·P·Q (+сверка с экспертом) и срезы по тегам.
+    Издание без quality-лидерборда (ранжировать нечем) → сразу детальная таблица.
+    """
+    is_quality = result.get("leaderboard_view") == "quality"
+    if is_quality:
+        print_leaderboard(result)
+    if full or not is_quality:
+        if is_quality:
+            console.print()
+        print_summary(result, experiment_path)
+        console.print()
+        print_tag_profiles(result)
+
+
+def leaderboard_report(auto_path: Path | None = None, full: bool = False) -> Path:
+    """Мгновенная сводка из СОХРАНЁННОЙ авто-оценки L1 — без пере-исполнения в 1С."""
+    auto_path = auto_path or newest_auto()
+    result = json.loads(auto_path.read_text(encoding="utf-8"))
+    # эксперимент рядом с auto (для сверки с экспертом в --full); может и не существовать
+    experiment_path = PRISM / "results" / f"{result['experiment_id']}.json"
+    console.print(f"лидерборд · {auto_path.name}\n", style="bold", markup=False, highlight=False)
+    print_report(result, experiment_path, full=full)
+    return auto_path
+
+
 def score_report(
-    experiment_path: Path, edition_name: str = "core", out_path: Path | None = None
+    experiment_path: Path,
+    edition_name: str = "core",
+    out_path: Path | None = None,
+    full: bool = False,
 ) -> Path:
-    """Прогнать издание по эксперименту, записать результат, напечатать сводку."""
+    """Прогнать издание по эксперименту (пересчёт в 1С), записать L1 и напечатать сводку."""
     runner = get_runner()
     if not runner.available():
         console.print(
@@ -493,10 +574,13 @@ def score_report(
         markup=False,
         highlight=False,
     )
-    print_summary(result, experiment_path)
-    console.print()
-    print_tag_profiles(result)
+    print_report(result, experiment_path, full=full)
     console.print(f"\n→ {out_path.relative_to(PRISM)}", style="green", highlight=False)
+    console.print(
+        "  детали по прогонам: --full · переоткрыть без пересчёта: prism leaderboard",
+        style="dim",
+        highlight=False,
+    )
     return out_path
 
 
@@ -544,4 +628,4 @@ def print_tag_profiles(result: dict) -> None:
                     f"{row['n']} ⚠" if low else str(row["n"]),
                     style="dim" if low else None,
                 )
-        console.print(table)
+        console.print(Align.center(table))

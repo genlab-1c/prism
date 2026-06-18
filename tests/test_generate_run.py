@@ -216,7 +216,7 @@ def test_max_cost_cap_skips_all(tmp_path):
 
 
 def test_leaderboard_view_ranks_models(capsys):
-    from harness.orchestrate import print_summary
+    from harness.orchestrate import print_report
 
     result = {
         "leaderboard_view": "quality",
@@ -247,7 +247,7 @@ def test_leaderboard_view_ranks_models(capsys):
             },
         ],
     }
-    print_summary(result, Path("/nonexistent.json"))
+    print_report(result, Path("/nonexistent.json"))  # лидерборд — вывод по умолчанию
     out = capsys.readouterr().out
     assert "Лидерборд" in out
     assert out.index("Alpha") < out.index("Beta")  # Alpha (Q̄=10) выше Beta (Q̄=4)
