@@ -15,13 +15,14 @@ HELLO = 'Сообщить("PRISM_OK");\n'
 local = LocalRunner()
 in_docker = DockerRunner()
 
-requires_local = pytest.mark.skipif(
-    not local.available(), reason="oscript не установлен")
+requires_local = pytest.mark.skipif(not local.available(), reason="oscript не установлен")
 requires_docker = pytest.mark.skipif(
-    not in_docker.available(), reason="нет docker-образа prism-onescript")
+    not in_docker.available(), reason="нет docker-образа prism-onescript"
+)
 
 
 # ── фабрика ──────────────────────────────────────────────────────────────────
+
 
 def test_factory_default_local(monkeypatch):
     monkeypatch.delenv("PRISM_RUNNER", raising=False)
@@ -45,6 +46,7 @@ def test_factory_unknown_mode():
 
 # ── local ────────────────────────────────────────────────────────────────────
 
+
 @requires_local
 @pytest.mark.slow
 def test_local_runs(tmp_path):
@@ -65,6 +67,7 @@ def test_local_timeout(tmp_path):
 
 # ── docker (песочница) ───────────────────────────────────────────────────────
 
+
 @requires_docker
 @pytest.mark.slow
 def test_docker_runs_same_as_local(tmp_path):
@@ -80,13 +83,15 @@ def test_docker_no_network(tmp_path):
     """Сеть в песочнице отрезана: HTTP-запрос изнутри обязан упасть."""
     script = tmp_path / "net.os"
     script.write_text(
-        'Попытка\n'
+        "Попытка\n"
         '    Соединение = Новый HTTPСоединение("example.com",, , , , 3);\n'
         '    Ответ = Соединение.Получить(Новый HTTPЗапрос("/"));\n'
         '    Сообщить("NET_OPEN");\n'
-        'Исключение\n'
+        "Исключение\n"
         '    Сообщить("NET_BLOCKED");\n'
-        'КонецПопытки;\n', encoding="utf-8")
+        "КонецПопытки;\n",
+        encoding="utf-8",
+    )
     res = in_docker.run_os(script, timeout=30)
     assert "NET_BLOCKED" in res.stdout
     assert "NET_OPEN" not in res.stdout

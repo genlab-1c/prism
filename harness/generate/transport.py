@@ -16,15 +16,23 @@ class HttpResponse:
     """Нормализованный HTTP-ответ: код + распарсенный JSON (или None) + сырой текст."""
 
     status_code: int
-    body: Any = None        # распарсенный JSON (dict/list) либо None
+    body: Any = None  # распарсенный JSON (dict/list) либо None
     text: str = ""
 
 
 class Transport(Protocol):
     """Контракт транспорта. method: GET|POST; json — тело JSON, data — форма (x-www-form)."""
 
-    def request(self, method: str, url: str, *, headers: dict, json: dict | None = None,
-                data: dict | None = None, timeout: int = 120) -> HttpResponse: ...
+    def request(
+        self,
+        method: str,
+        url: str,
+        *,
+        headers: dict,
+        json: dict | None = None,
+        data: dict | None = None,
+        timeout: int = 120,
+    ) -> HttpResponse: ...
 
 
 class RequestsTransport:
@@ -33,12 +41,21 @@ class RequestsTransport:
     def __init__(self, verify: bool = True):
         self.verify = verify
 
-    def request(self, method: str, url: str, *, headers: dict, json: dict | None = None,
-                data: dict | None = None, timeout: int = 120) -> HttpResponse:
-        import requests   # ленивый импорт: тесты с фейк-транспортом requests не требуют
+    def request(
+        self,
+        method: str,
+        url: str,
+        *,
+        headers: dict,
+        json: dict | None = None,
+        data: dict | None = None,
+        timeout: int = 120,
+    ) -> HttpResponse:
+        import requests  # ленивый импорт: тесты с фейк-транспортом requests не требуют
 
-        resp = requests.request(method, url, headers=headers, json=json, data=data,
-                                timeout=timeout, verify=self.verify)
+        resp = requests.request(
+            method, url, headers=headers, json=json, data=data, timeout=timeout, verify=self.verify
+        )
         try:
             body = resp.json()
         except ValueError:

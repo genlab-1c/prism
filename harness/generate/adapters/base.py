@@ -41,22 +41,36 @@ class Adapter(ABC):
         self.timeout = timeout
 
     @abstractmethod
-    def chat(self, model_id: str, messages: list[ChatMessage], *,
-             temperature: float = 0.0, max_tokens: int = 4096,
-             seed: int | None = None, tools: list[dict] | None = None,
-             tool_choice: str = "auto") -> LLMResult:
+    def chat(
+        self,
+        model_id: str,
+        messages: list[ChatMessage],
+        *,
+        temperature: float = 0.0,
+        max_tokens: int = 4096,
+        seed: int | None = None,
+        tools: list[dict] | None = None,
+        tool_choice: str = "auto",
+    ) -> LLMResult:
         """Один вызов генерации. Неподдерживаемые параметры адаптер молча игнорирует."""
         ...
 
     # ── общая обвязка: таймер + ловля сетевых ошибок ─────────────────────────
-    def _send(self, method: str, url: str, *, headers: dict,
-              json: dict | None = None, data: dict | None = None
-              ) -> tuple[HttpResponse | None, float, str | None]:
+    def _send(
+        self,
+        method: str,
+        url: str,
+        *,
+        headers: dict,
+        json: dict | None = None,
+        data: dict | None = None,
+    ) -> tuple[HttpResponse | None, float, str | None]:
         """(ответ|None, прошло_сек, ошибка|None). Исключение транспорта → ошибка, не падение."""
         start = time.time()
         try:
-            resp = self.transport.request(method, url, headers=headers, json=json,
-                                          data=data, timeout=self.timeout)
+            resp = self.transport.request(
+                method, url, headers=headers, json=json, data=data, timeout=self.timeout
+            )
             return resp, time.time() - start, None
-        except Exception as e:                       # noqa: BLE001 — сеть: возвращаем как failure
+        except Exception as e:  # noqa: BLE001 — сеть: возвращаем как failure
             return None, time.time() - start, str(e)

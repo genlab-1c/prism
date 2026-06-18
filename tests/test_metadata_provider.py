@@ -18,23 +18,33 @@ SPEC = {
     },
     "documents": {
         "РеализацияТоваров": {
-            "tabular_sections": {"Товары": {"attributes": {
-                "Номенклатура": {"type": "СправочникСсылка.Номенклатура"},
-                "Цена": {"type": "Число", "length": 15, "precision": 2}}}},
-            "registers": ["ТоварыНаСкладах"]},
+            "tabular_sections": {
+                "Товары": {
+                    "attributes": {
+                        "Номенклатура": {"type": "СправочникСсылка.Номенклатура"},
+                        "Цена": {"type": "Число", "length": 15, "precision": 2},
+                    }
+                }
+            },
+            "registers": ["ТоварыНаСкладах"],
+        },
     },
     "accumulation_registers": {
         "ТоварыНаСкладах": {
             "register_type": "Balance",
-            "dimensions": {"Склад": {"type": "СправочникСсылка.Склады"},
-                           "Номенклатура": {"type": "СправочникСсылка.Номенклатура"}},
-            "resources": {"ВНаличии": {"type": "Число", "length": 15, "precision": 3}}},
+            "dimensions": {
+                "Склад": {"type": "СправочникСсылка.Склады"},
+                "Номенклатура": {"type": "СправочникСсылка.Номенклатура"},
+            },
+            "resources": {"ВНаличии": {"type": "Число", "length": 15, "precision": 3}},
+        },
     },
     "information_registers": {
         "ЦеныНоменклатуры": {
             "periodicity": "Day",
             "dimensions": {"Номенклатура": {"type": "СправочникСсылка.Номенклатура"}},
-            "resources": {"Цена": {"type": "Число", "length": 15, "precision": 2}}},
+            "resources": {"Цена": {"type": "Число", "length": 15, "precision": 2}},
+        },
     },
 }
 
@@ -57,7 +67,7 @@ def test_list_all_and_filtered(provider):
     assert "Справочник.Номенклатура" in all_objs
     assert "РегистрНакопления.ТоварыНаСкладах" in all_objs
     assert "РегистрСведений.ЦеныНоменклатуры" in all_objs
-    assert len(all_objs) == 5                       # 2 спр + 1 док + 1 РН + 1 РС
+    assert len(all_objs) == 5  # 2 спр + 1 док + 1 РН + 1 РС
 
     only_reg = provider.call("list_objects", {"kind": "РегистрНакопления"}).splitlines()
     assert only_reg == ["РегистрНакопления.ТоварыНаСкладах"]
@@ -78,7 +88,7 @@ def test_structure_register_with_dims_and_resources(provider):
 
 
 def test_structure_document_with_tabular_section(provider):
-    s = provider.call("get_object_structure", {"name": "РеализацияТоваров"})   # бар-имя
+    s = provider.call("get_object_structure", {"name": "РеализацияТоваров"})  # бар-имя
     assert "табличная часть Товары" in s
     assert "Цена (Число 15.2)" in s
     assert "движения по регистрам: ТоварыНаСкладах" in s

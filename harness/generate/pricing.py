@@ -15,7 +15,7 @@ from pydantic import BaseModel
 
 from harness.loaders import PRISM
 
-_PER = 1_000_000          # цены публикуют за 1М токенов
+_PER = 1_000_000  # цены публикуют за 1М токенов
 
 
 class PriceTable(BaseModel):
@@ -28,7 +28,9 @@ class PriceTable(BaseModel):
     def known(self, model_id: str) -> bool:
         return model_id in self.prices
 
-    def cost(self, model_id: str, tokens_input: int, tokens_output: int) -> tuple[float, float, float]:
+    def cost(
+        self, model_id: str, tokens_input: int, tokens_output: int
+    ) -> tuple[float, float, float]:
         """(стоимость_вход, стоимость_выход, итого) в USD. Нет цены → нули."""
         p = self.prices.get(model_id)
         if not p:
@@ -39,7 +41,7 @@ class PriceTable(BaseModel):
 
 
 def load_pricing(root: object = PRISM) -> PriceTable:
-    path = root / "generation" / "pricing.yaml"          # type: ignore[operator]
+    path = root / "generation" / "pricing.yaml"  # type: ignore[operator]
     if not path.exists():
         return PriceTable()
     data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}

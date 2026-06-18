@@ -23,19 +23,24 @@ def proto():
 
 
 requires_oscript = pytest.mark.skipif(
-    not meaning.available(), reason="OneScript не установлен (./tools/get-onescript.sh)")
+    not meaning.available(), reason="OneScript не установлен (./tools/get-onescript.sh)"
+)
 
 
 # ── band: пороги из YAML, не из кода ─────────────────────────────────────────
 
-@pytest.mark.parametrize("passed,total,expected", [
-    (4, 4, 10),     # 100%
-    (9, 10, 8),     # 90%  → ≥85%
-    (3, 5, 6),      # 60%
-    (2, 4, 4),      # 50%
-    (1, 10, 2),     # >0%
-    (0, 4, 0),      # 0%
-])
+
+@pytest.mark.parametrize(
+    "passed,total,expected",
+    [
+        (4, 4, 10),  # 100%
+        (9, 10, 8),  # 90%  → ≥85%
+        (3, 5, 6),  # 60%
+        (2, 4, 4),  # 50%
+        (1, 10, 2),  # >0%
+        (0, 4, 0),  # 0%
+    ],
+)
 def test_band_thresholds(proto, passed, total, expected):
     assert meaning.band(passed, total, executed=True, protocol=proto) == expected
 
@@ -51,13 +56,17 @@ def test_band_zero_total_is_zero(proto):
 
 # ── fine_m: плавная оценка (лидербордная) — доля × 10, без мёртвых зон ────────
 
-@pytest.mark.parametrize("passed,total,expected", [
-    (5, 5, 10.0),   # 100%
-    (4, 5, 8.0),    # 80% → плавно 8.0 (ступенька была бы 6 — вот снятая мёртвая зона)
-    (3, 5, 6.0),    # 60%
-    (1, 3, 3.3),    # 33.3% → ступенька 2, плавно 3.3
-    (0, 4, 0.0),    # 0%
-])
+
+@pytest.mark.parametrize(
+    "passed,total,expected",
+    [
+        (5, 5, 10.0),  # 100%
+        (4, 5, 8.0),  # 80% → плавно 8.0 (ступенька была бы 6 — вот снятая мёртвая зона)
+        (3, 5, 6.0),  # 60%
+        (1, 3, 3.3),  # 33.3% → ступенька 2, плавно 3.3
+        (0, 4, 0.0),  # 0%
+    ],
+)
 def test_fine_m_is_share_times_ten(passed, total, expected):
     assert meaning.fine_m(passed, total, executed=True) == expected
 
@@ -94,11 +103,12 @@ def test_detect_no_functions():
 
 # ── рендер значений tests.yaml → 1С ──────────────────────────────────────────
 
+
 def test_value_scalars():
     assert meaning._value(None, "x") == ([], "Неопределено")
     assert meaning._value(True, "x") == ([], "Истина")
     assert meaning._value(42, "x") == ([], "42")
-    assert meaning._value('а"б', "x") == ([], '"а""б"')          # экранирование кавычек
+    assert meaning._value('а"б', "x") == ([], '"а""б"')  # экранирование кавычек
 
 
 def test_value_date():
@@ -114,8 +124,7 @@ def test_value_nested_array():
 
 def test_value_table():
     """Маркер __table__ → ТаблицаЗначений (колонки + строки через Установить)."""
-    stmts, expr = meaning._value(
-        {"__table__": {"columns": ["К1", "К2"], "rows": [["а", 1]]}}, "Т")
+    stmts, expr = meaning._value({"__table__": {"columns": ["К1", "К2"], "rows": [["а", 1]]}}, "Т")
     assert expr == "Т"
     assert "Т = Новый ТаблицаЗначений;" in stmts
     assert 'Т.Колонки.Добавить("К1");' in stmts
@@ -127,8 +136,7 @@ def test_value_table():
 
 SORT_TESTS = TaskTests(
     entry_point_patterns=["Сортир\\w*"],
-    tests=[{"args": [[3, 1, 2]], "expected": [1, 2, 3]},
-           {"args": [[]], "expected": []}],
+    tests=[{"args": [[3, 1, 2]], "expected": [1, 2, 3]}, {"args": [[]], "expected": []}],
 )
 
 # NB: переменную нельзя называть «И» — конфликт с ключевым словом 1С (логическое И).
@@ -161,8 +169,13 @@ def test_good_candidate_full_score(proto, tmp_path):
 @requires_oscript
 @pytest.mark.slow
 def test_broken_candidate_zero(proto, tmp_path):
-    r = meaning.score_m("Функция Сортировка(А)\n    Возврат А;\n// нет КонецФункции",
-                        SORT_TESTS, proto, tmp_path, "broken")
+    r = meaning.score_m(
+        "Функция Сортировка(А)\n    Возврат А;\n// нет КонецФункции",
+        SORT_TESTS,
+        proto,
+        tmp_path,
+        "broken",
+    )
     assert not r.executed and r.score == 0
 
 
@@ -172,16 +185,19 @@ def test_wrong_logic_partial(proto, tmp_path):
     """Возвращает вход как есть: пустой массив пройдёт (1/2), сортировка — нет."""
     code = "Функция Сортировка(А) Экспорт\n    Возврат А;\nКонецФункции"
     r = meaning.score_m(code, SORT_TESTS, proto, tmp_path, "wrong")
-    assert r.executed and (r.passed, r.total) == (1, 2) and r.score == 4   # 50%
+    assert r.executed and (r.passed, r.total) == (1, 2) and r.score == 4  # 50%
 
 
 # ── валидация эталонов: canonical обязан проходить свои тесты ────────────────
 
+
 @requires_oscript
 @pytest.mark.slow
-@pytest.mark.parametrize("task", [t for t in load_tasks()
-                                  if t.canonical and t.testable and t.category == "A"],
-                         ids=lambda t: t.id)   # B-эталоны гоняет prism check (исполнение в 1С)
+@pytest.mark.parametrize(
+    "task",
+    [t for t in load_tasks() if t.canonical and t.testable and t.category == "A"],
+    ids=lambda t: t.id,
+)  # B-эталоны гоняет prism check (исполнение в 1С)
 def test_canonical_passes_own_tests(proto, tmp_path, task):
     code = task.canonical.read_text(encoding="utf-8")
     r = meaning.score_m(code, task.tests, proto, tmp_path, f"canon_{task.id}")

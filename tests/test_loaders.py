@@ -23,8 +23,8 @@ from harness.loaders import (
 )
 from harness.score.quality import SCORER_TO_AXIS
 
-
 # ── фикстуры: грузим реальные контракты один раз ─────────────────────────────
+
 
 @pytest.fixture(scope="module")
 def const():
@@ -42,6 +42,7 @@ def tasks():
 
 
 # ── конституция ──────────────────────────────────────────────────────────────
+
 
 def test_constitution_axes(const):
     assert list(const.axes) == ["S", "M", "O", "P"]
@@ -65,6 +66,7 @@ def test_applicable_axes_category_b_all(const):
 
 
 # ── протокол L1 ──────────────────────────────────────────────────────────────
+
 
 def test_l1_axes_match_constitution(const, proto):
     """Протокол не выдумывает осей сверх конституции."""
@@ -101,6 +103,7 @@ def test_l1_o_unreachable_zero(proto):
 
 # ── единый движок score_for (обе оси направления) ────────────────────────────
 
+
 def test_score_for_lower_is_better(proto):
     """S: меньше причин → выше балл; else-строка для >6."""
     s = proto.scoring("S")
@@ -111,17 +114,18 @@ def test_score_for_higher_is_better(proto):
     """M: больше доля → выше балл; exclusive >0 и хвостовой else=0."""
     m = proto.scoring("M")
     assert [m.score_for(x) for x in (1.0, 0.9, 0.6, 0.5)] == [10, 8, 6, 4]
-    assert m.score_for(0.001) == 2          # > 0% (exclusive)
-    assert m.score_for(0.0) == 0            # else: 0% / не исполнился
+    assert m.score_for(0.001) == 2  # > 0% (exclusive)
+    assert m.score_for(0.0) == 0  # else: 0% / не исполнился
 
 
 # ── задачи ───────────────────────────────────────────────────────────────────
+
 
 def test_tasks_loaded(tasks):
     a_ids = [t.id for t in tasks if t.category == "A"]
     b_ids = [t.id for t in tasks if t.category == "B"]
     # Набор задач растёт — точный список не пиним, проверяем инварианты.
-    assert a_ids and b_ids                            # обе категории присутствуют
+    assert a_ids and b_ids  # обе категории присутствуют
     assert all(i.startswith("A") for i in a_ids)
     assert all(i.startswith("B") for i in b_ids)
 
@@ -158,10 +162,11 @@ def test_all_a_tasks_have_canonical(tasks):
 
 # ── издание и генерация ──────────────────────────────────────────────────────
 
+
 def test_edition_core():
     core = load_edition("core")
     assert core.mode == "single-shot"
-    assert core.context == "agentic"        # кат. B: агентный сбор метаданных
+    assert core.context == "agentic"  # кат. B: агентный сбор метаданных
     assert set(core.scorers) <= set(SCORER_TO_AXIS), "неизвестный скорер в издании"
 
 
@@ -169,7 +174,7 @@ def test_generation_catalog():
     gen = load_generation()
     # Каталог моделей меняется — конкретные модели не пиним, проверяем структуру.
     known_adapters = {"openrouter", "openai_compat", "gigachat", "yandexgpt"}
-    assert gen.models                                 # каталог не пуст
+    assert gen.models  # каталог не пуст
     for key, m in gen.models.items():
         assert m.id and m.access.adapter in known_adapters, key
     assert "A" in gen.prompts
@@ -183,7 +188,8 @@ def test_generation_params_cover_models():
 
 # ── валидация Pydantic ───────────────────────────────────────────────────────
 
+
 def test_edition_missing_field_rejected():
     """Битый контракт издания падает на загрузке, а не глубоко в раннере."""
     with pytest.raises(ValidationError):
-        Edition(name="x", mode="single-shot")      # нет context/scorers/leaderboard_view
+        Edition(name="x", mode="single-shot")  # нет context/scorers/leaderboard_view

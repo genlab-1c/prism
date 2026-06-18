@@ -26,18 +26,24 @@ _BASE_URL = "https://gigachat.devices.sberbank.ru/api/v1"
 class GigaChatAdapter(Adapter):
     name = "gigachat"
     supports_seed = False
-    supports_tools = True       # GigaChat поддерживает функции
+    supports_tools = True  # GigaChat поддерживает функции
 
-    def __init__(self, auth_key: str, scope: str = "GIGACHAT_API_PERS",
-                 base_url: str = _BASE_URL, oauth_url: str = _OAUTH_URL,
-                 transport=None, timeout: int = 120):
+    def __init__(
+        self,
+        auth_key: str,
+        scope: str = "GIGACHAT_API_PERS",
+        base_url: str = _BASE_URL,
+        oauth_url: str = _OAUTH_URL,
+        transport=None,
+        timeout: int = 120,
+    ):
         super().__init__(transport, timeout)
         self.auth_key = auth_key
         self.scope = scope
         self.base_url = base_url.rstrip("/")
         self.oauth_url = oauth_url
         self._token: str | None = None
-        self._token_exp_ms: float = 0.0      # epoch ms истечения токена
+        self._token_exp_ms: float = 0.0  # epoch ms истечения токена
 
     def _ensure_token(self) -> tuple[str | None, str | None]:
         """Действующий access_token (с кэшем). Возврат (токен|None, ошибка|None)."""
@@ -49,8 +55,9 @@ class GigaChatAdapter(Adapter):
             "Content-Type": "application/x-www-form-urlencoded",
             "Accept": "application/json",
         }
-        resp, _, err = self._send("POST", self.oauth_url, headers=headers,
-                                  data={"scope": self.scope})
+        resp, _, err = self._send(
+            "POST", self.oauth_url, headers=headers, data={"scope": self.scope}
+        )
         if err:
             return None, f"{self.name} oauth: {err}"
         if resp.status_code != 200:
@@ -62,8 +69,17 @@ class GigaChatAdapter(Adapter):
             return None, f"{self.name} oauth: нет access_token в ответе"
         return self._token, None
 
-    def chat(self, model_id, messages, *, temperature=0.0, max_tokens=4096,
-             seed=None, tools=None, tool_choice="auto") -> LLMResult:
+    def chat(
+        self,
+        model_id,
+        messages,
+        *,
+        temperature=0.0,
+        max_tokens=4096,
+        seed=None,
+        tools=None,
+        tool_choice="auto",
+    ) -> LLMResult:
         token, err = self._ensure_token()
         if err:
             return LLMResult.failure(err)
@@ -78,8 +94,9 @@ class GigaChatAdapter(Adapter):
         if tools:
             body["functions"] = tools
 
-        resp, elapsed, err = self._send("POST", f"{self.base_url}/chat/completions",
-                                        headers=headers, json=body)
+        resp, elapsed, err = self._send(
+            "POST", f"{self.base_url}/chat/completions", headers=headers, json=body
+        )
         if err:
             return LLMResult.failure(f"{self.name}: {err}", elapsed)
         if resp.status_code != 200:

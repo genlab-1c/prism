@@ -38,8 +38,13 @@ def compute_hash(text: str, *, normalize: bool = True) -> str:
 def compare_hashes(hashes: list[str]) -> dict:
     """Статистика детерминизма по хешам прогонов (match_rate — доля самого частого)."""
     if not hashes:
-        return {"total_runs": 0, "unique_count": 0, "match_rate": 0.0,
-                "most_common_hash": "", "most_common_count": 0}
+        return {
+            "total_runs": 0,
+            "unique_count": 0,
+            "match_rate": 0.0,
+            "most_common_hash": "",
+            "most_common_count": 0,
+        }
     counter = Counter(hashes)
     most_common_hash, most_common_count = counter.most_common(1)[0]
     return {

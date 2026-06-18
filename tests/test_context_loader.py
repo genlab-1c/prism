@@ -16,9 +16,12 @@ from harness.generate.types import LLMResult, ToolCall
 SPEC = {
     "catalogs": {"Склады": {"hierarchical": False}, "Номенклатура": {"hierarchical": True}},
     "accumulation_registers": {
-        "ТоварыНаСкладах": {"register_type": "Balance",
-                            "dimensions": {"Склад": {"type": "СправочникСсылка.Склады"}},
-                            "resources": {"ВНаличии": {"type": "Число", "length": 15, "precision": 3}}}},
+        "ТоварыНаСкладах": {
+            "register_type": "Balance",
+            "dimensions": {"Склад": {"type": "СправочникСсылка.Склады"}},
+            "resources": {"ВНаличии": {"type": "Число", "length": 15, "precision": 3}},
+        }
+    },
 }
 
 
@@ -43,16 +46,23 @@ class ScriptedAdapter:
 
 
 def _result(tool_calls=None, content="", ok=True, tokens=10):
-    return LLMResult(success=ok, content=content, tool_calls=tool_calls,
-                     tokens_total=tokens, error=None if ok else "boom")
+    return LLMResult(
+        success=ok,
+        content=content,
+        tool_calls=tool_calls,
+        tokens_total=tokens,
+        error=None if ok else "boom",
+    )
 
 
 def test_agent_collects_structure_then_finishes():
-    adapter = ScriptedAdapter([
-        _result([_tc("a", "search_objects", query="товар")]),
-        _result([_tc("b", "get_object_structure", name="РегистрНакопления.ТоварыНаСкладах")]),
-        _result([_tc("c", "finish_research", summary="беру ТоварыНаСкладах")]),
-    ])
+    adapter = ScriptedAdapter(
+        [
+            _result([_tc("a", "search_objects", query="товар")]),
+            _result([_tc("b", "get_object_structure", name="РегистрНакопления.ТоварыНаСкладах")]),
+            _result([_tc("c", "finish_research", summary="беру ТоварыНаСкладах")]),
+        ]
+    )
     loader = AgenticContextLoader(adapter, SpecMetadataProvider(SPEC), "model")
     r = loader.load("получить остатки")
     assert r.success and r.iterations == 3 and r.tool_calls == 3
@@ -63,14 +73,16 @@ def test_agent_collects_structure_then_finishes():
 
 
 def test_max_objects_limit_stops_early():
-    adapter = ScriptedAdapter([
-        _result([_tc("1", "get_object_structure", name="Склады")]),
-        _result([_tc("2", "get_object_structure", name="Номенклатура")]),
-        _result([_tc("3", "get_object_structure", name="ТоварыНаСкладах")]),  # не дойдём
-    ])
+    adapter = ScriptedAdapter(
+        [
+            _result([_tc("1", "get_object_structure", name="Склады")]),
+            _result([_tc("2", "get_object_structure", name="Номенклатура")]),
+            _result([_tc("3", "get_object_structure", name="ТоварыНаСкладах")]),  # не дойдём
+        ]
+    )
     loader = AgenticContextLoader(adapter, SpecMetadataProvider(SPEC), "model", max_objects=2)
     r = loader.load("задача")
-    assert len(r.objects_loaded) == 2 and adapter.calls == 2     # остановились на лимите
+    assert len(r.objects_loaded) == 2 and adapter.calls == 2  # остановились на лимите
 
 
 def test_no_tool_calls_ends_loop():
@@ -80,12 +92,14 @@ def test_no_tool_calls_ends_loop():
 
 
 def test_unknown_object_not_added_to_context():
-    adapter = ScriptedAdapter([
-        _result([_tc("x", "get_object_structure", name="ВымышленныйРегистр")]),
-        _result([_tc("y", "finish_research", summary="ничего не нашёл")]),
-    ])
+    adapter = ScriptedAdapter(
+        [
+            _result([_tc("x", "get_object_structure", name="ВымышленныйРегистр")]),
+            _result([_tc("y", "finish_research", summary="ничего не нашёл")]),
+        ]
+    )
     r = AgenticContextLoader(adapter, SpecMetadataProvider(SPEC), "model").load("задача")
-    assert r.objects_loaded == [] and r.context_text == ""       # «не найден» в контекст не идёт
+    assert r.objects_loaded == [] and r.context_text == ""  # «не найден» в контекст не идёт
 
 
 def test_adapter_failure_propagates():

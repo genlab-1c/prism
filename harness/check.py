@@ -23,7 +23,6 @@ from pathlib import Path
 from harness.execute import bsl_ls
 from harness.execute.onec import runner as onec
 from harness.execute.runner import get_runner
-from harness.report import catalog
 from harness.loaders import (
     PRISM,
     load_constitution,
@@ -33,17 +32,20 @@ from harness.loaders import (
     load_tags_vocab,
     load_tasks,
 )
+from harness.report import catalog
 from harness.score.meaning import score_m
 from harness.score.optimization import score_o
 from harness.score.quality import SCORER_TO_AXIS
 from harness.score.syntax import score_s
 
 # Статусы пунктов: ok — норма; warn — деградация (не ошибка); fail — нарушение; skip — не проверяли
-Item = tuple[str, str]            # (status, text)
-Section = dict                    # {"title": str, "items": list[Item]}
+Item = tuple[str, str]  # (status, text)
+Section = dict  # {"title": str, "items": list[Item]}
 
 
-def run_checks(only: set[str] | None = None, category: str | None = None) -> tuple[list[Section], bool]:
+def run_checks(
+    only: set[str] | None = None, category: str | None = None
+) -> tuple[list[Section], bool]:
     """Контракты + задания всегда (дёшево); прогон эталонов в песочнице (дорого)
     можно сузить: only — id задач, category — A|B. Это экспресс-режим под итерации
     над одной задачей (prism check --task B17), чтобы не ждать все эталоны."""
@@ -59,17 +61,19 @@ def run_checks(only: set[str] | None = None, category: str | None = None) -> tup
 
 # ── 1. контракты метрики ─────────────────────────────────────────────────────
 
+
 def _check_contracts() -> Section:
     items: list[Item] = []
     try:
         const = load_constitution()
         proto = load_protocol_l1()
         gen = load_generation()
-    except Exception as e:                                  # noqa: BLE001 — показываем как fail
+    except Exception as e:  # noqa: BLE001 — показываем как fail
         return {"title": "Контракты метрики", "items": [("fail", f"загрузка: {e}")]}
 
-    items.append(("ok", f"конституция v{const.version}: оси {list(const.axes)}, "
-                        f"шкала {const.valid_scores}"))
+    items.append(
+        ("ok", f"конституция v{const.version}: оси {list(const.axes)}, шкала {const.valid_scores}")
+    )
 
     if set(proto.axes) == set(const.axes):
         items.append(("ok", f"протокол L1 v{proto.version}: оси совпадают с конституцией"))
@@ -109,12 +113,13 @@ def _check_contracts() -> Section:
 
 # ── 2. контракты заданий ─────────────────────────────────────────────────────
 
+
 def _check_tasks() -> Section:
     items: list[Item] = []
     try:
         tasks = load_tasks()
         vocab = load_tags_vocab()
-    except Exception as e:                                  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
         return {"title": "Контракты заданий", "items": [("fail", f"загрузка задач/тегов: {e}")]}
 
     items.append(("ok", f"загружено задач: {len(tasks)} ({', '.join(t.id for t in tasks)})"))
@@ -132,7 +137,9 @@ def _check_tasks() -> Section:
             items.extend(_check_task_b(t))
             continue
         if not (t.entry_point and t.signature and t.prompt):
-            items.append(("fail", f"{t.id}: пустое обязательное поле (entry_point/signature/prompt)"))
+            items.append(
+                ("fail", f"{t.id}: пустое обязательное поле (entry_point/signature/prompt)")
+            )
         if t.testable:
             if not t.tests.entry_point_patterns:
                 items.append(("fail", f"{t.id}: есть тесты, но нет entry_point_patterns"))
@@ -149,7 +156,9 @@ def _check_tasks() -> Section:
     if catalog.is_current():
         items.append(("ok", "банк задач (tasks/README.md) актуален"))
     else:
-        items.append(("fail", "банк задач (tasks/README.md) устарел — пересоберите: make tasks-index"))
+        items.append(
+            ("fail", "банк задач (tasks/README.md) устарел — пересоберите: make tasks-index")
+        )
     return {"title": "Контракты заданий", "items": items}
 
 
@@ -158,8 +167,9 @@ def _check_task_b(t) -> list[Item]:
     items: list[Item] = []
     if not (t.prompt and t.entry_point_patterns):
         items.append(("fail", f"{t.id}: пустое обязательное поле (prompt/entry_point_patterns)"))
-    missing = [f for f in ("config_spec.yaml", "fixtures.yaml", "tests.bsl")
-               if not (t.dir / f).exists()]
+    missing = [
+        f for f in ("config_spec.yaml", "fixtures.yaml", "tests.bsl") if not (t.dir / f).exists()
+    ]
     if missing:
         items.append(("warn", f"{t.id}: нет {', '.join(missing)} — исполнение B не собрано"))
     else:
@@ -168,6 +178,7 @@ def _check_task_b(t) -> list[Item]:
 
 
 # ── 3. когерентность эталонов (эталон проходит свои тесты) ────────────────────
+
 
 def _check_canonicals(only: set[str] | None = None, category: str | None = None) -> Section:
     proto = load_protocol_l1()
@@ -193,8 +204,11 @@ def _check_canonicals(only: set[str] | None = None, category: str | None = None)
         # M — ЖЁСТКИЙ гейт: эталон обязан пройти свои тесты на 100%
         m = score_m(code, t.tests, proto, work / t.id, name=f"canon_{t.id}", runner=runner)
         gate = m.executed and m.passed == m.total and m.score == 10
-        m_txt = (f"M=10 ({m.passed}/{m.total})" if gate
-                 else f"M={m.score} ({m.passed}/{m.total}) — {m.errors[:1]}")
+        m_txt = (
+            f"M=10 ({m.passed}/{m.total})"
+            if gate
+            else f"M={m.score} ({m.passed}/{m.total}) — {m.errors[:1]}"
+        )
         # S/O — пока только показываем, не гейтим (эталон ожидаем образцовым)
         if diags is None:
             so_txt = "S/O: BSL LS недоступен"
@@ -211,13 +225,21 @@ def _check_canonicals(only: set[str] | None = None, category: str | None = None)
     for t in tasks_b:
         code = t.canonical.read_text(encoding="utf-8-sig")
         run = onec.run_candidate(code, t.dir, work / t.id, t.entry_point_patterns)
-        gate = (run.status == "ok" and run.total > 0 and run.passed == run.total
-                and not run.platform_errors and not run.compile_error_lines)
-        txt = (f"S=10 · M=10 ({run.passed}/{run.total}) · P чисто" if gate
-               else f"{run.status}: {run.passed}/{run.total}"
-                    f"{' · компиляция: ' + str(run.compile_errors[:1]) if run.compile_error_lines else ''}"
-                    f"{' · платформенные ошибки: ' + str(run.platform_errors) if run.platform_errors else ''}"
-                    f"{' · ' + (run.log or run.infra_detail)[:120] if not gate else ''}")
+        gate = (
+            run.status == "ok"
+            and run.total > 0
+            and run.passed == run.total
+            and not run.platform_errors
+            and not run.compile_error_lines
+        )
+        txt = (
+            f"S=10 · M=10 ({run.passed}/{run.total}) · P чисто"
+            if gate
+            else f"{run.status}: {run.passed}/{run.total}"
+            f"{' · компиляция: ' + str(run.compile_errors[:1]) if run.compile_error_lines else ''}"
+            f"{' · платформенные ошибки: ' + str(run.platform_errors) if run.platform_errors else ''}"
+            f"{' · ' + (run.log or run.infra_detail)[:120] if not gate else ''}"
+        )
         items.append(("ok" if gate else "fail", f"{t.id}: эталон (1С) {txt}"))
 
     if not items:
@@ -238,6 +260,7 @@ def _canonical_diagnostics(tasks, work: Path) -> dict | None:
 
 
 # ── 4. доступность инструментов по осям ──────────────────────────────────────
+
 
 def _check_instruments() -> Section:
     items: list[Item] = []

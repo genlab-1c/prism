@@ -24,9 +24,13 @@ FINISH_TOOL = {
     "function": {
         "name": "finish_research",
         "description": "Завершить исследование метаданных, когда собрано достаточно для кода.",
-        "parameters": {"type": "object", "properties": {
-            "summary": {"type": "string", "description": "какие объекты используешь и почему"}},
-            "required": ["summary"]},
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "summary": {"type": "string", "description": "какие объекты используешь и почему"}
+            },
+            "required": ["summary"],
+        },
     },
 }
 
@@ -49,19 +53,28 @@ class ContextResult(BaseModel):
     success: bool
     context_text: str = ""
     objects_loaded: list[str] = Field(default_factory=list)
-    summary: str = ""                 # резюме из finish_research
+    summary: str = ""  # резюме из finish_research
     iterations: int = 0
     tool_calls: int = 0
     tokens: int = 0
-    tokens_input: int = 0             # для учёта стоимости агентного сбора (кат. B)
+    tokens_input: int = 0  # для учёта стоимости агентного сбора (кат. B)
     tokens_output: int = 0
     error: str | None = None
 
 
 class AgenticContextLoader:
-    def __init__(self, adapter: Adapter, provider: MetadataProvider, model_id: str, *,
-                 system_prompt: str = _SYSTEM, user_template: str = _USER,
-                 max_iterations: int = 8, max_objects: int = 5, max_context_chars: int = 15000):
+    def __init__(
+        self,
+        adapter: Adapter,
+        provider: MetadataProvider,
+        model_id: str,
+        *,
+        system_prompt: str = _SYSTEM,
+        user_template: str = _USER,
+        max_iterations: int = 8,
+        max_objects: int = 5,
+        max_context_chars: int = 15000,
+    ):
         self.adapter = adapter
         self.provider = provider
         self.model_id = model_id
@@ -87,11 +100,16 @@ class AgenticContextLoader:
             res.tokens_input += out.tokens_input
             res.tokens_output += out.tokens_output
             if not out.success:
-                return ContextResult(success=False, error=out.error, iterations=res.iterations,
-                                     tokens=res.tokens, tokens_input=res.tokens_input,
-                                     tokens_output=res.tokens_output)
+                return ContextResult(
+                    success=False,
+                    error=out.error,
+                    iterations=res.iterations,
+                    tokens=res.tokens,
+                    tokens_input=res.tokens_input,
+                    tokens_output=res.tokens_output,
+                )
             if not out.tool_calls:
-                break                                   # модель не зовёт инструменты — закончили
+                break  # модель не зовёт инструменты — закончили
 
             messages.append(ChatMessage.assistant(out.content or "", tool_calls=out.tool_calls))
             for tc in out.tool_calls:
@@ -103,7 +121,9 @@ class AgenticContextLoader:
                     res.objects_loaded = list(res.objects_loaded)
                     return res
                 result_text = self.provider.call(tc.name, args)
-                messages.append(ChatMessage.tool_response(result_text, tool_call_id=tc.id, name=tc.name))
+                messages.append(
+                    ChatMessage.tool_response(result_text, tool_call_id=tc.id, name=tc.name)
+                )
 
                 # в контекст идут только успешные структуры объектов
                 if tc.name == _STRUCTURE_TOOL and "не найден" not in result_text:

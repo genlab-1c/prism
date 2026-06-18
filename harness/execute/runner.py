@@ -36,7 +36,7 @@ class ExecResult(BaseModel):
 
     stdout: str = ""
     stderr: str = ""
-    rc: int | None = None            # None = таймаут
+    rc: int | None = None  # None = таймаут
     timed_out: bool = False
 
 
@@ -53,8 +53,9 @@ class LocalRunner(BaseModel):
 
     def run_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         try:
-            proc = subprocess.run([str(OSCRIPT), str(script)],
-                                  capture_output=True, text=True, timeout=timeout)
+            proc = subprocess.run(
+                [str(OSCRIPT), str(script)], capture_output=True, text=True, timeout=timeout
+            )
         except subprocess.TimeoutExpired:
             return ExecResult(timed_out=True)
         return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
@@ -68,28 +69,45 @@ class DockerRunner(BaseModel):
 
     def available(self) -> bool:
         try:
-            return subprocess.run(
-                ["docker", "image", "inspect", self.image],
-                capture_output=True, timeout=10).returncode == 0
+            return (
+                subprocess.run(
+                    ["docker", "image", "inspect", self.image], capture_output=True, timeout=10
+                ).returncode
+                == 0
+            )
         except (subprocess.TimeoutExpired, FileNotFoundError):
             return False
 
     def unavailable_reason(self) -> str:
-        return (f"нет docker-образа {self.image} — "
-                f"docker build -t {self.image} -f docker/onescript.Dockerfile .")
+        return (
+            f"нет docker-образа {self.image} — "
+            f"docker build -t {self.image} -f docker/onescript.Dockerfile ."
+        )
 
     def run_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         script = script.resolve()
         container = f"prism-os-{uuid.uuid4().hex[:12]}"
         # --user uid хоста: иначе контейнерный пользователь не прочитает каталоги 0700
         # (например, pytest tmp_path); непривилегированность сохраняется
-        cmd = ["docker", "run", "--rm", "--name", container, *SANDBOX_OPTS,
-               "--user", f"{os.getuid()}:{os.getgid()}",
-               "-v", f"{script.parent}:/sandbox:ro",
-               self.image, "oscript", f"/sandbox/{script.name}"]
+        cmd = [
+            "docker",
+            "run",
+            "--rm",
+            "--name",
+            container,
+            *SANDBOX_OPTS,
+            "--user",
+            f"{os.getuid()}:{os.getgid()}",
+            "-v",
+            f"{script.parent}:/sandbox:ro",
+            self.image,
+            "oscript",
+            f"/sandbox/{script.name}",
+        ]
         try:
-            proc = subprocess.run(cmd, capture_output=True, text=True,
-                                  timeout=timeout + 10)   # запас на старт контейнера
+            proc = subprocess.run(
+                cmd, capture_output=True, text=True, timeout=timeout + 10
+            )  # запас на старт контейнера
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
             return ExecResult(timed_out=True)

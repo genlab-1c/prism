@@ -20,8 +20,10 @@ PRISM = Path(__file__).resolve().parents[1]
 
 # ── метрика: конституция ─────────────────────────────────────────────────────
 
+
 class AxisSpec(BaseModel):
     """Блок одной оси в metrics/smop.yaml."""
+
     model_config = ConfigDict(extra="allow")
 
     name: str
@@ -34,9 +36,9 @@ class Constitution(BaseModel):
 
     valid_scores: list[int]
     axes: dict[str, AxisSpec]
-    q_formula: str                   # mean_of_applicable
-    q_primary_result: str            # vector
-    thresholds: dict[str, int]       # high / acceptable / low
+    q_formula: str  # mean_of_applicable
+    q_primary_result: str  # vector
+    thresholds: dict[str, int]  # high / acceptable / low
     version: str
 
     def applicable_axes(self, category: str) -> list[str]:
@@ -58,21 +60,24 @@ def load_constitution(root: Path = PRISM) -> Constitution:
 
 # ── метрика: протокол L1 ─────────────────────────────────────────────────────
 
+
 class ScoringRule(BaseModel):
     """Строка таблицы scoring.table: порог → балл (см. шапку smop_l1_auto.yaml)."""
+
     model_config = ConfigDict(populate_by_name=True)
 
     score: int
-    bound: float | None = None                        # граница сравнения (нет у хвостовой строки)
-    exclusive: bool = False                           # строгое сравнение (< / >)
-    is_else: bool = Field(False, alias="else")        # хвост «во всех прочих случаях»
+    bound: float | None = None  # граница сравнения (нет у хвостовой строки)
+    exclusive: bool = False  # строгое сравнение (< / >)
+    is_else: bool = Field(False, alias="else")  # хвост «во всех прочих случаях»
 
 
 class Scoring(BaseModel):
     """Таблица балла оси: сигнал → балл (единственный источник порогов для оси)."""
-    model_config = ConfigDict(extra="allow")          # unit/floor_note/recall_rule — справочные
 
-    direction: str                                    # lower_is_better | higher_is_better
+    model_config = ConfigDict(extra="allow")  # unit/floor_note/recall_rule — справочные
+
+    direction: str  # lower_is_better | higher_is_better
     table: list[ScoringRule]
 
     def score_for(self, signal: float) -> int:
@@ -87,19 +92,22 @@ class Scoring(BaseModel):
                 hit = signal < rule.bound if rule.exclusive else signal <= rule.bound
             if hit:
                 return rule.score
-        return self.table[-1].score                   # подстраховка, если нет else-строки
+        return self.table[-1].score  # подстраховка, если нет else-строки
 
 
 class L1Axis(BaseModel):
     """Блок оси в metrics/smop_l1_auto.yaml: таблица балла + параметры инструмента."""
-    model_config = ConfigDict(extra="allow")          # instrument/signal/measures — справочные
+
+    model_config = ConfigDict(extra="allow")  # instrument/signal/measures — справочные
 
     scoring: Scoring | None = None
-    pre_check: dict | None = None                     # сразу 0 в обход таблицы баллов (оси S, P)
-    cluster_gap: int | None = None                    # S: соседние ParseError ≤N строк = одна причина
-    compile_blocker_codes: list[str] | None = None    # S: не-ParseError диагностики «не скомпилируется»
-    white_list: dict[str, float] | None = None        # O: код диагностики BSL LS → вес
-    applies_to: list[str] | None = None               # только у P
+    pre_check: dict | None = None  # сразу 0 в обход таблицы баллов (оси S, P)
+    cluster_gap: int | None = None  # S: соседние ParseError ≤N строк = одна причина
+    compile_blocker_codes: list[str] | None = (
+        None  # S: не-ParseError диагностики «не скомпилируется»
+    )
+    white_list: dict[str, float] | None = None  # O: код диагностики BSL LS → вес
+    applies_to: list[str] | None = None  # только у P
 
 
 class ProtocolL1(BaseModel):
@@ -134,11 +142,12 @@ def load_protocol_l1(root: Path = PRISM) -> ProtocolL1:
 
 # ── задачи ───────────────────────────────────────────────────────────────────
 
+
 class TaskTests(BaseModel):
     """tests.yaml задачи: скрытые кейсы оси M."""
 
     entry_point_patterns: list[str] = Field(default_factory=list)
-    tests: list[dict]                # {args: [...], expected: ...}
+    tests: list[dict]  # {args: [...], expected: ...}
 
 
 class Task(BaseModel):
@@ -152,18 +161,18 @@ class Task(BaseModel):
 
     id: str
     name: str
-    category: str                    # "A" | "B"
+    category: str  # "A" | "B"
     difficulty: str
     prompt: str
     dir: Path
-    entry_point: str | None = None           # A: имя функции эталона
-    signature: str | None = None             # A: точная сигнатура
-    entry_point_patterns: list[str] = Field(default_factory=list)   # B: детекция функции
-    expected_objects: list[str] = Field(default_factory=list)       # B: сид оси P
-    tests: TaskTests | None = None           # A: скрытые кейсы (tests.yaml)
-    canonical: Path | None = None    # эталон, если есть
-    m_testing: str | None = None     # пометка вроде pending_harness
-    tags: dict[str, list[str]] = Field(default_factory=dict)   # измерение → теги (срезы анализа)
+    entry_point: str | None = None  # A: имя функции эталона
+    signature: str | None = None  # A: точная сигнатура
+    entry_point_patterns: list[str] = Field(default_factory=list)  # B: детекция функции
+    expected_objects: list[str] = Field(default_factory=list)  # B: сид оси P
+    tests: TaskTests | None = None  # A: скрытые кейсы (tests.yaml)
+    canonical: Path | None = None  # эталон, если есть
+    m_testing: str | None = None  # пометка вроде pending_harness
+    tags: dict[str, list[str]] = Field(default_factory=dict)  # измерение → теги (срезы анализа)
 
     @property
     def testable(self) -> bool:
@@ -173,8 +182,9 @@ class Task(BaseModel):
         фикстуры, проверки tests.bsl).
         """
         if self.category == "B":
-            return all((self.dir / f).exists()
-                       for f in ("config_spec.yaml", "fixtures.yaml", "tests.bsl"))
+            return all(
+                (self.dir / f).exists() for f in ("config_spec.yaml", "fixtures.yaml", "tests.bsl")
+            )
         return self.tests is not None and bool(self.tests.tests)
 
 
@@ -188,23 +198,26 @@ def load_tasks(root: Path = PRISM, category: str | None = None) -> list[Task]:
         task_dir = task_yaml.parent
         tests_path = task_dir / "tests.yaml"
         canonical_path = task_dir / "canonical.bsl"
-        tasks.append(Task(
-            **doc,
-            dir=task_dir,
-            tests=_read(tests_path) if tests_path.exists() else None,
-            canonical=canonical_path if canonical_path.exists() else None,
-        ))
+        tasks.append(
+            Task(
+                **doc,
+                dir=task_dir,
+                tests=_read(tests_path) if tests_path.exists() else None,
+                canonical=canonical_path if canonical_path.exists() else None,
+            )
+        )
     return tasks
 
 
 # ── словарь тегов (контролируемый, для срезов анализа) ───────────────────────
+
 
 class TagDimension(BaseModel):
     """Измерение тегов: значения + мультизначность + применимость к категории."""
 
     multi: bool = True
     values: list[str]
-    applies_to: list[str] | None = None        # None = ко всем категориям
+    applies_to: list[str] | None = None  # None = ко всем категориям
 
 
 class TagsVocab(BaseModel):
@@ -238,13 +251,14 @@ def load_tags_vocab(root: Path = PRISM) -> TagsVocab:
 
 # ── издание и генерация ──────────────────────────────────────────────────────
 
+
 class Edition(BaseModel):
     """editions/<имя>.yaml — конфиг-профиль прогона."""
 
     name: str
-    mode: str                        # single-shot | agentic
-    context: str                     # none | mcp | ab
-    scorers: list[str]               # оси, которые издание хочет считать
+    mode: str  # single-shot | agentic
+    context: str  # none | mcp | ab
+    scorers: list[str]  # оси, которые издание хочет считать
     leaderboard_view: str
 
 
@@ -255,8 +269,8 @@ def load_edition(name: str, root: Path = PRISM) -> Edition:
 class ModelAccess(BaseModel):
     """Канал доступа к модели (адаптер харнесса)."""
 
-    adapter: str                     # openrouter | openai_compat | gigachat | …
-    endpoint: str | None = None      # для openai_compat (Ollama/vLLM)
+    adapter: str  # openrouter | openai_compat | gigachat | …
+    endpoint: str | None = None  # для openai_compat (Ollama/vLLM)
 
 
 class ModelEntry(BaseModel):
@@ -273,8 +287,8 @@ class Generation(BaseModel):
     """generation/: каталог моделей + числовые параметры + system-промпты."""
 
     models: dict[str, ModelEntry]
-    params: dict                     # defaults из params.yaml
-    prompts: dict[str, str]          # категория → system-промпт
+    params: dict  # defaults из params.yaml
+    prompts: dict[str, str]  # категория → system-промпт
 
 
 def load_generation(root: Path = PRISM) -> Generation:
@@ -286,6 +300,7 @@ def load_generation(root: Path = PRISM) -> Generation:
 
 
 # ── внутреннее ───────────────────────────────────────────────────────────────
+
 
 def _read(path: Path) -> dict:
     with open(path, encoding="utf-8") as f:

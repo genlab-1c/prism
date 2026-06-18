@@ -29,7 +29,7 @@ def _fmt_type(spec: dict) -> str:
         return f"Число {spec.get('length', 15)}.{spec.get('precision', 0)}"
     if t == "Строка":
         return f"Строка {spec.get('length', 100)}"
-    return t                                    # СправочникСсылка.X / ДокументСсылка.X / Дата
+    return t  # СправочникСсылка.X / ДокументСсылка.X / Дата
 
 
 def _fields(title: str, items: dict) -> list[str]:
@@ -44,31 +44,58 @@ class SpecMetadataProvider(MetadataProvider):
         # индекс: имя объекта → (секция, тип); и (тип, имя) для разрешения «Тип.Имя»
         self._index: dict[str, tuple[str, str]] = {}
         for section, type_name in _KINDS.items():
-            for name in (self.spec.get(section) or {}):
+            for name in self.spec.get(section) or {}:
                 self._index[name] = (section, type_name)
 
     # ── инструменты ──────────────────────────────────────────────────────────
     def tools(self) -> list[dict]:
         kinds = list(_KINDS.values())
         return [
-            {"type": "function", "function": {
-                "name": "list_objects",
-                "description": "Список объектов метаданных конфигурации в виде «Тип.Имя».",
-                "parameters": {"type": "object", "properties": {
-                    "kind": {"type": "string", "enum": kinds,
-                             "description": "тип объекта (необязательно)"}}}}},
-            {"type": "function", "function": {
-                "name": "search_objects",
-                "description": "Найти объекты метаданных по подстроке имени.",
-                "parameters": {"type": "object", "properties": {
-                    "query": {"type": "string", "description": "часть имени объекта"}},
-                    "required": ["query"]}}},
-            {"type": "function", "function": {
-                "name": "get_object_structure",
-                "description": "Полная структура объекта: измерения/ресурсы/реквизиты/табличные части.",
-                "parameters": {"type": "object", "properties": {
-                    "name": {"type": "string", "description": "имя объекта или «Тип.Имя»"}},
-                    "required": ["name"]}}},
+            {
+                "type": "function",
+                "function": {
+                    "name": "list_objects",
+                    "description": "Список объектов метаданных конфигурации в виде «Тип.Имя».",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "kind": {
+                                "type": "string",
+                                "enum": kinds,
+                                "description": "тип объекта (необязательно)",
+                            }
+                        },
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "search_objects",
+                    "description": "Найти объекты метаданных по подстроке имени.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "query": {"type": "string", "description": "часть имени объекта"}
+                        },
+                        "required": ["query"],
+                    },
+                },
+            },
+            {
+                "type": "function",
+                "function": {
+                    "name": "get_object_structure",
+                    "description": "Полная структура объекта: измерения/ресурсы/реквизиты/табличные части.",
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string", "description": "имя объекта или «Тип.Имя»"}
+                        },
+                        "required": ["name"],
+                    },
+                },
+            },
         ]
 
     def call(self, name: str, arguments: dict) -> str:
@@ -87,7 +114,7 @@ class SpecMetadataProvider(MetadataProvider):
         for section, type_name in _KINDS.items():
             if kind and kind != type_name:
                 continue
-            for obj_name in (self.spec.get(section) or {}):
+            for obj_name in self.spec.get(section) or {}:
                 lines.append(f"{type_name}.{obj_name}")
         return "\n".join(lines) if lines else "(объектов нет)"
 
@@ -100,7 +127,11 @@ class SpecMetadataProvider(MetadataProvider):
 
     def _resolve(self, name: str) -> tuple[str, str] | None:
         """«Тип.Имя» или «Имя» → (секция, имя_объекта) либо None."""
-        bare = name.split(".", 1)[1] if "." in name and name.split(".", 1)[0] in _KINDS.values() else name
+        bare = (
+            name.split(".", 1)[1]
+            if "." in name and name.split(".", 1)[0] in _KINDS.values()
+            else name
+        )
         hit = self._index.get(bare)
         return (hit[0], bare) if hit else None
 
@@ -114,13 +145,17 @@ class SpecMetadataProvider(MetadataProvider):
         out = [f"{type_name}.{obj}"]
 
         if section == "catalogs":
-            hier = "иерархический (группы и элементы)" if s.get("hierarchical") else "не иерархический"
+            hier = (
+                "иерархический (группы и элементы)" if s.get("hierarchical") else "не иерархический"
+            )
             out.append(f"  {hier}")
             out += _fields("реквизиты", s.get("attributes") or {})
         elif section == "documents":
             out += _fields("реквизиты", s.get("attributes") or {})
             for ts, ts_spec in (s.get("tabular_sections") or {}).items():
-                cols = ", ".join(f"{n} ({_fmt_type(t)})" for n, t in (ts_spec.get("attributes") or {}).items())
+                cols = ", ".join(
+                    f"{n} ({_fmt_type(t)})" for n, t in (ts_spec.get("attributes") or {}).items()
+                )
                 out.append(f"  табличная часть {ts}: {cols}")
             if s.get("registers"):
                 out.append(f"  движения по регистрам: {', '.join(s['registers'])}")

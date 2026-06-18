@@ -26,7 +26,7 @@ from pydantic import BaseModel
 
 DOCKER_IMAGE = "prism-onec:latest"
 ONEC_BIN = "/opt/1cv8t/x86_64/8.3.27.1508/1cv8t"
-STEP_TIMEOUT_S = 180          # на каждый шаг конфигуратора (DESIGNER) или клиента 1С
+STEP_TIMEOUT_S = 180  # на каждый шаг конфигуратора (DESIGNER) или клиента 1С
 RESULT_RE = re.compile(r"PASSED=(\d+);TOTAL=(\d+);?(.*)", re.DOTALL)
 
 # Маркеры платформенной ошибки в логе теста — сигнал оси P (ошибка обращения
@@ -35,9 +35,9 @@ PLATFORM_ERROR_MARKERS = [
     "Поле не найдено",
     "Таблица не найдена",
     "Объект не найден",
-    "не обнаружено",          # «Поле объекта не обнаружено»
+    "не обнаружено",  # «Поле объекта не обнаружено»
     "Метод объекта не обнаружен",
-    "Ошибка при вызове метода контекста (Выполнить)",   # ошибки исполнения запроса
+    "Ошибка при вызове метода контекста (Выполнить)",  # ошибки исполнения запроса
 ]
 
 
@@ -54,24 +54,25 @@ class OneCRunResult(BaseModel):
       infra_error     — инфраструктура развалилась явно (→ None).
     """
 
-    status: str                     # ok | no_entry | candidate_error | no_result | infra_error
+    status: str  # ok | no_entry | candidate_error | no_result | infra_error
     passed: int = 0
     total: int = 0
-    log: str = ""                   # хвост result.txt: FAIL'ы и исключения тестов
+    log: str = ""  # хвост result.txt: FAIL'ы и исключения тестов
     platform_errors: list[str] = []  # сработавшие маркеры платформенных ошибок
-    platform_error_tests: int = 0   # сколько тестов упало именно платформенной ошибкой
+    platform_error_tests: int = 0  # сколько тестов упало именно платформенной ошибкой
     compile_error_lines: list[int] = []  # строки ошибок компиляции модуля кандидата (ось S)
     compile_errors: list[str] = []  # тексты ошибок компилятора (диагностика)
     entry_point: str | None = None
-    infra_detail: str = ""          # диагностика инфраструктурных падений
+    infra_detail: str = ""  # диагностика инфраструктурных падений
 
 
 def available() -> bool:
     """Docker + образ с платформой на месте."""
     if shutil.which("docker") is None:
         return False
-    res = subprocess.run(["docker", "image", "inspect", DOCKER_IMAGE],
-                         capture_output=True, text=True)
+    res = subprocess.run(
+        ["docker", "image", "inspect", DOCKER_IMAGE], capture_output=True, text=True
+    )
     return res.returncode == 0
 
 
@@ -85,21 +86,26 @@ _empty_cfg_lock = threading.Lock()
 def _empty_cfg_cache() -> Path | None:
     """Выгрузка пустой конфигурации — общий кэш (work/_onec/empty-cfg)."""
     from harness.loaders import PRISM
+
     cache_root = PRISM / "work" / "_onec"
     cache = cache_root / "empty-cfg"
     if (cache / "Configuration.xml").exists():
         return cache
-    with _empty_cfg_lock:                            # под параллелизмом общий кэш собираем
-        if (cache / "Configuration.xml").exists():   # один раз (двойная проверка под замком)
+    with _empty_cfg_lock:  # под параллелизмом общий кэш собираем
+        if (cache / "Configuration.xml").exists():  # один раз (двойная проверка под замком)
             return cache
         cache_root.mkdir(parents=True, exist_ok=True)
-        res = _in_container(cache_root, (
-            f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib0;Locale=ru_RU;' >/dev/null 2>&1; "
-            f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib0;' "
-            f"/DumpConfigToFiles /work/empty-cfg >/dev/null 2>&1; "
-            f"chmod -R a+rwX /work/empty-cfg /work/ib0 2>/dev/null; "
-            f"test -f /work/empty-cfg/Configuration.xml && echo OK || echo FAIL"
-        ), STEP_TIMEOUT_S * 2)
+        res = _in_container(
+            cache_root,
+            (
+                f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib0;Locale=ru_RU;' >/dev/null 2>&1; "
+                f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib0;' "
+                f"/DumpConfigToFiles /work/empty-cfg >/dev/null 2>&1; "
+                f"chmod -R a+rwX /work/empty-cfg /work/ib0 2>/dev/null; "
+                f"test -f /work/empty-cfg/Configuration.xml && echo OK || echo FAIL"
+            ),
+            STEP_TIMEOUT_S * 2,
+        )
         return cache if "OK" in res.stdout else None
 
 
@@ -120,16 +126,33 @@ def _in_container(work_dir: Path, script: str, timeout: int) -> subprocess.Compl
         limits += ["--cpus", os.environ["PRISM_ONEC_CPUS"]]
     try:
         return subprocess.run(
-            ["docker", "run", "--rm", "--name", name, "--network=none", *limits,
-             "-v", f"{work_dir}:/work", DOCKER_IMAGE, "bash", "-lc", script],
-            capture_output=True, text=True, timeout=timeout)
+            [
+                "docker",
+                "run",
+                "--rm",
+                "--name",
+                name,
+                "--network=none",
+                *limits,
+                "-v",
+                f"{work_dir}:/work",
+                DOCKER_IMAGE,
+                "bash",
+                "-lc",
+                script,
+            ],
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
     except subprocess.TimeoutExpired:
         subprocess.run(["docker", "kill", name], capture_output=True, text=True)
         raise
 
 
-SUB_RE = re.compile(r"^\s*(?:Функция|Процедура)\s+([\wа-яА-ЯёЁ]+)\s*\(",
-                    re.MULTILINE | re.IGNORECASE)
+SUB_RE = re.compile(
+    r"^\s*(?:Функция|Процедура)\s+([\wа-яА-ЯёЁ]+)\s*\(", re.MULTILINE | re.IGNORECASE
+)
 
 
 def detect_entry_point(code: str, patterns: list[str]) -> str | None:
@@ -143,21 +166,23 @@ def detect_entry_point(code: str, patterns: list[str]) -> str | None:
         return None
     for pattern in patterns:
         rx = re.compile(pattern, re.IGNORECASE)
-        for name in names:                       # порядок объявления = приоритет
+        for name in names:  # порядок объявления = приоритет
             if rx.fullmatch(name):
                 return name
     return names[0]
 
 
-def run_candidate(candidate_code: str, task_dir: Path, work_dir: Path,
-                  entry_patterns: list[str]) -> OneCRunResult:
+def run_candidate(
+    candidate_code: str, task_dir: Path, work_dir: Path, entry_patterns: list[str]
+) -> OneCRunResult:
     """Полный прогон одного кандидата B: сборка → база → исполнение → результат."""
     from .assemble import assemble_run_config
 
     entry = detect_entry_point(candidate_code, entry_patterns)
     if entry is None:
-        return OneCRunResult(status="no_entry",
-                             infra_detail="в коде кандидата не найдено ни одной функции")
+        return OneCRunResult(
+            status="no_entry", infra_detail="в коде кандидата не найдено ни одной функции"
+        )
 
     work_dir.mkdir(parents=True, exist_ok=True)
 
@@ -168,13 +193,15 @@ def run_candidate(candidate_code: str, task_dir: Path, work_dir: Path,
     if not (empty_cfg / "Configuration.xml").exists():
         cache = _empty_cfg_cache()
         if cache is None:
-            return OneCRunResult(status="infra_error", entry_point=entry,
-                                 infra_detail="не удалось выгрузить пустую конфигурацию (кэш)")
+            return OneCRunResult(
+                status="infra_error",
+                entry_point=entry,
+                infra_detail="не удалось выгрузить пустую конфигурацию (кэш)",
+            )
         shutil.copytree(cache, empty_cfg, dirs_exist_ok=True)
 
     # 2) сборка прогонной конфы (на хосте, чистый Python)
-    assemble_run_config(task_dir, candidate_code, entry,
-                        empty_cfg, work_dir / "run-cfg")
+    assemble_run_config(task_dir, candidate_code, entry, empty_cfg, work_dir / "run-cfg")
 
     # 3) база + компиляция (S) + исполнение (M/P) — один вызов контейнера.
     # /CheckModules даёт ось S (ошибки модуля КодКандидата); если кандидат не
@@ -205,11 +232,15 @@ def run_candidate(candidate_code: str, task_dir: Path, work_dir: Path,
 
     # ось S — ошибки компиляции модуля кандидата (компилятор 1С, не статика)
     lines, errors = _parse_compile_log(_read(work_dir / "check.log"))
-    if lines:                                    # не компилируется → вина кандидата
-        return OneCRunResult(status="candidate_error", entry_point=entry,
-                             compile_error_lines=lines, compile_errors=errors[:5],
-                             log="; ".join(errors[:3])[:500],
-                             infra_detail="модуль кандидата не компилируется")
+    if lines:  # не компилируется → вина кандидата
+        return OneCRunResult(
+            status="candidate_error",
+            entry_point=entry,
+            compile_error_lines=lines,
+            compile_errors=errors[:5],
+            log="; ".join(errors[:3])[:500],
+            infra_detail="модуль кандидата не компилируется",
+        )
 
     # компилируется → M/P из result.txt
     result_file = work_dir / "result.txt"
@@ -217,8 +248,11 @@ def run_candidate(candidate_code: str, task_dir: Path, work_dir: Path,
         return parse_result(result_file.read_text(encoding="utf-8-sig", errors="replace"), entry)
 
     detail = "таймаут прогона" if timed_out else "result.txt не создан"
-    return OneCRunResult(status="no_result", entry_point=entry,
-                         infra_detail=f"{detail}; load.log: {_read(work_dir / 'load.log')[:200]}")
+    return OneCRunResult(
+        status="no_result",
+        entry_point=entry,
+        infra_detail=f"{detail}; load.log: {_read(work_dir / 'load.log')[:200]}",
+    )
 
 
 # лог /CheckModules: «{ОбщийМодуль.КодКандидата.Модуль(строка,колонка)}: Сообщение»
@@ -251,14 +285,25 @@ def parse_result(text: str, entry: str | None = None) -> OneCRunResult:
     if not m:
         # обработчик упал до тестов (КЛИЕНТ_ИСКЛЮЧЕНИЕ и т.п.)
         markers = [p for p in PLATFORM_ERROR_MARKERS if p.lower() in text.lower()]
-        return OneCRunResult(status="ok", passed=0, total=0, log=text[:500],
-                             platform_errors=markers, entry_point=entry)
+        return OneCRunResult(
+            status="ok",
+            passed=0,
+            total=0,
+            log=text[:500],
+            platform_errors=markers,
+            entry_point=entry,
+        )
     log = m.group(3).strip()
     markers = [p for p in PLATFORM_ERROR_MARKERS if p.lower() in log.lower()]
-    return OneCRunResult(status="ok", passed=int(m.group(1)), total=int(m.group(2)),
-                         log=log[:500], platform_errors=markers,
-                         platform_error_tests=_count_platform_error_tests(log),
-                         entry_point=entry)
+    return OneCRunResult(
+        status="ok",
+        passed=int(m.group(1)),
+        total=int(m.group(2)),
+        log=log[:500],
+        platform_errors=markers,
+        platform_error_tests=_count_platform_error_tests(log),
+        entry_point=entry,
+    )
 
 
 def _count_platform_error_tests(log: str) -> int:

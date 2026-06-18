@@ -59,7 +59,9 @@ def estimate_cost(pricing: PriceTable, pairs: list[tuple[str, int]], max_tokens:
             unknown.add(model_id)
         _, _, per_run = pricing.cost(model_id, max_tokens, max_tokens)
         by_model[model_id] = by_model.get(model_id, 0.0) + per_run * runs
-    return {"total": round(sum(by_model.values()), 4),
-            "by_model": {k: round(v, 4) for k, v in by_model.items()},
-            "unknown_price": sorted(unknown),
-            "as_of": pricing.as_of}
+    return {
+        "total": round(sum(by_model.values()), 4),
+        "by_model": {k: round(v, 4) for k, v in by_model.items()},
+        "unknown_price": sorted(unknown),
+        "as_of": pricing.as_of,
+    }

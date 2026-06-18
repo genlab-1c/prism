@@ -24,8 +24,12 @@ def test_run_checks_no_failures():
 def test_run_checks_sections_present():
     sections, _ = check.run_checks()
     titles = {s["title"] for s in sections}
-    assert {"Контракты метрики", "Контракты заданий",
-            "Когерентность эталонов", "Инструменты по осям"} <= titles
+    assert {
+        "Контракты метрики",
+        "Контракты заданий",
+        "Когерентность эталонов",
+        "Инструменты по осям",
+    } <= titles
 
 
 def test_every_item_has_known_status():
@@ -41,5 +45,6 @@ def test_cli_check_returns_zero():
 
 def test_cli_requires_subcommand(capsys):
     import pytest
+
     with pytest.raises(SystemExit):
         cli.main([])

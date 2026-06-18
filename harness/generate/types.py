@@ -17,7 +17,7 @@ class ToolCall(BaseModel):
 
     id: str = ""
     type: Literal["function"] = "function"
-    function: dict[str, Any] = Field(default_factory=dict)   # {name: str, arguments: str(JSON)}
+    function: dict[str, Any] = Field(default_factory=dict)  # {name: str, arguments: str(JSON)}
 
     @property
     def name(self) -> str:
@@ -33,9 +33,9 @@ class ChatMessage(BaseModel):
 
     role: Literal["system", "user", "assistant", "tool"]
     content: str = ""
-    tool_calls: list[ToolCall] | None = None     # assistant с вызовами инструментов
-    tool_call_id: str | None = None              # ответ tool
-    name: str | None = None                      # имя инструмента (tool response)
+    tool_calls: list[ToolCall] | None = None  # assistant с вызовами инструментов
+    tool_call_id: str | None = None  # ответ tool
+    name: str | None = None  # имя инструмента (tool response)
 
     @classmethod
     def system(cls, content: str) -> ChatMessage:
@@ -57,8 +57,9 @@ class ChatMessage(BaseModel):
         """Формат сообщения для OpenAI-совместимого API."""
         d: dict[str, Any] = {"role": self.role, "content": self.content}
         if self.tool_calls:
-            d["tool_calls"] = [{"id": tc.id, "type": tc.type, "function": tc.function}
-                               for tc in self.tool_calls]
+            d["tool_calls"] = [
+                {"id": tc.id, "type": tc.type, "function": tc.function} for tc in self.tool_calls
+            ]
         if self.tool_call_id:
             d["tool_call_id"] = self.tool_call_id
         if self.name:

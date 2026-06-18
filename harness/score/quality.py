@@ -15,8 +15,9 @@ from harness.loaders import Constitution, load_constitution
 SCORER_TO_AXIS = {"syntax": "S", "meaning": "M", "optimization": "O", "platform": "P"}
 
 
-def compute_q(scores: dict[str, int | None], category: str,
-              constitution: Constitution) -> float | None:
+def compute_q(
+    scores: dict[str, int | None], category: str, constitution: Constitution
+) -> float | None:
     """Q = среднее по ПРИМЕНИМЫМ осям (formula: mean_of_applicable).
 
     scores: {ось: балл | None}. None = ось не измерена (нет инструмента) —

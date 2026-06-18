@@ -6,6 +6,7 @@
 относительно реального LoadConfigFromFiles проверяется уже исполнением задачи в 1С
 (make check MODE=docker) — здесь гейтятся структура и проводка значений.
 """
+
 from __future__ import annotations
 
 import datetime
@@ -25,29 +26,41 @@ from harness.synthconfig import (
 )
 from harness.synthconfig.build_config import _type_xml
 
-
 # ── well-formedness: всякий объект — валидный XML (префиксы из HDR объявлены) ──
+
 
 def test_all_object_xml_is_well_formed():
     """Структурная корректность (не семантика 1С): парсится ElementTree без ошибок."""
     samples = [
         enum_xml("СтатусыЗаказов", ["Новый", "Выполнен"]),
         constant_xml("БазоваяВалюта", {"type": "СправочникСсылка.Валюты"}),
-        catalog_xml("Спецификации", hierarchical=True,
-                    attributes={"Услуга": {"type": "Булево"},
-                                "Получатель": {"type": ["СправочникСсылка.А", "СправочникСсылка.Б"]}},
-                    tabular_sections={"Материалы": {"attributes": {"Кол": {"type": "Число"}}}}),
-        document_xml("Платёж", registers=["Взаиморасчёты"],
-                     attributes={"Сумма": {"type": "Число", "length": 15, "precision": 2}},
-                     tabular_sections={"Строки": {"attributes": {"Товар": {"type": "СправочникСсылка.Н"}}}}),
-        accumreg_xml("Взаиморасчёты", {"Контрагент": {"type": "СправочникСсылка.К"}},
-                     {"Сумма": {"length": 15, "precision": 2}}),
+        catalog_xml(
+            "Спецификации",
+            hierarchical=True,
+            attributes={
+                "Услуга": {"type": "Булево"},
+                "Получатель": {"type": ["СправочникСсылка.А", "СправочникСсылка.Б"]},
+            },
+            tabular_sections={"Материалы": {"attributes": {"Кол": {"type": "Число"}}}},
+        ),
+        document_xml(
+            "Платёж",
+            registers=["Взаиморасчёты"],
+            attributes={"Сумма": {"type": "Число", "length": 15, "precision": 2}},
+            tabular_sections={"Строки": {"attributes": {"Товар": {"type": "СправочникСсылка.Н"}}}},
+        ),
+        accumreg_xml(
+            "Взаиморасчёты",
+            {"Контрагент": {"type": "СправочникСсылка.К"}},
+            {"Сумма": {"length": 15, "precision": 2}},
+        ),
     ]
     for xml in samples:
-        ET.fromstring(xml)            # бросит ParseError при кривой вложенности/незакрытом теге
+        ET.fromstring(xml)  # бросит ParseError при кривой вложенности/незакрытом теге
 
 
 # ── типы: булево / составной / ссылка на перечисление ────────────────────────
+
 
 def test_boolean_type():
     xml = catalog_xml("Номенклатура", attributes={"Услуга": {"type": "Булево"}})
@@ -63,28 +76,39 @@ def test_composite_type_two_members_one_wrapper():
     """Составной тип: один <Type> с несколькими <v8:Type> (под ВЫРАЗИТЬ ... КАК ...)."""
     xml = _type_xml({"type": ["СправочникСсылка.ФизЛица", "СправочникСсылка.ЮрЛица"]})
     assert "cfg:CatalogRef.ФизЛица" in xml and "cfg:CatalogRef.ЮрЛица" in xml
-    assert xml.count("<Type>") == 1            # одна обёртка
-    assert xml.count("<v8:Type>") == 2          # два члена
+    assert xml.count("<Type>") == 1  # одна обёртка
+    assert xml.count("<v8:Type>") == 2  # два члена
 
 
 def test_unknown_type_raises():
     import pytest
+
     with pytest.raises(ValueError):
         _type_xml({"type": "ХранилищеЗначения"})
 
 
 # ── табличные части справочника ──────────────────────────────────────────────
 
+
 def test_catalog_tabular_section():
-    xml = catalog_xml("Спецификации", tabular_sections={
-        "Материалы": {"attributes": {"Материал": {"type": "СправочникСсылка.Номенклатура"},
-                                     "Количество": {"type": "Число", "length": 10, "precision": 3}}}})
+    xml = catalog_xml(
+        "Спецификации",
+        tabular_sections={
+            "Материалы": {
+                "attributes": {
+                    "Материал": {"type": "СправочникСсылка.Номенклатура"},
+                    "Количество": {"type": "Число", "length": 10, "precision": 3},
+                }
+            }
+        },
+    )
     assert 'name="CatalogTabularSection.Спецификации.Материалы"' in xml
     assert 'name="CatalogTabularSectionRow.Спецификации.Материалы"' in xml
     assert "<Name>Материал</Name>" in xml and "<Name>Количество</Name>" in xml
 
 
 # ── перечисления ─────────────────────────────────────────────────────────────
+
 
 def test_enum_xml_values_and_types():
     xml = enum_xml("СтатусыЗаказов", ["Новый", "ВРаботе", "Выполнен"])
@@ -96,6 +120,7 @@ def test_enum_xml_values_and_types():
 
 # ── константы ────────────────────────────────────────────────────────────────
 
+
 def test_constant_xml():
     xml = constant_xml("БазоваяВалюта", {"type": "СправочникСсылка.Валюты"})
     assert "<Constant uuid=" in xml
@@ -105,12 +130,18 @@ def test_constant_xml():
 
 # ── подчинённый регистр сведений (write_mode RecorderSubordinate) ────────────
 
+
 def test_information_register_write_mode():
-    indep = information_register_xml("Цены", {"Н": {"type": "СправочникСсылка.Номенклатура"}},
-                                     {"Цена": {"type": "Число"}})
+    indep = information_register_xml(
+        "Цены", {"Н": {"type": "СправочникСсылка.Номенклатура"}}, {"Цена": {"type": "Число"}}
+    )
     assert "<WriteMode>Independent</WriteMode>" in indep
-    sub = information_register_xml("Цены", {"Н": {"type": "СправочникСсылка.Номенклатура"}},
-                                   {"Цена": {"type": "Число"}}, write_mode="RecorderSubordinate")
+    sub = information_register_xml(
+        "Цены",
+        {"Н": {"type": "СправочникСсылка.Номенклатура"}},
+        {"Цена": {"type": "Число"}},
+        write_mode="RecorderSubordinate",
+    )
     assert "<WriteMode>RecorderSubordinate</WriteMode>" in sub
 
 
@@ -120,39 +151,57 @@ def test_document_records_information_register():
 
 
 def test_fixtures_subordinate_info_register_via_registrar():
-    bsl = generate_fixtures_module({
-        "catalogs": {"Номенклатура": [{"ref": "Т1", "Наименование": "Товар А"}]},
-        "info_register_records": {"ЦеныДокументом": {"registrar": "УстановкаЦен", "records": [
-            {"Период": datetime.date(2026, 1, 1), "Номенклатура": "Т1", "Цена": 100}]}}})
+    bsl = generate_fixtures_module(
+        {
+            "catalogs": {"Номенклатура": [{"ref": "Т1", "Наименование": "Товар А"}]},
+            "info_register_records": {
+                "ЦеныДокументом": {
+                    "registrar": "УстановкаЦен",
+                    "records": [
+                        {"Период": datetime.date(2026, 1, 1), "Номенклатура": "Т1", "Цена": 100}
+                    ],
+                }
+            },
+        }
+    )
     assert "Документы.УстановкаЦен.СоздатьДокумент();" in bsl
     assert "РегистрыСведений.ЦеныДокументом.СоздатьНаборЗаписей();" in bsl
     assert "Набор.Отбор.Регистратор.Установить(Док.Ссылка);" in bsl
     assert "З.Цена = 100;" in bsl
-    assert "ВидДвижения" not in bsl                # у РС вида движения нет
+    assert "ВидДвижения" not in bsl  # у РС вида движения нет
 
 
 def test_render_subordinate_info_register():
-    spec = {"information_registers": {"Цены": {"write_mode": "RecorderSubordinate",
-            "dimensions": {"Н": {"type": "СправочникСсылка.Номенклатура"}},
-            "resources": {"Цена": {"type": "Число"}}}}}
+    spec = {
+        "information_registers": {
+            "Цены": {
+                "write_mode": "RecorderSubordinate",
+                "dimensions": {"Н": {"type": "СправочникСсылка.Номенклатура"}},
+                "resources": {"Цена": {"type": "Число"}},
+            }
+        }
+    }
     assert "подчинён регистратору" in render_schema(spec)
 
 
 # ── предопределённые элементы (частично: XML грузится; runtime-инициализация — TODO) ──
 
+
 def test_predefined_xml_format():
     xml = predefined_xml(["Основной", {"name": "Услуги", "folder": True}])
-    assert 'version="2.20"' in xml                  # обязательно — иначе несовпадение формата
+    assert 'version="2.20"' in xml  # обязательно — иначе несовпадение формата
     assert "<Name>Основной</Name>" in xml
     assert "<Name>Услуги</Name>" in xml and "<IsFolder>true</IsFolder>" in xml
-    ET.fromstring(xml)                              # well-formed
+    ET.fromstring(xml)  # well-formed
 
 
 # ── build(): дерево + инъекция в Configuration.xml ───────────────────────────
 
-_EMPTY_CONF = ('<?xml version="1.0" encoding="UTF-8"?>\n<MetaDataObject>\n\t<Configuration>\n'
-               '\t\t<ChildObjects>\n\t\t\t<Language>Русский</Language>\n'
-               '\t\t</ChildObjects>\n\t</Configuration>\n</MetaDataObject>\n')
+_EMPTY_CONF = (
+    '<?xml version="1.0" encoding="UTF-8"?>\n<MetaDataObject>\n\t<Configuration>\n'
+    "\t\t<ChildObjects>\n\t\t\t<Language>Русский</Language>\n"
+    "\t\t</ChildObjects>\n\t</Configuration>\n</MetaDataObject>\n"
+)
 
 
 def test_build_writes_objects_and_injects_children(tmp_path):
@@ -181,25 +230,57 @@ def test_build_writes_objects_and_injects_children(tmp_path):
 
 # ── фикстуры: проводка значений в BSL ────────────────────────────────────────
 
+
 def test_fixtures_boolean():
-    bsl = generate_fixtures_module({"catalogs": {"Ном": [
-        {"ref": "Н1", "Наименование": "Услуга связи", "Услуга": True},
-        {"ref": "Н2", "Наименование": "Товар", "Услуга": False}]}})
+    bsl = generate_fixtures_module(
+        {
+            "catalogs": {
+                "Ном": [
+                    {"ref": "Н1", "Наименование": "Услуга связи", "Услуга": True},
+                    {"ref": "Н2", "Наименование": "Товар", "Услуга": False},
+                ]
+            }
+        }
+    )
     assert "Об.Услуга = Истина;" in bsl
     assert "Об.Услуга = Ложь;" in bsl
 
 
 def test_fixtures_enum_passthrough():
-    bsl = generate_fixtures_module({"catalogs": {"Заказы": [
-        {"ref": "З1", "Наименование": "Заказ 1", "Статус": "Перечисления.СтатусыЗаказов.Выполнен"}]}})
+    bsl = generate_fixtures_module(
+        {
+            "catalogs": {
+                "Заказы": [
+                    {
+                        "ref": "З1",
+                        "Наименование": "Заказ 1",
+                        "Статус": "Перечисления.СтатусыЗаказов.Выполнен",
+                    }
+                ]
+            }
+        }
+    )
     assert "Об.Статус = Перечисления.СтатусыЗаказов.Выполнен;" in bsl
-    assert '"Перечисления' not in bsl                       # НЕ как строка
+    assert '"Перечисления' not in bsl  # НЕ как строка
 
 
 def test_fixtures_catalog_tabular_section():
-    bsl = generate_fixtures_module({"catalogs": {"Спецификации": [
-        {"ref": "С1", "Наименование": "Изделие А",
-         "Материалы": [{"Материал": "М1", "Количество": 2}, {"Материал": "М2", "Количество": 5}]}]}})
+    bsl = generate_fixtures_module(
+        {
+            "catalogs": {
+                "Спецификации": [
+                    {
+                        "ref": "С1",
+                        "Наименование": "Изделие А",
+                        "Материалы": [
+                            {"Материал": "М1", "Количество": 2},
+                            {"Материал": "М2", "Количество": 5},
+                        ],
+                    }
+                ]
+            }
+        }
+    )
     assert "Об.Материалы.Добавить();" in bsl
     assert "Стр.Количество = 2;" in bsl and "Стр.Количество = 5;" in bsl
 
@@ -212,13 +293,23 @@ def test_fixtures_constants():
 
 # ── render_schema: контекст для модели ───────────────────────────────────────
 
+
 def test_render_constants_enums_and_catalog_ts():
     spec = {
         "constants": {"БазоваяВалюта": {"type": "СправочникСсылка.Валюты"}},
         "enums": {"СтатусыЗаказов": ["Новый", "Выполнен"]},
-        "catalogs": {"Спецификации": {"tabular_sections": {
-            "Материалы": {"attributes": {"Материал": {"type": "СправочникСсылка.Номенклатура"},
-                                         "Количество": {"type": "Число", "length": 10, "precision": 3}}}}}},
+        "catalogs": {
+            "Спецификации": {
+                "tabular_sections": {
+                    "Материалы": {
+                        "attributes": {
+                            "Материал": {"type": "СправочникСсылка.Номенклатура"},
+                            "Количество": {"type": "Число", "length": 10, "precision": 3},
+                        }
+                    }
+                }
+            }
+        },
     }
     text = render_schema(spec)
     assert "Константы:" in text and "Константа.БазоваяВалюта" in text
@@ -227,6 +318,13 @@ def test_render_constants_enums_and_catalog_ts():
 
 
 def test_render_composite_label():
-    spec = {"catalogs": {"Платежи": {"attributes": {
-        "Получатель": {"type": ["СправочникСсылка.ФизЛица", "СправочникСсылка.ЮрЛица"]}}}}}
+    spec = {
+        "catalogs": {
+            "Платежи": {
+                "attributes": {
+                    "Получатель": {"type": ["СправочникСсылка.ФизЛица", "СправочникСсылка.ЮрЛица"]}
+                }
+            }
+        }
+    }
     assert "составной (" in render_schema(spec)

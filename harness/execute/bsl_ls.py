@@ -67,8 +67,16 @@ class LocalBSL(BaseModel):
         return f"BSL LS {VERSION} · {java_bin()} (local)"
 
     def analyze(self, src_dir: Path, out_dir: Path) -> dict[str, list[dict]]:
-        cmd = [java_bin(), "-jar", str(JAR), *_ANALYZE,
-               "--srcDir", str(src_dir), "--outputDir", str(out_dir)]
+        cmd = [
+            java_bin(),
+            "-jar",
+            str(JAR),
+            *_ANALYZE,
+            "--srcDir",
+            str(src_dir),
+            "--outputDir",
+            str(out_dir),
+        ]
         return _run_and_parse(cmd, out_dir)
 
 
@@ -80,14 +88,20 @@ class DockerBSL(BaseModel):
 
     def available(self) -> bool:
         try:
-            return subprocess.run(["docker", "image", "inspect", self.image],
-                                  capture_output=True, timeout=10).returncode == 0
+            return (
+                subprocess.run(
+                    ["docker", "image", "inspect", self.image], capture_output=True, timeout=10
+                ).returncode
+                == 0
+            )
         except (subprocess.TimeoutExpired, FileNotFoundError):
             return False
 
     def unavailable_reason(self) -> str:
-        return (f"нет docker-образа {self.image} — "
-                f"docker build -t {self.image} -f docker/bsl-ls.Dockerfile .")
+        return (
+            f"нет docker-образа {self.image} — "
+            f"docker build -t {self.image} -f docker/bsl-ls.Dockerfile ."
+        )
 
     def describe(self) -> str:
         return f"BSL LS {VERSION} · {self.image} (docker)"
@@ -96,10 +110,24 @@ class DockerBSL(BaseModel):
         src_dir, out_dir = src_dir.resolve(), out_dir.resolve()
         out_dir.mkdir(parents=True, exist_ok=True)
         # --user uid хоста: чтобы bsl-json.json в /out был читаем на хосте (как DockerRunner)
-        cmd = ["docker", "run", "--rm", "--network=none",
-               "--user", f"{os.getuid()}:{os.getgid()}",
-               "-v", f"{src_dir}:/src:ro", "-v", f"{out_dir}:/out",
-               self.image, *_ANALYZE, "--srcDir", "/src", "--outputDir", "/out"]
+        cmd = [
+            "docker",
+            "run",
+            "--rm",
+            "--network=none",
+            "--user",
+            f"{os.getuid()}:{os.getgid()}",
+            "-v",
+            f"{src_dir}:/src:ro",
+            "-v",
+            f"{out_dir}:/out",
+            self.image,
+            *_ANALYZE,
+            "--srcDir",
+            "/src",
+            "--outputDir",
+            "/out",
+        ]
         return _run_and_parse(cmd, out_dir)
 
 
@@ -117,6 +145,7 @@ def get_analyzer(mode: str | None = None) -> BSL:
 
 
 # ── фасад (стабильный модульный API для оркестратора/чека) ───────────────────
+
 
 def available() -> bool:
     return get_analyzer().available()
@@ -141,16 +170,20 @@ def analyze(src_dir: Path, out_dir: Path) -> dict[str, list[dict]]:
 
 # ── внутреннее ───────────────────────────────────────────────────────────────
 
+
 def _run_and_parse(cmd: list[str], out_dir: Path) -> dict[str, list[dict]]:
     out_dir.mkdir(parents=True, exist_ok=True)
     proc = subprocess.run(cmd, capture_output=True, text=True, timeout=TIMEOUT_S)
     report_path = out_dir / "bsl-json.json"
     if not report_path.exists():
-        raise RuntimeError(f"BSL LS не создал отчёт (rc={proc.returncode}).\n"
-                           f"stderr: {proc.stderr[-2000:]}")
+        raise RuntimeError(
+            f"BSL LS не создал отчёт (rc={proc.returncode}).\nstderr: {proc.stderr[-2000:]}"
+        )
     report = _read_json(report_path)
-    return {_basename(info["path"]): [_norm(d) for d in info.get("diagnostics", [])]
-            for info in report.get("fileinfos", [])}
+    return {
+        _basename(info["path"]): [_norm(d) for d in info.get("diagnostics", [])]
+        for info in report.get("fileinfos", [])
+    }
 
 
 def _basename(raw: str) -> str:
@@ -168,7 +201,7 @@ def _norm(diag: dict) -> dict:
     start = diag.get("range", {}).get("start", {})
     return {
         "code": str(code),
-        "severity": str(diag.get("severity", "")).lower(),   # error|warning|information|hint
+        "severity": str(diag.get("severity", "")).lower(),  # error|warning|information|hint
         "message": diag.get("message", ""),
         "line": start.get("line", -1) + 1,
     }
@@ -176,4 +209,5 @@ def _norm(diag: dict) -> dict:
 
 def _read_json(path: Path) -> dict:
     import json
+
     return json.loads(path.read_text(encoding="utf-8-sig"))

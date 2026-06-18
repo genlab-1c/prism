@@ -59,17 +59,19 @@ def render(root: Path = PRISM) -> str:
     out.append("> _Файл собран из `task.yaml` командой `prism tasks` — не правьте вручную._")
     out.append("")
 
-    out.append("## Категория A — алгоритмика на чистом BSL " f"({len(a)})")
+    out.append(f"## Категория A — алгоритмика на чистом BSL ({len(a)})")
     out.append("")
     out.append("Исполняется в OneScript (без платформы 1С). Ось P неприменима.")
     out.append("")
     out.append("| ID | Задача | Сложность | Навыки |")
     out.append("|----|--------|:---:|--------|")
     for t in a:
-        out.append(f"| {t.id} | {t.name} | {_DIFF_RU.get(t.difficulty, t.difficulty)} | {_tags(t, 'skill')} |")
+        out.append(
+            f"| {t.id} | {t.name} | {_DIFF_RU.get(t.difficulty, t.difficulty)} | {_tags(t, 'skill')} |"
+        )
     out.append("")
 
-    out.append("## Категория B — платформенные задачи " f"({len(b)})")
+    out.append(f"## Категория B — платформенные задачи ({len(b)})")
     out.append("")
     out.append("Исполняются в реальной 1С против синтетической базы из описания задачи.")
     out.append("Колонка «Объекты» — метаданные, которых задача касается (сид оси Платформа).")
@@ -78,8 +80,10 @@ def render(root: Path = PRISM) -> str:
     out.append("|----|--------|:---:|--------|--------|--------|")
     for t in b:
         objects = "<br>".join(t.expected_objects) or "—"
-        out.append(f"| {t.id} | {t.name} | {_DIFF_RU.get(t.difficulty, t.difficulty)} | "
-                   f"{_tags(t, 'skill')} | {_tags(t, 'platform')} | {objects} |")
+        out.append(
+            f"| {t.id} | {t.name} | {_DIFF_RU.get(t.difficulty, t.difficulty)} | "
+            f"{_tags(t, 'skill')} | {_tags(t, 'platform')} | {objects} |"
+        )
     out.append("")
     return "\n".join(out)
 

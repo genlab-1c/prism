@@ -34,8 +34,8 @@ FUNC_RE = re.compile(r"^\s*Функция\s+([\wа-яА-ЯёЁ]+)\s*\(", re.MULT
 class MeaningResult(BaseModel):
     """Итог оценки M одного кандидата."""
 
-    score: int | None            # балл по протоколу; None = ось не измерена (нет инструмента)
-    executed: bool = False       # модуль скомпилировался и исполнился
+    score: int | None  # балл по протоколу; None = ось не измерена (нет инструмента)
+    executed: bool = False  # модуль скомпилировался и исполнился
     passed: int = 0
     total: int = 0
     entry_point: str | None = None
@@ -78,15 +78,20 @@ def detect_entry_point(code: str, patterns: list[str]) -> str | None:
         return None
     for pattern in patterns:
         rx = re.compile(pattern, re.IGNORECASE)
-        for name in names:                  # порядок объявления = приоритет
+        for name in names:  # порядок объявления = приоритет
             if rx.fullmatch(name):
                 return name
     return names[0]
 
 
-def score_m(candidate_code: str, tests: TaskTests, protocol: ProtocolL1,
-            work_dir: Path, name: str = "candidate",
-            runner: Runner | None = None) -> MeaningResult:
+def score_m(
+    candidate_code: str,
+    tests: TaskTests,
+    protocol: ProtocolL1,
+    work_dir: Path,
+    name: str = "candidate",
+    runner: Runner | None = None,
+) -> MeaningResult:
     """Прогнать кейсы tests для кода кандидата; вернуть балл M по протоколу.
 
     runner — режим исполнения (по умолчанию из env PRISM_RUNNER: local | docker).
@@ -94,45 +99,65 @@ def score_m(candidate_code: str, tests: TaskTests, protocol: ProtocolL1,
     runner = runner or get_runner()
     total = len(tests.tests)
     if not runner.available():
-        return MeaningResult(score=None, total=total,
-                             errors=[runner.unavailable_reason()])
+        return MeaningResult(score=None, total=total, errors=[runner.unavailable_reason()])
 
     entry = detect_entry_point(candidate_code, tests.entry_point_patterns)
     if entry is None:
-        return MeaningResult(score=band(0, total, False, protocol), total=total,
-                             errors=["в коде кандидата не найдено ни одной функции"])
+        return MeaningResult(
+            score=band(0, total, False, protocol),
+            total=total,
+            errors=["в коде кандидата не найдено ни одной функции"],
+        )
 
     harness_path = work_dir / f"{name}.test.os"
     harness_path.parent.mkdir(parents=True, exist_ok=True)
-    harness_path.write_text(build_harness(candidate_code, entry, tests.tests),
-                            encoding="utf-8")
+    harness_path.write_text(build_harness(candidate_code, entry, tests.tests), encoding="utf-8")
     res = runner.run_os(harness_path)
     if res.timed_out:
-        return MeaningResult(score=band(0, total, False, protocol), total=total,
-                             entry_point=entry, errors=["таймаут исполнения"])
-
-    if "PRISM_BEGIN" not in res.stdout:     # модуль не скомпилировался OneScript'ом
         return MeaningResult(
-            score=band(0, total, False, protocol), total=total, entry_point=entry,
-            errors=[f"compile_error: {(res.stderr or res.stdout)[-400:].strip()}"])
+            score=band(0, total, False, protocol),
+            total=total,
+            entry_point=entry,
+            errors=["таймаут исполнения"],
+        )
+
+    if "PRISM_BEGIN" not in res.stdout:  # модуль не скомпилировался OneScript'ом
+        return MeaningResult(
+            score=band(0, total, False, protocol),
+            total=total,
+            entry_point=entry,
+            errors=[f"compile_error: {(res.stderr or res.stdout)[-400:].strip()}"],
+        )
 
     passed = len(re.findall(r"^PRISM_PASS ", res.stdout, re.MULTILINE))
-    errors = [line[:200] for line in res.stdout.splitlines()
-              if line.startswith(("PRISM_FAIL", "PRISM_ERR"))]
-    return MeaningResult(score=band(passed, total, True, protocol), executed=True,
-                         passed=passed, total=total, entry_point=entry, errors=errors)
+    errors = [
+        line[:200]
+        for line in res.stdout.splitlines()
+        if line.startswith(("PRISM_FAIL", "PRISM_ERR"))
+    ]
+    return MeaningResult(
+        score=band(passed, total, True, protocol),
+        executed=True,
+        passed=passed,
+        total=total,
+        entry_point=entry,
+        errors=errors,
+    )
 
 
 # ── генерация харнесса .os ───────────────────────────────────────────────────
+
 
 def build_harness(candidate_code: str, entry_point: str, tests: list[dict]) -> str:
     # Слой совместимости: платформенные функции 1С, отсутствующие в OneScript.
     # Добавляется ТОЛЬКО если кандидат ссылается на символ (эмуляция окружения,
     # а не помощь кандидату).
-    shims = "".join(impl for name, impl in _PLATFORM_SHIMS.items()
-                    if re.search(rf"\b{name}\b", candidate_code, re.IGNORECASE)
-                    and not re.search(rf"(?:Функция|Процедура)\s+{name}\b",
-                                      candidate_code, re.IGNORECASE))
+    shims = "".join(
+        impl
+        for name, impl in _PLATFORM_SHIMS.items()
+        if re.search(rf"\b{name}\b", candidate_code, re.IGNORECASE)
+        and not re.search(rf"(?:Функция|Процедура)\s+{name}\b", candidate_code, re.IGNORECASE)
+    )
     candidate_code = candidate_code + shims
     blocks = ['Сообщить("PRISM_BEGIN");']
     for i, t in enumerate(tests):
@@ -147,12 +172,13 @@ def build_harness(candidate_code: str, entry_point: str, tests: list[dict]) -> s
             "\n".join(preamble)
             + f"\nРезультат_{i} = {entry_point}({', '.join(arg_exprs)});\n"
             + f"Если ПризмаСравнить(Результат_{i}, {exp_expr}) Тогда\n"
-            + f"    Сообщить(\"PRISM_PASS {i}\");\n"
-            + f"Иначе\n    Сообщить(\"PRISM_FAIL {i}\");\nКонецЕсли;"
+            + f'    Сообщить("PRISM_PASS {i}");\n'
+            + f'Иначе\n    Сообщить("PRISM_FAIL {i}");\nКонецЕсли;'
         )
         blocks.append(
-            "Попытка\n" + _indent(body)
-            + f"\nИсключение\n    Сообщить(\"PRISM_ERR {i} \" + ОписаниеОшибки());\nКонецПопытки;"
+            "Попытка\n"
+            + _indent(body)
+            + f'\nИсключение\n    Сообщить("PRISM_ERR {i} " + ОписаниеОшибки());\nКонецПопытки;'
         )
     return candidate_code + "\n\n" + _COMPARE_FN + "\n" + "\n\n".join(blocks) + "\n"
 
@@ -171,7 +197,7 @@ def _value(value, name: str) -> tuple[list[str], str]:
         if "__date__" in value:
             y, m, d = value["__date__"].split("-")
             return [], f"Дата({int(y)}, {int(m)}, {int(d)})"
-        if "__table__" in value:                       # ТаблицаЗначений: {columns, rows}
+        if "__table__" in value:  # ТаблицаЗначений: {columns, rows}
             spec = value["__table__"]
             stmts = [f"{name} = Новый ТаблицаЗначений;"]
             for col in spec["columns"]:

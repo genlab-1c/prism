@@ -37,8 +37,10 @@ def _bsl_value(value, var_names: dict[str, str]) -> str:
     """Значение поля записи → выражение BSL (ссылка/перечисление/булево/число/дата/строка)."""
     if isinstance(value, str) and value in var_names:
         return var_names[value]
-    if isinstance(value, str) and (value.startswith("Перечисления.") or value.startswith("Справочники.")):
-        return value                       # готовое BSL: Перечисления.X.Y / Справочники.X.Предопределённый
+    if isinstance(value, str) and (
+        value.startswith("Перечисления.") or value.startswith("Справочники.")
+    ):
+        return value  # готовое BSL: Перечисления.X.Y / Справочники.X.Предопределённый
     if isinstance(value, (datetime.date, datetime.datetime)):
         return f"Дата({value.year}, {value.month}, {value.day})"
     if isinstance(value, bool):
@@ -61,7 +63,7 @@ def generate_fixtures_module(fixtures: dict) -> str:
     ]
 
     body: list[str] = []
-    var_names: dict[str, str] = {}   # ref → имя переменной BSL
+    var_names: dict[str, str] = {}  # ref → имя переменной BSL
 
     # — справочники: элементы и группы, иерархия по parent (порядок YAML = родители раньше).
     #   Служебные ключи — ниже в cat_reserved; прочие ключи трактуются как РЕКВИЗИТЫ
@@ -79,13 +81,15 @@ def generate_fixtures_module(fixtures: dict) -> str:
             if parent:
                 pvar = var_names.get(parent)
                 if pvar is None:
-                    raise ValueError(f"fixtures: parent «{parent}» объявлен позже ребёнка «{ref}» — "
-                                     f"родители должны идти раньше в YAML")
+                    raise ValueError(
+                        f"fixtures: parent «{parent}» объявлен позже ребёнка «{ref}» — "
+                        f"родители должны идти раньше в YAML"
+                    )
                 body.append(f"\t{var}Об.Родитель = {pvar};")
             for field, value in item.items():
                 if field in cat_reserved:
                     continue
-                if isinstance(value, list):       # табличная часть справочника: строки-словари
+                if isinstance(value, list):  # табличная часть справочника: строки-словари
                     for row in value:
                         body.append(f"\tСтр = {var}Об.{field}.Добавить();")
                         for col, cval in row.items():
@@ -101,8 +105,10 @@ def generate_fixtures_module(fixtures: dict) -> str:
     for reg_name, block in (fixtures.get("register_records") or {}).items():
         registrar = block.get("registrar")
         if not registrar:
-            raise ValueError(f"fixtures: у регистра «{reg_name}» не задан registrar — "
-                             f"движения без документа-регистратора не записываются")
+            raise ValueError(
+                f"fixtures: у регистра «{reg_name}» не задан registrar — "
+                f"движения без документа-регистратора не записываются"
+            )
         for rec in block.get("records", []):
             period = _bsl_value(rec["Период"], var_names) if "Период" in rec else "ТекущаяДата()"
             body.append(f"\tДок = Документы.{registrar}.СоздатьДокумент();")

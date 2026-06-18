@@ -29,8 +29,9 @@ _PAIRS = (
 )
 
 
-def score_s(diagnostics: list[dict], protocol: ProtocolL1,
-            module_text: str | None = None) -> tuple[int, dict]:
+def score_s(
+    diagnostics: list[dict], protocol: ProtocolL1, module_text: str | None = None
+) -> tuple[int, dict]:
     """S = компилируемость: парность + кластеры ParseError + compile-блокеры → балл."""
     s_axis = protocol.axes["S"]
     gap = s_axis.cluster_gap or 3
@@ -42,7 +43,7 @@ def score_s(diagnostics: list[dict], protocol: ProtocolL1,
     blockers = [d for d in diagnostics if d["code"] in blocker_codes]
     n = clusters + len(blockers)
 
-    score = 0 if not balanced else protocol.scoring("S").score_for(n)   # pre_check → 0 минуя таблицу
+    score = 0 if not balanced else protocol.scoring("S").score_for(n)  # pre_check → 0 минуя таблицу
     detail = {
         "root_causes": n,
         "parse_error_clusters": clusters,
@@ -55,6 +56,7 @@ def score_s(diagnostics: list[dict], protocol: ProtocolL1,
 
 
 # ── внутреннее ───────────────────────────────────────────────────────────────
+
 
 def _cluster_lines(lines: list[int], gap: int) -> int:
     """Число кластеров: соседние ParseError (≤gap строк) — одна корневая причина."""
@@ -84,9 +86,9 @@ def _strip_strings_and_comments(text: str) -> str:
     """Убрать строковые литералы (включая |-продолжения запросов) и // комментарии."""
     out = []
     for line in text.splitlines():
-        if line.lstrip().startswith("|"):              # продолжение многострочной строки
+        if line.lstrip().startswith("|"):  # продолжение многострочной строки
             continue
-        line = re.sub(r'"(?:[^"]|"")*"?', " ", line)   # литералы (в т.ч. незакрытые)
+        line = re.sub(r'"(?:[^"]|"")*"?', " ", line)  # литералы (в т.ч. незакрытые)
         line = line.split("//", 1)[0]
         out.append(line)
     return "\n".join(out)

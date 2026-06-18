@@ -17,10 +17,30 @@ from collections.abc import Callable
 from .types import LLMResult
 
 # подстроки в тексте ошибки (lower-case). Перманентные проверяются первыми.
-_PERMANENT = ("401", "403", "invalid api key", "insufficient", "quota exceeded",
-              "unauthorized", "forbidden")
-_TRANSIENT = ("429", "500", "502", "503", "504", "timeout", "timed out",
-              "connection", "temporar", "overload", "rate limit", "unavailable", "reset")
+_PERMANENT = (
+    "401",
+    "403",
+    "invalid api key",
+    "insufficient",
+    "quota exceeded",
+    "unauthorized",
+    "forbidden",
+)
+_TRANSIENT = (
+    "429",
+    "500",
+    "502",
+    "503",
+    "504",
+    "timeout",
+    "timed out",
+    "connection",
+    "temporar",
+    "overload",
+    "rate limit",
+    "unavailable",
+    "reset",
+)
 
 
 def is_transient(error: str | None) -> bool:
@@ -31,9 +51,14 @@ def is_transient(error: str | None) -> bool:
     return any(m in e for m in _TRANSIENT)
 
 
-def with_retry(call: Callable[[], LLMResult], *, retries: int = 3, base_delay: float = 2.0,
-               sleep: Callable[[float], None] = time.sleep,
-               on_retry: Callable[[int, str | None, float], None] | None = None) -> LLMResult:
+def with_retry(
+    call: Callable[[], LLMResult],
+    *,
+    retries: int = 3,
+    base_delay: float = 2.0,
+    sleep: Callable[[float], None] = time.sleep,
+    on_retry: Callable[[int, str | None, float], None] | None = None,
+) -> LLMResult:
     """Вызвать call(); при транзиентном фейле повторить до retries раз с бэкоффом.
 
     Возвращает первый успех либо последний фейл (исчерпали попытки / ошибка перманентна).
@@ -46,7 +71,7 @@ def with_retry(call: Callable[[], LLMResult], *, retries: int = 3, base_delay: f
             return last
         if attempt >= retries or not is_transient(last.error):
             break
-        delay = base_delay * (2 ** attempt)
+        delay = base_delay * (2**attempt)
         if on_retry:
             on_retry(attempt + 1, last.error, delay)
         sleep(delay)

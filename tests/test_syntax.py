@@ -21,7 +21,7 @@ def proto():
     return load_protocol_l1()
 
 
-BALANCED = "Функция Ф()\nКонецФункции"          # парный текст для проверок не про парность
+BALANCED = "Функция Ф()\nКонецФункции"  # парный текст для проверок не про парность
 
 
 def diag(code: str, line: int, severity: str = "error") -> dict:
@@ -30,14 +30,26 @@ def diag(code: str, line: int, severity: str = "error") -> dict:
 
 # ── банды из протокола (число причин → балл) ─────────────────────────────────
 
-@pytest.mark.parametrize("n,expected", [
-    (0, 10), (1, 8), (2, 6), (3, 6), (4, 4), (6, 4), (7, 2), (99, 2),
-])
+
+@pytest.mark.parametrize(
+    "n,expected",
+    [
+        (0, 10),
+        (1, 8),
+        (2, 6),
+        (3, 6),
+        (4, 4),
+        (6, 4),
+        (7, 2),
+        (99, 2),
+    ],
+)
 def test_band_from_protocol(proto, n, expected):
     assert proto.scoring("S").score_for(n) == expected
 
 
 # ── score_s на синтетических диагностиках ────────────────────────────────────
+
 
 def test_clean_code_full_score(proto):
     s, det = syntax.score_s([], proto, BALANCED)
@@ -80,11 +92,14 @@ def test_parity_broken_is_zero(proto):
 
 def test_parity_ignores_keywords_in_strings(proto):
     """Ключевые слова внутри литералов не ломают парность."""
-    s, det = syntax.score_s([], proto, 'Функция Ф()\n    Текст = "КонецФункции Цикл";\nКонецФункции')
+    s, det = syntax.score_s(
+        [], proto, 'Функция Ф()\n    Текст = "КонецФункции Цикл";\nКонецФункции'
+    )
     assert det["balanced"] and s == 10
 
 
 # ── выбор режима инструмента (без docker) ────────────────────────────────────
+
 
 def test_get_analyzer_local_by_default(monkeypatch):
     monkeypatch.delenv("PRISM_BSL", raising=False)
@@ -105,8 +120,8 @@ def test_get_analyzer_unknown_mode_rejected():
 # ── интеграция: BSL LS ───────────────────────────────────────────────────────
 
 requires_bsl = pytest.mark.skipif(
-    not bsl_ls.available(),
-    reason="BSL LS не установлен (./tools/get-bsl-ls.sh) или нет java 21+")
+    not bsl_ls.available(), reason="BSL LS не установлен (./tools/get-bsl-ls.sh) или нет java 21+"
+)
 
 
 @requires_bsl
@@ -114,14 +129,18 @@ requires_bsl = pytest.mark.skipif(
 def test_integration_clean_and_broken(proto, tmp_path):
     src = tmp_path / "src"
     src.mkdir()
-    (src / "good.bsl").write_text("Функция Ф(А) Экспорт\n    Возврат А;\nКонецФункции\n",
-                                  encoding="utf-8")
-    (src / "bad.bsl").write_text("Функция Г(А) Экспорт\n    Для И = 0 По 5 Цикл\n        Возврат\n",
-                                 encoding="utf-8")
+    (src / "good.bsl").write_text(
+        "Функция Ф(А) Экспорт\n    Возврат А;\nКонецФункции\n", encoding="utf-8"
+    )
+    (src / "bad.bsl").write_text(
+        "Функция Г(А) Экспорт\n    Для И = 0 По 5 Цикл\n        Возврат\n", encoding="utf-8"
+    )
     diags = bsl_ls.analyze(src, tmp_path / "out")
-    s_good, _ = syntax.score_s(diags.get("good.bsl", []), proto,
-                               (src / "good.bsl").read_text(encoding="utf-8"))
-    s_bad, det_bad = syntax.score_s(diags.get("bad.bsl", []), proto,
-                                    (src / "bad.bsl").read_text(encoding="utf-8"))
+    s_good, _ = syntax.score_s(
+        diags.get("good.bsl", []), proto, (src / "good.bsl").read_text(encoding="utf-8")
+    )
+    s_bad, det_bad = syntax.score_s(
+        diags.get("bad.bsl", []), proto, (src / "bad.bsl").read_text(encoding="utf-8")
+    )
     assert s_good == 10
-    assert s_bad == 0 and not det_bad["balanced"]      # обрезанная генерация
+    assert s_bad == 0 and not det_bad["balanced"]  # обрезанная генерация

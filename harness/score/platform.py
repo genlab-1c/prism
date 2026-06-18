@@ -20,22 +20,31 @@ from harness.loaders import ProtocolL1
 
 def score_p(run: OneCRunResult, protocol: ProtocolL1) -> tuple[int | None, dict]:
     """Балл P из результата исполнения кандидата против синтетической базы."""
-    if run.status in ("infra_error", "no_result"):       # инфраструктура → «не измерено»
-        return None, {"reason": f"исполнение не состоялось ({run.status}): {run.infra_detail[:200]}"}
+    if run.status in ("infra_error", "no_result"):  # инфраструктура → «не измерено»
+        return None, {
+            "reason": f"исполнение не состоялось ({run.status}): {run.infra_detail[:200]}"
+        }
     if run.status in ("no_entry", "candidate_error"):
         # вина кандидата: функции нет / модуль не компилируется →
         # ни одного подтверждённого обращения к метаданным (pre_check протокола)
-        return 0, {"reason": run.infra_detail or "в коде кандидата не найдено ни одной функции",
-                   "log": run.log[:200]}
+        return 0, {
+            "reason": run.infra_detail or "в коде кандидата не найдено ни одной функции",
+            "log": run.log[:200],
+        }
 
     if run.total == 0:
         # обработчик упал до тестов: платформенные маркеры есть → структура вымышлена
         signal = 0.0 if run.platform_errors else None
         if signal is None:
-            return None, {"reason": "тесты не исполнились, платформенных маркеров нет",
-                          "log": run.log[:200]}
+            return None, {
+                "reason": "тесты не исполнились, платформенных маркеров нет",
+                "log": run.log[:200],
+            }
         return protocol.scoring("P").score_for(signal), {
-            "clean_share": 0.0, "platform_errors": run.platform_errors, "log": run.log[:200]}
+            "clean_share": 0.0,
+            "platform_errors": run.platform_errors,
+            "log": run.log[:200],
+        }
 
     clean = run.total - run.platform_error_tests
     share = clean / run.total
