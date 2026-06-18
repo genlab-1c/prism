@@ -27,6 +27,8 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
+from rich.table import Table
+
 from harness.execute import bsl_ls
 from harness.execute.onec import runner as onec
 from harness.execute.runner import Runner, get_runner
@@ -46,6 +48,7 @@ from harness.score.optimization import score_o
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
 from harness.score.syntax import _cluster_lines, score_s
+from harness.ui import console
 
 
 def _concurrency() -> int:
@@ -73,9 +76,13 @@ def _failed_generation_run(r: dict, axes) -> dict | None:
         reason = (r.get("error") or "генерация не удалась")[:200]
         scores: dict = {a: None for a in axes}
         scores["Q"] = None
-        return {"scores": scores, "bands": {"M": None, "P": None},
-                "detail": {a: {"reason": f"генерация не удалась: {reason}"} for a in axes}}
+        return {
+            "scores": scores,
+            "bands": {"M": None, "P": None},
+            "detail": {a: {"reason": f"генерация не удалась: {reason}"} for a in axes},
+        }
     return None
+
 
 FENCE_RE = re.compile(r"```(?:[\wа-яА-Я+]+)?\s*\n(.*?)```", re.DOTALL)
 
@@ -96,16 +103,19 @@ class Instruments:
     onec_run: onec.OneCRunResult | None = None
 
 
-def _onec_run_for(task: Task, code: str, work_dir: Path,
-                  instr: Instruments) -> onec.OneCRunResult | None:
+def _onec_run_for(
+    task: Task, code: str, work_dir: Path, instr: Instruments
+) -> onec.OneCRunResult | None:
     """Исполнение кандидата B против синтетической базы — один раз на кандидата."""
     if instr.onec_run is None and onec.available():
         instr.onec_run = onec.run_candidate(
-            code, task.dir, work_dir / "onec", task.entry_point_patterns)
+            code, task.dir, work_dir / "onec", task.entry_point_patterns
+        )
     return instr.onec_run
 
 
 # ── извлечение кода кандидата ─────────────────────────────────────────────────
+
 
 def extract_code(response: str) -> str:
     """Код из ответа модели: первый ```-блок, иначе весь текст как есть."""
@@ -121,55 +131,68 @@ def extract_code(response: str) -> str:
 # шкалы 0..10) для сверки с экспертом кладётся в detail["band"] и поднимается в
 # run["bands"] (см. score_candidate).
 
-def _score_meaning(task: Task, code: str, protocol: ProtocolL1,
-                   work_dir: Path, instr: Instruments) -> tuple[float | None, dict]:
+
+def _score_meaning(
+    task: Task, code: str, protocol: ProtocolL1, work_dir: Path, instr: Instruments
+) -> tuple[float | None, dict]:
     if not task.testable:
         return None, {"reason": "нет скрытых тестов — ось M не исполнима"}
-    if task.category == "B":                        # исполнение в 1С (синтетическая база)
+    if task.category == "B":  # исполнение в 1С (синтетическая база)
         if not onec.available():
             return None, {"reason": onec.unavailable_reason()}
         run = _onec_run_for(task, code, work_dir, instr)
-        if run.status in ("infra_error", "no_result"):    # инфраструктура → «не измерено»
-            return None, {"reason": f"исполнение не состоялось ({run.status})",
-                          "infra_detail": run.infra_detail[:300]}
+        if run.status in ("infra_error", "no_result"):  # инфраструктура → «не измерено»
+            return None, {
+                "reason": f"исполнение не состоялось ({run.status})",
+                "infra_detail": run.infra_detail[:300],
+            }
         # no_entry / candidate_error — вина кандидата → floor 0 (как в кат. A)
         executed = run.status == "ok" and run.total > 0
-        return (fine_m(run.passed, run.total, executed),
-                {**run.model_dump(), "band": m_band(run.passed, run.total, executed, protocol)})
+        return (
+            fine_m(run.passed, run.total, executed),
+            {**run.model_dump(), "band": m_band(run.passed, run.total, executed, protocol)},
+        )
     res = score_m(code, task.tests, protocol, work_dir, name="cand", runner=instr.runner)
-    if res.score is None:                           # ось не измерена (нет раннера)
+    if res.score is None:  # ось не измерена (нет раннера)
         return None, res.model_dump(exclude={"score"})
-    return (fine_m(res.passed, res.total, res.executed),
-            {**res.model_dump(exclude={"score"}), "band": res.score})
+    return (
+        fine_m(res.passed, res.total, res.executed),
+        {**res.model_dump(exclude={"score"}), "band": res.score},
+    )
 
 
-def _score_syntax(task: Task, code: str, protocol: ProtocolL1,
-                  work_dir: Path, instr: Instruments) -> tuple[int | None, dict]:
-    if task.category == "B":                        # S(B) — компилятор 1С (/CheckModules)
+def _score_syntax(
+    task: Task, code: str, protocol: ProtocolL1, work_dir: Path, instr: Instruments
+) -> tuple[int | None, dict]:
+    if task.category == "B":  # S(B) — компилятор 1С (/CheckModules)
         if not onec.available():
             return None, {"reason": onec.unavailable_reason()}
         run = _onec_run_for(task, code, work_dir, instr)
         if run.status in ("infra_error", "no_result"):
             return None, {"reason": f"исполнение не состоялось ({run.status})"}
-        gap = protocol.axes["S"].cluster_gap or 3   # соседние ошибки = одна корневая причина
+        gap = protocol.axes["S"].cluster_gap or 3  # соседние ошибки = одна корневая причина
         clusters = _cluster_lines(sorted(run.compile_error_lines), gap)
         return protocol.scoring("S").score_for(clusters), {
-            "root_causes": clusters, "instrument": "1С /CheckModules",
-            "errors": run.compile_errors}
+            "root_causes": clusters,
+            "instrument": "1С /CheckModules",
+            "errors": run.compile_errors,
+        }
     if instr.diagnostics is None:
         return None, {"reason": f"BSL LS недоступен — {bsl_ls.unavailable_reason()}"}
     return score_s(instr.diagnostics, protocol, code)
 
 
-def _score_optimization(task: Task, code: str, protocol: ProtocolL1,
-                        work_dir: Path, instr: Instruments) -> tuple[int | None, dict]:
+def _score_optimization(
+    task: Task, code: str, protocol: ProtocolL1, work_dir: Path, instr: Instruments
+) -> tuple[int | None, dict]:
     if instr.diagnostics is None:
         return None, {"reason": f"BSL LS недоступен — {bsl_ls.unavailable_reason()}"}
     return score_o(instr.diagnostics, protocol)
 
 
-def _score_platform(task: Task, code: str, protocol: ProtocolL1,
-                    work_dir: Path, instr: Instruments) -> tuple[float | None, dict]:
+def _score_platform(
+    task: Task, code: str, protocol: ProtocolL1, work_dir: Path, instr: Instruments
+) -> tuple[float | None, dict]:
     """P из ТОГО ЖЕ прогона 1С, что и M (кэш instr.onec_run): один запуск, два сигнала.
 
     Возвращает ПЛАВНУЮ оценку (чистая доля × 10) для лидерборда; ступенька score_p
@@ -188,8 +211,7 @@ def _score_platform(task: Task, code: str, protocol: ProtocolL1,
     return fine, {**detail, "band": band}
 
 
-SCORERS = {"S": _score_syntax, "M": _score_meaning,
-           "O": _score_optimization, "P": _score_platform}
+SCORERS = {"S": _score_syntax, "M": _score_meaning, "O": _score_optimization, "P": _score_platform}
 
 # Оси, чей инструмент — батч BSL LS (диагностики считаются один раз на прогон)
 BSL_AXES = {"S", "O"}
@@ -197,9 +219,16 @@ BSL_AXES = {"S", "O"}
 
 # ── оценка одного кандидата ───────────────────────────────────────────────────
 
-def score_candidate(task: Task, code: str, requested: set[str],
-                    constitution: Constitution, protocol: ProtocolL1,
-                    work_dir: Path, instr: Instruments) -> tuple[dict, dict]:
+
+def score_candidate(
+    task: Task,
+    code: str,
+    requested: set[str],
+    constitution: Constitution,
+    protocol: ProtocolL1,
+    work_dir: Path,
+    instr: Instruments,
+) -> tuple[dict, dict]:
     """Все оси для одного кода → (scores {ось: балл|None, Q}, detail {ось: …}).
 
     scores[M], scores[P] — ПЛАВНЫЕ (доля × 10); scores[S], scores[O] — ступеньки.
@@ -209,9 +238,9 @@ def score_candidate(task: Task, code: str, requested: set[str],
     applicable = set(constitution.applicable_axes(task.category))
     scores: dict[str, int | None] = {}
     detail: dict[str, dict] = {}
-    for axis in constitution.axes:                  # порядок S·M·O·P из конституции
+    for axis in constitution.axes:  # порядок S·M·O·P из конституции
         if axis not in applicable or axis not in requested:
-            scores[axis] = None                     # N/A для категории либо не просит издание
+            scores[axis] = None  # N/A для категории либо не просит издание
         elif axis not in SCORERS:
             scores[axis] = None
             detail[axis] = {"reason": "скорер оси не реализован"}
@@ -222,6 +251,7 @@ def score_candidate(task: Task, code: str, requested: set[str],
 
 
 # ── прогон издания по эксперименту ────────────────────────────────────────────
+
 
 def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     constitution = load_constitution()
@@ -238,15 +268,19 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     records = []
     for tr in experiment["task_results"]:
         task = tasks.get(tr["task_id"])
-        if task is None:                            # задача эксперимента не мигрирована в tasks/
+        if task is None:  # задача эксперимента не мигрирована в tasks/
             continue
         model_safe = tr["model_id"].replace("/", "_")
         for r in tr["runs"]:
-            records.append({
-                "tr": tr, "r": r, "task": task,
-                "code": extract_code(r["response"]),
-                "fname": f"{tr['task_id']}__{model_safe}__run{r['run_index']}.bsl",
-            })
+            records.append(
+                {
+                    "tr": tr,
+                    "r": r,
+                    "task": task,
+                    "code": extract_code(r["response"]),
+                    "fname": f"{tr['task_id']}__{model_safe}__run{r['run_index']}.bsl",
+                }
+            )
 
     # Фаза 1: один батч BSL LS на всех кандидатов (старт JVM дорог) → {имя: диагностики}
     diags_by_file = _batch_diagnostics(records, requested, work_root)
@@ -257,22 +291,30 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     def _score_rec(rec: dict) -> dict:
         tr, r = rec["tr"], rec["r"]
         na = _failed_generation_run(r, constitution.axes)
-        if na is not None:                          # генерация прогона не удалась → N/A, не 0
-            return {"key": (tr["task_id"], tr["model_id"]), "tr": tr,
-                    "run": {"run_index": r["run_index"],
-                            "response_hash": r.get("response_hash"), **na}}
+        if na is not None:  # генерация прогона не удалась → N/A, не 0
+            return {
+                "key": (tr["task_id"], tr["model_id"]),
+                "tr": tr,
+                "run": {"run_index": r["run_index"], "response_hash": r.get("response_hash"), **na},
+            }
         diags = None if diags_by_file is None else diags_by_file.get(rec["fname"], [])
         instr = Instruments(runner=runner, diagnostics=diags)
-        work_dir = work_root / tr["task_id"] / tr["model_id"].replace("/", "_") / f"run{r['run_index']}"
+        work_dir = (
+            work_root / tr["task_id"] / tr["model_id"].replace("/", "_") / f"run{r['run_index']}"
+        )
         scores, detail = score_candidate(
-            rec["task"], rec["code"], requested, constitution, protocol, work_dir, instr)
+            rec["task"], rec["code"], requested, constitution, protocol, work_dir, instr
+        )
         return {
-            "key": (tr["task_id"], tr["model_id"]), "tr": tr,
+            "key": (tr["task_id"], tr["model_id"]),
+            "tr": tr,
             "run": {
                 "run_index": r["run_index"],
                 "response_hash": r.get("response_hash"),
-                "scores": scores,                       # M/P плавные — лидерборд
-                "bands": {a: detail.get(a, {}).get("band") for a in ("M", "P")},  # ступеньки для сверки с экспертом (L2)
+                "scores": scores,  # M/P плавные — лидерборд
+                "bands": {
+                    a: detail.get(a, {}).get("band") for a in ("M", "P")
+                },  # ступеньки для сверки с экспертом (L2)
                 "detail": detail,
             },
         }
@@ -280,23 +322,29 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     workers = _concurrency()
     if workers > 1 and len(records) > 1:
         with ThreadPoolExecutor(max_workers=workers) as pool:
-            scored = list(pool.map(_score_rec, records))    # map сохраняет порядок входа
+            scored = list(pool.map(_score_rec, records))  # map сохраняет порядок входа
     else:
         scored = [_score_rec(rec) for rec in records]
 
     groups: dict[tuple, dict] = {}
-    for res in scored:                                       # сборка в порядке records
+    for res in scored:  # сборка в порядке records
         tr = res["tr"]
-        group = groups.setdefault(res["key"], {
-            "task_id": tr["task_id"], "model_id": tr["model_id"],
-            "model_name": tr["model_name"], "runs": []})
+        group = groups.setdefault(
+            res["key"],
+            {
+                "task_id": tr["task_id"],
+                "model_id": tr["model_id"],
+                "model_name": tr["model_name"],
+                "runs": [],
+            },
+        )
         group["runs"].append(res["run"])
 
     return {
         "experiment_id": exp_id,
-        "evaluator_id": "auto_l1",                  # против expert_01 в экспертной разметке
+        "evaluator_id": "auto_l1",  # против expert_01 в экспертной разметке
         "edition": edition.name,
-        "leaderboard_view": edition.leaderboard_view,   # как ранжировать сводку (см. print_summary)
+        "leaderboard_view": edition.leaderboard_view,  # как ранжировать сводку (см. print_summary)
         "runner": runner.name,
         "syntax_analyzer": f"bsl-ls {bsl_ls.VERSION}" if diags_by_file is not None else None,
         "protocol_version": protocol.version,
@@ -305,8 +353,9 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     }
 
 
-def _batch_diagnostics(records: list[dict], requested: set[str],
-                       work_root: Path) -> dict[str, list[dict]] | None:
+def _batch_diagnostics(
+    records: list[dict], requested: set[str], work_root: Path
+) -> dict[str, list[dict]] | None:
     """Один прогон BSL LS на всех кандидатов → {имя_файла: диагностики}.
 
     None — анализатор не нужен (издание не просит S/O) либо недоступен: оси S/O
@@ -322,6 +371,7 @@ def _batch_diagnostics(records: list[dict], requested: set[str],
 
 
 # ── сводка и сверка с экспертом ───────────────────────────────────────────────
+
 
 def _expert_index(experiment_path: Path) -> dict[tuple, dict]:
     """{(task_id, model_id, run_index): scores} из экспертного файла, если он есть."""
@@ -343,26 +393,40 @@ def _fmt(v) -> str:
 
 def print_summary(result: dict, experiment_path: Path) -> None:
     expert = _expert_index(experiment_path)
-    head = f"{'задача':<6} {'модель':<16} {'S':>3} {'M':>5} {'O':>3} {'P':>5} {'Q':>5}"
+    table = Table(header_style="bold", row_styles=["", "dim"])
+    table.add_column("задача")
+    table.add_column("модель")
+    for axis in ("S", "M", "O", "P"):
+        table.add_column(axis, justify="right")
+    table.add_column("Q", justify="right", style="bold")  # Q — итог, выделяем колонкой
     if expert:
-        head += f"   {'S·эксп':>6} {'M·эксп':>6} {'Q·эксп':>6}  M-детали"
-    print(head)
-    print("─" * len(head))
+        for col in ("S·эксп", "M·эксп", "Q·эксп"):
+            table.add_column(col, justify="right")
+        table.add_column("M-детали")
     for t in result["tasks"]:
         model = t["model_name"][:16]
         for r in t["runs"]:
             s = r["scores"]
-            line = (f"{t['task_id']:<6} {model:<16} "
-                    f"{_fmt(s['S']):>3} {_fmt(s['M']):>5} {_fmt(s['O']):>3} "
-                    f"{_fmt(s['P']):>5} {_fmt(s['Q']):>5}")
+            row = [
+                t["task_id"],
+                model,
+                _fmt(s["S"]),
+                _fmt(s["M"]),
+                _fmt(s["O"]),
+                _fmt(s["P"]),
+                _fmt(s["Q"]),
+            ]
             if expert:
                 e = expert.get((t["task_id"], t["model_id"], r["run_index"]), {})
                 md = r["detail"].get("M", {})
-                m_info = (f"{md.get('passed', '')}/{md.get('total', '')}"
-                          if md.get("total") else md.get("reason", ""))
-                line += (f"   {_fmt(e.get('S')):>6} {_fmt(e.get('M')):>6} "
-                         f"{_fmt(e.get('Q')):>6}  {m_info}")
-            print(line)
+                m_info = (
+                    f"{md.get('passed', '')}/{md.get('total', '')}"
+                    if md.get("total")
+                    else md.get("reason", "")
+                )
+                row += [_fmt(e.get("S")), _fmt(e.get("M")), _fmt(e.get("Q")), m_info]
+            table.add_row(*row)
+    console.print(table)
 
     if result.get("leaderboard_view") == "quality":
         print_leaderboard(result)
@@ -378,13 +442,19 @@ def print_leaderboard(result: dict) -> None:
                 by_model.setdefault(t["model_name"], []).append(q)
     if not by_model:
         return
-    print("\nЛидерборд (средний Q):")
+    table = Table(title="Лидерборд (средний Q)", title_style="bold", header_style="bold")
+    table.add_column("#", justify="right")
+    table.add_column("модель")
+    table.add_column("Q̄", justify="right")
+    table.add_column("n", justify="right")
     ranked = sorted(((sum(v) / len(v), name) for name, v in by_model.items()), reverse=True)
     for i, (avg, name) in enumerate(ranked, 1):
-        print(f"  {i}. {name:<18} Q̄ = {avg:.2f}  (n={len(by_model[name])})")
+        table.add_row(str(i), name, f"{avg:.2f}", str(len(by_model[name])))
+    console.print(table)
 
 
 # ── прогон + отчёт (зовётся из CLI: prism score) ──────────────────────────────
+
 
 def newest_experiment() -> Path:
     """Свежайший experiment_A_*.json из results/ (по сортировке имени = по дате)."""
@@ -394,41 +464,84 @@ def newest_experiment() -> Path:
     return runs[-1]
 
 
-def score_report(experiment_path: Path, edition_name: str = "core",
-                 out_path: Path | None = None) -> Path:
+def score_report(
+    experiment_path: Path, edition_name: str = "core", out_path: Path | None = None
+) -> Path:
     """Прогнать издание по эксперименту, записать результат, напечатать сводку."""
     runner = get_runner()
     if not runner.available():
-        print(f"⚠ раннер {runner.name} недоступен: {runner.unavailable_reason()}")
-        print("  ось M выйдет «не измерена» (score=None) для всех кандидатов.")
+        console.print(
+            f"⚠ раннер {runner.name} недоступен: {runner.unavailable_reason()}",
+            style="yellow",
+            markup=False,
+            highlight=False,
+        )
+        console.print(
+            "  ось M выйдет «не измерена» (score=None) для всех кандидатов.", style="yellow"
+        )
 
     result = run(experiment_path, edition_name, runner)
 
-    out_path = out_path or (PRISM / "results" / "auto"
-                            / f"{result['experiment_id']}_auto_l1.json")
+    out_path = out_path or (PRISM / "results" / "auto" / f"{result['experiment_id']}_auto_l1.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
 
     analyzer = result["syntax_analyzer"] or "S/O вне издания или анализатор недоступен"
-    print(f"издание {result['edition']} × {experiment_path.name}\n"
-          f"раннер {result['runner']} · синтаксис {analyzer} · протокол L1 v{result['protocol_version']}\n")
+    console.print(
+        f"издание {result['edition']} × {experiment_path.name}\n"
+        f"раннер {result['runner']} · синтаксис {analyzer} · протокол L1 v{result['protocol_version']}\n",
+        markup=False,
+        highlight=False,
+    )
     print_summary(result, experiment_path)
-    print()
+    console.print()
     print_tag_profiles(result)
-    print(f"\n→ {out_path.relative_to(PRISM)}")
+    console.print(f"\n→ {out_path.relative_to(PRISM)}", style="green", highlight=False)
     return out_path
 
 
 def print_tag_profiles(result: dict) -> None:
     """Срезы качества по тегам — по каждой модели (где модель сильнее/слабее)."""
-    from harness.stats.tags import format_tag_profile, tag_profile
+    from harness.stats.tags import tag_profile
 
     tasks_by_id = {t.id: t for t in load_tasks()}
     by_model: dict[tuple, list] = {}
     for t in result["tasks"]:
         by_model.setdefault((t["model_id"], t["model_name"]), []).append(t)
-    print("── срезы по тегам (M̄ — логика, P̄ — платформа; n — задач; модель-vs-модель) ──")
+    console.print(
+        "── срезы по тегам (M̄ — логика, P̄ — платформа; n — задач; модель-vs-модель) ──",
+        style="bold",
+        highlight=False,
+    )
     for (_mid, mname), groups in by_model.items():
         prof = tag_profile(groups, tasks_by_id)
-        if prof:
-            print(format_tag_profile(mname, prof))
+        if not prof:
+            continue
+        table = Table(  # одна таблица на модель; измерения разделены секциями
+            title=f"профиль по тегам — {mname}",
+            title_style="bold",
+            title_justify="left",
+            header_style="bold",
+        )
+        table.add_column("измерение")
+        table.add_column("тег")
+        table.add_column("M̄", justify="right")
+        table.add_column("P̄", justify="right")
+        table.add_column("n", justify="right")
+        for di, dim in enumerate(sorted(prof)):
+            if di:
+                table.add_section()
+            rows = sorted(prof[dim].items(), key=lambda kv: (-(kv[1].get("M") or -1), kv[0]))
+            for ti, (tag, row) in enumerate(rows):
+                m = "—" if row.get("M") is None else f"{row['M']:.1f}"
+                p = "—" if row.get("P") is None else f"{row['P']:.1f}"
+                low = row["n"] < 3  # тег на 1–2 задачах — шум; гасим строку и метим ⚠
+                table.add_row(
+                    dim if ti == 0 else "",
+                    tag,
+                    m,
+                    p,
+                    f"{row['n']} ⚠" if low else str(row["n"]),
+                    style="dim" if low else None,
+                )
+        console.print(table)

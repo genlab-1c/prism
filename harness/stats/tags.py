@@ -62,21 +62,6 @@ def tag_profile(model_tasks: list[dict], tasks_by_id: dict[str, Task]) -> dict[s
         result[dim] = {}
         for tag, axis_lists in tags.items():
             row = {a: (round(mean(v), 2) if v else None) for a, v in axis_lists.items()}
-            row["n"] = len(axis_lists["M"])      # задач, где ось M измерена (опорная)
+            row["n"] = len(axis_lists["M"])  # задач, где ось M измерена (опорная)
             result[dim][tag] = row
     return result
-
-
-def format_tag_profile(model_name: str, profile: dict[str, dict]) -> str:
-    """Человекочитаемый профиль: измерение → теги с M̄/P̄ и n."""
-    lines = [f"профиль по тегам — {model_name}"]
-    for dim in sorted(profile):
-        lines.append(f"  [{dim}]")
-        lines.append(f"    {'тег':<22} {'M̄':>5} {'P̄':>5} {'n':>3}")
-        rows = sorted(profile[dim].items(), key=lambda kv: (-(kv[1].get('M') or -1), kv[0]))
-        for tag, row in rows:
-            m = "—" if row.get("M") is None else f"{row['M']:.1f}"
-            p = "—" if row.get("P") is None else f"{row['P']:.1f}"
-            warn = " ⚠малое n" if row["n"] < 3 else ""
-            lines.append(f"    {tag:<22} {m:>5} {p:>5} {row['n']:>3}{warn}")
-    return "\n".join(lines)
