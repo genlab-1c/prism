@@ -43,8 +43,7 @@ def test_cli_check_returns_zero():
     assert cli.main(["check"]) == 0
 
 
-def test_cli_requires_subcommand(capsys):
-    import pytest
-
-    with pytest.raises(SystemExit):
-        cli.main([])
+def test_cli_no_subcommand_shows_quickstart(capsys):
+    rc = cli.main([])
+    assert rc == 0  # без подкоманды — шпаргалка, а не ошибка argparse
+    assert "prism leaderboard" in capsys.readouterr().out
