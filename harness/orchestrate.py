@@ -27,7 +27,6 @@ from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 
-from rich.align import Align
 from rich.table import Table
 
 from harness.execute import bsl_ls
@@ -434,7 +433,7 @@ def print_summary(result: dict, experiment_path: Path) -> None:
                 )
                 row += [_fmt(e.get("S")), _fmt(e.get("M")), _fmt(e.get("Q")), m_info]
             table.add_row(*row)
-    console.print(Align.center(table))
+    console.print(table)
 
 
 def print_leaderboard(result: dict) -> None:
@@ -487,7 +486,7 @@ def print_leaderboard(result: dict) -> None:
             avg(b["Q"], 2),
             str(len(b["Q"])),
         )
-    console.print(Align.center(table))
+    console.print(table)
 
 
 # ── прогон + отчёт (зовётся из CLI: prism score) ──────────────────────────────
@@ -628,4 +627,4 @@ def print_tag_profiles(result: dict) -> None:
                     f"{row['n']} ⚠" if low else str(row["n"]),
                     style="dim" if low else None,
                 )
-        console.print(Align.center(table))
+        console.print(table)

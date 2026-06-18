@@ -18,7 +18,56 @@ import sys
 from pathlib import Path
 
 from harness import check, orchestrate
-from harness.ui import STATUS_STYLE, console
+from harness.ui import STATUS_STYLE, console, print_logo
+
+try:  # версия из метаданных установленного пакета (pyproject [project].version)
+    from importlib.metadata import version as _pkg_version
+
+    VERSION = _pkg_version("prism-bench")
+except Exception:  # не установлен как пакет (запуск из исходников) — не падаем
+    VERSION = "dev"
+
+# Русификация стандартных строк argparse (заголовки справки и тексты ошибок). argparse
+# берёт их через модульный gettext-хелпер `_`; подменяем его словарём-переводчиком. Важно
+# сделать это ДО создания парсеров — дефолтные группы («команды»/«параметры») и текст -h
+# вычисляются в момент конструирования ArgumentParser.
+_HELP_RU: dict[str, str] = {
+    "usage: ": "использование: ",
+    "positional arguments": "команды",
+    "options": "параметры",
+    "optional arguments": "параметры",
+    "show this help message and exit": "показать эту справку и выйти",
+    "show program's version number and exit": "показать версию и выйти",
+    "the following arguments are required: %s": "не хватает обязательных аргументов: %s",
+    "unrecognized arguments: %s": "неизвестные аргументы: %s",
+    "argument %s: %s": "аргумент %s: %s",
+    "argument %(argument_name)s: %(message)s": "аргумент %(argument_name)s: %(message)s",
+    "invalid choice: %(value)r (choose from %(choices)s)": (
+        "недопустимое значение %(value)r (допустимо: %(choices)s)"
+    ),
+    "invalid %(type)s value: %(value)r": "недопустимое значение %(type)s: %(value)r",
+    "expected one argument": "ожидался один аргумент",
+    "expected at least one argument": "ожидался хотя бы один аргумент",
+    "ambiguous option: %(option)s could match %(matches)s": (
+        "неоднозначная опция: %(option)s подходит под %(matches)s"
+    ),
+    "%(prog)s: error: %(message)s\n": "%(prog)s: ошибка: %(message)s\n",
+    "unknown parser %(parser_name)r (choices: %(choices)s)": (
+        "неизвестная команда %(parser_name)r (доступно: %(choices)s)"
+    ),
+}
+argparse._ = lambda message: _HELP_RU.get(message, message)  # type: ignore[attr-defined]
+
+
+def _argument_error_ru(self: argparse.ArgumentError) -> str:
+    """Русский текст ошибки аргумента: префикс «argument» в ArgumentError.__str__ зашит
+    без gettext (Python 3.10), поэтому словарём не ловится — локализуем сам __str__."""
+    if self.argument_name is None:
+        return str(self.message)
+    return f"аргумент {self.argument_name}: {self.message}"
+
+
+argparse.ArgumentError.__str__ = _argument_error_ru  # type: ignore[method-assign]
 
 
 def _add_runtime_flags(parser: argparse.ArgumentParser) -> None:
@@ -137,7 +186,8 @@ def cmd_check(args: argparse.Namespace) -> int:
 
 def print_quickstart() -> None:
     """Шпаргалка-«главная»: что набрать, когда `prism` вызван без команды."""
-    console.print("\n[bold]PRISM[/bold] — оценка кода 1С:Предприятие, сгенерированного ИИ\n")
+    print_logo()  # брендовый баннер (тихо ничего на не-tty)
+    console.print()
     steps = [
         ("посмотреть результаты", "prism leaderboard"),
         ("пересчитать оценку L1", "prism score"),
@@ -154,11 +204,36 @@ def print_quickstart() -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    ap = argparse.ArgumentParser(prog="prism", description="PRISM — бенчмарк кодогенерации 1С.")
+    ap = argparse.ArgumentParser(
+        prog="prism",
+        description="PRISM — бенчмарк кодогенерации 1С.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,  # epilog с примерами — как есть
+        epilog=(
+            "Примеры:\n"
+            "  prism                       шпаргалка (эта подсказка)\n"
+            "  prism leaderboard           кто впереди (мгновенно, без пересчёта)\n"
+            "  prism score --full          пересчитать L1 + построчные детали\n"
+            "  prism check --task B17       быстро прогнать эталон одной задачи\n\n"
+            "Справка по команде:  prism <команда> --help"
+        ),
+    )
+    ap.add_argument(
+        "--version", action="version", version=f"prism {VERSION}", help="показать версию и выйти"
+    )
     # без подкоманды — не ошибка, а шпаргалка (см. main); поэтому required=False
-    sub = ap.add_subparsers(dest="command", required=False)
+    sub = ap.add_subparsers(dest="command", required=False, metavar="<команда>")
 
-    ge = sub.add_parser("generate", help="генерация кода кандидатов моделями по изданию")
+    ge = sub.add_parser(
+        "generate",
+        help="генерация кода кандидатов моделями по изданию",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Примеры:\n"
+            "  prism generate --category A --dry-run        смета стоимости без сети\n"
+            "  prism generate --category A --models deepseek gemini\n"
+            "  prism generate --category B --tasks B1 B2 --max-cost 5"
+        ),
+    )
     ge.add_argument("--category", required=True, choices=["A", "B"], help="категория задач")
     ge.add_argument("--edition", default="core", help="издание из editions/ (по умолчанию core)")
     ge.add_argument("--models", nargs="*", default=None, help="ключи моделей (по умолчанию все)")
@@ -199,7 +274,14 @@ def build_parser() -> argparse.ArgumentParser:
     ge.set_defaults(func=cmd_generate)
 
     lb = sub.add_parser(
-        "leaderboard", help="мгновенная сводка лидерборда из готовой оценки L1 (без пересчёта)"
+        "leaderboard",
+        help="мгновенная сводка лидерборда из готовой оценки L1 (без пересчёта)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Примеры:\n"
+            "  prism leaderboard            свежайший лидерборд\n"
+            "  prism leaderboard --full     + построчная таблица S·M·O·P·Q и срезы по тегам"
+        ),
     )
     lb.add_argument(
         "--experiment",
@@ -213,7 +295,17 @@ def build_parser() -> argparse.ArgumentParser:
     )
     lb.set_defaults(func=cmd_leaderboard)
 
-    sc = sub.add_parser("score", help="авто-оценка L1 готовых генераций по изданию (пересчёт)")
+    sc = sub.add_parser(
+        "score",
+        help="авто-оценка L1 готовых генераций по изданию (пересчёт)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Примеры:\n"
+            "  prism score                  пересчитать свежайший эксперимент → лидерборд\n"
+            "  prism score --full           + построчные детали S·M·O·P·Q\n"
+            "  prism score --runner docker  ось M в песочнице Docker"
+        ),
+    )
     sc.add_argument(
         "--experiment",
         type=Path,
@@ -233,7 +325,17 @@ def build_parser() -> argparse.ArgumentParser:
     _add_runtime_flags(sc)
     sc.set_defaults(func=cmd_score)
 
-    ch = sub.add_parser("check", help="проверка целостности контрактов, заданий, эталонов")
+    ch = sub.add_parser(
+        "check",
+        help="проверка целостности контрактов, заданий, эталонов",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Примеры:\n"
+            "  prism check                  полная проверка (гейт перед коммитом)\n"
+            "  prism check --task B17       быстро: эталон только задачи B17\n"
+            "  prism check --category A     эталоны только категории A"
+        ),
+    )
     ch.add_argument(
         "--task",
         nargs="*",
