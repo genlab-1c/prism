@@ -27,7 +27,7 @@ export PRISM_BSL    := $(MODE)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls test test-fast lint clean
+.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls test test-fast lint docs clean
 
 help:  ## показать этот список
 	@echo "Пользоваться бенчмарком — командой prism (свой --help и флаги):"
@@ -68,5 +68,7 @@ lint: venv  ## ruff (check + format) + pre-commit (как в CI)
 	$(UV) run ruff check .
 	$(UV) run ruff format --check .
 	$(UV) run pre-commit run --all-files
+docs: venv  ## регенерировать таблицы лидерборда и бейджи в README/status (алиас prism docs)
+	$(UV) run prism docs
 clean:  ## убрать venv, рабочие и build-артефакты (данные results/ не трогает)
 	rm -rf $(VENV) site build *.egg-info .pytest_cache .ruff_cache work

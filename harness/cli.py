@@ -169,6 +169,16 @@ def cmd_tasks(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_docs(args: argparse.Namespace) -> int:
+    from harness.report import leaderboard_md
+
+    changed = leaderboard_md.write()
+    for p in changed:
+        console.print(f"→ {p.name} обновлён", style="green", highlight=False)
+    console.print("  таблицы лидерборда и счётные бейджи пересобраны из results/auto/", style="dim")
+    return 0
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     _apply_runtime_flags(args)
     only = set(args.task) if args.task else None
@@ -368,6 +378,17 @@ def build_parser() -> argparse.ArgumentParser:
         "tasks", help="пересобрать видимый банк задач (tasks/README.md) из task.yaml"
     )
     tk.set_defaults(func=cmd_tasks)
+
+    dc = sub.add_parser(
+        "docs",
+        help="регенерировать таблицы лидерборда и бейджи в README/status из оценок L1",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Подменяет регионы между <!-- prism:KEY --> в README.md и docs/status.md\n"
+            "данными из results/auto/*_auto_l1.json. Запускать после prism score."
+        ),
+    )
+    dc.set_defaults(func=cmd_docs)
 
     return ap
 
