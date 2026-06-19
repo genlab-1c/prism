@@ -16,6 +16,7 @@ from harness.generate.adapters import (
     GigaChatAdapter,
     OpenAICompatAdapter,
     YandexGPTAdapter,
+    YandexResponsesAdapter,
     build_adapter,
 )
 from harness.generate.adapters.registry import ADAPTERS
@@ -306,6 +307,7 @@ def test_registry_builds_each_adapter_from_env():
     assert isinstance(build_adapter("openrouter", env=env), OpenAICompatAdapter)
     assert isinstance(build_adapter("gigachat", env=env), GigaChatAdapter)
     assert isinstance(build_adapter("yandexgpt", env=env), YandexGPTAdapter)
+    assert isinstance(build_adapter("yandex_responses", env=env), YandexResponsesAdapter)
     local = build_adapter("openai_compat", endpoint="http://localhost:11434/v1", env={})
     assert isinstance(local, OpenAICompatAdapter) and local.base_url.endswith("11434/v1")
 
@@ -317,4 +319,10 @@ def test_registry_missing_creds_and_unknown_adapter():
         build_adapter("openai_compat", env={})  # нет endpoint
     with pytest.raises(AdapterConfigError):
         build_adapter("несуществующий", env={})
-    assert set(ADAPTERS) == {"openrouter", "openai_compat", "gigachat", "yandexgpt"}
+    assert set(ADAPTERS) == {
+        "openrouter",
+        "openai_compat",
+        "gigachat",
+        "yandexgpt",
+        "yandex_responses",
+    }

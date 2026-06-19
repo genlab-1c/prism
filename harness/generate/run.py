@@ -51,7 +51,11 @@ AdapterFactory = Callable[[str, ModelEntry], Adapter]
 def _default_factory(model_key: str, entry: ModelEntry) -> Adapter:
     from .adapters.registry import build_adapter
 
-    return build_adapter(entry.access.adapter, endpoint=entry.access.endpoint)
+    return build_adapter(
+        entry.access.adapter,
+        endpoint=entry.access.endpoint,
+        reasoning_effort=entry.access.reasoning_effort,
+    )
 
 
 class GenerationRunner:

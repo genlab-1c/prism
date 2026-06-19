@@ -11,3 +11,5 @@ defaults:
     deepseek: { temperature: 0.1, runs: 1 }      # DeepSeek V4-Flash (OpenRouter)
     qwen:     { temperature: 0.1, runs: 1 }      # Qwen3-235B-A22B (OpenRouter)
     glm:      { temperature: 0.1, runs: 1 }      # GLM-4.7 Flash (OpenRouter)
+    gpt_oss:  { temperature: 0.1, runs: 1 }      # GPT OSS 120B (Yandex Responses API)
+    qwen36:   { temperature: 0.1, runs: 1 }      # Qwen3.6-35B-A3B (Yandex Responses API, tools)

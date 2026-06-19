@@ -271,6 +271,9 @@ class ModelAccess(BaseModel):
 
     adapter: str  # openrouter | openai_compat | gigachat | …
     endpoint: str | None = None  # для openai_compat (Ollama/vLLM)
+    reasoning_effort: str | None = (
+        None  # Responses API: "none" — отключить reasoning (Qwen3.6 и др.)
+    )
 
 
 class ModelEntry(BaseModel):

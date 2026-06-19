@@ -6,6 +6,7 @@ harness/settings.py):
   openai_compat OPENAI_COMPAT_API_KEY (необязательно для локали) + endpoint из access
   gigachat      GIGACHAT_AUTH_KEY [+ GIGACHAT_SCOPE]
   yandexgpt     YANDEX_API_KEY + YANDEX_FOLDER_ID
+  yandex_responses  YANDEX_API_KEY + YANDEX_FOLDER_ID (Responses API: gpt-oss и др.)
 """
 
 from __future__ import annotations
@@ -16,9 +17,10 @@ from ..transport import Transport
 from .base import Adapter
 from .gigachat import GigaChatAdapter
 from .openai_compat import OpenAICompatAdapter
+from .yandex_responses import YandexResponsesAdapter
 from .yandexgpt import YandexGPTAdapter
 
-ADAPTERS = ("openrouter", "openai_compat", "gigachat", "yandexgpt")
+ADAPTERS = ("openrouter", "openai_compat", "gigachat", "yandexgpt", "yandex_responses")
 
 _OPENROUTER_BASE = "https://openrouter.ai/api/v1"
 
@@ -38,11 +40,13 @@ def build_adapter(
     adapter_name: str,
     *,
     endpoint: str | None = None,
+    reasoning_effort: str | None = None,
     env: dict | None = None,
     transport: Transport | None = None,
     timeout: int = 120,
 ) -> Adapter:
-    """Сконструировать адаптер по имени. endpoint — из access.endpoint (для openai_compat)."""
+    """Сконструировать адаптер по имени. endpoint — из access.endpoint (для openai_compat);
+    reasoning_effort — из access.reasoning_effort (Responses API: "none" гасит reasoning)."""
     env = credentials_env() if env is None else env
 
     if adapter_name == "openrouter":
@@ -81,6 +85,15 @@ def build_adapter(
             folder_id=_require(env, "YANDEX_FOLDER_ID", adapter_name),
             transport=transport,
             timeout=timeout,
+        )
+
+    if adapter_name == "yandex_responses":
+        return YandexResponsesAdapter(
+            api_key=_require(env, "YANDEX_API_KEY", adapter_name),
+            folder_id=_require(env, "YANDEX_FOLDER_ID", adapter_name),
+            reasoning_effort=reasoning_effort,
+            transport=transport,
+            timeout=max(timeout, 300),  # reasoning может быть долгим → даём время
         )
 
     raise AdapterConfigError(f"неизвестный адаптер {adapter_name!r}; есть: {ADAPTERS}")
