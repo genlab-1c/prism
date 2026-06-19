@@ -101,6 +101,9 @@ class L1Axis(BaseModel):
     model_config = ConfigDict(extra="allow")  # instrument/signal/measures — справочные
 
     scoring: Scoring | None = None
+    exec_scoring: Scoring | None = (
+        None  # O: исполнительная нога (категория A): отклонение роста от оптимума → балл
+    )
     pre_check: dict | None = None  # сразу 0 в обход таблицы баллов (оси S, P)
     cluster_gap: int | None = None  # S: соседние ParseError ≤N строк = одна причина
     compile_blocker_codes: list[str] | None = (
@@ -134,6 +137,11 @@ class ProtocolL1(BaseModel):
         assert wl, "у оси O в протоколе L1 должен быть white_list"
         return wl
 
+    def o_exec_scoring(self) -> Scoring:
+        s = self.axes["O"].exec_scoring
+        assert s, "у оси O в протоколе L1 нет блока exec_scoring (исполнительная нога)"
+        return s
+
 
 def load_protocol_l1(root: Path = PRISM) -> ProtocolL1:
     doc = _read(root / "metrics" / "smop_l1_auto.yaml")
@@ -148,6 +156,20 @@ class TaskTests(BaseModel):
 
     entry_point_patterns: list[str] = Field(default_factory=list)
     tests: list[dict]  # {args: [...], expected: ...}
+
+
+class TaskPerf(BaseModel):
+    """perf.yaml: данные исполнительной оценки O (категория A).
+
+    gen — BSL, строит вход размера {n}; call — вызов функции кандидата ({entry} — её имя,
+    детектится в коде); sizes — лесенка размеров; p_opt — оптимальный показатель роста
+    задачи (балл O ставится по ОТКЛОНЕНИЮ роста кандидата от p_opt, а не «квадрат=плохо»).
+    """
+
+    p_opt: float
+    sizes: list[int]
+    gen: str
+    call: str
 
 
 class Task(BaseModel):
@@ -170,6 +192,7 @@ class Task(BaseModel):
     entry_point_patterns: list[str] = Field(default_factory=list)  # B: детекция функции
     expected_objects: list[str] = Field(default_factory=list)  # B: сид оси P
     tests: TaskTests | None = None  # A: скрытые кейсы (tests.yaml)
+    perf: TaskPerf | None = None  # A: данные исполнительной оценки O (perf.yaml)
     canonical: Path | None = None  # эталон, если есть
     m_testing: str | None = None  # пометка вроде pending_harness
     tags: dict[str, list[str]] = Field(default_factory=dict)  # измерение → теги (срезы анализа)
@@ -197,12 +220,14 @@ def load_tasks(root: Path = PRISM, category: str | None = None) -> list[Task]:
             continue
         task_dir = task_yaml.parent
         tests_path = task_dir / "tests.yaml"
+        perf_path = task_dir / "perf.yaml"
         canonical_path = task_dir / "canonical.bsl"
         tasks.append(
             Task(
                 **doc,
                 dir=task_dir,
                 tests=_read(tests_path) if tests_path.exists() else None,
+                perf=_read(perf_path) if perf_path.exists() else None,
                 canonical=canonical_path if canonical_path.exists() else None,
             )
         )
