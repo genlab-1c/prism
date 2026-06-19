@@ -95,8 +95,12 @@ def _wrap(table: str) -> str:
 def render_overall(result: dict, category: str) -> str:
     rows = _ranked(result)
     axes = ["S", "M", "O"] + (["P"] if category == "B" else []) + ["Q"]
-    titles = {"S": "S", "M": "M", "O": "O-авто", "P": "P", "Q": "Q · общий"}
-    bold_axes = {"M", "P", "Q"}  # выделяем различающие оси; S/O насыщены — без жирного
+    # O в категории A считается ИСПОЛНЕНИЕМ (класс роста), в B — статикой (антипаттерны)
+    o_title = "O-исп" if category == "A" else "O-авто"
+    titles = {"S": "S", "M": "M", "O": o_title, "P": "P", "Q": "Q · общий"}
+    bold_axes = (
+        {"M", "O", "P", "Q"} if category == "A" else {"M", "P", "Q"}
+    )  # в A ось O теперь различает — выделяем
     maxes = {a: max((m[a] for _, m, _ in rows if m[a] is not None), default=None) for a in axes}
     head = "| Модель | " + " | ".join(titles[a] for a in axes) + " |"
     sep = "|--------|" + ":---:|" * len(axes)

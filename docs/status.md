@@ -47,13 +47,13 @@
 <!-- prism:status:lb -->
 | Модель | Q · категория A | Q · категория B |
 |---|:---:|:---:|
-| **DeepSeek V4-Flash** | **9.02** | **6.23** |
-| Alice AI LLM | 8.05 | 5.00 |
-| Gemini 2.5 Flash Lite | 7.90 | 4.50 |
-| GLM-4.7 Flash | 7.86 | 5.77 |
-| Qwen3-235B-A22B | 7.58 | 4.96 |
-| YandexGPT 5 Lite | 7.11 | 4.93 |
-| YandexGPT 5.1 Pro | 6.88 | 4.62 |
+| **DeepSeek V4-Flash** | **8.29** | **6.23** |
+| GLM-4.7 Flash | 7.26 | 5.77 |
+| Alice AI LLM | 6.93 | 5.00 |
+| Gemini 2.5 Flash Lite | 6.87 | 4.50 |
+| Qwen3-235B-A22B | 6.53 | 4.96 |
+| YandexGPT 5 Lite | 6.28 | 4.93 |
+| YandexGPT 5.1 Pro | 5.93 | 4.62 |
 <!-- /prism:status:lb -->
 
 *(A — 25 алгоритмических задач, B — 15 платформенных; ранги по A и B немного различаются —

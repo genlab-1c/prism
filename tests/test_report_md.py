@@ -34,7 +34,7 @@ def test_overall_ranks_by_q_and_bolds_leader():
     # первая строка данных (после шапки и разделителя) — лидер по Q
     assert "**Сильная**" in lines[2]  # лидер выделен жирным
     assert lines[3].startswith("| Слабая")  # за ним — слабее
-    assert "O-авто" in lines[0] and "P" not in lines[0]  # у A нет оси P
+    assert "O-исп" in lines[0] and "P" not in lines[0]  # у A — O по исполнению, нет оси P
 
 
 def test_overall_includes_p_for_category_b():
