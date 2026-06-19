@@ -171,9 +171,12 @@ def test_edition_core():
 
 
 def test_generation_catalog():
+    from harness.generate.adapters.registry import ADAPTERS
+
     gen = load_generation()
     # Каталог моделей меняется — конкретные модели не пиним, проверяем структуру.
-    known_adapters = {"openrouter", "openai_compat", "gigachat", "yandexgpt"}
+    # Набор адаптеров берём из реестра (единый источник), чтобы тест не устаревал.
+    known_adapters = set(ADAPTERS)
     assert gen.models  # каталог не пуст
     for key, m in gen.models.items():
         assert m.id and m.access.adapter in known_adapters, key

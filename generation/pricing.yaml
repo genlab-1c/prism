@@ -17,3 +17,5 @@ prices:
   "deepseek/deepseek-v4-flash":    { input: 0.09, output: 0.18 }
   "qwen/qwen3-235b-a22b-2507":     { input: 0.09, output: 0.1 }
   "z-ai/glm-4.7-flash":            { input: 0.06, output: 0.4 }
+  "gpt-oss-120b/latest":           { input: 0.3,  output: 0.9 }    # Yandex, ОЦЕНКА (уточнить тариф)
+  "qwen3.6-35b-a3b/latest":        { input: 0.2,  output: 0.6 }    # Yandex, ОЦЕНКА (уточнить тариф)
