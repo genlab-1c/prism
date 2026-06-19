@@ -70,19 +70,27 @@ models:
       supports_seed: false
       supports_tools: true
 
-  gpt_oss:
-    id: "gpt-oss-120b/latest"            # Yandex Cloud Responses API → gpt://<folder>/gpt-oss-120b/latest
-    name: "GPT OSS 120B"
-    vendor: openai
+  ygpt5_lite:
+    id: "yandexgpt-5-lite/latest"        # Yandex Cloud Responses API
+    name: "YandexGPT 5 Lite"
+    vendor: yandex
     access:
-      adapter: yandex_responses          # НЕ yandexgpt: gpt-oss отдаётся через Responses API
+      adapter: yandex_responses
     capabilities:
-      context_window: 131072
+      context_window: 32768
       supports_seed: false
-      # tools формально поддержаны API (плоский формат принят), НО на стороне Yandex
-      # любой tools-запрос к gpt-oss зависает (>280с без ответа) — агентный сбор метаданных
-      # кат. B повесил бы прогон. Отключаем: кат. B пойдёт без контекста (context_loaded=false).
-      supports_tools: false
+      supports_tools: true               # function calling работает (проверено)
+
+  ygpt51_pro:
+    id: "yandexgpt-5.1/latest"           # Yandex Cloud Responses API
+    name: "YandexGPT 5.1 Pro"
+    vendor: yandex
+    access:
+      adapter: yandex_responses
+    capabilities:
+      context_window: 32768
+      supports_seed: false
+      supports_tools: true               # function calling работает (проверено)
 
   qwen36:
     id: "qwen3.6-35b-a3b/latest"         # Yandex Cloud Responses API
@@ -90,11 +98,11 @@ models:
     vendor: alibaba
     access:
       adapter: yandex_responses
-      reasoning_effort: "none"           # ОБЯЗАТЕЛЬНО: иначе reasoning вешает tools-запросы (как у gpt-oss)
+      reasoning_effort: "none"           # гасим reasoning: быстрее и дешевле, на качество кода влияет слабо
     capabilities:
       context_window: 262144
       supports_seed: false
-      supports_tools: true               # function calling работает при reasoning_effort=none (проверено)
+      supports_tools: true               # function calling работает (проверено end-to-end)
 
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
