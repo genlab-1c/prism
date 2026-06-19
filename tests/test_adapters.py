@@ -326,3 +326,24 @@ def test_registry_missing_creds_and_unknown_adapter():
         "yandexgpt",
         "yandex_responses",
     }
+
+
+def test_registry_proxy_selected_by_adapter_group():
+    """RU-прокси → Yandex/GigaChat, INTL-прокси → OpenRouter; локальный — без прокси."""
+    env = {
+        "OPENROUTER_API_KEY": "or",
+        "GIGACHAT_AUTH_KEY": "gc",
+        "YANDEX_API_KEY": "yk",
+        "YANDEX_FOLDER_ID": "fld",
+        "PRISM_PROXY_RU": "http://ru-proxy:3128",
+        "PRISM_PROXY_INTL": "http://intl-proxy:3128",
+    }
+    ru = {"http": "http://ru-proxy:3128", "https": "http://ru-proxy:3128"}
+    intl = {"http": "http://intl-proxy:3128", "https": "http://intl-proxy:3128"}
+    assert build_adapter("yandex_responses", env=env).transport.proxies == ru
+    assert build_adapter("yandexgpt", env=env).transport.proxies == ru
+    assert build_adapter("gigachat", env=env).transport.proxies == ru
+    assert build_adapter("openrouter", env=env).transport.proxies == intl
+    # без прокси-переменных транспорт не подменяется (proxies отсутствуют/None)
+    bare = build_adapter("yandexgpt", env={"YANDEX_API_KEY": "k", "YANDEX_FOLDER_ID": "f"})
+    assert getattr(bare.transport, "proxies", None) is None

@@ -36,6 +36,10 @@ class Credentials(BaseSettings):
     gigachat_scope: str | None = None
     yandex_api_key: str | None = None
     yandex_folder_id: str | None = None
+    # Прокси по группам каналов (см. build_adapter): RU — отечественный (Yandex, GigaChat),
+    # INTL — зарубежный (OpenRouter). Формат: http(s)://[user:pass@]host:port. Пусто — напрямую.
+    prism_proxy_ru: str | None = None
+    prism_proxy_intl: str | None = None
 
     def as_env(self) -> dict[str, str]:
         """Заданные ключи как {ИМЯ_В_ВЕРХНЕМ_РЕГИСТРЕ: значение} — формат, который ждёт build_adapter."""

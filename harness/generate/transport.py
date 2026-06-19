@@ -36,10 +36,16 @@ class Transport(Protocol):
 
 
 class RequestsTransport:
-    """Боевой транспорт на requests. verify=False бывает нужен GigaChat (российский CA)."""
+    """Боевой транспорт на requests. verify=False бывает нужен GigaChat (российский CA).
 
-    def __init__(self, verify: bool = True):
+    proxy — URL прокси (http(s)://[user:pass@]host:port) для ВСЕХ запросов этого транспорта;
+    None — без прокси (прямое соединение). Прокси выбирается по адаптеру в build_adapter
+    (отечественный для Yandex/GigaChat, зарубежный для OpenRouter).
+    """
+
+    def __init__(self, verify: bool = True, proxy: str | None = None):
         self.verify = verify
+        self.proxies = {"http": proxy, "https": proxy} if proxy else None
 
     def request(
         self,
@@ -54,7 +60,14 @@ class RequestsTransport:
         import requests  # ленивый импорт: тесты с фейк-транспортом requests не требуют
 
         resp = requests.request(
-            method, url, headers=headers, json=json, data=data, timeout=timeout, verify=self.verify
+            method,
+            url,
+            headers=headers,
+            json=json,
+            data=data,
+            timeout=timeout,
+            verify=self.verify,
+            proxies=self.proxies,
         )
         try:
             body = resp.json()

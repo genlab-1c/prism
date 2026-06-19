@@ -13,7 +13,7 @@ from __future__ import annotations
 
 from harness.settings import credentials_env
 
-from ..transport import Transport
+from ..transport import RequestsTransport, Transport
 from .base import Adapter
 from .gigachat import GigaChatAdapter
 from .openai_compat import OpenAICompatAdapter
@@ -23,6 +23,15 @@ from .yandexgpt import YandexGPTAdapter
 ADAPTERS = ("openrouter", "openai_compat", "gigachat", "yandexgpt", "yandex_responses")
 
 _OPENROUTER_BASE = "https://openrouter.ai/api/v1"
+
+# Какой прокси использовать на адаптер: RU — отечественный (Yandex, GigaChat),
+# INTL — зарубежный (OpenRouter). openai_compat — локальный сервер, без прокси.
+_PROXY_ENV = {
+    "yandexgpt": "PRISM_PROXY_RU",
+    "yandex_responses": "PRISM_PROXY_RU",
+    "gigachat": "PRISM_PROXY_RU",
+    "openrouter": "PRISM_PROXY_INTL",
+}
 
 
 class AdapterConfigError(RuntimeError):
@@ -48,6 +57,13 @@ def build_adapter(
     """Сконструировать адаптер по имени. endpoint — из access.endpoint (для openai_compat);
     reasoning_effort — из access.reasoning_effort (Responses API: "none" гасит reasoning)."""
     env = credentials_env() if env is None else env
+
+    # прокси на группу каналов: явный transport (тесты) приоритетнее; иначе при заданном
+    # PRISM_PROXY_* строим транспорт с прокси, без него — None (адаптер берёт default_transport)
+    if transport is None:
+        proxy = env.get(_PROXY_ENV.get(adapter_name, ""))
+        if proxy:
+            transport = RequestsTransport(proxy=proxy)
 
     if adapter_name == "openrouter":
         return OpenAICompatAdapter(
