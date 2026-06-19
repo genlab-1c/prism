@@ -144,7 +144,9 @@ def cmd_generate(args: argparse.Namespace) -> int:
 def cmd_score(args: argparse.Namespace) -> int:
     _apply_runtime_flags(args)
     experiment = args.experiment or orchestrate.newest_experiment()
-    orchestrate.score_report(experiment, args.edition, args.out, full=args.full)
+    orchestrate.score_report(
+        experiment, args.edition, args.out, full=args.full, model_keys=args.models
+    )
     return 0
 
 
@@ -301,9 +303,11 @@ def build_parser() -> argparse.ArgumentParser:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "Примеры:\n"
-            "  prism score                  пересчитать свежайший эксперимент → лидерборд\n"
-            "  prism score --full           + построчные детали S·M·O·P·Q\n"
-            "  prism score --runner docker  ось M в песочнице Docker"
+            "  prism score                          пересчитать свежайший эксперимент → лидерборд\n"
+            "  prism score --full                   + построчные детали S·M·O·P·Q\n"
+            "  prism score --models ygpt5_lite ygpt51_pro\n"
+            "                                       оценить только эти модели, дозаписать в auto_l1\n"
+            "  prism score --runner docker          ось M в песочнице Docker"
         ),
     )
     sc.add_argument(
@@ -313,6 +317,14 @@ def build_parser() -> argparse.ArgumentParser:
         help="путь к experiment_*.json (по умолчанию свежайший experiment_A_*)",
     )
     sc.add_argument("--edition", default="core", help="издание из editions/ (по умолчанию core)")
+    sc.add_argument(
+        "--models",
+        nargs="*",
+        default=None,
+        metavar="KEY",
+        help="оценить только эти модели (ключи каталога) с дозаписью в существующий auto_l1; "
+        "прежние модели не пересчитываются",
+    )
     sc.add_argument(
         "--out",
         type=Path,

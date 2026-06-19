@@ -39,6 +39,7 @@ from harness.loaders import (
     Task,
     load_constitution,
     load_edition,
+    load_generation,
     load_protocol_l1,
     load_tasks,
 )
@@ -253,7 +254,12 @@ def score_candidate(
 # ── прогон издания по эксперименту ────────────────────────────────────────────
 
 
-def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
+def run(
+    experiment_path: Path,
+    edition_name: str,
+    runner: Runner,
+    model_ids: set[str] | None = None,
+) -> dict:
     constitution = load_constitution()
     protocol = load_protocol_l1()
     edition = load_edition(edition_name)
@@ -267,6 +273,8 @@ def run(experiment_path: Path, edition_name: str, runner: Runner) -> dict:
     # Кандидаты в порядке эксперимента; уникальное имя файла → ключ диагностик BSL LS
     records = []
     for tr in experiment["task_results"]:
+        if model_ids is not None and tr["model_id"] not in model_ids:
+            continue  # частичный скоринг: считаем только указанные модели
         task = tasks.get(tr["task_id"])
         if task is None:  # задача эксперимента не мигрирована в tasks/
             continue
@@ -546,8 +554,14 @@ def score_report(
     edition_name: str = "core",
     out_path: Path | None = None,
     full: bool = False,
+    model_keys: list[str] | None = None,
 ) -> Path:
-    """Прогнать издание по эксперименту (пересчёт в 1С), записать L1 и напечатать сводку."""
+    """Прогнать издание по эксперименту (пересчёт в 1С), записать L1 и напечатать сводку.
+
+    model_keys — оценить только эти модели (ключи каталога): результат ДОЗАПИСЫВАЕТСЯ в
+    существующий auto_l1 (прежние модели берутся готовыми, не пересчитываются). Так
+    добавляют новые генерации, не гоняя 1С по уже посчитанному базлайну.
+    """
     runner = get_runner()
     if not runner.available():
         console.print(
@@ -560,10 +574,32 @@ def score_report(
             "  ось M выйдет «не измерена» (score=None) для всех кандидатов.", style="yellow"
         )
 
-    result = run(experiment_path, edition_name, runner)
+    model_ids = None
+    if model_keys:  # ключи каталога → id моделей (run/auto_l1 оперируют id)
+        catalog = load_generation().models
+        model_ids = {catalog[k].id for k in model_keys if k in catalog}
+        unknown = [k for k in model_keys if k not in catalog]
+        if unknown:
+            console.print(f"⚠ нет в каталоге, пропущены: {', '.join(unknown)}", style="yellow")
+        if not model_ids:
+            raise SystemExit("ни одной известной модели в --models")
+
+    result = run(experiment_path, edition_name, runner, model_ids=model_ids)
 
     out_path = out_path or (PRISM / "results" / "auto" / f"{result['experiment_id']}_auto_l1.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if model_ids is not None and out_path.exists():  # дозапись: сохранить прежние модели
+        prev = json.loads(out_path.read_text(encoding="utf-8"))
+        kept = [g for g in prev.get("tasks", []) if g["model_id"] not in model_ids]
+        result["tasks"] = kept + result["tasks"]
+        console.print(
+            f"дозапись в {out_path.name}: пересчитано моделей {len(model_ids)}, "
+            f"сохранено прежних групп {len(kept)}\n",
+            style="dim",
+            highlight=False,
+        )
+
     out_path.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
 
     analyzer = result["syntax_analyzer"] or "S/O вне издания или анализатор недоступен"
