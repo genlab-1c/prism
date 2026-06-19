@@ -46,6 +46,7 @@ from harness.loaders import (
 from harness.score.meaning import band as m_band
 from harness.score.meaning import fine_m, score_m
 from harness.score.optimization import score_o
+from harness.score.optimization_exec import score_o_exec
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
 from harness.score.syntax import _cluster_lines, score_s
@@ -186,6 +187,24 @@ def _score_syntax(
 def _score_optimization(
     task: Task, code: str, protocol: ProtocolL1, work_dir: Path, instr: Instruments
 ) -> tuple[int | None, dict]:
+    # O-исп (категория A): есть perf.yaml → алгоритмическая оптимальность исполнением.
+    if task.perf is not None and instr.runner is not None:
+        patterns = task.tests.entry_point_patterns if task.tests else []
+        res = score_o_exec(
+            code,
+            task.perf,
+            patterns,
+            protocol,
+            work_dir / "oexec",
+            name="cand",
+            runner=instr.runner,
+        )
+        if res.score is not None:
+            return res.score, {**res.model_dump(exclude={"score"}), "leg": "O-исп"}
+        # не измерилась (нет раннера / кандидат не исполнился) → откат на O-авто, если есть статика
+        if instr.diagnostics is None:
+            return None, {"reason": f"O-исп не измерена: {res.note}", "leg": "O-исп"}
+    # O-авто: статические perf/арх-антипаттерны (несёт сигнал в B; в A — заглушка-потолок)
     if instr.diagnostics is None:
         return None, {"reason": f"BSL LS недоступен — {bsl_ls.unavailable_reason()}"}
     return score_o(instr.diagnostics, protocol)
