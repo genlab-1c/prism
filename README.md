@@ -20,8 +20,8 @@
 <!-- prism:badges -->
   <img src="https://img.shields.io/badge/задач-27-success" alt="задач: 27">
   <img src="https://img.shields.io/badge/тест--кейсов-88-blue" alt="тест-кейсов: 88">
-  <img src="https://img.shields.io/badge/генераций_в_прогоне-175-blue" alt="генераций: 175">
-  <img src="https://img.shields.io/badge/в_лидерборде-7_моделей-blue" alt="в лидерборде 7 моделей">
+  <img src="https://img.shields.io/badge/генераций_в_прогоне-205-blue" alt="генераций: 205">
+  <img src="https://img.shields.io/badge/в_лидерборде-10_моделей-blue" alt="в лидерборде 10 моделей">
 <!-- /prism:badges -->
 </p>
 <p align="center">
@@ -169,11 +169,14 @@ PRISM отвечает на этот вопрос числом, а не мнен
 
 | Модель | S | M | O-исп | Q · общий |
 |--------|:---:|:---:|:---:|:---:|
-| **DeepSeek V4-Flash** | 9.8 | **6.7** | **8.0** | **7.83** |
+| **DeepSeek V4-Flash** | 9.8 | 6.7 | **8.0** | **7.83** |
+| Claude Opus 4.8 | 9.2 | **7.0** | 6.6 | 7.30 |
 | GLM-4.7 Flash | 9.8 | 3.4 | 6.0 | 6.18 |
+| Claude Sonnet 4.6 | 8.2 | 4.0 | **8.0** | 5.90 |
 | Gemini 2.5 Flash Lite | 9.0 | 3.2 | 6.0 | 5.70 |
 | Alice AI LLM | 9.2 | 2.2 | 7.0 | 5.50 |
 | Qwen3-235B-A22B | 8.8 | 3.0 | 4.0 | 5.30 |
+| Qwen3.6-35B-A3B | 8.8 | 1.2 | 7.0 | 4.93 |
 | YandexGPT 5 Lite | 8.0 | 2.2 | 4.0 | 4.77 |
 | YandexGPT 5.1 Pro | 7.8 | 0.0 | — | 3.90 |
 
@@ -226,11 +229,14 @@ PRISM отвечает на этот вопрос числом, а не мнен
 
 | Модель | строки | коллекции | алгоритм |
 |--------|:---:|:---:|:---:|
-| **DeepSeek V4-Flash** | **7.8** | **6.7** | **7.5** |
+| **DeepSeek V4-Flash** | **7.8** | 6.7 | **7.5** |
+| Claude Opus 4.8 | 5.0 | **7.1** | **7.5** |
 | GLM-4.7 Flash | 5.0 | 2.0 | 2.9 |
+| Claude Sonnet 4.6 | 5.0 | 4.3 | 0.0 |
 | Gemini 2.5 Flash Lite | 5.0 | 1.7 | 5.0 |
 | Alice AI LLM | 2.5 | 1.7 | 2.5 |
 | Qwen3-235B-A22B | 2.5 | 2.9 | 2.5 |
+| Qwen3.6-35B-A3B | 0.0 | 1.7 | 0.0 |
 | YandexGPT 5 Lite | 0.0 | 2.5 | 3.1 |
 | YandexGPT 5.1 Pro | 0.0 | 0.0 | 0.0 |
 

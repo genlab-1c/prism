@@ -48,10 +48,13 @@
 | Модель | Q · категория A | Q · категория B |
 |---|:---:|:---:|
 | **DeepSeek V4-Flash** | **7.83** | **6.23** |
+| Claude Opus 4.8 | 7.30 | — |
 | GLM-4.7 Flash | 6.18 | 5.77 |
+| Claude Sonnet 4.6 | 5.90 | — |
 | Gemini 2.5 Flash Lite | 5.70 | 4.50 |
 | Alice AI LLM | 5.50 | 5.00 |
 | Qwen3-235B-A22B | 5.30 | 4.96 |
+| Qwen3.6-35B-A3B | 4.93 | — |
 | YandexGPT 5 Lite | 4.77 | 4.93 |
 | YandexGPT 5.1 Pro | 3.90 | 4.62 |
 <!-- /prism:status:lb -->
