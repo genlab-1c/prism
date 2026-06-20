@@ -187,8 +187,11 @@ def _score_syntax(
 def _score_optimization(
     task: Task, code: str, protocol: ProtocolL1, work_dir: Path, instr: Instruments
 ) -> tuple[int | None, dict]:
-    # O-исп (категория A): есть perf.yaml → алгоритмическая оптимальность исполнением.
-    if task.perf is not None and instr.runner is not None:
+    # Категория A (есть perf.yaml): O мерится ТОЛЬКО исполнением (O-исп). Статический O-авто
+    # в алгоритмике бесполезен (потолок 10), поэтому отката на него НЕТ: не измерилось → N/A.
+    if task.perf is not None:
+        if instr.runner is None or not instr.runner.available():
+            return None, {"reason": "O-исп: раннер OneScript недоступен", "leg": "O-исп"}
         patterns = task.tests.entry_point_patterns if task.tests else []
         res = score_o_exec(
             code,
@@ -199,12 +202,9 @@ def _score_optimization(
             name="cand",
             runner=instr.runner,
         )
-        if res.score is not None:
-            return res.score, {**res.model_dump(exclude={"score"}), "leg": "O-исп"}
-        # не измерилась (нет раннера / кандидат не исполнился) → откат на O-авто, если есть статика
-        if instr.diagnostics is None:
-            return None, {"reason": f"O-исп не измерена: {res.note}", "leg": "O-исп"}
-    # O-авто: статические perf/арх-антипаттерны (несёт сигнал в B; в A — заглушка-потолок)
+        # score=None (кандидат не исполнился / не нашли функцию) → N/A, не потолок O-авто
+        return res.score, {**res.model_dump(exclude={"score"}), "leg": "O-исп"}
+    # Задачи без perf (категория B): O-авто — статические perf/арх-антипаттерны BSL LS.
     if instr.diagnostics is None:
         return None, {"reason": f"BSL LS недоступен — {bsl_ls.unavailable_reason()}"}
     return score_o(instr.diagnostics, protocol)

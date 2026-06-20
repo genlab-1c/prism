@@ -26,6 +26,12 @@ from harness.score.meaning import detect_entry_point
 
 OK_MARKER = "PRISM_O_OK"
 
+# Прогон под -codestat кратно медленнее обычного исполнения (инструментирование счётчика
+# + подменённые аналоги встроенных). Лимит выше, чем у оси M (15с), иначе корректные
+# O(n²)-решения упираются в таймаут под нагрузкой. Таймаут остаётся сигналом «слишком
+# медленно» только для действительно патологических решений (экспонента и т.п.).
+O_EXEC_TIMEOUT_S = 60
+
 
 class OptExecResult(BaseModel):
     """Итог исполнительной оценки O одного кандидата."""
@@ -89,7 +95,7 @@ def score_o_exec(
         stat = work_dir / f"{name}.operf.json"
         stat.unlink(missing_ok=True)
         script.write_text(code + "\n" + body, encoding="utf-8")
-        res = runner.run_os_codestat(script, stat)
+        res = runner.run_os_codestat(script, stat, timeout=O_EXEC_TIMEOUT_S)
         if res.timed_out:
             if ops:  # на меньших размерах считалось, а тут завис → слишком медленно
                 return OptExecResult(
