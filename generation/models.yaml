@@ -70,6 +70,28 @@ models:
       supports_seed: false
       supports_tools: true
 
+  sonnet:
+    id: "anthropic/claude-sonnet-4.6"    # через OpenRouter, Anthropic, с tools
+    name: "Claude Sonnet 4.6"
+    vendor: anthropic
+    access:
+      adapter: openrouter
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
+  opus:
+    id: "anthropic/claude-opus-4.8"      # через OpenRouter, Anthropic, с tools
+    name: "Claude Opus 4.8"
+    vendor: anthropic
+    access:
+      adapter: openrouter
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
   ygpt5_lite:
     id: "yandexgpt-5-lite/latest"        # Yandex Cloud Responses API
     name: "YandexGPT 5 Lite"

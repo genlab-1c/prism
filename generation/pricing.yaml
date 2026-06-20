@@ -17,6 +17,8 @@ prices:
   "deepseek/deepseek-v4-flash":    { input: 0.09, output: 0.18 }
   "qwen/qwen3-235b-a22b-2507":     { input: 0.09, output: 0.1 }
   "z-ai/glm-4.7-flash":            { input: 0.06, output: 0.4 }
+  "anthropic/claude-sonnet-4.6":   { input: 3.0,  output: 15.0 }   # OpenRouter, точный тариф
+  "anthropic/claude-opus-4.8":     { input: 5.0,  output: 25.0 }   # OpenRouter, точный тариф
   "yandexgpt-5-lite/latest":       { input: 0.15, output: 0.45 }   # Yandex, ОЦЕНКА (уточнить тариф)
   "yandexgpt-5.1/latest":          { input: 0.6,  output: 1.8 }    # Yandex, ОЦЕНКА (уточнить тариф)
   "qwen3.6-35b-a3b/latest":        { input: 0.2,  output: 0.6 }    # Yandex, ОЦЕНКА (уточнить тариф)
