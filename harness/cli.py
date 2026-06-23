@@ -1,9 +1,13 @@
 """Точка входа пользователя: `prism <команда>`.
 
 Тонкий диспетчер — бизнес-логики тут нет, только разбор аргументов и вызов:
+  prism doctor   — готовность окружения: инструменты осей, ключи моделей (без сети)
+  prism ping     — живой минимальный запрос к моделям (проверка ключа/связи)
   prism generate — сгенерировать код кандидатов моделями по изданию → results/
+                   (--mock — сухой прогон конвейера без сети)
   prism score    — авто-оценка L1 готовых генераций по изданию → results/auto/
   prism check    — целостность: контракты метрики, задания, эталоны, инструменты
+  prism submit   — упаковать прогон для шеринга (хеш совместимости) / принять чужой
   prism tasks    — пересобрать видимый банк задач (tasks/README.md) из task.yaml
 
 Зарегистрирован как консольный скрипт в pyproject ([project.scripts] prism).
@@ -108,6 +112,24 @@ def _apply_runtime_flags(args: argparse.Namespace) -> None:
 
 
 def cmd_generate(args: argparse.Namespace) -> int:
+    if args.mock:  # сухой прогон конвейера: без сети и ключей (имитация модели mock/echo)
+        from harness.generate.mock import build_mock_runner
+
+        console.print(
+            f"режим имитации (без сети) · модель mock/echo · {args.mock}",
+            style="dim",
+            highlight=False,
+        )
+        exp = build_mock_runner(args.mock, verbose=True).run_experiment(
+            args.category, task_ids=args.tasks, edition_name=args.edition
+        )
+        print(
+            f"→ results/{exp.experiment_name}.json  "
+            f"({exp.tasks_count} задач × 1 модель · имитация, $0.0000)\n"
+            f"  дальше: prism score --experiment results/{exp.experiment_name}.json"
+        )
+        return 0
+
     from harness.generate.run import GenerationRunner
 
     runner = GenerationRunner(
@@ -143,10 +165,20 @@ def cmd_generate(args: argparse.Namespace) -> int:
 
 def cmd_score(args: argparse.Namespace) -> int:
     _apply_runtime_flags(args)
-    experiment = args.experiment or orchestrate.newest_experiment()
-    orchestrate.score_report(
-        experiment, args.edition, args.out, full=args.full, model_keys=args.models
-    )
+    if args.experiment:  # явный набор генераций — считаем именно его
+        orchestrate.score_report(
+            args.experiment, args.edition, args.out, full=args.full, model_keys=args.models
+        )
+        return 0
+    if args.out:  # без --experiment пишем в свой auto_l1 на категорию → один --out неоднозначен
+        raise SystemExit("--out требует явного --experiment")
+    experiments = orchestrate.newest_experiments()  # свежий прогон КАЖДОЙ категории (A и B)
+    if not experiments:
+        raise SystemExit("в results/ нет experiment_*.json — сначала `prism generate`")
+    for i, (_cat, path) in enumerate(experiments.items()):
+        if i:
+            console.print()
+        orchestrate.score_report(path, args.edition, None, full=args.full, model_keys=args.models)
     return 0
 
 
@@ -196,15 +228,83 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_doctor(args: argparse.Namespace) -> int:
+    from harness import preflight
+
+    sections, verdict = preflight.doctor_sections()
+    preflight.render_doctor(sections, verdict)
+    return 0
+
+
+def cmd_ping(args: argparse.Namespace) -> int:
+    from harness import preflight
+
+    results = preflight.ping_models(args.models)
+    preflight.render_ping(results)
+    return 1 if any(r["status"] == "fail" for r in results) else 0
+
+
+def cmd_submit(args: argparse.Namespace) -> int:
+    from datetime import datetime
+
+    from harness import submit
+    from harness.loaders import PRISM
+
+    if args.verify:  # приём чужого пакета: сверка версии бенчмарка
+        info = submit.verify_submission(args.verify)
+        sub = info["submission"]
+        if not info["compatible"]:
+            console.print(
+                "✗ несовместимо: прогон на другой версии бенчмарка — цифры несравнимы",
+                style="bold red",
+                highlight=False,
+            )
+            console.print(
+                f"  пакет {str(sub.get('compat_hash', '?'))[:12]} ≠ репо {info['current_hash'][:12]}",
+                style="dim",
+                highlight=False,
+            )
+            return 1
+        console.print("✓ совместимо с текущим репо (compat_hash совпал)", style="green")
+        console.print(f"  модели: {', '.join(sub.get('models', [])) or '—'}", style="dim")
+        if args.apply:
+            out = submit.apply_submission(sub)
+            console.print(
+                f"→ влито в {out.relative_to(PRISM)} · пересоберите лидерборд: prism docs",
+                style="green",
+                highlight=False,
+            )
+        else:
+            console.print("  влить в results/auto/: повторите с --apply", style="dim")
+        return 0
+
+    out, sub = submit.build_submission(args.experiment, created=datetime.now().isoformat())
+    console.print(f"→ {out.relative_to(PRISM)}", style="green", highlight=False)
+    console.print(
+        f"  compat_hash: {sub['compat_hash'][:12]} · модели: {', '.join(sub['models']) or '—'}",
+        style="dim",
+        highlight=False,
+    )
+    console.print(
+        "  Поделиться: приложите файл к PR или пришлите автору (он сверит: prism submit --verify).",
+        style="dim",
+        highlight=False,
+    )
+    return 0
+
+
 def print_quickstart() -> None:
     """Шпаргалка-«главная»: что набрать, когда `prism` вызван без команды."""
     print_logo()  # брендовый баннер (тихо ничего на не-tty)
     console.print()
     steps = [
+        ("всё ли готово к работе", "prism doctor"),
+        ("проверить связь с моделями", "prism ping"),
         ("посмотреть результаты", "prism leaderboard"),
         ("пересчитать оценку L1", "prism score"),
-        ("проверить целостность", "prism check"),
+        ("сухой прогон без сети", "prism generate --category A --mock"),
         ("сгенерировать код моделями", "prism generate --category A"),
+        ("поделиться результатом", "prism submit"),
     ]
     for desc, cmd in steps:
         console.print(f"  {desc:<30}[cyan]{cmd}[/cyan]", highlight=False)
@@ -241,6 +341,7 @@ def build_parser() -> argparse.ArgumentParser:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "Примеры:\n"
+            "  prism generate --category A --mock           сухой прогон без сети (эталон)\n"
             "  prism generate --category A --dry-run        смета стоимости без сети\n"
             "  prism generate --category A --models deepseek gemini\n"
             "  prism generate --category B --tasks B1 B2 --max-cost 5"
@@ -283,6 +384,15 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="только предполётная оценка стоимости, без вызовов сети",
     )
+    ge.add_argument(
+        "--mock",
+        nargs="?",
+        const="canonical",
+        default=None,
+        choices=["canonical", "stub"],
+        help="сухой прогон конвейера без сети: имитация модели mock/echo "
+        "(canonical — отдаёт эталон задачи, stub — заглушку; по умолчанию canonical)",
+    )
     ge.set_defaults(func=cmd_generate)
 
     lb = sub.add_parser(
@@ -291,7 +401,7 @@ def build_parser() -> argparse.ArgumentParser:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "Примеры:\n"
-            "  prism leaderboard            свежайший лидерборд\n"
+            "  prism leaderboard            свежий лидерборд A и B\n"
             "  prism leaderboard --full     + построчная таблица S·M·O·P·Q и срезы по тегам"
         ),
     )
@@ -300,7 +410,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=None,
         metavar="AUTO_L1",
-        help="путь к results/auto/*_auto_l1.json (по умолчанию свежайший)",
+        help="путь к results/auto/*_auto_l1.json (по умолчанию свежайший каждой категории)",
     )
     lb.add_argument(
         "--full", action="store_true", help="добавить построчную таблицу S·M·O·P·Q и срезы по тегам"
@@ -313,7 +423,7 @@ def build_parser() -> argparse.ArgumentParser:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
             "Примеры:\n"
-            "  prism score                          пересчитать свежайший эксперимент → лидерборд\n"
+            "  prism score                          свежий прогон A и B → два лидерборда\n"
             "  prism score --full                   + построчные детали S·M·O·P·Q\n"
             "  prism score --models ygpt5_lite ygpt51_pro\n"
             "                                       оценить только эти модели, дозаписать в auto_l1\n"
@@ -324,7 +434,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--experiment",
         type=Path,
         default=None,
-        help="путь к experiment_*.json (по умолчанию свежайший experiment_A_*)",
+        help="путь к experiment_*.json (по умолчанию свежайший каждой категории — A и B)",
     )
     sc.add_argument("--edition", default="core", help="издание из editions/ (по умолчанию core)")
     sc.add_argument(
@@ -389,6 +499,62 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
     dc.set_defaults(func=cmd_docs)
+
+    dr = sub.add_parser(
+        "doctor",
+        help="быстрый чек готовности: окружение, инструменты осей, ключи моделей (без сети)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="Не делает прогонов в 1С и сетевых вызовов — только смотрит, что установлено.",
+    )
+    dr.set_defaults(func=cmd_doctor)
+
+    pg = sub.add_parser(
+        "ping",
+        help="живой минимальный запрос к моделям — проверить ключ и связь (тратит немного токенов)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Шлёт по одному короткому запросу на модель → расходует немного токенов.\n"
+            "Примеры:\n"
+            "  prism ping                   все модели каталога с заданными ключами\n"
+            "  prism ping --models deepseek gemini"
+        ),
+    )
+    pg.add_argument(
+        "--models", nargs="*", default=None, metavar="KEY", help="ключи моделей (по умолчанию все)"
+    )
+    pg.set_defaults(func=cmd_ping)
+
+    sb = sub.add_parser(
+        "submit",
+        help="упаковать свой прогон для шеринга (с хеш-суммой совместимости) или принять чужой",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Примеры:\n"
+            "  prism submit                         собрать пакет из свежей оценки L1\n"
+            "  prism submit --verify file.json      сверить чужой пакет с этим репо\n"
+            "  prism submit --verify file.json --apply   + влить в results/auto/"
+        ),
+    )
+    sb.add_argument(
+        "--experiment",
+        type=Path,
+        default=None,
+        metavar="AUTO_L1",
+        help="путь к results/auto/*_auto_l1.json для упаковки (по умолчанию свежайший)",
+    )
+    sb.add_argument(
+        "--verify",
+        type=Path,
+        default=None,
+        metavar="FILE",
+        help="режим автора: сверить отпечаток пакета с текущим репозиторием",
+    )
+    sb.add_argument(
+        "--apply",
+        action="store_true",
+        help="с --verify: при совместимости влить оценку в results/auto/",
+    )
+    sb.set_defaults(func=cmd_submit)
 
     return ap
 

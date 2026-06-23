@@ -22,6 +22,17 @@ from .yandexgpt import YandexGPTAdapter
 
 ADAPTERS = ("openrouter", "openai_compat", "gigachat", "yandexgpt", "yandex_responses")
 
+# Какие переменные окружения требует каждый адаптер, чтобы вообще построиться.
+# Единый источник для предполётных проверок (prism doctor / ping): пусто — кред
+# не нужно (openai_compat ходит на локальный endpoint, ключ опционален).
+ADAPTER_REQUIRED_KEYS: dict[str, list[str]] = {
+    "openrouter": ["OPENROUTER_API_KEY"],
+    "openai_compat": [],
+    "gigachat": ["GIGACHAT_AUTH_KEY"],
+    "yandexgpt": ["YANDEX_API_KEY", "YANDEX_FOLDER_ID"],
+    "yandex_responses": ["YANDEX_API_KEY", "YANDEX_FOLDER_ID"],
+}
+
 _OPENROUTER_BASE = "https://openrouter.ai/api/v1"
 
 # Какой прокси использовать на адаптер: RU — отечественный (Yandex, GigaChat),
