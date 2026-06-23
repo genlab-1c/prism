@@ -97,9 +97,9 @@ def _wrap(table: str) -> str:
 def render_overall(result: dict, category: str) -> str:
     rows = _ranked(result)
     axes = ["S", "M", "O"] + (["P"] if category == "B" else []) + ["Q"]
-    # O в категории A считается ИСПОЛНЕНИЕМ (класс роста), в B — статикой (антипаттерны)
-    o_title = "O-исп" if category == "A" else "O-авто"
-    titles = {"S": "S", "M": "M", "O": o_title, "P": "P", "Q": "Q · общий"}
+    # Постфиксы O-исп/O-авто убраны — в таблице просто «O»; как именно меряется ось O
+    # в каждой категории, объясняет проза страницы лидерборда.
+    titles = {"S": "S", "M": "M", "O": "O", "P": "P", "Q": "Q · общий"}
     bold_axes = (
         {"M", "O", "P", "Q"} if category == "A" else {"M", "P", "Q"}
     )  # в A ось O теперь различает — выделяем

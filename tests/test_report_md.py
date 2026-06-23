@@ -35,7 +35,7 @@ def test_overall_ranks_by_q_and_bolds_leader():
     assert lines[2].startswith("| 1 |") and "**Сильная**" in lines[2]  # лидер: №1, жирный
     assert lines[3].startswith("| 2 |") and "Слабая" in lines[3]  # за ним — №2, слабее
     assert lines[0].startswith("| № | Модель")  # колонка ранга — первой
-    assert "O-исп" in lines[0] and "| P |" not in lines[0]  # у A — O по исполнению, нет оси P
+    assert "| O |" in lines[0] and "| P |" not in lines[0]  # у A есть ось O, нет оси P
 
 
 def test_overall_includes_p_for_category_b():
