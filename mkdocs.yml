@@ -30,7 +30,11 @@ markdown_extensions:
       permalink: true
   - pymdownx.highlight:
       anchor_linenums: true
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid          # диаграммы Mermaid (встроены в Material) — ```mermaid ... ```
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.inlinehilite
 
 nav:
@@ -42,4 +46,3 @@ nav:
   - Как запустить: cli.md
   - Как участвовать: https://github.com/genlab-1c/prism/blob/main/CONTRIBUTING.md
   - Архитектура: architecture.md
-  - Ключевые решения: decisions.md
