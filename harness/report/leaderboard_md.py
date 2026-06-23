@@ -3,7 +3,8 @@
 Таблицы лидерборда и числа в бейджах — ПРОИЗВОДНЫЕ данные: их источник правды —
 results/auto/*_auto_l1.json (оценки L1) + банк задач. Держать их руками = рассинхрон,
 поэтому регенерируем командой `prism docs` (см. cli). Команда подменяет помеченные
-регионы между `<!-- prism:KEY -->` и `<!-- /prism:KEY -->` в README.md и docs/status.md.
+регионы между `<!-- prism:KEY -->` и `<!-- /prism:KEY -->` в README.md, docs/leaderboard.md
+и docs/status.md (lb:*-регионы общие у README и страницы лидерборда сайта).
 
 Регионы:
   badges        — счётные бейджи (задач / тест-кейсов / генераций / моделей);
@@ -88,8 +89,9 @@ def _cell(v: float | None, is_max: bool, prec: int) -> str:
 
 
 def _wrap(table: str) -> str:
-    """Центрируем таблицу (как в README)."""
-    return f'<div align="center">\n\n{table}\n\n</div>'
+    """Центрируем таблицу. Атрибут `markdown` — чтобы Python-Markdown (MkDocs, расширение
+    md_in_html) рендерил таблицу внутри <div>; на GitHub атрибут игнорируется."""
+    return f'<div align="center" markdown>\n\n{table}\n\n</div>'
 
 
 def render_overall(result: dict, category: str) -> str:
@@ -263,6 +265,20 @@ def write() -> list[Path]:
     readme.write_text(text, encoding="utf-8")
 
     changed = [readme]
+
+    # Страница лидерборда сайта (docs/leaderboard.md) — те же регионы, что в README.
+    lb_page = PRISM / "docs" / "leaderboard.md"
+    if lb_page.exists():
+        p = lb_page.read_text(encoding="utf-8")
+        if a:
+            p = _replace_region(p, "lb:a-overall", render_overall(a, "A"))
+            p = _replace_region(p, "lb:a-skill", render_by_tag(a, "skill", "M"))
+        if b:
+            p = _replace_region(p, "lb:b-overall", render_overall(b, "B"))
+            p = _replace_region(p, "lb:b-platform", render_by_tag(b, "platform", "P"))
+        lb_page.write_text(p, encoding="utf-8")
+        changed.append(lb_page)
+
     status = PRISM / "docs" / "status.md"
     if status.exists():
         s = status.read_text(encoding="utf-8")

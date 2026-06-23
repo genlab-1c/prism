@@ -491,11 +491,11 @@ def build_parser() -> argparse.ArgumentParser:
 
     dc = sub.add_parser(
         "docs",
-        help="регенерировать таблицы лидерборда и бейджи в README/status из оценок L1",
+        help="регенерировать таблицы лидерборда и бейджи в README/leaderboard/status из оценок L1",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
-            "Подменяет регионы между <!-- prism:KEY --> в README.md и docs/status.md\n"
-            "данными из results/auto/*_auto_l1.json. Запускать после prism score."
+            "Подменяет регионы между <!-- prism:KEY --> в README.md, docs/leaderboard.md\n"
+            "и docs/status.md данными из results/auto/*_auto_l1.json. Запускать после prism score."
         ),
     )
     dc.set_defaults(func=cmd_docs)
