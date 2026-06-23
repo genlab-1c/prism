@@ -137,7 +137,7 @@ def test_tasks_category_filter():
 
 
 def test_all_a_tasks_testable(tasks):
-    """У всех задач A есть скрытые тесты и паттерны entry point (A5 — через __table__)."""
+    """У всех задач A есть скрытые тесты и паттерны entry point (A1 — через __table__)."""
     for t in tasks:
         if t.category != "A":
             continue

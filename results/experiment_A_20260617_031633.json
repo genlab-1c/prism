@@ -14,11 +14,11 @@
     "YandexGPT 5.1 Pro",
     "Qwen3.6-35B-A3B"
   ],
-  "tasks_count": 10,
+  "tasks_count": 9,
   "runs_per_task": 1,
   "task_results": [
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -58,7 +58,7 @@
       "avg_time": 2.051
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -98,7 +98,7 @@
       "avg_time": 1.546
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -138,7 +138,7 @@
       "avg_time": 9.505
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -178,7 +178,7 @@
       "avg_time": 8.388
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -218,7 +218,7 @@
       "avg_time": 16.061
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -258,7 +258,7 @@
       "avg_time": 10.771
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -298,7 +298,7 @@
       "avg_time": 7.492
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -338,7 +338,7 @@
       "avg_time": 4.644
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -378,7 +378,7 @@
       "avg_time": 3.081
     },
     {
-      "task_id": "A10",
+      "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -419,406 +419,6 @@
     },
     {
       "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "aliceai-llm/latest",
-      "model_name": "Alice AI LLM",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": " ```\nФункция СортировкаПузырьком(ИсходныйМассив) Экспорт\n\n    МассивДляСортировки = ИсходныйМассив.Скопировать();\n    РазмерМассива = МассивДляСортировки.Количество();\n\n    Для i = 0 По РазмерМассива - 2 Цикл\n        Для j = 0 По РазмерМассива - i - 2 Цикл\n            Если МассивДляСортировки[j] > МассивДляСортировки[j + 1] Тогда\n                ВременноеЗначение = МассивДляСортировки[j];\n                МассивДляСортировки[j] = МассивДляСортировки[j + 1];\n                МассивДляСортировки[j + 1] = ВременноеЗначение;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n\n    Возврат МассивДляСортировки;\n\nКонецФункции\n```",
-          "response_hash": "30e2719d9a045a4d0d49788b5bed5abf3b0f547471c6729b336c220085f73a96",
-          "tokens_input": 103,
-          "tokens_output": 203,
-          "tokens_total": 306,
-          "elapsed_time": 2.3951914310455322,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "30e2719d9a045a4d0d49788b5bed5abf3b0f547471c6729b336c220085f73a96",
-        "most_common_count": 1,
-        "hashes": [
-          "30e2719d9a045a4d0d49788b5bed5abf3b0f547471c6729b336c220085f73a96"
-        ]
-      },
-      "total_tokens": 306,
-      "total_cost": 0.0,
-      "avg_time": 2.395
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "google/gemini-2.5-flash-lite",
-      "model_name": "Gemini 2.5 Flash Lite",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "```bsl\nФункция СортироватьМассивПузырьком(ИсходныйМассив)\n\n\tЕсли ТипЗнч(ИсходныйМассив) <> Тип(\"Массив\") Тогда\n\t\tВызватьИсключение(\"Параметр должен быть массивом.\");\n\tКонецЕсли;\n\n\t// Создаем копию массива, чтобы не изменять исходный\n\tОтсортированныйМассив = Новый Массив;\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tОтсортированныйМассив.Добавить(Элемент);\n\tКонецЦикла;\n\n\tРазмер = ОтсортированныйМассив.Количество();\n\n\tДля i = 0 По Размер - 2 Цикл\n\t\tДля j = 0 По Размер - 2 - i Цикл\n\t\t\tЕсли ОтсортированныйМассив[j] > ОтсортированныйМассив[j + 1] Тогда\n\t\t\t\t// Меняем местами элементы\n\t\t\t\tВременнаяПеременная = ОтсортированныйМассив[j];\n\t\t\t\tОтсортированныйМассив[j] = ОтсортированныйМассив[j + 1];\n\t\t\t\tОтсортированныйМассив[j + 1] = ВременнаяПеременная;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЦикла;\n\n\tВозврат ОтсортированныйМассив;\n\nКонецФункции\n```",
-          "response_hash": "e3953af25d4d3289bfb44b321884f6a70d575b145ea1debd5fbe744f00283ecc",
-          "tokens_input": 114,
-          "tokens_output": 318,
-          "tokens_total": 432,
-          "elapsed_time": 1.7929117679595947,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "e3953af25d4d3289bfb44b321884f6a70d575b145ea1debd5fbe744f00283ecc",
-        "most_common_count": 1,
-        "hashes": [
-          "e3953af25d4d3289bfb44b321884f6a70d575b145ea1debd5fbe744f00283ecc"
-        ]
-      },
-      "total_tokens": 432,
-      "total_cost": 0.0,
-      "avg_time": 1.793
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "deepseek/deepseek-v4-flash",
-      "model_name": "DeepSeek V4-Flash",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "```\nФункция ПузырьковаяСортировка(МассивЧисел)\n\n    // Создаем копию исходного массива\n    Копия = Новый Массив;\n    Для Каждого Элемент Из МассивЧисел Цикл\n        Копия.Добавить(Элемент);\n    КонецЦикла;\n\n    // Сортировка пузырьком по возрастанию\n    Для Индекс1 = 0 По Копия.Количество() - 2 Цикл\n        Для Индекс2 = 0 По Копия.Количество() - 2 - Индекс1 Цикл\n            Если Копия[Индекс2] > Копия[Индекс2 + 1] Тогда\n                Врем = Копия[Индекс2];\n                Копия[Индекс2] = Копия[Индекс2 + 1];\n                Копия[Индекс2 + 1] = Врем;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n\n    Возврат Копия;\n\nКонецФункции\n```",
-          "response_hash": "055923fa3ba403ba25664821898c72de0274a6b93687fa8bfb309bdd33f9972f",
-          "tokens_input": 130,
-          "tokens_output": 821,
-          "tokens_total": 951,
-          "elapsed_time": 8.024753093719482,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "055923fa3ba403ba25664821898c72de0274a6b93687fa8bfb309bdd33f9972f",
-        "most_common_count": 1,
-        "hashes": [
-          "055923fa3ba403ba25664821898c72de0274a6b93687fa8bfb309bdd33f9972f"
-        ]
-      },
-      "total_tokens": 951,
-      "total_cost": 0.0,
-      "avg_time": 8.025
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "qwen/qwen3-235b-a22b-2507",
-      "model_name": "Qwen3-235B-A22B",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "Функция СортировкаПузырьком(МассивЧисел)\n\n\t// Создаем копию массива, чтобы не изменять исходный\n\tРезультат = Новый Массив;\n\tДля Каждого Элемент Из МассивЧисел Цикл\n\t\tРезультат.Добавить(Элемент);\n\tКонецЦикла;\n\n\t// Сортировка методом пузырька\n\tКоличествоЭлементов = Результат.Количество();\n\tДля i = 0 По КоличествоЭлементов - 2 Цикл\n\t\tДля j = 0 По КоличествоЭлементов - 2 - i Цикл\n\t\t\tЕсли Результат[j] > Результат[j + 1] Тогда\n\t\t\t\tВременное = Результат[j];\n\t\t\t\tРезультат[j] = Результат[j + 1];\n\t\t\t\tРезультат[j + 1] = Временное;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
-          "response_hash": "6422951d693a81af52d1246ff950043f02087437e52765fd9386c8c6f13675fe",
-          "tokens_input": 148,
-          "tokens_output": 260,
-          "tokens_total": 408,
-          "elapsed_time": 4.042401552200317,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "6422951d693a81af52d1246ff950043f02087437e52765fd9386c8c6f13675fe",
-        "most_common_count": 1,
-        "hashes": [
-          "6422951d693a81af52d1246ff950043f02087437e52765fd9386c8c6f13675fe"
-        ]
-      },
-      "total_tokens": 408,
-      "total_cost": 0.0,
-      "avg_time": 4.042
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "Функция СортировкаПузырьком(МассивЧисел)\n\n    // Создаем копию массива, чтобы не изменять исходный\n    КопияМассива = Новый Массив;\n    КопияМассива.Значения = МассивЧисел.Значения;\n\n    // Алгоритм пузырьковой сортировки\n    Для к = 1 По КопияМассива.Количество() - 1 Цикл\n        Для л = 1 По КопияМассива.Количество() - к Цикл\n            Если КопияМассива[л] > КопияМассива[л + 1] Тогда\n                Врем = КопияМассива[л];\n                КопияМассива[л] = КопияМассива[л + 1];\n                КопияМассива[л + 1] = Врем;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n\n    Возврат КопияМассива;\n\nКонецФункции",
-          "response_hash": "cc206937ff5bd5e139a872f85897b30556521ab8594565f2458551654ddfaba5",
-          "tokens_input": 120,
-          "tokens_output": 1111,
-          "tokens_total": 1231,
-          "elapsed_time": 13.555981159210205,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "cc206937ff5bd5e139a872f85897b30556521ab8594565f2458551654ddfaba5",
-        "most_common_count": 1,
-        "hashes": [
-          "cc206937ff5bd5e139a872f85897b30556521ab8594565f2458551654ddfaba5"
-        ]
-      },
-      "total_tokens": 1231,
-      "total_cost": 0.0,
-      "avg_time": 13.556
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "anthropic/claude-sonnet-4.6",
-      "model_name": "Claude Sonnet 4.6",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "```1c\nФункция СортировкаПузырьком(МассивЧисел)\n    \n    // Создаём копию массива, чтобы не изменять исходный\n    ОтсортированныйМассив = Новый Массив;\n    Для Каждого Элемент Из МассивЧисел Цикл\n        ОтсортированныйМассив.Добавить(Элемент);\n    КонецЦикла;\n    \n    КоличествоЭлементов = ОтсортированныйМассив.Количество();\n    \n    // Сортировка методом пузырька\n    Для И = 0 По КоличествоЭлементов - 2 Цикл\n        Для Дж = 0 По КоличествоЭлементов - 2 - И Цикл\n            Если ОтсортированныйМассив[Дж] > ОтсортированныйМассив[Дж + 1] Тогда\n                // Меняем элементы местами\n                ВременноеЗначение             = ОтсортированныйМассив[Дж];\n                ОтсортированныйМассив[Дж]     = ОтсортированныйМассив[Дж + 1];\n                ОтсортированныйМассив[Дж + 1] = ВременноеЗначение;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n    \n    Возврат ОтсортированныйМассив;\n    \nКонецФункции\n\n// Пример использования\nМассивЧисел = Новый Массив;\nМассивЧисел.Добавить(64);\nМассивЧисел.Добавить(34);\nМассивЧисел.Добавить(25);\nМассивЧисел.Добавить(12);\nМассивЧисел.Добавить(22);\nМассивЧисел.Добавить(11);\nМассивЧисел.Добавить(90);\n\nОтсортированныйМассив = СортировкаПузырьком(МассивЧисел);\n\n// Вывод исходного массива\nСтрокаИсходный = \"\";\nДля Каждого Элемент Из МассивЧисел Цикл\n    СтрокаИсходный = СтрокаИсходный + Элемент + \" \";\nКонецЦикла;\nСообщить(\"Исходный массив:     \" + СтрокаИсходный);\n\n// Вывод отсортированного массива\nСтрокаОтсортированный = \"\";\nДля Каждого Элемент Из ОтсортированныйМассив Цикл\n    СтрокаОтсортированный = СтрокаОтсортированный + Элемент + \" \";\nКонецЦикла;\nСообщить(\"Отсортированный массив: \" + СтрокаОтсортированный);\n```",
-          "response_hash": "7da21eaf5ecd9b246bd2dbe8dda3f3eac3948c78ea65abdbe3b10ac9b1e5a77c",
-          "tokens_input": 163,
-          "tokens_output": 864,
-          "tokens_total": 1027,
-          "elapsed_time": 11.801069259643555,
-          "cost_input": 0.0004890000000000001,
-          "cost_output": 0.01296,
-          "cost_total": 0.013449,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "7da21eaf5ecd9b246bd2dbe8dda3f3eac3948c78ea65abdbe3b10ac9b1e5a77c",
-        "most_common_count": 1,
-        "hashes": [
-          "7da21eaf5ecd9b246bd2dbe8dda3f3eac3948c78ea65abdbe3b10ac9b1e5a77c"
-        ]
-      },
-      "total_tokens": 1027,
-      "total_cost": 0.013449,
-      "avg_time": 11.801
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "anthropic/claude-opus-4.8",
-      "model_name": "Claude Opus 4.8",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "```bsl\nФункция СортировкаПузырьком(ИсходныйМассив)\n    \n    Результат = Новый Массив;\n    Для Каждого Элемент Из ИсходныйМассив Цикл\n        Результат.Добавить(Элемент);\n    КонецЦикла;\n    \n    КоличествоЭлементов = Результат.Количество();\n    \n    Для Индекс1 = 0 По КоличествоЭлементов - 2 Цикл\n        Для Индекс2 = 0 По КоличествоЭлементов - 2 - Индекс1 Цикл\n            Если Результат[Индекс2] > Результат[Индекс2 + 1] Тогда\n                ВременноеЗначение = Результат[Индекс2];\n                Результат[Индекс2] = Результат[Индекс2 + 1];\n                Результат[Индекс2 + 1] = ВременноеЗначение;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n    \n    Возврат Результат;\n    \nКонецФункции\n```",
-          "response_hash": "e4d7b837d16bc2a380eb0dbdf08bf148bcf115a0420e49e5e751854062fec333",
-          "tokens_input": 182,
-          "tokens_output": 359,
-          "tokens_total": 541,
-          "elapsed_time": 6.972533702850342,
-          "cost_input": 0.00091,
-          "cost_output": 0.008975,
-          "cost_total": 0.009885,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "e4d7b837d16bc2a380eb0dbdf08bf148bcf115a0420e49e5e751854062fec333",
-        "most_common_count": 1,
-        "hashes": [
-          "e4d7b837d16bc2a380eb0dbdf08bf148bcf115a0420e49e5e751854062fec333"
-        ]
-      },
-      "total_tokens": 541,
-      "total_cost": 0.009885,
-      "avg_time": 6.973
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "yandexgpt-5-lite/latest",
-      "model_name": "YandexGPT 5 Lite",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "```\nФункция СортировкаМетодомПузырька(МассивЧисел)\n    НовыйМассив = Новый Массив(МассивЧисел.Количество());\n    Для Индекс = 0 По МассивЧисел.Количество() - 1 Цикл\n        НовыйМассив[Индекс] = МассивЧисел[Индекс];\n    КонецЦикла;\n\n    Для i = 0 По НовыйМассив.Количество() - 1 Цикл\n        Для j = 0 По НовыйМассив.Количество() - 2 Цикл\n            Если НовыйМассив[j] > НовыйМассив[j + 1] Тогда\n                Обмен = НовыйМассив[j];\n                НовыйМассив[j] = НовыйМассив[j + 1];\n                НовыйМассив[j + 1] = Обмен;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n\n    Возврат НовыйМассив;\nКонецФункции\n```",
-          "response_hash": "f0786c9166b07417c7c99b9fdf9d3466d883f3152eb633a144bfedc8833dd9f5",
-          "tokens_input": 103,
-          "tokens_output": 203,
-          "tokens_total": 306,
-          "elapsed_time": 4.298619508743286,
-          "cost_input": 1.545e-05,
-          "cost_output": 9.135e-05,
-          "cost_total": 0.0001068,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "f0786c9166b07417c7c99b9fdf9d3466d883f3152eb633a144bfedc8833dd9f5",
-        "most_common_count": 1,
-        "hashes": [
-          "f0786c9166b07417c7c99b9fdf9d3466d883f3152eb633a144bfedc8833dd9f5"
-        ]
-      },
-      "total_tokens": 306,
-      "total_cost": 0.0001068,
-      "avg_time": 4.299
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "yandexgpt-5.1/latest",
-      "model_name": "YandexGPT 5.1 Pro",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "```\nФункция СортироватьМассивПузырьком(ИсходныйМассив)\n    // Создаем копию исходного массива\n    МассивДляСортировки = Новый Массив;\n    Для Каждого Элемент Из ИсходныйМассив Цикл\n        МассивДляСортировки.Добавить(Элемент);\n    КонецЦикла;\n\n    // Сортировка методом пузырька\n    Для И = 0 По МассивДляСортировки.ВГраница() - 1 Цикл\n        Для J = 0 По МассивДляСортировки.ВГраница() - И - 1 Цикл\n            Если МассивДляСортировки[J] > МассивДляСортировки[J + 1] Тогда\n                // Обмен элементов\n                ВременноеЗначение = МассивДляСортировки[J];\n                МассивДляСортировки[J] = МассивДляСортировки[J + 1];\n                МассивДляСортировки[J + 1] = ВременноеЗначение;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n\n    Возврат МассивДляСортировки;\nКонецФункции\n```",
-          "response_hash": "1fce98e776f525d7b1f9f9dd8a6d2357a275c2e9b10ebe67ca7c3c70e6747fcf",
-          "tokens_input": 102,
-          "tokens_output": 248,
-          "tokens_total": 350,
-          "elapsed_time": 3.8406729698181152,
-          "cost_input": 6.12e-05,
-          "cost_output": 0.0004464,
-          "cost_total": 0.0005076,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "1fce98e776f525d7b1f9f9dd8a6d2357a275c2e9b10ebe67ca7c3c70e6747fcf",
-        "most_common_count": 1,
-        "hashes": [
-          "1fce98e776f525d7b1f9f9dd8a6d2357a275c2e9b10ebe67ca7c3c70e6747fcf"
-        ]
-      },
-      "total_tokens": 350,
-      "total_cost": 0.0005076,
-      "avg_time": 3.841
-    },
-    {
-      "task_id": "A1",
-      "task_name": "Сортировка пузырьком",
-      "model_id": "qwen3.6-35b-a3b/latest",
-      "model_name": "Qwen3.6-35B-A3B",
-      "context_loaded": false,
-      "context_objects": [],
-      "context_analysis_cost": 0.0,
-      "runs": [
-        {
-          "run_index": 0,
-          "seed": null,
-          "temperature": 0.1,
-          "response": "\n\n```1c\nФункция СортировкаПузырьком(ИсходныйМассив) Экспорт\n    МассивДляСортировки = ИсходныйМассив.Копировать();\n    Количество = МассивДляСортировки.Количество();\n    Перем i, j, Временный;\n    Для i = 0 По Количество - 2 Цикл\n        Для j = 0 По Количество - i - 2 Цикл\n            Если МассивДляСортировки[j] > МассивДляСортировки[j + 1] Тогда\n                Временный = МассивДляСортировки[j];\n                МассивДляСортировки[j] = МассивДляСортировки[j + 1];\n                МассивДляСортировки[j + 1] = Временный;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n    Возврат МассивДляСортировки;\nКонецФункции\n```",
-          "response_hash": "660c63cfbc47212502a9b844bd881e539b407b03016dad003857a1bb50149a02",
-          "tokens_input": 129,
-          "tokens_output": 2688,
-          "tokens_total": 2817,
-          "elapsed_time": 8.522517919540405,
-          "cost_input": 2.58e-05,
-          "cost_output": 0.0016128,
-          "cost_total": 0.0016386,
-          "success": true,
-          "error": null
-        }
-      ],
-      "determinism": {
-        "total_runs": 1,
-        "unique_responses": 1,
-        "match_rate": 1.0,
-        "most_common_hash": "660c63cfbc47212502a9b844bd881e539b407b03016dad003857a1bb50149a02",
-        "most_common_count": 1,
-        "hashes": [
-          "660c63cfbc47212502a9b844bd881e539b407b03016dad003857a1bb50149a02"
-        ]
-      },
-      "total_tokens": 2817,
-      "total_cost": 0.0016386,
-      "avg_time": 8.523
-    },
-    {
-      "task_id": "A2",
       "task_name": "Группировка таблицы значений",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -858,7 +458,7 @@
       "avg_time": 2.252
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -898,7 +498,7 @@
       "avg_time": 1.76
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -938,7 +538,7 @@
       "avg_time": 11.851
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -978,7 +578,7 @@
       "avg_time": 7.597
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -1018,7 +618,7 @@
       "avg_time": 24.911
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -1058,7 +658,7 @@
       "avg_time": 8.7
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -1098,7 +698,7 @@
       "avg_time": 10.028
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -1138,7 +738,7 @@
       "avg_time": 4.461
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -1178,7 +778,7 @@
       "avg_time": 2.504
     },
     {
-      "task_id": "A2",
+      "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -1218,7 +818,7 @@
       "avg_time": 10.752
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -1258,7 +858,7 @@
       "avg_time": 1.685
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -1298,7 +898,7 @@
       "avg_time": 1.226
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -1338,7 +938,7 @@
       "avg_time": 23.742
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -1378,7 +978,7 @@
       "avg_time": 3.797
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -1418,7 +1018,7 @@
       "avg_time": 24.546
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -1458,7 +1058,7 @@
       "avg_time": 7.154
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -1498,7 +1098,7 @@
       "avg_time": 6.786
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -1538,7 +1138,7 @@
       "avg_time": 2.858
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -1578,7 +1178,7 @@
       "avg_time": 2.186
     },
     {
-      "task_id": "A3",
+      "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -1618,7 +1218,7 @@
       "avg_time": 6.793
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -1658,7 +1258,7 @@
       "avg_time": 2.899
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -1698,7 +1298,7 @@
       "avg_time": 3.714
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -1738,7 +1338,7 @@
       "avg_time": 17.61
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -1778,7 +1378,7 @@
       "avg_time": 7.826
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -1818,7 +1418,7 @@
       "avg_time": 18.219
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -1858,7 +1458,7 @@
       "avg_time": 15.692
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -1898,7 +1498,7 @@
       "avg_time": 12.19
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -1938,7 +1538,7 @@
       "avg_time": 4.799
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -1978,7 +1578,7 @@
       "avg_time": 4.092
     },
     {
-      "task_id": "A4",
+      "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -2009,7 +1609,7 @@
       "avg_time": 10.975
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -2049,7 +1649,7 @@
       "avg_time": 1.339
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -2089,7 +1689,7 @@
       "avg_time": 1.435
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -2129,7 +1729,7 @@
       "avg_time": 5.887
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -2169,7 +1769,7 @@
       "avg_time": 19.209
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -2209,7 +1809,7 @@
       "avg_time": 15.774
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -2249,7 +1849,7 @@
       "avg_time": 13.645
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -2289,7 +1889,7 @@
       "avg_time": 15.563
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -2329,7 +1929,7 @@
       "avg_time": 4.473
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -2369,7 +1969,7 @@
       "avg_time": 2.846
     },
     {
-      "task_id": "A5",
+      "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -2409,7 +2009,7 @@
       "avg_time": 8.553
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -2449,7 +2049,7 @@
       "avg_time": 3.265
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -2489,7 +2089,7 @@
       "avg_time": 2.853
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -2529,7 +2129,7 @@
       "avg_time": 30.252
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -2569,7 +2169,7 @@
       "avg_time": 4.781
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -2609,7 +2209,7 @@
       "avg_time": 31.743
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -2649,7 +2249,7 @@
       "avg_time": 13.65
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -2689,7 +2289,7 @@
       "avg_time": 10.864
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -2729,7 +2329,7 @@
       "avg_time": 4.321
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -2769,7 +2369,7 @@
       "avg_time": 3.677
     },
     {
-      "task_id": "A6",
+      "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -2800,7 +2400,7 @@
       "avg_time": 11.819
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -2840,7 +2440,7 @@
       "avg_time": 3.264
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -2880,7 +2480,7 @@
       "avg_time": 2.047
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -2920,7 +2520,7 @@
       "avg_time": 8.496
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -2960,7 +2560,7 @@
       "avg_time": 46.574
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -3000,7 +2600,7 @@
       "avg_time": 28.326
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -3040,7 +2640,7 @@
       "avg_time": 12.375
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -3080,7 +2680,7 @@
       "avg_time": 9.027
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -3120,7 +2720,7 @@
       "avg_time": 5.742
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -3160,7 +2760,7 @@
       "avg_time": 3.93
     },
     {
-      "task_id": "A7",
+      "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -3191,7 +2791,7 @@
       "avg_time": 11.845
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -3231,7 +2831,7 @@
       "avg_time": 1.733
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -3271,7 +2871,7 @@
       "avg_time": 1.252
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -3311,7 +2911,7 @@
       "avg_time": 6.09
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -3351,7 +2951,7 @@
       "avg_time": 4.375
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -3391,7 +2991,7 @@
       "avg_time": 25.742
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -3431,7 +3031,7 @@
       "avg_time": 9.719
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -3471,7 +3071,7 @@
       "avg_time": 6.747
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -3511,7 +3111,7 @@
       "avg_time": 3.691
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -3551,7 +3151,7 @@
       "avg_time": 3.019
     },
     {
-      "task_id": "A8",
+      "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",
@@ -3582,7 +3182,7 @@
       "avg_time": 11.625
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -3622,7 +3222,7 @@
       "avg_time": 1.589
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "google/gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash Lite",
@@ -3662,7 +3262,7 @@
       "avg_time": 2.019
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
@@ -3702,7 +3302,7 @@
       "avg_time": 14.114
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
@@ -3742,7 +3342,7 @@
       "avg_time": 10.21
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "z-ai/glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
@@ -3782,7 +3382,7 @@
       "avg_time": 17.895
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "anthropic/claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
@@ -3822,7 +3422,7 @@
       "avg_time": 11.876
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "anthropic/claude-opus-4.8",
       "model_name": "Claude Opus 4.8",
@@ -3862,7 +3462,7 @@
       "avg_time": 9.448
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -3902,7 +3502,7 @@
       "avg_time": 4.531
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "yandexgpt-5.1/latest",
       "model_name": "YandexGPT 5.1 Pro",
@@ -3942,7 +3542,7 @@
       "avg_time": 4.241
     },
     {
-      "task_id": "A9",
+      "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "qwen3.6-35b-a3b/latest",
       "model_name": "Qwen3.6-35B-A3B",

@@ -1,7 +1,7 @@
 # Задача категории A (алгоритмическая, без метаданных). Исполняется в OneScript.
 # Применимость осей — в metrics/smop.yaml (для категории A: P = N/A).
 # Параметры генерации (модель/temperature/seed/system_prompt) — НЕ здесь, а в run-config.
-id: A6
+id: A5
 name: Частота слов
 category: A
 difficulty: medium

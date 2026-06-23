@@ -1,7 +1,7 @@
 # Задача категории A (алгоритмическая, без метаданных). Исполняется в OneScript.
 # Применимость осей — в metrics/smop.yaml (для категории A: P = N/A).
 # Параметры генерации (модель/temperature/seed/system_prompt) — НЕ здесь, а в run-config.
-id: A5
+id: A4
 name: Скользящее среднее
 category: A
 difficulty: medium
