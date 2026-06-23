@@ -30,29 +30,29 @@
 Окружение управляет [uv](https://docs.astral.sh/uv/) — единый менеджер Python/зависимостей.
 Нет uv? Поставьте одной строкой: `curl -LsSf https://astral.sh/uv/install.sh | sh`.
 
+По умолчанию код кандидата исполняется **в Docker** (песочница для недоверенного кода ИИ),
+поэтому базовый путь — собрать образы инструментов:
+
 ```bash
-uv sync                          # харнесс (PyYAML + pydantic) + dev-группа (pytest, ruff…) в .venv
-                                 # .venv uv создаёт и поддерживает сам; группа docs — uv sync --group docs
-
-./tools/get-onescript.sh         # ось M (кат. A): исполнение тестов в OneScript
-./tools/get-bsl-ls.sh            # оси S/O: статический анализатор BSL LS (нужна java 21+)
-
-# оси M/P категории B: учебная 1С headless в Docker (дистрибутив 1С приносишь сам,
-# в репозиторий и образы он не попадает — см. docker/onec.Dockerfile):
-make image-onec                  # подскажет, куда положить дистрибутив, если его нет
+uv sync                          # харнесс + dev-группа (pytest, ruff…) в .venv (uv ведёт сам)
+make images                      # docker-образы инструментов A: prism-onescript + prism-bsl-ls
+make image-onec                  # учебная 1С для категории B (подскажет про дистрибутив)
+# короче: make setup-all = uv sync + образы A + учебная 1С B
 ```
 
-Команды запускаются через `uv run` (он сам поддерживает окружение в актуальном состоянии):
-`uv run prism <команда>`. То же без установки пакета — `uv run python -m harness.cli <команда>`.
-Активировали `.venv` (`source .venv/bin/activate`) — можно звать `prism` напрямую.
+Хостовый dev-режим (быстрее, но без песочницы) — `./tools/get-onescript.sh` +
+`./tools/get-bsl-ls.sh` (нужна java 21+), и звать с `--runner local` / `--bsl local`.
+
+Команды запускаются через `uv run` (он сам поддерживает окружение): `uv run prism <команда>`.
+То же без установки пакета — `uv run python -m harness.cli <команда>`.
 
 **Одной целью:**
 
 | Цель | Что ставит |
 |------|------------|
-| `make setup-all` | **всё для A и B**: окружение + инструменты осей + учебная 1С (кат. B) |
-| `make setup` | окружение + инструменты осей на хост (категория A, режим `local`) |
-| `make setup-docker` | окружение + docker-образы инструментов (для `--runner docker`) |
+| `make setup-all` | **всё в Docker (дефолт)**: окружение + образы инструментов A + учебная 1С B |
+| `make setup-docker` | окружение + docker-образы инструментов A (без учебной 1С B) |
+| `make setup` | хостовый dev-режим: инструменты осей на хост (зови с `--runner/--bsl local`) |
 | `make image-onec` | образ учебной 1С для категории B (проведёт по дистрибутиву, если его нет) |
 
 Категория B требует **свой** дистрибутив платформы 1С (не редистрибутируется): `make
@@ -172,8 +172,9 @@ prism check
 ## `prism score`
 
 Авто-оценка Уровня 1 готовых генераций по изданию — **без новой генерации**, но **с
-пересчётом** (исполнение кандидатов: кат. A — OneScript, кат. B — 1С в Docker, отсюда
-минуты). Берёт выходы моделей из `results/experiment_*.json`, прогоняет скореры осей,
+пересчётом** (исполнение кандидатов в песочнице: кат. A — OneScript, кат. B — 1С, по
+умолчанию обе в Docker, отсюда минуты). Берёт выходы моделей из `results/experiment_*.json`,
+прогоняет скореры осей,
 считает Q и пишет результат в `results/auto/<exp>_auto_l1.json` (схема зеркальна
 экспертной разметке). Во время прогона виден прогресс-бар.
 
@@ -181,7 +182,7 @@ prism check
 prism score                                          # свежий прогон A и B → два лидерборда
 prism score --experiment results/experiment_A_<timestamp>.json
 prism score --full                                   # построчная таблица S·M·O·P·Q вместо лидерборда
-prism score --concurrency 8 --runner docker          # параллелизм/песочница флагом (поверх env)
+prism score --concurrency 8 --runner local           # хостовый раннер флагом (по умолчанию docker)
 ```
 
 Без `--experiment` оценивается свежий прогон **каждой** категории (A и B), каждый в свой
@@ -194,8 +195,8 @@ prism score --concurrency 8 --runner docker          # параллелизм/п
 | `--out` | `results/auto/<exp>_auto_l1.json` | куда писать результат |
 | `--full` | — | построчная таблица `S·M·O·P·Q` (+сверка с экспертом) и срезы по тегам |
 | `--concurrency` | env / ≤4 | параллельных прогонов (поверх `PRISM_CONCURRENCY`) |
-| `--runner` | env / `local` | песочница оси M, `local`\|`docker` (поверх `PRISM_RUNNER`) |
-| `--bsl` | env / `local` | инструмент S/O, `local`\|`docker` (поверх `PRISM_BSL`) |
+| `--runner` | env / `docker` | песочница оси M, `docker`\|`local` (поверх `PRISM_RUNNER`) |
+| `--bsl` | env / `docker` | инструмент S/O, `docker`\|`local` (поверх `PRISM_BSL`) |
 
 По умолчанию печатается **лидерборд** (средний Q по моделям). Полная построчная таблица
 и срезы по тегам — под `--full`; если рядом лежит экспертный файл
@@ -217,9 +218,10 @@ prism leaderboard --full                             # + построчная т
 снимком, как в README, а не одна случайная по времени оценка.
 
 !!! tip "Режим исполнения"
-    Раннер оси M — `PRISM_RUNNER`/`--runner` (`local` по умолчанию | `docker`), инструмент
-    S/O — `PRISM_BSL`/`--bsl`, путь к Java — `PRISM_JAVA`. Это инфраструктура, не идентичность
-    балла, поэтому не в `editions/`.
+    По умолчанию код кандидата исполняется **в Docker-песочнице** (недоверенный код ИИ).
+    Раннер оси M — `PRISM_RUNNER`/`--runner` (`docker` по умолчанию | `local`), инструмент
+    S/O — `PRISM_BSL`/`--bsl` (тоже `docker`), путь к Java для `local` — `PRISM_JAVA`. Это
+    инфраструктура, не идентичность балла, поэтому не в `editions/`.
 
 ## `prism submit`
 
