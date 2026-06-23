@@ -60,7 +60,7 @@ INFOREG_TYPES = [
     ("InformationRegisterRecordKey", "RecordKey"),
     ("InformationRegisterRecordManager", "RecordManager"),
 ]
-# ENUM_TYPES — проверено боем: задача B16 грузит перечисление в реальную 1С и проходит
+# ENUM_TYPES — перечисления грузятся в реальную 1С: задачи со статусами/видами проходят
 # эталон на 100% (prism check).
 #
 # CONST_TYPES — ⚠️ КОНСТАНТЫ ПОКА НЕ ЗАГРУЖАЮТСЯ. LoadConfigFromFiles отвергает любой

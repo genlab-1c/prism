@@ -177,7 +177,7 @@ uv run prism leaderboard --experiment results/auto/<exp>_auto_l1.json   # кон
 
 ```bash
 uv run prism check                  # полная проверка (гейт перед коммитом)
-uv run prism check --task B17       # быстро: эталон только задачи B17
+uv run prism check --task B15       # быстро: эталон только задачи B15
 uv run prism check --category A     # эталоны только категории A
 ```
 

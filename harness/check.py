@@ -51,7 +51,7 @@ def run_checks(
 ) -> tuple[list[Section], bool]:
     """Контракты + задания всегда (дёшево); прогон эталонов в песочнице (дорого)
     можно сузить: only — id задач, category — A|B. Это экспресс-режим под итерации
-    над одной задачей (prism check --task B17), чтобы не ждать все эталоны."""
+    над одной задачей (prism check --task B15), чтобы не ждать все эталоны."""
     sections = [
         _check_contracts(),
         _check_tasks(),

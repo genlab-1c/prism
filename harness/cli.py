@@ -325,7 +325,7 @@ def build_parser() -> argparse.ArgumentParser:
             "  prism                       шпаргалка (эта подсказка)\n"
             "  prism leaderboard           кто впереди (мгновенно, без пересчёта)\n"
             "  prism score --full          пересчитать L1 + построчные детали\n"
-            "  prism check --task B17       быстро прогнать эталон одной задачи\n\n"
+            "  prism check --task B15       быстро прогнать эталон одной задачи\n\n"
             "Справка по команде:  prism <команда> --help"
         ),
     )
@@ -464,7 +464,7 @@ def build_parser() -> argparse.ArgumentParser:
         epilog=(
             "Примеры:\n"
             "  prism check                  полная проверка (гейт перед коммитом)\n"
-            "  prism check --task B17       быстро: эталон только задачи B17\n"
+            "  prism check --task B15       быстро: эталон только задачи B15\n"
             "  prism check --category A     эталоны только категории A"
         ),
     )
@@ -473,7 +473,7 @@ def build_parser() -> argparse.ArgumentParser:
         nargs="*",
         default=None,
         metavar="ID",
-        help="экспресс: прогнать эталоны только этих задач (напр. --task B17)",
+        help="экспресс: прогнать эталоны только этих задач (напр. --task B15)",
     )
     ch.add_argument(
         "--category",

@@ -22,8 +22,8 @@
 </p>
 <p align="center">
 <!-- prism:badges -->
-  <img src="https://img.shields.io/badge/задач-27-success" alt="задач: 27">
-  <img src="https://img.shields.io/badge/тест--кейсов-88-blue" alt="тест-кейсов: 88">
+  <img src="https://img.shields.io/badge/задач-25-success" alt="задач: 25">
+  <img src="https://img.shields.io/badge/тест--кейсов-86-blue" alt="тест-кейсов: 86">
   <img src="https://img.shields.io/badge/генераций_в_прогоне-205-blue" alt="генераций: 205">
   <img src="https://img.shields.io/badge/в_лидерборде-10_моделей-blue" alt="в лидерборде 10 моделей">
 <!-- /prism:badges -->
