@@ -23,13 +23,42 @@ from rich.text import Text
 
 console = Console()
 
-# статус среза check → (глиф, rich-стиль)
+# Бренд-акцент: cyan из спектра логотипа (ось M). Единый акцент команд CLI.
+ACCENT = "#22D3EE"
+
+# Статус среза → (точка, rich-стиль). Цветные точки вместо «галочек» — современно и чисто.
 STATUS_STYLE: dict[str, tuple[str, str]] = {
-    "ok": ("✓", "green"),
-    "warn": ("⚠", "yellow"),
-    "fail": ("✗", "bold red"),
-    "skip": ("·", "dim"),
+    "ok": ("●", "green"),
+    "warn": ("●", "yellow"),
+    "fail": ("●", "red"),
+    "skip": ("○", "dim"),
 }
+
+
+def brand_title(subtitle: str) -> None:
+    """Брендовая шапка вывода команды: «PRISM · <subtitle>»."""
+    console.print(
+        f"\n  [bold {ACCENT}]PRISM[/bold {ACCENT}] [dim]· {subtitle}[/dim]\n", highlight=False
+    )
+
+
+def print_status_sections(sections: list) -> None:
+    """Секции со статус-точками (единый вид doctor / check): заголовок + выровненные строки."""
+    from rich.table import Table
+    from rich.text import Text
+
+    for s in sections:
+        console.print(f"  [dim]{s['title']}[/dim]", highlight=False)
+        grid = Table.grid(padding=(0, 1))
+        grid.add_column(width=2)  # отступ
+        grid.add_column(justify="center")  # статус-точка
+        grid.add_column(overflow="fold")  # текст
+        for status, text in s["items"]:
+            glyph, style = STATUS_STYLE.get(status, ("·", "dim"))
+            grid.add_row("", Text(glyph, style=style), Text(text))
+        console.print(grid)
+        console.print()
+
 
 # Пасхалка PRISM_FUN=1: вместо строгого спиннера у прогресс-бара по строке бегает котик.
 # Кадры — туда-обратно, чистый ASCII (фиксированная ширина → без дрожания); регистрируем

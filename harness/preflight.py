@@ -15,6 +15,9 @@ from __future__ import annotations
 import platform
 import shutil
 
+from rich.table import Table
+from rich.text import Text
+
 from harness.check import Item, Section, _check_instruments
 from harness.execute.onec import runner as onec
 from harness.execute.runner import get_runner
@@ -26,7 +29,7 @@ from harness.generate.adapters.registry import (
 from harness.generate.types import ChatMessage
 from harness.loaders import load_generation
 from harness.settings import credentials_env
-from harness.ui import STATUS_STYLE, console
+from harness.ui import STATUS_STYLE, brand_title, console, print_status_sections
 
 try:
     from importlib.metadata import version as _pkg_version
@@ -91,23 +94,18 @@ def doctor_sections() -> tuple[list[Section], dict]:
     return sections, verdict
 
 
-def render_sections(sections: list[Section]) -> None:
-    for s in sections:
-        console.print(f"\n{s['title']}", style="bold", markup=False, highlight=False)
-        for status, text in s["items"]:
-            glyph, style = STATUS_STYLE.get(status, ("?", "dim"))
-            console.print(f"  {glyph} {text}", style=style, markup=False, highlight=False)
-
-
 def render_doctor(sections: list[Section], verdict: dict) -> None:
-    render_sections(sections)
+    brand_title("проверка готовности")
+    print_status_sections(sections)
 
-    def mark(ok: bool) -> str:
-        return "[green]✓[/green]" if ok else "[red]✗[/red]"
+    def dot(ok: bool) -> str:
+        return "[green]●[/green]" if ok else "[red]●[/red]"
 
     console.print(
-        f"\nГотов к: генерации {mark(verdict['generation'])} · "
-        f"оценке A {mark(verdict['score_a'])} · оценке B {mark(verdict['score_b'])}",
+        f"  [dim]готов[/dim]   "
+        f"генерация {dot(verdict['generation'])}    "
+        f"оценка A {dot(verdict['score_a'])}    "
+        f"оценка B {dot(verdict['score_b'])}\n",
         highlight=False,
     )
 
@@ -158,18 +156,29 @@ def ping_models(model_keys: list[str] | None = None) -> list[dict]:
 
 
 def render_ping(results: list[dict]) -> None:
-    console.print(
-        "проверка связи с моделями (минимальный запрос — тратит немного токенов)\n",
-        style="bold",
-        highlight=False,
-    )
+    brand_title("связь с моделями")
+    grid = Table.grid(padding=(0, 2))
+    grid.add_column(width=2)  # отступ
+    grid.add_column(justify="center")  # статус-точка
+    grid.add_column()  # ключ модели
+    grid.add_column(style="dim")  # канал
+    grid.add_column(overflow="fold")  # детали
     for r in results:
-        glyph, style = STATUS_STYLE.get(r["status"], ("?", "dim"))
-        line = f"  {glyph} {r['key']:<14}{r['adapter']:<16}{r['detail']}"
-        console.print(line, style=style, markup=False, highlight=False)
+        glyph, style = STATUS_STYLE.get(r["status"], ("·", "dim"))
+        grid.add_row(
+            "",
+            Text(glyph, style=style),
+            Text(r["key"], style="bold"),
+            Text(r["adapter"]),
+            Text(r["detail"], style=style),
+        )
+    console.print(grid)
+
     n_ok = sum(r["status"] == "ok" for r in results)
     n_fail = sum(r["status"] == "fail" for r in results)
     n_skip = sum(r["status"] == "skip" for r in results)
     console.print(
-        f"\nитог: {n_ok} ✓ · {n_fail} ✗ · {n_skip} пропуск", style="bold", highlight=False
+        f"\n  [dim]итог[/dim]   [green]{n_ok} на связи[/green]   "
+        f"[red]{n_fail} с ошибкой[/red]   [dim]{n_skip} пропущено[/dim]\n",
+        highlight=False,
     )

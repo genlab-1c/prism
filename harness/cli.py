@@ -22,7 +22,7 @@ import sys
 from pathlib import Path
 
 from harness import check, orchestrate
-from harness.ui import STATUS_STYLE, console, print_logo
+from harness.ui import ACCENT, brand_title, console, print_logo, print_status_sections
 
 try:  # версия из метаданных установленного пакета (pyproject [project].version)
     from importlib.metadata import version as _pkg_version
@@ -115,18 +115,19 @@ def cmd_generate(args: argparse.Namespace) -> int:
     if args.mock:  # сухой прогон конвейера: без сети и ключей (имитация модели mock/echo)
         from harness.generate.mock import build_mock_runner
 
-        console.print(
-            f"режим имитации (без сети) · модель mock/echo · {args.mock}",
-            style="dim",
-            highlight=False,
-        )
+        brand_title(f"генерация · имитация ({args.mock})")
+        console.print("  [dim]без сети и ключей · модель mock/echo[/dim]\n", highlight=False)
         exp = build_mock_runner(args.mock, verbose=True).run_experiment(
             args.category, task_ids=args.tasks, edition_name=args.edition
         )
-        print(
-            f"→ results/{exp.experiment_name}.json  "
-            f"({exp.tasks_count} задач × 1 модель · имитация, $0.0000)\n"
-            f"  дальше: prism score --experiment results/{exp.experiment_name}.json"
+        console.print(
+            f"\n  [green]→ results/{exp.experiment_name}.json[/green]  "
+            f"[dim]({exp.tasks_count} задач × 1 модель · имитация)[/dim]",
+            highlight=False,
+        )
+        console.print(
+            f"  [dim]дальше:[/dim] prism score --experiment results/{exp.experiment_name}.json",
+            highlight=False,
         )
         return 0
 
@@ -138,16 +139,23 @@ def cmd_generate(args: argparse.Namespace) -> int:
 
     if args.dry_run:  # предполётная оценка стоимости, без сети
         est = runner.estimate(args.category, model_keys=args.models, task_ids=args.tasks)
-        print(
-            f"≈ {est['pairs']} пар · ${est['total']:.4f} (грубая верхняя оценка, "
-            f"цены на {est['as_of'] or '—'})"
+        brand_title("генерация · смета стоимости")
+        console.print(
+            f"  ≈ {est['pairs']} пар · [bold]${est['total']:.4f}[/bold]  "
+            f"[dim](грубая верхняя оценка, цены на {est['as_of'] or '—'})[/dim]",
+            highlight=False,
         )
         for mid, cost in est["by_model"].items():
-            print(f"    {mid}: ${cost:.4f}")
+            console.print(f"    [dim]{mid}[/dim]  ${cost:.4f}", highlight=False)
         if est["unknown_price"]:
-            print(f"  ⚠ нет цены (бюджет недосчитан): {', '.join(est['unknown_price'])}")
+            console.print(
+                f"  [yellow]● нет цены (бюджет недосчитан): "
+                f"{', '.join(est['unknown_price'])}[/yellow]",
+                highlight=False,
+            )
         return 0
 
+    brand_title("генерация")
     exp = runner.run_experiment(
         args.category,
         model_keys=args.models,
@@ -155,10 +163,11 @@ def cmd_generate(args: argparse.Namespace) -> int:
         edition_name=args.edition,
         resume=args.resume,
     )
-    print(
-        f"→ results/{exp.experiment_name}.json  "
-        f"({exp.tasks_count} задач × {len(exp.models_used)} моделей · "
-        f"токенов {exp.total_tokens} · ${exp.total_cost:.4f})"
+    console.print(
+        f"\n  [green]→ results/{exp.experiment_name}.json[/green]  "
+        f"[dim]({exp.tasks_count} задач × {len(exp.models_used)} моделей · "
+        f"токенов {exp.total_tokens} · ${exp.total_cost:.4f})[/dim]",
+        highlight=False,
     )
     return 0
 
@@ -188,15 +197,32 @@ def cmd_leaderboard(args: argparse.Namespace) -> int:
 
 
 def cmd_tasks(args: argparse.Namespace) -> int:
+    from rich.table import Table
+
     from harness.loaders import load_tasks
     from harness.report import catalog
 
     path = catalog.write()
     tasks = load_tasks()
+    brand_title("банк задач")
+    for cat, title in (("A", "алгоритмика"), ("B", "платформа")):
+        rows = sorted((t for t in tasks if t.category == cat), key=lambda t: int(t.id[1:]))
+        if not rows:
+            continue
+        console.print(f"  [dim]категория {cat} · {title} · {len(rows)}[/dim]", highlight=False)
+        grid = Table.grid(padding=(0, 2))
+        grid.add_column(style="bold", width=4)  # id (для --task / --tasks)
+        grid.add_column()  # имя
+        grid.add_column(style="dim")  # сложность
+        for t in rows:
+            grid.add_row(t.id, t.name, t.difficulty or "")
+        console.print(grid)
+        console.print()
     a = sum(t.category == "A" for t in tasks)
-    print(
-        f"→ {path.relative_to(path.parents[1])}  "
-        f"(банк задач пересобран: {len(tasks)} задач — A: {a}, B: {len(tasks) - a})"
+    console.print(
+        f"  [dim]→ {path.relative_to(path.parents[1])} пересобран · "
+        f"всего {len(tasks)} (A: {a}, B: {len(tasks) - a})[/dim]\n",
+        highlight=False,
     )
     return 0
 
@@ -215,16 +241,15 @@ def cmd_check(args: argparse.Namespace) -> int:
     _apply_runtime_flags(args)
     only = set(args.task) if args.task else None
     sections, ok = check.run_checks(only=only, category=args.category)
-    for s in sections:
-        console.print(f"\n{s['title']}", style="bold", markup=False, highlight=False)
-        for status, text in s["items"]:
-            glyph, style = STATUS_STYLE.get(status, ("?", "dim"))
-            # markup=False — текст среза идёт как есть (возможные «[…]» не трактуются как разметка)
-            console.print(f"  {glyph} {text}", style=style, markup=False, highlight=False)
+    brand_title("проверка целостности")
+    print_status_sections(sections)
     fails = sum(st == "fail" for s in sections for st, _ in s["items"])
     warns = sum(st == "warn" for s in sections for st, _ in s["items"])
-    verdict = "[green]ОК[/green]" if ok else "[bold red]ЕСТЬ НАРУШЕНИЯ[/bold red]"
-    console.print(f"\n{verdict}: {fails} fail, {warns} warn", highlight=False)
+    warn_tail = f"   [yellow]предупреждений: {warns}[/yellow]" if warns else ""
+    if ok:
+        console.print(f"  [dim]итог[/dim]   [green]● целостность в порядке[/green]{warn_tail}\n")
+    else:
+        console.print(f"  [dim]итог[/dim]   [red]● нарушений: {fails}[/red]{warn_tail}\n")
     return 0 if ok else 1
 
 
@@ -238,10 +263,63 @@ def cmd_doctor(args: argparse.Namespace) -> int:
 
 def cmd_ping(args: argparse.Namespace) -> int:
     from harness import preflight
+    from harness.loaders import load_generation
 
+    catalog = load_generation().models
+    unknown = [k for k in (args.models or []) if k not in catalog]
+    known = [k for k in (args.models or []) if k in catalog]
+    if unknown and not known:  # все запрошенные ключи — мимо каталога: пинговать нечего
+        brand_title("связь с моделями")
+        console.print(f"  [red]●[/red] нет такой модели: {', '.join(unknown)}", highlight=False)
+        console.print("  [dim]список ключей моделей: prism models[/dim]\n", highlight=False)
+        return 1
+    if unknown:  # часть ключей неизвестна — предупреждаем и пингуем остальные
+        console.print(
+            f"  [yellow]●[/yellow] пропускаю неизвестные: {', '.join(unknown)} "
+            "[dim](prism models)[/dim]",
+            highlight=False,
+        )
     results = preflight.ping_models(args.models)
     preflight.render_ping(results)
     return 1 if any(r["status"] == "fail" for r in results) else 0
+
+
+def cmd_models(args: argparse.Namespace) -> int:
+    from rich.table import Table
+
+    from harness.generate.adapters.registry import ADAPTER_REQUIRED_KEYS
+    from harness.loaders import load_generation
+    from harness.settings import credentials_env
+
+    gen = load_generation()
+    env = credentials_env()
+    brand_title("каталог моделей")
+    grid = Table.grid(padding=(0, 2))
+    grid.add_column(width=2, justify="center")  # ключ канала есть?
+    grid.add_column(style="bold")  # ключ модели (для --models)
+    grid.add_column()  # имя
+    grid.add_column(style="dim")  # вендор · адаптер
+    grid.add_column(style="dim")  # возможности
+    has_key = False
+    for key, m in gen.models.items():
+        caps = m.capabilities or {}
+        missing = [k for k in ADAPTER_REQUIRED_KEYS.get(m.access.adapter, []) if k not in env]
+        dot = "[green]●[/green]" if not missing else "[dim]○[/dim]"
+        has_key = has_key or not missing
+        marks = []
+        if caps.get("supports_tools"):
+            marks.append("tools (кат. B)")
+        if caps.get("supports_seed"):
+            marks.append("seed")
+        grid.add_row(dot, key, m.name, f"{m.vendor} · {m.access.adapter}", " · ".join(marks))
+    console.print(grid)
+    legend = "  [green]●[/green] ключ канала задан   [dim]○ нет ключа (см. .env.example)[/dim]"
+    console.print(f"\n{legend}", highlight=False)
+    console.print(
+        f"  [dim]всего {len(gen.models)} · пинг: prism ping --models <ключ>[/dim]\n",
+        highlight=False,
+    )
+    return 0
 
 
 def cmd_submit(args: argparse.Namespace) -> int:
@@ -251,43 +329,60 @@ def cmd_submit(args: argparse.Namespace) -> int:
     from harness.loaders import PRISM
 
     if args.verify:  # приём чужого пакета: сверка версии бенчмарка
-        info = submit.verify_submission(args.verify)
+        brand_title("проверка пакета")
+        path = Path(args.verify)
+        if not path.exists():  # допускаем короткое имя — ищем в results/submissions/
+            alt = PRISM / "results" / "submissions" / path.name
+            path = alt if alt.exists() else path
+        if not path.exists():
+            console.print(f"  [red]●[/red] пакет не найден: {args.verify}", highlight=False)
+            subs = sorted((PRISM / "results" / "submissions").glob("*_submission.json"))
+            if subs:
+                console.print("  [dim]есть в results/submissions/:[/dim]", highlight=False)
+                for s in subs:
+                    console.print(f"    [dim]{s.name}[/dim]", highlight=False)
+            console.print()
+            return 1
+        info = submit.verify_submission(path)
         sub = info["submission"]
         if not info["compatible"]:
             console.print(
-                "✗ несовместимо: прогон на другой версии бенчмарка — цифры несравнимы",
-                style="bold red",
+                "  [red]●[/red] несовместимо: прогон на другой версии бенчмарка — цифры несравнимы",
                 highlight=False,
             )
             console.print(
-                f"  пакет {str(sub.get('compat_hash', '?'))[:12]} ≠ репо {info['current_hash'][:12]}",
-                style="dim",
+                f"  [dim]пакет {str(sub.get('compat_hash', '?'))[:12]} ≠ "
+                f"репо {info['current_hash'][:12]}[/dim]\n",
                 highlight=False,
             )
             return 1
-        console.print("✓ совместимо с текущим репо (compat_hash совпал)", style="green")
-        console.print(f"  модели: {', '.join(sub.get('models', [])) or '—'}", style="dim")
+        console.print(
+            "  [green]●[/green] совместимо с текущим репозиторием (compat_hash совпал)",
+            highlight=False,
+        )
+        console.print(f"  [dim]моделей[/dim] {len(sub.get('models', []))}\n", highlight=False)
         if args.apply:
             out = submit.apply_submission(sub)
             console.print(
-                f"→ влито в {out.relative_to(PRISM)} · пересоберите лидерборд: prism docs",
-                style="green",
+                f"  [green]→ влито в {out.relative_to(PRISM)}[/green]  "
+                f"[dim]пересоберите лидерборд: prism docs[/dim]\n",
                 highlight=False,
             )
         else:
-            console.print("  влить в results/auto/: повторите с --apply", style="dim")
+            console.print("  [dim]влить в results/auto/: повторите с --apply[/dim]\n")
         return 0
 
+    brand_title("упаковка прогона")
     out, sub = submit.build_submission(args.experiment, created=datetime.now().isoformat())
-    console.print(f"→ {out.relative_to(PRISM)}", style="green", highlight=False)
+    console.print(f"  [green]→ {out.relative_to(PRISM)}[/green]", highlight=False)
     console.print(
-        f"  compat_hash: {sub['compat_hash'][:12]} · модели: {', '.join(sub['models']) or '—'}",
-        style="dim",
+        f"  [dim]compat_hash[/dim] {sub['compat_hash'][:12]}   "
+        f"[dim]моделей[/dim] {len(sub['models'])}",
         highlight=False,
     )
     console.print(
-        "  Поделиться: приложите файл к PR или пришлите автору (он сверит: prism submit --verify).",
-        style="dim",
+        "  [dim]поделиться: приложите файл к PR или пришлите автору "
+        "(он сверит: prism submit --verify)[/dim]\n",
         highlight=False,
     )
     return 0
@@ -296,21 +391,27 @@ def cmd_submit(args: argparse.Namespace) -> int:
 def print_quickstart() -> None:
     """Шпаргалка-«главная»: что набрать, когда `prism` вызван без команды."""
     print_logo()  # брендовый баннер (тихо ничего на не-tty)
-    console.print()
+    console.print(
+        f"  [dim]GenLab-1C · PRISM[/dim] [bold]v{VERSION}[/bold] [dim]· издание core[/dim]\n",
+        highlight=False,
+    )
     steps = [
+        ("какие задачи в банке", "prism tasks"),
+        ("какие модели в каталоге", "prism models"),
         ("всё ли готово к работе", "prism doctor"),
         ("проверить связь с моделями", "prism ping"),
-        ("посмотреть результаты", "prism leaderboard"),
-        ("пересчитать оценку L1", "prism score"),
         ("сухой прогон без сети", "prism generate --category A --mock"),
         ("сгенерировать код моделями", "prism generate --category A"),
+        ("пересчитать оценку L1", "prism score"),
+        ("посмотреть результаты", "prism leaderboard"),
         ("поделиться результатом", "prism submit"),
     ]
     for desc, cmd in steps:
-        console.print(f"  {desc:<30}[cyan]{cmd}[/cyan]", highlight=False)
+        console.print(f"  {desc:<30}[{ACCENT}]{cmd}[/{ACCENT}]", highlight=False)
     console.print(
-        "\n  справка по любой команде     [cyan]prism <команда> --help[/cyan]"
-        "\n  установка и тесты            [cyan]make setup[/cyan] · [cyan]make test[/cyan]\n",
+        f"\n  справка по любой команде     [{ACCENT}]prism <команда> --help[/{ACCENT}]"
+        f"\n  установка и тесты            [{ACCENT}]make setup-all[/{ACCENT}] · "
+        f"[{ACCENT}]make test[/{ACCENT}]\n",
         highlight=False,
     )
 
@@ -485,9 +586,12 @@ def build_parser() -> argparse.ArgumentParser:
     ch.set_defaults(func=cmd_check)
 
     tk = sub.add_parser(
-        "tasks", help="пересобрать видимый банк задач (tasks/README.md) из task.yaml"
+        "tasks", help="показать банк задач (id для --task) и пересобрать tasks/README.md"
     )
     tk.set_defaults(func=cmd_tasks)
+
+    md = sub.add_parser("models", help="показать каталог моделей (ключи для --models, без сети)")
+    md.set_defaults(func=cmd_models)
 
     dc = sub.add_parser(
         "docs",

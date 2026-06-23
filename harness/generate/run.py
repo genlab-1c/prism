@@ -147,8 +147,9 @@ class GenerationRunner:
                     meter.add(tr.total_cost)
             if done:
                 self._progress(
-                    f"resume {exp_name}: готово {len(done)}/{len(pairs)} пар, "
-                    f"добираем {len(pairs) - len(done)}"
+                    f"  resume {exp_name}: готово {len(done)}/{len(pairs)} пар, "
+                    f"добираем {len(pairs) - len(done)}",
+                    style="dim",
                 )
 
         pending = [(t, k) for (t, k) in pairs if (t.id, k) not in done]
@@ -157,7 +158,11 @@ class GenerationRunner:
 
         def work(task: Task, key: str) -> tuple[tuple[str, str], TaskResult | None]:
             if meter.exceeded():  # кап исчерпан → новые пары не запускаем
-                self._progress(f"· пропуск {task.id}×{key}: бюджет ${self.max_cost} исчерпан")
+                self._progress(
+                    f"  ○ пропуск {task.name} · {self.models[key].name}: "
+                    f"бюджет ${self.max_cost} исчерпан",
+                    style="dim",
+                )
                 return (task.id, key), None
             sem = self._sems.get(self.models[key].access.adapter)
             if sem:
@@ -165,7 +170,10 @@ class GenerationRunner:
             try:
                 tr = self._run_pair(task, key, self.models[key], category, edition.context)
             except Exception as e:  # noqa: BLE001 — пара упала жёстко: не роняем прогон
-                self._progress(f"✗ {task.id}×{key}: {e} — пара останется для resume")
+                self._progress(
+                    f"  ● {task.name} · {self.models[key].name}: {e} — resume повторит",
+                    style="red",
+                )
                 return (task.id, key), None
             finally:
                 if sem:
@@ -174,12 +182,13 @@ class GenerationRunner:
             if not any(r.success for r in tr.runs):  # ни один прогон не удался (сеть/доступ) →
                 err = tr.runs[0].error if tr.runs else "нет прогонов"  # как исключение: не пишем,
                 self._progress(
-                    f"⚠ {task.id}×{key}: генерация не удалась ({err}) — пара останется для resume"
+                    f"  ● {task.name} · {self.models[key].name}: генерация не удалась ({err})",
+                    style="yellow",
                 )
                 return (task.id, key), None  # resume повторит; в эксперимент не попадёт
             if write:
                 self._write_part(parts_dir, task.id, key, tr)
-            self._progress(f"✓ {task.id}×{key}  (${meter.spent:.4f} всего)")
+            self._progress(f"  ● {task.name} · {self.models[key].name}", style="green")
             return (task.id, key), tr
 
         results: dict[tuple[str, str], TaskResult] = dict(done)
@@ -189,9 +198,10 @@ class GenerationRunner:
             bar = self.verbose and console.is_terminal
             progress = (
                 Progress(
-                    TextColumn("[progress.description]{task.description}"),
+                    TextColumn("  [progress.description]{task.description}"),
                     BarColumn(),
                     MofNCompleteColumn(),
+                    TextColumn("[dim]·[/dim] [green]${task.fields[cost]:.4f}[/green]"),
                     TimeElapsedColumn(),
                     console=console,
                 )
@@ -199,7 +209,9 @@ class GenerationRunner:
                 else nullcontext()
             )
             with progress:
-                bar_task = progress.add_task("генерация пар", total=len(pending)) if bar else None
+                bar_task = (
+                    progress.add_task("генерация", total=len(pending), cost=0.0) if bar else None
+                )
                 self._progress_sink = progress if bar else None
                 try:
                     with ThreadPoolExecutor(max_workers=max(1, self.concurrency)) as pool:
@@ -208,6 +220,9 @@ class GenerationRunner:
                                 results[pkey] = tr
                             if bar:
                                 progress.advance(bar_task)
+                                progress.update(
+                                    bar_task, cost=meter.spent
+                                )  # потрачено в реальном времени
                 finally:
                     self._progress_sink = None
 
@@ -266,7 +281,7 @@ class GenerationRunner:
                 base_delay=self.retry_base_delay,
                 sleep=self._sleep,
                 on_retry=lambda n, err, d: self._progress(
-                    f"  ↻ {task.id}×{key} попытка {n}: {err} — пауза {d:.0f}с"
+                    f"  ↻ {task.id}×{key} попытка {n}: {err} — пауза {d:.0f}с", style="dim"
                 ),
             )
             ci, co, ct = self._cost(entry.id, out.tokens_input, out.tokens_output)
@@ -310,8 +325,9 @@ class GenerationRunner:
                 if model_id not in self._warned_prices:
                     self._warned_prices.add(model_id)
                     self._progress(
-                        f"⚠ нет цены для {model_id} в pricing.yaml — стоимость "
-                        f"по этой модели не учтена"
+                        f"  ● нет цены для {model_id} в pricing.yaml — стоимость "
+                        f"по этой модели не учтена",
+                        style="yellow",
                     )
         return self.pricing.cost(model_id, tokens_in, tokens_out)
 
@@ -384,11 +400,9 @@ class GenerationRunner:
         )
         return path
 
-    def _progress(self, msg: str) -> None:
+    def _progress(self, msg: str, style: str | None = None) -> None:
         if not self.verbose:
             return
-        sink = self._progress_sink
-        if sink is not None:  # печатаем НАД живым баром, не ломая его
-            sink.console.print(msg, markup=False, highlight=False)
-        else:
-            print(msg, flush=True)
+        # печатаем НАД живым баром, не ломая его; на не-tty rich сам снимет цвет.
+        target = self._progress_sink.console if self._progress_sink is not None else console
+        target.print(msg, style=style, markup=False, highlight=False)

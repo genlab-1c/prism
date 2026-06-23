@@ -285,15 +285,15 @@ def _check_instruments() -> Section:
     items: list[Item] = []
     runner = get_runner()
     if runner.available():
-        items.append(("ok", f"M (meaning): раннер {runner.name} ✓"))
+        items.append(("ok", f"M (meaning): раннер {runner.name}"))
     else:
         items.append(("warn", f"M (meaning): {runner.unavailable_reason()} — ось не измеряется"))
     if bsl_ls.available():
-        items.append(("ok", f"S/O (syntax/optimization): {bsl_ls.describe()} ✓"))
+        items.append(("ok", f"S/O (syntax/optimization): {bsl_ls.describe()}"))
     else:
         items.append(("warn", f"S/O: {bsl_ls.unavailable_reason()} — оси не измеряются"))
     if onec.available():
-        items.append(("ok", f"S/M/P кат. B (1С): docker-образ {onec.DOCKER_IMAGE} ✓"))
+        items.append(("ok", f"S/M/P кат. B (1С): docker-образ {onec.DOCKER_IMAGE}"))
     else:
         items.append(("warn", f"M/P кат. B: {onec.unavailable_reason()}"))
     return {"title": "Инструменты по осям", "items": items}
