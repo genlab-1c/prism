@@ -25,7 +25,10 @@ from pathlib import Path
 from pydantic import BaseModel
 
 DOCKER_IMAGE = "prism-onec:latest"
-ONEC_BIN = "/opt/1cv8t/x86_64/8.3.27.1508/1cv8t"
+# Путь к бинарю учебного клиента — версия НЕ зашита: находим его глобом в рантайме внутри
+# контейнера (подставляется в bash -c). Работает с образом любой версии 1С и не зависит от
+# PATH (в части старых образов PATH к бинарю битый).
+ONEC_BIN = '"$(ls /opt/1cv8t/x86_64/*/1cv8t 2>/dev/null | head -1)"'
 STEP_TIMEOUT_S = 180  # на каждый шаг конфигуратора (DESIGNER) или клиента 1С
 RESULT_RE = re.compile(r"PASSED=(\d+);TOTAL=(\d+);?(.*)", re.DOTALL)
 

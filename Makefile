@@ -21,9 +21,9 @@ ONESCRIPT_IMAGE := prism-onescript:2.0.1
 BSL_LS_IMAGE    := prism-bsl-ls:0.29.0
 # Учебная 1С для категории B (оси M/P). Дистрибутив приносится свой (НЕ коммитится,
 # НЕ редистрибутируется): tools/ в .gitignore. Имя образа = onec.DOCKER_IMAGE.
-ONEC_VER   := 8.3.27.1508
+# Версия НЕ зашита: ищем .run любой версии — в tools/1ce-training/ или прямо в корне tools/.
 ONEC_IMAGE := prism-onec:latest
-ONEC_DIST  := tools/1ce-training/setup-training-$(ONEC_VER)-x86_64.run
+ONEC_DIST  := $(firstword $(wildcard tools/1ce-training/setup-*.run) $(wildcard tools/setup-*.run) $(wildcard tools/1ce-training/*.run) $(wildcard tools/*.run))
 
 # MODE=docker — тумблер песочниц для `make test` (интеграция в контейнерах вместо хоста).
 # Для самих прогонов prism песочница выбирается флагом: prism ... --runner/--bsl docker.
@@ -50,7 +50,7 @@ help:  ## показать этот список
 ##@ Установка
 setup: venv tools  ## окружение (uv) + инструменты осей на ХОСТ → прогон prism в режиме local
 setup-all: venv tools  ## ВСЁ для A и B: окружение + инструменты осей + учебная 1С (кат. B)
-	@if [ -f "$(ONEC_DIST)" ]; then \
+	@if [ -n "$(ONEC_DIST)" ]; then \
 		$(MAKE) --no-print-directory image-onec; \
 	else \
 		$(MAKE) --no-print-directory onec-guide; \
@@ -67,14 +67,21 @@ image-onescript:  ## образ песочницы M (OneScript)
 	docker build -t $(ONESCRIPT_IMAGE) -f docker/onescript.Dockerfile .
 image-bsl-ls:  ## образ инструмента S/O (BSL LS на JRE 21)
 	docker build -t $(BSL_LS_IMAGE) -f docker/bsl-ls.Dockerfile .
-image-onec:  ## образ учебной 1С для категории B (нужен свой дистрибутив — см. onec-guide)
-	@if [ ! -f "$(ONEC_DIST)" ]; then $(MAKE) --no-print-directory onec-guide; exit 1; fi
+image-onec:  ## образ учебной 1С для категории B (дистрибутив любой версии в tools/ — см. onec-guide)
+	@dist="$(ONEC_DIST)"; \
+	if [ -z "$$dist" ]; then $(MAKE) --no-print-directory onec-guide; exit 1; fi; \
+	mkdir -p tools/1ce-training; \
+	if [ "$$(cd "$$(dirname "$$dist")" && pwd)" != "$$(cd tools/1ce-training && pwd)" ]; then \
+		echo "→ переношу дистрибутив в tools/1ce-training/: $$(basename "$$dist")"; \
+		mv "$$dist" tools/1ce-training/; \
+	fi; \
+	echo "→ сборка $(ONEC_IMAGE) из $$(ls tools/1ce-training/*.run | head -1)"; \
 	docker build -t $(ONEC_IMAGE) -f docker/onec.Dockerfile tools/1ce-training
 onec-guide:  ## как добыть дистрибутив учебной 1С для категории B
 	@printf '\n  Категория B исполняется в учебной 1С (Docker) — нужен свой дистрибутив платформы:\n'
-	@printf '    1. Скачай учебную версию $(ONEC_VER) (Linux, .run) — https://developer.1c.ru\n'
-	@printf '       (учебной версии не нужна активация лицензии)\n'
-	@printf '    2. Положи setup-training-$(ONEC_VER)-x86_64.run в tools/1ce-training/\n'
+	@printf '    1. Скачай учебную версию (Linux, файл .run) — https://developer.1c.ru\n'
+	@printf '       (учебной версии не нужна активация лицензии; подойдёт любая версия 8.3.2x)\n'
+	@printf '    2. Положи .run в tools/1ce-training/ (или прямо в tools/ — make его найдёт и перенесёт)\n'
 	@printf '    3. Собери образ:  make image-onec\n'
 	@printf '  Дистрибутив не коммитится и не редистрибутируется (tools/ в .gitignore).\n\n'
 
