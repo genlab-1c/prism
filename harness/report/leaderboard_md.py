@@ -102,8 +102,8 @@ def render_overall(result: dict, category: str) -> str:
         {"M", "O", "P", "Q"} if category == "A" else {"M", "P", "Q"}
     )  # в A ось O теперь различает — выделяем
     maxes = {a: max((m[a] for _, m, _ in rows if m[a] is not None), default=None) for a in axes}
-    head = "| Модель | " + " | ".join(titles[a] for a in axes) + " |"
-    sep = "|--------|" + ":---:|" * len(axes)
+    head = "| № | Модель | " + " | ".join(titles[a] for a in axes) + " |"
+    sep = "|:---:|--------|" + ":---:|" * len(axes)
     out = [head, sep]
     for i, (name, m, _n) in enumerate(rows):
         cells = []
@@ -112,7 +112,7 @@ def render_overall(result: dict, category: str) -> str:
             is_max = a in bold_axes and m[a] is not None and abs(m[a] - (maxes[a] or -9)) < 1e-9
             cells.append(_cell(m[a], is_max, prec))
         nm = f"**{name}**" if i == 0 else name
-        out.append(f"| {nm} | " + " | ".join(cells) + " |")
+        out.append(f"| {i + 1} | {nm} | " + " | ".join(cells) + " |")
     return _wrap("\n".join(out))
 
 
