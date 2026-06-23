@@ -13,11 +13,25 @@ from __future__ import annotations
 from functools import lru_cache
 from pathlib import Path
 
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # .env ищем рядом с репозиторием (harness/ → корень), а не от CWD — чтобы подхват
 # работал из любого рабочего каталога.
 _ENV_FILE = Path(__file__).resolve().parent.parent / ".env"
+
+
+def load_runtime_env() -> None:
+    """Подгрузить .env в окружение процесса, не перетирая уже заданные переменные.
+
+    Ключи моделей читает pydantic (класс Credentials), а рантайм-настройки —
+    PRISM_RUNNER/PRISM_BSL/PRISM_CONCURRENCY/PRISM_ONEC_MEMORY/PRISM_ONEC_CPUS/PRISM_JAVA —
+    код берёт «сырым» os.environ.get(...). Чтобы и они работали из .env (а не только как
+    переменные оболочки), один раз подгружаем .env в os.environ на старте CLI. override=False
+    сохраняет приоритет настоящего окружения над .env (как у pydantic-settings).
+    """
+    if _ENV_FILE.exists():
+        load_dotenv(_ENV_FILE, override=False)
 
 
 class Credentials(BaseSettings):

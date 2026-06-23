@@ -560,6 +560,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv: list[str] | None = None) -> int:
+    from harness.settings import load_runtime_env
+
+    load_runtime_env()  # .env → os.environ (рантайм-переменные PRISM_* работают из .env)
     args = build_parser().parse_args(argv)
     if not getattr(args, "command", None):  # `prism` без команды → шпаргалка, не ошибка
         print_quickstart()
