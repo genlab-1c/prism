@@ -11,6 +11,7 @@ authors:
     given-names: Danila
     email: ads4.nr@mail.ru
 version: "1.0.0"
+date-released: "2026-06-24"
 license: MIT
 repository-code: "https://github.com/genlab-1c/prism"
 keywords:
