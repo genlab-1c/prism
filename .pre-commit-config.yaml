@@ -37,5 +37,6 @@ repos:
       - id: end-of-file-fixer        # перевод строки в конце файла
         exclude: ^results/
       - id: check-yaml               # валидность YAML (editions/, metric/, tasks/)
+        args: [--unsafe]             # допускаем кастомные теги mkdocs (!!python/name для mermaid)
       - id: check-merge-conflict     # забытые маркеры конфликтов
       - id: check-added-large-files  # случайные большие файлы (>500 КБ)
