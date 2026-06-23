@@ -10,7 +10,8 @@
 # pyproject.toml, `uv run <cmd>` запускает в нём. Нет uv? → curl -LsSf https://astral.sh/uv/install.sh | sh
 #
 # Готовые рецепты установки:
-#   make setup         — окружение + инструменты осей на ХОСТ          (прогон prism в режиме local)
+#   make setup-all     — ВСЁ для категорий A и B: окружение + инструменты + учебная 1С (кат. B)
+#   make setup         — окружение + инструменты осей на ХОСТ          (категория A, режим local)
 #   make setup-docker  — окружение + docker-образы инструментов        (prism ... --runner docker)
 
 UV    ?= uv
@@ -18,6 +19,11 @@ VENV  ?= .venv
 
 ONESCRIPT_IMAGE := prism-onescript:2.0.1
 BSL_LS_IMAGE    := prism-bsl-ls:0.29.0
+# Учебная 1С для категории B (оси M/P). Дистрибутив приносится свой (НЕ коммитится,
+# НЕ редистрибутируется): tools/ в .gitignore. Имя образа = onec.DOCKER_IMAGE.
+ONEC_VER   := 8.3.27.1508
+ONEC_IMAGE := prism-onec:latest
+ONEC_DIST  := tools/1ce-training/setup-training-$(ONEC_VER)-x86_64.run
 
 # MODE=docker — тумблер песочниц для `make test` (интеграция в контейнерах вместо хоста).
 # Для самих прогонов prism песочница выбирается флагом: prism ... --runner/--bsl docker.
@@ -27,7 +33,7 @@ export PRISM_BSL    := $(MODE)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup-docker venv tools images image-onescript image-bsl-ls test test-fast lint docs clean
+.PHONY: help setup setup-all setup-docker venv tools images image-onescript image-bsl-ls image-onec onec-guide test test-fast lint docs clean
 
 help:  ## показать этот список
 	@echo "Пользоваться бенчмарком — командой prism (свой --help и флаги):"
@@ -43,6 +49,13 @@ help:  ## показать этот список
 
 ##@ Установка
 setup: venv tools  ## окружение (uv) + инструменты осей на ХОСТ → прогон prism в режиме local
+setup-all: venv tools  ## ВСЁ для A и B: окружение + инструменты осей + учебная 1С (кат. B)
+	@if [ -f "$(ONEC_DIST)" ]; then \
+		$(MAKE) --no-print-directory image-onec; \
+	else \
+		$(MAKE) --no-print-directory onec-guide; \
+		printf '  Категории A готовы. Для B выполни шаги выше, затем: make image-onec\n\n'; \
+	fi
 setup-docker: venv images  ## окружение (uv) + docker-образы инструментов → prism ... --runner docker
 
 ##@ Инструменты осей
@@ -54,6 +67,16 @@ image-onescript:  ## образ песочницы M (OneScript)
 	docker build -t $(ONESCRIPT_IMAGE) -f docker/onescript.Dockerfile .
 image-bsl-ls:  ## образ инструмента S/O (BSL LS на JRE 21)
 	docker build -t $(BSL_LS_IMAGE) -f docker/bsl-ls.Dockerfile .
+image-onec:  ## образ учебной 1С для категории B (нужен свой дистрибутив — см. onec-guide)
+	@if [ ! -f "$(ONEC_DIST)" ]; then $(MAKE) --no-print-directory onec-guide; exit 1; fi
+	docker build -t $(ONEC_IMAGE) -f docker/onec.Dockerfile tools/1ce-training
+onec-guide:  ## как добыть дистрибутив учебной 1С для категории B
+	@printf '\n  Категория B исполняется в учебной 1С (Docker) — нужен свой дистрибутив платформы:\n'
+	@printf '    1. Скачай учебную версию $(ONEC_VER) (Linux, .run) — https://developer.1c.ru\n'
+	@printf '       (учебной версии не нужна активация лицензии)\n'
+	@printf '    2. Положи setup-training-$(ONEC_VER)-x86_64.run в tools/1ce-training/\n'
+	@printf '    3. Собери образ:  make image-onec\n'
+	@printf '  Дистрибутив не коммитится и не редистрибутируется (tools/ в .gitignore).\n\n'
 
 ##@ Разработка
 venv: $(VENV)  ## python-окружение (.venv) — uv sync
