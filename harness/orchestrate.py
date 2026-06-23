@@ -50,7 +50,7 @@ from harness.score.optimization_exec import score_o_exec
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
 from harness.score.syntax import _cluster_lines, score_s
-from harness.ui import console, progress_bar
+from harness.ui import brand_title, console, progress_bar
 
 
 def _concurrency() -> int:
@@ -519,33 +519,65 @@ def print_leaderboard(result: dict) -> None:
 # ── прогон + отчёт (зовётся из CLI: prism score) ──────────────────────────────
 
 
+def _is_mock_experiment(path: Path) -> bool:
+    """Сухой прогон конвейера (модель mock/echo) — не настоящий эксперимент для оценки.
+
+    Иначе оставшийся после `generate --mock` файл стал бы «свежим» для категории и
+    засорял бы авто-выбор `score`/`leaderboard`."""
+    try:
+        used = json.loads(path.read_text(encoding="utf-8")).get("models_used") or []
+    except (OSError, json.JSONDecodeError):
+        return False
+    return bool(used) and all(str(m).lower().startswith("mock") for m in used)
+
+
+def _is_mock_auto(path: Path) -> bool:
+    """Не-настоящая авто-оценка L1: mock-прогон (model_id == mock/echo) ИЛИ пустая (0 задач).
+
+    Пустые auto появляются, когда оценивать нечего (напр. `score --models X` против прогона
+    без модели X) — на лидерборд их пускать нельзя."""
+    try:
+        tasks = json.loads(path.read_text(encoding="utf-8")).get("tasks") or []
+    except (OSError, json.JSONDecodeError):
+        return False
+    ids = {str(t.get("model_id", "")) for t in tasks}
+    return not ids or all(i.lower().startswith("mock") for i in ids)
+
+
+def _prefer_real(runs: list[Path], is_mock) -> list[Path]:
+    """Отсеять mock; но если настоящих нет — вернуть всё (демо `--mock` без реальных прогонов)."""
+    real = [r for r in runs if not is_mock(r)]
+    return real or runs
+
+
 def newest_experiment(category: str = "A") -> Path:
-    """Свежайший experiment_<cat>_*.json из results/ (по сортировке имени = по дате)."""
+    """Свежайший НАСТОЯЩИЙ experiment_<cat>_*.json (mock игнорируется, если есть реальные)."""
     runs = sorted((PRISM / "results").glob(f"experiment_{category}_*.json"))
     if not runs:
         raise SystemExit(f"в results/ нет experiment_{category}_*.json")
-    return runs[-1]
+    return _prefer_real(runs, _is_mock_experiment)[-1]
 
 
 def newest_experiments() -> dict[str, Path]:
-    """{категория: свежайший experiment_<cat>_*.json} по всем присутствующим категориям.
+    """{категория: свежайший НАСТОЯЩИЙ experiment_<cat>_*.json} по всем категориям.
 
     Основа дефолта `prism score` без аргументов: оценить свежий прогон И A, И B, а не
-    только A (раньше брался лишь experiment_A_* — категория B молча выпадала)."""
+    только A. Mock-прогоны (`generate --mock`) пропускаются, пока есть реальные — иначе
+    забытый сухой прогон становился бы «свежим» и оценивался вместо настоящего."""
     found: dict[str, Path] = {}
     for cat in ("A", "B"):
         runs = sorted((PRISM / "results").glob(f"experiment_{cat}_*.json"))
         if runs:
-            found[cat] = runs[-1]
+            found[cat] = _prefer_real(runs, _is_mock_experiment)[-1]
     return found
 
 
 def newest_auto(category: str | None = None) -> Path:
-    """Последняя по времени авто-оценка L1 из results/auto/ (по mtime, не по имени).
+    """Последняя по времени НАСТОЯЩАЯ авто-оценка L1 из results/auto/ (mock игнорируется).
 
     category=None — across A/B (для `prism submit`); иначе только указанной категории."""
     pattern = f"experiment_{category}_*_auto_l1.json" if category else "*_auto_l1.json"
-    runs = list((PRISM / "results" / "auto").glob(pattern))
+    runs = _prefer_real(list((PRISM / "results" / "auto").glob(pattern)), _is_mock_auto)
     if not runs:
         where = f" категории {category}" if category else ""
         raise SystemExit(f"в results/auto/ нет оценок L1{where} — сначала запустите `prism score`")
@@ -553,10 +585,11 @@ def newest_auto(category: str | None = None) -> Path:
 
 
 def newest_autos() -> list[Path]:
-    """Свежайший auto_l1 каждой присутствующей категории (A раньше B) — для лидерборда A+B."""
+    """Свежайший НАСТОЯЩИЙ auto_l1 каждой категории (A раньше B) — для лидерборда A+B."""
     out: list[Path] = []
     for cat in ("A", "B"):
         runs = list((PRISM / "results" / "auto").glob(f"experiment_{cat}_*_auto_l1.json"))
+        runs = _prefer_real(runs, _is_mock_auto)
         if runs:
             out.append(max(runs, key=lambda p: p.stat().st_mtime))
     return out
@@ -584,7 +617,7 @@ def _print_one_leaderboard(auto_path: Path, full: bool) -> None:
     result = json.loads(auto_path.read_text(encoding="utf-8"))
     # эксперимент рядом с auto (для сверки с экспертом в --full); может и не существовать
     experiment_path = PRISM / "results" / f"{result['experiment_id']}.json"
-    console.print(f"лидерборд · {auto_path.name}\n", style="bold", markup=False, highlight=False)
+    console.print(f"  [dim]· {auto_path.name}[/dim]\n", highlight=False)
     print_report(result, experiment_path, full=full)
 
 
@@ -593,6 +626,7 @@ def leaderboard_report(auto_path: Path | None = None, full: bool = False) -> lis
 
     Без явного пути печатает свежайший лидерборд КАЖДОЙ категории (A и B, как в README),
     а не одну случайную по mtime."""
+    brand_title("лидерборд")
     if auto_path is not None:
         _print_one_leaderboard(auto_path, full)
         return [auto_path]
@@ -619,16 +653,15 @@ def score_report(
     существующий auto_l1 (прежние модели берутся готовыми, не пересчитываются). Так
     добавляют новые генерации, не гоняя 1С по уже посчитанному базлайну.
     """
+    brand_title("оценка L1")
     runner = get_runner()
     if not runner.available():
         console.print(
-            f"⚠ раннер {runner.name} недоступен: {runner.unavailable_reason()}",
-            style="yellow",
-            markup=False,
+            f"  [yellow]●[/yellow] раннер {runner.name} недоступен: {runner.unavailable_reason()}",
             highlight=False,
         )
         console.print(
-            "  ось M выйдет «не измерена» (score=None) для всех кандидатов.", style="yellow"
+            "    ось M выйдет «не измерена» (score=None) для всех кандидатов.", style="dim"
         )
 
     model_ids = None
@@ -637,7 +670,10 @@ def score_report(
         model_ids = {catalog[k].id for k in model_keys if k in catalog}
         unknown = [k for k in model_keys if k not in catalog]
         if unknown:
-            console.print(f"⚠ нет в каталоге, пропущены: {', '.join(unknown)}", style="yellow")
+            console.print(
+                f"  [yellow]●[/yellow] нет в каталоге, пропущены: {', '.join(unknown)}",
+                highlight=False,
+            )
         if not model_ids:
             raise SystemExit("ни одной известной модели в --models")
 
@@ -661,9 +697,9 @@ def score_report(
 
     analyzer = result["syntax_analyzer"] or "S/O вне издания или анализатор недоступен"
     console.print(
-        f"издание {result['edition']} × {experiment_path.name}\n"
-        f"раннер {result['runner']} · синтаксис {analyzer} · протокол L1 v{result['protocol_version']}\n",
-        markup=False,
+        f"  [dim]издание {result['edition']} × {experiment_path.name}[/dim]\n"
+        f"  [dim]раннер {result['runner']} · синтаксис {analyzer} · "
+        f"протокол L1 v{result['protocol_version']}[/dim]\n",
         highlight=False,
     )
     print_report(result, experiment_path, full=full)
