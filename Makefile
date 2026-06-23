@@ -16,6 +16,9 @@
 
 UV    ?= uv
 VENV  ?= .venv
+# Адрес dev-сервера документации (make docs-serve). Порт 8000 часто занят другим
+# приложением — переопредели: make docs-serve DOCS_ADDR=127.0.0.1:8001
+DOCS_ADDR ?= 127.0.0.1:8000
 
 ONESCRIPT_IMAGE := prism-onescript:2.0.1
 BSL_LS_IMAGE    := prism-bsl-ls:0.29.0
@@ -33,7 +36,7 @@ export PRISM_BSL    := $(MODE)
 endif
 
 .DEFAULT_GOAL := help
-.PHONY: help setup setup-all setup-docker venv tools images image-onescript image-bsl-ls image-onec onec-guide test test-fast lint docs clean
+.PHONY: help setup setup-all setup-docker venv tools images image-onescript image-bsl-ls image-onec onec-guide test test-fast lint docs docs-serve docs-build clean
 
 help:  ## показать этот список
 	@echo "Пользоваться бенчмарком — командой prism (свой --help и флаги):"
@@ -100,5 +103,11 @@ lint: venv  ## ruff (check + format) + pre-commit (как в CI)
 	$(UV) run pre-commit run --all-files
 docs: venv  ## регенерировать таблицы лидерборда и бейджи в README/status (алиас prism docs)
 	$(UV) run prism docs
+docs-serve: venv  ## локальный предпросмотр документации (MkDocs); порт сменить: DOCS_ADDR=127.0.0.1:8001
+	$(UV) sync --group docs
+	$(UV) run mkdocs serve -a $(DOCS_ADDR)
+docs-build: venv  ## собрать статический сайт документации в site/ (MkDocs)
+	$(UV) sync --group docs
+	$(UV) run mkdocs build
 clean:  ## убрать venv, рабочие и build-артефакты (данные results/ не трогает)
 	rm -rf $(VENV) site build *.egg-info .pytest_cache .ruff_cache work

@@ -1,5 +1,6 @@
 <p align="center">
-  <img src="assets/lockdark.png" alt="PRISM — многомерная оценка генерации кода 1С" width="450">
+  <img src="assets/locklight.png#only-light" alt="PRISM — многомерная оценка генерации кода 1С" width="450">
+  <img src="assets/lockdark.png#only-dark" alt="PRISM — многомерная оценка генерации кода 1С" width="450">
 </p>
 
 # PRISM
