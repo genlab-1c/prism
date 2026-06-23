@@ -13,7 +13,7 @@ SCORERS — единственное место, куда подключаетс
 печатает дельту авто↔эксперт по M и Q — первая проверка согласованности.
 
 Запуск (CLI prism, см. cli.py):
-  prism score                                            # свежайший experiment_A_*.json, издание core
+  prism score                                            # свежий прогон A и B, издание core
   prism score --experiment results/experiment_B_20260301_130327.json
   PRISM_RUNNER=docker prism score                        # ось M кат. A в песочнице
 """
@@ -519,24 +519,47 @@ def print_leaderboard(result: dict) -> None:
 # ── прогон + отчёт (зовётся из CLI: prism score) ──────────────────────────────
 
 
-def newest_experiment() -> Path:
-    """Свежайший experiment_A_*.json из results/ (по сортировке имени = по дате)."""
-    runs = sorted((PRISM / "results").glob("experiment_A_*.json"))
+def newest_experiment(category: str = "A") -> Path:
+    """Свежайший experiment_<cat>_*.json из results/ (по сортировке имени = по дате)."""
+    runs = sorted((PRISM / "results").glob(f"experiment_{category}_*.json"))
     if not runs:
-        raise SystemExit("в results/ нет experiment_A_*.json")
+        raise SystemExit(f"в results/ нет experiment_{category}_*.json")
     return runs[-1]
 
 
-def newest_auto() -> Path:
-    """Последняя по времени авто-оценка L1 из results/auto/ (для `prism leaderboard`).
+def newest_experiments() -> dict[str, Path]:
+    """{категория: свежайший experiment_<cat>_*.json} по всем присутствующим категориям.
 
-    По mtime, а не по имени: across A/B «свежая» — та, что посчитана последней, а не
-    та, чьё имя позже по алфавиту.
-    """
-    runs = list((PRISM / "results" / "auto").glob("*_auto_l1.json"))
+    Основа дефолта `prism score` без аргументов: оценить свежий прогон И A, И B, а не
+    только A (раньше брался лишь experiment_A_* — категория B молча выпадала)."""
+    found: dict[str, Path] = {}
+    for cat in ("A", "B"):
+        runs = sorted((PRISM / "results").glob(f"experiment_{cat}_*.json"))
+        if runs:
+            found[cat] = runs[-1]
+    return found
+
+
+def newest_auto(category: str | None = None) -> Path:
+    """Последняя по времени авто-оценка L1 из results/auto/ (по mtime, не по имени).
+
+    category=None — across A/B (для `prism submit`); иначе только указанной категории."""
+    pattern = f"experiment_{category}_*_auto_l1.json" if category else "*_auto_l1.json"
+    runs = list((PRISM / "results" / "auto").glob(pattern))
     if not runs:
-        raise SystemExit("в results/auto/ нет оценок L1 — сначала запустите `prism score`")
+        where = f" категории {category}" if category else ""
+        raise SystemExit(f"в results/auto/ нет оценок L1{where} — сначала запустите `prism score`")
     return max(runs, key=lambda p: p.stat().st_mtime)
+
+
+def newest_autos() -> list[Path]:
+    """Свежайший auto_l1 каждой присутствующей категории (A раньше B) — для лидерборда A+B."""
+    out: list[Path] = []
+    for cat in ("A", "B"):
+        runs = list((PRISM / "results" / "auto").glob(f"experiment_{cat}_*_auto_l1.json"))
+        if runs:
+            out.append(max(runs, key=lambda p: p.stat().st_mtime))
+    return out
 
 
 def print_report(result: dict, experiment_path: Path, full: bool = False) -> None:
@@ -557,15 +580,30 @@ def print_report(result: dict, experiment_path: Path, full: bool = False) -> Non
         print_tag_profiles(result)
 
 
-def leaderboard_report(auto_path: Path | None = None, full: bool = False) -> Path:
-    """Мгновенная сводка из СОХРАНЁННОЙ авто-оценки L1 — без пере-исполнения в 1С."""
-    auto_path = auto_path or newest_auto()
+def _print_one_leaderboard(auto_path: Path, full: bool) -> None:
     result = json.loads(auto_path.read_text(encoding="utf-8"))
     # эксперимент рядом с auto (для сверки с экспертом в --full); может и не существовать
     experiment_path = PRISM / "results" / f"{result['experiment_id']}.json"
     console.print(f"лидерборд · {auto_path.name}\n", style="bold", markup=False, highlight=False)
     print_report(result, experiment_path, full=full)
-    return auto_path
+
+
+def leaderboard_report(auto_path: Path | None = None, full: bool = False) -> list[Path]:
+    """Мгновенная сводка из СОХРАНЁННОЙ авто-оценки L1 — без пере-исполнения в 1С.
+
+    Без явного пути печатает свежайший лидерборд КАЖДОЙ категории (A и B, как в README),
+    а не одну случайную по mtime."""
+    if auto_path is not None:
+        _print_one_leaderboard(auto_path, full)
+        return [auto_path]
+    paths = newest_autos()
+    if not paths:
+        raise SystemExit("в results/auto/ нет оценок L1 — сначала запустите `prism score`")
+    for i, p in enumerate(paths):
+        if i:
+            console.print()
+        _print_one_leaderboard(p, full)
+    return paths
 
 
 def score_report(

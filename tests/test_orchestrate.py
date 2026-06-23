@@ -130,3 +130,42 @@ def test_failed_generation_is_na_not_zero(const):
 def test_successful_or_legacy_run_scored_normally(const):
     assert orchestrate._failed_generation_run({"success": True}, const.axes) is None
     assert orchestrate._failed_generation_run({}, const.axes) is None  # легаси без поля — оцениваем
+
+
+# ── выбор свежих прогонов/оценок: A и B, а не только A ────────────────────────
+
+
+def _touch(p, mtime=None):
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text("{}", encoding="utf-8")
+    if mtime is not None:
+        import os
+
+        os.utime(p, (mtime, mtime))
+
+
+def test_newest_experiments_covers_both_categories(tmp_path, monkeypatch):
+    monkeypatch.setattr(orchestrate, "PRISM", tmp_path)
+    res = tmp_path / "results"
+    _touch(res / "experiment_A_20260101_000000.json")
+    _touch(res / "experiment_A_20260102_000000.json")  # свежее по имени
+    _touch(res / "experiment_B_20260101_000000.json")
+    found = orchestrate.newest_experiments()
+    assert set(found) == {"A", "B"}  # B больше не выпадает
+    assert found["A"].name == "experiment_A_20260102_000000.json"  # свежайший A
+
+
+def test_newest_autos_one_per_category(tmp_path, monkeypatch):
+    monkeypatch.setattr(orchestrate, "PRISM", tmp_path)
+    auto = tmp_path / "results" / "auto"
+    _touch(auto / "experiment_A_20260101_000000_auto_l1.json", mtime=1000)
+    _touch(auto / "experiment_A_20260102_000000_auto_l1.json", mtime=2000)  # новее по mtime
+    _touch(auto / "experiment_B_20260101_000000_auto_l1.json", mtime=1500)
+    autos = orchestrate.newest_autos()
+    names = sorted(p.name for p in autos)
+    assert names == [
+        "experiment_A_20260102_000000_auto_l1.json",
+        "experiment_B_20260101_000000_auto_l1.json",
+    ]
+    # category-фильтр newest_auto берёт только свою категорию
+    assert orchestrate.newest_auto("B").name == "experiment_B_20260101_000000_auto_l1.json"
