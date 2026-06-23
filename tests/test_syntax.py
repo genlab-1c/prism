@@ -101,15 +101,15 @@ def test_parity_ignores_keywords_in_strings(proto):
 # ── выбор режима инструмента (без docker) ────────────────────────────────────
 
 
-def test_get_analyzer_local_by_default(monkeypatch):
+def test_get_analyzer_docker_by_default(monkeypatch):
     monkeypatch.delenv("PRISM_BSL", raising=False)
-    assert bsl_ls.get_analyzer().name == "local"
-
-
-def test_get_analyzer_docker_by_env(monkeypatch):
-    monkeypatch.setenv("PRISM_BSL", "docker")
     analyzer = bsl_ls.get_analyzer()
     assert analyzer.name == "docker" and "prism-bsl-ls" in analyzer.image
+
+
+def test_get_analyzer_local_by_env(monkeypatch):
+    monkeypatch.setenv("PRISM_BSL", "local")
+    assert bsl_ls.get_analyzer().name == "local"
 
 
 def test_get_analyzer_unknown_mode_rejected():

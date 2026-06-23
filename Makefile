@@ -9,10 +9,10 @@
 # Окружение управляет uv (https://docs.astral.sh/uv/): `uv sync` собирает .venv из
 # pyproject.toml, `uv run <cmd>` запускает в нём. Нет uv? → curl -LsSf https://astral.sh/uv/install.sh | sh
 #
-# Готовые рецепты установки:
-#   make setup-all     — ВСЁ для категорий A и B: окружение + инструменты + учебная 1С (кат. B)
-#   make setup         — окружение + инструменты осей на ХОСТ          (категория A, режим local)
-#   make setup-docker  — окружение + docker-образы инструментов        (prism ... --runner docker)
+# Готовые рецепты установки (по умолчанию код исполняется в Docker — песочница):
+#   make setup-all     — ВСЁ в Docker: окружение + образы инструментов (A) + учебная 1С (B)
+#   make setup-docker  — окружение + docker-образы инструментов A (без учебной 1С B)
+#   make setup         — хостовый dev-режим: инструменты осей на ХОСТ (зови с --runner/--bsl local)
 
 UV    ?= uv
 VENV  ?= .venv
@@ -48,15 +48,15 @@ help:  ## показать этот список
 		/^[a-zA-Z_-]+:.*?## /{printf "    \033[36m%-16s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
 ##@ Установка
-setup: venv tools  ## окружение (uv) + инструменты осей на ХОСТ → прогон prism в режиме local
-setup-all: venv tools  ## ВСЁ для A и B: окружение + инструменты осей + учебная 1С (кат. B)
+setup-all: venv images  ## ВСЁ в Docker (дефолт): окружение + образы инструментов A + учебная 1С B
 	@if [ -n "$(ONEC_DIST)" ]; then \
 		$(MAKE) --no-print-directory image-onec; \
 	else \
 		$(MAKE) --no-print-directory onec-guide; \
-		printf '  Категории A готовы. Для B выполни шаги выше, затем: make image-onec\n\n'; \
+		printf '  Категория A готова (Docker). Для B выполни шаги выше, затем: make image-onec\n\n'; \
 	fi
-setup-docker: venv images  ## окружение (uv) + docker-образы инструментов → prism ... --runner docker
+setup-docker: venv images  ## окружение (uv) + docker-образы инструментов A (без учебной 1С B)
+setup: venv tools  ## хостовый dev-режим: инструменты осей на ХОСТ (зови с --runner/--bsl local)
 
 ##@ Инструменты осей
 tools:  ## OneScript + BSL LS на ХОСТ (bootstrap-скрипты)

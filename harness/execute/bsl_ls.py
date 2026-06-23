@@ -1,12 +1,14 @@
 """Инструмент осей S/O: BSL Language Server в режиме analyze → JSON-диагностики.
 
 Два режима, как у раннера OneScript (execute/runner.py) — выбор через env PRISM_BSL:
-  local  — java -jar из tools/ прямо на хосте (нужен JRE 21+). Для своей разработки.
   docker — образ prism-bsl-ls (docker/bsl-ls.Dockerfile): JRE внутри, без сети,
-           код смонтирован read-only. Для CI и недоверенных кандидатов.
+           код смонтирован read-only. ДЕФОЛТ — ради воспроизводимости и единого
+           пинового JRE.
+  local  — java -jar из tools/ прямо на хосте (нужен JRE 21+). Для своей разработки
+           (явно: --bsl local или PRISM_BSL=local).
 
 BSL LS только ПАРСИТ код (не исполняет), поэтому риск ниже, чем у M, и local на хосте
-допустим даже для чужого кода; docker — ради воспроизводимости и единого пинового JRE.
+допустим даже для чужого кода — но дефолт держим в Docker заодно с раннером оси M.
 
 Один батч-запуск на всё дерево исходников (старт JVM ~секунды — per-file дорого).
 Отчёт: <out_dir>/bsl-json.json, fileinfos[{path, diagnostics[{code, severity, …}]}].
@@ -135,8 +137,8 @@ BSL = LocalBSL | DockerBSL
 
 
 def get_analyzer(mode: str | None = None) -> BSL:
-    """Фабрика по режиму: аргумент → env PRISM_BSL → local."""
-    mode = (mode or os.environ.get("PRISM_BSL") or "local").lower()
+    """Фабрика по режиму: аргумент → env PRISM_BSL → docker (песочница по умолчанию)."""
+    mode = (mode or os.environ.get("PRISM_BSL") or "docker").lower()
     if mode == "local":
         return LocalBSL()
     if mode == "docker":

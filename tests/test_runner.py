@@ -24,19 +24,19 @@ requires_docker = pytest.mark.skipif(
 # ── фабрика ──────────────────────────────────────────────────────────────────
 
 
-def test_factory_default_local(monkeypatch):
+def test_factory_default_docker(monkeypatch):
     monkeypatch.delenv("PRISM_RUNNER", raising=False)
-    assert get_runner().name == "local"
+    assert get_runner().name == "docker"  # песочница по умолчанию (недоверенный код LLM)
 
 
 def test_factory_env(monkeypatch):
-    monkeypatch.setenv("PRISM_RUNNER", "docker")
-    assert get_runner().name == "docker"
+    monkeypatch.setenv("PRISM_RUNNER", "local")
+    assert get_runner().name == "local"
 
 
 def test_factory_arg_beats_env(monkeypatch):
-    monkeypatch.setenv("PRISM_RUNNER", "docker")
-    assert get_runner("local").name == "local"
+    monkeypatch.setenv("PRISM_RUNNER", "local")
+    assert get_runner("docker").name == "docker"
 
 
 def test_factory_unknown_mode():

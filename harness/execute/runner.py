@@ -2,12 +2,13 @@
 
 Режим — ИНФРАСТРУКТУРА, не идентичность результата: баллы не зависят от способа
 запуска (тот же OneScript), поэтому режим не входит в «версия × издание × конфиг»
-и не живёт в editions/. Выбор — env PRISM_RUNNER (local по умолчанию) или явно.
+и не живёт в editions/. Выбор — env PRISM_RUNNER (docker по умолчанию) или явно.
 
-  local  — oscript из tools/ прямо на хосте. Быстро; для своей разработки.
   docker — образ prism-onescript (docker/onescript.Dockerfile): без сети,
-           лимиты CPU/память, код смонтирован read-only. Для CI и чужих
-           кандидатов: код LLM недоверенный, у OneScript есть доступ к ФС/сети.
+           лимиты CPU/память, код смонтирован read-only. ДЕФОЛТ: код LLM
+           недоверенный, у OneScript есть доступ к ФС/сети — гоняем в песочнице.
+  local  — oscript из tools/ прямо на хосте. Быстро; для своей разработки
+           (явно: --runner local или PRISM_RUNNER=local).
 
 Скореры не знают о режимах — зовут runner.run_os(file) и получают результат.
 """
@@ -166,8 +167,8 @@ Runner = LocalRunner | DockerRunner
 
 
 def get_runner(mode: str | None = None) -> Runner:
-    """Фабрика по режиму: аргумент → env PRISM_RUNNER → local."""
-    mode = (mode or os.environ.get("PRISM_RUNNER") or "local").lower()
+    """Фабрика по режиму: аргумент → env PRISM_RUNNER → docker (песочница по умолчанию)."""
+    mode = (mode or os.environ.get("PRISM_RUNNER") or "docker").lower()
     if mode == "local":
         return LocalRunner()
     if mode == "docker":
