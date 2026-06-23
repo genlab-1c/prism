@@ -24,6 +24,7 @@ theme:
 markdown_extensions:
   - admonition
   - attr_list
+  - md_in_html        # рендерить markdown-таблицы внутри <div align="center"> (как на GitHub)
   - tables
   - toc:
       permalink: true
@@ -34,9 +35,11 @@ markdown_extensions:
 
 nav:
   - Обзор: index.md
+  - Лидерборд: leaderboard.md
   - Как это работает: how-it-works.md
   - Что умеет сейчас: status.md
   - Честные границы: validity.md
   - Как запустить: cli.md
+  - Как участвовать: https://github.com/genlab-1c/prism/blob/main/CONTRIBUTING.md
   - Архитектура: architecture.md
   - Ключевые решения: decisions.md
