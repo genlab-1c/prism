@@ -9,6 +9,9 @@ FROM eclipse-temurin:21-jre-jammy
 ARG BSL_LS_VERSION=0.29.0
 ADD https://github.com/1c-syntax/bsl-language-server/releases/download/v${BSL_LS_VERSION}/bsl-language-server-${BSL_LS_VERSION}-exec.jar \
     /opt/bsl-language-server.jar
+# ADD из URL кладёт файл как root:600 — под non-root (USER ниже + --user в DockerBSL)
+# jar нечитаем («Unable to access jarfile»). Делаем мир-читаемым.
+RUN chmod 0644 /opt/bsl-language-server.jar
 
 ENV HOME=/tmp
 USER 10001
