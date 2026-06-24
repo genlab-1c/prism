@@ -35,6 +35,8 @@ jobs:
       - name: Сборка сайта
         run: mkdocs build
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true   # включить Pages автоматически на первом прогоне (если ещё не включён)
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
