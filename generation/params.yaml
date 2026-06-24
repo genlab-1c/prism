@@ -16,3 +16,5 @@ defaults:
     ygpt5_lite:  { temperature: 0.1, runs: 1 }   # YandexGPT 5 Lite (Yandex Responses API)
     ygpt51_pro:  { temperature: 0.1, runs: 1 }   # YandexGPT 5.1 Pro (Yandex Responses API)
     qwen36:      { temperature: 0.1, runs: 1 }   # Qwen3.6-35B-A3B (Yandex Responses API, tools)
+    ygpt5_pro:   { temperature: 0.1, runs: 1 }   # YandexGPT 5 Pro (Yandex Responses API, tools)
+    alice_flash: { temperature: 0.1, runs: 1 }   # Alice AI LLM Flash (Yandex Responses API, tools)

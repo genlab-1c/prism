@@ -126,6 +126,28 @@ models:
       supports_seed: false
       supports_tools: true               # function calling работает (проверено end-to-end)
 
+  ygpt5_pro:
+    id: "yandexgpt-5-pro/latest"         # Yandex Cloud Responses API
+    name: "YandexGPT 5 Pro"
+    vendor: yandex
+    access:
+      adapter: yandex_responses
+    capabilities:
+      context_window: 32768
+      supports_seed: false
+      supports_tools: true               # function calling — поддерживается (Responses API)
+
+  alice_flash:
+    id: "aliceai-llm-flash/latest"       # Yandex Cloud Responses API
+    name: "Alice AI LLM Flash"
+    vendor: yandex
+    access:
+      adapter: yandex_responses
+    capabilities:
+      context_window: 65536
+      supports_seed: false
+      supports_tools: true               # быстрая агентная модель, function calling
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  gigachat:
