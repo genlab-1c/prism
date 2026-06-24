@@ -274,6 +274,11 @@ def load_tags_vocab(root: Path = PRISM) -> TagsVocab:
     return TagsVocab(dimensions=doc["dimensions"], version=doc["meta"]["version"])
 
 
+def load_error_taxonomy(root: Path = PRISM) -> dict:
+    """metrics/error_taxonomy.yaml — словарь «текст ошибки → код» для воронки отказа."""
+    return _read(root / "metrics" / "error_taxonomy.yaml")
+
+
 # ── издание и генерация ──────────────────────────────────────────────────────
 
 
