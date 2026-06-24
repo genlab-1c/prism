@@ -177,6 +177,57 @@ def render_by_tag(result: dict, dimension: str, axis: str) -> str:
     return _wrap("\n".join(out))
 
 
+# Цветные квадраты итогов попытки (markdown не умеет ANSI — берём эмодзи).
+_FUNNEL_EMOJI = {
+    "решено": "🟩",
+    "неверный ответ": "🟨",
+    "ошибка выполнения": "🟧",
+    "не компилируется": "🟥",
+}
+_FUNNEL_BAR_CELLS = 10  # ширина полосы в квадратах (каждый ≈ 10% попыток)
+
+
+def _emoji_bar(buckets: dict, n: int) -> str:
+    """Полоса-отсев квадратами: доли исходов, в сумме ровно на ширину полосы.
+
+    Наибольшие остатки добивают ширину; ненулевая корзина не схлопывается в ноль."""
+    from harness.stats.funnel import BUCKETS
+
+    raw = {b: buckets[b] / n * _FUNNEL_BAR_CELLS for b in BUCKETS}
+    cells = {b: int(raw[b]) for b in BUCKETS}
+    cells = {b: (1 if cells[b] == 0 and buckets[b] else cells[b]) for b in BUCKETS}
+    short = _FUNNEL_BAR_CELLS - sum(cells.values())
+    for b in sorted(BUCKETS, key=lambda b: raw[b] - int(raw[b]), reverse=True):
+        if short <= 0:
+            break
+        cells[b] += 1
+        short -= 1
+    return "".join(_FUNNEL_EMOJI[b] * cells[b] for b in BUCKETS)
+
+
+def render_funnel(result: dict) -> str:
+    """Где ломается код у каждой модели (markdown): все попытки по итогу, не баллы.
+
+    Полоса = 100% попыток четырьмя итогами; «решено %» впереди; самая частая поломка —
+    отдельной колонкой. Ранжир по доле решённых (как печатает prism leaderboard --full).
+    """
+    from harness.loaders import load_error_taxonomy
+    from harness.stats.funnel import funnel
+
+    rows = funnel(result, load_error_taxonomy())
+    head = "| Модель | решено | результат всех попыток | самая частая поломка |"
+    sep = "|--------|:---:|:---|:---|"
+    out = [head, sep]
+    for i, (name, f) in enumerate(rows):
+        cause = f["cause"]
+        cause_txt = f"{cause[0]} ×{cause[1]}" if cause else "—"
+        solved = f"{round(f['solved'] * 100)}%"
+        nm = f"**{name}**" if i == 0 else name
+        solved = f"**{solved}**" if i == 0 else solved
+        out.append(f"| {nm} | {solved} | {_emoji_bar(f['buckets'], f['n'])} | {cause_txt} |")
+    return _wrap("\n".join(out))
+
+
 def render_status_summary(a: dict | None, b: dict | None) -> str:
     """Компактная сводка Q̄ A/B по моделям для docs/status.md (ранжир по Q̄ A)."""
     qa = {name: m["Q"] for name, m, _ in _ranked(a)} if a else {}
@@ -259,9 +310,11 @@ def write() -> list[Path]:
     if a:
         text = _replace_region(text, "lb:a-overall", render_overall(a, "A"))
         text = _replace_region(text, "lb:a-skill", render_by_tag(a, "skill", "M"))
+        text = _replace_region(text, "lb:a-funnel", render_funnel(a))
     if b:
         text = _replace_region(text, "lb:b-overall", render_overall(b, "B"))
         text = _replace_region(text, "lb:b-platform", render_by_tag(b, "platform", "P"))
+        text = _replace_region(text, "lb:b-funnel", render_funnel(b))
     readme.write_text(text, encoding="utf-8")
 
     changed = [readme]
@@ -273,9 +326,11 @@ def write() -> list[Path]:
         if a:
             p = _replace_region(p, "lb:a-overall", render_overall(a, "A"))
             p = _replace_region(p, "lb:a-skill", render_by_tag(a, "skill", "M"))
+            p = _replace_region(p, "lb:a-funnel", render_funnel(a))
         if b:
             p = _replace_region(p, "lb:b-overall", render_overall(b, "B"))
             p = _replace_region(p, "lb:b-platform", render_by_tag(b, "platform", "P"))
+            p = _replace_region(p, "lb:b-funnel", render_funnel(b))
         lb_page.write_text(p, encoding="utf-8")
         changed.append(lb_page)
 
