@@ -49,12 +49,14 @@
 |---|:---:|:---:|
 | **DeepSeek V4-Flash** | **7.82** | **6.23** |
 | Claude Opus 4.8 | 7.22 | — |
+| Alice AI LLM Flash | 6.86 | 4.60 |
 | GLM-4.7 Flash | 6.32 | 5.77 |
 | Claude Sonnet 4.6 | 6.22 | — |
 | Alice AI LLM | 5.56 | 5.00 |
 | Gemini 2.5 Flash Lite | 5.44 | 4.50 |
 | Qwen3.6-35B-A3B | 5.04 | — |
 | Qwen3-235B-A22B | 5.00 | 4.96 |
+| YandexGPT 5 Pro | 4.78 | 4.37 |
 | YandexGPT 5 Lite | 4.50 | 4.93 |
 | YandexGPT 5.1 Pro | 4.00 | 4.59 |
 <!-- /prism:status:lb -->

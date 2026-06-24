@@ -24,8 +24,8 @@
 <!-- prism:badges -->
   <img src="https://img.shields.io/badge/задач-24-success" alt="задач: 24">
   <img src="https://img.shields.io/badge/тест--кейсов-82-blue" alt="тест-кейсов: 82">
-  <img src="https://img.shields.io/badge/генераций_в_прогоне-195-blue" alt="генераций: 195">
-  <img src="https://img.shields.io/badge/в_лидерборде-10_моделей-blue" alt="в лидерборде 10 моделей">
+  <img src="https://img.shields.io/badge/генераций_в_прогоне-243-blue" alt="генераций: 243">
+  <img src="https://img.shields.io/badge/в_лидерборде-12_моделей-blue" alt="в лидерборде 12 моделей">
 <!-- /prism:badges -->
 </p>
 <p align="center">
@@ -242,14 +242,16 @@ PRISM отвечает на этот вопрос числом, а не мнен
 |:---:|--------|:---:|:---:|:---:|:---:|
 | 1 | **DeepSeek V4-Flash** | 9.8 | 6.3 | **8.8** | **7.82** |
 | 2 | Claude Opus 4.8 | 9.1 | **6.7** | 7.0 | 7.22 |
-| 3 | GLM-4.7 Flash | 9.8 | 3.7 | 6.0 | 6.32 |
-| 4 | Claude Sonnet 4.6 | 8.4 | 4.4 | 8.0 | 6.22 |
-| 5 | Alice AI LLM | 9.1 | 2.4 | 7.0 | 5.56 |
-| 6 | Gemini 2.5 Flash Lite | 8.9 | 2.4 | 7.0 | 5.44 |
-| 7 | Qwen3.6-35B-A3B | 8.9 | 1.3 | 7.0 | 5.04 |
-| 8 | Qwen3-235B-A22B | 8.7 | 2.2 | 4.0 | 5.00 |
-| 9 | YandexGPT 5 Lite | 7.8 | 1.7 | 4.0 | 4.50 |
-| 10 | YandexGPT 5.1 Pro | 8.0 | 0.0 | — | 4.00 |
+| 3 | Alice AI LLM Flash | 9.3 | 5.7 | 6.4 | 6.86 |
+| 4 | GLM-4.7 Flash | 9.8 | 3.7 | 6.0 | 6.32 |
+| 5 | Claude Sonnet 4.6 | 8.4 | 4.4 | 8.0 | 6.22 |
+| 6 | Alice AI LLM | 9.1 | 2.4 | 7.0 | 5.56 |
+| 7 | Gemini 2.5 Flash Lite | 8.9 | 2.4 | 7.0 | 5.44 |
+| 8 | Qwen3.6-35B-A3B | 8.9 | 1.3 | 7.0 | 5.04 |
+| 9 | Qwen3-235B-A22B | 8.7 | 2.2 | 4.0 | 5.00 |
+| 10 | YandexGPT 5 Pro | 9.3 | 0.2 | — | 4.78 |
+| 11 | YandexGPT 5 Lite | 7.8 | 1.7 | 4.0 | 4.50 |
+| 12 | YandexGPT 5.1 Pro | 8.0 | 0.0 | — | 4.00 |
 
 </div>
 <!-- /prism:lb:a-overall -->
@@ -266,8 +268,10 @@ PRISM отвечает на этот вопрос числом, а не мнен
 | 3 | Alice AI LLM | 8.1 | 0.7 | 9.9 | 1.3 | 5.00 |
 | 4 | Qwen3-235B-A22B | 8.3 | 0.7 | 10.0 | 0.9 | 4.96 |
 | 5 | YandexGPT 5 Lite | 8.4 | 0.0 | 9.9 | 0.0 | 4.93 |
-| 6 | YandexGPT 5.1 Pro | 8.4 | 0.0 | 9.7 | 0.2 | 4.59 |
-| 7 | Gemini 2.5 Flash Lite | 8.8 | 0.0 | 9.2 | 0.0 | 4.50 |
+| 6 | Alice AI LLM Flash | 8.9 | 0.0 | 9.5 | 0.0 | 4.60 |
+| 7 | YandexGPT 5.1 Pro | 8.4 | 0.0 | 9.7 | 0.2 | 4.59 |
+| 8 | Gemini 2.5 Flash Lite | 8.8 | 0.0 | 9.2 | 0.0 | 4.50 |
+| 9 | YandexGPT 5 Pro | 8.0 | 0.0 | 9.5 | 0.0 | 4.37 |
 
 </div>
 <!-- /prism:lb:b-overall -->
@@ -292,13 +296,15 @@ PRISM отвечает на этот вопрос числом, а не мнен
 | Модель | строки | коллекции | алгоритм |
 |--------|:---:|:---:|:---:|
 | **DeepSeek V4-Flash** | **7.8** | 6.1 | **6.7** |
-| Claude Opus 4.8 | 5.0 | **6.7** | **6.7** |
+| Claude Opus 4.8 | 5.0 | 6.7 | **6.7** |
+| Alice AI LLM Flash | 5.3 | **6.9** | 0.0 |
 | GLM-4.7 Flash | 5.0 | 2.3 | 3.9 |
 | Claude Sonnet 4.6 | 5.0 | 5.0 | 0.0 |
 | Alice AI LLM | 2.5 | 2.0 | 3.3 |
 | Gemini 2.5 Flash Lite | 5.0 | 0.3 | 3.3 |
 | Qwen3.6-35B-A3B | 0.0 | 2.0 | 0.0 |
 | Qwen3-235B-A22B | 2.5 | 1.7 | 0.0 |
+| YandexGPT 5 Pro | 0.0 | 0.3 | 0.0 |
 | YandexGPT 5 Lite | 0.0 | 1.7 | 1.7 |
 | YandexGPT 5.1 Pro | 0.0 | 0.0 | 0.0 |
 
@@ -317,8 +323,10 @@ PRISM отвечает на этот вопрос числом, а не мнен
 | Alice AI LLM | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
 | Qwen3-235B-A22B | 0.0 | 1.1 | 0.0 | 1.1 | 1.1 | 0.0 |
 | YandexGPT 5 Lite | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| Alice AI LLM Flash | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
 | YandexGPT 5.1 Pro | 0.0 | 1.1 | 0.0 | 1.1 | 1.1 | 0.0 |
 | Gemini 2.5 Flash Lite | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
+| YandexGPT 5 Pro | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 | 0.0 |
 
 </div>
 <!-- /prism:lb:b-platform -->
