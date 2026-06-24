@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Как участвовать
+    url: https://github.com/genlab-1c/prism/blob/main/CONTRIBUTING.md
+    about: Добавить задачу, модель или прислать прогон — пошаговая карта.
+  - name: Прислать прогон модели
+    url: https://github.com/genlab-1c/prism/blob/main/CONTRIBUTING.md#добавить-модель-или-прислать-прогон
+    about: generate → score → submit, затем приложите пакет к PR.
