@@ -16,8 +16,11 @@ tools/*
 # Рабочие артефакты прогонов (промежуточные; канонические результаты — в results/)
 work/
 
-# Авто-оценки L1 (воспроизводимый дериват из results/ + протокола; не каноничны)
-results/auto/
+# Авто-оценки L1 (дериват из results/ + протокола). Кэш прогонов игнорируем, но
+# КАНОНИЧЕСКИЕ снимки коммитим — чтобы `prism leaderboard` работал сразу после клона.
+results/auto/*
+!results/auto/experiment_A_20260617_031633_auto_l1.json
+!results/auto/experiment_B_20260617_031637_auto_l1.json
 # Промежуточные чекпойнты генерации (для --resume; финал — в experiment_*.json)
 results/*.parts/
 

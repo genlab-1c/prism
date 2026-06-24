@@ -1,0 +1,5933 @@
+{
+  "experiment_id": "experiment_A_20260617_031633",
+  "evaluator_id": "auto_l1",
+  "edition": "core",
+  "leaderboard_view": "quality",
+  "runner": "docker",
+  "syntax_analyzer": "bsl-ls 0.29.0",
+  "protocol_version": "1.1.0",
+  "constitution_version": "1.1.0",
+  "tasks": [
+    {
+      "task_id": "A1",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c70d5e476e99805bb645383db4e3a9b9db826cfb2310b494a3dbfd126662ce91",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (СодержитКлюч)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 50 / Method not found (СодержитКлюч)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "94849d9e21ed110e4fc8147b292396ca6e5002a047a14fcdb5456e57f3c729f9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2038,
+                4088,
+                8128,
+                16173
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1ca7f4fd1bd397529c3074082c5b5f27bf8bb181231ad864edf74e5c7d22d0a0",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 4 / Invalid type of argument}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 4 / Invalid type of argument}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 4 / Invalid type of argument}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 41 / Invalid type of argument}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9b3af353d3132bb4faef7c7b81130dffb987b95ec838915135749b96281b4e84",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (НайтиПоЗначению)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (НайтиПоЗначению)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (НайтиПоЗначению)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 49 / Method not found (НайтиПоЗначению)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7bf9ec71c55eb7553b90426239e0bc77cbed1921db099702ace7dbdf2a531676",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 7,21 / Expecting symbol: Equal}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 44,21 / Expecting symbol: Equal}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3435f1fb01aa76b25ffbb8597ab68b1b9135bdeb699716870b7a77e1415edd01",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "ГруппировкаТаблицы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.97,
+              "p_opt": 1.0,
+              "ops": [
+                48492,
+                190514,
+                736202,
+                2890685
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ГруппировкаТаблицы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "35acfb9705852349ea16c353984c937084f9168d476758b71a28ac1aa2f65484",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "ГруппироватьТЗ",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 2 / Method not found (Копировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 2 / Method not found (Копировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 2 / Method not found (Копировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ГруппироватьТЗ",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 39 / Method not found (Копировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "11305727601170ff3f1f63898838c674f34ad5a372576ede2c7d3fcb75bef0ae",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": null,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 49,38 / Too many actual parameters}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a1fd8b4b9d1ad242f19aa293e2205a20cb174426879b45298b6487e569416159",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 3 / Invalid type of argument}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 3 / Invalid type of argument}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 3 / Invalid type of argument}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 40 / Invalid type of argument}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4cee30dad3676adea216187561816b370eddc1b6e68732a6b1fbd023c389f0f1",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (УдалитьДубли)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (УдалитьДубли)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (УдалитьДубли)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 44 / Method not found (УдалитьДубли)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "710c7e0eb54cf0219d67db9bcac402d01df2097dfd24152fa248aa684826c518",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 3 / Invalid type of argument}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 3 / Invalid type of argument}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 3 / Invalid type of argument}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 40 / Invalid type of argument}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9070909028fa4e5a8660938a3695ce4d0afa7ac6c73ea5f5efecb0ae71c916b8",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2038,
+                4088,
+                8128,
+                16173
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e1e9d14611ee93888d372084ccc85647a0eb89d3d465e81994dd6a7a27ecbaac",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": null,
+            "P": null,
+            "Q": 6.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 6 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 6 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 6 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 6 / Conversion to type 'Boolean' is not supported}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 43 / Conversion to type 'Boolean' is not supported}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "895f53f71a12d5a39a19098b349edec12d83f7453644a4103f2b7ae3cfc0692f",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": null,
+            "P": null,
+            "Q": 6.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 44 / Conversion to type 'Boolean' is not supported}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ecb9d19979495066d98a3ff3808f7eff1b1a32b198ac6a82aebbeb390d255d1a",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": null,
+            "P": null,
+            "Q": 6.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 7 / Conversion to type 'Boolean' is not supported}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 44 / Conversion to type 'Boolean' is not supported}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3ca1e942b0edeef65f33a8e43e6492f8167e7cf4b6baad9815b935ae86595d78",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": null,
+            "P": null,
+            "Q": 6.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЗначения",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Свойство)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Свойство)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Свойство)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Свойство)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьУникальныеЗначения",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 47 / Method not found (Свойство)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f45346610f734de2ea6991fc5ced04e3534e3450e0508cf0cfe73da188bc557d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1205,
+                2405,
+                4805,
+                9603
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "156543dcc823565cfd3b51da72ef9148398887d8b752ba6835f0db565171ac44",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 5,
+              "entry_point": "ВыделитьУникальные",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 6,22 / Expecting symbol: In}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ВыделитьУникальные",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 43,22 / Expecting symbol: In}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d74848bd0521311f1be8f533f52b1f7f2e944d5df7cf47267e4c2f94a42276cf",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": 10,
+            "P": null,
+            "Q": 7.33
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "errors": [
+                "PRISM_FAIL 0",
+                "PRISM_FAIL 2",
+                "PRISM_FAIL 3",
+                "PRISM_FAIL 4"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1604,
+                3204,
+                6404,
+                12804
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0672386dd913477d1cfbfad757fa2b3dcc20a47aa21c006348eeacd862bc1e1f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1205,
+                2405,
+                4805,
+                9603
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3c9d456eee4524188d4c761cdb3a2e4813848fe4a14e41678bbfd30edebb6240",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,14 / Неизвестный символ !}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 41,14 / Неизвестный символ !}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3c3866cde975b15aef57bb045d6d912d7e677c0f7132a81514debd58d04a5ecf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                101304,
+                402604,
+                1605204,
+                6405609
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "48ec8d3f8b01d8725be3c28759568eb76514211ae261e73c6eb858a4c9ce2aa7",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": null,
+            "P": null,
+            "Q": 6.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 4 / Method not found (Содержит)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 4 / Method not found (Содержит)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 4 / Method not found (Содержит)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 4 / Method not found (Содержит)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 41 / Method not found (Содержит)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e551ee4fbdc9f70194180d9c5923c9f7766c6249c4358da43528f8778c90ff81",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                101304,
+                402604,
+                1605204,
+                6405609
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "066a6cba3cbd1ca0359995e2fbde1f7ca41838a0ac21dd944d95c4d06373515f",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (СравнениеЗначений)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (СравнениеЗначений)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (СравнениеЗначений)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (СравнениеЗначений)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (СравнениеЗначений)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (СравнениеЗначений)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 45 / Type is not defined (СравнениеЗначений)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e6d14b899a32157c000504817771e04abedc17458701ca1528bb70753667e28e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.1,
+              "ops": [
+                3202,
+                6393,
+                12767,
+                25447
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "07852a649b17826bc855766d1143614186272549d1fb6d28144a1a9847b3e1c6",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьПересекающиесяИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 66,6 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьПересекающиесяИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 103,6 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2f3433809bd2fdb2beb8c8714a8524827be81b2520c54031ddf2807c6cf592bd",
+          "scores": {
+            "S": 10,
+            "M": 1.7,
+            "O": null,
+            "P": null,
+            "Q": 5.85
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (КритерийСортировки)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (КритерийСортировки)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (КритерийСортировки)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (КритерийСортировки)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 8 / Type is not defined (КритерийСортировки)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 45 / Type is not defined (КритерийСортировки)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "445bcded4a63872623c2bbc301b70dc0e18075d5fdd153a248733bae08239139",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.1,
+              "ops": [
+                111845,
+                441889,
+                1780140,
+                7062682
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "59762da6ecb56cc5239b7f605d460ebbecfd40f6612c88a7d011837497ecfa4e",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "МассивНепересекающихсяИнтервалов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 5,11 / Неизвестный символ {}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "МассивНепересекающихсяИнтервалов",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 42,11 / Неизвестный символ {}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4b5e8a60bad492730c6e6a4927405ba9e7035838251fb7ea79119dc206f88a6a",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 8,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 45,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8bda6e7bdf12d098afbb046f83b90850dc5fd780ef8078d210e0a58095cb5655",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 29,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 66,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "889db2d54ed510f140b89f07976452a3e6823266576b334de7760513d80e1566",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "функция": {
+                  "open": 3,
+                  "close": 2
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 10,46 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 47,46 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bcd1b542e6913cc4eb3da84197d2c714a707cf7894fec352cd250a7a90b44cf8",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 3,11 / Symbol not found Массив}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 40,11 / Symbol not found Массив}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7874b53db514b22efe7164e46f596f30eb9a91ad0d5092d19aec5653d35977da",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 11,39 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 48,39 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e6447b90101ac7d5946253e80c3d2ede936e9e223a454feb2db0e26d533beb86",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53762,
+                212512,
+                845012,
+                3370012
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4fb8f79bcdf3bc2d604931aa2bfbce87603e9c50bb669f55d02d07938e3bfafe",
+          "scores": {
+            "S": 10,
+            "M": 3.3,
+            "O": null,
+            "P": null,
+            "Q": 6.65
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 2,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 10 / Index is out of range}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 10 / Index is out of range}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 10 / Index is out of range}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 10 / Index is out of range}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 47 / Index is out of range}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9103e416b417309703b2aaeac89c297a065ce1cb2beb2801213e2736074bd147",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Размер)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Размер)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Размер)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Размер)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Размер)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Размер)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящееСреднее",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 44 / Method not found (Размер)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c55c6292f5fa31ac5dc48ba911228d81ba3260848f60c114cc37e7e5e4461b14",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ВычислитьСкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53764,
+                212514,
+                845014,
+                3370014
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВычислитьСкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6aad93ee738553aa28509287a18095836c1c940ff90520b5a24bfa74a475c5e3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53611,
+                212211,
+                844411,
+                3368811
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящееСреднее",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e46da4971991f8df43fd09355c7117a9db7ddf80475dccdad5d7fd23606cae82",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "28eed533d0f0713d51d0b48517baf7e9674c5c14a567c9febeda4a31eb017f2c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящаяСредняя",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53611,
+                212211,
+                844411,
+                3368811
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящаяСредняя",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "384a01b5add2a0d769fd3b7d0cee3c0598dcbccbe1c3e81cd07f42b260ca293b",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 12,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 49,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "078dbb03e3f6c50771893e62491fe070e2b50cdd1ce0e5434cb7417eba06d4ca",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 8,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 45,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c349745d73a94a8a86d951ac48bac7495ab1c8a16f7fc12fe21f44d9c7d2a930",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 6,14 / Symbol not found Счетчик}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 43,14 / Symbol not found Счетчик}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ab7c5c28b1d50dc9296ed56136f12c1c3a540a8d13be3b1edc6796c7e9ef2b92",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 2,20 / Symbol not found Длина}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящееСреднее",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 39,20 / Symbol not found Длина}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "76db68080157f53d49d8a0a5dc098b2118389f0b1b72362e0d0da95e342e052f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53762,
+                212512,
+                845012,
+                3370012
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6297ca2554ae8a9b4122af836e94efe98858589c1bf569862ea46d00d0cef757",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПолучитьЧастотуСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 6,20 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьЧастотуСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 43,20 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "10eff75857fec8dedfa1fe25c51053935a39e11953f4f826c8c86479a9458fab",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                202,
+                427,
+                877,
+                1742
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5a7b3505125e4084eba7a0b5df0dbff81f33f870341c5c370c00165ef009e77d",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "parse_error_clusters": 3,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПосчитатьСловаВТексте",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 26,13 / Expecting symbol: Equal}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПосчитатьСловаВТексте",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 63,13 / Expecting symbol: Equal}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "17fe100a477ab9e6efa2ac0db0070d7cf5cd230765d2c03bbc70e63ac21a0e6c",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 7,25 / Too many actual parameters}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 44,25 / Too many actual parameters}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "751bde576f67a16d05bc3db923cfec1fe42a23e3691741109b49af157c07e79b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7222,
+                14145,
+                28374,
+                57797
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "afa41e9485fb727cca5aa56b45f6ff7c0fb43443fe16b3ceaef38377b84f5e2a",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ОбработатьТекст",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 9,29 / Expecting \";\"}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбработатьТекст",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 46,29 / Expecting \";\"}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "33fb3186085879a942fa6a17eea6453be7b3a1c0099194a94a87acbcb1f7a3c7",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьСловаВТексте",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 9,27 / Symbol not found СтрРазбить}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьСловаВТексте",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 46,27 / Symbol not found СтрРазбить}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "73ba2f910871baf29acbb00b30ace9b79352822a0e17801f8f54fcb650f68728",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПосчитатьСлова",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 22 / Object property is not found (кот)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 22 / Object property is not found (привет)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 22 / Object property is not found (один)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 22 / Object property is not found (да)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПосчитатьСлова",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line: 59 / Object property is not found (aced)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "83353aa765b776f39b9561e091980ecde93d628630be3dc46ce225f586cb5c31",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 9,18 / Symbol not found РазложитьСтрокуВМассив}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 46,18 / Symbol not found РазложитьСтрокуВМассив}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "092878980f33ada16e2b8c155cebe2c4bd6e54619f01d8552727453527472222",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 0,
+              "blockers": 1,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ProcedureReturnsValue"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6e11b90a466d436ac63d6579b4b0c3136545aa8fcdcb3c266f6388aa06673d2f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПолучитьЧастотуСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.03,
+              "p_opt": 1.0,
+              "ops": [
+                365,
+                769,
+                1577,
+                3133
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПолучитьЧастотуСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "298f8671e9f037ff4040aef1a47e674671d37a4864d4c54509809c271f50004e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.71,
+              "p_opt": 2.0,
+              "ops": [
+                228,
+                396,
+                612,
+                876
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0b433765998e35f00c822a187a788d03a93c3495c20cae7aa72d5be4c1fc3b2d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.86,
+              "p_opt": 2.0,
+              "ops": [
+                334,
+                616,
+                986,
+                1444
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a396c8a4669f2b2d8e7073c815f75413367fc9756fc158655ac12e9e607dbe6b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.77,
+              "p_opt": 2.0,
+              "ops": [
+                278,
+                494,
+                774,
+                1118
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b95971e584303965c868e742f011cf5d7322fecdd8aab3fba6861e5f58a832a3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "Левенштейн",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.78,
+              "p_opt": 2.0,
+              "ops": [
+                205,
+                367,
+                577,
+                835
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "Левенштейн",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f0f7ad00f9f44fc7aed84aa1ef9c5b7f6344f36eb236fe1f6866a7e50007eec7",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 21,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 58,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "306fa20f44e7e8bdc7cd97428d8a00cb1739b33755399cb72fb404a1f4384174",
+          "scores": {
+            "S": 4,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 4,
+              "parse_error_clusters": 4,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 11,13 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 48,13 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1a8cc6b256eb64b3f48a5d7da45d389073039399120921bc1461680c33606129",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 16,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РедакционноеРасстояние",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 53,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2fe0f6d45771e7409e135c688d6da671e3c482a303b10f364bac14b5dd07253f",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ПолучитьРедакционноеРасстояние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 7,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьРедакционноеРасстояние",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 44,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2dd48d00ce8c4084b335d56887c299c8c198c3ee7c64683c6ff198e61a6d4ae7",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 4,
+              "parse_error_clusters": 4,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "если": {
+                  "open": 2,
+                  "close": 1
+                },
+                "цикл": {
+                  "open": 0,
+                  "close": 5
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "Левенштейн",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 11,3 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "Левенштейн",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 48,3 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c897dcd23ceaae06157378759af689a752235b584b5444687e30f1f7825e1b1a",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 13,9 / Неизвестный символ :}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 50,9 / Неизвестный символ :}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3a477b43734a0f9d99c3df6feec6bcbd09db26983eeda5282e08d208052f688a",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (Матрица)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (Матрица)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (Матрица)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (Матрица)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (Матрица)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (Матрица)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (Матрица)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line: 44 / Type is not defined (Матрица)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d78e1b9b321350fa712a4238a27401154760decad2b88e2c5322031dfe461566",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "RLE_Сжатие",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 17,33 / Expecting \";\"}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "RLE_Сжатие",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 54,33 / Expecting \";\"}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e784adebb67340c90f71296ccead5e4d3255e36ee61125c9cabd8cac631afbbf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158043,
+                606323,
+                2336962,
+                9362618
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5d8b4f4b4dd6fe4431a633a8aa389394e26610eb3262faed75c582282c5b7a90",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьСтрокуRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158348,
+                606928,
+                2338167,
+                9365023
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьСтрокуRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6408ce2c52274150451e24a97b31962a6072b6c2585877cf66b5f230f3e065cd",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "65691869a04d747974e831539b2727cbf51c153589a43440889487d9a6c8037c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "acaeb3e487d539988805005f01a86278cb585ad17688380856f8541f01df87eb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "483bd0fa6d35b26c3fc6c35b1b64dc81e0240b24671f59ca9113531c70fedd62",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158617,
+                606897,
+                2337536,
+                9363192
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "58bed2f8bf347335b8911644e416184c894d5ee3dd484570aaaaf1c4b521e27a",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "RLEСжатие",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 10,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "RLEСжатие",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 47,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9487d0a9dda564dd533c6e65206214c7d2c8e57a2aa5555fc770a2fecd002c19",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "RLE_Сжатие",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,66 / Too many actual parameters}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "RLE_Сжатие",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 52,79 / Too many actual parameters}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e3bb3cec3cad7cb9aef1b2546cb40c414bad6d592311e3025b207c83d44e8b8e",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "RLE",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,44 / Symbol not found ЧислоВСтроку}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "RLE",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 52,57 / Symbol not found ЧислоВСтроку}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6b7e6f78bfdf9116a8497d41e8b8d0c0a514d26c591939419f520944de96bb5c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьСтрокуRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                157743,
+                605723,
+                2335762,
+                9360218
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьСтрокуRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7022a78cc99f39e3a6a0f2a2cc347e272b6f4066231012a48017d6549ac49274",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 12,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 49,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "63e0be50604b81ee223542538a390faaad2458580874c94c50abfd54d505f48b",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "Анаграмма",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "Анаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 56 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7308c9e8580f3478716b330b4aa6fa7c78501094d9019e4ae15255a93046d8a7",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 13,20 / Symbol not found РазложитьСтрокуВМассивСимволов}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 50,20 / Symbol not found РазложитьСтрокуВМассивСимволов}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cd3f26905acbf82b21ba140382c6a19736e65e974c32bcf24926831c103ab077",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляютсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 7,12 / Symbol not found Замена}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляютсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 44,12 / Symbol not found Замена}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f5d3a875c5b4f99ab84dbea438b0a43df88830c29e720bd813039ef0ac175769",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 11 / Property 'Символы' is not writable}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 11 / Property 'Символы' is not writable}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 11 / Property 'Символы' is not writable}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 11 / Property 'Символы' is not writable}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 11 / Property 'Символы' is not writable}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 11 / Property 'Символы' is not writable}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 11 / Property 'Символы' is not writable}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 48 / Property 'Символы' is not writable}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bf03b359260593077a0292bf500d55128a84e0a9b601edc63648908730b2a4e3",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "Анаграммы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 6,9 / Symbol not found НижРег}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "Анаграммы",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 43,9 / Symbol not found НижРег}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f64125679edfcc12100b3579d53baa443baa0bb1cdaf0f0efca3048b32e60a7f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                7245,
+                14245,
+                28245,
+                56245
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "041b619a167ada4116542d91439f7222ab7e2d527330eacfb144b9ac34d235f6",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляютсяЛиАнаграммами",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 9,10 / Symbol not found Длина}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляютсяЛиАнаграммами",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 46,10 / Symbol not found Длина}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a2ca52770cad9643628d400aa0a23a8587340df46459b22127051747076d0852",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 2 / Value is not of object type}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 2 / Value is not of object type}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 2 / Value is not of object type}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 2 / Value is not of object type}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 2 / Value is not of object type}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 2 / Value is not of object type}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 2 / Value is not of object type}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 39 / Value is not of object type}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0ce6a5cfd9b1cc424f27a579a479fc24f49247cbc7b828fe29a2801177c99937",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,12 / Symbol not found СтрВерх}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 41,12 / Symbol not found СтрВерх}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ccd42a98d8418936ee1e33dfbc623a755f4daec5733290a0c1569154a92cc0ee",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 54 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "aliceai-llm/latest",
+      "model_name": "Alice AI LLM",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "25a62970d20aa0136711be4e0d7b67e183cc91536b99f5d7c3a814617811ac70",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 20,43 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 57,43 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "deepseek/deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "39c4e14907da1d2324543f304545f059a628c3b29fa43c1970a61a73d0d9da5d",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "РешетоЭратосфена",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,37 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РешетоЭратосфена",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 52,37 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "google/gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d851670e076691e3b287bc4916246b9b55302bf4c429ac006d8366c8e5d483ec",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 20,16 / Expecting symbol: To}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 57,16 / Expecting symbol: To}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "42326cebabd6b941a331cdac35d561d62702080f203110b9105296afb4c6de83",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 22,38 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 59,38 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "anthropic/claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a5c10f0241c7e5e5b40c1b8a003bca01613c74bf9bc8692852e14f827014a70e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "model_name": "Qwen3-235B-A22B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a8cb1ec440dc3eb507f1dc943118bf5c5f1fd1a66c29497bf8e0a1e79f3a7923",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,11 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 41,11 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c3e79ccf83e2a036cd2a514614e4c9322732230b3968d1d9ccf7cb81aae58379",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "цикл": {
+                  "open": 3,
+                  "close": 4
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 16,45 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 53,45 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "anthropic/claude-sonnet-4.6",
+      "model_name": "Claude Sonnet 4.6",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7c2ebd5bedd762ebe9de1df7660ed071c40c6a594a29ce686a3e99873010edd3",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "РешетоЭратосфена",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 10,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РешетоЭратосфена",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 47,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9dd73452873d788a08de5e1a2b9bea6859d2a3fd6f4a2aedc52b8f4784e6f6c7",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 7,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 44,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "69a2e79bf5c9580a6f43fcdee765c9249b7ec5ec88e260211a9f6d0bb29232f0",
+          "scores": {
+            "S": 10,
+            "M": 5.0,
+            "O": null,
+            "P": null,
+            "Q": 7.5
+          },
+          "bands": {
+            "M": 4,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 16 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 16 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 16 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}"
+              ],
+              "band": 4
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line: 53 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "509b3a4956f04789bac89c6cc3e8eb23b20db67faf6c08feed848e291940b7e5",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,37 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 52,37 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ea701e4382f8b835c6ef287d4f092b95f1e8ae387908929dada36538dc012680",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 16,42 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 53,42 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
