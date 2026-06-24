@@ -1,5 +1,7 @@
 site_name: PRISM
 site_description: Исполняемый бенчмарк кодогенерации 1С (методика SMOP — Syntax · Meaning · Optimization · Platform)
+site_url: https://genlab-1c.github.io/prism/
+repo_url: https://github.com/genlab-1c/prism
 docs_dir: docs
 use_directory_urls: true
 
