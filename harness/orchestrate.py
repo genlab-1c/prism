@@ -610,6 +610,8 @@ def print_report(result: dict, experiment_path: Path, full: bool = False) -> Non
             console.print()
         print_summary(result, experiment_path)
         console.print()
+        print_funnel(result)
+        console.print()
         print_tag_profiles(result)
 
 
@@ -710,6 +712,75 @@ def score_report(
         highlight=False,
     )
     return out_path
+
+
+# Исходы воронки от лучшего к худшему. Цвет + символ-градиент (█▓▒░): полоса читается
+# и в монохроме (solid = хорошо, бледный = плохо), цвет не несёт смысл в одиночку.
+_FUNNEL_STYLE = {
+    "решено": ("green", "█"),
+    "неверный ответ": ("yellow", "▓"),
+    "ошибка выполнения": ("dark_orange3", "▒"),
+    "не компилируется": ("red", "░"),
+}
+_FUNNEL_BAR_WIDTH = 20
+
+
+def _funnel_bar(buckets: dict, n: int) -> str:
+    """Полоса-отсев: доли исходов символами █▓▒░ в цвете, в сумме на всю ширину.
+
+    Наибольшие остатки добивают ширину ровно до W, ненулевая корзина не схлопывается
+    в ноль (иначе редкий, но реальный исход исчезал бы)."""
+    from harness.stats.funnel import BUCKETS
+
+    raw = {b: buckets[b] / n * _FUNNEL_BAR_WIDTH for b in BUCKETS}
+    widths = {b: int(raw[b]) for b in BUCKETS}
+    widths = {b: (1 if widths[b] == 0 and buckets[b] else widths[b]) for b in BUCKETS}
+    short = _FUNNEL_BAR_WIDTH - sum(widths.values())
+    for b in sorted(BUCKETS, key=lambda b: raw[b] - int(raw[b]), reverse=True):
+        if short <= 0:
+            break
+        widths[b] += 1
+        short -= 1
+    return "".join(
+        f"[{_FUNNEL_STYLE[b][0]}]{_FUNNEL_STYLE[b][1] * widths[b]}[/]" for b in BUCKETS if widths[b]
+    )
+
+
+def print_funnel(result: dict) -> None:
+    """Где ломается код у каждой модели — все попытки по итогу (а не сколько баллов).
+
+    Полоса = все попытки, поделённые на 4 итога: решено / неверный ответ (код отработал,
+    но результат не тот) / ошибка выполнения (упал при запуске или работе) / не
+    компилируется. В сумме всегда 100%. «самая частая поломка» — что чинить первым.
+    Атрибуция к корню: итог считается там, где прогон ВПЕРВЫЕ сломался, без двойного счёта.
+    """
+    from harness.loaders import load_error_taxonomy
+    from harness.stats.funnel import funnel
+
+    rows = funnel(result, load_error_taxonomy())
+    if not rows:
+        return
+    legend = "   ".join(f"[{c}]{g}[/] {b}" for b, (c, g) in _FUNNEL_STYLE.items())
+    console.print("где ломается код у каждой модели (все попытки = 100%)", style="bold")
+    console.print(f"  {legend}", highlight=False)
+    table = Table(header_style="bold", title_justify="left")
+    table.add_column("модель", no_wrap=True)
+    table.add_column("решено", justify="right", style="bold green")  # ключевое число — вперёд
+    table.add_column("результат попыток", width=_FUNNEL_BAR_WIDTH, no_wrap=True)
+    table.add_column("самая частая поломка")  # последняя — может переноситься без вреда
+    table.add_column("n", justify="right")
+
+    for name, f in rows:
+        cause = f["cause"]
+        cause_txt = f"{cause[0]} ×{cause[1]}" if cause else "—"
+        table.add_row(
+            name,
+            f"{round(f['solved'] * 100)}%",
+            _funnel_bar(f["buckets"], f["n"]),
+            cause_txt,
+            str(f["n"]),
+        )
+    console.print(table)
 
 
 def print_tag_profiles(result: dict) -> None:
