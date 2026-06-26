@@ -24,3 +24,6 @@ prices:
   "yandexgpt-5-pro/latest":        { input: 0.6,  output: 1.8 }    # Yandex, ОЦЕНКА (тариф Pro-тира)
   "qwen3.6-35b-a3b/latest":        { input: 0.2,  output: 0.6 }    # Yandex, ОЦЕНКА (уточнить тариф)
   "aliceai-llm-flash/latest":      { input: 0.2,  output: 0.6 }    # Yandex, ОЦЕНКА (Flash-тир, дешевле обычной Alice)
+  "GigaChat-2-Max":                { input: 1.95, output: 1.95 }   # Сбер, ОЦЕНКА в USD (тариф в рублях/токенах)
+  "GigaChat-2-Pro":                { input: 1.95, output: 1.95 }   # Сбер, ОЦЕНКА
+  "GigaChat-2":                    { input: 0.2,  output: 0.2 }    # Сбер, ОЦЕНКА (Lite-тир)
