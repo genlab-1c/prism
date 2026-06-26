@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "prism-bench"
-version = "1.1.0"                       # + разбор отказов на лидерборде (где ломается код)
+version = "1.2.0"                       # + сводный лидерборд A/B, ± погрешность, теплокарта профиля
 description = "PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP: Syntax · Meaning · Optimization · Platform)"
 readme = "README.md"
 license = { text = "MIT" }
