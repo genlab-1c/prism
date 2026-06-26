@@ -18,3 +18,6 @@ defaults:
     qwen36:      { temperature: 0.1, runs: 1 }   # Qwen3.6-35B-A3B (Yandex Responses API, tools)
     ygpt5_pro:   { temperature: 0.1, runs: 1 }   # YandexGPT 5 Pro (Yandex Responses API, tools)
     alice_flash: { temperature: 0.1, runs: 1 }   # Alice AI LLM Flash (Yandex Responses API, tools)
+    gigachat_max:  { temperature: 0.1, runs: 1 }  # GigaChat 2 Max (Сбер)
+    gigachat_pro:  { temperature: 0.1, runs: 1 }  # GigaChat 2 Pro (Сбер)
+    gigachat_lite: { temperature: 0.1, runs: 1 }  # GigaChat 2 Lite (Сбер)

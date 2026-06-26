@@ -148,18 +148,40 @@ models:
       supports_seed: false
       supports_tools: true               # быстрая агентная модель, function calling
 
+  gigachat_max:
+    id: "GigaChat-2-Max"
+    name: "GigaChat 2 Max"
+    vendor: sber
+    access:
+      adapter: gigachat
+    capabilities:
+      context_window: 131072
+      supports_seed: false             # детерминизм у GigaChat только температурой
+      supports_tools: true
+
+  gigachat_pro:
+    id: "GigaChat-2-Pro"
+    name: "GigaChat 2 Pro"
+    vendor: sber
+    access:
+      adapter: gigachat
+    capabilities:
+      context_window: 131072
+      supports_seed: false
+      supports_tools: true
+
+  gigachat_lite:
+    id: "GigaChat-2"
+    name: "GigaChat 2 Lite"
+    vendor: sber
+    access:
+      adapter: gigachat
+    capabilities:
+      context_window: 131072
+      supports_seed: false
+      supports_tools: true
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
-#
-#  gigachat:
-#    id: "GigaChat-2-Max"
-#    name: "GigaChat 2 Max"
-#    vendor: sber
-#    access:
-#      adapter: gigachat
-#    capabilities:
-#      context_window: 131072
-#      supports_seed: false           # детерминизм у GigaChat только температурой
-#      supports_tools: true
 #
 #  qwen-local:
 #    id: "qwen2.5-coder:32b-q8_0"      # квантизация в id — это часть идентичности модели
