@@ -99,6 +99,12 @@ def build_adapter(
         )
 
     if adapter_name == "gigachat":
+        # Российский корневой сертификат — боевой транспорт без проверки CA (см. transport.py).
+        # Верхний блок прокси строит транспорт с verify=True по умолчанию, поэтому для GigaChat
+        # пересобираем его с verify=False, сохраняя прокси. Фейковый транспорт из тестов
+        # (не RequestsTransport) не трогаем.
+        if transport is None or isinstance(transport, RequestsTransport):
+            transport = RequestsTransport(verify=False, proxy=env.get("PRISM_PROXY_RU"))
         return GigaChatAdapter(
             auth_key=_require(env, "GIGACHAT_AUTH_KEY", adapter_name),
             scope=env.get("GIGACHAT_SCOPE", "GIGACHAT_API_PERS"),
