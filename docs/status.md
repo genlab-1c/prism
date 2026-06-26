@@ -56,9 +56,12 @@
 | Gemini 2.5 Flash Lite | 5.44 | 4.50 |
 | Qwen3.6-35B-A3B | 5.04 | — |
 | Qwen3-235B-A22B | 5.00 | 4.96 |
+| GigaChat 2 Max | 4.89 | 4.13 |
 | YandexGPT 5 Pro | 4.78 | 4.37 |
 | YandexGPT 5 Lite | 4.50 | 4.93 |
 | YandexGPT 5.1 Pro | 4.00 | 4.59 |
+| GigaChat 2 Lite | 3.00 | 4.27 |
+| GigaChat 2 Pro | 2.44 | 4.07 |
 <!-- /prism:status:lb -->
 
 *(прогон: A — 10 алгоритмических задач, B — 15 платформенных; банк с тех пор подрос до 17
