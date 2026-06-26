@@ -257,10 +257,12 @@ def render_summary() -> str:
     sa = {name: f["solved"] for name, f in funnel(a, tax)} if a else {}
     sb = {name: f["solved"] for name, f in funnel(b, tax)} if b else {}
     names = sorted(set(sa) | set(sb), key=lambda n: sa.get(n, -1.0), reverse=True)
-    out = ["| Модель | Алгоритмика (A) | Платформа 1С (B) |", "|--------|:---|:---|"]
+    out = ["| № | Модель | Алгоритмика (A) | Платформа 1С (B) |", "|:---:|--------|:---|:---|"]
     for i, name in enumerate(names):
         nm = f"**{name}**" if i == 0 else name
-        out.append(f"| {nm} | {_summary_cell(sa.get(name))} | {_summary_cell(sb.get(name))} |")
+        out.append(
+            f"| {i + 1} | {nm} | {_summary_cell(sa.get(name))} | {_summary_cell(sb.get(name))} |"
+        )
     return _wrap("\n".join(out))
 
 
