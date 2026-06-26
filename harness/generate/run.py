@@ -233,6 +233,72 @@ class GenerationRunner:
             self._save(exp)
         return exp
 
+    def rebuild_from_parts(
+        self, exp_name: str, category: str | None = None, write: bool = True
+    ) -> ExperimentResult:
+        """Пересобрать experiment_*.json из ВСЕХ чекпойнтов <exp>.parts/, без сети.
+
+        Зачем: resume и обычный прогон кладут в рулон-json только пары своих --models
+        ([run.py] сборка из pairs), тогда как .parts хранят все накопленные пары. После
+        дозапуска новых моделей рулон перестаёт отражать полный состав — эта команда
+        приводит его к полному набору с диска. Источник правды — .parts.
+
+        Порядок пар — как в боевой сборке: задачи в порядке банка, модели в порядке
+        каталога; пары вне каталога/банка уходят в хвост по имени файла."""
+        parts_dir = self.results_dir / f"{exp_name}.parts"
+        if not parts_dir.is_dir():
+            raise FileNotFoundError(f"нет каталога чекпойнтов: {parts_dir}")
+
+        if category is None:  # из имени: experiment_<cat>_<timestamp>
+            bits = exp_name.split("_")
+            category = bits[1] if len(bits) > 1 else ""
+
+        task_order = {t.id: i for i, t in enumerate(load_tasks(category=category))}
+        key_order = {k: i for i, k in enumerate(self.models)}
+        big = len(task_order) + len(key_order) + 1  # незнакомые — в хвост
+
+        loaded: list[tuple[int, int, str, str, TaskResult]] = []
+        for path in parts_dir.glob("*.json"):
+            task_id, sep, key = path.stem.partition("__")
+            if not sep:  # не наш формат имени <task>__<key>.json
+                continue
+            tr = self._load_part(parts_dir, task_id, key)
+            if tr is not None:
+                loaded.append(
+                    (task_order.get(task_id, big), key_order.get(key, big), task_id, key, tr)
+                )
+        loaded.sort(key=lambda r: (r[0], r[1], r[2], r[3]))
+
+        seen = {r[3] for r in loaded}
+        models_used = [self.models[k].name for k in self.models if k in seen]
+        for r in loaded:  # модели вне каталога — по имени из чекпойнта, в хвост
+            if r[3] not in self.models and r[4].model_name not in models_used:
+                models_used.append(r[4].model_name)
+
+        timestamp = datetime.now().isoformat()  # прежний timestamp рулона сохраняем
+        existing = self.results_dir / f"{exp_name}.json"
+        if existing.exists():
+            try:
+                timestamp = json.loads(existing.read_text(encoding="utf-8")).get(
+                    "timestamp", timestamp
+                )
+            except (ValueError, OSError):
+                pass
+
+        exp = ExperimentResult(
+            experiment_name=exp_name,
+            category=category,
+            timestamp=timestamp,
+            models_used=models_used,
+            tasks_count=len({r[2] for r in loaded}),
+            runs_per_task=max((len(r[4].runs) for r in loaded), default=0),
+        )
+        exp.task_results = [r[4] for r in loaded]
+        exp.calculate_totals()
+        if write:
+            self._save(exp)
+        return exp
+
     def estimate(
         self, category: str, model_keys: list[str] | None = None, task_ids: list[str] | None = None
     ) -> dict:
