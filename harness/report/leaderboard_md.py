@@ -88,6 +88,14 @@ def _cell(v: float | None, is_max: bool, prec: int) -> str:
     return f"**{txt}**" if (is_max and v is not None) else txt
 
 
+def _heat(v: float | None) -> str:
+    """Ячейка теплокарты профиля: цвет по уровню балла + число. 🟩 ≥7 · 🟨 ≥4 · 🟥 <4."""
+    if v is None:
+        return "—"
+    emoji = "🟩" if v >= 7 else "🟨" if v >= 4 else "🟥"
+    return f"{emoji} {v:.1f}"
+
+
 def _wrap(table: str) -> str:
     """Центрируем таблицу. Атрибут `markdown` — чтобы Python-Markdown (MkDocs, расширение
     md_in_html) рендерил таблицу внутри <div>; на GitHub атрибут игнорируется."""
@@ -161,24 +169,12 @@ def render_by_tag(result: dict, dimension: str, axis: str) -> str:
     def val(name: str, tag: str) -> float | None:
         return profiles[name].get(tag, {}).get(axis)
 
-    maxes = {
-        tag: max((val(m, tag) for m in order if val(m, tag) is not None), default=None)
-        for tag in cols
-    }
     labels = [_TAG_LABELS.get(tag, tag) for tag in cols]
     head = "| Модель | " + " | ".join(labels) + " |"
     sep = "|--------|" + ":---:|" * len(cols)
     out = [head, sep]
     for i, name in enumerate(order):
-        cells = [
-            _cell(
-                val(name, tag),
-                val(name, tag) is not None
-                and abs((val(name, tag) or -9) - (maxes[tag] or -9)) < 1e-9,
-                1,
-            )
-            for tag in cols
-        ]
+        cells = [_heat(val(name, tag)) for tag in cols]
         nm = f"**{name}**" if i == 0 else name
         out.append(f"| {nm} | " + " | ".join(cells) + " |")
     return _wrap("\n".join(out))
@@ -222,7 +218,7 @@ def render_funnel(result: dict) -> str:
     from harness.stats.funnel import funnel
 
     rows = funnel(result, load_error_taxonomy())
-    head = "| Модель | решено | результат всех попыток | самая частая поломка |"
+    head = "| Модель | решено целиком | результат всех попыток | самая частая поломка |"
     sep = "|--------|:---:|:---|:---|"
     out = [head, sep]
     for i, (name, f) in enumerate(rows):
@@ -362,6 +358,7 @@ def write() -> list[Path]:
     lb_page = PRISM / "docs" / "leaderboard.md"
     if lb_page.exists():
         p = lb_page.read_text(encoding="utf-8")
+        p = _replace_region(p, "lb:summary", render_summary())
         if a:
             p = _replace_region(p, "lb:a-overall", render_overall(a, "A"))
             p = _replace_region(p, "lb:a-skill", render_by_tag(a, "skill", "M"))
