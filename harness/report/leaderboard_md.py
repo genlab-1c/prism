@@ -228,6 +228,35 @@ def render_funnel(result: dict) -> str:
     return _wrap("\n".join(out))
 
 
+def _summary_cell(solved: float | None) -> str:
+    """Ячейка сводки: полоса 🟩(решено)/🟥(не решено) + процент; «не измерялось» без данных."""
+    if solved is None:
+        return "_не измерялось_"
+    n = round(solved * 10)
+    return "🟩" * n + "🟥" * (10 - n) + f" {round(solved * 100)}%"
+
+
+def render_summary() -> str:
+    """Сводная таблица «кто лучше в целом»: доля решённых заданий по A и B рядом.
+
+    «Решено» = задание, где код прошёл ВСЕ скрытые проверки (доля «решено» из funnel — те же
+    числа, что в детальных таблицах). Сортировка по A (там данные есть у всех моделей).
+    A и B НЕ усредняются: они меряют разное (алгоритмика vs платформа), и разрыв виден."""
+    from harness.loaders import load_error_taxonomy
+    from harness.stats.funnel import funnel
+
+    tax = load_error_taxonomy()
+    a, b = _load("A"), _load("B")
+    sa = {name: f["solved"] for name, f in funnel(a, tax)} if a else {}
+    sb = {name: f["solved"] for name, f in funnel(b, tax)} if b else {}
+    names = sorted(set(sa) | set(sb), key=lambda n: sa.get(n, -1.0), reverse=True)
+    out = ["| Модель | Алгоритмика (A) | Платформа 1С (B) |", "|--------|:---|:---|"]
+    for i, name in enumerate(names):
+        nm = f"**{name}**" if i == 0 else name
+        out.append(f"| {nm} | {_summary_cell(sa.get(name))} | {_summary_cell(sb.get(name))} |")
+    return _wrap("\n".join(out))
+
+
 def render_status_summary(a: dict | None, b: dict | None) -> str:
     """Компактная сводка Q̄ A/B по моделям для docs/status.md (ранжир по Q̄ A)."""
     qa = {name: m["Q"] for name, m, _ in _ranked(a)} if a else {}
@@ -307,6 +336,7 @@ def write() -> list[Path]:
     readme = PRISM / "README.md"
     text = readme.read_text(encoding="utf-8")
     text = _replace_region(text, "badges", render_badges())
+    text = _replace_region(text, "lb:summary", render_summary())
     if a:
         text = _replace_region(text, "lb:a-overall", render_overall(a, "A"))
         text = _replace_region(text, "lb:a-skill", render_by_tag(a, "skill", "M"))
