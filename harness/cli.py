@@ -172,6 +172,28 @@ def cmd_generate(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_rebuild(args: argparse.Namespace) -> int:
+    from harness.generate.run import GenerationRunner
+
+    name = args.experiment  # принимаем имя, путь к json или к .parts
+    if name.endswith(".parts"):
+        name = name[: -len(".parts")]
+    elif name.endswith(".json"):
+        name = name[: -len(".json")]
+    name = Path(name).name  # отрезаем results/ при пути
+
+    exp = GenerationRunner().rebuild_from_parts(name)
+    brand_title("пересборка рулона из чекпойнтов")
+    console.print(
+        f"  [green]→ results/{exp.experiment_name}.json[/green]  "
+        f"[dim]({exp.tasks_count} задач × {len(exp.models_used)} моделей · "
+        f"пар {len(exp.task_results)} · токенов {exp.total_tokens})[/dim]",
+        highlight=False,
+    )
+    console.print(f"  [dim]модели:[/dim] {', '.join(exp.models_used)}", highlight=False)
+    return 0
+
+
 def cmd_score(args: argparse.Namespace) -> int:
     _apply_runtime_flags(args)
     if args.experiment:  # явный набор генераций — считаем именно его
@@ -557,6 +579,21 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_runtime_flags(sc)
     sc.set_defaults(func=cmd_score)
+
+    rb = sub.add_parser(
+        "rebuild",
+        help="пересобрать experiment_*.json из всех чекпойнтов .parts (без сети)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Зачем: после дозапуска новых моделей через resume рулон-json содержит только\n"
+            "пары последнего --models, а .parts хранят полный набор. Команда приводит json\n"
+            "к полному составу с диска (источник правды — .parts).\n\n"
+            "Пример:\n"
+            "  prism rebuild experiment_A_20260617_031633"
+        ),
+    )
+    rb.add_argument("experiment", help="имя эксперимента или путь к experiment_*.json / *.parts")
+    rb.set_defaults(func=cmd_rebuild)
 
     ch = sub.add_parser(
         "check",

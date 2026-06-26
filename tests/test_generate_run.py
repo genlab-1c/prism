@@ -206,6 +206,26 @@ def test_resume_skips_completed_pairs(tmp_path):
     assert len(again.task_results) == 2  # но результат полный
 
 
+def test_rebuild_from_parts_unions_all_models(tmp_path):
+    # одна модель → дозапуск второй через resume (как --models на отдельный канал)
+    runner = _runner(adapter_factory=lambda k, e: CountingAdapter([]), results_dir=tmp_path)
+    first = runner.run_experiment("A", model_keys=["claude"], task_ids=["A1", "A2"])
+    runner.run_experiment(
+        "A", model_keys=["gpt"], task_ids=["A1", "A2"], resume=first.experiment_name
+    )
+    # рулон отражает только пары последнего прогона (gpt) — а .parts держат обе модели
+    rolled = json.loads((tmp_path / f"{first.experiment_name}.json").read_text(encoding="utf-8"))
+    assert {t["model_id"] for t in rolled["task_results"]} == {"test/gpt"}
+
+    exp = runner.rebuild_from_parts(first.experiment_name)
+    assert len(exp.task_results) == 4  # 2 модели × 2 задачи из всех .parts
+    assert {t.model_id for t in exp.task_results} == {"test/claude", "test/gpt"}
+    assert exp.models_used == ["Claude", "GPT"]  # порядок каталога
+    # записанный рулон тоже полный
+    reread = json.loads((tmp_path / f"{first.experiment_name}.json").read_text(encoding="utf-8"))
+    assert len(reread["task_results"]) == 4
+
+
 def test_max_cost_cap_skips_all(tmp_path):
     calls: list[str] = []
     runner = _runner(
