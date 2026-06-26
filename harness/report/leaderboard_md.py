@@ -95,7 +95,12 @@ def _wrap(table: str) -> str:
 
 
 def render_overall(result: dict, category: str) -> str:
+    from harness.stats.summary import model_stats
+
     rows = _ranked(result)
+    # Погрешность Q (полуширина 95% ДИ по задачам) — в публичной таблице называем просто
+    # «± погрешность»; точный интервал и термин «ДИ» — в `prism leaderboard --full`/методичке.
+    margins = {s.model_name: s.q.margin for s in model_stats(result)}
     axes = ["S", "M", "O"] + (["P"] if category == "B" else []) + ["Q"]
     # Постфиксы O-исп/O-авто убраны — в таблице просто «O»; как именно меряется ось O
     # в каждой категории, объясняет проза страницы лидерборда.
@@ -104,8 +109,8 @@ def render_overall(result: dict, category: str) -> str:
         {"M", "O", "P", "Q"} if category == "A" else {"M", "P", "Q"}
     )  # в A ось O теперь различает — выделяем
     maxes = {a: max((m[a] for _, m, _ in rows if m[a] is not None), default=None) for a in axes}
-    head = "| № | Модель | " + " | ".join(titles[a] for a in axes) + " |"
-    sep = "|:---:|--------|" + ":---:|" * len(axes)
+    head = "| № | Модель | " + " | ".join(titles[a] for a in axes) + " | ± погрешность |"
+    sep = "|:---:|--------|" + ":---:|" * len(axes) + ":---:|"
     out = [head, sep]
     for i, (name, m, _n) in enumerate(rows):
         cells = []
@@ -114,7 +119,9 @@ def render_overall(result: dict, category: str) -> str:
             is_max = a in bold_axes and m[a] is not None and abs(m[a] - (maxes[a] or -9)) < 1e-9
             cells.append(_cell(m[a], is_max, prec))
         nm = f"**{name}**" if i == 0 else name
-        out.append(f"| {i + 1} | {nm} | " + " | ".join(cells) + " |")
+        margin = margins.get(name)
+        margin_txt = f"±{margin:.1f}" if margin is not None else "—"
+        out.append(f"| {i + 1} | {nm} | " + " | ".join(cells) + f" | {margin_txt} |")
     return _wrap("\n".join(out))
 
 
