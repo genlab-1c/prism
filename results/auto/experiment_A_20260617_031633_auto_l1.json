@@ -5928,6 +5928,1469 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "88388b628183f2ecc31f68cfebef7c100f70e08d5032a581c10573fc60d0d3c4",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 6 / Invalid type of argument}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 6 / Invalid type of argument}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 6 / Invalid type of argument}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 43 / Invalid type of argument}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "92649c2e51f647f1e5ad2d99af30e8abc672e8525471ed3af43f3a3a63602ba6",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 12,72 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 49,72 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2dcdf56ebea96262a7df18856ae9c9331e63b3cb2d22e9e60b381e9d1fa9022f",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 3,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "467928caba3875e3e9af8c0cf6a74851f5ad99971a878f5068751eab7a585693",
+          "scores": {
+            "S": 10,
+            "M": 4.0,
+            "O": null,
+            "P": null,
+            "Q": 7.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 2,
+              "total": 5,
+              "entry_point": "ВыделениеУникальныхЭлементов",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 6 / Задано неправильное имя атрибута структуры '1'}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 6 / Задано неправильное имя атрибута структуры '5'}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 6 / Задано неправильное имя атрибута структуры '3'}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ВыделениеУникальныхЭлементов",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 43 / Задано неправильное имя атрибута структуры '1905495'}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "74eeeb9d194274b83b40b30726a337e5e87947e4a718f050541ca49586485232",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 5,
+              "entry_point": "ПолучитьМассивБезДубликатов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 10,2 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьМассивБезДубликатов",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 47,2 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2b14a094ccbd1dc850385a5e789431ea5d1c0298dfefa8092e542d7509d4fe26",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 5,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2c908dd618db8014f2474314bf4b44a7b61313461102145386aa011216025f0a",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 13,34 / Symbol not found Максимум}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 50,34 / Symbol not found Максимум}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "413a2b8f519e1a66a5a9e9582f1090c04af05c438d20bb0cf84eaf5df34e20cc",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "если": {
+                  "open": 1,
+                  "close": 0
+                },
+                "цикл": {
+                  "open": 1,
+                  "close": 0
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 3,11 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 40,11 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b81041e81401b1bea8ed7b97f2e93e6a1e84383fa21793c154f900f8dace348c",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 3,43 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 40,43 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "307b37e184e5bc2883494ce6f9d1dd1a1cca23f2aafa1cb29758a76511a8c321",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,10 / Symbol not found Длина}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 41,10 / Symbol not found Длина}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8b1625a8bb327ae6a4340b52f488bbf24793d4ffae3adc7878250816d40605e1",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 5,38 / Symbol not found Количество}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 42,38 / Symbol not found Количество}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b311df60235cacf7aab7bb6e3e3e72b3c2112bfe695a16b96808937cb76a7625",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "12af712db029f715549ee260208cf33fd911fe55b579c0087f33965098e3759b",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "СчитатьЧастотуСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 12,31 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СчитатьЧастотуСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 49,31 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "87c5ce9e285ed6c666e464cad62eb0be06680537bfce222c1bf55051302e5a65",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 2,10 / Symbol not found РегExp}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 39,10 / Symbol not found РегExp}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cb28040b07c17bfc272969ee5db8f8da3722958772a6761f0837dbda80e27c7f",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "СловарьЧастот",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 1,45 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СловарьЧастот",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 38,45 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e43c8a49e722c6f6555d24077e4e930a210ae9ed2c98592b1de215c6c54d7e0b",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РасстЛевенштейна",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 8 / Index is out of range}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 8 / Index is out of range}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 8 / Index is out of range}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 8 / Index is out of range}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 8 / Index is out of range}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 8 / Index is out of range}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 8 / Index is out of range}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РасстЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line: 45 / Index is out of range}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9e07355efb976d3dc0d6d12db38c1fbbd43b847e12ea6fdfe62ef534fa083b89",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "если": {
+                  "open": 3,
+                  "close": 2
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РедактированиеРасстояние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 6,7 / Неизвестный символ :}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РедактированиеРасстояние",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 43,7 / Неизвестный символ :}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1c3562766e9866fdf8af674d9a5166147a8db363d5a2b9b201d719a18d782129",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 4,
+              "parse_error_clusters": 4,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "функция": {
+                  "open": 0,
+                  "close": 1
+                },
+                "если": {
+                  "open": 3,
+                  "close": 2
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "914ab1e8f3b693579ebc07c933df9b2d971cfdb1e0bf410c29e6e5a6a8b3ba7b",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 11,35 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СжатьRLE",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 48,35 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8b9d5637c3cc6d10111fb31ca68fcc92627820d73bf12f07227786b474266741",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "RLESжатие",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 14,34 / Symbol not found ПодсчитаннаяДлину}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "RLESжатие",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 51,47 / Symbol not found ПодсчитаннаяДлину}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "af83035868321cbe598a529450ce31805c2843e62c99989533bb84a63f9b166b",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "parse_error_clusters": 3,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СжатьСтроку",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 8,20 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СжатьСтроку",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 45,20 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ec2fb8b304d355e07168b1a4fd6f3b7b915b8e8d7732746680e8f075dba3a511",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "СтрокиАнаграммы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 3,27 / Symbol not found Нижний}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СтрокиАнаграммы",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 40,27 / Symbol not found Нижний}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0fd4eb1756001900d87c2031d7f92824b7dd06f327cf03e7f75cec029252bd7b",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 5,
+              "parse_error_clusters": 5,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "функция": {
+                  "open": 1,
+                  "close": 0
+                },
+                "если": {
+                  "open": 4,
+                  "close": 0
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,1 / Expecting symbol: EndOfText}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 41,1 / Expecting symbol: EndOfText}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "70b863ae5ad3b648dfc0ffc6055d91ee32134cea651092057263139139cec334",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 1,33 / Expecting symbol: ClosePar}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 38,33 / Expecting symbol: ClosePar}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0a2fc410a458a7054c94d54ac84709755a7245dc94ecdb39043f82f16aae2e09",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "РешетоЭратосфена",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 20,21 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РешетоЭратосфена",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 57,21 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "GigaChat-2-Pro",
+      "model_name": "GigaChat 2 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0a981e80cdfdb09663768298bece83d734b0f9182c48f55623184efe9f6a3772",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "цикл": {
+                  "open": 4,
+                  "close": 3
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 22,3 / Неизвестный символ |}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 59,3 / Неизвестный символ |}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8534aebc255b8c7a95025907a0e49724ee45990d086d3cf95fc37933fb5d390c",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "parse_error_clusters": 3,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "цикл": {
+                  "open": 4,
+                  "close": 5
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 2,30 / Expecting symbol: ClosePar}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 39,30 / Expecting symbol: ClosePar}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
