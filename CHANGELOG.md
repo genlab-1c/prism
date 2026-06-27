@@ -3,6 +3,23 @@
 Заметные изменения PRISM. Формат — [Keep a Changelog](https://keepachangelog.com/ru/1.0.0/);
 версии по [SemVer](https://semver.org/lang/ru/) на пару «набор задач + определение метрики».
 
+## [1.3.1] — 2026-06-27
+
+Зарубежные модели через шлюз AITUNNEL и запас токенов под reasoning.
+Метрика и банк задач не менялись — оценки из 1.3.0 сравнимы напрямую.
+
+### Добавлено
+- **Модели через AITUNNEL** (OpenAI-совместимый шлюз, канал `openai_compat`,
+  endpoint в `generation/models.yaml`, ключ `OPENAI_COMPAT_API_KEY`): OpenAI
+  GPT-5.5, GPT-5 Mini, GPT-OSS 120B; Google Gemini 3.1 Pro и Gemini 3.5 Flash.
+  Цены — в `generation/pricing.yaml` (рублёвый тариф aitunnel ÷ ~85 ₽/$).
+
+### Исправлено
+- **Обрезка reasoning-моделей** — дефолт `generation/params.yaml → max_tokens`
+  поднят с 4096 до 16384. У reasoning-моделей рассуждение расходует выходной
+  бюджет, и на 4096 код обрывался (пустой или неполный ответ). Не-reasoning
+  модели не затронуты — они заканчивают ответ раньше потолка.
+
 ## [1.3.0] — 2026-06-26
 
 Подключение моделей Сбера GigaChat и инструмент пересборки рулона прогона.
