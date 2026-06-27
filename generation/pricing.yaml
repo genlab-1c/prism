@@ -27,3 +27,12 @@ prices:
   "GigaChat-2-Max":                { input: 1.95, output: 1.95 }   # Сбер, ОЦЕНКА в USD (тариф в рублях/токенах)
   "GigaChat-2-Pro":                { input: 1.95, output: 1.95 }   # Сбер, ОЦЕНКА
   "GigaChat-2":                    { input: 0.2,  output: 0.2 }    # Сбер, ОЦЕНКА (Lite-тир)
+  # AITUNNEL (openai_compat) — id отличаются от OpenRouter/Yandex; цены ОЦЕНКА по тарифу той же модели
+  "claude-opus-4.8":               { input: 5.0,  output: 25.0 }   # AITUNNEL, ОЦЕНКА (= тариф Opus 4.8)
+  "claude-sonnet-4.6":             { input: 3.0,  output: 15.0 }   # AITUNNEL, ОЦЕНКА (= тариф Sonnet 4.6)
+  "qwen3.6-35b-a3b":               { input: 0.2,  output: 0.6 }    # AITUNNEL, ОЦЕНКА (= тариф Qwen3.6)
+  "gpt-5.5":                       { input: 1.18, output: 70.6 }   # AITUNNEL, ОЦЕНКА (тариф 100/6000 ₽ ÷ ~85 ₽/$)
+  "gpt-5-mini":                    { input: 0.06, output: 4.7 }    # AITUNNEL, ОЦЕНКА (тариф 5/400 ₽ ÷ ~85)
+  "gpt-oss-120b":                  { input: 0.35, output: 1.4 }    # AITUNNEL, ОЦЕНКА (тариф 30/120 ₽ ÷ ~85)
+  "gemini-3.1-pro-preview":        { input: 0.47, output: 28.2 }   # AITUNNEL, ОЦЕНКА (тариф 40/2400 ₽ ÷ ~85)
+  "gemini-3.5-flash":              { input: 3.53, output: 21.2 }   # AITUNNEL, ОЦЕНКА (тариф 300/1800 ₽ ÷ ~85)
