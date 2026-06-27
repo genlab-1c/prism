@@ -243,8 +243,11 @@ def render_summary() -> str:
     """Сводная таблица «кто лучше в целом»: доля решённых заданий по A и B рядом.
 
     «Решено» = задание, где код прошёл ВСЕ скрытые проверки (доля «решено» из funnel — те же
-    числа, что в детальных таблицах). Сортировка по A (там данные есть у всех моделей).
-    A и B НЕ усредняются: они меряют разное (алгоритмика vs платформа), и разрыв виден."""
+    числа, что в детальных таблицах). Сортировка — по среднему доли решённых A и B (таблица
+    отвечает «кто лучше в целом», а не «кто силён в алгоритмике»); пустую категорию в среднем
+    пропускаем (модель, измеренная лишь по одной категории, ранжируется по ней). В ЯЧЕЙКАХ A и B
+    показываем раздельно — они меряют разное (алгоритмика vs платформа), усреднять их для показа
+    нельзя: разрыв (как у Gemini 3.1 Pro: топ по A, ноль по платформе 1С) должен быть виден."""
     from harness.loaders import load_error_taxonomy
     from harness.stats.funnel import funnel
 
@@ -252,7 +255,12 @@ def render_summary() -> str:
     a, b = _load("A"), _load("B")
     sa = {name: f["solved"] for name, f in funnel(a, tax)} if a else {}
     sb = {name: f["solved"] for name, f in funnel(b, tax)} if b else {}
-    names = sorted(set(sa) | set(sb), key=lambda n: sa.get(n, -1.0), reverse=True)
+
+    def _overall(name: str) -> float:
+        vals = [v for v in (sa.get(name), sb.get(name)) if v is not None]
+        return sum(vals) / len(vals) if vals else -1.0
+
+    names = sorted(set(sa) | set(sb), key=_overall, reverse=True)
     out = ["| № | Модель | Алгоритмика (A) | Платформа 1С (B) |", "|:---:|--------|:---|:---|"]
     for i, name in enumerate(names):
         nm = f"**{name}**" if i == 0 else name
