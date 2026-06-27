@@ -3,7 +3,9 @@
 # текста промптов (generation/prompts.yaml).
 
 defaults:
-  max_tokens: 4096
+  max_tokens: 16384                               # запас под reasoning-модели (рассуждение сидит в выходном бюджете);
+                                                   # не-reasoning модели заканчивают ответ сами задолго до потолка → им не вредит.
+                                                   # Для дорогих моделей на aitunnel помнить: предоценка ключа растёт пропорционально (см. memory)
   concurrency: 4                                 # параллельных пар (задача×модель); I/O-bound
   model_params:
     alice:    { temperature: 0.1, runs: 1 }      # Alice AI LLM (Yandex)
@@ -21,3 +23,8 @@ defaults:
     gigachat_max:  { temperature: 0.1, runs: 1 }  # GigaChat 2 Max (Сбер)
     gigachat_pro:  { temperature: 0.1, runs: 1 }  # GigaChat 2 Pro (Сбер)
     gigachat_lite: { temperature: 0.1, runs: 1 }  # GigaChat 2 Lite (Сбер)
+    gpt55:    { temperature: 0.1, runs: 1 }        # GPT-5.5 через AITUNNEL (reasoning — следить за обрезкой)
+    gpt5_mini:   { temperature: 0.1, runs: 1 }     # GPT-5 Mini через AITUNNEL
+    gpt_oss120b: { temperature: 0.1, runs: 1 }     # GPT-OSS 120B через AITUNNEL
+    gemini31_pro: { temperature: 0.1, runs: 1 }    # Gemini 3.1 Pro через AITUNNEL
+    gemini35_flash: { temperature: 0.1, runs: 1 }  # Gemini 3.5 Flash через AITUNNEL

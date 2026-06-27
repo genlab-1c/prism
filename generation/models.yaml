@@ -181,6 +181,66 @@ models:
       supports_seed: false
       supports_tools: true
 
+  gpt55:
+    id: "gpt-5.5"                        # канал — AITUNNEL (openai_compat)
+    name: "GPT-5.5"
+    vendor: openai
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1050000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: рассуждение ест max_tokens (см. params)
+
+  gpt5_mini:
+    id: "gpt-5-mini"                     # канал — AITUNNEL (openai_compat), дешёвый GPT-5
+    name: "GPT-5 Mini"
+    vendor: openai
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 400000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
+  gpt_oss120b:
+    id: "gpt-oss-120b"                   # канал — AITUNNEL (openai_compat), открытая 120B OpenAI
+    name: "GPT-OSS 120B"
+    vendor: openai
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 131072
+      supports_seed: false
+      supports_tools: true
+
+  gemini31_pro:
+    id: "gemini-3.1-pro-preview"         # канал — AITUNNEL (openai_compat), флагман Google
+    name: "Gemini 3.1 Pro"
+    vendor: google
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
+  gemini35_flash:
+    id: "gemini-3.5-flash"               # канал — AITUNNEL (openai_compat), новейший flash Google
+    name: "Gemini 3.5 Flash"
+    vendor: google
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
