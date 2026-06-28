@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://prism.genlab-1c.ru/sitemap.xml
