@@ -1,0 +1,67 @@
+/* ============================================================
+   PRISM — Light theme (opt-in via data-theme="light" on <html>).
+   The brand is dark-first; light is a faithful inversion that keeps the
+   spectrum as the only colour. Axis hues are deepened to "-600" steps so
+   they stay readable as bars AND as small coloured text on white.
+   ============================================================ */
+[data-theme="light"] {
+  /* Neutral ramp — inverted: navy tokens become light surfaces */
+  --navy-950: #eef2f7;   /* sunken (code, table header strip) */
+  --navy-900: #f4f7fb;   /* page background */
+  --navy-850: #eef2f7;
+  --navy-800: #ffffff;   /* card / surface */
+  --navy-700: #f0f4f9;   /* raised / hover */
+  --navy-600: #c4cedc;   /* strong border */
+  --line: #e1e7f0;       /* hairline border */
+  --line-soft: rgba(12, 22, 38, 0.06);
+
+  /* Text — dark navy ink on light */
+  --ink-100: #0c1626;
+  --ink-200: #33425e;
+  --ink-300: #5d6c86;
+  --ink-400: #8593a8;
+
+  /* Spectrum — deepened for contrast on white (soft/line tints follow) */
+  --axis-s: #5b5ef0;   /* S — Синтаксис   */
+  --axis-m: #0aa5c4;   /* M — Смысл        */
+  --axis-o: #099b6e;   /* O — Оптимальность*/
+  --axis-p: #d98a18;   /* P — Платформа    */
+
+  --axis-s-soft: rgba(91, 94, 240, 0.12);
+  --axis-m-soft: rgba(10, 165, 196, 0.13);
+  --axis-o-soft: rgba(9, 155, 110, 0.13);
+  --axis-p-soft: rgba(217, 138, 24, 0.14);
+
+  --axis-s-line: rgba(91, 94, 240, 0.38);
+  --axis-m-line: rgba(10, 165, 196, 0.38);
+  --axis-o-line: rgba(9, 155, 110, 0.38);
+  --axis-p-line: rgba(217, 138, 24, 0.40);
+
+  /* Brand action — deepen cyan so white text on it is legible */
+  --brand: #0aa5c4;
+  --brand-strong: #0890ac;
+  --brand-ink: #ffffff;        /* text on brand fills + axis discs */
+  --one-c: #d98a18;
+  --info: #5b5ef0;
+  --verified: #099b6e;
+  --ok: #099b6e;
+  --ok-soft: rgba(9, 155, 110, 0.13);
+  --warn: #c9820f;
+  --warn-soft: rgba(217, 138, 24, 0.14);
+  --danger: #dc4d4d;
+  --danger-soft: rgba(220, 77, 77, 0.12);
+
+  /* Neutral overlays flip to dark-based so they read on light surfaces */
+  --surface-translucent: rgba(244, 247, 251, 0.82);
+  --track-bg: rgba(12, 22, 38, 0.09);
+  --chip-bg: rgba(12, 22, 38, 0.04);
+  --hover-overlay: rgba(12, 22, 38, 0.05);
+  --top-tint: rgba(10, 165, 196, 0.06);
+
+  /* Shadows — visible on light, slightly stronger than dark's */
+  --shadow-sm: 0 1px 2px rgba(20, 40, 70, 0.08);
+  --shadow-md: 0 6px 20px rgba(20, 40, 70, 0.10);
+  --shadow-lg: 0 18px 48px rgba(20, 40, 70, 0.16);
+  --glow-brand: 0 0 0 1px rgba(10, 165, 196, 0.35), 0 8px 28px rgba(10, 165, 196, 0.16);
+  --glow-soft: 0 0 24px rgba(10, 165, 196, 0.10);
+}

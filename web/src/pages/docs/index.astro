@@ -1,0 +1,21 @@
+---
+// Документация — хаб: список разделов.
+import Base from '../../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+const mods = import.meta.glob('../../content/md/*.md', { eager: true });
+const docs = Object.values(mods)
+  .filter((m) => m.frontmatter.section === 'docs')
+  .map((m) => ({ slug: m.frontmatter.slug, title: m.frontmatter.title }));
+---
+
+<Base title="Документация" active="docs">
+  <main class="doc-main">
+    <article class="prose">
+      <h1>Документация</h1>
+      <p>Как устроен PRISM — методика оценки, запуск, текущий статус и честные границы.</p>
+      <ul>
+        {docs.map((d) => <li><a href={`${base}docs/${d.slug}`}>{d.title}</a></li>)}
+      </ul>
+    </article>
+  </main>
+</Base>

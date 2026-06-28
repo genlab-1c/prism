@@ -1,0 +1,13 @@
+---
+// Банк задач = tasks/README.md (генерится `prism tasks`, синхронизируется).
+import Base from '../layouts/Base.astro';
+const mods = import.meta.glob('../content/md/*.md', { eager: true });
+const mod = Object.values(mods).find((m) => m.frontmatter.slug === 'tasks');
+const { Content, frontmatter } = mod;
+---
+
+<Base title={`Задачи · ${frontmatter.title}`} active="tasks">
+  <main class="doc-main">
+    <article class="prose"><Content /></article>
+  </main>
+</Base>

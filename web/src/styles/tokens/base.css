@@ -1,0 +1,62 @@
+/* ============================================================
+   PRISM — base element styling & utility primitives.
+   Minimal global resets + a few helpers used across cards/kits.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--lh-normal);
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Numbers should be tabular everywhere they appear */
+.prism-num, .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: var(--track-mono);
+}
+
+/* Eyebrow / overline label */
+.prism-eyebrow {
+  font-size: var(--text-micro);
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--text-faint);
+  font-weight: var(--fw-semibold);
+}
+
+/* The signature spectrum keyline — a thin prism gradient rule */
+.prism-rule {
+  height: 2px;
+  border: 0;
+  background: var(--prism);
+  border-radius: var(--radius-pill);
+}
+
+/* Prism gradient text (use sparingly, for hero marks) */
+.prism-text {
+  background: var(--prism);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+::selection { background: rgba(34,211,238,0.28); color: var(--ink-100); }
+
+/* Focus ring — accessible, brand-tinted */
+:where(a, button, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }

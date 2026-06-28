@@ -1,0 +1,13 @@
+---
+// Методология = how-it-works.md (источник — MkDocs docs/, синхронизируется).
+import Base from '../layouts/Base.astro';
+const mods = import.meta.glob('../content/md/*.md', { eager: true });
+const mod = Object.values(mods).find((m) => m.frontmatter.slug === 'how-it-works');
+const { Content, frontmatter } = mod;
+---
+
+<Base title={`Методология · ${frontmatter.title}`} active="methodology">
+  <main class="doc-main">
+    <article class="prose"><Content /></article>
+  </main>
+</Base>

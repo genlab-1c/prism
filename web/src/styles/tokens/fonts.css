@@ -1,0 +1,5 @@
+/* PRISM webfonts — IBM Plex family.
+   IBM Plex has full Cyrillic coverage (the product is Russian-language) and a
+   matching monospace for code/score readouts. Loaded from Google Fonts CDN.
+   NOTE: served via @import (no local binaries shipped) — see readme caveats. */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap');
