@@ -1,9 +1,13 @@
 site_name: PRISM
 site_description: Исполняемый бенчмарк кодогенерации 1С (методика SMOP — Syntax · Meaning · Optimization · Platform)
-site_url: https://genlab-1c.github.io/prism/
+site_url: https://prism.genlab-1c.ru/
 repo_url: https://github.com/genlab-1c/prism
 docs_dir: docs
 use_directory_urls: true
+
+plugins:
+  - search                # встроенный поиск (по умолчанию активен; при явном plugins его надо указать)
+  - social                # авто-генерация og:image-карточек для соцсетей и SEO (требует mkdocs-material[imaging])
 
 theme:
   name: material
