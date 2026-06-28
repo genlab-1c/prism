@@ -109,6 +109,11 @@ function CodePane({ task, info = {} }) {
               <div key={i} style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, lineHeight: 1.5, color: 'var(--ink-200)', background: 'var(--danger-soft)', borderLeft: '2px solid var(--danger)', borderRadius: '0 var(--radius-xs) var(--radius-xs) 0', padding: '7px 10px', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{e}</div>
             ))}
           </div>
+          {(task.scores?.S ?? 0) >= 7 && (d.outcome === 'runtime' || d.outcome === 'wrong') && (
+            <p style={{ margin: '10px 0 0', fontFamily: 'var(--font-mono)', fontSize: 11, lineHeight: 1.5, color: 'var(--ink-400)' }}>
+              Почему <span style={{ color: 'var(--axis-s)' }}>S</span> высокий? S — синтаксис <b>модуля</b> (компиляция). Кривой текст запроса или несуществующие метаданные вылезают на <b>исполнении</b> → идут в <span style={{ color: 'var(--axis-m)' }}>M</span>/<span style={{ color: 'var(--axis-p)' }}>P</span>, не в S. Модуль компилируется — толку ноль.
+            </p>
+          )}
         </div>
       )}
 
