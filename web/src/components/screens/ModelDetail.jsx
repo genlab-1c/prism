@@ -65,6 +65,105 @@ const fmtTime = (t) => (t == null ? '—' : `${t.toFixed(1)}с`);
 const fmtCost = (c) => (c == null ? '—' : c < 0.0005 ? '<$0.001' : `$${c.toFixed(c < 1 ? 3 : 2)}`);
 const Sep = () => <span style={{ color: 'var(--line)' }}>·</span>;
 
+/* ---------- вьюер метаданных синтетической базы 1С ---------- */
+const KIND_LABEL = {
+  catalogs: 'Справочники', documents: 'Документы', accumulation_registers: 'Регистры накопления',
+  information_registers: 'Регистры сведений', enums: 'Перечисления', constants: 'Константы',
+};
+const fmtType = (v) => {
+  if (v == null) return '';
+  if (typeof v !== 'object') return String(v);
+  let s = v.type || '';
+  if (v.length != null) s += `(${v.length}${v.precision != null ? `,${v.precision}` : ''})`;
+  return s || JSON.stringify(v);
+};
+function FieldList({ title, obj }) {
+  if (!obj || !Object.keys(obj).length) return null;
+  return (
+    <div style={{ marginTop: 8 }}>
+      <div className="prism-eyebrow" style={{ marginBottom: 4 }}>{title}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+        {Object.entries(obj).map(([k, v]) => (
+          <div key={k} style={{ display: 'flex', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+            <span style={{ color: 'var(--ink-200)' }}>{k}</span>
+            <span style={{ color: 'var(--ink-400)' }}>{fmtType(v)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+function ObjectCard({ name, def = {} }) {
+  const badges = [];
+  if (def.hierarchical) badges.push('иерархический');
+  if (def.register_type) badges.push(def.register_type === 'Balance' ? 'остатки' : def.register_type === 'Turnovers' ? 'обороты' : String(def.register_type));
+  return (
+    <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', padding: '12px 14px', background: 'var(--surface-sunken)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--axis-p)' }}>{name}</span>
+        {badges.map((b) => <Tag key={b} color="p">{b}</Tag>)}
+      </div>
+      {Array.isArray(def.registers) && def.registers.length > 0 && (
+        <div style={{ marginTop: 6, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>движения по: {def.registers.join(', ')}</div>
+      )}
+      <FieldList title="Измерения" obj={def.dimensions} />
+      <FieldList title="Ресурсы" obj={def.resources} />
+      <FieldList title="Реквизиты" obj={def.attributes} />
+    </div>
+  );
+}
+function ConfigView({ config }) {
+  const known = Object.keys(KIND_LABEL);
+  const keys = [...known.filter((k) => config[k]), ...Object.keys(config).filter((k) => !known.includes(k) && config[k] && typeof config[k] === 'object')];
+  return (
+    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 18 }}>
+      {keys.map((k) => {
+        const objs = config[k];
+        if (!objs || typeof objs !== 'object' || !Object.keys(objs).length) return null;
+        return (
+          <section key={k}>
+            <div className="prism-eyebrow" style={{ marginBottom: 8, color: 'var(--axis-p)' }}>{KIND_LABEL[k] || k}</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))', gap: 10 }}>
+              {Object.entries(objs).map(([name, def]) => <ObjectCard key={name} name={name} def={def || {}} />)}
+            </div>
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+/* ---------- вьюер тестов категории A (вход → ожидание) ---------- */
+function MiniTable({ columns = [], rows = [] }) {
+  return (
+    <table style={{ borderCollapse: 'collapse', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
+      <thead><tr>{columns.map((c) => <th key={c} style={{ textAlign: 'left', padding: '3px 9px', color: 'var(--ink-400)', borderBottom: '1px solid var(--line)', fontWeight: 600 }}>{c}</th>)}</tr></thead>
+      <tbody>{rows.map((r, i) => <tr key={i}>{r.map((cell, j) => <td key={j} style={{ padding: '3px 9px', color: 'var(--ink-200)', borderBottom: '1px solid var(--line-soft)' }}>{String(cell)}</td>)}</tr>)}</tbody>
+    </table>
+  );
+}
+function Val({ v }) {
+  if (v && typeof v === 'object' && v.__table__) return <MiniTable columns={v.__table__.columns} rows={v.__table__.rows} />;
+  return <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-200)' }}>{typeof v === 'string' ? `"${v}"` : JSON.stringify(v)}</span>;
+}
+function TestCases({ cases = [] }) {
+  return (
+    <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 12 }}>
+      {cases.map((c, i) => (
+        <div key={i} style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', padding: '12px 14px', background: 'var(--surface-sunken)' }}>
+          <div className="prism-eyebrow" style={{ marginBottom: 10 }}>тест {i + 1}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.04em', color: 'var(--ink-400)' }}>аргументы</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'flex-start' }}>{(c.args || []).map((a, j) => <Val key={j} v={a} />)}</div>
+            <span style={{ marginTop: 6, fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.04em', color: 'var(--axis-o)' }}>→ ожидается</span>
+            <Val v={c.expected} />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function CodeTab({ label, active, onClick }) {
   return (
     <button onClick={onClick} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '11px 4px', marginRight: 18, borderBottom: `2px solid ${active ? 'var(--brand)' : 'transparent'}`, fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: active ? 600 : 500, color: active ? 'var(--ink-100)' : 'var(--ink-400)' }}>{label}</button>
@@ -122,7 +221,7 @@ function CodePane({ task, info = {} }) {
         <CodeTab label="Код модели" active={tab === 'code'} onClick={() => setTab('code')} />
         <CodeTab label="Условие" active={tab === 'prompt'} onClick={() => setTab('prompt')} />
         <CodeTab label="Тесты" active={tab === 'tests'} onClick={() => setTab('tests')} />
-        {info.configHtml && <CodeTab label="База 1С" active={tab === 'base'} onClick={() => setTab('base')} />}
+        {info.config && <CodeTab label="База 1С" active={tab === 'base'} onClick={() => setTab('base')} />}
       </div>
 
       {tab === 'code' && (task.empty
@@ -136,9 +235,11 @@ function CodePane({ task, info = {} }) {
         </div>
       )}
 
-      {tab === 'tests' && (info.testsHtml
-        ? <div className="code-pane" dangerouslySetInnerHTML={{ __html: info.testsHtml }} />
-        : <div style={{ padding: '28px 16px', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-400)' }}>тесты не найдены</div>)}
+      {tab === 'tests' && (info.tests
+        ? <TestCases cases={info.tests} />
+        : info.testsHtml
+          ? <div className="code-pane" dangerouslySetInnerHTML={{ __html: info.testsHtml }} />
+          : <div style={{ padding: '28px 16px', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-400)' }}>тесты не найдены</div>)}
 
       {tab === 'base' && (
         <div>
@@ -149,9 +250,8 @@ function CodePane({ task, info = {} }) {
               ? <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{gm.contextObjects.map((o, i) => <Tag key={i} color="p">{o}</Tag>)}</div>
               : <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>контекст пуст — модель не запрашивала метаданные базы</span>}
           </div>
-          {/* объекты синтетической конфигурации 1С (спека базы задачи) */}
-          <div className="prism-eyebrow" style={{ padding: '12px 16px 0' }}>объекты синтетической базы 1С</div>
-          <div className="code-pane" dangerouslySetInnerHTML={{ __html: info.configHtml }} />
+          {/* объекты синтетической конфигурации 1С — карточками */}
+          <ConfigView config={info.config} />
         </div>
       )}
     </div>

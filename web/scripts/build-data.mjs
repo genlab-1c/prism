@@ -253,26 +253,30 @@ function loadTaskInfo() {
       const tp = path.join(base, dir, 'task.yaml');
       if (!fs.existsSync(tp)) continue;
       const t = readYAML(tp);
+      // База 1С — распарсенная спека (рендерим карточками объектов, не YAML)
       const cfg = path.join(base, dir, 'config_spec.yaml');
-      const configHtml = fs.existsSync(cfg) ? highlightAs(fs.readFileSync(cfg, 'utf8'), 'yaml') : '';
+      const config = fs.existsSync(cfg) ? readYAML(cfg) : null;
+      // Тесты — A: структурированные кейсы (вход→ожидание); B: BSL-проверки (подсветка)
       const bsl = path.join(base, dir, 'tests.bsl');
       const yml = path.join(base, dir, 'tests.yaml');
-      let testsText = '';
-      let testsLang = '';
+      let testsHtml = '';
+      let tests = null;
       if (fs.existsSync(bsl)) {
-        testsText = fs.readFileSync(bsl, 'utf8'); testsLang = 'bsl';
-        cases += (testsText.match(/^\s*(?:Процедура|Функция)\b/gim) || []).length;
+        const txt = fs.readFileSync(bsl, 'utf8');
+        testsHtml = highlightAs(txt, 'bsl');
+        cases += (txt.match(/^\s*(?:Процедура|Функция)\b/gim) || []).length;
       } else if (fs.existsSync(yml)) {
-        testsText = fs.readFileSync(yml, 'utf8'); testsLang = 'yaml';
-        cases += (readYAML(yml).tests || []).length;
+        tests = readYAML(yml).tests || [];
+        cases += tests.length;
       }
       info[t.id] = {
         prompt: (t.prompt || '').trim(),
         signature: t.signature || '',
         difficulty: t.difficulty || '',
         entryPoint: t.entry_point || '',
-        testsHtml: testsText ? highlightAs(testsText, testsLang) : '',
-        configHtml,
+        config,
+        tests,
+        testsHtml,
       };
     }
   }
