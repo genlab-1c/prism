@@ -8,6 +8,9 @@ venv/
 .coverage
 htmlcov/
 
+# Кэш плагинов (соцкарточки MkDocs Material и пр.)
+.cache/
+
 # Инструменты-бинари (тяжёлые, ставятся локально): BSL LS jar, OneScript, YAXUNIT, 1С.
 # Сами бинари не коммитятся — в git идут только bootstrap-скрипты установки.
 tools/*
@@ -21,6 +24,7 @@ work/
 results/auto/*
 !results/auto/experiment_A_20260617_031633_auto_l1.json
 !results/auto/experiment_B_20260617_031637_auto_l1.json
+!results/auto/site_data.json
 # Промежуточные чекпойнты генерации (для --resume; финал — в experiment_*.json)
 results/*.parts/
 
