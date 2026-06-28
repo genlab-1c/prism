@@ -1,3 +1,7 @@
+---
+description: "PRISM — открытый бенчмарк качества генерации кода 1С:Предприятие (BSL). Оценка исполнением по методике SMOP: компилятор, скрытые тесты, реальная база."
+---
+
 <p align="center">
   <img src="assets/locklight.png#only-light" alt="PRISM — многомерная оценка генерации кода 1С" width="450">
   <img src="assets/lockdark.png#only-dark" alt="PRISM — многомерная оценка генерации кода 1С" width="450">
