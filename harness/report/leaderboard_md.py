@@ -284,6 +284,80 @@ def render_status_summary(a: dict | None, b: dict | None) -> str:
     return "\n".join(out)
 
 
+# ── JSON для сайта (web/) ──────────────────────────────────────────────────────
+
+
+def site_data() -> dict:
+    """Все виды лидерборда одним JSON для витрины web/ — те же расчёты, что в md.
+
+    Источник правды один (эти функции), сайт лишь рисует. Ключ — имя модели; web
+    дополняет вендором/ценой/кодом. Виды: overall (S·M·O·P·Q + ±), funnel (исходы +
+    причина), profile (срез по навыкам M / платформе P)."""
+    from harness.loaders import load_error_taxonomy
+    from harness.stats.funnel import funnel
+    from harness.stats.summary import model_stats
+    from harness.stats.tags import tag_profile
+
+    tax = load_error_taxonomy()
+    tasks_by_id = {t.id: t for t in load_tasks()}
+
+    def per_category(result: dict | None, category: str) -> dict:
+        if not result:
+            return {}
+        axes = ["S", "M", "O"] + (["P"] if category == "B" else []) + ["Q"]
+        dim = "skill" if category == "A" else "platform"
+        prof_axis = "M" if category == "A" else "P"
+        ranked = {name: m for name, m, _ in _ranked(result)}
+        margins = {s.model_name: s.q.margin for s in model_stats(result)}
+        funnels = dict(funnel(result, tax))
+        groups: dict[str, list] = {}
+        for t in result["tasks"]:
+            groups.setdefault(t["model_name"], []).append(t)
+
+        out = {}
+        for name, m in ranked.items():
+            f = funnels.get(name, {})
+            prof = tag_profile(groups[name], tasks_by_id).get(dim, {})
+            out[name] = {
+                **{a: m.get(a) for a in axes},
+                "margin": margins.get(name),
+                "solved": f.get("solved"),
+                "funnel": {
+                    "n": f.get("n"),
+                    "buckets": f.get("buckets"),
+                    "cause": list(f["cause"]) if f.get("cause") else None,
+                },
+                "profile": {
+                    tag: {"value": v.get(prof_axis), "n": v.get("n")} for tag, v in prof.items()
+                },
+            }
+        return out
+
+    a, b = _load("A"), _load("B")
+    A, B = per_category(a, "A"), per_category(b, "B")
+    names = sorted(set(A) | set(B))
+
+    def cols(result: dict | None, dim: str) -> list[str]:
+        if not result:
+            return []
+        groups: dict[str, list] = {}
+        for t in result["tasks"]:
+            groups.setdefault(t["model_name"], []).append(t)
+        profs = {name: tag_profile(g, tasks_by_id).get(dim, {}) for name, g in groups.items()}
+        return [
+            tag
+            for tag in _dimension_tags(dim)
+            if max((profs[m].get(tag, {}).get("n", 0) for m in profs), default=0)
+            >= _MIN_TASKS_PER_TAG
+        ]
+
+    return {
+        "models": [{"name": n, "A": A.get(n), "B": B.get(n)} for n in names],
+        "profileCols": {"A": cols(a, "skill"), "B": cols(b, "platform")},
+        "tagLabels": _TAG_LABELS,
+    }
+
+
 # ── бейджи ───────────────────────────────────────────────────────────────────
 
 
@@ -384,4 +458,9 @@ def write() -> list[Path]:
         s = _replace_region(s, "status:lb", render_status_summary(a, b))
         status.write_text(s, encoding="utf-8")
         changed.append(status)
+
+    # JSON для витрины web/ — все виды лидерборда одним файлом (web читает его).
+    site = AUTO / "site_data.json"
+    site.write_text(json.dumps(site_data(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    changed.append(site)
     return changed
