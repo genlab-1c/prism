@@ -1,0 +1,27 @@
+/* Подсветка кода BSL — Shiki рендерит на билде в двухтемовый HTML
+   (переменные --shiki-dark / --shiki-light), здесь только выбор по теме.
+   Фон берём из токенов DS, а не из Shiki, чтобы блок жил в общей палитре. */
+.code-pane {
+  max-height: 560px;
+  overflow: auto;
+}
+.code-pane pre.shiki {
+  margin: 0;
+  padding: 16px;
+  background: var(--surface-sunken) !important;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+  tab-size: 4;
+  -moz-tab-size: 4;
+}
+/* dark-first: по умолчанию тёмные токены, светлые — при data-theme="light" */
+.code-pane pre.shiki,
+.code-pane pre.shiki span {
+  color: var(--shiki-dark);
+  background-color: transparent !important;
+}
+[data-theme='light'] .code-pane pre.shiki,
+[data-theme='light'] .code-pane pre.shiki span {
+  color: var(--shiki-light);
+}

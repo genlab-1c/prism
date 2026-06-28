@@ -1,0 +1,10 @@
+---
+// Главная — лидерборд (островок). Данные из results/ (npm run data).
+import Base from '../layouts/Base.astro';
+import App from '../components/App.jsx';
+import data from '../data/leaderboard.json';
+---
+
+<Base active="leaderboard">
+  <App client:load data={data} />
+</Base>

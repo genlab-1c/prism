@@ -1,0 +1,80 @@
+/* ============================================================
+   PRISM — Color tokens
+   Dark-first. The brand is a prism splitting white light into the
+   four SMOP quality axes. The spectrum IS the palette.
+   ============================================================ */
+:root {
+  /* ---- Spectrum: the four SMOP axes (sampled from the logo beam) ---- */
+  --axis-s: #7c7ef8;   /* S — Синтаксис  (violet) */
+  --axis-m: #22d3ee;   /* M — Смысл       (cyan)   */
+  --axis-o: #34d399;   /* O — Оптимальность (emerald) */
+  --axis-p: #fbbf24;   /* P — Платформа   (amber)  */
+
+  /* soft tints (12% over base) for axis backgrounds / chips */
+  --axis-s-soft: rgba(124, 126, 248, 0.14);
+  --axis-m-soft: rgba(34, 211, 238, 0.14);
+  --axis-o-soft: rgba(52, 211, 153, 0.14);
+  --axis-p-soft: rgba(251, 191, 36, 0.14);
+
+  /* axis border tints (for outlined chips) */
+  --axis-s-line: rgba(124, 126, 248, 0.40);
+  --axis-m-line: rgba(34, 211, 238, 0.40);
+  --axis-o-line: rgba(52, 211, 153, 0.40);
+  --axis-p-line: rgba(251, 191, 36, 0.40);
+
+  /* ---- Neutral ramp (deep navy → light) ---- */
+  --navy-950: #0a111e;   /* page void, behind everything */
+  --navy-900: #0c1626;   /* brand background (logo bg)    */
+  --navy-850: #101c30;
+  --navy-800: #131d2e;   /* surface / card                */
+  --navy-700: #1a2638;   /* raised surface, hover         */
+  --navy-600: #243248;   /* borders strong                */
+  --line: #1f2c40;       /* hairline border               */
+  --line-soft: rgba(255,255,255,0.06);
+
+  /* ---- Text ---- */
+  --ink-100: #eef2f8;    /* primary text, headings        */
+  --ink-200: #c3cddd;    /* secondary text                */
+  --ink-300: #8e9cb3;    /* tertiary / labels             */
+  --ink-400: #61708a;    /* muted / disabled / captions   */
+
+  /* ---- Brand accent ---- */
+  --brand: #22d3ee;            /* PRISM cyan — primary action */
+  --brand-strong: #0fb6d4;
+  --brand-ink: #04222a;        /* text on brand fills */
+  --one-c: #fbbf24;            /* the "1С" amber highlight */
+
+  /* ---- Semantic ---- */
+  --ok: #34d399;
+  --ok-soft: rgba(52,211,153,0.14);
+  --warn: #fbbf24;
+  --warn-soft: rgba(251,191,36,0.14);
+  --danger: #f87171;
+  --danger-soft: rgba(248,113,113,0.14);
+  --info: #7c7ef8;
+  --verified: #34d399;         /* the "Verified" trust seal */
+
+  /* ---- Semantic surface aliases ---- */
+  --bg: var(--navy-900);
+  --surface: var(--navy-800);
+  --surface-raised: var(--navy-700);
+  --surface-sunken: var(--navy-950);
+  --border: var(--line);
+  --border-strong: var(--navy-600);
+  --text: var(--ink-100);
+  --text-muted: var(--ink-300);
+  --text-faint: var(--ink-400);
+
+  /* ---- Neutral overlays (theme-aware; flip on light) ----
+     Tints layered over the current surface. On dark these are white-based;
+     the light theme redefines them as dark-based so they stay visible. */
+  --surface-translucent: rgba(12, 22, 38, 0.85);  /* sticky header bg */
+  --track-bg: rgba(255, 255, 255, 0.06);           /* meter / bar tracks */
+  --chip-bg: rgba(255, 255, 255, 0.04);            /* faint chip fills */
+  --hover-overlay: rgba(255, 255, 255, 0.05);      /* ghost-button hover */
+  --top-tint: rgba(34, 211, 238, 0.04);            /* #1 row spotlight */
+
+  /* ---- The signature prism gradient ---- */
+  --prism: linear-gradient(90deg, var(--axis-s) 0%, var(--axis-m) 36%, var(--axis-o) 68%, var(--axis-p) 100%);
+  --prism-45: linear-gradient(120deg, var(--axis-s), var(--axis-m), var(--axis-o), var(--axis-p));
+}

@@ -1,0 +1,37 @@
+/* ============================================================
+   PRISM — Typography tokens
+   IBM Plex Sans for UI/prose, IBM Plex Mono for scores, codes &
+   the 1C code itself. Numbers everywhere are tabular & mono.
+   ============================================================ */
+:root {
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-cond: 'IBM Plex Sans Condensed', 'IBM Plex Sans', sans-serif; /* tight display */
+
+  /* Type scale — 1.25 major-third-ish, tuned for a data UI */
+  --text-display: 56px;   /* hero numerals / page hero      */
+  --text-h1: 38px;
+  --text-h2: 28px;
+  --text-h3: 21px;
+  --text-h4: 17px;
+  --text-body: 15px;      /* base UI text                   */
+  --text-sm: 13.5px;
+  --text-xs: 12px;        /* labels, captions               */
+  --text-micro: 10.5px;   /* over-line eyebrows, all-caps    */
+
+  --lh-tight: 1.05;     /* @kind font */
+  --lh-snug: 1.25;      /* @kind font */
+  --lh-normal: 1.5;     /* @kind font */
+  --lh-relaxed: 1.65;   /* @kind font */
+
+  --fw-regular: 400;    /* @kind font */
+  --fw-medium: 500;     /* @kind font */
+  --fw-semibold: 600;   /* @kind font */
+  --fw-bold: 700;       /* @kind font */
+
+  /* Tracking */
+  --track-tight: -0.02em;   /* @kind font */
+  --track-normal: 0;        /* @kind font */
+  --track-caps: 0.08em;     /* @kind font */
+  --track-mono: 0.01em;     /* @kind font */
+}

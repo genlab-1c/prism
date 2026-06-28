@@ -1,0 +1,34 @@
+---
+// Документация: страница на каждый синхронизированный doc (section: docs).
+import Base from '../../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+const mods = import.meta.glob('../../content/md/*.md', { eager: true });
+
+export function getStaticPaths() {
+  const all = import.meta.glob('../../content/md/*.md', { eager: true });
+  return Object.values(all)
+    .filter((m) => m.frontmatter.section === 'docs')
+    .map((m) => ({ params: { slug: m.frontmatter.slug } }));
+}
+
+const { slug } = Astro.params;
+const mod = Object.values(mods).find((m) => m.frontmatter.slug === slug);
+const { Content, frontmatter } = mod;
+const docs = Object.values(mods)
+  .filter((m) => m.frontmatter.section === 'docs')
+  .map((m) => ({ slug: m.frontmatter.slug, title: m.frontmatter.title }));
+---
+
+<Base title={`Документация · ${frontmatter.title}`} active="docs">
+  <div class="doc-shell">
+    <aside class="doc-sidebar">
+      <div class="prism-eyebrow">Документация</div>
+      <nav>
+        {docs.map((d) => (
+          <a href={`${base}docs/${d.slug}`} aria-current={d.slug === slug ? 'page' : undefined}>{d.title}</a>
+        ))}
+      </nav>
+    </aside>
+    <article class="prose"><Content /></article>
+  </div>
+</Base>

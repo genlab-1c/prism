@@ -1,0 +1,137 @@
+/* ============================================================
+   PRISM web — оформление документации (рендер markdown из docs/).
+   Раскладка страниц-доков + типографика «.prose» на токенах DS.
+   ============================================================ */
+
+/* --- раскладка --- */
+.doc-main {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 40px 24px 8px;
+}
+.doc-main .prose { max-width: 760px; margin: 0 auto; }
+
+.doc-shell {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 32px 24px 8px;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+.doc-sidebar { position: sticky; top: 76px; }
+.doc-sidebar nav { display: flex; flex-direction: column; gap: 2px; margin-top: 10px; }
+.doc-sidebar a {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-400);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+}
+.doc-sidebar a:hover { color: var(--ink-200); background: var(--hover-overlay); }
+.doc-sidebar a[aria-current='page'] {
+  color: var(--ink-100);
+  border-left-color: var(--brand);
+  background: var(--surface-raised);
+}
+@media (max-width: 820px) {
+  .doc-shell { grid-template-columns: 1fr; gap: 16px; }
+  .doc-sidebar { position: static; }
+  .doc-sidebar nav { flex-direction: row; flex-wrap: wrap; }
+}
+
+/* --- типографика --- */
+.prose {
+  color: var(--ink-200);
+  font-size: var(--text-body);
+  line-height: var(--lh-relaxed);
+}
+.prose > :first-child { margin-top: 0; }
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--ink-100);
+  line-height: var(--lh-snug);
+  letter-spacing: -0.01em;
+  font-weight: var(--fw-semibold);
+}
+.prose h1 { font-size: var(--text-h1); margin: 0 0 16px; }
+.prose h2 {
+  font-size: var(--text-h2); margin: 40px 0 14px;
+  padding-top: 16px; border-top: 1px solid var(--line);
+}
+.prose h3 { font-size: var(--text-h3); margin: 28px 0 10px; }
+.prose h4 { font-size: var(--text-h4); margin: 22px 0 8px; }
+.prose p { margin: 0 0 14px; }
+.prose a { color: var(--brand); text-decoration: none; }
+.prose a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.prose strong { color: var(--ink-100); font-weight: var(--fw-semibold); }
+
+.prose ul, .prose ol { margin: 0 0 14px; padding-left: 22px; }
+.prose li { margin: 4px 0; }
+.prose li::marker { color: var(--ink-400); }
+
+.prose hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+
+/* инлайн-код и блоки */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--chip-bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xs);
+  padding: 1px 5px;
+  color: var(--ink-100);
+}
+.prose pre {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  background: var(--surface-sunken);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  overflow: auto;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.prose pre code { background: none; border: 0; padding: 0; color: var(--ink-200); font-size: inherit; }
+
+/* callout (бывшие admonitions !!!), оформлены как блок-цитаты */
+.prose blockquote {
+  margin: 0 0 16px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--brand);
+  background: var(--surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--ink-200);
+}
+.prose blockquote > :last-child { margin-bottom: 0; }
+.prose blockquote strong:first-child { color: var(--brand); }
+
+/* таблицы (лидерборд/статус/банк задач) */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 18px;
+  font-size: var(--text-sm);
+}
+.prose th, .prose td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+}
+.prose thead th {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-400);
+  background: var(--surface-sunken);
+}
+.prose tbody tr:hover { background: var(--hover-overlay); }
+.prose td:first-child { font-family: var(--font-mono); color: var(--ink-200); }
+
+.prose img { max-width: 100%; height: auto; }
+.prose sub, .prose small { color: var(--ink-400); }

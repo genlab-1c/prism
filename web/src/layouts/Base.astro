@@ -1,0 +1,44 @@
+---
+// Базовый layout: дизайн-система PRISM + общая шапка/подвал на всех страницах.
+// Тему ставим до рендера (без вспышки). `active` подсвечивает пункт меню.
+import '../styles/styles.css';
+import '../styles/scrollbars.css';
+import '../styles/code.css';
+import '../styles/prose.css';
+import SiteHeader from '../components/SiteHeader.jsx';
+import Footer from '../components/Footer.astro';
+import data from '../data/leaderboard.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+  active?: 'leaderboard' | 'methodology' | 'tasks' | 'docs';
+}
+const {
+  title = 'PRISM — многомерная оценка генерации кода 1С',
+  description = 'Исполняемый бенчмарк кода 1С (BSL): код запускается по-настоящему и оценивается по четырём осям SMOP — Syntax · Meaning · Optimization · Platform.',
+  active = 'leaderboard',
+} = Astro.props;
+const version = data.meta?.version || '';
+---
+
+<!doctype html>
+<html lang="ru" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('prism-theme');
+        if (t) document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
+  </head>
+  <body>
+    <SiteHeader client:load active={active} version={version} />
+    <slot />
+    <Footer />
+  </body>
+</html>

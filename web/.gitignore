@@ -1,0 +1,9 @@
+# зависимости и сборка Astro
+node_modules/
+dist/
+.astro/
+
+# генерируется build-скриптом из results/ (источник правды — там)
+src/data/leaderboard.json
+public/data/
+src/content/md/
