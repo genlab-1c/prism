@@ -75,7 +75,9 @@ function Identity({ m, size = 38 }) {
   );
 }
 
-const card = { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' };
+const card = { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)' };
+// липкая шапка таблицы под навбаром (страница крутится, колонки на виду)
+const headStick = { position: 'sticky', top: 59, zIndex: 3, borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0' };
 function ListRow({ grid, i, top, onClick, children }) {
   const [h, setH] = React.useState(false);
   return (
@@ -123,7 +125,7 @@ function OverallTable({ cat, models, navigate }) {
   });
   return (
     <div style={card}>
-      <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 14, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 14, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
         <span style={colHead()}>#</span><span style={colHead()}>модель</span>
         {axes.map((a) => <SortHead key={a} label={a} axis={a} sortKey={sortKey} dir={dir} onSort={onSort} />)}
         <SortHead label="Q" axis="q" sortKey={sortKey} dir={dir} onSort={onSort} />
@@ -170,7 +172,7 @@ function SummaryView({ models, navigate }) {
   const grid = '44px minmax(180px,1.4fr) minmax(150px,1fr) minmax(150px,1fr)';
   return (
     <div style={card}>
-      <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
         <span style={colHead()}>#</span><span style={colHead()}>модель</span>
         <span style={colHead()}>алгоритмика · A</span><span style={colHead()}>платформа 1С · B</span>
       </div>
@@ -204,7 +206,7 @@ function FunnelView({ cat, models, navigate }) {
         {BUCKETS.map(([k, c]) => <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-300)' }}><span style={{ width: 9, height: 9, borderRadius: 3, background: c }} />{k}</span>)}
       </div>
       <div style={card}>
-        <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
           <span style={colHead()}>#</span><span style={colHead()}>модель</span><span style={colHead({ textAlign: 'right' })}>решено</span><span style={colHead()}>исход всех попыток</span><span style={colHead()}>частая поломка</span>
         </div>
         {rows.map((m, i) => {
