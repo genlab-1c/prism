@@ -284,13 +284,13 @@ function GenerationsBrowser({ modelId }) {
 
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 320px) 1fr', gap: 20, alignItems: 'start' }}>
-      <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', position: 'sticky', top: 76 }}>
+      <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowY: 'auto', overflowX: 'hidden', position: 'sticky', top: 76, maxHeight: 'calc(100vh - 96px)' }}>
         {groups.map(([cat, label]) => {
           const items = gen.tasks.filter((t) => t.category === cat);
           if (!items.length) return null;
           return (
             <div key={cat}>
-              <div className="prism-eyebrow" style={{ padding: '10px 12px 6px', borderBottom: '1px solid var(--line)', background: 'var(--surface-sunken)' }}>{label}</div>
+              <div className="prism-eyebrow" style={{ padding: '10px 12px 6px', borderBottom: '1px solid var(--line)', background: 'var(--surface-sunken)', position: 'sticky', top: 0, zIndex: 1 }}>{label}</div>
               {items.map((t) => <TaskItem key={t.taskId} t={t} active={t.taskId === sel} onClick={() => setSel(t.taskId)} />)}
             </div>
           );
