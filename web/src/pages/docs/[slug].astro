@@ -19,7 +19,7 @@ const docs = Object.values(mods)
   .map((m) => ({ slug: m.frontmatter.slug, title: m.frontmatter.title }));
 ---
 
-<Base title={`Документация · ${frontmatter.title}`} active="docs">
+<Base title={`Документация · ${frontmatter.title}`} description={frontmatter.description} active="docs">
   <div class="doc-shell">
     <aside class="doc-sidebar">
       <div class="prism-eyebrow">Документация</div>

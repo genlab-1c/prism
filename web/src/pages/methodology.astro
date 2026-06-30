@@ -6,7 +6,7 @@ const mod = Object.values(mods).find((m) => m.frontmatter.slug === 'how-it-works
 const { Content, frontmatter } = mod;
 ---
 
-<Base title={`Методология · ${frontmatter.title}`} active="methodology">
+<Base title={`Методология · ${frontmatter.title}`} description={frontmatter.description} active="methodology">
   <main class="doc-main">
     <article class="prose"><Content /></article>
   </main>

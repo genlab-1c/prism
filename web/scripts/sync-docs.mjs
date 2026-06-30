@@ -81,8 +81,19 @@ function transform(src) {
 fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(OUT, { recursive: true });
 for (const p of PAGES) {
-  const md = transform(fs.readFileSync(p.src, 'utf8'));
-  const fm = `---\ntitle: ${JSON.stringify(p.title)}\nslug: ${JSON.stringify(p.slug)}\nsection: ${JSON.stringify(p.section)}\n---\n\n`;
+  let raw = fs.readFileSync(p.src, 'utf8');
+  // срезать исходный YAML-фронтматтер (иначе утечёт в тело), вытащив из него description для SEO
+  let description = '';
+  const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n?/);
+  if (fmMatch) {
+    const d = fmMatch[1].match(/^description:\s*(.+)$/m);
+    if (d) description = d[1].trim().replace(/^["']|["']$/g, '');
+    raw = raw.slice(fmMatch[0].length);
+  }
+  const md = transform(raw);
+  const fm = `---\ntitle: ${JSON.stringify(p.title)}\nslug: ${JSON.stringify(p.slug)}\nsection: ${JSON.stringify(p.section)}\n`
+    + (description ? `description: ${JSON.stringify(description)}\n` : '')
+    + '---\n\n';
   fs.writeFileSync(path.join(OUT, `${p.slug}.md`), fm + md);
 }
 console.log(`✓ src/content/md — ${PAGES.length} страниц из docs/ + tasks (admonitions → цитаты)`);
