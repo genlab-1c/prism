@@ -28,3 +28,6 @@
 *::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+/* Навигация в шапке на мобиле — горизонтальный скролл без видимой полосы */
+.nav-bar::-webkit-scrollbar { height: 0; width: 0; }

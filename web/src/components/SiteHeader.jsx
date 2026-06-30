@@ -13,14 +13,15 @@ const NAV = [
   { key: 'docs', label: 'документация', href: `${BASE}docs` },
 ];
 
-function NavLink({ label, href, active }) {
+function NavLink({ label, href, active, compact }) {
   const [hover, setHover] = React.useState(false);
   return (
     <a href={href} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       style={{
         textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: active ? 600 : 500,
         color: active ? 'var(--ink-100)' : (hover ? 'var(--ink-200)' : 'var(--ink-400)'),
-        padding: '21px 2px', position: 'relative', letterSpacing: '0.005em',
+        padding: compact ? '10px 2px' : '21px 2px', position: 'relative', letterSpacing: '0.005em',
+        whiteSpace: 'nowrap', flex: 'none',
         transition: 'color var(--dur-fast) var(--ease)',
       }}>
       {label}
@@ -101,8 +102,8 @@ export default function SiteHeader({ active = 'leaderboard', version = '', repo 
             </span>
           )}
         </div>
-        <nav style={{ display: 'flex', gap: isMobile ? 16 : 24, alignSelf: 'stretch', alignItems: 'center', flexWrap: 'wrap', order: isMobile ? 3 : 0, flexBasis: isMobile ? '100%' : 'auto', justifyContent: isMobile ? 'flex-start' : 'flex-start' }}>
-          {NAV.map((n) => <NavLink key={n.key} label={n.label} href={n.href} active={active === n.key} />)}
+        <nav className="nav-bar" style={{ display: 'flex', gap: isMobile ? 20 : 24, alignSelf: 'stretch', alignItems: 'center', order: isMobile ? 3 : 0, flexBasis: isMobile ? '100%' : 'auto', flexWrap: 'nowrap', overflowX: isMobile ? 'auto' : 'visible', scrollbarWidth: 'none' }}>
+          {NAV.map((n) => <NavLink key={n.key} label={n.label} href={n.href} active={active === n.key} compact={isMobile} />)}
         </nav>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           {!isMobile && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>v{version || '—'}</span>}
