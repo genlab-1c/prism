@@ -36,3 +36,4 @@ prices:
   "gpt-oss-120b":                  { input: 0.35, output: 1.4 }    # AITUNNEL, ОЦЕНКА (тариф 30/120 ₽ ÷ ~85)
   "gemini-3.1-pro-preview":        { input: 0.47, output: 28.2 }   # AITUNNEL, ОЦЕНКА (тариф 40/2400 ₽ ÷ ~85)
   "gemini-3.5-flash":              { input: 3.53, output: 21.2 }   # AITUNNEL, ОЦЕНКА (тариф 300/1800 ₽ ÷ ~85)
+  "mimo-v2.5":                     { input: 0.94, output: 4.7 }    # AITUNNEL, ОЦЕНКА (тариф 80/400 ₽ ÷ ~85)

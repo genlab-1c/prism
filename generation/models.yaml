@@ -241,6 +241,18 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
 
+  mimo25:
+    id: "mimo-v2.5"                      # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "MiMo-V2.5"
+    vendor: xiaomi
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true               # function calling заявлен; проверить на кат. B (риск как у reasoning-моделей)
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
