@@ -87,6 +87,7 @@ function loadExperiment(cat) {
       code,
       meta: {
         tokens: t.total_tokens || 0,
+        tokensOut: t.runs?.[0]?.tokens_output || 0, // нужно для честной (по выходу) стоимости прогона
         cost: t.total_cost || 0,
         time: t.avg_time || 0,
         contextLoaded: !!t.context_loaded,
@@ -121,26 +122,60 @@ const highlightAs = (code, lang) =>
 const highlight = (code) => highlightAs(code, 'bsl');
 
 /* ---- 4. Сборка моделей для таблицы ---- */
+const RUB = 85; // курс для отображения (как в pricing.yaml)
 const costOf = (id) => {
   const p = pricing[id];
   if (!p) return '—';
-  return `$${(((p.input + p.output) / 2) / 1000).toFixed(3)} / 1k`;
+  return `${Math.round(((p.input + p.output) / 2) * RUB)} ₽/1M`; // средняя цена за 1 млн токенов
 };
+
+/* Экономика прогона по модели: суммарные токены, ср. время на задачу и стоимость
+   ВСЕГО прогона (A+B). Стоимость считаем по тарифу × фактическим токенам с разделением
+   вход/выход — иначе модели с дорогим выходом (reasoning) выглядели бы дешевле, чем есть.
+   Стоимость в результатах прогона храним как ОЦЕНКУ (pricing.yaml — снимок тарифов). */
+function econOf(name, id) {
+  const tasks = [...(expA[name] || []), ...(expB[name] || [])];
+  if (!tasks.length) return {};
+  let tokIn = 0, tokOut = 0, tokTot = 0, timeSum = 0, n = 0;
+  for (const t of tasks) {
+    const m = t.meta || {};
+    tokTot += m.tokens || 0;
+    tokOut += m.tokensOut || 0;
+    tokIn += Math.max(0, (m.tokens || 0) - (m.tokensOut || 0));
+    if (m.time) { timeSum += m.time; n += 1; }
+  }
+  const p = pricing[id];
+  const runCost = p ? (tokIn * p.input + tokOut * p.output) / 1e6 : null;
+  return {
+    runCost: runCost == null ? null : Math.round(runCost * 1000) / 1000,
+    priceIn: p ? p.input : null,
+    priceOut: p ? p.output : null,
+    tokensOut: tokOut,
+    tokensTotal: tokTot,
+    avgTime: n ? Math.round((timeSum / n) * 10) / 10 : null,
+  };
+}
 
 const names = new Set([...Object.keys(A.summary), ...Object.keys(B.summary)]);
 const models = [...names].map((name) => {
   const a = A.summary[name];
   const b = B.summary[name];
   const meta = byName[name] || {};
+  // общий Q — среднее по A и B со взвешиванием на число задач (как в сводном зачёте)
+  const wA = a ? a.taskCount : 0, wB = b ? b.taskCount : 0;
+  const qOverall = (wA + wB) ? r2(((a?.Q || 0) * wA + (b?.Q || 0) * wB) / (wA + wB)) : null;
   return {
     id: slug(name),
     name,
+    vendor: meta.vendor || '',
     family: VENDOR[meta.vendor] || meta.vendor || '',
     cost: costOf(meta.id),
+    econ: econOf(name, meta.id),
     A: a ? { S: r1(a.S), M: r1(a.M), O: r1(a.O) } : null,
     B: b ? { S: r1(b.S), M: r1(b.M), O: r1(b.O), P: r1(b.P) } : null,
     qA: a ? r2(a.Q) : null,
     qB: b ? r2(b.Q) : null,
+    qOverall,
     verified: false,
   };
 });
@@ -173,8 +208,9 @@ if (fs.existsSync(sdPath)) {
 }
 
 /* ---- 5. Per-model файлы генераций (ленивая подгрузка по клику) ---- */
+// Каталог НЕ сносим целиком (иначе работающий dev-сервер Vite теряет его из виду и
+// отдаёт 404 на свежие файлы) — обновляем на месте, лишние подчищаем после записи.
 const GEN_DIR = path.join(WEB, 'public', 'data', 'gen');
-fs.rmSync(GEN_DIR, { recursive: true, force: true });
 fs.mkdirSync(GEN_DIR, { recursive: true });
 
 const pick = (s) => (s == null ? null : r1(s)); // оси задачи — к одному знаку
@@ -235,12 +271,16 @@ function genTasks(name) {
 }
 
 let genCount = 0;
+const writtenGen = new Set();
 for (const m of models) {
   const tasks = genTasks(m.name);
   if (!tasks.length) continue;
   fs.writeFileSync(path.join(GEN_DIR, `${m.id}.json`), JSON.stringify({ id: m.id, name: m.name, tasks }));
+  writtenGen.add(`${m.id}.json`);
   genCount += tasks.length;
 }
+// подчистить файлы моделей, которых больше нет в прогоне
+for (const f of fs.readdirSync(GEN_DIR)) if (f.endsWith('.json') && !writtenGen.has(f)) fs.rmSync(path.join(GEN_DIR, f));
 
 /* ---- 5b. Условие и тесты задач (одинаковы у всех моделей → отдельный tasks.json) ---- */
 function loadTaskInfo() {
@@ -270,10 +310,13 @@ function loadTaskInfo() {
         cases += tests.length;
       }
       info[t.id] = {
+        name: t.name || t.id,
+        category: cat.toUpperCase(),
         prompt: (t.prompt || '').trim(),
         signature: t.signature || '',
         difficulty: t.difficulty || '',
         entryPoint: t.entry_point || '',
+        tags: t.tags || {},
         config,
         tests,
         testsHtml,
@@ -284,6 +327,26 @@ function loadTaskInfo() {
 }
 const taskInfo = loadTaskInfo();
 fs.writeFileSync(path.join(WEB, 'public', 'data', 'tasks.json'), JSON.stringify(taskInfo.info));
+
+/* ---- 5c. Мета страницы задач: параметры генерации + системные промпты ---- */
+const params = readYAML(path.join(REPO, 'generation', 'params.yaml')) || {};
+const promptsCfg = readYAML(path.join(REPO, 'generation', 'prompts.yaml')) || {};
+const mp = params.defaults?.model_params || params.model_params || {};
+const temps = [...new Set(Object.values(mp).map((m) => m.temperature).filter((v) => v != null))];
+const runsSet = [...new Set(Object.values(mp).map((m) => m.runs).filter((v) => v != null))];
+const tasksMeta = {
+  params: {
+    max_tokens: params.defaults?.max_tokens ?? null,
+    concurrency: params.defaults?.concurrency ?? null,
+    temperature: temps.length === 1 ? temps[0] : temps,        // у всех 0.1 → одно число
+    runs: runsSet.length === 1 ? runsSet[0] : runsSet,
+  },
+  prompts: { A: (promptsCfg.system?.A || '').trim(), B: (promptsCfg.system?.B || '').trim() },
+  order: Object.entries(taskInfo.info)
+    .map(([id, t]) => ({ id, name: t.name, category: t.category, difficulty: t.difficulty }))
+    .sort((a, b) => (a.category === b.category ? taskNum(a.id) - taskNum(b.id) : a.category < b.category ? -1 : 1)),
+};
+fs.writeFileSync(path.join(WEB, 'public', 'data', 'tasks_meta.json'), JSON.stringify(tasksMeta));
 
 // тест-кейсы и генерации — берём из бейджей README (их считает `prism docs`), чтобы 1:1 с публикацией
 const readme = fs.readFileSync(path.join(REPO, 'README.md'), 'utf8');
@@ -299,10 +362,22 @@ const dateOf = (exp) => { const m = (exp || '').match(/_(\d{4})(\d{2})(\d{2})_/)
 const tasksA = Math.max(0, ...Object.values(A.summary).map((m) => m.taskCount));
 const tasksB = Math.max(0, ...Object.values(B.summary).map((m) => m.taskCount));
 
+/* ---- 6b. Репозиторий и звёзды (для ссылки/бейджа в шапке) ----
+   Звёзды тянем с GitHub API на билде; офлайн/недоступно → null (бейдж без числа). */
+const GH_REPO = 'genlab-1c/prism';
+let repoStars = null;
+try {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 4000); // не вешать сборку, если сети нет
+  const r = await fetch(`https://api.github.com/repos/${GH_REPO}`, { headers: { 'User-Agent': 'prism-web' }, signal: ctrl.signal });
+  clearTimeout(t);
+  if (r.ok) repoStars = (await r.json()).stargazers_count ?? null;
+} catch { /* офлайн или лимит API — бейдж покажем без числа */ }
+
 const OUT = path.join(WEB, 'src', 'data', 'leaderboard.json');
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify({
-  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun: dateOf(B.exp), profileCols, tagLabels },
+  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun: dateOf(B.exp), profileCols, tagLabels, repo: { url: `https://github.com/${GH_REPO}`, stars: repoStars } },
   models,
 }, null, 2) + '\n');
 

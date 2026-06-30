@@ -6,4 +6,5 @@ dist/
 # генерируется build-скриптом из results/ (источник правды — там)
 src/data/leaderboard.json
 public/data/
+public/og/
 src/content/md/
