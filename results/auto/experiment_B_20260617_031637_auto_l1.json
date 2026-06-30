@@ -19913,6 +19913,2563 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "070d27e7a01faed3351deb825ca328de9f43890e212dc6868bd91a7cff7a23c6",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(19)}: Ошибка при вызове метода контекста (Выполнить): {(6, 36)}: Ожидается выражение \"(\"\nНоменклатура.Ссылка В ИЕРАРХИИ <<?>>&Группа; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(19)}: Ошибка при вызове метода контекста (Выполнить): {(6, 36)}: Ожидается выражение \"(\"\nНоменклатура.Ссылка В ИЕРАРХИИ <<?>>&Группа; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(19)}: Ошибка при вызове метода контекста (Выполнить): {(6, 36)}: Ожидается выра",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьВсеЭлементыВГруппе",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d9d4aa846bb273c76dc77ffb4cab4563545b321e7651bf5c5fd5156330546927",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьКонечныеЭлементыНоменклатуры",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8ecf109981c4f5e8be8fee4916f571522f79382e02997357ba5b78a5d49f4ac7",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 4,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(2, 24)}: Поле не найдено \"ОстаткиТоваровОстатки.Количество\"\nОстаткиТоваровОстатки.<<?>>Количество КАК Количество; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(2, 24)}: Поле не найдено \"ОстаткиТоваровОстатки.Количество\"\nОстаткиТоваровОстатки.<<?>>Количество КАК Количество; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: О",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 4,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДостаточноТовараНаСкладе",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 4,
+              "platform_error_tests": 4,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "81c49e67dbc9e5a429172c87891c210b3924cca76893334806215e165d919894",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 4,
+              "total": 4,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДостаточноТовараНаСкладе",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 4,
+              "total": 4,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "158be1837ff12c9dfe658619b843d6d239474891aa033b3821ad61b39fcda6c0",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(36)}: Метод объекта не обнаружен (ПроверитьУникальностьИНН); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(49)}: Метод объекта не обнаружен (ПроверитьУникальностьИНН); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(61)}: Метод объекта не обнаружен (ПроверитьУникальностьИНН);",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПроверитьУникальностьИНН",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0151910f71abd6cdbbbc4233813f918406458047e860413984381cba21e5d4e9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЕстьДругойКонтрагентСИНН",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "262c7562afc06b51f3d062558045c36b90f2b9009a4fe16889b8331b8393c603",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(36)}: Метод объекта не обнаружен (КоличествоВБазовойЕдинице); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(48)}: Метод объекта не обнаружен (КоличествоВБазовойЕдинице); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(60)}: Метод объекта не обнаружен (КоличествоВБазовойЕдинице);",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "КоличествоВБазовойЕдинице",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "12888003924ac6f9b8a1944bfabff29401ce39636343dd369688f22c559b1e10",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПеревестиКоличествоВБазовуюЕдиницу",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "900804b311409d9522b72929efa5b96eab665cf712d4c46db4f219361bd3174b",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 4,
+            "P": 0.0,
+            "Q": 3.5
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 28)}: Поле не найдено \"ТоварыНаСкладахОстатки.ВНаличии\"\nТоварыНаСкладахОстатки.<<?>>ВНаличии КАК ВНаличии,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 28)}: Поле не найдено \"ТоварыНаСкладахОстатки.ВНаличии\"\nТоварыНаСкладахОстатки.<<?>>ВНаличии КАК ВНаличии,; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка ",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 4.0,
+              "count": 2,
+              "codes": [
+                "JoinWithVirtualTable"
+              ]
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "eefc706a38b1d3f158e9dd77ef3142b94fa0e6326e0c09eb11195b0552f39608",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 6,
+            "P": 0.0,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(33)}: Ошибка при вызове метода контекста (Выполнить): {(5, 2)}: Неверные параметры \"МассивНоменклатуры\"\n<<?>>&МассивНоменклатуры КАК МассивНоменклатуры; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(33)}: Ошибка при вызове метода контекста (Выполнить): {(5, 2)}: Неверные параметры \"МассивНоменклатуры\"\n<<?>>&МассивНоменклатуры КАК МассивНоменклатуры; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(33)}: Ошибка при вызове метода контекста ",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "JoinWithSubQuery"
+              ]
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0f58b1dfa873a5df8c0f6b611bc222151bb731e78b34785a541b0d28170069f9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификация",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6364e72745fe6f0c528e92c74b9607eac6bbcf315a1e305008cb580d9f8563fd",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификацияНоменклатуры",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b9cbed20143172326cd5f3135f0a70586aaa137929ae617f4cb8c75ef01d6e3d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваров",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "dae03713b5faacb2703e0f99d62696d3ffa348aed754364b0c5e7db8c7d7de05",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 6,
+            "P": 10.0,
+            "Q": 9.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 2.0,
+              "count": 1,
+              "codes": [
+                "VirtualTableCallWithoutParameters"
+              ]
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4f15bf0d8fef49d45ed22c98cd8eb5dc10629173cc90215d4010061615f50c91",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 4.5
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Переменная не определена (ОбменДанными)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Переменная не определена (ОбменДанными)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                9
+              ],
+              "compile_errors": [
+                "Переменная не определена (ОбменДанными)"
+              ],
+              "entry_point": "ЗаполнитьЦены",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Переменная не определена (ОбменДанными)",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e7dce8dbdec8a7ff379372b80193ca8b42419505cd8cbec34805a8b547295a97",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 4.5
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Переменная не определена (РегистрСведений)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Переменная не определена (РегистрСведений)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                3
+              ],
+              "compile_errors": [
+                "Переменная не определена (РегистрСведений)"
+              ],
+              "entry_point": "ЗаполнитьЦены",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Переменная не определена (РегистрСведений)",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ac8504a59595e089ac64d70d5b0e5b7ae135b81edc40c46a2ba5669568af2594",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 8,
+            "P": 3.3,
+            "Q": 5.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(37)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Поле не найдено \"ПартииТоваровНаСкладахОстатки.Номенклатура\"\n<<?>>ПартииТоваровНаСкладахОстатки.Номенклатура КАК Номенклатура,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(37)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Поле не найдено \"ПартииТоваровНаСкладахОстатки.Номенклатура\"\n<<?>>ПартииТоваровНаСкладахОстатки.Номенклатура КАК Номенклатура,; тест3 FAIL (ис",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыFIFO",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 1.0,
+              "count": 1,
+              "codes": [
+                "QueryNestedFieldsByDot"
+              ]
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "923386048ce8888d9f89a020bc428808a537f2c5943e3a2b9ee1f6ba1e5c2ee4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыПоFIFO",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "771fb653eb57d04d622b9d00ef9565aa4089d0d1654b13da1ddee6fc0c35d6fe",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСредневзвешеннуюСебестоимость",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4b9c00fdda828c8ad323e3d0ae2b6eab5b2e184918fad50a39e237e9d67ac012",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСебестоимость",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "dad9cdc3d13f1c955cc6c3e9887bcd7f4541f94786a8909b3824cf86cfb3a18f",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 3.3,
+            "Q": 5.83
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(67)}: Метод объекта не обнаружен (ПересчитатьСуммы); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(80)}: Метод объекта не обнаружен (ПересчитатьСуммы); тест3 FAIL (исключение без имени валюты: {ОбщийМодуль.Тесты.Модуль(94)}: Метод объекта не обнаружен (ПересчитатьСуммы));",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммы",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b1cf292d8a525080dae7422c231329a5265d73e57e59742bb8e5f17d1ffac948",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммы",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "19d21a9e896823ee7fd02853334b370a2377385196044929d59ed98939bf371c",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 6.7,
+            "Q": 8.35
+          },
+          "bands": {
+            "M": 6,
+            "P": 6
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(38)}: Ошибка при вызове метода контекста (Выполнить): {(6, 67)}: Неверные параметры \"РегистрНакопления.Продажи.Обороты, 2\"\nРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, <<?>>Номенклатура, &Склад) КАК ПродажиОбороты;",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 1,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ОборотыПродажЗаПериод",
+              "infra_detail": "",
+              "band": 6
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.667,
+              "clean": 2,
+              "total": 3,
+              "platform_error_tests": 1,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bade67945afaeca7b0abae58417be6b1fb4eec186ecd7e6835da7bd5c5c3f63f",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(25)}: Ошибка при вызове метода контекста (Выполнить): {(6, 69)}: Неверные параметры \"РегистрНакопления.Продажи.Обороты, 3\"\nРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, , <<?>>&Условие) КАК ПродажиОбороты; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(25)}: Ошибка при вызове метода контекста (Выполнить): {(6, 69)}: Неверные параметры \"РегистрНакопления.Продажи.Обороты, 3\"\nРегистрНакопления.Продажи.Обороты(&НачалоПериода, ",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "16ff93c7c9f5e45942bcabb3fa1236b08ab8e1424c02e9f52c0d5cadd2c615c4",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(53)}: Метод объекта не обнаружен (ЦенаЗакупкиНаДату); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(65)}: Метод объекта не обнаружен (ЦенаЗакупкиНаДату); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(77)}: Метод объекта не обнаружен (ЦенаЗакупкиНаДату);",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЦенаЗакупкиНаДату",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ab8a3b165b4117f80e401f6079497d38d0150380859af64833022064384026b6",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 4.5
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Переменная не определена (РегистрСведений)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Переменная не определена (РегистрСведений)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                7
+              ],
+              "compile_errors": [
+                "Переменная не определена (РегистрСведений)"
+              ],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Переменная не определена (РегистрСведений)",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "95742d79abf7fee42b83f574ffc11d924344221f18d7b6807bb6d76d3cf1cd02",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 4,
+            "P": 0.0,
+            "Q": 3.5
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 2,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(58)}: Ошибка при вызове метода контекста (Выполнить): {(9, 1)}: Синтаксическая ошибка \"СГРУППИРОВАНО\"\n<<?>>СГРУППИРОВАНО ПО; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(58)}: Ошибка при вызове метода контекста (Выполнить): {(9, 1)}: Синтаксическая ошибка \"СГРУППИРОВАНО\"\n<<?>>СГРУППИРОВАНО ПО;",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ОстаткиИДвижения",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 4.0,
+              "count": 2,
+              "codes": [
+                "VirtualTableCallWithoutParameters"
+              ]
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 2,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4ea1091f1a931a3377efd12e57c07a8dc937a8c4d19d74165190f54d6d2ee7ea",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 8,
+            "P": 10.0,
+            "Q": 9.5
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиПоНоменклатуре",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 1.0,
+              "count": 1,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery"
+              ]
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5794bed74ea793e016803eb2f0c7ef8c54890d7346e024f2e8ad59d9a609d7b3",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "no_entry",
+              "passed": 0,
+              "total": 0,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": null,
+              "infra_detail": "в коде кандидата не найдено ни одной функции",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "reason": "в коде кандидата не найдено ни одной функции",
+              "log": "",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "efcb2b5ed0018d7d248f7b14a3747fa8253132e72347d4ec1fcc45165c4442dc",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СводТоваров",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3f5e727e9cfba322e4a91d4481d21b591af3ae3a0532825e2acff2dec7eb5d59",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьКонечныеЭлементы",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "29f923ee0abe1b6e6c9a563b97b393adafb9bcd20f81a604f11beaf2e95e0ee3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 4,
+              "total": 4,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДостаточноТовараНаСкладе",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 4,
+              "total": 4,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4ebc89ea0cbd3d5961dd7c1e391f229aa8b0e34c9f4c993521171b70fac83274",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ИННУникален",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "КоличествоВБазовойЕдинице",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "03bc1e59805732b93bb76c745d132930e9a1856fb93e492079825766086cf6b4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4137dc28af5738f3bd5bd74c19350ce9c8c81e2512194d2afbeac7354d5c1ad3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификация",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0688530952b0a21e813290241b03ae390425857c12483a9a42bdff6213e1a362",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстатки",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7d7d58cd40d22a1c283ba8e9a0f5313f5e2ab6a3b8e4620b3e44191e92140bf8",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦены",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1a5cae1572e1fe49ef339a7f2098fe7bbd03b2bd3b6ae772dcd8cf0c7233e730",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 8,
+            "P": 3.3,
+            "Q": 5.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(44)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Тип не может быть выбран в запросе\n<<?>>Т.Номенклатура КАК Номенклатура,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(44)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Тип не может быть выбран в запросе\n<<?>>Т.Номенклатура КАК Номенклатура,; тест3 FAIL (исключение без имени номенклатуры: {ОбщийМодуль.КодКандидата.Модуль(44)}: Ошибка при вызове метода контекста (",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыFIFO",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 1.0,
+              "count": 1,
+              "codes": [
+                "QueryNestedFieldsByDot"
+              ]
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "80ae298551c78a66846659afbf358abd164dc2969a7536e5693f5c2e0ebf87b4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСебестоимость",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3b216d260071cde8f11aa6216934f030ca36ee1eb50881282faacdc8b9265066",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 3.3,
+            "Q": 5.83
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(67)}: Метод объекта не обнаружен (ПересчитатьСуммыПриСменеВалюты); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.Тесты.Модуль(80)}: Метод объекта не обнаружен (ПересчитатьСуммыПриСменеВалюты); тест3 FAIL (исключение без имени валюты: {ОбщийМодуль.Тесты.Модуль(94)}: Метод объекта не обнаружен (ПересчитатьСуммыПриСменеВалюты));",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c46909d0efc2df50e8b5ac5b40ea2fad658d190efd5eb82ead864607e6b7b2ba",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4c4adb0b122caeaa8e2acbf49702f35282b4d4e4ed29808cb575fb00becdf4ea",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "53500253be53b1e89c8fc9a6457337d5dbbb100f68a358284756c96d506ee0bd",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиИОбороты",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d35b2c85f78cd48d686c69492da1dc4b8ad5f98b261d62d1c10c8cc46dd37b8c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СводТоваров",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
     }
   ]
 }

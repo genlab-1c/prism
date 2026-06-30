@@ -10991,6 +10991,1537 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "94cac72311629bbbbf457004464504d1242ef7c6adbdd2f3e6841de521934145",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": null,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 48,32 / Too many actual parameters}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ee0f643cc4ae5cb8cff35896cdf8b901ebf7d73d39d18b934eafad575b7bb43f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 1.0,
+              "ops": [
+                4,
+                4,
+                4,
+                4
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1870e0e4ea8b65b19263b4ead80c5fa02966c7cea1469901a9a873ad9284c023",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 2 / Type is not defined (Запрос)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 2 / Type is not defined (Запрос)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 2 / Type is not defined (Запрос)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 39 / Type is not defined (Запрос)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c67ec5fd462586c9cb8e2f9b98fc30c4eac4209bb920091315d5172ac2d482b8",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "функция": {
+                  "open": 0,
+                  "close": 1
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 5,
+              "entry_point": null,
+              "errors": [
+                "в коде кандидата не найдено ни одной функции"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": null,
+              "ops": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "в коде кандидата не найдено ни одной функции",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "adbd6ab977c68c629bfff02d9be1ee58d5995619b2e09622f39a4f2a4abb7ca0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1205,
+                2405,
+                4805,
+                9603
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cd4389b0c4905c5c7bd24d010f2d6960994e22f1c7ba1f690aac584092c45f69",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1205,
+                2405,
+                4805,
+                9603
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "27ad9544668821fc067914441b0e80ab2b35c6539de8fbeddd060855c85aee74",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.0,
+              "p_opt": 1.1,
+              "ops": [
+                110650,
+                439512,
+                1775405,
+                7053343
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c4457fc182e02e9c6018ef2f842bbd1999dffb1f4311e2e63098b148f5d9c267",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СлитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3191,
+                6346,
+                12641,
+                24951
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СлитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b219c2f736891daac8c7dc7956814773543d7531cbc0c83babae82e4b3b99def",
+          "scores": {
+            "S": 10,
+            "M": 1.7,
+            "O": null,
+            "P": null,
+            "Q": 5.85
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 6,
+              "entry_point": "СлитьИнтервалы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 11 / Greater-than/Less-than comparison operations are not supported for 'Массив'}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 11 / Greater-than/Less-than comparison operations are not supported for 'Массив'}",
+                "PRISM_FAIL 3",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 11 / Greater-than/Less-than comparison operations are not supported for 'Массив'}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 11 / Greater-than/Less-than comparison operations are not supported for 'Массив'}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СлитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 44 / Внешнее исключение (System.OutOfMemoryException): Exception of type 'System.OutOfMemoryException' was thrown.}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2e7b862d2d29cf93cb2b572162d934f50f1c424839dc9914cdf816c2e2a32fe8",
+          "scores": {
+            "S": 10,
+            "M": 3.3,
+            "O": null,
+            "P": null,
+            "Q": 6.65
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 2,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 20 / Index is out of range}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 20 / Index is out of range}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 20 / Index is out of range}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 14 / Index is out of range}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящееСреднее",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 57 / Index is out of range}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c5f53e0fb1d0775e14e51be666095eb03e15bff355a639784c13e3073075adac",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53614,
+                212214,
+                844414,
+                3368814
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1dbed63f92642ead6118617ba0a460a2bd7ad993659ff86b8640dac03f688e30",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                962,
+                1912,
+                3812,
+                7612
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3d55b7086ae34a4d1dffc755226e9c0a69274977173c21d32d2c60fbd76faa65",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 13 / Iterator is not defined}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 13 / Iterator is not defined}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 13 / Iterator is not defined}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 13 / Iterator is not defined}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line: 50 / Iterator is not defined}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cad7c375b00add67632e22921b6dae91b5d7bce39c82729058e9c930aa052911",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПолучитьЧастотуСлов",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 17 / Object property is not found (кот)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 17 / Object property is not found (привет)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 17 / Object property is not found (один)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 17 / Object property is not found (да)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьЧастотуСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line: 54 / Object property is not found (aced)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2b39a15b2ecae3b04345f298eaa959a7a5ba702caa285db3081fded9c5123f8b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПолучитьЧастотуСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7403,
+                14491,
+                29050,
+                59154
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПолучитьЧастотуСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2fba76d1410b666a5fe4a914b44e985e0a86fca0406e8d4ce1b6c53ca3bdfa34",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.87,
+              "p_opt": 2.0,
+              "ops": [
+                460,
+                853,
+                1372,
+                2013
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4aac88023105dd612a4f17c6854241fd01f35e730c04fce1f2a79f2f3d1090fb",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 26,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 63,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9ad6bf32d8d41c83f297f3f8b03338cf90a565410e64373706a817214693a353",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 11,6 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 48,6 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "876c39d006814192b3bd1f742fa97b37c0993c2263e2f5d0d3c42a7ebf108138",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5f9c822012693e2c6aacaf54dcec9468e39082713c363aa60413acf89467ca4a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ЗакодироватьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ЗакодироватьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "26c39a52404cadf33c740a8082279f19cf5b6c2221cbd4d8e9825fdf6da36347",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "82c26304a9de7335a3d1fb347d895d4fe2389a681d9ec25bc7b2d1d983feaeca",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 24 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 24 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 24 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 24 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 24 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 24 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 61 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fc59909e5557ff095eaa35a56adead23ff4c6794ba979b2fe4569544b836aca2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7009,
+                14009,
+                28009,
+                56009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bb289607c0085bdb25b6d5f6e3a67e587df307b93250cd8523589550ceee2341",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 11 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 11 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 11 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 11 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 11 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 11 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 48 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "677d38c5cfb4b9cdf3ae2f752c862c37e2c9ce6cfc33f4529e7655b27f1773cb",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 19,13 / Symbol not found Корень}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 56,13 / Symbol not found Корень}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1dd5f42f82153d4e41b14df3456c16ffbc7975a02618eca635d15dfbac1aa48e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38562,
+                79765,
+                164546,
+                338593
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "087e82d9939663f27d9add5091b1066b4b017ab4e84636722ce0dec7a38e48fb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                46963,
+                96576,
+                198155,
+                405752
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }

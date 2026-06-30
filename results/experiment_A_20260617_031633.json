@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_A_20260617_031633",
   "category": "A",
-  "timestamp": "2026-06-30T23:28:37.183273",
+  "timestamp": "2026-06-30T23:49:33.373820",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -24,7 +24,10 @@
     "Gemini 3.1 Pro",
     "Gemini 3.5 Flash",
     "MiMo-V2.5",
-    "MiniMax M3"
+    "MiniMax M3",
+    "Qwen3.7 Plus",
+    "Grok Build 0.1",
+    "Grok 4.3"
   ],
   "tasks_count": 9,
   "runs_per_task": 1,
@@ -910,6 +913,126 @@
       "avg_time": 47.504
     },
     {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция СгруппироватьТаблицуЗначений(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяКолонкиСуммирования)\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"ЗначениеГруппировки\");\n\tРезультат.Колонки.Добавить(\"Сумма\", Новый ОписаниеТипов(\"Число\"));\n\t\n\tДля Каждого Строка Из ИсходнаяТаблица Цикл\n\t\tЗначениеГруппировки = Строка[ИмяКолонкиГруппировки];\n\t\tЗначениеДляСуммирования = Строка[ИмяКолонкиСуммирования];\n\t\t\n\t\tНайденныеСтроки = Результат.Найти(ЗначениеГруппировки, \"ЗначениеГруппировки\");\n\t\t\n\t\tЕсли НайденныеСтроки = Неопределено Тогда\n\t\t\tНоваяСтрока = Результат.Добавить();\n\t\t\tНоваяСтрока.ЗначениеГруппировки = ЗначениеГруппировки;\n\t\t\tНоваяСтрока.Сумма = ЗначениеДляСуммирования;\n\t\tИначе\n\t\t\tНайденныеСтроки.Сумма = НайденныеСтроки.Сумма + ЗначениеДляСуммирования;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "94cac72311629bbbbf457004464504d1242ef7c6adbdd2f3e6841de521934145",
+          "tokens_input": 149,
+          "tokens_output": 533,
+          "tokens_total": 682,
+          "elapsed_time": 11.365387678146362,
+          "cost_input": 0.00014005999999999998,
+          "cost_output": 0.00200408,
+          "cost_total": 0.00214414,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "94cac72311629bbbbf457004464504d1242ef7c6adbdd2f3e6841de521934145",
+        "most_common_count": 1,
+        "hashes": [
+          "94cac72311629bbbbf457004464504d1242ef7c6adbdd2f3e6841de521934145"
+        ]
+      },
+      "total_tokens": 682,
+      "total_cost": 0.00214414,
+      "avg_time": 11.365
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицуЗначений(ТаблицаЗначений, ИмяКолонкиГруппировки, ИмяКолонкиСуммы) Экспорт\n\tНоваяТаблица = ТаблицаЗначений.Скопировать();\n\tНоваяТаблица.Свернуть(ИмяКолонкиГруппировки, ИмяКолонкиСуммы);\n\tВозврат НоваяТаблица;\nКонецФункции",
+          "response_hash": "ee0f643cc4ae5cb8cff35896cdf8b901ebf7d73d39d18b934eafad575b7bb43f",
+          "tokens_input": 268,
+          "tokens_output": 1591,
+          "tokens_total": 1859,
+          "elapsed_time": 13.067421913146973,
+          "cost_input": 0.0006298,
+          "cost_output": 0.0074936099999999995,
+          "cost_total": 0.00812341,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ee0f643cc4ae5cb8cff35896cdf8b901ebf7d73d39d18b934eafad575b7bb43f",
+        "most_common_count": 1,
+        "hashes": [
+          "ee0f643cc4ae5cb8cff35896cdf8b901ebf7d73d39d18b934eafad575b7bb43f"
+        ]
+      },
+      "total_tokens": 1859,
+      "total_cost": 0.00812341,
+      "avg_time": 13.067
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицуЗначений(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяЧисловойКолонки) Экспорт\n Запрос = Новый Запрос;\n Запрос.Текст =\n \"ВЫБРАТЬ\n | Т.\" + ИмяКолонкиГруппировки + \" КАК ЗначениеГруппировки,\n | СУММА(Т.\" + ИмяЧисловойКолонки + \") КАК Сумма\n |ИЗ\n | &Таблица КАК Т\n |СГРУППИРОВАТЬ ПО\n | Т.\" + ИмяКолонкиГруппировки;\n Запрос.УстановитьПараметр(\"Таблица\", ИсходнаяТаблица);\n Возврат Запрос.Выполнить().Выгрузить();\nКонецФункции",
+          "response_hash": "1870e0e4ea8b65b19263b4ead80c5fa02966c7cea1469901a9a873ad9284c023",
+          "tokens_input": 274,
+          "tokens_output": 1063,
+          "tokens_total": 1337,
+          "elapsed_time": 10.170701503753662,
+          "cost_input": 0.00080556,
+          "cost_output": 0.0062504399999999995,
+          "cost_total": 0.007056,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1870e0e4ea8b65b19263b4ead80c5fa02966c7cea1469901a9a873ad9284c023",
+        "most_common_count": 1,
+        "hashes": [
+          "1870e0e4ea8b65b19263b4ead80c5fa02966c7cea1469901a9a873ad9284c023"
+        ]
+      },
+      "total_tokens": 1337,
+      "total_cost": 0.007056,
+      "avg_time": 10.171
+    },
+    {
       "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "aliceai-llm/latest",
@@ -1790,6 +1913,126 @@
       "avg_time": 15.252
     },
     {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функциция УникальныеЭлементы(Массив)\n\t\n\tРезультат = Новый Массив;\n\tУжеДобавлены = Новый Соответствие;\n\t\n\tДля Каждого Элемент Из Массив Цикл\n\t\tЕсли УжеДобавлены[Элемент] = Неопределено Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\t\tУжеДобавлены.Вставить(Элемент, Истина);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "c67ec5fd462586c9cb8e2f9b98fc30c4eac4209bb920091315d5172ac2d482b8",
+          "tokens_input": 133,
+          "tokens_output": 418,
+          "tokens_total": 551,
+          "elapsed_time": 9.102739572525024,
+          "cost_input": 0.00012502,
+          "cost_output": 0.00157168,
+          "cost_total": 0.0016967,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c67ec5fd462586c9cb8e2f9b98fc30c4eac4209bb920091315d5172ac2d482b8",
+        "most_common_count": 1,
+        "hashes": [
+          "c67ec5fd462586c9cb8e2f9b98fc30c4eac4209bb920091315d5172ac2d482b8"
+        ]
+      },
+      "total_tokens": 551,
+      "total_cost": 0.0016967,
+      "avg_time": 9.103
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьУникальныеЭлементы(Массив) Экспорт\n    Результат = Новый Массив;\n    Уникальные = Новый Соответствие;\n    \n    Для Каждого Элемент Из Массив Цикл\n        Если Уникальные[Элемент] = Неопределено Тогда\n            Результат.Добавить(Элемент);\n            Уникальные[Элемент] = Истина;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "adbd6ab977c68c629bfff02d9be1ee58d5995619b2e09622f39a4f2a4abb7ca0",
+          "tokens_input": 246,
+          "tokens_output": 899,
+          "tokens_total": 1145,
+          "elapsed_time": 6.641905307769775,
+          "cost_input": 0.0005781,
+          "cost_output": 0.00423429,
+          "cost_total": 0.00481239,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "adbd6ab977c68c629bfff02d9be1ee58d5995619b2e09622f39a4f2a4abb7ca0",
+        "most_common_count": 1,
+        "hashes": [
+          "adbd6ab977c68c629bfff02d9be1ee58d5995619b2e09622f39a4f2a4abb7ca0"
+        ]
+      },
+      "total_tokens": 1145,
+      "total_cost": 0.00481239,
+      "avg_time": 6.642
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УникальныеЭлементы(Массив)\n НовыйМассив = Новый Массив;\n Увиденные = Новый Соответствие;\n Для Каждого Элемент Из Массив Цикл\n Если Увиденные[Элемент] = Неопределено Тогда\n НовыйМассив.Добавить(Элемент);\n Увиденные.Вставить(Элемент, Истина);\n КонецЕсли;\n КонецЦикла;\n Возврат НовыйМассив;\nКонецФункции",
+          "response_hash": "cd4389b0c4905c5c7bd24d010f2d6960994e22f1c7ba1f690aac584092c45f69",
+          "tokens_input": 252,
+          "tokens_output": 492,
+          "tokens_total": 744,
+          "elapsed_time": 4.949890613555908,
+          "cost_input": 0.00074088,
+          "cost_output": 0.00289296,
+          "cost_total": 0.00363384,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cd4389b0c4905c5c7bd24d010f2d6960994e22f1c7ba1f690aac584092c45f69",
+        "most_common_count": 1,
+        "hashes": [
+          "cd4389b0c4905c5c7bd24d010f2d6960994e22f1c7ba1f690aac584092c45f69"
+        ]
+      },
+      "total_tokens": 744,
+      "total_cost": 0.00363384,
+      "avg_time": 4.95
+    },
+    {
       "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "aliceai-llm/latest",
@@ -2659,6 +2902,126 @@
       "total_tokens": 2742,
       "total_cost": 0.007004489999999999,
       "avg_time": 37.31
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИнтервалы(ВхМассив) Экспорт\n\t\n\tЕсли ВхМассив.Количество() = 0 Тогда\n\t\tВозврат Новый Массив;\n\tКонецЕсли;\n\t\n\t// Копирование и сортировка пузырьком по возрастанию начала интервала\n\tОтсортированные = Новый Массив;\n\tДля Каждого Элем Из ВхМассив Цикл\n\t\tОтсортированные.Добавить(Элем);\n\tКонецЦикла;\n\t\n\tДля i = 0 По Отсортированные.Количество() - 2 Цикл\n\t\tДля j = 0 По Отсортированные.Количество() - 2 - i Цикл\n\t\t\tЕсли Отсортированные[j][0] > Отсортированные[j + 1][0] Тогда\n\t\t\t\tВрем = Отсортированные[j];\n\t\t\t\tОтсортированные[j] = Отсортированные[j + 1];\n\t\t\t\tОтсортированные[j + 1] = Врем;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЦикла;\n\t\n\t// Слияние пересекающихся и соприкасающихся интервалов\n\tРезультат = Новый Массив;\n\tТекущий = Новый Массив;\n\tТекущий.Добавить(Отсортированные[0][0]);\n\tТекущий.Добавить(Отсортированные[0][1]);\n\t\n\tДля k = 1 По Отсортированные.Количество() - 1 Цикл\n\t\tЭлем = Отсортированные[k];\n\t\tЕсли Элем[0] <= Текущий[1] Тогда\n\t\t\tЕсли Элем[1] > Текущий[1] Тогда\n\t\t\t\tТекущий[1] = Элем[1];\n\t\t\tКонецЕсли;\n\t\tИначе\n\t\t\tРезультат.Добавить(Текущий);\n\t\t\tТекущий = Новый Массив;\n\t\t\tТекущий.Добавить(Элем[0]);\n\t\t\tТекущий.Добавить(Элем[1]);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(Текущий);\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "27ad9544668821fc067914441b0e80ab2b35c6539de8fbeddd060855c85aee74",
+          "tokens_input": 200,
+          "tokens_output": 1531,
+          "tokens_total": 1731,
+          "elapsed_time": 28.96900224685669,
+          "cost_input": 0.000188,
+          "cost_output": 0.00575656,
+          "cost_total": 0.00594456,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "27ad9544668821fc067914441b0e80ab2b35c6539de8fbeddd060855c85aee74",
+        "most_common_count": 1,
+        "hashes": [
+          "27ad9544668821fc067914441b0e80ab2b35c6539de8fbeddd060855c85aee74"
+        ]
+      },
+      "total_tokens": 1731,
+      "total_cost": 0.00594456,
+      "avg_time": 28.969
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СлитьИнтервалы(ИсходныеИнтервалы) Экспорт\n    Если ИсходныеИнтервалы.Количество() = 0 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n    \n    Таблица = Новый ТаблицаЗначений;\n    Таблица.Колонки.Добавить(\"Начало\");\n    Таблица.Колонки.Добавить(\"Конец\");\n    \n    Для Каждого Интервал Из ИсходныеИнтервалы Цикл\n        НоваяСтрока = Таблица.Добавить();\n        НоваяСтрока.Начало = Интервал[0];\n        НоваяСтрока.Конец = Интервал[1];\n    КонецЦикла;\n    \n    Таблица.Сортировать(\"Начало\");\n    \n    Результат = Новый Массив;\n    ТекущийНачало = Таблица[0].Начало;\n    ТекущийКонец = Таблица[0].Конец;\n    \n    Для Индекс = 1 По Таблица.Количество() - 1 Цикл\n        Строка = Таблица[Индекс];\n        Если Строка.Начало <= ТекущийКонец Тогда\n            ТекущийКонец = Макс(ТекущийКонец, Строка.Конец);\n        Иначе\n            НовыйИнтервал = Новый Массив;\n            НовыйИнтервал.Добавить(ТекущийНачало);\n            НовыйИнтервал.Добавить(ТекущийКонец);\n            Результат.Добавить(НовыйИнтервал);\n            \n            ТекущийНачало = Строка.Начало;\n            ТекущийКонец = Строка.Конец;\n        КонецЕсли;\n    КонецЦикла;\n    \n    НовыйИнтервал = Новый Массив;\n    НовыйИнтервал.Добавить(ТекущийНачало);\n    НовыйИнтервал.Добавить(ТекущийКонец);\n    Результат.Добавить(НовыйИнтервал);\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "c4457fc182e02e9c6018ef2f842bbd1999dffb1f4311e2e63098b148f5d9c267",
+          "tokens_input": 312,
+          "tokens_output": 2092,
+          "tokens_total": 2404,
+          "elapsed_time": 15.132975339889526,
+          "cost_input": 0.0007332,
+          "cost_output": 0.00985332,
+          "cost_total": 0.01058652,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c4457fc182e02e9c6018ef2f842bbd1999dffb1f4311e2e63098b148f5d9c267",
+        "most_common_count": 1,
+        "hashes": [
+          "c4457fc182e02e9c6018ef2f842bbd1999dffb1f4311e2e63098b148f5d9c267"
+        ]
+      },
+      "total_tokens": 2404,
+      "total_cost": 0.01058652,
+      "avg_time": 15.133
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СлитьИнтервалы(Интервалы) Экспорт\n Если Интервалы.Количество() = 0 Тогда\n Возврат Новый Массив;\n КонецЕсли;\n Сортированные = Новый Массив;\n Для Каждого Инт Из Интервалы Цикл\n Сортированные.Добавить(Новый Массив(Инт[0], Инт[1]));\n КонецЦикла;\n Для ИИ = 0 По Сортированные.Количество() - 2 Цикл\n Для ЙЙ = ИИ + 1 По Сортированные.Количество() - 1 Цикл\n Если Сортированные[ЙЙ][0] < Сортированные[ИИ][0] Тогда\n Врем = Сортированные[ИИ];\n Сортированные[ИИ] = Сортированные[ЙЙ];\n Сортированные[ЙЙ] = Врем;\n КонецЕсли;\n КонецЦикла;\n КонецЦикла;\n Результат = Новый Массив;\n Текущий = Сортированные[0];\n Для ИИ = 1 По Сортированные.Количество() - 1 Цикл\n Если Сортированные[ИИ][0] <= Текущий[1] Тогда\n Текущий[1] = Макс(Текущий[1], Сортированные[ИИ][1]);\n Иначе\n Результат.Добавить(Текущий);\n Текущий = Сортированные[ИИ];\n КонецЕсли;\n КонецЦикла;\n Результат.Добавить(Текущий);\n Возврат Результат;\nКонецФункции",
+          "response_hash": "b219c2f736891daac8c7dc7956814773543d7531cbc0c83babae82e4b3b99def",
+          "tokens_input": 318,
+          "tokens_output": 878,
+          "tokens_total": 1196,
+          "elapsed_time": 6.980641603469849,
+          "cost_input": 0.0009349199999999999,
+          "cost_output": 0.00516264,
+          "cost_total": 0.006097559999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b219c2f736891daac8c7dc7956814773543d7531cbc0c83babae82e4b3b99def",
+        "most_common_count": 1,
+        "hashes": [
+          "b219c2f736891daac8c7dc7956814773543d7531cbc0c83babae82e4b3b99def"
+        ]
+      },
+      "total_tokens": 1196,
+      "total_cost": 0.006097559999999999,
+      "avg_time": 6.981
     },
     {
       "task_id": "A4",
@@ -3541,6 +3904,126 @@
       "avg_time": 28.296
     },
     {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция СкользящееСреднее(МассивЧисел, Окно) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tДлина = МассивЧисел.Количество();\n\t\n\tЕсли Окно < 1 ИЛИ Окно > Длина Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tСуммаОкна = 0;\n\t\n\tДля Инд = 1 По Окно Цикл\n\t\tСуммаОкна = СуммаОкна + МассивЧисел[Инд];\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(СуммаОкна / Окно);\n\t\n\tДля Инд = Окно + 1 По Длина Цикл\n\t\tСуммаОкна = СуммаОкна + МассивЧисел[Инд] - МассивЧисел[Инд - Окно];\n\t\tРезультат.Добавить(СуммаОкна / Окно);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "2e7b862d2d29cf93cb2b572162d934f50f1c424839dc9914cdf816c2e2a32fe8",
+          "tokens_input": 163,
+          "tokens_output": 432,
+          "tokens_total": 595,
+          "elapsed_time": 9.30866265296936,
+          "cost_input": 0.00015322,
+          "cost_output": 0.0016243199999999998,
+          "cost_total": 0.0017775399999999998,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2e7b862d2d29cf93cb2b572162d934f50f1c424839dc9914cdf816c2e2a32fe8",
+        "most_common_count": 1,
+        "hashes": [
+          "2e7b862d2d29cf93cb2b572162d934f50f1c424839dc9914cdf816c2e2a32fe8"
+        ]
+      },
+      "total_tokens": 595,
+      "total_cost": 0.0017775399999999998,
+      "avg_time": 9.309
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьСкользящиеСредние(МассивЧисел, РазмерОкна) Экспорт\n    Если РазмерОкна < 1 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n    \n    Количество = МассивЧисел.Количество();\n    Если РазмерОкна > Количество Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n    \n    Результат = Новый Массив(Количество - РазмерОкна + 1);\n    \n    Для Индекс = 0 По Количество - РазмерОкна Цикл\n        Сумма = 0;\n        Для Смещение = 0 По РазмерОкна - 1 Цикл\n            Сумма = Сумма + МассивЧисел[Индекс + Смещение];\n        КонецЦикла;\n        Результат[Индекс] = Сумма / РазмерОкна;\n    КонецЦикла;\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "c5f53e0fb1d0775e14e51be666095eb03e15bff355a639784c13e3073075adac",
+          "tokens_input": 276,
+          "tokens_output": 1676,
+          "tokens_total": 1952,
+          "elapsed_time": 14.043872833251953,
+          "cost_input": 0.0006486,
+          "cost_output": 0.00789396,
+          "cost_total": 0.008542560000000001,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c5f53e0fb1d0775e14e51be666095eb03e15bff355a639784c13e3073075adac",
+        "most_common_count": 1,
+        "hashes": [
+          "c5f53e0fb1d0775e14e51be666095eb03e15bff355a639784c13e3073075adac"
+        ]
+      },
+      "total_tokens": 1952,
+      "total_cost": 0.008542560000000001,
+      "avg_time": 14.044
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СкользящиеСредние(МассивЧисел, РазмерОкна)\nЕсли РазмерОкна < 1 Тогда\nВозврат Новый Массив;\nКонецЕсли;\nДлина = МассивЧисел.Количество();\nЕсли РазмерОкна > Длина Тогда\nВозврат Новый Массив;\nКонецЕсли;\nРезультат = Новый Массив;\nСумма = 0;\nДля Инд = 0 По РазмерОкна - 1 Цикл\nСумма = Сумма + МассивЧисел[Инд];\nКонецЦикла;\nРезультат.Добавить(Сумма / РазмерОкна);\nДля Инд = РазмерОкна По Длина - 1 Цикл\nСумма = Сумма - МассивЧисел[Инд - РазмерОкна] + МассивЧисел[Инд];\nРезультат.Добавить(Сумма / РазмерОкна);\nКонецЦикла;\nВозврат Результат;\nКонецФункции",
+          "response_hash": "1dbed63f92642ead6118617ba0a460a2bd7ad993659ff86b8640dac03f688e30",
+          "tokens_input": 282,
+          "tokens_output": 659,
+          "tokens_total": 941,
+          "elapsed_time": 5.795377492904663,
+          "cost_input": 0.00082908,
+          "cost_output": 0.0038749199999999996,
+          "cost_total": 0.004704,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1dbed63f92642ead6118617ba0a460a2bd7ad993659ff86b8640dac03f688e30",
+        "most_common_count": 1,
+        "hashes": [
+          "1dbed63f92642ead6118617ba0a460a2bd7ad993659ff86b8640dac03f688e30"
+        ]
+      },
+      "total_tokens": 941,
+      "total_cost": 0.004704,
+      "avg_time": 5.795
+    },
+    {
       "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "aliceai-llm/latest",
@@ -4410,6 +4893,126 @@
       "total_tokens": 4327,
       "total_cost": 0.0114974,
       "avg_time": 30.577
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПодсчитатьСлова(Текст)\n\t\n\tРезультат = Новый Структура;\n\t\n\tЕсли ПустаяСтрока(Текст) Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Заменяем знаки препинания на пробелы\n\tЗнакиПрепинания = \",.!?:;\"\"'()[]{}«»—–-\";\n\tОчищенныйТекст = Текст;\n\t\n\tДля Каждого Символ Из ЗнакиПрепинания Цикл\n\t\tОчищенныйТекст = СтрЗаменить(ОчищенныйТекст, Символ, \" \");\n\tКонецЦикла;\n\t\n\t// Разбиваем текст на слова\n\tМассивСлов = СтрРазделить(ОчищенныйТекст, \" \", Ложь);\n\t\n\t// Подсчитываем каждое слово\n\tДля Каждого Слово Из МассивСлов Цикл\n\t\t\n\t\tЕсли ПустаяСтрока(Слово) Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\t\t\n\t\tСловоНижнийРегистр = НРег(Слово);\n\t\t\n\t\tЕсли Результат.Свойство(СловоНижнийРегистр) Тогда\n\t\t\tРезультат.Вставить(СловоНижнийРегистр, Результат[СловоНижнийРегистр] + 1);\n\t\tИначе\n\t\t\tРезультат.Вставить(СловоНижнийРегистр, 1);\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "3d55b7086ae34a4d1dffc755226e9c0a69274977173c21d32d2c60fbd76faa65",
+          "tokens_input": 156,
+          "tokens_output": 731,
+          "tokens_total": 887,
+          "elapsed_time": 14.646303176879883,
+          "cost_input": 0.00014664,
+          "cost_output": 0.0027485599999999997,
+          "cost_total": 0.0028951999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3d55b7086ae34a4d1dffc755226e9c0a69274977173c21d32d2c60fbd76faa65",
+        "most_common_count": 1,
+        "hashes": [
+          "3d55b7086ae34a4d1dffc755226e9c0a69274977173c21d32d2c60fbd76faa65"
+        ]
+      },
+      "total_tokens": 887,
+      "total_cost": 0.0028951999999999997,
+      "avg_time": 14.646
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьЧастотуСлов(Знач Текст) Экспорт\n\tТекст = НРег(Текст);\n\tПунктуация = \".,;:!?()[]{}\"\"'«»—–-\";\n\tДля Номер = 1 По СтрДлина(Пунктуация) Цикл\n\t\tСимвол = Сред(Пунктуация, Номер, 1);\n\t\tТекст = СтрЗаменить(Текст, Символ, \" \");\n\tКонецЦикла;\n\tМассивСлов = СтрРазделить(Текст, \" \", Истина);\n\tРезультат = Новый Структура;\n\tДля Каждого Слово Из МассивСлов Цикл\n\t\tЕсли ПустаяСтрока(Слово) Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\t\tЕсли Результат.Свойство(Слово) Тогда\n\t\t\tРезультат[Слово] = Результат[Слово] + 1;\n\t\tИначе\n\t\t\tРезультат[Слово] = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "cad7c375b00add67632e22921b6dae91b5d7bce39c82729058e9c930aa052911",
+          "tokens_input": 271,
+          "tokens_output": 3156,
+          "tokens_total": 3427,
+          "elapsed_time": 21.980597972869873,
+          "cost_input": 0.00063685,
+          "cost_output": 0.01486476,
+          "cost_total": 0.015501609999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cad7c375b00add67632e22921b6dae91b5d7bce39c82729058e9c930aa052911",
+        "most_common_count": 1,
+        "hashes": [
+          "cad7c375b00add67632e22921b6dae91b5d7bce39c82729058e9c930aa052911"
+        ]
+      },
+      "total_tokens": 3427,
+      "total_cost": 0.015501609999999999,
+      "avg_time": 21.981
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьЧастотуСлов(Текст) Экспорт\n Стр = НРег(Текст);\n Результат = Новый Структура;\n ТекСлово = \"\";\n Для П = 1 По СтрДлина(Стр) Цикл\n Сим = Сред(Стр, П, 1);\n Код = КодСимвола(Сим);\n Если (Код >= 1040 И Код <= 1103) Или (Код >= 65 И Код <= 90) Или (Код >= 97 И Код <= 122) Тогда\n ТекСлово = ТекСлово + Сим;\n Иначе\n Если Не ПустаяСтрока(ТекСлово) Тогда\n Если Результат.Свойство(ТекСлово) Тогда\n Результат[ТекСлово] = Результат[ТекСлово] + 1;\n Иначе\n Результат.Вставить(ТекСлово, 1);\n КонецЕсли;\n ТекСлово = \"\";\n КонецЕсли;\n КонецЕсли;\n КонецЦикла;\n Если Не ПустаяСтрока(ТекСлово) Тогда\n Если Результат.Свойство(ТекСлово) Тогда\n Результат[ТекСлово] = Результат[ТекСлово] + 1;\n Иначе\n Результат.Вставить(ТекСлово, 1);\n КонецЕсли;\n КонецЕсли;\n Возврат Результат;\nКонецФункции",
+          "response_hash": "2b39a15b2ecae3b04345f298eaa959a7a5ba702caa285db3081fded9c5123f8b",
+          "tokens_input": 277,
+          "tokens_output": 1185,
+          "tokens_total": 1462,
+          "elapsed_time": 10.34162163734436,
+          "cost_input": 0.00081438,
+          "cost_output": 0.0069678000000000006,
+          "cost_total": 0.0077821800000000005,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2b39a15b2ecae3b04345f298eaa959a7a5ba702caa285db3081fded9c5123f8b",
+        "most_common_count": 1,
+        "hashes": [
+          "2b39a15b2ecae3b04345f298eaa959a7a5ba702caa285db3081fded9c5123f8b"
+        ]
+      },
+      "total_tokens": 1462,
+      "total_cost": 0.0077821800000000005,
+      "avg_time": 10.342
     },
     {
       "task_id": "A6",
@@ -5283,6 +5886,126 @@
       "avg_time": 19.369
     },
     {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(Строка1, Строка2)\n\t\n\tм = СтрДлина(Строка1);\n\tн = СтрДлина(Строка2);\n\t\n\tЕсли м = 0 Тогда\n\t\tВозврат н;\n\tКонецЕсли;\n\t\n\tЕсли н = 0 Тогда\n\t\tВозврат м;\n\tКонецЕсли;\n\t\n\tПредыдущаяСтрока = Новый Массив(н + 1);\n\tТекущаяСтрока = Новый Массив(н + 1);\n\t\n\tДля j = 0 По н Цикл\n\t\tПредыдущаяСтрока[j] = j;\n\tКонецЦикла;\n\t\n\tДля i = 1 По м Цикл\n\t\tТекущаяСтрока[0] = i;\n\t\tСимвол1 = Сред(Строка1, i, 1);\n\t\t\n\t\tДля j = 1 По н Цикл\n\t\t\tСимвол2 = Сред(Строка2, j, 1);\n\t\t\t\n\t\t\tЕсли Символ1 = Символ2 Тогда\n\t\t\t\tСтоимость = 0;\n\t\t\tИначе\n\t\t\t\tСтоимость = 1;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tУдаление = ПредыдущаяСтрока[j] + 1;\n\t\t\tВставка = ТекущаяСтрока[j - 1] + 1;\n\t\t\tЗамена = ПредыдущаяСтрока[j - 1] + Стоимость;\n\t\t\t\n\t\t\tМинимум = Удаление;\n\t\t\tЕсли Вставка < Минимум Тогда\n\t\t\t\tМинимум = Вставка;\n\t\t\tКонецЕсли;\n\t\t\tЕсли Замена < Минимум Тогда\n\t\t\t\tМинимум = Замена;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tТекущаяСтрока[j] = Минимум;\n\t\tКонецЦикла;\n\t\t\n\t\tВременная = ПредыдущаяСтрока;\n\t\tПредыдущаяСтрока = ТекущаяСтрока;\n\t\tТекущаяСтрока = Временная;\n\tКонецЦикла;\n\t\n\tВозврат ПредыдущаяСтрока[н];\n\t\nКонецФункции",
+          "response_hash": "2fba76d1410b666a5fe4a914b44e985e0a86fca0406e8d4ce1b6c53ca3bdfa34",
+          "tokens_input": 130,
+          "tokens_output": 3570,
+          "tokens_total": 3700,
+          "elapsed_time": 65.85101366043091,
+          "cost_input": 0.0001222,
+          "cost_output": 0.013423199999999998,
+          "cost_total": 0.013545399999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2fba76d1410b666a5fe4a914b44e985e0a86fca0406e8d4ce1b6c53ca3bdfa34",
+        "most_common_count": 1,
+        "hashes": [
+          "2fba76d1410b666a5fe4a914b44e985e0a86fca0406e8d4ce1b6c53ca3bdfa34"
+        ]
+      },
+      "total_tokens": 3700,
+      "total_cost": 0.013545399999999997,
+      "avg_time": 65.851
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(Строка1, Строка2) Экспорт\n    Длина1 = СтрДлина(Строка1);\n    Длина2 = СтрДлина(Строка2);\n    \n    Если Длина1 = 0 Тогда\n        Возврат Длина2;\n    КонецЕсли;\n    \n    Если Длина2 = 0 Тогда\n        Возврат Длина1;\n    КонецЕсли;\n    \n    Матрица = Новый Массив(Длина1 + 1);\n    Для Индекс = 0 По Длина1 Цикл\n        Матрица[Индекс] = Новый Массив(Длина2 + 1);\n    КонецЦикла;\n    \n    Для Индекс = 0 По Длина1 Цикл\n        Матрица[Индекс][0] = Индекс;\n    КонецЦикла;\n    \n    Для Индекс = 0 По Длина2 Цикл\n        Матрица[0][Индекс] = Индекс;\n    КонецЦикла;\n    \n    Для И = 1 По Длина1 Цикл\n        Для Й = 1 По Длина2 Цикл\n            Если Сред(Строка1, И, 1) = Сред(Строка2, Й, 1) Тогда\n                Матрица[И][Й] = Матрица[И - 1][Й - 1];\n            Иначе\n                Матрица[И][Й] = 1 + Мин(Матрица[И - 1][Й], Матрица[И][Й - 1], Матрица[И - 1][Й - 1]);\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n    \n    Возврат Матрица[Длина1][Длина2];\nКонецФункции",
+          "response_hash": "4aac88023105dd612a4f17c6854241fd01f35e730c04fce1f2a79f2f3d1090fb",
+          "tokens_input": 247,
+          "tokens_output": 1571,
+          "tokens_total": 1818,
+          "elapsed_time": 11.059062719345093,
+          "cost_input": 0.00058045,
+          "cost_output": 0.0073994099999999995,
+          "cost_total": 0.00797986,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4aac88023105dd612a4f17c6854241fd01f35e730c04fce1f2a79f2f3d1090fb",
+        "most_common_count": 1,
+        "hashes": [
+          "4aac88023105dd612a4f17c6854241fd01f35e730c04fce1f2a79f2f3d1090fb"
+        ]
+      },
+      "total_tokens": 1818,
+      "total_cost": 0.00797986,
+      "avg_time": 11.059
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(С1, С2)\n\tД1 = СтрДлина(С1);\n\tД2 = СтрДлина(С2);\n\tЕсли Д1 = 0 Тогда\n\t\tВозврат Д2;\n\tКонецЕсли;\n\tЕсли Д2 = 0 Тогда\n\t\tВозврат Д1;\n\tКонецЕсли;\n\tМ = Новый Массив(Д1 + 1);\n\tДля И = 0 По Д1 Цикл\n\t\tМ[И] = Новый Массив(Д2 + 1);\n\tКонецЦикла;\n\tДля И = 0 По Д1 Цикл\n\t\tМ[И][0] = И;\n\tКонецЦикла;\n\tДля И = 0 По Д2 Цикл\n\t\tМ[0][И] = И;\n\tКонецЦикла;\n\tДля И = 1 По Д1 Цикл\n\t\tДля Й = 1 По Д2 Цикл\n\t\t\tЕсли Сред(С1, И, 1) = Сред(С2, Й, 1) Тогда\n\t\t\t\tСтоимость = 0;\n\t\t\tИначе\n\t\t\t\tСтоимость = 1;\n\t\t\tКонецЕсли;\n\t\t\tМ[И][Й] = Мин(М[И - 1][Й] + 1, М[И][Й - 1] + 1, М[И - 1][Й - 1] + Стоимость);\n\t\tКонецЦикла;\n\tКонецЦикла;\n\tВозврат М[Д1][Д2];\nКонецФункции",
+          "response_hash": "9ad6bf32d8d41c83f297f3f8b03338cf90a565410e64373706a817214693a353",
+          "tokens_input": 253,
+          "tokens_output": 1050,
+          "tokens_total": 1303,
+          "elapsed_time": 7.943653583526611,
+          "cost_input": 0.0007438200000000001,
+          "cost_output": 0.006174,
+          "cost_total": 0.00691782,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "9ad6bf32d8d41c83f297f3f8b03338cf90a565410e64373706a817214693a353",
+        "most_common_count": 1,
+        "hashes": [
+          "9ad6bf32d8d41c83f297f3f8b03338cf90a565410e64373706a817214693a353"
+        ]
+      },
+      "total_tokens": 1303,
+      "total_cost": 0.00691782,
+      "avg_time": 7.944
+    },
+    {
       "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "aliceai-llm/latest",
@@ -6154,6 +6877,126 @@
       "avg_time": 3.797
     },
     {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СжатьRLE(ИсходнаяСтрока) Экспорт\n\t\n\tРезультат = \"\";\n\t\n\tЕсли СтрДлина(ИсходнаяСтрока) = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tТекущийСимвол = Сред(ИсходнаяСтрока, 1, 1);\n\tСчетчик = 1;\n\t\n\tДля Инд = 2 По СтрДлина(ИсходнаяСтрока) Цикл\n\t\tСимвол = Сред(ИсходнаяСтрока, Инд, 1);\n\t\tЕсли Символ = ТекущийСимвол Тогда\n\t\t\tСчетчик = Счетчик + 1;\n\t\tИначе\n\t\t\tРезультат = Результат + ТекущийСимвол + Строка(Счетчик);\n\t\t\tТекущийСимвол = Символ;\n\t\t\tСчетчик = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат = Результат + ТекущийСимвол + Строка(Счетчик);\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "876c39d006814192b3bd1f742fa97b37c0993c2263e2f5d0d3c42a7ebf108138",
+          "tokens_input": 178,
+          "tokens_output": 479,
+          "tokens_total": 657,
+          "elapsed_time": 10.168716192245483,
+          "cost_input": 0.00016732,
+          "cost_output": 0.0018010399999999998,
+          "cost_total": 0.0019683599999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "876c39d006814192b3bd1f742fa97b37c0993c2263e2f5d0d3c42a7ebf108138",
+        "most_common_count": 1,
+        "hashes": [
+          "876c39d006814192b3bd1f742fa97b37c0993c2263e2f5d0d3c42a7ebf108138"
+        ]
+      },
+      "total_tokens": 657,
+      "total_cost": 0.0019683599999999997,
+      "avg_time": 10.169
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЗакодироватьRLE(ИсходнаяСтрока) Экспорт\n    Если ПустаяСтрока(ИсходнаяСтрока) Тогда\n        Возврат \"\";\n    КонецЕсли;\n    \n    Результат = \"\";\n    ТекущийСимвол = Сред(ИсходнаяСтрока, 1, 1);\n    Счетчик = 1;\n    \n    Для Позиция = 2 По СтрДлина(ИсходнаяСтрока) Цикл\n        Символ = Сред(ИсходнаяСтрока, Позиция, 1);\n        Если Символ = ТекущийСимвол Тогда\n            Счетчик = Счетчик + 1;\n        Иначе\n            Результат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n            ТекущийСимвол = Символ;\n            Счетчик = 1;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Результат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "5f9c822012693e2c6aacaf54dcec9468e39082713c363aa60413acf89467ca4a",
+          "tokens_input": 288,
+          "tokens_output": 1255,
+          "tokens_total": 1543,
+          "elapsed_time": 8.463147401809692,
+          "cost_input": 0.0006768000000000001,
+          "cost_output": 0.00591105,
+          "cost_total": 0.00658785,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5f9c822012693e2c6aacaf54dcec9468e39082713c363aa60413acf89467ca4a",
+        "most_common_count": 1,
+        "hashes": [
+          "5f9c822012693e2c6aacaf54dcec9468e39082713c363aa60413acf89467ca4a"
+        ]
+      },
+      "total_tokens": 1543,
+      "total_cost": 0.00658785,
+      "avg_time": 8.463
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СжатьRLE(ИсходнаяСтрока) Экспорт\n Если ПустаяСтрока(ИсходнаяСтрока) Тогда\n Возврат \"\";\n КонецЕсли;\n Результат = \"\";\n ТекущийСимвол = Лев(ИсходнаяСтрока, 1);\n Счетчик = 1;\n Для Индекс = 2 По СтрДлина(ИсходнаяСтрока) Цикл\n Символ = Сред(ИсходнаяСтрока, Индекс, 1);\n Если Символ = ТекущийСимвол Тогда\n Счетчик = Счетчик + 1;\n Иначе\n Результат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n ТекущийСимвол = Символ;\n Счетчик = 1;\n КонецЕсли;\n КонецЦикла;\n Результат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n Возврат Результат;\nКонецФункции",
+          "response_hash": "26c39a52404cadf33c740a8082279f19cf5b6c2221cbd4d8e9825fdf6da36347",
+          "tokens_input": 294,
+          "tokens_output": 718,
+          "tokens_total": 1012,
+          "elapsed_time": 6.008116960525513,
+          "cost_input": 0.00086436,
+          "cost_output": 0.00422184,
+          "cost_total": 0.0050862,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "26c39a52404cadf33c740a8082279f19cf5b6c2221cbd4d8e9825fdf6da36347",
+        "most_common_count": 1,
+        "hashes": [
+          "26c39a52404cadf33c740a8082279f19cf5b6c2221cbd4d8e9825fdf6da36347"
+        ]
+      },
+      "total_tokens": 1012,
+      "total_cost": 0.0050862,
+      "avg_time": 6.008
+    },
+    {
       "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "aliceai-llm/latest",
@@ -7023,6 +7866,126 @@
       "total_tokens": 1358,
       "total_cost": 0.00315014,
       "avg_time": 9.954
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция ЭтоАнаграмма(Строка1, Строка2)\n    \n    Строка1 = НРег(Строка1);\n    Строка1 = СтрЗаменить(Строка1, \" \", \"\");\n    \n    Строка2 = НРег(Строка2);\n    Строка2 = СтрЗаменить(Строка2, \" \", \"\");\n    \n    Если СтрДлина(Строка1) <> СтрДлина(Строка2) Тогда\n        Возврат Ложь;\n    КонецЕсли;\n    \n    Массив1 = Новый Массив;\n    Массив2 = Новый Массив;\n    \n    Для i = 1 По СтрДлина(Строка1) Цикл\n        Массив1.Добавить(Сред(Строка1, i, 1));\n    КонецЦикла;\n    \n    Для i = 1 По СтрДлина(Строка2) Цикл\n        Массив2.Добавить(Сред(Строка2, i, 1));\n    КонецЦикла;\n    \n    Массив1.Сортировать();\n    Массив2.Сортировать();\n    \n    Возврат Массив1 = Массив2;\n    \nКонецФункции\n```",
+          "response_hash": "82c26304a9de7335a3d1fb347d895d4fe2389a681d9ec25bc7b2d1d983feaeca",
+          "tokens_input": 146,
+          "tokens_output": 1024,
+          "tokens_total": 1170,
+          "elapsed_time": 19.872296810150146,
+          "cost_input": 0.00013723999999999998,
+          "cost_output": 0.0038502399999999996,
+          "cost_total": 0.00398748,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "82c26304a9de7335a3d1fb347d895d4fe2389a681d9ec25bc7b2d1d983feaeca",
+        "most_common_count": 1,
+        "hashes": [
+          "82c26304a9de7335a3d1fb347d895d4fe2389a681d9ec25bc7b2d1d983feaeca"
+        ]
+      },
+      "total_tokens": 1170,
+      "total_cost": 0.00398748,
+      "avg_time": 19.872
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЭтоАнаграмма(Строка1, Строка2) Экспорт\n    Строка1 = НРег(СтрЗаменить(Строка1, \" \", \"\"));\n    Строка2 = НРег(СтрЗаменить(Строка2, \" \", \"\"));\n    Если СтрДлина(Строка1) <> СтрДлина(Строка2) Тогда\n        Возврат Ложь;\n    КонецЕсли;\n    Частоты = Новый Соответствие;\n    Для Индекс = 1 По СтрДлина(Строка1) Цикл\n        Символ = Сред(Строка1, Индекс, 1);\n        ТекущееЗначение = Частоты[Символ];\n        Если ТекущееЗначение = Неопределено Тогда\n            Частоты.Вставить(Символ, 1);\n        Иначе\n            Частоты.Вставить(Символ, ТекущееЗначение + 1);\n        КонецЕсли;\n    КонецЦикла;\n    Для Индекс = 1 По СтрДлина(Строка2) Цикл\n        Символ = Сред(Строка2, Индекс, 1);\n        ТекущееЗначение = Частоты[Символ];\n        Если ТекущееЗначение = Неопределено Или ТекущееЗначение <= 0 Тогда\n            Возврат Ложь;\n        Иначе\n            Частоты.Вставить(Символ, ТекущееЗначение - 1);\n        КонецЕсли;\n    КонецЦикла;\n    Возврат Истина;\nКонецФункции",
+          "response_hash": "fc59909e5557ff095eaa35a56adead23ff4c6794ba979b2fe4569544b836aca2",
+          "tokens_input": 255,
+          "tokens_output": 3612,
+          "tokens_total": 3867,
+          "elapsed_time": 23.304187536239624,
+          "cost_input": 0.0005992500000000001,
+          "cost_output": 0.01701252,
+          "cost_total": 0.01761177,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "fc59909e5557ff095eaa35a56adead23ff4c6794ba979b2fe4569544b836aca2",
+        "most_common_count": 1,
+        "hashes": [
+          "fc59909e5557ff095eaa35a56adead23ff4c6794ba979b2fe4569544b836aca2"
+        ]
+      },
+      "total_tokens": 3867,
+      "total_cost": 0.01761177,
+      "avg_time": 23.304
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЭтоАнаграмма(Стр1, Стр2)\n Стр1 = НРег(СтрЗаменить(Стр1, \" \", \"\"));\n Стр2 = НРег(СтрЗаменить(Стр2, \" \", \"\"));\n Если СтрДлина(Стр1) <> СтрДлина(Стр2) Тогда\n Возврат Ложь;\n КонецЕсли;\n Мас1 = Новый Массив;\n Для П = 1 По СтрДлина(Стр1) Цикл\n Мас1.Добавить(Сред(Стр1, П, 1));\n КонецЦикла;\n Мас1.Сортировать();\n Мас2 = Новый Массив;\n Для П = 1 По СтрДлина(Стр2) Цикл\n Мас2.Добавить(Сред(Стр2, П, 1));\n КонецЦикла;\n Мас2.Сортировать();\n Для П = 0 По Мас1.Количество() - 1 Цикл\n Если Мас1[П] <> Мас2[П] Тогда\n Возврат Ложь;\n КонецЕсли;\n КонецЦикла;\n Возврат Истина;\nКонецФункции",
+          "response_hash": "bb289607c0085bdb25b6d5f6e3a67e587df307b93250cd8523589550ceee2341",
+          "tokens_input": 261,
+          "tokens_output": 771,
+          "tokens_total": 1032,
+          "elapsed_time": 6.271541595458984,
+          "cost_input": 0.00076734,
+          "cost_output": 0.0045334799999999995,
+          "cost_total": 0.0053008199999999995,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bb289607c0085bdb25b6d5f6e3a67e587df307b93250cd8523589550ceee2341",
+        "most_common_count": 1,
+        "hashes": [
+          "bb289607c0085bdb25b6d5f6e3a67e587df307b93250cd8523589550ceee2341"
+        ]
+      },
+      "total_tokens": 1032,
+      "total_cost": 0.0053008199999999995,
+      "avg_time": 6.272
     },
     {
       "task_id": "A9",
@@ -7903,9 +8866,129 @@
       "total_tokens": 2355,
       "total_cost": 0.0060460800000000006,
       "avg_time": 35.314
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПростыеЧисла(Граница) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Создаём массив-решето: индекс = число, значение = Истина (простое)\n\tРешето = Новый Массив;\n\tДля к = 0 По Граница Цикл\n\t\tРешето.Добавить(Истина);\n\tКонецЦикла;\n\t\n\tРешето[0] = Ложь;\n\tРешето[1] = Ложь;\n\t\n\t// Решето Эратосфена\n\tВерх = Цел(Корень(Граница));\n\tДля i = 2 По Верх Цикл\n\t\tЕсли Решето[i] = Истина Тогда\n\t\t\tj = i * i;\n\t\t\tПока j <= Граница Цикл\n\t\t\t\tРешето[j] = Ложь;\n\t\t\t\tj = j + i;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\t// Собираем простые числа\n\tДля к = 2 По Граница Цикл\n\t\tЕсли Решето[к] = Истина Тогда\n\t\t\tРезультат.Добавить(к);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "677d38c5cfb4b9cdf3ae2f752c862c37e2c9ce6cfc33f4529e7655b27f1773cb",
+          "tokens_input": 149,
+          "tokens_output": 536,
+          "tokens_total": 685,
+          "elapsed_time": 11.121484518051147,
+          "cost_input": 0.00014005999999999998,
+          "cost_output": 0.00201536,
+          "cost_total": 0.00215542,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "677d38c5cfb4b9cdf3ae2f752c862c37e2c9ce6cfc33f4529e7655b27f1773cb",
+        "most_common_count": 1,
+        "hashes": [
+          "677d38c5cfb4b9cdf3ae2f752c862c37e2c9ce6cfc33f4529e7655b27f1773cb"
+        ]
+      },
+      "total_tokens": 685,
+      "total_cost": 0.00215542,
+      "avg_time": 11.121
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "grok-build-0.1",
+      "model_name": "Grok Build 0.1",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьПростыеЧисла(Граница) Экспорт\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Новый Массив;\n\tКонецЕсли;\n\t\n\tСито = Новый Массив(Граница + 1);\n\tДля Индекс = 0 По Граница Цикл\n\t\tСито[Индекс] = Истина;\n\tКонецЦикла;\n\t\n\tСито[0] = Ложь;\n\tСито[1] = Ложь;\n\t\n\tВерхняяГраница = Цел(Sqrt(Граница));\n\tДля i = 2 По ВерхняяГраница Цикл\n\t\tЕсли Сито[i] Тогда\n\t\t\tj = i * i;\n\t\t\tПока j <= Граница Цикл\n\t\t\t\tСито[j] = Ложь;\n\t\t\t\tj = j + i;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат = Новый Массив;\n\tДля i = 2 По Граница Цикл\n\t\tЕсли Сито[i] Тогда\n\t\t\tРезультат.Добавить(i);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "1dd5f42f82153d4e41b14df3456c16ffbc7975a02618eca635d15dfbac1aa48e",
+          "tokens_input": 262,
+          "tokens_output": 2574,
+          "tokens_total": 2836,
+          "elapsed_time": 14.27268934249878,
+          "cost_input": 0.0006157000000000001,
+          "cost_output": 0.012123539999999999,
+          "cost_total": 0.012739239999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1dd5f42f82153d4e41b14df3456c16ffbc7975a02618eca635d15dfbac1aa48e",
+        "most_common_count": 1,
+        "hashes": [
+          "1dd5f42f82153d4e41b14df3456c16ffbc7975a02618eca635d15dfbac1aa48e"
+        ]
+      },
+      "total_tokens": 2836,
+      "total_cost": 0.012739239999999999,
+      "avg_time": 14.273
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "grok-4.3",
+      "model_name": "Grok 4.3",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьПростыеЧисла(Граница) Экспорт\nЕсли Граница < 2 Тогда\nВозврат Новый Массив;\nКонецЕсли;\nСито = Новый Массив(Граница + 1);\nДля Инд = 0 По Граница Цикл\nСито[Инд] = Истина;\nКонецЦикла;\nСито[0] = Ложь;\nСито[1] = Ложь;\nДля П = 2 По Граница Цикл\nЕсли Сито[П] Тогда\nМнож = П * П;\nПока Множ <= Граница Цикл\nСито[Множ] = Ложь;\nМнож = Множ + П;\nКонецЦикла;\nКонецЕсли;\nКонецЦикла;\nРезультат = Новый Массив;\nДля Ч = 2 По Граница Цикл\nЕсли Сито[Ч] Тогда\nРезультат.Добавить(Ч);\nКонецЕсли;\nКонецЦикла;\nВозврат Результат;\nКонецФункции",
+          "response_hash": "087e82d9939663f27d9add5091b1066b4b017ab4e84636722ce0dec7a38e48fb",
+          "tokens_input": 268,
+          "tokens_output": 965,
+          "tokens_total": 1233,
+          "elapsed_time": 9.600507736206055,
+          "cost_input": 0.00078792,
+          "cost_output": 0.0056742,
+          "cost_total": 0.00646212,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "087e82d9939663f27d9add5091b1066b4b017ab4e84636722ce0dec7a38e48fb",
+        "most_common_count": 1,
+        "hashes": [
+          "087e82d9939663f27d9add5091b1066b4b017ab4e84636722ce0dec7a38e48fb"
+        ]
+      },
+      "total_tokens": 1233,
+      "total_cost": 0.00646212,
+      "avg_time": 9.601
     }
   ],
-  "total_tokens": 219304,
-  "total_cost": 1.8175799199999996,
+  "total_tokens": 261073,
+  "total_cost": 1.9992204699999994,
   "total_time": 0.0
 }
