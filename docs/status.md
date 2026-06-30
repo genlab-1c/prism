@@ -51,9 +51,10 @@ description: "Что в бенчмарке PRISM уже работает: авт
 <!-- prism:status:lb -->
 | Модель | Q · категория A | Q · категория B |
 |---|:---:|:---:|
-| **Gemini 3.5 Flash** | **9.78** | **9.30** |
-| Gemini 3.1 Pro | 9.78 | 4.98 |
+| **Gemini 3.1 Pro** | **9.78** | **4.98** |
+| Gemini 3.5 Flash | 9.78 | 9.30 |
 | GPT-5.5 | 9.00 | 8.59 |
+| MiMo-V2.5 | 7.87 | 8.75 |
 | DeepSeek V4-Flash | 7.82 | 6.23 |
 | Claude Opus 4.8 | 7.22 | 7.52 |
 | Alice AI LLM Flash | 6.86 | 4.60 |
