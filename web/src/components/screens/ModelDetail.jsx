@@ -5,12 +5,15 @@
 import React from 'react';
 import { Icon } from '../chrome/Chrome.jsx';
 import { Avatar } from '../core/Avatar.jsx';
+import { VendorLogo } from '../prism/VendorLogo.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Button } from '../core/Button.jsx';
 import { Tag } from '../core/Tag.jsx';
 import { ScoreBar } from '../prism/ScoreBar.jsx';
 import { ScoreVector } from '../prism/ScoreVector.jsx';
 import { QScore } from '../prism/QScore.jsx';
+import { NarrativeCard, ShareBar } from '../prism/NarrativeCard.jsx';
+import { fmtRub } from '../../lib/insights.js';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -62,7 +65,7 @@ function TaskItem({ t, active, onClick }) {
 
 const fmtTokens = (n) => (n == null ? '—' : n < 1000 ? `${n}` : `${(n / 1000).toFixed(1)}k`);
 const fmtTime = (t) => (t == null ? '—' : `${t.toFixed(1)}с`);
-const fmtCost = (c) => (c == null ? '—' : c < 0.0005 ? '<$0.001' : `$${c.toFixed(c < 1 ? 3 : 2)}`);
+const fmtCost = fmtRub; // стоимость показываем в рублях
 const Sep = () => <span style={{ color: 'var(--line)' }}>·</span>;
 
 /* ---------- вьюер метаданных синтетической базы 1С ---------- */
@@ -258,32 +261,60 @@ function CodePane({ task, info = {} }) {
   );
 }
 
-function GenerationsBrowser({ modelId }) {
+// лёгкий загрузчик файла генераций модели (кэш в рамках жизни компонента)
+function useGen(id) {
   const [gen, setGen] = React.useState(null);
+  const [err, setErr] = React.useState(false);
+  React.useEffect(() => {
+    if (!id) { setGen(null); setErr(false); return; }
+    let alive = true; setGen(null); setErr(false);
+    fetch(`${BASE}data/gen/${id}.json`).then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((g) => { if (alive) setGen(g); }).catch(() => { if (alive) setErr(true); });
+    return () => { alive = false; };
+  }, [id]);
+  return [gen, err];
+}
+
+// шапка колонки сравнения: какая модель + кнопка убрать
+function PaneHead({ name, vendor, onClose }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+      <VendorLogo vendor={vendor} name={name} size={26} />
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--ink-100)', flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
+      {onClose && <button onClick={onClose} title="убрать сравнение" style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 16, lineHeight: 1, padding: 2 }}>×</button>}
+    </div>
+  );
+}
+
+function GenerationsBrowser({ modelId, modelName, models = [] }) {
   const [info, setInfo] = React.useState({});
   const [sel, setSel] = React.useState(null);
-  const [err, setErr] = React.useState(false);
+  const [cmpId, setCmpId] = React.useState('');
+  const [gen, err] = useGen(modelId);
+  const [genB, errB] = useGen(cmpId || null);
 
   React.useEffect(() => {
     let alive = true;
-    setGen(null); setErr(false);
-    Promise.all([
-      fetch(`${BASE}data/gen/${modelId}.json`).then((r) => (r.ok ? r.json() : Promise.reject())),
-      fetch(`${BASE}data/tasks.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({})),
-    ])
-      .then(([g, ti]) => { if (alive) { setGen(g); setInfo(ti); setSel(g.tasks[0]?.taskId ?? null); } })
-      .catch(() => { if (alive) setErr(true); });
+    fetch(`${BASE}data/tasks.json`).then((r) => (r.ok ? r.json() : {})).catch(() => ({}))
+      .then((ti) => { if (alive) setInfo(ti); });
     return () => { alive = false; };
-  }, [modelId]);
+  }, []);
+  React.useEffect(() => { if (gen && sel == null) setSel(gen.tasks[0]?.taskId ?? null); }, [gen]);
 
   if (err) return <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>генерации не найдены.</p>;
   if (!gen) return <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>загрузка генераций…</p>;
 
   const groups = [['A', 'категория A · алгоритмика'], ['B', 'категория B · платформа 1С']];
   const current = gen.tasks.find((t) => t.taskId === sel);
+  const currentB = genB?.tasks.find((t) => t.taskId === sel);
+  const cmpModel = models.find((x) => x.id === cmpId);
+  const meVendor = models.find((x) => x.id === modelId)?.vendor;
+  const others = models.filter((x) => x.id !== modelId);
+
+  const selectStyle = { background: 'var(--surface-sunken)', color: 'var(--ink-200)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', padding: '6px 10px', fontFamily: 'var(--font-mono)', fontSize: 12.5, cursor: 'pointer' };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(240px, 320px) 1fr', gap: 20, alignItems: 'start' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px, 300px) 1fr', gap: 20, alignItems: 'start' }}>
       <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowY: 'auto', overflowX: 'hidden', position: 'sticky', top: 76, maxHeight: 'calc(100vh - 96px)' }}>
         {groups.map(([cat, label]) => {
           const items = gen.tasks.filter((t) => t.category === cat);
@@ -296,14 +327,47 @@ function GenerationsBrowser({ modelId }) {
           );
         })}
       </div>
-      {current && <CodePane key={current.taskId} task={current} info={info[current.taskId] || {}} />}
+
+      <div style={{ minWidth: 0 }}>
+        {/* выбор второй модели для сравнения бок-о-бок */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>сравнить с</span>
+          <select value={cmpId} onChange={(e) => setCmpId(e.target.value)} style={selectStyle}>
+            <option value="">— одна модель —</option>
+            {others.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
+          </select>
+          {cmpId && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>задача одна, код — рядом</span>}
+        </div>
+
+        {cmpId ? (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(330px, 1fr))', gap: 16, alignItems: 'start' }}>
+            <div style={{ minWidth: 0 }}>
+              <PaneHead name={modelName} vendor={meVendor} />
+              {current && <CodePane key={`a-${current.taskId}`} task={current} info={info[current.taskId] || {}} />}
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <PaneHead name={cmpModel?.name || '—'} vendor={cmpModel?.vendor} onClose={() => setCmpId('')} />
+              {errB
+                ? <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>генерации не найдены.</p>
+                : !genB
+                  ? <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>загрузка…</p>
+                  : currentB
+                    ? <CodePane key={`b-${currentB.taskId}`} task={currentB} info={info[currentB.taskId] || {}} />
+                    : <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13, padding: 16 }}>нет этой задачи у модели.</p>}
+            </div>
+          </div>
+        ) : (
+          current && <CodePane key={current.taskId} task={current} info={info[current.taskId] || {}} />
+        )}
+      </div>
     </div>
   );
 }
 
-export function ModelDetailScreen({ modelId, models = [], navigate = () => {} }) {
+export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = () => {} }) {
   const m = models.find((x) => x.id === modelId);
   if (!m) return <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '40px 24px' }}><p>модель не найдена.</p></main>;
+  const tagLabels = meta.tagLabels || {};
 
   return (
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
@@ -312,8 +376,8 @@ export function ModelDetailScreen({ modelId, models = [], navigate = () => {} })
       </div>
 
       {/* Шапка модели */}
-      <section style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '20px 0 32px', flexWrap: 'wrap' }}>
-        <Avatar name={m.name} size={64} />
+      <section style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '20px 0 24px', flexWrap: 'wrap' }}>
+        <VendorLogo vendor={m.vendor} name={m.name} size={64} />
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
             <h1 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 'var(--text-h2)', fontWeight: 600, color: 'var(--ink-100)', letterSpacing: '-0.01em' }}>{m.name}</h1>
@@ -324,6 +388,12 @@ export function ModelDetailScreen({ modelId, models = [], navigate = () => {} })
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, color: 'var(--axis-o)' }}><Icon name="zap" size={13} />{m.cost}</span>
           </div>
         </div>
+        <ShareBar model={m} models={models} tagLabels={tagLabels} meta={meta} />
+      </section>
+
+      {/* Карточка-вердикт (авто-нарратив из данных) */}
+      <section style={{ marginBottom: 28 }}>
+        <NarrativeCard model={m} models={models} tagLabels={tagLabels} />
       </section>
 
       {/* Категории */}
@@ -335,8 +405,8 @@ export function ModelDetailScreen({ modelId, models = [], navigate = () => {} })
       {/* Браузер генераций */}
       <section style={{ paddingBottom: 8 }}>
         <h2 style={{ fontSize: 'var(--text-h3)', fontWeight: 600, color: 'var(--ink-100)', margin: '0 0 4px' }}>Что написала модель</h2>
-        <p style={{ fontSize: 13, color: 'var(--ink-400)', margin: '0 0 18px' }}>Реальный код по каждой задаче — тот, что запускали против учебной базы. Выбери задачу слева.</p>
-        <GenerationsBrowser modelId={m.id} />
+        <p style={{ fontSize: 13, color: 'var(--ink-400)', margin: '0 0 18px' }}>Реальный код по каждой задаче — тот, что запускали против учебной базы. Выбери задачу слева; можно поставить рядом вторую модель.</p>
+        <GenerationsBrowser modelId={m.id} modelName={m.name} models={models} />
       </section>
     </main>
   );

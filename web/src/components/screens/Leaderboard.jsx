@@ -7,6 +7,8 @@ import { Avatar } from '../core/Avatar.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Tag } from '../core/Tag.jsx';
 import { RankBadge } from '../prism/RankBadge.jsx';
+import { VendorLogo } from '../prism/VendorLogo.jsx';
+import { EconomyView } from './Economy.jsx';
 
 const AXIS_COLOR = { S: 'var(--axis-s)', M: 'var(--axis-m)', O: 'var(--axis-o)', P: 'var(--axis-p)' };
 // исходы воронки: цвет на каждый, от лучшего к худшему
@@ -28,16 +30,41 @@ function Shield({ label, value, tone = 'neutral', icon }) {
   );
 }
 
-function CommandBlock() {
+// быстрый старт: git clone + раскрывающийся список команд (как в README)
+const QUICK_CMDS = [
+  ['cd prism && make setup-all', 'окружение (uv) + инструменты осей + учебная 1С'],
+  ['uv run prism leaderboard', 'лидерборд из готовых оценок (мгновенно)'],
+  ['uv run prism generate --category A --models claude', 'генерация одной моделью'],
+  ['uv run prism score', 'исполнить код и пересчитать оценки L1'],
+  ['uv run prism doctor', 'проверить окружение, инструменты, ключи'],
+];
+function CmdLine({ cmd, hint, primary }) {
   const [copied, setCopied] = React.useState(false);
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', padding: '11px 14px' }}>
-      <code style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-200)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-        <span style={{ color: 'var(--axis-o)', userSelect: 'none' }}>$ </span><span style={{ color: 'var(--ink-100)' }}>prism</span> score <span style={{ color: 'var(--ink-400)' }}>--edition</span> core
-      </code>
-      <button onClick={() => { try { navigator.clipboard.writeText('prism score --edition core'); } catch (e) {} setCopied(true); setTimeout(() => setCopied(false), 1200); }}
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: primary ? '11px 14px' : '8px 14px', borderTop: primary ? 'none' : '1px solid var(--line)' }}>
+      <div style={{ minWidth: 0 }}>
+        <code style={{ fontFamily: 'var(--font-mono)', fontSize: primary ? 13 : 12.5, color: 'var(--ink-100)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block' }}>
+          <span style={{ color: 'var(--axis-o)', userSelect: 'none' }}>$ </span>{cmd}
+        </code>
+        {hint && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--ink-400)' }}>{hint}</span>}
+      </div>
+      <button onClick={() => { try { navigator.clipboard.writeText(cmd); } catch (e) {} setCopied(true); setTimeout(() => setCopied(false), 1200); }}
         style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', cursor: 'pointer', color: copied ? 'var(--ok)' : 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 11.5, flex: 'none' }}>
-        <Icon name={copied ? 'check' : 'copy'} size={14} />{copied ? 'copied' : 'copy'}
+        <Icon name={copied ? 'check' : 'copy'} size={14} />{copied ? 'ок' : 'copy'}
+      </button>
+    </div>
+  );
+}
+function QuickStart({ repo }) {
+  const [open, setOpen] = React.useState(false);
+  const clone = `git clone ${repo?.url || 'https://github.com/genlab-1c/prism'}`;
+  return (
+    <div style={{ background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', overflow: 'hidden' }}>
+      <CmdLine cmd={clone} primary />
+      {open && QUICK_CMDS.map(([cmd, hint]) => <CmdLine key={cmd} cmd={cmd} hint={hint} />)}
+      <button onClick={() => setOpen((v) => !v)}
+        style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, background: 'var(--surface)', border: 'none', borderTop: '1px solid var(--line)', cursor: 'pointer', color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 11.5, padding: '7px' }}>
+        <Icon name={open ? 'arrowUp' : 'arrowDown'} size={13} />{open ? 'свернуть' : 'команды бенчмарка'}
       </button>
     </div>
   );
@@ -66,7 +93,7 @@ function Segmented({ items, value, onChange }) {
 function Identity({ m, size = 38 }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 13, minWidth: 0 }}>
-      <Avatar name={m.name} size={size} />
+      <VendorLogo vendor={m.vendor} name={m.name} size={size} />
       <div style={{ minWidth: 0 }}>
         <div style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 600, color: 'var(--ink-100)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.name}</div>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', marginTop: 1 }}>{m.family}</div>
@@ -129,7 +156,7 @@ function OverallTable({ cat, models, navigate }) {
         <span style={colHead()}>#</span><span style={colHead()}>модель</span>
         {axes.map((a) => <SortHead key={a} label={a} axis={a} sortKey={sortKey} dir={dir} onSort={onSort} />)}
         <SortHead label="Q" axis="q" sortKey={sortKey} dir={dir} onSort={onSort} />
-        <span style={colHead({ textAlign: 'right' })}>±</span><span style={colHead({ textAlign: 'right' })}>$/1k</span>
+        <span style={colHead({ textAlign: 'right' })}>±</span><span style={colHead({ textAlign: 'right' })}>цена</span>
       </div>
       {rows.map((m) => {
         const r = qRank[m.id];
@@ -280,10 +307,10 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
         <h1 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: 'var(--ink-100)', letterSpacing: '-0.01em' }}>
           prism <span style={{ color: 'var(--ink-400)', fontWeight: 400 }}>— многомерная оценка генерации кода 1С</span>
         </h1>
-        <p style={{ margin: '12px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 660, lineHeight: 1.55 }}>
-          Забираем код модели и <span style={{ color: 'var(--ink-100)' }}>по-настоящему запускаем</span> его — компилятор, скрытые тесты, реальная база&nbsp;1С. Оценка по четырём осям&nbsp;<span style={{ color: 'var(--axis-s)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>S</span> <span style={{ color: 'var(--axis-m)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>M</span> <span style={{ color: 'var(--axis-o)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>O</span> <span style={{ color: 'var(--axis-p)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>P</span>, а не «прошло / не прошло».
+        <p style={{ margin: '12px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
+          Открытый бенчмарк качества генерации кода 1С. Код, который написала модель, мы <span style={{ color: 'var(--ink-100)' }}>по-настоящему исполняем</span> — компилятор, скрытые тесты, живая база&nbsp;1С — и оцениваем по четырём осям&nbsp;<span style={{ color: 'var(--axis-s)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>S</span> <span style={{ color: 'var(--axis-m)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>M</span> <span style={{ color: 'var(--axis-o)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>O</span> <span style={{ color: 'var(--axis-p)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>P</span> (синтаксис · смысл · оптимальность · платформа), а не по принципу «прошло&nbsp;/ не&nbsp;прошло».
         </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 16 }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 16, alignItems: 'center' }}>
           <Shield label="версия" value={`v${meta.version || '—'}`} tone="brand" />
           <Shield label="лицензия" value="MIT" />
           <Shield label="задач" value={String(totalTasks)} />
@@ -293,29 +320,36 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="прогон" value={meta.lastRun || '—'} tone="ok" />
           <Shield label="уровень" value="L1 · машина" tone="s" icon="cpu" />
         </div>
-        <div style={{ marginTop: 16, maxWidth: 420 }}><CommandBlock /></div>
+        <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>
+        <p style={{ margin: '14px 0 0', fontSize: 13.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.55 }}>
+          Участвуйте: добавьте свою модель в лидерборд или пришлите готовый прогон.{' '}
+          <a href={(meta.repo?.url || 'https://github.com/genlab-1c/prism')} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Как поучаствовать</a>
+        </p>
       </section>
 
       <div style={{ display: 'flex', gap: 28, borderBottom: '1px solid var(--line)', marginBottom: 24 }}>
         <Tab label="Сводка" sub="кто лучше в целом" active={view === 'summary'} onClick={() => setView('summary')} />
         <Tab label="Категория A" sub="алгоритмика · OneScript" active={view === 'A'} onClick={() => setView('A')} />
         <Tab label="Категория B" sub="платформа · реальная 1С" active={view === 'B'} onClick={() => setView('B')} />
+        <Tab label="Экономика" sub="качество ↔ цена" active={view === 'econ'} onClick={() => setView('econ')} />
       </div>
+
+      {view === 'econ' && <EconomyView models={models} navigate={navigate} />}
 
       {view === 'summary' && (
         <>
+          <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.</p>
           <SummaryView models={models} navigate={navigate} />
-          <p style={{ marginTop: 14, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>ранжир по среднему доли решённых A и B · «решено» = код прошёл все скрытые проверки</p>
         </>
       )}
 
       {(view === 'A' || view === 'B') && (
         <>
-          <div style={{ marginBottom: 20 }}><Segmented items={SUBS} value={sub} onChange={setSub} /></div>
+          <div style={{ marginBottom: 16 }}><Segmented items={SUBS} value={sub} onChange={setSub} /></div>
+          {sub === 'overall' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>{view === 'A' ? `${meta.tasksA || 0} алгоритмических задач` : `${meta.tasksB || 0} платформенных задач`}. Q — средний балл по осям. ± — погрешность оценки (95% доверительный интервал).</p>}
           {sub === 'overall' && <OverallTable cat={view} models={models} navigate={navigate} />}
           {sub === 'funnel' && <FunnelView cat={view} models={models} navigate={navigate} />}
           {sub === 'profile' && <ProfileView cat={view} models={models} cols={cols[view]} labels={labels} navigate={navigate} />}
-          {sub === 'overall' && <p style={{ marginTop: 14, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>{view === 'A' ? `${meta.tasksA || 0} алгоритмических задач` : `${meta.tasksB || 0} платформенных задач`} · Q = mean(applicable axes) · ± = полуширина 95% ДИ</p>}
         </>
       )}
     </main>

@@ -1,13 +1,13 @@
 ---
-// Банк задач = tasks/README.md (генерится `prism tasks`, синхронизируется).
+// Банк задач — отдельная страница из данных (public/data/tasks*.json), а не из docs.
+// Условия, скрытые тесты, объекты учебной базы + параметры генерации и системные промпты.
 import Base from '../layouts/Base.astro';
-const mods = import.meta.glob('../content/md/*.md', { eager: true });
-const mod = Object.values(mods).find((m) => m.frontmatter.slug === 'tasks');
-const { Content, frontmatter } = mod;
+import TasksPage from '../components/screens/TasksPage.jsx';
 ---
 
-<Base title={`Задачи · ${frontmatter.title}`} active="tasks">
-  <main class="doc-main">
-    <article class="prose"><Content /></article>
-  </main>
+<Base
+  title="Задачи · PRISM"
+  description="Банк задач PRISM: алгоритмика на 1С (категория A) и платформенные задачи против учебной базы (категория B) — условия, скрытые тесты, параметры генерации и системные промпты."
+  active="tasks">
+  <TasksPage client:load />
 </Base>

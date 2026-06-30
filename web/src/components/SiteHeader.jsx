@@ -45,24 +45,31 @@ function ThemeToggle({ theme, onToggle }) {
   );
 }
 
-function StarButton() {
+function StarButton({ repo }) {
   const [hover, setHover] = React.useState(false);
+  const url = repo?.url || 'https://github.com/genlab-1c/prism';
   return (
-    <a href="https://github.com/genlab-1c/prism" target="_blank" rel="noreferrer"
+    <a href={url} target="_blank" rel="noreferrer"
+      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       style={{ display: 'inline-flex', alignItems: 'stretch', borderRadius: 'var(--radius-sm)', overflow: 'hidden', border: '1px solid var(--border-strong)', textDecoration: 'none' }}>
-      <span onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: 7, padding: '0 11px', height: 30,
-          background: hover ? 'var(--navy-600)' : 'var(--surface-raised)', color: 'var(--ink-100)',
-          fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: 500, transition: 'background var(--dur-fast) var(--ease)',
-        }}>
+      <span style={{
+        display: 'inline-flex', alignItems: 'center', gap: 7, padding: '0 11px', height: 30,
+        background: hover ? 'var(--navy-600)' : 'var(--surface-raised)', color: 'var(--ink-100)',
+        fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: 500, transition: 'background var(--dur-fast) var(--ease)',
+      }}>
         <span style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span>Star
       </span>
+      {repo?.stars != null && (
+        <span style={{
+          display: 'inline-flex', alignItems: 'center', padding: '0 11px', height: 30, borderLeft: '1px solid var(--border-strong)',
+          background: 'var(--surface)', color: 'var(--ink-100)', fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: 700,
+        }}>{repo.stars}</span>
+      )}
     </a>
   );
 }
 
-export default function SiteHeader({ active = 'leaderboard', version = '' }) {
+export default function SiteHeader({ active = 'leaderboard', version = '', repo = null }) {
   const [theme, setTheme] = React.useState(
     () => (typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme')) || 'dark',
   );
@@ -96,7 +103,7 @@ export default function SiteHeader({ active = 'leaderboard', version = '' }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>v{version || '—'}</span>
           <ThemeToggle theme={theme} onToggle={toggleTheme} />
-          <StarButton />
+          <StarButton repo={repo} />
         </div>
       </div>
     </header>
