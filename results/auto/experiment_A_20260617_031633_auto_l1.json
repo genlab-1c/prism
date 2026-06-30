@@ -10461,6 +10461,536 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "05a20ad2cd21a5a1cd618a631991e8c39d231dd4ed1b54b7bf240e2e0c101b30",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.97,
+              "p_opt": 1.0,
+              "ops": [
+                170078,
+                661072,
+                2620452,
+                10298734
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9b38fbc9ad990e29484dc921e824ccffe558a48474a1c6e384d977fabf33b202",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                101304,
+                402604,
+                1605204,
+                6405609
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f163e0197cb2b5394c7deece21d42cc37b473b36ee5301a4d1444d703b1843cc",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.0,
+              "p_opt": 1.1,
+              "ops": [
+                111051,
+                440313,
+                1777006,
+                7056544
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "585206ca5df10bffc13351b21bb6f8fe9c8a358ad9f05eb5d8facbcb995c9de5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                960,
+                1910,
+                3810,
+                7610
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящееСреднее",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "90981ac2fb8673402bdc5d2ab20d3fa0ed1e5256d17e07f89d92ba651e933e1a",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": null,
+            "Q": 6.67
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [
+                "PRISM_FAIL 0",
+                "PRISM_FAIL 1",
+                "PRISM_FAIL 2",
+                "PRISM_FAIL 3"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": 0.87,
+              "p_opt": 1.0,
+              "ops": [
+                303,
+                528,
+                978,
+                1843
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7f74b16e415ed476e8bebeb4af51850a1905447b787d9f71f960ba5acc992d6a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.85,
+              "p_opt": 2.0,
+              "ops": [
+                338,
+                620,
+                990,
+                1448
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d0a0a327d0c109b40c12ef6ed28b058ffd199b76f3074867ea7d2588d8cd17d1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжатие",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжатие",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1fda649de97aa76c6951f40111aabd4449b2e856a23fd1f4dc455ee832778a4c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3509,
+                7009,
+                14009,
+                28009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "minimax-m3",
+      "model_name": "MiniMax M3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f452ef2f0fc9b40e25fc7aec5687b03a478ea09648c7f8d4865717264c6073de",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "РешетоЭратосфена",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 22,5 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РешетоЭратосфена",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 59,5 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
