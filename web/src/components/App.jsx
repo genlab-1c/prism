@@ -15,6 +15,6 @@ export default function App({ data = {} }) {
   };
 
   return route.screen === 'model'
-    ? <ModelDetailScreen modelId={route.modelId} models={models} navigate={navigate} />
+    ? <ModelDetailScreen modelId={route.modelId} models={models} meta={meta} navigate={navigate} />
     : <LeaderboardScreen navigate={navigate} models={models} meta={meta} />;
 }

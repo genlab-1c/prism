@@ -13,13 +13,17 @@ interface Props {
   title?: string;
   description?: string;
   active?: 'leaderboard' | 'methodology' | 'tasks' | 'docs';
+  ogImage?: string;
 }
 const {
   title = 'PRISM — многомерная оценка генерации кода 1С',
   description = 'Исполняемый бенчмарк кода 1С (BSL): код запускается по-настоящему и оценивается по четырём осям SMOP — Syntax · Meaning · Optimization · Platform.',
   active = 'leaderboard',
+  ogImage,
 } = Astro.props;
 const version = data.meta?.version || '';
+const canonical = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site || Astro.url.origin).href : undefined;
 ---
 
 <!doctype html>
@@ -29,6 +33,16 @@ const version = data.meta?.version || '';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PRISM" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
     <script is:inline>
       try {
         const t = localStorage.getItem('prism-theme');
@@ -37,7 +51,7 @@ const version = data.meta?.version || '';
     </script>
   </head>
   <body>
-    <SiteHeader client:load active={active} version={version} />
+    <SiteHeader client:load active={active} version={version} repo={data.meta?.repo} />
     <slot />
     <Footer />
   </body>
