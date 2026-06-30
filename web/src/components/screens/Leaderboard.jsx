@@ -9,6 +9,10 @@ import { Tag } from '../core/Tag.jsx';
 import { RankBadge } from '../prism/RankBadge.jsx';
 import { VendorLogo } from '../prism/VendorLogo.jsx';
 import { EconomyView } from './Economy.jsx';
+import { useIsMobile } from '../../lib/useMediaQuery.js';
+
+// закреплённая слева колонка (имя модели остаётся видимым при горизонтальной прокрутке)
+const stickyLeft = (bg) => ({ position: 'sticky', left: 0, zIndex: 1, background: bg });
 
 const AXIS_COLOR = { S: 'var(--axis-s)', M: 'var(--axis-m)', O: 'var(--axis-o)', P: 'var(--axis-p)' };
 // исходы воронки: цвет на каждый, от лучшего к худшему
@@ -264,11 +268,12 @@ function FunnelView({ cat, models, navigate }) {
 
 /* ===================== вид: Профиль (непрерывная теплокарта) ===================== */
 function ProfileView({ cat, models, cols, labels, navigate }) {
+  const isMobile = useIsMobile();
   const qKey = cat === 'A' ? 'qA' : 'qB';
   const axis = cat === 'A' ? 'm' : 'p';
   const rows = models.filter((m) => m[qKey] != null && m[cat]?.profile).sort((a, b) => b[qKey] - a[qKey]);
   if (!cols.length) return <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>нет тегов с достаточным числом задач.</p>;
-  const grid = `minmax(180px,1.4fr) ${cols.map(() => 'minmax(64px,1fr)').join(' ')}`;
+  const grid = `${isMobile ? '128px' : 'minmax(180px,1.4fr)'} ${cols.map(() => (isMobile ? '64px' : 'minmax(64px,1fr)')).join(' ')}`;
   const heat = (v) => v == null
     ? { background: 'transparent', color: 'var(--ink-400)' }
     : { background: `color-mix(in srgb, var(--axis-${axis}) ${Math.round(10 + (v / 10) * 36)}%, transparent)`, color: v >= 4 ? 'var(--ink-100)' : 'var(--ink-300)' };
@@ -279,7 +284,7 @@ function ProfileView({ cat, models, cols, labels, navigate }) {
       </p>
       <div style={{ ...card, overflowX: 'auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: grid, alignItems: 'center', background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)' }}>
-          <span style={{ ...colHead(), padding: '12px 20px' }}>модель</span>
+          <span style={{ ...colHead(), padding: '12px 20px', ...stickyLeft('var(--surface-sunken)'), zIndex: 2 }}>модель</span>
           {cols.map((c) => <span key={c} style={{ padding: '10px 6px', display: 'grid', placeItems: 'center' }}><Tag color={cat === 'A' ? 'm' : 'p'}>{labels[c] || c}</Tag></span>)}
         </div>
         {rows.map((m, i) => (
@@ -287,7 +292,7 @@ function ProfileView({ cat, models, cols, labels, navigate }) {
             style={{ display: 'grid', gridTemplateColumns: grid, alignItems: 'stretch', borderTop: '1px solid var(--line)', cursor: 'pointer', background: i === 0 ? 'var(--top-tint)' : 'transparent' }}
             onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--hover-overlay)')}
             onMouseLeave={(e) => (e.currentTarget.style.background = i === 0 ? 'var(--top-tint)' : 'transparent')}>
-            <div style={{ padding: '10px 20px' }}><Identity m={m} size={30} /></div>
+            <div style={{ padding: '10px 20px', ...stickyLeft(i === 0 ? 'var(--top-tint)' : 'var(--surface)') }}><Identity m={m} size={30} /></div>
             {cols.map((c) => {
               const v = m[cat].profile[c]?.value;
               const st = heat(v);
