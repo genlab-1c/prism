@@ -18197,6 +18197,856 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "850fdebda421c0774a3a7a19ab23336d5448cfd3cb18153e31319ea043e5f5c7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЭлементыГруппы",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9906211f91ec258b344eddb43067dbc1a58e6bf95485160fe00cc7f1d76e82d7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 4,
+              "total": 4,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ТоварДостаточнаНаСкладе",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 4,
+              "total": 4,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2282e410cfdcafc857ea771b09307e386a04a110e8235e975d3f173dcdf944d3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ИННУникален",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "129fceb7d36a0e4e88dcf7191c508963c741607f025bac8bca6d608dc0c31a91",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПеревестиКоличествоВБазовую",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e92ddc7858448ca9c1f56ab10bc140495746ff18ee8a053eda5323143a91df9c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": 10.0,
+            "Q": 8.5
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 4.0,
+              "count": 2,
+              "codes": [
+                "JoinWithVirtualTable"
+              ]
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2e415fd22355b901b12afc5e4b8a2f62a85c949e44433984ee87b5c94a834821",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификация",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2093d5d83472f8a44f8d28390d42743f017ba30aaec81d1959bbb52bd2371aa4",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 2,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(5, 5)}: Неверные параметры \"РегистрНакопления.ТоварыНаСкладах.Остатки\"\n<<?>>РегистрНакопления.ТоварыНаСкладах.Остатки(, Склад = &Склад, Номенклатура В (&Номенклатура)) КАК ТоварыНаСкладахОстатки; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(5, 5)}: Неверные параметры \"РегистрНакопления.ТоварыНаСкладах.Остатки\"\n<<?>>РегистрНакопле",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 2,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "29aaedb229372e3521205c1bca111e20a56d67875a6246bde42dc84e311b467e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦеныВТабличнойЧасти",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "de5acc7700219ec4e9c289a6889fa78bee8dcef6592a413492e9bf4f379c0c20",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 4,
+            "P": 3.3,
+            "Q": 4.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(34)}: Ошибка при вызове метода контекста (Выполнить): {(3, 28)}: Поле не найдено \"ПартииТоваровНаСкладах.Количество\"\nПартииТоваровНаСкладах.<<?>>Количество КАК Количество,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(34)}: Ошибка при вызове метода контекста (Выполнить): {(3, 28)}: Поле не найдено \"ПартииТоваровНаСкладах.Количество\"\nПартииТоваровНаСкладах.<<?>>Количество КАК Количество,; тест3 FAIL (исключение без имени номенклатуры: {Общи",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписаниеТоваровFIFO",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 4.0,
+              "count": 2,
+              "codes": [
+                "CreateQueryInCycle",
+                "JoinWithVirtualTable"
+              ]
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c94d5a8c296f1275a241364a26656b5b1f5b79dcce959a1c5d4add635ed59e54",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСреднююСебестоимость",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4306e879325ee6d6be7136c12018f5a8ea7c0bf0094aaf0f880bdfe27b5474ff",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "884f8007dc2075f60d56546bd9dac4cf35dbd9a05138ff3db4c9c1c7b467beb4",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 6.7,
+            "Q": 8.35
+          },
+          "bands": {
+            "M": 6,
+            "P": 6
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(38)}: Ошибка при вызове метода контекста (Выполнить): {(6, 72)}: Поле не найдено \"ПродажиОбороты.Склад\"\nРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, , <<?>>ПродажиОбороты.Склад = &Склад) КАК ПродажиОбороты;",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 1,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродажЗаПериод",
+              "infra_detail": "",
+              "band": 6
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.667,
+              "clean": 2,
+              "total": 3,
+              "platform_error_tests": 1,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 6
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0dbb4cce790251a30aeddb804eb43072e2a26338ac83dfbbd6fd1db0a8a199e5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9ff350b4ecbdee89e667a4868000acf13e2a2e8339bb7b8089ffe01fd1e3365e",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": 10,
+            "P": 0.0,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 2,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(40)}: Ошибка при вызове метода контекста (Выполнить): {(23, 8)}: Неверные параметры \"РегистрНакопления.ДвиженияТоваров.Обороты\"\nИЗ <<?>>РегистрНакопления.ДвиженияТоваров.Обороты(&НачалоПериода, &КонецПериода, , , Склад = &Склад) КАК ДвиженияТоваровОбороты; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(40)}: Ошибка при вызове метода контекста (Выполнить): {(23, 8)}: Неверные параметры \"РегистрНакопления.ДвиженияТоваров.Обороты\"\nИЗ <<?>>Регис",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиОборотыПоТовару",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 2,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8ea40f0eebf913cce121cd41a439fc0b4c813f896afe96bb8de2f8b1f421238d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СводТабличнойЧастиТовары",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": []
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
     }
   ]
 }

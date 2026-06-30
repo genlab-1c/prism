@@ -9948,6 +9948,519 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "10727386945e57d477a9d3c3ff546ff14e970584f7c182ec3ec629a876161cef",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "ГруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2164,
+                4344,
+                8632,
+                17166
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ГруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "084160303f43cb0eaf114c417da22e0f13449f06f414e9f200f578b80b67729f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1205,
+                2405,
+                4805,
+                9603
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7a9891ef9128e20a071257f2806fccbed71893d3984fffb8e4faf38746e321e3",
+          "scores": {
+            "S": 10,
+            "M": 1.7,
+            "O": null,
+            "P": null,
+            "Q": 5.85
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / OneScript.StandardLibrary.Collections.ArrayImpl: Массив Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 7 / OneScript.StandardLibrary.Collections.ArrayImpl: Массив Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 7 / OneScript.StandardLibrary.Collections.ArrayImpl: Массив Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 7 / OneScript.StandardLibrary.Collections.ArrayImpl: Массив Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 7 / OneScript.StandardLibrary.Collections.ArrayImpl: Массив Conversion to type 'Number' is not supported}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 44 / OneScript.StandardLibrary.Collections.ArrayImpl: Массив Conversion to type 'Number' is not supported}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "311f06f31b5a674b48844d21f207547ba9cc6ac227e829e7ad76da642694c683",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53613,
+                212213,
+                844413,
+                3368813
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "71fe0d344eaf26343ceb9a11a32a70634cfd3bb41d8b42bb1143cd279d8efaac",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчетСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.89,
+              "p_opt": 1.0,
+              "ops": [
+                528,
+                943,
+                1773,
+                3372
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчетСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "191a5b77844a4f02f1633aa71f2322999ef358157e751a4e5189a4102b1ec3da",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.66,
+              "p_opt": 2.0,
+              "ops": [
+                292,
+                498,
+                760,
+                1078
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РедакционноеРасстояние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "392a2d84921ccf5a0ee2fc02b2e62ab059698b8a45235dacb8c91676526bab07",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжать",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158505,
+                607225,
+                2338730,
+                9366154
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжать",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d8ea8cfca91c9ea87236db85b6863a5e7576acd5880c1080932cbcb45c0a8142",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 3,17 / Symbol not found СтрНРег}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 40,17 / Symbol not found СтрНРег}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a9097ca692b2e5f63e0034561a3f8dad43943f33659b9dea0117e1407b5d12ba",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 22,17 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 59,17 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
