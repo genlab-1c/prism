@@ -1,0 +1,23 @@
+---
+// Отдельная страница модели — для шаринг-ссылок и предпросмотра (OG).
+// Статически генерируется по каждой модели лидерборда; экран тот же, что в SPA.
+import Base from '../../layouts/Base.astro';
+import ModelPage from '../../components/ModelPage.jsx';
+import data from '../../data/leaderboard.json';
+import { buildInsights, shortSummary } from '../../lib/insights.js';
+
+export function getStaticPaths() {
+  const d = data as any;
+  return d.models.map((m: any) => ({ params: { id: m.id }, props: { model: m } }));
+}
+
+const { model } = Astro.props as any;
+const ins = buildInsights(model, (data as any).models, (data as any).meta?.tagLabels || {});
+const title = `${model.name} — разбор прогона · prism`;
+const description = shortSummary(ins);
+const ogImage = `og/${model.id}.png`; // картинка генерируется на билде (см. scripts/build-og.mjs)
+---
+
+<Base title={title} description={description} active="leaderboard" ogImage={ogImage}>
+  <ModelPage client:load modelId={model.id} data={data} />
+</Base>
