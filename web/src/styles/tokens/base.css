@@ -5,6 +5,8 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+html { overflow-x: clip; }   /* нет горизонтальной прокрутки страницы; clip (не hidden) не ломает sticky-шапку */
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -14,6 +16,8 @@ body {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  max-width: 100%;
 }
 
 /* Numbers should be tabular everywhere they appear */

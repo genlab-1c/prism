@@ -342,7 +342,7 @@ function GenerationsBrowser({ modelId, modelName, models = [] }) {
         </div>
 
         {cmpId ? (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(330px, 1fr))', gap: 16, alignItems: 'start' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(330px, 1fr))', gap: 16, alignItems: 'start' }}>
             <div style={{ minWidth: 0 }}>
               <PaneHead name={modelName} vendor={meVendor} />
               {current && <CodePane key={`a-${current.taskId}`} task={current} info={info[current.taskId] || {}} />}
