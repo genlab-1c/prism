@@ -265,6 +265,42 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: рассуждение ест max_tokens; кат. B на AITUNNEL под вопросом (как Qwen3.6)
 
+  qwen37_plus:
+    id: "qwen3.7-plus"                   # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Qwen3.7 Plus"
+    vendor: alibaba
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 262144
+      supports_seed: false
+      supports_tools: true               # reasoning-модель
+
+  grok_build:
+    id: "grok-build-0.1"                 # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Grok Build 0.1"
+    vendor: xai
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 256000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель (chain of thought)
+
+  grok43:
+    id: "grok-4.3"                       # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Grok 4.3"
+    vendor: xai
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 256000
+      supports_seed: false
+      supports_tools: true               # reasoning по reasoning_effort; tool calling
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:

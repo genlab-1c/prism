@@ -30,3 +30,6 @@ defaults:
     gemini35_flash: { temperature: 0.1, runs: 1 }  # Gemini 3.5 Flash через AITUNNEL
     mimo25:      { temperature: 0.1, runs: 1 }      # MiMo-V2.5 (Xiaomi) через AITUNNEL
     minimax_m3:  { temperature: 0.1, runs: 1 }      # MiniMax M3 через AITUNNEL (reasoning)
+    qwen37_plus: { temperature: 0.1, runs: 1 }      # Qwen3.7 Plus через AITUNNEL (reasoning)
+    grok_build:  { temperature: 0.1, runs: 1 }      # Grok Build 0.1 через AITUNNEL (reasoning)
+    grok43:      { temperature: 0.1, runs: 1 }      # Grok 4.3 через AITUNNEL (reasoning)
