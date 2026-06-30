@@ -103,8 +103,16 @@ function Identity({ m, size = 38 }) {
 }
 
 const card = { background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)' };
-// липкая шапка таблицы под навбаром (страница крутится, колонки на виду)
-const headStick = { position: 'sticky', top: 59, zIndex: 3, borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0' };
+// скруглённая шапка таблицы (без sticky — иначе ломается внутри горизонтального скролла)
+const headStick = { borderRadius: 'var(--radius-lg) var(--radius-lg) 0 0' };
+// обёртка плотной таблицы: на узких экранах едет горизонтально, не ломая страницу
+function TableScroll({ minWidth = 640, children }) {
+  return (
+    <div style={{ ...card, overflowX: 'auto' }}>
+      <div style={{ minWidth }}>{children}</div>
+    </div>
+  );
+}
 function ListRow({ grid, i, top, onClick, children }) {
   const [h, setH] = React.useState(false);
   return (
@@ -151,7 +159,7 @@ function OverallTable({ cat, models, navigate }) {
     return dir === 'desc' ? bv - av : av - bv;
   });
   return (
-    <div style={card}>
+    <TableScroll minWidth={cat === 'A' ? 680 : 720}>
       <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 14, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
         <span style={colHead()}>#</span><span style={colHead()}>модель</span>
         {axes.map((a) => <SortHead key={a} label={a} axis={a} sortKey={sortKey} dir={dir} onSort={onSort} />)}
@@ -174,7 +182,7 @@ function OverallTable({ cat, models, navigate }) {
           </div>
         );
       })}
-    </div>
+    </TableScroll>
   );
 }
 
@@ -198,7 +206,7 @@ function SummaryView({ models, navigate }) {
   const rows = [...models].sort((a, b) => overall(b) - overall(a));
   const grid = '44px minmax(180px,1.4fr) minmax(150px,1fr) minmax(150px,1fr)';
   return (
-    <div style={card}>
+    <TableScroll minWidth={620}>
       <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
         <span style={colHead()}>#</span><span style={colHead()}>модель</span>
         <span style={colHead()}>алгоритмика · A</span><span style={colHead()}>платформа 1С · B</span>
@@ -211,7 +219,7 @@ function SummaryView({ models, navigate }) {
           <SolvedStat solved={m.B?.solved} />
         </ListRow>
       ))}
-    </div>
+    </TableScroll>
   );
 }
 
@@ -232,7 +240,7 @@ function FunnelView({ cat, models, navigate }) {
       <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', marginBottom: 14 }}>
         {BUCKETS.map(([k, c]) => <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-300)' }}><span style={{ width: 9, height: 9, borderRadius: 3, background: c }} />{k}</span>)}
       </div>
-      <div style={card}>
+      <TableScroll minWidth={680}>
         <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
           <span style={colHead()}>#</span><span style={colHead()}>модель</span><span style={colHead({ textAlign: 'right' })}>решено</span><span style={colHead()}>исход всех попыток</span><span style={colHead()}>частая поломка</span>
         </div>
@@ -249,7 +257,7 @@ function FunnelView({ cat, models, navigate }) {
             </ListRow>
           );
         })}
-      </div>
+      </TableScroll>
     </>
   );
 }

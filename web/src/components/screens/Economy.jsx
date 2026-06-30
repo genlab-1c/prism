@@ -86,7 +86,8 @@ function ValueRanking({ models, navigate, metric }) {
 
   const head = { fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)' };
   return (
-    <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+    <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowX: 'auto' }}>
+     <div style={{ minWidth: 600 }}>
       <div style={{ display: 'grid', gridTemplateColumns: '30px minmax(150px,1.4fr) minmax(120px,1fr) minmax(120px,1fr) 104px', gap: 16, alignItems: 'center', padding: '11px 18px', background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)' }}>
         <span />
         <span style={head}>модель</span>
@@ -101,6 +102,7 @@ function ValueRanking({ models, navigate, metric }) {
         </div>
       )}
       {rest.map((p) => <Row key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum={false} dominator={dominatorOf(p)} onClick={() => navigate('model', p.id)} />)}
+     </div>
     </div>
   );
 }

@@ -3,6 +3,7 @@
    (страницы сайта раздельные), активный пункт приходит пропсом `active`. */
 import React from 'react';
 import { Icon } from './chrome/Chrome.jsx';
+import { useIsMobile } from '../lib/useMediaQuery.js';
 
 const BASE = import.meta.env.BASE_URL;
 const NAV = [
@@ -80,6 +81,7 @@ export default function SiteHeader({ active = 'leaderboard', version = '', repo 
     try { localStorage.setItem('prism-theme', next); } catch (e) {}
   };
   const logo = `${BASE}assets/${theme === 'light' ? 'locklight' : 'lockdark'}.png`;
+  const isMobile = useIsMobile();
 
   return (
     <header style={{
@@ -87,21 +89,23 @@ export default function SiteHeader({ active = 'leaderboard', version = '', repo 
       background: 'var(--surface-translucent)', backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid var(--line)',
     }}>
-      <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: isMobile ? '8px 16px' : '0 24px', minHeight: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: isMobile ? 'wrap' : 'nowrap', rowGap: 6 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
           <a href={BASE} style={{ display: 'flex', alignItems: 'center' }}>
             <img src={logo} alt="PRISM" style={{ height: 26, width: 'auto', display: 'block' }} />
           </a>
-          <span style={{ color: 'var(--line)', fontSize: 18 }}>/</span>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>
-            <span style={{ color: 'var(--ink-300)' }}>genlab-1c</span><span> / </span><span style={{ color: 'var(--ink-200)' }}>prism</span>
-          </span>
+          {!isMobile && <span style={{ color: 'var(--line)', fontSize: 18 }}>/</span>}
+          {!isMobile && (
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>
+              <span style={{ color: 'var(--ink-300)' }}>genlab-1c</span><span> / </span><span style={{ color: 'var(--ink-200)' }}>prism</span>
+            </span>
+          )}
         </div>
-        <nav style={{ display: 'flex', gap: 24, alignSelf: 'stretch', alignItems: 'center' }}>
+        <nav style={{ display: 'flex', gap: isMobile ? 16 : 24, alignSelf: 'stretch', alignItems: 'center', flexWrap: 'wrap', order: isMobile ? 3 : 0, flexBasis: isMobile ? '100%' : 'auto', justifyContent: isMobile ? 'flex-start' : 'flex-start' }}>
           {NAV.map((n) => <NavLink key={n.key} label={n.label} href={n.href} active={active === n.key} />)}
         </nav>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>v{version || '—'}</span>
+          {!isMobile && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>v{version || '—'}</span>}
           <ThemeToggle theme={theme} onToggle={toggleTheme} />
           <StarButton repo={repo} />
         </div>

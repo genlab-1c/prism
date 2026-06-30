@@ -14,6 +14,7 @@ import { ScoreVector } from '../prism/ScoreVector.jsx';
 import { QScore } from '../prism/QScore.jsx';
 import { NarrativeCard, ShareBar } from '../prism/NarrativeCard.jsx';
 import { fmtRub } from '../../lib/insights.js';
+import { useIsMobile } from '../../lib/useMediaQuery.js';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -287,6 +288,7 @@ function PaneHead({ name, vendor, onClose }) {
 }
 
 function GenerationsBrowser({ modelId, modelName, models = [] }) {
+  const isMobile = useIsMobile();
   const [info, setInfo] = React.useState({});
   const [sel, setSel] = React.useState(null);
   const [cmpId, setCmpId] = React.useState('');
@@ -314,8 +316,8 @@ function GenerationsBrowser({ modelId, modelName, models = [] }) {
   const selectStyle = { background: 'var(--surface-sunken)', color: 'var(--ink-200)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', padding: '6px 10px', fontFamily: 'var(--font-mono)', fontSize: 12.5, cursor: 'pointer' };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: 'minmax(220px, 300px) 1fr', gap: 20, alignItems: 'start' }}>
-      <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowY: 'auto', overflowX: 'hidden', position: 'sticky', top: 76, maxHeight: 'calc(100vh - 96px)' }}>
+    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(220px, 300px) 1fr', gap: isMobile ? 14 : 20, alignItems: 'start' }}>
+      <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowY: 'auto', overflowX: 'hidden', position: isMobile ? 'static' : 'sticky', top: 76, maxHeight: isMobile ? 280 : 'calc(100vh - 96px)' }}>
         {groups.map(([cat, label]) => {
           const items = gen.tasks.filter((t) => t.category === cat);
           if (!items.length) return null;
