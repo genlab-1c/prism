@@ -1,7 +1,7 @@
 name: docs
 
-# Сборка сайта документации (MkDocs Material) и публикация на GitHub Pages.
-# Триггеры: изменения в docs/ или конфиге, плюс ручной запуск.
+# Проверочная сборка документации MkDocs (Material). НЕ публикует на GitHub Pages:
+# сайт публикует deploy.yml (Astro, web/). Здесь только валидация, что docs/ собирается.
 on:
   push:
     branches: [main]
@@ -11,16 +11,8 @@ on:
       - .github/workflows/docs.yml
   workflow_dispatch:
 
-# Права для нативного деплоя Pages через OIDC.
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-# Один деплой за раз; идущий не прерываем.
-concurrency:
-  group: pages
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -34,21 +26,5 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y libcairo2-dev libfreetype6-dev libffi-dev libjpeg-dev libpng-dev libz-dev
       - name: Установка MkDocs Material
         run: pip install "mkdocs-material[imaging]>=9.5"
-      - name: Сборка сайта
+      - name: Сборка сайта (проверка, без публикации)
         run: mkdocs build
-      - uses: actions/configure-pages@v5
-        with:
-          enablement: true   # включить Pages автоматически на первом прогоне (если ещё не включён)
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: site
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
