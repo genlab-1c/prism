@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="7" fill="#0c1626"/>
+  <!-- призма -->
+  <path d="M16 6 L24.5 23 L7.5 23 Z" fill="#ffffff" fill-opacity="0.05" stroke="#cdd6e3" stroke-width="1.3" stroke-linejoin="round"/>
+  <!-- входящий белый луч + источник -->
+  <circle cx="2.6" cy="14.2" r="1.3" fill="#eef2f8"/>
+  <line x1="2.6" y1="14.2" x2="14.5" y2="18" stroke="#eef2f8" stroke-width="1.3" stroke-linecap="round"/>
+  <!-- расщепление на оси SMOP -->
+  <g stroke-width="1.7" stroke-linecap="round">
+    <line x1="16" y1="18.6" x2="30" y2="10.5" stroke="#7c7ef8"/>
+    <line x1="16" y1="18.6" x2="30" y2="14.5" stroke="#22d3ee"/>
+    <line x1="16" y1="18.6" x2="30" y2="18.5" stroke="#34d399"/>
+    <line x1="16" y1="18.6" x2="30" y2="22.5" stroke="#fbbf24"/>
+  </g>
+</svg>
