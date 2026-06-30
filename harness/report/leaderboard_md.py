@@ -420,18 +420,13 @@ def write() -> list[Path]:
     if a is None and b is None:
         raise SystemExit("нет оценок в results/auto/ — сначала `prism score`")
 
+    # В README держим только бейджи и краткую сводку: детальные таблицы (баллы по осям,
+    # воронка, профиль) — на сайте (prism.genlab-1c.ru) и в docs/leaderboard.md, чтобы
+    # README не разрастался на сотни строк.
     readme = PRISM / "README.md"
     text = readme.read_text(encoding="utf-8")
     text = _replace_region(text, "badges", render_badges())
     text = _replace_region(text, "lb:summary", render_summary())
-    if a:
-        text = _replace_region(text, "lb:a-overall", render_overall(a, "A"))
-        text = _replace_region(text, "lb:a-skill", render_by_tag(a, "skill", "M"))
-        text = _replace_region(text, "lb:a-funnel", render_funnel(a))
-    if b:
-        text = _replace_region(text, "lb:b-overall", render_overall(b, "B"))
-        text = _replace_region(text, "lb:b-platform", render_by_tag(b, "platform", "P"))
-        text = _replace_region(text, "lb:b-funnel", render_funnel(b))
     readme.write_text(text, encoding="utf-8")
 
     changed = [readme]
