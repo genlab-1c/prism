@@ -259,6 +259,27 @@ def cmd_docs(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_charts(args: argparse.Namespace) -> int:
+    from harness.report import charts
+
+    if not charts.check_matplotlib_available():
+        console.print(
+            "matplotlib не установлен. Поставьте группу графиков: uv sync --group charts",
+            style="red",
+        )
+        return 1
+    made = charts.generate(args.out, top=args.top)
+    if not made:
+        console.print("нет оценок в results/auto/ — сначала прогоните prism score", style="red")
+        return 1
+    for p in made:
+        console.print(f"→ {p}", style="green", highlight=False)
+    console.print(
+        f"  {len(made)} файлов (SVG + PNG) — publication-quality графики SMOP", style="dim"
+    )
+    return 0
+
+
 def cmd_check(args: argparse.Namespace) -> int:
     _apply_runtime_flags(args)
     only = set(args.task) if args.task else None
@@ -640,6 +661,24 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
     dc.set_defaults(func=cmd_docs)
+
+    cg = sub.add_parser(
+        "charts",
+        help="сгенерировать графики лидерборда (SVG+PNG, matplotlib) из оценок L1",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Рендерит ранжир по Q̄, профиль по осям SMOP и радар для топ-N моделей\n"
+            "(по A и B) в results/charts/. Нужен matplotlib: uv sync --group charts.\n"
+            "Примеры:\n"
+            "  prism charts\n"
+            "  prism charts --top 6 --out docs/assets/charts"
+        ),
+    )
+    cg.add_argument("--out", default=None, help="каталог вывода (по умолчанию results/charts/)")
+    cg.add_argument(
+        "--top", type=int, default=8, help="сколько моделей на радаре/сравнении (по умолчанию 8)"
+    )
+    cg.set_defaults(func=cmd_charts)
 
     dr = sub.add_parser(
         "doctor",

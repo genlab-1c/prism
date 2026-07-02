@@ -28,6 +28,9 @@ results/auto/*
 # Промежуточные чекпойнты генерации (для --resume; финал — в experiment_*.json)
 results/*.parts/
 
+# Сгенерированные графики (prism charts) — дериват из оценок L1
+results/charts/
+
 # Сборка документации MkDocs
 site/
 
