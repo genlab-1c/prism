@@ -359,6 +359,11 @@ const cases = badgeNum(/badge\/тест--кейсов-(\d+)/) ?? taskInfo.cases;
 const pyproject = fs.readFileSync(path.join(REPO, 'pyproject.toml'), 'utf8');
 const version = (pyproject.match(/version\s*=\s*"([^"]+)"/) || [])[1] || '';
 const dateOf = (exp) => { const m = (exp || '').match(/_(\d{4})(\d{2})(\d{2})_/); return m ? `${m[1]}-${m[2]}-${m[3]}` : ''; };
+// дата прогона = дата ПОСЛЕДНЕЙ генерации (поле timestamp в рулоне, оно обновляется при
+// каждом generate/--resume), а не дата из имени файла (первый прогон). Фолбэк — имя файла.
+const expTimestamp = (cat) => { try { const f = expFile(cat); return f ? (readJSON(path.join(RESULTS, f)).timestamp || '') : ''; } catch { return ''; } };
+const lastRunIso = [expTimestamp('A'), expTimestamp('B')].filter(Boolean).sort().pop() || '';
+const lastRun = /^\d{4}-\d{2}-\d{2}/.test(lastRunIso) ? lastRunIso.slice(0, 10) : dateOf(B.exp);
 const tasksA = Math.max(0, ...Object.values(A.summary).map((m) => m.taskCount));
 const tasksB = Math.max(0, ...Object.values(B.summary).map((m) => m.taskCount));
 
@@ -377,7 +382,7 @@ try {
 const OUT = path.join(WEB, 'src', 'data', 'leaderboard.json');
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify({
-  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun: dateOf(B.exp), profileCols, tagLabels, repo: { url: `https://github.com/${GH_REPO}`, stars: repoStars } },
+  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun, profileCols, tagLabels, repo: { url: `https://github.com/${GH_REPO}`, stars: repoStars } },
   models,
 }, null, 2) + '\n');
 
