@@ -57,6 +57,9 @@ docs = [
     "mkdocs-material>=9.5",
     # mkdocstrings[python] — добавить, когда захотим автодок из докстрингов скореров
 ]
+charts = [
+    "matplotlib>=3.8",           # графики лидерборда `prism charts` (publication-quality SVG/PNG)
+]
 
 [project.scripts]
 prism = "harness.cli:main"
