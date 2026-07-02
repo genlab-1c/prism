@@ -383,21 +383,27 @@ def render_badges() -> str:
     res_a, res_b = _load("A"), _load("B")
     models = len({t["model_name"] for r in (res_a, res_b) if r for t in r["tasks"]})
     gens = 0
+    last_run = ""  # дата ПОСЛЕДНЕЙ генерации (поле timestamp рулона), не из имени файла
     for r in (res_a, res_b):
         if not r:
             continue
         exp = PRISM / "results" / f"{r['experiment_id']}.json"
         if exp.exists():
-            gens += len(json.loads(exp.read_text(encoding="utf-8"))["task_results"])
+            data = json.loads(exp.read_text(encoding="utf-8"))
+            gens += len(data["task_results"])
+            ts = (data.get("timestamp") or "")[:10]
+            if ts > last_run:
+                last_run = ts
 
-    return "\n".join(
-        [
-            _badge("задач", str(len(tasks)), "success", f"задач: {len(tasks)}"),
-            _badge("тест--кейсов", str(cases), "blue", f"тест-кейсов: {cases}"),
-            _badge("генераций_в_прогоне", str(gens), "blue", f"генераций: {gens}"),
-            _badge("в_лидерборде", f"{models}_моделей", "blue", f"в лидерборде {models} моделей"),
-        ]
-    )
+    badges = [
+        _badge("задач", str(len(tasks)), "success", f"задач: {len(tasks)}"),
+        _badge("тест--кейсов", str(cases), "blue", f"тест-кейсов: {cases}"),
+        _badge("генераций_в_прогоне", str(gens), "blue", f"генераций: {gens}"),
+        _badge("в_лидерборде", f"{models}_моделей", "blue", f"в лидерборде {models} моделей"),
+    ]
+    if last_run:
+        badges.append(_badge("прогон", last_run, "informational", f"прогон: {last_run}"))
+    return "\n".join(badges)
 
 
 # ── подстановка в файлы ────────────────────────────────────────────────────────

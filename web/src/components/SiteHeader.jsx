@@ -50,6 +50,17 @@ function ThemeToggle({ theme, onToggle }) {
 function StarButton({ repo }) {
   const [hover, setHover] = React.useState(false);
   const url = repo?.url || 'https://github.com/genlab-1c/prism';
+  const slug = url.replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, '');
+  // счётчик тянем с GitHub API на клиенте (near real-time); build-значение — стартовое/фолбэк
+  const [stars, setStars] = React.useState(repo?.stars ?? null);
+  React.useEffect(() => {
+    let alive = true;
+    fetch(`https://api.github.com/repos/${slug}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (alive && d && typeof d.stargazers_count === 'number') setStars(d.stargazers_count); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [slug]);
   return (
     <a href={url} target="_blank" rel="noreferrer"
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
@@ -61,11 +72,11 @@ function StarButton({ repo }) {
       }}>
         <span style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span>Star
       </span>
-      {repo?.stars != null && (
+      {stars != null && (
         <span style={{
           display: 'inline-flex', alignItems: 'center', padding: '0 11px', height: 30, borderLeft: '1px solid var(--border-strong)',
           background: 'var(--surface)', color: 'var(--ink-100)', fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: 700,
-        }}>{repo.stars}</span>
+        }}>{stars}</span>
       )}
     </a>
   );
