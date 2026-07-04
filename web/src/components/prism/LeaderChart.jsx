@@ -13,11 +13,14 @@ const AXIS_NAME = { S: 'синтаксис', M: 'смысл', O: 'оптимал
 const FONT = 'ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif';
 const qColor = (q) => (q == null ? '#9aa3b2' : q >= 7 ? '#34d399' : q >= 4 ? '#fbbf24' : '#f87171');
 
-// палитры полотна по теме сайта
+// палитры полотна по теме сайта (hex — чтобы сериализовалось в экспорт)
 const THEME = {
-  light: { bg: '#ffffff', ink: '#1a2230', sub: '#5a6577', grid: '#e2e6ee', muted: '#8a94a6', rowHover: '#eef2f9' },
-  dark: { bg: '#0d1a2d', ink: '#eef2f8', sub: '#9aa7bd', grid: '#26374e', muted: '#5f6f88', rowHover: '#182a41' },
+  light: { bg: '#ffffff', ink: '#1a2230', sub: '#5a6577', grid: '#e2e6ee', muted: '#8a94a6', rowHover: '#eef2f9',
+    brand: '#0aa5c4', brandInk: '#ffffff', ok: '#099b6e', warn: '#c9820f', danger: '#dc4d4d', head: '#f2f5fa', zebra: '#f8fafc', tint: '#e8f6fa' },
+  dark: { bg: '#0d1a2d', ink: '#eef2f8', sub: '#9aa7bd', grid: '#26374e', muted: '#5f6f88', rowHover: '#182a41',
+    brand: '#22d3ee', brandInk: '#04222a', ok: '#34d399', warn: '#fbbf24', danger: '#f87171', head: '#122135', zebra: '#101e33', tint: '#12293a' },
 };
+const solvedHex = (C, s) => (s == null ? C.muted : s >= 0.7 ? C.ok : s >= 0.4 ? C.warn : C.danger);
 function useTheme() {
   const read = () => (typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme')) || 'dark';
   const [t, setT] = React.useState(read);
@@ -158,6 +161,94 @@ function BarsSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate }) {
   );
 }
 
+/* ── таблица сводки для выгрузки картинкой (доля решённых A/B) ── */
+export function SummaryTableSvg({ svgRef, rows, meta, C }) {
+  const W = 900, headTop = 56, headH = 28, bodyTop = 90, rowH = 46;
+  const H = bodyTop + rows.length * rowH + 40;
+  const rankX = 40, nameX = 66, aX = 452, bX = 672, barOff = 62, barW = 128;
+  const cell = (x, s, cy) => {
+    if (s == null) return <text x={x} y={cy + 5} fontSize="12" fill={C.muted}>не измерялось</text>;
+    const pct = Math.round(s * 100); const col = solvedHex(C, s);
+    return (
+      <g>
+        <text x={x} y={cy + 7}><tspan fontSize="21" fontWeight="700" fill={col}>{pct}</tspan><tspan fontSize="12" fontWeight="600" fill={col} dx="1">%</tspan></text>
+        <rect x={x + barOff} y={cy - 4} width={barW} height={7} rx={3.5} fill={C.grid} />
+        <rect x={x + barOff} y={cy - 4} width={Math.max(2, barW * s)} height={7} rx={3.5} fill={col} />
+      </g>
+    );
+  };
+  return (
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
+      <text x={24} y={30} fontSize="17" fontWeight="700" fill={C.ink}>Рейтинг PRISM — доля решённых задач</text>
+      <text x={24} y={48} fontSize="11.5" fill={C.sub}>алгоритмика (OneScript) · платформа 1С (реальная 1С в Docker) · {rows.length} моделей</text>
+      <rect x={0} y={headTop} width={W} height={headH} fill={C.head} />
+      <text x={rankX} y={headTop + 18} textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>#</text>
+      <text x={nameX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
+      <text x={aX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>АЛГОРИТМИКА · A</text>
+      <text x={bX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>ПЛАТФОРМА 1С · B</text>
+      {rows.map((m, i) => {
+        const y0 = bodyTop + i * rowH; const cy = y0 + rowH / 2; const top = i === 0;
+        return (
+          <g key={m.id}>
+            <rect x={0} y={y0} width={W} height={rowH} fill={top ? C.tint : (i % 2 ? C.zebra : 'transparent')} />
+            <rect x={rankX - 13} y={cy - 13} width={26} height={26} rx={7} fill={top ? C.brand : C.head} />
+            <text x={rankX} y={cy + 4} textAnchor="middle" fontSize="12" fontWeight="700" fill={top ? C.brandInk : C.sub}>{i + 1}</text>
+            <text x={nameX} y={cy - 2} fontSize="14" fontWeight={top ? 700 : 600} fill={C.ink}>{m.name}</text>
+            <text x={nameX} y={cy + 13} fontSize="10.5" fill={C.muted}>{m.family || m.vendor || ''}</text>
+            {cell(aX, m.A?.solved, cy)}
+            {cell(bX, m.B?.solved, cy)}
+          </g>
+        );
+      })}
+      <text x={W - 16} y={H - 14} textAnchor="end" fontSize="9.5" fill={C.muted}>{STAMP(meta)}</text>
+    </svg>
+  );
+}
+
+/* ── таблица баллов SMOP категории для выгрузки картинкой ── */
+export function ScoresTableSvg({ svgRef, cat, rows, meta, C }) {
+  const qKey = cat === 'A' ? 'qA' : 'qB';
+  const axes = CAT_AXES[cat];
+  const W = 900, headTop = 64, headH = 26, bodyTop = 98, rowH = 44;
+  const H = bodyTop + rows.length * rowH + 40;
+  const rankX = 38, nameX = 62, axStart = 306, axEnd = 772, qX = 838;
+  const colW = (axEnd - axStart) / axes.length;
+  return (
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
+      <text x={24} y={30} fontSize="17" fontWeight="700" fill={C.ink}>Рейтинг PRISM — категория {cat} · баллы SMOP</text>
+      <text x={24} y={48} fontSize="11.5" fill={C.sub}>{cat === 'A' ? 'алгоритмика · OneScript' : 'платформа 1С · реальная 1С в Docker'} · {axes.map((a) => `${a} ${AXIS_NAME[a]}`).join(' · ')} · Q — средний балл · {rows.length} моделей</text>
+      <rect x={0} y={headTop} width={W} height={headH} fill={C.head} />
+      <text x={nameX} y={headTop + 17} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
+      {axes.map((a, i) => <text key={a} x={axStart + i * colW + colW / 2} y={headTop + 17} textAnchor="middle" fontSize="11.5" fontWeight="700" fill={AXIS[a]}>{a}</text>)}
+      <text x={qX} y={headTop + 17} textAnchor="middle" fontSize="11.5" fontWeight="700" fill={C.ink}>Q</text>
+      {rows.map((m, i) => {
+        const y0 = bodyTop + i * rowH; const cy = y0 + rowH / 2; const top = i === 0; const q = m[qKey];
+        return (
+          <g key={m.id}>
+            <rect x={0} y={y0} width={W} height={rowH} fill={top ? C.tint : (i % 2 ? C.zebra : 'transparent')} />
+            <rect x={rankX - 12} y={cy - 12} width={24} height={24} rx={6} fill={top ? C.brand : C.head} />
+            <text x={rankX} y={cy + 4} textAnchor="middle" fontSize="11" fontWeight="700" fill={top ? C.brandInk : C.sub}>{i + 1}</text>
+            <text x={nameX} y={cy - 1} fontSize="13" fontWeight={top ? 700 : 600} fill={C.ink}>{m.name}</text>
+            <text x={nameX} y={cy + 12} fontSize="10" fill={C.muted}>{m.family || m.vendor || ''}</text>
+            {axes.map((a, ai) => {
+              const v = m[cat] && m[cat][a]; const cx = axStart + ai * colW + colW / 2; const cw = Math.min(colW - 10, 70);
+              if (v == null) return <text key={a} x={cx} y={cy + 4} textAnchor="middle" fontSize="12" fill={C.muted}>—</text>;
+              return (
+                <g key={a}>
+                  <rect x={cx - cw / 2} y={cy - 13} width={cw} height={26} rx={6} fill={AXIS[a]} fillOpacity={0.12 + (v / 10) * 0.5} />
+                  <text x={cx} y={cy + 4} textAnchor="middle" fontSize="12.5" fontWeight="600" fill={v >= 4 ? C.ink : C.sub}>{v.toFixed(1)}</text>
+                </g>
+              );
+            })}
+            <text x={qX} y={cy + 5} textAnchor="middle" fontSize="18" fontWeight="700" fill={C.ink}>{q.toFixed(2)}</text>
+          </g>
+        );
+      })}
+      <text x={W - 16} y={H - 14} textAnchor="end" fontSize="9.5" fill={C.muted}>{STAMP(meta)}</text>
+    </svg>
+  );
+}
+
 function Btn({ children, onClick, active, primary }) {
   const [h, setH] = React.useState(false);
   return (
@@ -224,6 +315,27 @@ export function LeaderChart({ cat, models = [], meta = {}, navigate }) {
       {shown.length === 0
         ? <p style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)', padding: '30px 0', textAlign: 'center' }}>выбери хотя бы одну модель</p>
         : <Chart svgRef={ref} cat={cat} shown={shown} meta={meta} C={C} hover={hover} setHover={setHover} navigate={navigate} />}
+    </div>
+  );
+}
+
+/* Панель выгрузки таблицы картинкой. Тумблер охвата живёт у родителя (он же фильтрует
+   видимую таблицу), сюда приходит готовый render(ref, C) с нужным SVG — он рисуется скрыто. */
+export function TableExport({ scope, setScope, count, name, render }) {
+  const theme = useTheme();
+  const C = THEME[theme];
+  const ref = React.useRef(null);
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
+      <Btn active={scope === 'top10'} onClick={() => setScope('top10')}>Топ-10</Btn>
+      <Btn active={scope === 'all'} onClick={() => setScope('all')}>Все ({count})</Btn>
+      <span style={{ flex: 1 }} />
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>скачать:</span>
+      <Btn onClick={() => ref.current && exportSvg(ref.current, name)}>↓ SVG</Btn>
+      <Btn primary onClick={() => ref.current && exportPng(ref.current, name, C.bg)}>↓ PNG</Btn>
+      <div style={{ position: 'absolute', left: -99999, top: 0, width: 900, pointerEvents: 'none' }} aria-hidden="true">
+        {render(ref, C)}
+      </div>
     </div>
   );
 }
