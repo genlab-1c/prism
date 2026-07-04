@@ -9,7 +9,7 @@ import { Tag } from '../core/Tag.jsx';
 import { RankBadge } from '../prism/RankBadge.jsx';
 import { VendorLogo } from '../prism/VendorLogo.jsx';
 import { EconomyView } from './Economy.jsx';
-import { LeaderChart } from '../prism/LeaderChart.jsx';
+import { LeaderChart, TableExport, SummaryTableSvg, ScoresTableSvg } from '../prism/LeaderChart.jsx';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
 
 // закреплённая слева колонка (имя модели остаётся видимым при горизонтальной прокрутке)
@@ -310,10 +310,21 @@ function ProfileView({ cat, models, cols, labels, navigate }) {
 export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} }) {
   const [view, setView] = React.useState('summary');
   const [sub, setSub] = React.useState('overall');
+  const [sumScope, setSumScope] = React.useState('top10'); // охват сводки: видимая таблица + картинка
+  const [scoreScope, setScoreScope] = React.useState('top10'); // охват таблицы баллов A/B
   const cols = meta.profileCols || { A: [], B: [] };
   const labels = meta.tagLabels || {};
   const totalTasks = (meta.tasksA || 0) + (meta.tasksB || 0);
   const SUBS = [{ key: 'overall', label: 'Баллы' }, { key: 'funnel', label: 'Где ломается' }, { key: 'profile', label: 'Профиль' }, { key: 'charts', label: 'График' }];
+
+  // сводка: сортировка по средней доле решённых A/B, срез по охвату
+  const sumOverall = (m) => { const v = [m.A?.solved, m.B?.solved].filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : -1; };
+  const sumRanked = React.useMemo(() => [...models].sort((a, b) => sumOverall(b) - sumOverall(a)), [models]);
+  const sumShown = sumScope === 'all' ? sumRanked : sumRanked.slice(0, 10);
+  // баллы A/B: сортировка по Q, срез по охвату
+  const qKey = view === 'A' ? 'qA' : 'qB';
+  const scoreRanked = React.useMemo(() => models.filter((m) => m[qKey] != null && m[view]).sort((a, b) => b[qKey] - a[qKey]), [models, qKey, view]);
+  const scoreShown = scoreScope === 'all' ? scoreRanked : scoreRanked.slice(0, 10);
 
   return (
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
@@ -353,7 +364,9 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
       {view === 'summary' && (
         <>
           <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.</p>
-          <SummaryView models={models} navigate={navigate} />
+          <TableExport scope={sumScope} setScope={setSumScope} count={sumRanked.length} name={`prism_summary_${sumScope}`}
+            render={(ref, C) => <SummaryTableSvg svgRef={ref} rows={sumShown} meta={meta} C={C} />} />
+          <SummaryView models={sumShown} navigate={navigate} />
         </>
       )}
 
@@ -361,7 +374,9 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
         <>
           <div style={{ marginBottom: 16 }}><Segmented items={SUBS} value={sub} onChange={setSub} /></div>
           {sub === 'overall' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>{view === 'A' ? `${meta.tasksA || 0} алгоритмических задач` : `${meta.tasksB || 0} платформенных задач`}. Q — средний балл по осям. ± — погрешность оценки (95% доверительный интервал).</p>}
-          {sub === 'overall' && <OverallTable cat={view} models={models} navigate={navigate} />}
+          {sub === 'overall' && <TableExport scope={scoreScope} setScope={setScoreScope} count={scoreRanked.length} name={`prism_scores_${view}_${scoreScope}`}
+            render={(ref, C) => <ScoresTableSvg svgRef={ref} cat={view} rows={scoreShown} meta={meta} C={C} />} />}
+          {sub === 'overall' && <OverallTable cat={view} models={scoreShown} navigate={navigate} />}
           {sub === 'funnel' && <FunnelView cat={view} models={models} navigate={navigate} />}
           {sub === 'profile' && <ProfileView cat={view} models={models} cols={cols[view]} labels={labels} navigate={navigate} />}
           {sub === 'charts' && <LeaderChart key={view} cat={view} models={models} meta={meta} navigate={navigate} />}
