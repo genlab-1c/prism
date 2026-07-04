@@ -9,6 +9,7 @@ import { Tag } from '../core/Tag.jsx';
 import { RankBadge } from '../prism/RankBadge.jsx';
 import { VendorLogo } from '../prism/VendorLogo.jsx';
 import { EconomyView } from './Economy.jsx';
+import { LeaderChart, OverallChart } from '../prism/LeaderChart.jsx';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
 
 // закреплённая слева колонка (имя модели остаётся видимым при горизонтальной прокрутке)
@@ -309,10 +310,11 @@ function ProfileView({ cat, models, cols, labels, navigate }) {
 export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} }) {
   const [view, setView] = React.useState('summary');
   const [sub, setSub] = React.useState('overall');
+  const [summaryTab, setSummaryTab] = React.useState('table');
   const cols = meta.profileCols || { A: [], B: [] };
   const labels = meta.tagLabels || {};
   const totalTasks = (meta.tasksA || 0) + (meta.tasksB || 0);
-  const SUBS = [{ key: 'overall', label: 'Баллы' }, { key: 'funnel', label: 'Где ломается' }, { key: 'profile', label: 'Профиль' }];
+  const SUBS = [{ key: 'overall', label: 'Баллы' }, { key: 'funnel', label: 'Где ломается' }, { key: 'profile', label: 'Профиль' }, { key: 'charts', label: 'График' }];
 
   return (
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
@@ -351,8 +353,14 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
 
       {view === 'summary' && (
         <>
-          <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.</p>
-          <SummaryView models={models} navigate={navigate} />
+          <div style={{ marginBottom: 16 }}><Segmented items={[{ key: 'table', label: 'Таблица' }, { key: 'chart', label: 'График' }]} value={summaryTab} onChange={setSummaryTab} /></div>
+          {summaryTab === 'table' && (
+            <>
+              <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.</p>
+              <SummaryView models={models} navigate={navigate} />
+            </>
+          )}
+          {summaryTab === 'chart' && <OverallChart models={models} meta={meta} navigate={navigate} />}
         </>
       )}
 
@@ -363,6 +371,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           {sub === 'overall' && <OverallTable cat={view} models={models} navigate={navigate} />}
           {sub === 'funnel' && <FunnelView cat={view} models={models} navigate={navigate} />}
           {sub === 'profile' && <ProfileView cat={view} models={models} cols={cols[view]} labels={labels} navigate={navigate} />}
+          {sub === 'charts' && <LeaderChart key={view} cat={view} models={models} meta={meta} navigate={navigate} />}
         </>
       )}
     </main>
