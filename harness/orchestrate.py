@@ -278,6 +278,7 @@ def run(
     edition_name: str,
     runner: Runner,
     model_ids: set[str] | None = None,
+    task_ids: set[str] | None = None,
 ) -> dict:
     constitution = load_constitution()
     protocol = load_protocol_l1()
@@ -294,6 +295,8 @@ def run(
     for tr in experiment["task_results"]:
         if model_ids is not None and tr["model_id"] not in model_ids:
             continue  # частичный скоринг: считаем только указанные модели
+        if task_ids is not None and tr["task_id"] not in task_ids:
+            continue  # частичный скоринг: считаем только указанные задачи
         task = tasks.get(tr["task_id"])
         if task is None:  # задача эксперимента не мигрирована в tasks/
             continue
@@ -648,12 +651,13 @@ def score_report(
     out_path: Path | None = None,
     full: bool = False,
     model_keys: list[str] | None = None,
+    task_ids: list[str] | None = None,
 ) -> Path:
     """Прогнать издание по эксперименту (пересчёт в 1С), записать L1 и напечатать сводку.
 
-    model_keys — оценить только эти модели (ключи каталога): результат ДОЗАПИСЫВАЕТСЯ в
-    существующий auto_l1 (прежние модели берутся готовыми, не пересчитываются). Так
-    добавляют новые генерации, не гоняя 1С по уже посчитанному базлайну.
+    model_keys / task_ids — оценить только эти модели / задачи: результат ДОЗАПИСЫВАЕТСЯ в
+    существующий auto_l1 (непересчитанные группы берутся готовыми). Так добавляют новые
+    генерации (напр. новые задачи на всех моделях), не гоняя 1С по уже посчитанному базлайну.
     """
     brand_title("оценка L1")
     runner = get_runner()
@@ -679,18 +683,26 @@ def score_report(
         if not model_ids:
             raise SystemExit("ни одной известной модели в --models")
 
-    result = run(experiment_path, edition_name, runner, model_ids=model_ids)
+    task_id_set = set(task_ids) if task_ids else None
+    result = run(experiment_path, edition_name, runner, model_ids=model_ids, task_ids=task_id_set)
 
     out_path = out_path or (PRISM / "results" / "auto" / f"{result['experiment_id']}_auto_l1.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    if model_ids is not None and out_path.exists():  # дозапись: сохранить прежние модели
+    if (model_ids is not None or task_id_set is not None) and out_path.exists():  # дозапись
+        # сохранить группы, НЕ попавшие под пересчёт (модель ИЛИ задача вне фильтра)
         prev = json.loads(out_path.read_text(encoding="utf-8"))
-        kept = [g for g in prev.get("tasks", []) if g["model_id"] not in model_ids]
+        kept = [
+            g
+            for g in prev.get("tasks", [])
+            if (model_ids is not None and g["model_id"] not in model_ids)
+            or (task_id_set is not None and g["task_id"] not in task_id_set)
+        ]
+        n_new = len(result["tasks"])
         result["tasks"] = kept + result["tasks"]
         console.print(
-            f"дозапись в {out_path.name}: пересчитано моделей {len(model_ids)}, "
-            f"сохранено прежних групп {len(kept)}\n",
+            f"дозапись в {out_path.name}: пересчитано групп {n_new}, "
+            f"сохранено прежних {len(kept)}\n",
             style="dim",
             highlight=False,
         )
