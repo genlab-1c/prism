@@ -1,0 +1,40 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "GigaChat-2",
+  "model_name": "GigaChat 2 Lite",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ВыделитьНДС(СуммаСНДС) Экспорт\n    Константа = ПолучитьОбщуюКонстанту(\"СтавкаНДС\");\n    Если Константа <> Неопределено Тогда\n        Возврат Целое((СуммаСНДС * Константа)/100);\n    КонецЕсли;\nКонецФункции;",
+      "response_hash": "57dc35243927c85155837aad2708831b5179361154b9e8aa7179112c35233169",
+      "tokens_input": 193,
+      "tokens_output": 72,
+      "tokens_total": 265,
+      "elapsed_time": 1.2569572925567627,
+      "cost_input": 3.86e-05,
+      "cost_output": 1.4400000000000001e-05,
+      "cost_total": 5.3e-05,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "57dc35243927c85155837aad2708831b5179361154b9e8aa7179112c35233169",
+    "most_common_count": 1,
+    "hashes": [
+      "57dc35243927c85155837aad2708831b5179361154b9e8aa7179112c35233169"
+    ]
+  },
+  "total_tokens": 265,
+  "total_cost": 5.3e-05,
+  "avg_time": 1.257
+}
