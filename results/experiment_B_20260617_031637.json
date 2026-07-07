@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_B_20260617_031637",
   "category": "B",
-  "timestamp": "2026-07-01T00:06:46.718328",
+  "timestamp": "2026-07-07T16:04:52.853508",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -29,7 +29,7 @@
     "Grok Build 0.1",
     "Grok 4.3"
   ],
-  "tasks_count": 15,
+  "tasks_count": 20,
   "runs_per_task": 1,
   "task_results": [
     {
@@ -6339,6 +6339,1338 @@
       "avg_time": 8.102
     },
     {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.034835,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция НайтиДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tДоговоры.Ссылка КАК Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Договоры КАК Договоры\n\t\t|ГДЕ\n\t\t|\tДоговоры.Владелец = &Контрагент\n\t\t|\tИ Договоры.ДатаНачала <= &ДатаСреза\n\t\t|\tИ (Договоры.ДатаОкончания >= &ДатаСреза\n\t\t|\t\t\tИЛИ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1))\n\t\t|\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tДоговоры.ДатаНачала УБЫВ\";\n\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tЗапрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Ссылка;\n\tИначе\n\t\tВозврат Неопределено;\n\tКонецЕсли;\n\t\nКонецФункции\n```",
+          "response_hash": "e5ed24a10af7096996add7c84dd90fb96801651c8a411a6b4218e0ca67d50ef0",
+          "tokens_input": 543,
+          "tokens_output": 491,
+          "tokens_total": 1034,
+          "elapsed_time": 8.261946678161621,
+          "cost_input": 0.002715,
+          "cost_output": 0.012275,
+          "cost_total": 0.01499,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e5ed24a10af7096996add7c84dd90fb96801651c8a411a6b4218e0ca67d50ef0",
+        "most_common_count": 1,
+        "hashes": [
+          "e5ed24a10af7096996add7c84dd90fb96801651c8a411a6b4218e0ca67d50ef0"
+        ]
+      },
+      "total_tokens": 1034,
+      "total_cost": 0.049824999999999994,
+      "avg_time": 8.262
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза)\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"\n        ВЫБРАТЬ\n            Договоры.Ссылка\n        ИЗ\n            Справочник.Договоры КАК Договоры\n        ГДЕ\n            Договоры.Владелец = &Контрагент\n            И (Договоры.ДатаОкончания >= &ДатаСреза ИЛИ Договоры.ДатаОкончания ЕСТЬ NULL)\n            И Договоры.ДатаНачала <= &ДатаСреза\n        УПОРЯДОЧИТЬ ПО\n            Договоры.ДатаНачала УБЫВ\n        ВЫБРАТЬ ПЕРВЫЕ 1\";\n\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    Запрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\n    Результат = Запрос.Выполнить();\n    Если Результат.Пустой() Тогда\n        Возврат Неопределено;\n    Иначе\n        Возврат Результат[0].Ссылка;\n    КонецЕсли;\nКонецФункции\n```",
+          "response_hash": "48afbb18424aa9b973b4b2cf2852888cdedf2480d2844cc10971b22e558621e3",
+          "tokens_input": 244,
+          "tokens_output": 211,
+          "tokens_total": 455,
+          "elapsed_time": 2.3355953693389893,
+          "cost_input": 0.00014639999999999998,
+          "cost_output": 0.0003798,
+          "cost_total": 0.0005262,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "48afbb18424aa9b973b4b2cf2852888cdedf2480d2844cc10971b22e558621e3",
+        "most_common_count": 1,
+        "hashes": [
+          "48afbb18424aa9b973b4b2cf2852888cdedf2480d2844cc10971b22e558621e3"
+        ]
+      },
+      "total_tokens": 455,
+      "total_cost": 0.0005262,
+      "avg_time": 2.336
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.0009017999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "\n\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        |    Договоры.Ссылка\n        |ИЗ\n        |    Справочник.Договоры КАК Договоры\n        |ГДЕ\n        |    Договоры.Владелец = &Контрагент\n        |    И Договоры.ДатаНачала <= &ДатаСреза\n        |    И (Договоры.ДатаОкончания = &Пусто ИЛИ Договоры.ДатаОкончания >= &ДатаСреза)\n        |УПОРЯДОЧИТЬ ПО\n        |    Договоры.ДатаНачала УБЫВ\n        |ОГРАНИЧИТЬ 1\";\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    Запрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n    Запрос.УстановитьПараметр(\"Пусто\", Неопределено);\n    Результат = Запрос.Выполнить();\n    Если Результат.Пустой() Тогда\n        Возврат Неопределено;\n    КонецЕсли;\n    Выборка = Результат.Выбрать();\n    Выборка.Следующий();\n    Возврат Выборка.Ссылка;\nКонецФункции",
+          "response_hash": "970ae4404ed2115c2c92e8cdef1ae393d03c7feb2ea6079e762f19264c522dfd",
+          "tokens_input": 382,
+          "tokens_output": 4920,
+          "tokens_total": 5302,
+          "elapsed_time": 28.66835331916809,
+          "cost_input": 7.640000000000001e-05,
+          "cost_output": 0.0029519999999999998,
+          "cost_total": 0.0030283999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "970ae4404ed2115c2c92e8cdef1ae393d03c7feb2ea6079e762f19264c522dfd",
+        "most_common_count": 1,
+        "hashes": [
+          "970ae4404ed2115c2c92e8cdef1ae393d03c7feb2ea6079e762f19264c522dfd"
+        ]
+      },
+      "total_tokens": 5302,
+      "total_cost": 0.0039302,
+      "avg_time": 28.668
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.00066,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция НайтиДействующийДоговор(Контрагент, ДатаСреза)\n\tЗапрос = Справочники.Договоры.СоздатьЗапрос();\n\tЗапрос.Текст = \"\n\t\tВЫБРАТЬ\n\t\t\tДоговоры.Ссылка\n\t\tИЗ\n\t\t\tСправочник.Договоры КАК Договоры\n\t\tГДЕ\n\t\t\tДоговоры.Владелец = &Контрагент\n\t\t\tИ (Договоры.ДатаНачала <= &ДатаСреза)\n\t\t\tИ (Договоры.ДатаОкончания >= &ДатаСреза ИЛИ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1))\n\t\tУПОРЯДОЧИТЬ ПО\n\t\t\tДатаНачала УБЫВ\n\t\";\n\t\n\tЗапрос.Параметры.Вставить(\"Контрагент\", Контрагент);\n\tЗапрос.Параметры.Вставить(\"ДатаСреза\", ДатаСреза);\n\t\n\tРезультатЗапроса = Запрос.Выполнить();\n\t\n\tЕсли РезультатЗапроса.Пустой() Тогда\n\t\tВозврат Неопределено;\n\tИначе\n\t\tВозврат РезультатЗапроса[0].Ссылка;\n\tКонецЕсли;\nКонецФункции\n```",
+          "response_hash": "27eebe89c080843638c0752cd59917b5e70e23e1302d1f1175a65a530ceff944",
+          "tokens_input": 245,
+          "tokens_output": 252,
+          "tokens_total": 497,
+          "elapsed_time": 6.163729906082153,
+          "cost_input": 0.000147,
+          "cost_output": 0.0004536,
+          "cost_total": 0.0006006,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "27eebe89c080843638c0752cd59917b5e70e23e1302d1f1175a65a530ceff944",
+        "most_common_count": 1,
+        "hashes": [
+          "27eebe89c080843638c0752cd59917b5e70e23e1302d1f1175a65a530ceff944"
+        ]
+      },
+      "total_tokens": 497,
+      "total_cost": 0.0012606,
+      "avg_time": 6.164
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.00037720000000000006,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": " ```\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза)\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n        \"ВЫБРАТЬ\n        |   Договоры.Ссылка\n        |ИЗ\n        |   Справочник.Договоры КАК Договоры\n        |ГДЕ\n        |   Договоры.Владелец = &Контрагент\n        |   И Договоры.ДатаНачала <= &ДатаСреза\n        |   И (Договоры.ДатаОкончания >= &ДатаСреза ИЛИ Договоры.ДатаОкончания = НЕОПРЕДЕЛЕНО)\n        |УПОРЯДОЧИТЬ ПО\n        |   Договоры.ДатаНачала УБЫВ\";\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    Запрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n    Результат = Запрос.Выполнить();\n    Выборка = Результат.Выбрать();\n    Если Выборка.Следующий() Тогда\n        Возврат Выборка.Ссылка;\n    Иначе\n        Возврат Неопределено;\n    КонецЕсли;\nКонецФункции\n```",
+          "response_hash": "cefcc87a69450ef5c361c4b4571648ebd71870a0160633add7ea17d67356918c",
+          "tokens_input": 292,
+          "tokens_output": 228,
+          "tokens_total": 520,
+          "elapsed_time": 3.523016929626465,
+          "cost_input": 5.84e-05,
+          "cost_output": 0.0001368,
+          "cost_total": 0.0001952,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cefcc87a69450ef5c361c4b4571648ebd71870a0160633add7ea17d67356918c",
+        "most_common_count": 1,
+        "hashes": [
+          "cefcc87a69450ef5c361c4b4571648ebd71870a0160633add7ea17d67356918c"
+        ]
+      },
+      "total_tokens": 520,
+      "total_cost": 0.0005724,
+      "avg_time": 3.523
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДействующийДоговорНаДата(СсылкаНаКонтрагента, ДатаСреза) Экспорт\n  \n  Запрос = Новый Запрос;\n  Запрос.Текст =\n    \"ВЫБРАТЬ ПЕРВЫЕ 1\n        Договоры.Ссылка\n      ИЗ \n        Справочник.Договоры КАК Договоры\n      ГДЕ\n        Договоры.Владелец = &Владелец\n        И Договоры.ДатаНачала <= &ДатаСреза\n        И (Договоры.ДатаОкончания >= &ДатаСреза ИЛИ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1))\n      УПОРЯДОЧИТЬ ПО\n        Договоры.ДатаНачала УБЫВ\";\n    \n  Запрос.УстановитьПараметр(\"Владелец\", СсылкаНаКонтрагента);\n  Запрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n  \n  РезультатЗапроса = Запрос.Выполнить();\n  ВыборкаДетальныеЗаписи = РезультатЗапроса.Выбрать();\n  \n  Если ВыборкаДетальныеЗаписи.Количество() > 0 Тогда\n    ВыборкаДетальныеЗаписи.Следующий(); // Берём первый результат запроса\n    Возврат ВыборкаДетальныеЗаписи.Ссылка; // возвращаем найденный договор\n  Иначе\n    Возврат Неопределено; // Нет действующего договора\n  КонецЕсли;\nКонецФункции",
+          "response_hash": "63c67cd43a78c824d5b3ad3d518a2939a1e1e65c480134e80831c0e4cb4305ac",
+          "tokens_input": 274,
+          "tokens_output": 313,
+          "tokens_total": 587,
+          "elapsed_time": 8.86666488647461,
+          "cost_input": 0.0005342999999999999,
+          "cost_output": 0.0006103500000000001,
+          "cost_total": 0.00114465,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "63c67cd43a78c824d5b3ad3d518a2939a1e1e65c480134e80831c0e4cb4305ac",
+        "most_common_count": 1,
+        "hashes": [
+          "63c67cd43a78c824d5b3ad3d518a2939a1e1e65c480134e80831c0e4cb4305ac"
+        ]
+      },
+      "total_tokens": 587,
+      "total_cost": 0.00114465,
+      "avg_time": 8.867
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "gemini-3.5-flash",
+      "model_name": "Gemini 3.5 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.02848494,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tДоговоры.Ссылка КАК Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Договоры КАК Договоры\n\t\t|ГДЕ\n\t\t|\tДоговоры.Владелец = &Контрагент\n\t\t|\tИ Договоры.ДатаНачала <= &ДатаСреза\n\t\t|\tИ (Договоры.ДатаОкончания >= &ДатаСреза\n\t\t|\t\t\tИЛИ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0))\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tДоговоры.ДатаНачала УБЫВ\";\n\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tЗапрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\n\tРезультатЗапроса = Запрос.Выполнить();\n\t\n\tЕсли Не РезультатЗапроса.Пустой() Тогда\n\t\tВыборка = РезультатЗапроса.Выбрать();\n\t\tВыборка.Следующий();\n\t\tВозврат Выборка.Ссылка;\n\tКонецЕсли;\n\n\tВозврат Неопределено;\n\nКонецФункции",
+          "response_hash": "c9e6707185bc428635978c013897655d22c8f3760b870d2dcaf1f5c7a2c714bf",
+          "tokens_input": 381,
+          "tokens_output": 1246,
+          "tokens_total": 1627,
+          "elapsed_time": 6.744426727294922,
+          "cost_input": 0.0013449299999999998,
+          "cost_output": 0.026415199999999996,
+          "cost_total": 0.027760129999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c9e6707185bc428635978c013897655d22c8f3760b870d2dcaf1f5c7a2c714bf",
+        "most_common_count": 1,
+        "hashes": [
+          "c9e6707185bc428635978c013897655d22c8f3760b870d2dcaf1f5c7a2c714bf"
+        ]
+      },
+      "total_tokens": 1627,
+      "total_cost": 0.056245069999999994,
+      "avg_time": 6.744
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.00495192,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1С\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n\n    Запрос = Новый Запрос;\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    Запрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\n    Запрос.Текст =\n    \"ВЫБРАТЬ ПЕРВЫЕ 1\n    |    Договоры.Ссылка КАК Ссылка\n    |ИЗ\n    |    Справочник.Договоры КАК Договоры\n    |ГДЕ\n    |    Договоры.Владелец = &Контрагент\n    |    И Договоры.ДатаНачала <= &ДатаСреза\n    |    И (Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1)\n    |        ИЛИ Договоры.ДатаОкончания >= &ДатаСреза)\n    |УПОРЯДОЧИТЬ ПО\n    |    Договоры.ДатаНачала УБЫВ\";\n\n    Результат = Запрос.Выполнить();\n\n    Если Результат.Пустой() Тогда\n        Возврат Неопределено;\n    Иначе\n        Выборка = Результат.Выбрать();\n        Выборка.Следующий();\n        Возврат Выборка.Ссылка;\n    КонецЕсли;\n\nКонецФункции\n```",
+          "response_hash": "fdcf68d76f49fa954805bba58e348fc7c81d5bd9c65c8c7a3ad45de69e17bc64",
+          "tokens_input": 464,
+          "tokens_output": 456,
+          "tokens_total": 920,
+          "elapsed_time": 9.106628656387329,
+          "cost_input": 0.00043616,
+          "cost_output": 0.0021432,
+          "cost_total": 0.00257936,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "fdcf68d76f49fa954805bba58e348fc7c81d5bd9c65c8c7a3ad45de69e17bc64",
+        "most_common_count": 1,
+        "hashes": [
+          "fdcf68d76f49fa954805bba58e348fc7c81d5bd9c65c8c7a3ad45de69e17bc64"
+        ]
+      },
+      "total_tokens": 920,
+      "total_cost": 0.0075312800000000004,
+      "avg_time": 9.107
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Взаиморасчеты",
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.0371,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ПолучитьДолгКонтрагента(Контрагент) Экспорт\n\t\n\tДолг = 0;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tВзаиморасчетыОстатки.СуммаОстаток КАК СуммаОстаток\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.Взаиморасчеты.Остатки КАК ВзаиморасчетыОстатки\n\t\t|ГДЕ\n\t\t|\tВзаиморасчетыОстатки.Договор.Владелец = &Контрагент\n\t\t|\tИ ВзаиморасчетыОстатки.СуммаОстаток > 0\";\n\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tПока Выборка.Следующий() Цикл\n\t\tДолг = Долг + Выборка.СуммаОстаток;\n\tКонецЦикла;\n\t\n\tВозврат Долг;\n\t\nКонецФункции\n```",
+          "response_hash": "51dc1fb7303917b9f2a431325481ede383e4d93c343e98e134de4e8588106734",
+          "tokens_input": 555,
+          "tokens_output": 390,
+          "tokens_total": 945,
+          "elapsed_time": 6.612223863601685,
+          "cost_input": 0.002775,
+          "cost_output": 0.00975,
+          "cost_total": 0.012525,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "51dc1fb7303917b9f2a431325481ede383e4d93c343e98e134de4e8588106734",
+        "most_common_count": 1,
+        "hashes": [
+          "51dc1fb7303917b9f2a431325481ede383e4d93c343e98e134de4e8588106734"
+        ]
+      },
+      "total_tokens": 945,
+      "total_cost": 0.049625,
+      "avg_time": 6.612
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "Справочник.Контрагенты",
+        "РегистрНакопления.Взаиморасчеты"
+      ],
+      "context_analysis_cost": 0.0013463999999999998,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьСуммарныйДолгКонтрагента(КонтрагентСсылка)\n    Долг = 0;\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"ВЫБРАТЬ\n                    СУММА(Взаиморасчеты.Сумма) КАК ОбщаяСумма\n                  ИЗ\n                    РегистрНакопления.Взаиморасчеты\n                  ГДЕ\n                    Взаиморасчеты.Договор.Владелец = &Контрагент\n                    И Взаиморасчеты.Сумма > 0\";\n    Запрос.УстановитьПараметр(\"Контрагент\", КонтрагентСсылка);\n    Результат = Запрос.Выполнить();\n    Если Результат.Пустой() Тогда\n        Возврат 0;\n    Иначе\n        Возврат Результат[0].ОбщаяСумма;\n    КонецЕсли;\nКонецФункции\n```",
+          "response_hash": "f07eb0ab8da4b8c8646b5a19751e864e2dd8aaf6740c9c3531fd6c4e030cd46b",
+          "tokens_input": 310,
+          "tokens_output": 166,
+          "tokens_total": 476,
+          "elapsed_time": 2.0421462059020996,
+          "cost_input": 0.000186,
+          "cost_output": 0.0002988,
+          "cost_total": 0.00048479999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f07eb0ab8da4b8c8646b5a19751e864e2dd8aaf6740c9c3531fd6c4e030cd46b",
+        "most_common_count": 1,
+        "hashes": [
+          "f07eb0ab8da4b8c8646b5a19751e864e2dd8aaf6740c9c3531fd6c4e030cd46b"
+        ]
+      },
+      "total_tokens": 476,
+      "total_cost": 0.0018311999999999998,
+      "avg_time": 2.042
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0006454,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "\n\nФункция ПолучитьСуммарныйДолгКонтрагента(Контрагент) Экспорт\n    Если ПустаяСтрока(Контрагент) Тогда\n        Возврат 0;\n    КонецЕсли;\n\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"ВЫБРАТЬ\n    |    Взаиморасчеты.Остатки.СуммаОстаток\n    |ИЗ\n    |    РегистрНакопления.Взаиморасчеты.Остатки(&Контрагент) КАК Взаиморасчеты\n    |ГДЕ\n    |    Взаиморасчеты.Договор.Владелец = &Контрагент\n    |    И Взаиморасчеты.СуммаОстаток > 0\";\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n    Результат = Запрос.Выполнить();\n    Выборка = Результат.Выбрать();\n    СуммаДолга = 0;\n    Пока Выборка.Следующий() Цикл\n        СуммаДолга = СуммаДолга + Выборка.СуммаОстаток;\n    КонецЦикла;\n\n    Возврат СуммаДолга;\nКонецФункции",
+          "response_hash": "5e031a39e3d7d3479eedf47bb4a1213d7d309bb32090da980b8660a402bf89c0",
+          "tokens_input": 295,
+          "tokens_output": 5899,
+          "tokens_total": 6194,
+          "elapsed_time": 31.706742763519287,
+          "cost_input": 5.9000000000000004e-05,
+          "cost_output": 0.0035394,
+          "cost_total": 0.0035984,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5e031a39e3d7d3479eedf47bb4a1213d7d309bb32090da980b8660a402bf89c0",
+        "most_common_count": 1,
+        "hashes": [
+          "5e031a39e3d7d3479eedf47bb4a1213d7d309bb32090da980b8660a402bf89c0"
+        ]
+      },
+      "total_tokens": 6194,
+      "total_cost": 0.0042438,
+      "avg_time": 31.707
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьСуммарныйДолгКонтрагента(СсылкаНаКонтрагента)\n\tДолг = 0;\n\tЗапрос = Справочники.Договоры.СоздатьЗапрос();\n\tЗапрос.Текст = \"ВЫБРАТЬ Договор, СУММА(Взаиморасчеты.Остаток) КАК Остаток\n\t\t\t\t\tИЗ Справочник.Договоры КАК Договор\n\t\t\t\t\tЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.Взаиморасчеты КАК Взаиморасчеты\n\t\t\t\t\tПО Договор.Ссылка = Взаиморасчеты.Договор\n\t\t\t\t\tГДЕ Договор.Контрагент = &Контрагент\n\t\t\t\t\tСГРУППИРОВАТЬ ПО Договор\";\n\t\n\tЗапрос.Параметры.Вставить(\"Контрагент\", СсылкаНаКонтрагента);\n\tРезультатЗапроса = Запрос.Выполнить();\n\t\n\tЕсли РезультатЗапроса.Пустой() Тогда\n\t\tВозврат 0;\n\tИначе\n\t\tДля Каждого СтрокаРезультатЗапроса Из РезультатЗапроса Цикл\n\t\t\tЕсли СтрокаРезультатЗапроса.Остаток > 0 Тогда\n\t\t\t\tДолг = Долг + СтрокаРезультатЗапроса.Остаток;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЕсли;\n\t\n\tВозврат Долг;\nКонецФункции\n```",
+          "response_hash": "9ba76e23916c577fb5a4ef601f0fabe4e247462abe64c138fa7204bebd3b6ef4",
+          "tokens_input": 223,
+          "tokens_output": 287,
+          "tokens_total": 510,
+          "elapsed_time": 6.209188461303711,
+          "cost_input": 0.0001338,
+          "cost_output": 0.0005166,
+          "cost_total": 0.0006504,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "9ba76e23916c577fb5a4ef601f0fabe4e247462abe64c138fa7204bebd3b6ef4",
+        "most_common_count": 1,
+        "hashes": [
+          "9ba76e23916c577fb5a4ef601f0fabe4e247462abe64c138fa7204bebd3b6ef4"
+        ]
+      },
+      "total_tokens": 510,
+      "total_cost": 0.0006504,
+      "avg_time": 6.209
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "РегистрНакопления.Взаиморасчеты"
+      ],
+      "context_analysis_cost": 0.00041160000000000003,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": " ```\nФункция ПолучитьСуммарныйДолгКонтрагента(СсылкаНаКонтрагента)\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n        \"ВЫБРАТЬ\n        |    СУММА(Взаиморасчеты.Сумма) КАК СуммаДолга\n        |ИЗ\n        |    РегистрНакопления.Взаиморасчеты КАК Взаиморасчеты\n        |    ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Договоры КАК Договоры\n        |    ПО Взаиморасчеты.Договор = Договоры.Ссылка\n        |ГДЕ\n        |    Договоры.Владелец = &Контрагент\n        |    И Взаиморасчеты.Сумма > 0\";\n    Запрос.УстановитьПараметр(\"Контрагент\", СсылкаНаКонтрагента);\n    Результат = Запрос.Выполнить();\n    Выборка = Результат.Выбрать();\n    Если Выборка.Следующий() Тогда\n        Возврат Выборка.СуммаДолга;\n    Иначе\n        Возврат 0;\n    КонецЕсли;\nКонецФункции\n```",
+          "response_hash": "599d52c2f89a8a2f739e6da72d4431002d1991a45de62ed2905f17e94d428aa7",
+          "tokens_input": 297,
+          "tokens_output": 213,
+          "tokens_total": 510,
+          "elapsed_time": 2.9722042083740234,
+          "cost_input": 5.940000000000001e-05,
+          "cost_output": 0.0001278,
+          "cost_total": 0.0001872,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "599d52c2f89a8a2f739e6da72d4431002d1991a45de62ed2905f17e94d428aa7",
+        "most_common_count": 1,
+        "hashes": [
+          "599d52c2f89a8a2f739e6da72d4431002d1991a45de62ed2905f17e94d428aa7"
+        ]
+      },
+      "total_tokens": 510,
+      "total_cost": 0.0005988,
+      "avg_time": 2.972
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьСуммарныйДолгПоКонтрагенту(СсылкаНаКонтрагента)\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tСУММА(Взаиморасчеты.Остаток) КАК Долг\n\t|ИЗ\n\t|\tРегистрНакопления.Взаиморасчеты КАК Взаиморасчеты\n\t|ГДЕ\n\t|\tВзаиморасчеты.Договор.Ссылка.Владелец = &Контрагент\n\t|\tИ Взаиморасчеты.Остаток > 0\";\n\t\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", СсылкаНаКонтрагента);\n\tРезультатЗапроса = Запрос.Выполнить();\n\tВыборкаДетальныеЗаписи = РезультатЗапроса.Выбрать();\n\n\tЕсли ВыборкаДетальныеЗаписи.Следующий() Тогда\n\t\tВозврат ВыборкаДетальныеЗаписи.Долг;\n\tИначе\n\t\tВозврат 0;\n\tКонецЕсли; \n\nКонецФункции // ПолучитьСуммарныйДолгПоКонтрагенту()",
+          "response_hash": "a73fd2a4f9b6d8879489f318f2fe8a98f7c8c97f1b169db7ff1eb5318a940e4f",
+          "tokens_input": 255,
+          "tokens_output": 241,
+          "tokens_total": 496,
+          "elapsed_time": 7.178261041641235,
+          "cost_input": 0.00049725,
+          "cost_output": 0.00046995,
+          "cost_total": 0.0009672,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "a73fd2a4f9b6d8879489f318f2fe8a98f7c8c97f1b169db7ff1eb5318a940e4f",
+        "most_common_count": 1,
+        "hashes": [
+          "a73fd2a4f9b6d8879489f318f2fe8a98f7c8c97f1b169db7ff1eb5318a940e4f"
+        ]
+      },
+      "total_tokens": 496,
+      "total_cost": 0.0009672,
+      "avg_time": 7.178
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "gemini-3.5-flash",
+      "model_name": "Gemini 3.5 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "РегистрНакопления.Взаиморасчеты"
+      ],
+      "context_analysis_cost": 0.031140429999999997,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДолгКонтрагента(Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ\n\t\t|\tЕСТЬNULL(СУММА(ВЫБОР\n\t\t|\t\t\t\tКОГДА ВзаиморасчетыОстатки.СуммаОстаток > 0\n\t\t|\t\t\t\t\tТОГДА ВзаиморасчетыОстатки.СуммаОстаток\n\t\t|\t\t\t\tИНАЧЕ 0\n\t\t|\t\t\tКОНЕЦ), 0) КАК Долг\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.Взаиморасчеты.Остатки(\n\t\t|\t\t\t,\n\t\t|\t\t\tДоговор В\n\t\t|\t\t\t\t(ВЫБРАТЬ\n\t\t|\t\t\t\t\tДоговоры.Ссылка\n\t\t|\t\t\t\tИЗ\n\t\t|\t\t\t\t\tСправочник.Договоры КАК Договоры\n\t\t|\t\t\t\tГДЕ\n\t\t|\t\t\t\t\tДоговоры.Владелец = &Контрагент)) КАК ВзаиморасчетыОстатки\";\n\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Долг;\n\tКонецЕсли;\n\t\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "b8beb94892e2ec7e24bc1fbdaa714fd71a286d918f3cf6b070d72ff0f188a8ae",
+          "tokens_input": 384,
+          "tokens_output": 1801,
+          "tokens_total": 2185,
+          "elapsed_time": 9.585192680358887,
+          "cost_input": 0.00135552,
+          "cost_output": 0.0381812,
+          "cost_total": 0.03953672,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b8beb94892e2ec7e24bc1fbdaa714fd71a286d918f3cf6b070d72ff0f188a8ae",
+        "most_common_count": 1,
+        "hashes": [
+          "b8beb94892e2ec7e24bc1fbdaa714fd71a286d918f3cf6b070d72ff0f188a8ae"
+        ]
+      },
+      "total_tokens": 2185,
+      "total_cost": 0.07067715,
+      "avg_time": 9.585
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "РегистрНакопления.Взаиморасчеты"
+      ],
+      "context_analysis_cost": 0.00740062,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция ПолучитьСуммуДолгаКонтрагента(КонтрагентСсылка) Экспорт\n\n    Запрос = Новый Запрос;\n    Запрос.УстановитьПараметр(\"Контрагент\", КонтрагентСсылка);\n    Запрос.Текст =\n    \"ВЫБРАТЬ\n    |    СУММА(ВЫБОР\n    |        КОГДА ВзаиморасчетыОстатки.СуммаОстаток > 0\n    |        ТОГДА ВзаиморасчетыОстатки.СуммаОстаток\n    |        ИНАЧЕ 0\n    |    КОНЕЦ) КАК СуммаДолга\n    |ИЗ\n    |    РегистрНакопления.Взаиморасчеты.Остатки(\n    |        ,\n    |        Договор В (\n    |            ВЫБРАТЬ Договоры.Ссылка\n    |            ИЗ Справочник.Договоры КАК Договоры\n    |            ГДЕ Договоры.Владелец = &Контрагент\n    |        )\n    |    ) КАК ВзаиморасчетыОстатки\";\n\n    РезультатЗапроса = Запрос.Выполнить();\n    Если РезультатЗапроса.Пустой() Тогда\n        Возврат 0;\n    КонецЕсли;\n\n    Выборка = РезультатЗапроса.Выбрать();\n    Выборка.Следующий();\n\n    СуммаДолга = ?(ЗначениеЗаполнено(Выборка.СуммаДолга), Выборка.СуммаДолга, 0);\n\n    Возврат СуммаДолга;\n\nКонецФункции\n```",
+          "response_hash": "c250dc78a0470796e83989787d200d47e3b40ebcab30c874c65a779f9313c852",
+          "tokens_input": 462,
+          "tokens_output": 2105,
+          "tokens_total": 2567,
+          "elapsed_time": 13.22875714302063,
+          "cost_input": 0.00043428,
+          "cost_output": 0.009893500000000001,
+          "cost_total": 0.010327780000000002,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c250dc78a0470796e83989787d200d47e3b40ebcab30c874c65a779f9313c852",
+        "most_common_count": 1,
+        "hashes": [
+          "c250dc78a0470796e83989787d200d47e3b40ebcab30c874c65a779f9313c852"
+        ]
+      },
+      "total_tokens": 2567,
+      "total_cost": 0.017728400000000002,
+      "avg_time": 13.229
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.02515,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1с\nФункция ВыделитьНДС(СуммаСНДС) Экспорт\n\tСтавка = Константы.СтавкаНДС.Получить();\n\tСуммаНДС = СуммаСНДС * Ставка / (100 + Ставка);\n\tВозврат Окр(СуммаНДС, 2);\nКонецФункции\n```",
+          "response_hash": "3188d3f9c7f2e8d8540b0d3dfff5eacef8d2f8287b895307ff60f0bc26a02209",
+          "tokens_input": 351,
+          "tokens_output": 120,
+          "tokens_total": 471,
+          "elapsed_time": 3.351992130279541,
+          "cost_input": 0.001755,
+          "cost_output": 0.003,
+          "cost_total": 0.0047550000000000005,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3188d3f9c7f2e8d8540b0d3dfff5eacef8d2f8287b895307ff60f0bc26a02209",
+        "most_common_count": 1,
+        "hashes": [
+          "3188d3f9c7f2e8d8540b0d3dfff5eacef8d2f8287b895307ff60f0bc26a02209"
+        ]
+      },
+      "total_tokens": 471,
+      "total_cost": 0.029905,
+      "avg_time": 3.352
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.0009636,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьСуммуНДС(СуммаСНДС)\n    СтавкаНДС = Константы.СтавкаНДС.Получить();\n    СуммаБезНДС = СуммаСНДС / (1 + СтавкаНДС / 100);\n    СуммаНДС = СуммаСНДС - СуммаБезНДС;\n    Возврат СуммаНДС;\nКонецФункции\n```",
+          "response_hash": "3247e1bb9cc15f3d714141f8faa61e202c5178a57d008ba9058d550622b3fe7c",
+          "tokens_input": 193,
+          "tokens_output": 71,
+          "tokens_total": 264,
+          "elapsed_time": 1.5552217960357666,
+          "cost_input": 0.0001158,
+          "cost_output": 0.00012780000000000002,
+          "cost_total": 0.0002436,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3247e1bb9cc15f3d714141f8faa61e202c5178a57d008ba9058d550622b3fe7c",
+        "most_common_count": 1,
+        "hashes": [
+          "3247e1bb9cc15f3d714141f8faa61e202c5178a57d008ba9058d550622b3fe7c"
+        ]
+      },
+      "total_tokens": 264,
+      "total_cost": 0.0012072,
+      "avg_time": 1.555
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.0008118000000000001,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "\n\n```1c\nФункция ВыделитьНДС(СуммаСНДС) Экспорт\n    Ставка = Константы.СтавкаНДС.Значение;\n    Возврат СуммаСНДС * Ставка / (100 + Ставка);\nКонецФункции\n```",
+          "response_hash": "a1b759c2a52fd3a5babd91fb7e1926ba17ccafadd61a8cd34419869092a3dc4b",
+          "tokens_input": 239,
+          "tokens_output": 2523,
+          "tokens_total": 2762,
+          "elapsed_time": 11.58708643913269,
+          "cost_input": 4.78e-05,
+          "cost_output": 0.0015138,
+          "cost_total": 0.0015616,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "a1b759c2a52fd3a5babd91fb7e1926ba17ccafadd61a8cd34419869092a3dc4b",
+        "most_common_count": 1,
+        "hashes": [
+          "a1b759c2a52fd3a5babd91fb7e1926ba17ccafadd61a8cd34419869092a3dc4b"
+        ]
+      },
+      "total_tokens": 2762,
+      "total_cost": 0.0023734000000000003,
+      "avg_time": 11.587
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0006071999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция РассчитатьНДС(СуммаСНДС)\n    СтавкаНДС = Константы.СтавкаНДС.Получить();\n    СуммаБезНДС = СуммаСНДС / (1 + СтавкаНДС / 100);\n    СуммаНДС = СуммаСНДС - СуммаБезНДС;\n    Возврат СуммаНДС;\nКонецФункции\n```",
+          "response_hash": "5c2532f5da7c218215a322b03129dd92d2ea4edcc5bd7e3d3f3969eff26aa8a6",
+          "tokens_input": 172,
+          "tokens_output": 68,
+          "tokens_total": 240,
+          "elapsed_time": 2.370337724685669,
+          "cost_input": 0.0001032,
+          "cost_output": 0.0001224,
+          "cost_total": 0.0002256,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5c2532f5da7c218215a322b03129dd92d2ea4edcc5bd7e3d3f3969eff26aa8a6",
+        "most_common_count": 1,
+        "hashes": [
+          "5c2532f5da7c218215a322b03129dd92d2ea4edcc5bd7e3d3f3969eff26aa8a6"
+        ]
+      },
+      "total_tokens": 240,
+      "total_cost": 0.0008327999999999999,
+      "avg_time": 2.37
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.0003208,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": " ```\nФункция ВыделитьНДС(СуммаССНДС)\n    СтавкаНДС = Константы.СтавкаНДС.Получить();\n    НДС = СуммаССНДС / (100 + СтавкаНДС) * СтавкаНДС;\n    Возврат НДС;\nКонецФункции\n```",
+          "response_hash": "3305056ac5c1026c93d50b157c64ab0560814dd0072e6715abff4f57393e2625",
+          "tokens_input": 194,
+          "tokens_output": 55,
+          "tokens_total": 249,
+          "elapsed_time": 1.7218537330627441,
+          "cost_input": 3.88e-05,
+          "cost_output": 3.3e-05,
+          "cost_total": 7.180000000000001e-05,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3305056ac5c1026c93d50b157c64ab0560814dd0072e6715abff4f57393e2625",
+        "most_common_count": 1,
+        "hashes": [
+          "3305056ac5c1026c93d50b157c64ab0560814dd0072e6715abff4f57393e2625"
+        ]
+      },
+      "total_tokens": 249,
+      "total_cost": 0.0003926,
+      "avg_time": 1.722
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ВыделитьСуммуНДС(СуммаСНДС) Экспорт\n    СуммаБезНДС = СуммаСНДС / ((100 + Константы.СтавкаНДС.Получить())/100);\n    Возврат СуммаСНДС - СуммаБезНДС;\nКонецФункции",
+          "response_hash": "c56c25d73c62d024b1c7c784b9782498ba466d104de95b33ad4ec46be472c952",
+          "tokens_input": 193,
+          "tokens_output": 67,
+          "tokens_total": 260,
+          "elapsed_time": 2.339958906173706,
+          "cost_input": 0.00037635,
+          "cost_output": 0.00013065,
+          "cost_total": 0.0005070000000000001,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c56c25d73c62d024b1c7c784b9782498ba466d104de95b33ad4ec46be472c952",
+        "most_common_count": 1,
+        "hashes": [
+          "c56c25d73c62d024b1c7c784b9782498ba466d104de95b33ad4ec46be472c952"
+        ]
+      },
+      "total_tokens": 260,
+      "total_cost": 0.0005070000000000001,
+      "avg_time": 2.34
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "gemini-3.5-flash",
+      "model_name": "Gemini 3.5 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.01267677,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ВыделитьНДС(СуммаСНДС) Экспорт\n\t\n\tСтавкаНДС = Константы.СтавкаНДС.Получить();\n\t\n\tЕсли СтавкаНДС = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tСуммаНДС = (СуммаСНДС * СтавкаНДС) / (100 + СтавкаНДС);\n\t\n\tВозврат Окр(СуммаНДС, 2);\n\t\nКонецФункции\n```",
+          "response_hash": "8124418aeb07e68bc9ce161a43ac7defe1f03c65f3d89650414f30f99b11d301",
+          "tokens_input": 232,
+          "tokens_output": 891,
+          "tokens_total": 1123,
+          "elapsed_time": 5.214393377304077,
+          "cost_input": 0.00081896,
+          "cost_output": 0.0188892,
+          "cost_total": 0.01970816,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "8124418aeb07e68bc9ce161a43ac7defe1f03c65f3d89650414f30f99b11d301",
+        "most_common_count": 1,
+        "hashes": [
+          "8124418aeb07e68bc9ce161a43ac7defe1f03c65f3d89650414f30f99b11d301"
+        ]
+      },
+      "total_tokens": 1123,
+      "total_cost": 0.03238493,
+      "avg_time": 5.214
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.00425162,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция ВыделитьНДС(СуммаСНДС) Экспорт\n    Ставка = Константы.СтавкаНДС.Получить();\n    Если Ставка = 0 Тогда\n        Возврат 0;\n    КонецЕсли;\n    Возврат СуммаСНДС * Ставка / (100 + Ставка);\nКонецФункции\n```",
+          "response_hash": "ca051df2a1df674e7c53468a217cadd401c9825112e3049ebad441674381b27f",
+          "tokens_input": 301,
+          "tokens_output": 251,
+          "tokens_total": 552,
+          "elapsed_time": 4.620315074920654,
+          "cost_input": 0.00028293999999999997,
+          "cost_output": 0.0011796999999999999,
+          "cost_total": 0.0014626399999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ca051df2a1df674e7c53468a217cadd401c9825112e3049ebad441674381b27f",
+        "most_common_count": 1,
+        "hashes": [
+          "ca051df2a1df674e7c53468a217cadd401c9825112e3049ebad441674381b27f"
+        ]
+      },
+      "total_tokens": 552,
+      "total_cost": 0.0057142600000000005,
+      "avg_time": 4.62
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрБухгалтерии.Хозрасчетный",
+        "ПланСчетов.Основной"
+      ],
+      "context_analysis_cost": 0.04023499999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ПолучитьСальдоСчета(Счет) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tСУММА(ЕСТЬNULL(Дебет.Сумма, 0)) КАК ОборотДт,\n\t|\tСУММА(ЕСТЬNULL(Кредит.Сумма, 0)) КАК ОборотКт\n\t|ИЗ\n\t|\t(ВЫБРАТЬ\n\t|\t\tХозрасчетный.Сумма КАК Сумма\n\t|\tИЗ\n\t|\t\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t|\tГДЕ\n\t|\t\tХозрасчетный.СчетДт В ИЕРАРХИИ (&Счет)) КАК Дебет,\n\t|\n\t|\t(ВЫБРАТЬ\n\t|\t\tХозрасчетный.Сумма КАК Сумма\n\t|\tИЗ\n\t|\t\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t|\tГДЕ\n\t|\t\tХозрасчетный.СчетКт В ИЕРАРХИИ (&Счет)) КАК Кредит\";\n\t\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\t\n\tВыборка = Запрос.Выбрать();\n\t\n\tОборотДт = 0;\n\tОборотКт = 0;\n\tЕсли Выборка.Следующий() Тогда\n\t\tОборотДт = Выборка.ОборотДт;\n\t\tОборотКт = Выборка.ОборотКт;\n\tКонецЕсли;\n\t\n\tЕсли Счет.Вид = ВидСчета.Пассивный Тогда\n\t\tСальдо = ОборотКт - ОборотДт;\n\tИначе\n\t\tСальдо = ОборотДт - ОборотКт;\n\tКонецЕсли;\n\t\n\tВозврат Сальдо;\n\t\nКонецФункции\n```\n\nЕсли требуется суммировать обороты в одном запросе без декартова произведения подзапросов (что некорректно при разном числе строк), приведённый вариант учитывает это за счёт раздельного суммирования внутри подзапросов перед соединением. Но безопаснее использовать объединение:\n\n```bsl\nФункция ПолучитьСальдоСчета(Счет) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tСУММА(Данные.Дебет) КАК ОборотДт,\n\t|\tСУММА(Данные.Кредит) КАК ОборотКт\n\t|ИЗ\n\t|\t(ВЫБРАТЬ\n\t|\t\tХозрасчетный.Сумма КАК Дебет,\n\t|\t\t0 КАК Кредит\n\t|\tИЗ\n\t|\t\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t|\tГДЕ\n\t|\t\tХозрасчетный.СчетДт В ИЕРАРХИИ (&Счет)\n\t|\n\t|\tОБЪЕДИНИТЬ ВСЕ\n\t|\n\t|\tВЫБРАТЬ\n\t|\t\t0,\n\t|\t\tХозрасчетный.Сумма\n\t|\tИЗ\n\t|\t\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t|\tГДЕ\n\t|\t\tХозрасчетный.СчетКт В ИЕРАРХИИ (&Счет)) КАК Данные\";\n\t\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\t\n\tВыборка = Запрос.Выбрать();\n\t\n\tОборотДт = 0;\n\tОборотКт = 0;\n\tЕсли Выборка.Следующий() Тогда\n\t\tОборотДт = ?(Выборка.ОборотДт = Null, 0, Выборка.ОборотДт);\n\t\tОборотКт = ?(Выборка.ОборотКт = Null, 0, Выборка.ОборотКт);\n\tКонецЕсли;\n\t\n\tЕсли Счет.Вид = ВидСчета.Пассивный Тогда\n\t\tСальдо = ОборотКт - ОборотДт;\n\tИначе\n\t\tСальдо = ОборотДт - ОборотКт;\n\tКонецЕсли;\n\t\n\tВозврат Сальдо;\n\t\nКонецФункции\n```",
+          "response_hash": "5e271a55c4f0f54ef7178750d457cd43244f71b82581bfcf3236c5eb3f8b719b",
+          "tokens_input": 735,
+          "tokens_output": 1553,
+          "tokens_total": 2288,
+          "elapsed_time": 17.704891681671143,
+          "cost_input": 0.003675,
+          "cost_output": 0.038825,
+          "cost_total": 0.042499999999999996,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5e271a55c4f0f54ef7178750d457cd43244f71b82581bfcf3236c5eb3f8b719b",
+        "most_common_count": 1,
+        "hashes": [
+          "5e271a55c4f0f54ef7178750d457cd43244f71b82581bfcf3236c5eb3f8b719b"
+        ]
+      },
+      "total_tokens": 2288,
+      "total_cost": 0.08273499999999999,
+      "avg_time": 17.705
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьСальдоСчета(СсылкаНаСчет)\n    Сальдо = 0;\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"ВЫБРАТЬ\n                    СУММА(Хозрасчетный.Сумма) КАК Сумма\n                    ИЗ\n                    РегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n                    ГДЕ\n                    Хозрасчетный.СчетДт В ИЕРАРХИИ(&СсылкаНаСчет)\n                    ИЛИ\n                    Хозрасчетный.СчетКт В ИЕРАРХИИ(&СсылкаНаСчет)\";\n    Запрос.УстановитьПараметр(\"СсылкаНаСчет\", СсылкаНаСчет);\n    РезультатЗапроса = Запрос.Выполнить();\n    Если РезультатЗапроса.Пустой() Тогда\n        Возврат Сальдо;\n    КонецЕсли;\n    Выбор = РезультатЗапроса.Выбрать();\n    Выбор.Следующий();\n    ОборотПоДебету = Выбор.Сумма;\n\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"ВЫБРАТЬ\n                    СУММА(Хозрасчетный.Сумма) КАК Сумма\n                    ИЗ\n                    РегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n                    ГДЕ\n                    Хозрасчетный.СчетКт В ИЕРАРХИИ(&СсылкаНаСчет)\n                    ИЛИ\n                    Хозрасчетный.СчетДт В ИЕРАРХИИ(&СсылкаНаСчет)\";\n    Запрос.УстановитьПараметр(\"СсылкаНаСчет\", СсылкаНаСчет);\n    РезультатЗапроса = Запрос.Выполнить();\n    Если РезультатЗапроса.Пустой() Тогда\n        Возврат Сальдо;\n    КонецЕсли;\n    Выбор = РезультатЗапроса.Выбрать();\n    Выбор.Следующий();\n    ОборотПоКредиту = Выбор.Сумма;\n\n    Сальдо = ОборотПоДебету - ОборотПоКредиту;\n\n    Если СсылкаНаСчет.Вид = ВидСчета.Пассивный Тогда\n        Сальдо = ОборотПоКредиту - ОборотПоДебету;\n    КонецЕсли;\n\n    Возврат Сальдо;\nКонецФункции\n```",
+          "response_hash": "0bec4896855cbd3b909179cc27caa9b61bf366da6f9fe0646787ae5743e46190",
+          "tokens_input": 299,
+          "tokens_output": 464,
+          "tokens_total": 763,
+          "elapsed_time": 3.9302871227264404,
+          "cost_input": 0.0001794,
+          "cost_output": 0.0008352,
+          "cost_total": 0.0010146,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "0bec4896855cbd3b909179cc27caa9b61bf366da6f9fe0646787ae5743e46190",
+        "most_common_count": 1,
+        "hashes": [
+          "0bec4896855cbd3b909179cc27caa9b61bf366da6f9fe0646787ae5743e46190"
+        ]
+      },
+      "total_tokens": 763,
+      "total_cost": 0.0010146,
+      "avg_time": 3.93
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.00026920000000000004,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "\n\n```1c\nФункция ПолучитьСальдоСчета(СсылкаНаСчет)\n\tЗапросД = Новый Запрос;\n\tЗапросД.Текст = \"ВЫБРАТЬ\n\t|\tСУММА(ХОЗРАСЧЕТНЫЙ.Сумма) КАК Дебет\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный КАК ХОЗРАСЧЕТНЫЙ\n\t|ГДЕ\n\t|\tХОЗРАСЧЕТНЫЙ.СчетДт В ИЕРАРХИИ &Счет\";\n\tЗапросД.УстановитьПараметр(\"Счет\", СсылкаНаСчет);\n\tДебет = ЗапросД.Выполнить().Поле(0);\n\tЕсли Дебет = Неопределено Тогда Дебет = 0; КонецЕсли;\n\n\tЗапросК = Новый Запрос;\n\tЗапросК.Текст = \"ВЫБРАТЬ\n\t|\tСУММА(ХОЗРАСЧЕТНЫЙ.Сумма) КАК Кредит\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный КАК ХОЗРАСЧЕТНЫЙ\n\t|ГДЕ\n\t|\tХОЗРАСЧЕТНЫЙ.СчетКт В ИЕРАРХИИ &Счет\";\n\tЗапросК.УстановитьПараметр(\"Счет\", СсылкаНаСчет);\n\tКредит = ЗапросК.Выполнить().Поле(0);\n\tЕсли Кредит = Неопределено Тогда Кредит = 0; КонецЕсли;\n\n\tВидСчета = СсылкаНаСчет.Вид;\n\tЕсли ВидСчета = ВидСчета.Пассивный Тогда\n\t\tСальдо = Кредит - Дебет;\n\tИначе\n\t\tСальдо = Дебет - Кредит;\n\tКонецЕсли;\n\n\tВозврат Сальдо;\nКонецФункции\n```",
+          "response_hash": "7f60937884a760d58128218bf3f6b870924b2223429c55af1779e46fd14ef8b5",
+          "tokens_input": 365,
+          "tokens_output": 5985,
+          "tokens_total": 6350,
+          "elapsed_time": 26.923146963119507,
+          "cost_input": 7.3e-05,
+          "cost_output": 0.0035909999999999996,
+          "cost_total": 0.0036639999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7f60937884a760d58128218bf3f6b870924b2223429c55af1779e46fd14ef8b5",
+        "most_common_count": 1,
+        "hashes": [
+          "7f60937884a760d58128218bf3f6b870924b2223429c55af1779e46fd14ef8b5"
+        ]
+      },
+      "total_tokens": 6350,
+      "total_cost": 0.0039331999999999995,
+      "avg_time": 26.923
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный"
+      ],
+      "context_analysis_cost": 0.0014214,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьСальдо(СсылкаНаСчет)\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\"ВЫБРАТЬ\n\t|\tСУММА(Хозрасчетный.Сумма) КАК Сумма,\n\t|\tХозрасчетный.СчетДт КАК Счет\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t|ГДЕ\n\t|\tХозрасчетный.СчетДт В ИЕРАРХИИ (&СсылкаНаСчет)\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tХозрасчетный.СчетДт\";\n\n\tЗапрос.Параметры.Вставить(\"СсылкаНаСчет\", СсылкаНаСчет);\n\tРезультатЗапроса = Запрос.Выполнить();\n\n\tДебет = 0;\n\tЕсли Не РезультатЗапроса.Пустой() Тогда\n\t\tДебет = РезультатЗапроса[0].Сумма;\n\tКонецЕсли;\n\n\tЗапрос.Текст = \n\t\"ВЫБРАТЬ\n\t|\tСУММА(Хозрасчетный.Сумма) КАК Сумма,\n\t|\tХозрасчетный.СчетКт КАК Счет\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t|ГДЕ\n\t|\tХозрасчетный.СчетКт В ИЕРАРХИИ (&СсылкаНаСчет)\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tХозрасчетный.СчетКт\";\n\n\tЗапрос.Параметры.Вставить(\"СсылкаНаСчет\", СсылкаНаСчет);\n\tРезультатЗапроса = Запрос.Выполнить();\n\n\tКредит = 0;\n\tЕсли Не РезультатЗапроса.Пустой() Тогда\n\t\tКредит = РезультатЗапроса[0].Сумма;\n\tКонецЕсли;\n\n\tСальдо = Дебет - Кредит;\n\tЕсли СсылкаНаСчет.Вид = ВидСчета.Пассивный Тогда\n\t\tСальдо = Кредит - Дебет;\n\tКонецЕсли;\n\n\tВозврат Сальдо;\nКонецФункции\n```",
+          "response_hash": "46220a5dc80bf8a5a01a0b921c17f2c9007801d4d62b4015e9d809967e0f31fa",
+          "tokens_input": 432,
+          "tokens_output": 453,
+          "tokens_total": 885,
+          "elapsed_time": 11.306785821914673,
+          "cost_input": 0.00025919999999999996,
+          "cost_output": 0.0008154,
+          "cost_total": 0.0010746,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "46220a5dc80bf8a5a01a0b921c17f2c9007801d4d62b4015e9d809967e0f31fa",
+        "most_common_count": 1,
+        "hashes": [
+          "46220a5dc80bf8a5a01a0b921c17f2c9007801d4d62b4015e9d809967e0f31fa"
+        ]
+      },
+      "total_tokens": 885,
+      "total_cost": 0.002496,
+      "avg_time": 11.307
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": " ```\nФункция ПолучитьСальдоСчёта(СсылкаНаСчёт)\n\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"\"\"\n    ВЫБРАТЬ\n        Хозрасчетный.Счёт,\n        СУММА(ВЫБОР\n            КОГДА Хозрасчетный.СчётДт = Хозрасчетный.Счёт\n            ТОГДА Хозрасчетный.Сумма\n            ИНАЧЕ 0\n        КОНЕЦ) КАК ОборотПоДебету,\n        СУММА(ВЫБОР\n            КОГДА Хозрасчетный.СчётКт = Хозрасчетный.Счёт\n            ТОГДА Хозрасчетный.Сумма\n            ИНАЧЕ 0\n        КОНЕЦ) КАК ОборотПоКредиту\n    ИЗ\n        РегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n    ГДЕ\n        Хозрасчетный.Счёт В ИЕРАРХИИ(&СсылкаНаСчёт)\n    \"\"\";\n    Запрос.УстановитьПараметр(\"СсылкаНаСчёт\", СсылкаНаСчёт);\n    Результат = Запрос.Выполнить();\n    Выборка = Результат.Выбрать();\n\n    Если Выборка.Следующий() Тогда\n        ОборотПоДебету = Выборка.ОборотПоДебету;\n        ОборотПоКредиту = Выборка.ОборотПоКредиту;\n\n        ВидСчёта = СсылкаНаСчёт.Вид;\n\n        Если ВидСчёта = Перечисления.ВидСчета.Пассивный Тогда\n            Возврат ОборотПоКредиту - ОборотПоДебету;\n        Иначе\n            Возврат ОборотПоДебету - ОборотПоКредиту;\n        КонецЕсли;\n    Иначе\n        Возврат 0;\n    КонецЕсли;\n\nКонецФункции\n```",
+          "response_hash": "35f032fc691c847353204f14b11a1556bd0c0db458e46c2926b1081f2609e609",
+          "tokens_input": 300,
+          "tokens_output": 366,
+          "tokens_total": 666,
+          "elapsed_time": 4.7321696281433105,
+          "cost_input": 5.9999999999999995e-05,
+          "cost_output": 0.0002196,
+          "cost_total": 0.00027959999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "35f032fc691c847353204f14b11a1556bd0c0db458e46c2926b1081f2609e609",
+        "most_common_count": 1,
+        "hashes": [
+          "35f032fc691c847353204f14b11a1556bd0c0db458e46c2926b1081f2609e609"
+        ]
+      },
+      "total_tokens": 666,
+      "total_cost": 0.00027959999999999997,
+      "avg_time": 4.732
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьСальдоПоСчету(СсылкаНаСчет)\n    \n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n            СУММА(ВЫРАЗИТЬ(\n                ? * Хозрасчетный.Сумма,\n                ТипЧисла(15, 2))) КАК Сальдо\n        ИЗ\n            РегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n        ГДЕ\n            Хозрасчетный.СчётДт В ИЕРАРХИИ(&Счет)\n            ИЛИ Хозрасчетный.СчётКт В ИЕРАРХИИ(&Счет)\";\n        \n    Если СсылкаНаСчет.Вид = Перечисление.ВидыСчетов.Пассивный Тогда\n        // Для пассивных счетов считаем кредитовое сальдо\n        Запрос.УстановитьПараметр(\"?\", -1); \n    Иначе\n        // Для активных и активно-пассивных счетов считаем дебетовое сальдо\n        Запрос.УстановитьПараметр(\"?\", 1);  \n    КонецЕсли;   \n    \n    Запрос.УстановитьПараметр(\"Счет\", СсылкаНаСчет);\n    \n    РезультатЗапроса = Запрос.Выполнить();\n    ВыборкаДетальныеЗаписи = РезультатЗапроса.Выбрать();\n    \n    Если ВыборкаДетальныеЗаписи.Следующий() Тогда\n        Возврат ВыборкаДетальныеЗаписи.Сальдо;\n    Иначе\n        Возврат 0;\n    КонецЕсли;\n\nКонецФункции",
+          "response_hash": "746a0a3f5ba281f9c3f853108a9acd084fe0d4ebe1c2d86543d100f794958f09",
+          "tokens_input": 317,
+          "tokens_output": 336,
+          "tokens_total": 653,
+          "elapsed_time": 9.811421871185303,
+          "cost_input": 0.00061815,
+          "cost_output": 0.0006552,
+          "cost_total": 0.00127335,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "746a0a3f5ba281f9c3f853108a9acd084fe0d4ebe1c2d86543d100f794958f09",
+        "most_common_count": 1,
+        "hashes": [
+          "746a0a3f5ba281f9c3f853108a9acd084fe0d4ebe1c2d86543d100f794958f09"
+        ]
+      },
+      "total_tokens": 653,
+      "total_cost": 0.00127335,
+      "avg_time": 9.811
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "gemini-3.5-flash",
+      "model_name": "Gemini 3.5 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный"
+      ],
+      "context_analysis_cost": 0.04306756,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьСальдоСчета(СчетСсылка) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ\n\t\t|\tСчет.Вид КАК Вид,\n\t\t|\tЕСТЬNULL(Обороты.ОборотДт, 0) КАК ОборотДт,\n\t\t|\tЕСТЬNULL(Обороты.ОборотКт, 0) КАК ОборотКт\n\t\t|ИЗ\n\t\t|\tПланСчетов.Основной КАК Счет\n\t\t|\t\tЛЕВОЕ СОЕДИНЕНИЕ (\n\t\t|\t\t\tВЫБРАТЬ\n\t\t|\t\t\t\tСУММА(ВЫБОР КОГДА Хозрасчетный.СчетДт В ИЕРАРХИИ(&Счет) ТОГДА Хозрасчетный.Сумма ИНАЧЕ 0 КОНЕЦ) КАК ОборотДт,\n\t\t|\t\t\t\tСУММА(ВЫБОР КОГДА Хозрасчетный.СчетКт В ИЕРАРХИИ(&Счет) ТОГДА Хозрасчетный.Сумма ИНАЧЕ 0 КОНЕЦ) КАК ОборотКт\n\t\t|\t\t\tИЗ\n\t\t|\t\t\t\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t\t|\t\t\tГДЕ\n\t\t|\t\t\t\tХозрасчетный.СчетДт В ИЕРАРХИИ(&Счет)\n\t\t|\t\t\t\tИЛИ Хозрасчетный.СчетКт В ИЕРАРХИИ(&Счет)\n\t\t|\t\t) КАК Обороты\n\t\t|\t\tПО ИСТИНА\n\t\t|ГДЕ\n\t\t|\tСчет.Ссылка = &Счет\";\n\t\t\n\tЗапрос.УстановитьПараметр(\"Счет\", СчетСсылка);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tЕсли Выборка.Вид = ВидСчета.Пассивный Тогда\n\t\t\tВозврат Выборка.ОборотКт - Выборка.ОборотДт;\n\t\tИначе\n\t\t\tВозврат Выборка.ОборотДт - Выборка.ОборотКт;\n\t\tКонецЕсли;\n\tКонецЕсли;\n\t\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "d7db2642227f905e94173106b6b0900d1b23fc71526a64a0cddcc3f36051163c",
+          "tokens_input": 516,
+          "tokens_output": 2930,
+          "tokens_total": 3446,
+          "elapsed_time": 13.56041955947876,
+          "cost_input": 0.0018214799999999997,
+          "cost_output": 0.062116,
+          "cost_total": 0.06393747999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d7db2642227f905e94173106b6b0900d1b23fc71526a64a0cddcc3f36051163c",
+        "most_common_count": 1,
+        "hashes": [
+          "d7db2642227f905e94173106b6b0900d1b23fc71526a64a0cddcc3f36051163c"
+        ]
+      },
+      "total_tokens": 3446,
+      "total_cost": 0.10700504,
+      "avg_time": 13.56
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный",
+        "Документ.Операция"
+      ],
+      "context_analysis_cost": 0.0139355,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция ПолучитьСальдоСчета(СсылкаНаСчет) Экспорт\n\n    Запрос = Новый Запрос;\n    Запрос.УстановитьПараметр(\"Счет\", СсылкаНаСчет);\n    Запрос.Текст =\n    \"ВЫБРАТЬ\n    |\tЕСТЬNULL(СУММА(ХозрасчетныйОбороты.СуммаОборотДт), 0) КАК ОборотДт,\n    |\tЕСТЬNULL(СУММА(ХозрасчетныйОбороты.СуммаОборотКт), 0) КАК ОборотКт\n    |ИЗ\n    |\tРегистрБухгалтерии.Хозрасчетный.Обороты(, , , Счет В ИЕРАРХИИ (&Счет), , , , ) КАК ХозрасчетныйОбороты\";\n\n    Результат = Запрос.Выполнить();\n    Выборка = Результат.Выбрать();\n    Выборка.Следующий();\n\n    ОборотДт = Выборка.ОборотДт;\n    ОборотКт = Выборка.ОборотКт;\n\n    Если СсылкаНаСчет.Вид = ВидСчета.Пассивный Тогда\n        Сальдо = ОборотКт - ОборотДт;\n    Иначе\n        Сальдо = ОборотДт - ОборотКт;\n    КонецЕсли;\n\n    Возврат Сальдо;\n\nКонецФункции\n```",
+          "response_hash": "3b2f6577fade8419733ae492dba049412250d86b39e97c533b8a5073d49522f0",
+          "tokens_input": 644,
+          "tokens_output": 534,
+          "tokens_total": 1178,
+          "elapsed_time": 4.4931395053863525,
+          "cost_input": 0.00060536,
+          "cost_output": 0.0025098,
+          "cost_total": 0.00311516,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3b2f6577fade8419733ae492dba049412250d86b39e97c533b8a5073d49522f0",
+        "most_common_count": 1,
+        "hashes": [
+          "3b2f6577fade8419733ae492dba049412250d86b39e97c533b8a5073d49522f0"
+        ]
+      },
+      "total_tokens": 1178,
+      "total_cost": 0.01705066,
+      "avg_time": 4.493
+    },
+    {
       "task_id": "B1",
       "task_name": "Получение остатков товаров на складе",
       "model_id": "aliceai-llm/latest",
@@ -7403,6 +8735,342 @@
       "total_tokens": 1556,
       "total_cost": 0.02004786,
       "avg_time": 10.018
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "claude-opus-4.8",
+      "model_name": "Claude Opus 4.8",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрБухгалтерии.Хозрасчетный",
+        "ПланВидовХарактеристик.ВидыСубконто",
+        "ПланСчетов.Основной"
+      ],
+      "context_analysis_cost": 0.046255000000000004,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ПолучитьДебетовыйОборотПоКонтрагенту(СчетСсылка, КонтрагентСсылка) Экспорт\n\n\tНомерСубконтоКонтрагент = 0;\n\tДля НомерСубконто = 1 По СчетСсылка.ВидыСубконто.Количество() Цикл\n\t\tВидСубконто = СчетСсылка.ВидыСубконто[НомерСубконто - 1].ВидСубконто;\n\t\tЕсли ВидСубконто.ТипЗначения.СодержитТип(Тип(\"СправочникСсылка.Контрагенты\")) Тогда\n\t\t\tНомерСубконтоКонтрагент = НомерСубконто;\n\t\t\tПрервать;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tЕсли НомерСубконтоКонтрагент = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tСУММА(Движения.Сумма) КАК Сумма\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(, , СчетДт = &Счет) КАК Движения\n\t|ГДЕ\n\t|\tДвижения.СубконтоДт\" + Формат(НомерСубконтоКонтрагент, \"ЧГ=0\") + \" = &Контрагент\";\n\n\tЗапрос.УстановитьПараметр(\"Счет\", СчетСсылка);\n\tЗапрос.УстановитьПараметр(\"Контрагент\", КонтрагентСсылка);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() И Выборка.Сумма <> Null Тогда\n\t\tВозврат Выборка.Сумма;\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции\n```",
+          "response_hash": "cd1062d5828a9fb76d7922bce69fa924b3e08b2ba68cc5dd184d8fcc2a109cbe",
+          "tokens_input": 848,
+          "tokens_output": 670,
+          "tokens_total": 1518,
+          "elapsed_time": 11.091738224029541,
+          "cost_input": 0.00424,
+          "cost_output": 0.01675,
+          "cost_total": 0.02099,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cd1062d5828a9fb76d7922bce69fa924b3e08b2ba68cc5dd184d8fcc2a109cbe",
+        "most_common_count": 1,
+        "hashes": [
+          "cd1062d5828a9fb76d7922bce69fa924b3e08b2ba68cc5dd184d8fcc2a109cbe"
+        ]
+      },
+      "total_tokens": 1518,
+      "total_cost": 0.067245,
+      "avg_time": 11.092
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "yandexgpt-5.1/latest",
+      "model_name": "YandexGPT 5.1 Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьДебетовыйОборот(СчётСсылка, КонтрагентСсылка)\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"\n        ВЫБРАТЬ\n            СУММА(Хозрасчетный.СуммаДт) КАК ДебетовыйОборот\n        ИЗ\n            РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто КАК Хозрасчетный\n        ГДЕ\n            Хозрасчетный.Счёт = &Счёт\n            И (Хозрасчетный.СубконтоДт1 = &Контрагент\n                ИЛИ Хозрасчетный.СубконтоДт2 = &Контрагент)\";\n\n    Запрос.УстановитьПараметр(\"Счёт\", СчётСсылка);\n    Запрос.УстановитьПараметр(\"Контрагент\", КонтрагентСсылка);\n\n    Результат = Запрос.Выполнить();\n    Если Результат.Пустой() Тогда\n        Возврат 0;\n    Иначе\n        Возврат Результат[0].ДебетовыйОборот;\n    КонецЕсли;\nКонецФункции\n```",
+          "response_hash": "566008d21841823e6b31e00e1e4d44536b3458c43c5f64c0b1a9da844ab5a139",
+          "tokens_input": 313,
+          "tokens_output": 215,
+          "tokens_total": 528,
+          "elapsed_time": 2.457099199295044,
+          "cost_input": 0.0001878,
+          "cost_output": 0.000387,
+          "cost_total": 0.0005748,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "566008d21841823e6b31e00e1e4d44536b3458c43c5f64c0b1a9da844ab5a139",
+        "most_common_count": 1,
+        "hashes": [
+          "566008d21841823e6b31e00e1e4d44536b3458c43c5f64c0b1a9da844ab5a139"
+        ]
+      },
+      "total_tokens": 528,
+      "total_cost": 0.0005748,
+      "avg_time": 2.457
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "qwen3.6-35b-a3b/latest",
+      "model_name": "Qwen3.6-35B-A3B",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "\n\nФункция ПолучитьДебетовыйОборотПоКонтрагенту(СсылкаНаСчет, СсылкаНаКонтрагент) Экспорт\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n    \"ВЫБРАТЬ\n    |    СУММ(Хозрасчетный.Сумма) КАК Сумма\n    |ИЗ\n    |    Хозрасчетный.ДвиженияССубконто КАК Хозрасчетный\n    |ГДЕ\n    |    Хозрасчетный.СчетДт = &Счет\n    |    И (Хозрасчетный.СубконтоДт1 = &Контрагент\n    |       ИЛИ Хозрасчетный.СубконтоДт2 = &Контрагент)\";\n    Запрос.УстановитьПараметр(\"Счет\", СсылкаНаСчет);\n    Запрос.УстановитьПараметр(\"Контрагент\", СсылкаНаКонтрагент);\n    Результат = Запрос.Выполнить();\n    Если Результат.Пустой() Тогда\n        Возврат 0;\n    КонецЕсли;\n    Возврат Результат.Выгрузить()[0].Сумма;\nКонецФункции",
+          "response_hash": "442142342a74139cbe7c548209638bf19de2623d919b18e1d8bb74a4dad19d9f",
+          "tokens_input": 385,
+          "tokens_output": 6590,
+          "tokens_total": 6975,
+          "elapsed_time": 38.79871726036072,
+          "cost_input": 7.7e-05,
+          "cost_output": 0.003954,
+          "cost_total": 0.004031,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "442142342a74139cbe7c548209638bf19de2623d919b18e1d8bb74a4dad19d9f",
+        "most_common_count": 1,
+        "hashes": [
+          "442142342a74139cbe7c548209638bf19de2623d919b18e1d8bb74a4dad19d9f"
+        ]
+      },
+      "total_tokens": 6975,
+      "total_cost": 0.004031,
+      "avg_time": 38.799
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "yandexgpt-5-pro/latest",
+      "model_name": "YandexGPT 5 Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный"
+      ],
+      "context_analysis_cost": 0.0014189999999999997,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ПолучитьДебетовыйОборот(СсылкаНаСчет, СсылкаНаКонтрагента)\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ\n\t\t\tСУММА(Хозрасчетный.Сумма) КАК ДебетовыйОборот\n\t\tИЗ\n\t\t\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t\tГДЕ\n\t\t\tХозрасчетный.СчетДт = &Счет\n\t\t\tИ (\n\t\t\t\tХозрасчетный.ДвиженияССубконто.СубконтоДт1 = &Контрагент\n\t\t\t\tИЛИ Хозрасчетный.ДвиженияССубконто.СубконтоДт2 = &Контрагент\n\t\t\t)\";\n\t\n\tЗапрос.Параметры.Вставить(\"Счет\", СсылкаНаСчет);\n\tЗапрос.Параметры.Вставить(\"Контрагент\", СсылкаНаКонтрагента);\n\t\n\tРезультатЗапроса = Запрос.Выполнить();\n\tЕсли РезультатЗапроса.Пустой() Тогда\n\t\tВозврат 0;\n\tИначе\n\t\tВозврат РезультатЗапроса[0].ДебетовыйОборот;\n\tКонецЕсли;\nКонецФункции\n```",
+          "response_hash": "19f83df419b88406fb1b7763623e16843137c3bc5dda89e34b0fced97eb0f6de",
+          "tokens_input": 465,
+          "tokens_output": 265,
+          "tokens_total": 730,
+          "elapsed_time": 6.637887001037598,
+          "cost_input": 0.000279,
+          "cost_output": 0.000477,
+          "cost_total": 0.0007559999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "19f83df419b88406fb1b7763623e16843137c3bc5dda89e34b0fced97eb0f6de",
+        "most_common_count": 1,
+        "hashes": [
+          "19f83df419b88406fb1b7763623e16843137c3bc5dda89e34b0fced97eb0f6de"
+        ]
+      },
+      "total_tokens": 730,
+      "total_cost": 0.002175,
+      "avg_time": 6.638
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "aliceai-llm-flash/latest",
+      "model_name": "Alice AI LLM Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0001394,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": " ```\nФункция ПолучитьДебетовыйОборотПоСчётуИКонтрагенту(СсылкаНаСчёт, СсылкаНаКонтрагента)\n\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ\n    |    Хозрасчетный.Сумма\n    |ИЗ\n    |    РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто КАК Хозрасчетный\n    |ГДЕ\n    |    Хозрасчетный.СчётДт = &СсылкаНаСчёт\n    |    И (Хозрасчетный.СубконтоДт1 = &СсылкаНаКонтрагента\n    |        ИЛИ Хозрасчетный.СубконтоДт2 = &СсылкаНаКонтрагента)\";\n\n    Запрос.УстановитьПараметр(\"СсылкаНаСчёт\", СсылкаНаСчёт);\n    Запрос.УстановитьПараметр(\"СсылкаНаКонтрагента\", СсылкаНаКонтрагента);\n\n    Результат = Запрос.Выполнить();\n    Выборка = Результат.Выбрать();\n\n    СуммаОборота = 0;\n    Пока Выборка.Следующий() Цикл\n        СуммаОборота = СуммаОборота + Выборка.Сумма;\n    КонецЦикла;\n\n    Возврат СуммаОборота;\n\nКонецФункции\n```",
+          "response_hash": "1dfa9ea61f0e3668ad93c97c136aab35b87b1965433eb2344deabd7669c77e9a",
+          "tokens_input": 314,
+          "tokens_output": 262,
+          "tokens_total": 576,
+          "elapsed_time": 3.9116129875183105,
+          "cost_input": 6.28e-05,
+          "cost_output": 0.0001572,
+          "cost_total": 0.00021999999999999998,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1dfa9ea61f0e3668ad93c97c136aab35b87b1965433eb2344deabd7669c77e9a",
+        "most_common_count": 1,
+        "hashes": [
+          "1dfa9ea61f0e3668ad93c97c136aab35b87b1965433eb2344deabd7669c77e9a"
+        ]
+      },
+      "total_tokens": 576,
+      "total_cost": 0.00035939999999999995,
+      "avg_time": 3.912
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "GigaChat-2-Max",
+      "model_name": "GigaChat 2 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ДебетовыйОборотПоСчётуИКонтрагенту(СсылкаНаСчёт, СсылкаНаКонтрагента)\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ СУММА(Хозрасчетный.ДебетСумма) КАК СуммаПроводок\n         ИЗ \n             РегистрБухгалтерии.Хозрасчетный Движения ССубконто КАК Хозрасчетный\n         ГДЕ\n             Хозрасчетный.СчетДт = &СчетДт\n             И ((Хозрасчетный.СубконтоДт1 = &Контрагент)\n                ИЛИ (Хозрасчетный.СубконтоДт2 = &Контрагент))\";\n    \n    Запрос.УстановитьПараметр(\"СчетДт\", СсылкаНаСчёт);\n    Запрос.УстановитьПараметр(\"Контрагент\", СсылкаНаКонтрагента);\n    \n    РезультатЗапроса = Запрос.Выполнить();\n    ВыборкаДетальныеЗаписи = РезультатЗапроса.Выбрать();\n    \n    Если ВыборкаДетальныеЗаписи.Количество() > 0 Тогда\n        ВыборкаДетальныеЗаписи.Следующий();\n        Возврат ВыборкаДетальныеЗаписи.СуммаПроводок;\n    Иначе\n        Возврат 0;\n    КонецЕсли;\nКонецФункции",
+          "response_hash": "062d6e8110e4319b421afaf0b29aa397be1dc859769c1016d1a3712c40988b3f",
+          "tokens_input": 343,
+          "tokens_output": 303,
+          "tokens_total": 646,
+          "elapsed_time": 6.702946901321411,
+          "cost_input": 0.0006688499999999999,
+          "cost_output": 0.00059085,
+          "cost_total": 0.0012596999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "062d6e8110e4319b421afaf0b29aa397be1dc859769c1016d1a3712c40988b3f",
+        "most_common_count": 1,
+        "hashes": [
+          "062d6e8110e4319b421afaf0b29aa397be1dc859769c1016d1a3712c40988b3f"
+        ]
+      },
+      "total_tokens": 646,
+      "total_cost": 0.0012596999999999999,
+      "avg_time": 6.703
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "gemini-3.5-flash",
+      "model_name": "Gemini 3.5 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный"
+      ],
+      "context_analysis_cost": 0.03301534,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ\n\t\t|\tЕСТЬNULL(СУММА(ХозрасчетныйДвиженияССубконто.Сумма), 0) КАК СуммаОборота\n\t\t|ИЗ\n\t\t|\tРегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто КАК ХозрасчетныйДвиженияССубконто\n\t\t|ГДЕ\n\t\t|\tХозрасчетныйДвиженияССубконто.СчетДт = &Счет\n\t\t|\tИ (ХозрасчетныйДвиженияССубконто.СубконтоДт1 = &Контрагент\n\t\t|\t\tИЛИ ХозрасчетныйДвиженияССубконто.СубконтоДт2 = &Контрагент)\";\n\t\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\t\n\tРезультатЗапроса = Запрос.Выполнить();\n\tВыборка = РезультатЗапроса.Выбрать();\n\t\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.СуммаОборота;\n\tКонецЕсли;\n\t\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "6a37011874145aca1edc625f3feba25ae9b3b87ee36bbd6a8ea1222f368341bb",
+          "tokens_input": 565,
+          "tokens_output": 1510,
+          "tokens_total": 2075,
+          "elapsed_time": 7.705211639404297,
+          "cost_input": 0.0019944499999999996,
+          "cost_output": 0.032012,
+          "cost_total": 0.03400645,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "6a37011874145aca1edc625f3feba25ae9b3b87ee36bbd6a8ea1222f368341bb",
+        "most_common_count": 1,
+        "hashes": [
+          "6a37011874145aca1edc625f3feba25ae9b3b87ee36bbd6a8ea1222f368341bb"
+        ]
+      },
+      "total_tokens": 2075,
+      "total_cost": 0.06702179,
+      "avg_time": 7.705
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "mimo-v2.5",
+      "model_name": "MiMo-V2.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрБухгалтерии.Хозрасчетный",
+        "ПланВидовХарактеристик.ВидыСубконто",
+        "ПланСчетов.Основной",
+        "Справочник.Контрагенты",
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.00523204,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция ПолучитьДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(ХозрасчетныйДвиженияССубконто.Сумма), 0) КАК Сумма\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто КАК ХозрасчетныйДвиженияССубконто\n\t|ГДЕ\n\t|\tХозрасчетныйДвиженияССубконто.СчетДт = &Счет\n\t|\tИ (ХозрасчетныйДвиженияССубконто.СубконтоДт1 = &Контрагент\n\t|\t\tИЛИ ХозрасчетныйДвиженияССубконто.СубконтоДт2 = &Контрагент)\";\n\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n\tРезультат = Запрос.Выполнить();\n\n\tЕсли Результат.Пустой() Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tВыборка = Результат.Выбрать();\n\tВыборка.Следующий();\n\n\tВозврат Выборка.Сумма;\n\nКонецФункции\n```",
+          "response_hash": "ccf4bf1b25ea12e2a306fef979bcb4f2715f915feab54892c08e72ebeba65797",
+          "tokens_input": 773,
+          "tokens_output": 1737,
+          "tokens_total": 2510,
+          "elapsed_time": 24.4085054397583,
+          "cost_input": 0.00072662,
+          "cost_output": 0.0081639,
+          "cost_total": 0.00889052,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ccf4bf1b25ea12e2a306fef979bcb4f2715f915feab54892c08e72ebeba65797",
+        "most_common_count": 1,
+        "hashes": [
+          "ccf4bf1b25ea12e2a306fef979bcb4f2715f915feab54892c08e72ebeba65797"
+        ]
+      },
+      "total_tokens": 2510,
+      "total_cost": 0.014122560000000001,
+      "avg_time": 24.409
     },
     {
       "task_id": "B2",
@@ -15855,7 +17523,7 @@
       "avg_time": 5.994
     }
   ],
-  "total_tokens": 675125,
-  "total_cost": 7.725287660000002,
+  "total_tokens": 737658,
+  "total_cost": 8.438538899999996,
   "total_time": 0.0
 }
