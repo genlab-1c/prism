@@ -1,0 +1,40 @@
+{
+  "task_id": "B20",
+  "task_name": "Оборот по счёту в разрезе субконто",
+  "model_id": "GigaChat-2",
+  "model_name": "GigaChat 2 Lite",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": " function получитьДебетовыйОборотПоСчётуИКонтрагенту(счётСсылка, контрагентСсылка) Экспорт\n    запрос = Новый Запрос;\n    запрос.Текст = \"ВЫБРАТЬ |  СУММА(ДвиженияССубконто.ОборотноСальдоваяВеличинаПоДебету) КАК ДебетовыйОборот | ИЗ | РегистрБухгалтерии.Хозрасчетный КАК ДвиженияССубконто | ГДЕ |  &Счёт = ДвиженияССубконто.Счёт И &Контрагент = ДвиженияССубконто.СубконтоДт1 |\";\n    запрос.УстановитьПараметр(\"Счёт\", счётСсылка);\n    запрос.УстановитьПараметр(\"Контрагент\", контрагентСсылка);\n    результат = запрос.Выполнить().ПервымиЗаписями();\n    Возврат результат.ДебетовыйОборот;\nКонецФункции",
+      "response_hash": "314dc1c3a5262158baa69d4494a85d3ebb2a3a4ed7c6c526cbe3349cb953c13e",
+      "tokens_input": 343,
+      "tokens_output": 209,
+      "tokens_total": 552,
+      "elapsed_time": 2.2793679237365723,
+      "cost_input": 6.86e-05,
+      "cost_output": 4.1800000000000006e-05,
+      "cost_total": 0.0001104,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "314dc1c3a5262158baa69d4494a85d3ebb2a3a4ed7c6c526cbe3349cb953c13e",
+    "most_common_count": 1,
+    "hashes": [
+      "314dc1c3a5262158baa69d4494a85d3ebb2a3a4ed7c6c526cbe3349cb953c13e"
+    ]
+  },
+  "total_tokens": 552,
+  "total_cost": 0.0001104,
+  "avg_time": 2.279
+}

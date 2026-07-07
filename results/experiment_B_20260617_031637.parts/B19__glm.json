@@ -1,0 +1,34 @@
+{
+  "task_id": "B19",
+  "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+  "model_id": "z-ai/glm-4.7-flash",
+  "model_name": "GLM-4.7 Flash",
+  "context_loaded": true,
+  "context_objects": [
+    "ПланСчетов.Основной",
+    "РегистрБухгалтерии.Хозрасчетный"
+  ],
+  "context_analysis_cost": 0.00046599999999999994,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "",
+      "response_hash": "",
+      "tokens_input": 535,
+      "tokens_output": 16384,
+      "tokens_total": 16919,
+      "elapsed_time": 183.4444830417633,
+      "cost_input": 3.21e-05,
+      "cost_output": 0.0065536,
+      "cost_total": 0.0065857,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": null,
+  "total_tokens": 16919,
+  "total_cost": 0.0070517,
+  "avg_time": 183.444
+}

@@ -1,0 +1,42 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "deepseek/deepseek-v4-flash",
+  "model_name": "DeepSeek V4-Flash",
+  "context_loaded": true,
+  "context_objects": [
+    "Константа.СтавкаНДС"
+  ],
+  "context_analysis_cost": 0.00033650999999999993,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ВыделитьНДС(СуммаСНДС)\n    Ставка = Константы.СтавкаНДС.Получить();\n    Возврат СуммаСНДС * Ставка / (100 + Ставка);\nКонецФункции",
+      "response_hash": "e06f63ad11b69ce5035a44122ece07618d91e4a6944389703db329bd43d7c5f5",
+      "tokens_input": 268,
+      "tokens_output": 302,
+      "tokens_total": 570,
+      "elapsed_time": 4.755463361740112,
+      "cost_input": 2.412e-05,
+      "cost_output": 5.436e-05,
+      "cost_total": 7.848e-05,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "e06f63ad11b69ce5035a44122ece07618d91e4a6944389703db329bd43d7c5f5",
+    "most_common_count": 1,
+    "hashes": [
+      "e06f63ad11b69ce5035a44122ece07618d91e4a6944389703db329bd43d7c5f5"
+    ]
+  },
+  "total_tokens": 570,
+  "total_cost": 0.00041498999999999996,
+  "avg_time": 4.755
+}
