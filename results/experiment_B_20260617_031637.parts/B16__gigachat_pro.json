@@ -1,0 +1,40 @@
+{
+  "task_id": "B16",
+  "task_name": "Договор, действующий на дату",
+  "model_id": "GigaChat-2-Pro",
+  "model_name": "GigaChat 2 Pro",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ПолучитьДействующийДоговор(ККонтрагент, ДСреза)\nДоговоры = Справочники.Договоры.НайтиПоРеквизитам(\"Владелец\", ККонтрагент);\nЕсли Договоры.Количество() > 0 Тогда\nРезультат = Неопределено;\nМаксимальнаяДатаНачала = '';\nДля каждого эл Из Договоры Цикл\nЕсли ((эл.ДатаНачала <= ДСреза И (ел.ДатаОкончания >= ДСреза Или ел.ДатаОкончания = '')) \nИ (МаксимальнаяДатаНачала = '' Или эл.ДатаНачала > МаксимальнаяДатаНачала)) Тогда\nРезультат = эл.Ссылка;\nМаксимальнаяДатаНачала = эл.ДатаНачала;\nКонецЕсли;\nКонецЦикла;\nВозврат Результат;\nКонецЕсли;\nКонецФункции",
+      "response_hash": "eb72dc9aeac2cc184906d70ebeff95267dad6cd7f928b8775db263b4f354ee9e",
+      "tokens_input": 274,
+      "tokens_output": 179,
+      "tokens_total": 453,
+      "elapsed_time": 4.37296199798584,
+      "cost_input": 0.0005342999999999999,
+      "cost_output": 0.00034904999999999995,
+      "cost_total": 0.0008833499999999999,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "eb72dc9aeac2cc184906d70ebeff95267dad6cd7f928b8775db263b4f354ee9e",
+    "most_common_count": 1,
+    "hashes": [
+      "eb72dc9aeac2cc184906d70ebeff95267dad6cd7f928b8775db263b4f354ee9e"
+    ]
+  },
+  "total_tokens": 453,
+  "total_cost": 0.0008833499999999999,
+  "avg_time": 4.373
+}

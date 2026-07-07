@@ -1,0 +1,40 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "aliceai-llm/latest",
+  "model_name": "Alice AI LLM",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": " ```\nФункция ПолучитьСуммуНДС(СуммаСНДС) Экспорт\n    СтавкаНДС = Константы.СтавкаНДС.Получить();\n    СуммаНДС = СуммаСНДС * СтавкаНДС / (100 + СтавкаНДС);\n    Возврат Окр(СуммаНДС, 2);\nКонецФункции\n```",
+      "response_hash": "4efc9e86109607e64c0de2b5f67a79ebdad1fe88f08f883d44d79ab3eb5c54c3",
+      "tokens_input": 172,
+      "tokens_output": 65,
+      "tokens_total": 237,
+      "elapsed_time": 3.7635350227355957,
+      "cost_input": 0.000172,
+      "cost_output": 6.5e-05,
+      "cost_total": 0.00023700000000000001,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "4efc9e86109607e64c0de2b5f67a79ebdad1fe88f08f883d44d79ab3eb5c54c3",
+    "most_common_count": 1,
+    "hashes": [
+      "4efc9e86109607e64c0de2b5f67a79ebdad1fe88f08f883d44d79ab3eb5c54c3"
+    ]
+  },
+  "total_tokens": 237,
+  "total_cost": 0.00023700000000000001,
+  "avg_time": 3.764
+}
