@@ -1,0 +1,44 @@
+{
+  "task_id": "B17",
+  "task_name": "Долг контрагента по договорам",
+  "model_id": "gemini-3.1-pro-preview",
+  "model_name": "Gemini 3.1 Pro",
+  "context_loaded": true,
+  "context_objects": [
+    "Справочник.Контрагенты",
+    "Справочник.Договоры",
+    "РегистрНакопления.Взаиморасчеты"
+  ],
+  "context_analysis_cost": 0.029897169999999997,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```bsl\nФункция ПолучитьДолгКонтрагента(Контрагент)\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ\n\t\t|\tЕСТЬNULL(СУММА(ВзаиморасчетыОстатки.СуммаОстаток), 0) КАК СуммаДолга\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.Взаиморасчеты.Остатки(, Договор.Владелец = &Контрагент) КАК ВзаиморасчетыОстатки\n\t\t|ГДЕ\n\t\t|\tВзаиморасчетыОстатки.СуммаОстаток > 0\";\n\t\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.СуммаДолга;\n\tКонецЕсли;\n\t\n\tВозврат 0;\n\t\nКонецФункции\n```",
+      "response_hash": "965daad2d2c51b52737d38de6c64a0e363b1e6f8c462c046198c59f2a7b88a7f",
+      "tokens_input": 403,
+      "tokens_output": 1759,
+      "tokens_total": 2162,
+      "elapsed_time": 13.780346870422363,
+      "cost_input": 0.00018941,
+      "cost_output": 0.049603799999999997,
+      "cost_total": 0.04979321,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "965daad2d2c51b52737d38de6c64a0e363b1e6f8c462c046198c59f2a7b88a7f",
+    "most_common_count": 1,
+    "hashes": [
+      "965daad2d2c51b52737d38de6c64a0e363b1e6f8c462c046198c59f2a7b88a7f"
+    ]
+  },
+  "total_tokens": 2162,
+  "total_cost": 0.07969037999999999,
+  "avg_time": 13.78
+}
