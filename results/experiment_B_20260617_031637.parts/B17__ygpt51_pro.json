@@ -1,0 +1,44 @@
+{
+  "task_id": "B17",
+  "task_name": "Долг контрагента по договорам",
+  "model_id": "yandexgpt-5.1/latest",
+  "model_name": "YandexGPT 5.1 Pro",
+  "context_loaded": true,
+  "context_objects": [
+    "Справочник.Договоры",
+    "Справочник.Контрагенты",
+    "РегистрНакопления.Взаиморасчеты"
+  ],
+  "context_analysis_cost": 0.0013463999999999998,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```\nФункция ПолучитьСуммарныйДолгКонтрагента(КонтрагентСсылка)\n    Долг = 0;\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"ВЫБРАТЬ\n                    СУММА(Взаиморасчеты.Сумма) КАК ОбщаяСумма\n                  ИЗ\n                    РегистрНакопления.Взаиморасчеты\n                  ГДЕ\n                    Взаиморасчеты.Договор.Владелец = &Контрагент\n                    И Взаиморасчеты.Сумма > 0\";\n    Запрос.УстановитьПараметр(\"Контрагент\", КонтрагентСсылка);\n    Результат = Запрос.Выполнить();\n    Если Результат.Пустой() Тогда\n        Возврат 0;\n    Иначе\n        Возврат Результат[0].ОбщаяСумма;\n    КонецЕсли;\nКонецФункции\n```",
+      "response_hash": "f07eb0ab8da4b8c8646b5a19751e864e2dd8aaf6740c9c3531fd6c4e030cd46b",
+      "tokens_input": 310,
+      "tokens_output": 166,
+      "tokens_total": 476,
+      "elapsed_time": 2.0421462059020996,
+      "cost_input": 0.000186,
+      "cost_output": 0.0002988,
+      "cost_total": 0.00048479999999999997,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "f07eb0ab8da4b8c8646b5a19751e864e2dd8aaf6740c9c3531fd6c4e030cd46b",
+    "most_common_count": 1,
+    "hashes": [
+      "f07eb0ab8da4b8c8646b5a19751e864e2dd8aaf6740c9c3531fd6c4e030cd46b"
+    ]
+  },
+  "total_tokens": 476,
+  "total_cost": 0.0018311999999999998,
+  "avg_time": 2.042
+}

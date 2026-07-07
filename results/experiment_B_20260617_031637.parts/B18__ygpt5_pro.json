@@ -1,0 +1,40 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "yandexgpt-5-pro/latest",
+  "model_name": "YandexGPT 5 Pro",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0006071999999999999,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```\nФункция РассчитатьНДС(СуммаСНДС)\n    СтавкаНДС = Константы.СтавкаНДС.Получить();\n    СуммаБезНДС = СуммаСНДС / (1 + СтавкаНДС / 100);\n    СуммаНДС = СуммаСНДС - СуммаБезНДС;\n    Возврат СуммаНДС;\nКонецФункции\n```",
+      "response_hash": "5c2532f5da7c218215a322b03129dd92d2ea4edcc5bd7e3d3f3969eff26aa8a6",
+      "tokens_input": 172,
+      "tokens_output": 68,
+      "tokens_total": 240,
+      "elapsed_time": 2.370337724685669,
+      "cost_input": 0.0001032,
+      "cost_output": 0.0001224,
+      "cost_total": 0.0002256,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "5c2532f5da7c218215a322b03129dd92d2ea4edcc5bd7e3d3f3969eff26aa8a6",
+    "most_common_count": 1,
+    "hashes": [
+      "5c2532f5da7c218215a322b03129dd92d2ea4edcc5bd7e3d3f3969eff26aa8a6"
+    ]
+  },
+  "total_tokens": 240,
+  "total_cost": 0.0008327999999999999,
+  "avg_time": 2.37
+}

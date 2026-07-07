@@ -1,0 +1,40 @@
+{
+  "task_id": "B17",
+  "task_name": "Долг контрагента по договорам",
+  "model_id": "GigaChat-2-Max",
+  "model_name": "GigaChat 2 Max",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ПолучитьСуммарныйДолгПоКонтрагенту(СсылкаНаКонтрагента)\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tСУММА(Взаиморасчеты.Остаток) КАК Долг\n\t|ИЗ\n\t|\tРегистрНакопления.Взаиморасчеты КАК Взаиморасчеты\n\t|ГДЕ\n\t|\tВзаиморасчеты.Договор.Ссылка.Владелец = &Контрагент\n\t|\tИ Взаиморасчеты.Остаток > 0\";\n\t\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", СсылкаНаКонтрагента);\n\tРезультатЗапроса = Запрос.Выполнить();\n\tВыборкаДетальныеЗаписи = РезультатЗапроса.Выбрать();\n\n\tЕсли ВыборкаДетальныеЗаписи.Следующий() Тогда\n\t\tВозврат ВыборкаДетальныеЗаписи.Долг;\n\tИначе\n\t\tВозврат 0;\n\tКонецЕсли; \n\nКонецФункции // ПолучитьСуммарныйДолгПоКонтрагенту()",
+      "response_hash": "a73fd2a4f9b6d8879489f318f2fe8a98f7c8c97f1b169db7ff1eb5318a940e4f",
+      "tokens_input": 255,
+      "tokens_output": 241,
+      "tokens_total": 496,
+      "elapsed_time": 7.178261041641235,
+      "cost_input": 0.00049725,
+      "cost_output": 0.00046995,
+      "cost_total": 0.0009672,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "a73fd2a4f9b6d8879489f318f2fe8a98f7c8c97f1b169db7ff1eb5318a940e4f",
+    "most_common_count": 1,
+    "hashes": [
+      "a73fd2a4f9b6d8879489f318f2fe8a98f7c8c97f1b169db7ff1eb5318a940e4f"
+    ]
+  },
+  "total_tokens": 496,
+  "total_cost": 0.0009672,
+  "avg_time": 7.178
+}
