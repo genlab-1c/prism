@@ -1,0 +1,42 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "claude-opus-4.8",
+  "model_name": "Claude Opus 4.8",
+  "context_loaded": true,
+  "context_objects": [
+    "Константа.СтавкаНДС"
+  ],
+  "context_analysis_cost": 0.02515,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.0,
+      "response": "```1с\nФункция ВыделитьНДС(СуммаСНДС) Экспорт\n\tСтавка = Константы.СтавкаНДС.Получить();\n\tСуммаНДС = СуммаСНДС * Ставка / (100 + Ставка);\n\tВозврат Окр(СуммаНДС, 2);\nКонецФункции\n```",
+      "response_hash": "3188d3f9c7f2e8d8540b0d3dfff5eacef8d2f8287b895307ff60f0bc26a02209",
+      "tokens_input": 351,
+      "tokens_output": 120,
+      "tokens_total": 471,
+      "elapsed_time": 3.351992130279541,
+      "cost_input": 0.001755,
+      "cost_output": 0.003,
+      "cost_total": 0.0047550000000000005,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "3188d3f9c7f2e8d8540b0d3dfff5eacef8d2f8287b895307ff60f0bc26a02209",
+    "most_common_count": 1,
+    "hashes": [
+      "3188d3f9c7f2e8d8540b0d3dfff5eacef8d2f8287b895307ff60f0bc26a02209"
+    ]
+  },
+  "total_tokens": 471,
+  "total_cost": 0.029905,
+  "avg_time": 3.352
+}
