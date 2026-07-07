@@ -1,0 +1,43 @@
+{
+  "task_id": "B17",
+  "task_name": "Долг контрагента по договорам",
+  "model_id": "grok-build-0.1",
+  "model_name": "Grok Build 0.1",
+  "context_loaded": true,
+  "context_objects": [
+    "Справочник.Договоры",
+    "РегистрНакопления.Взаиморасчеты"
+  ],
+  "context_analysis_cost": 0.02053818,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ПолучитьСуммарныйДолгКонтрагента(Контрагент) Экспорт\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \"\n\t|ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(ВзаиморасчетыОстатки.Сумма), 0) КАК СуммаДолга\n\t|ИЗ\n\t|\tРегистрНакопления.Взаиморасчеты.Остатки(, Договор.Владелец = &Контрагент) КАК ВзаиморасчетыОстатки\n\t|ГДЕ\n\t|\tВзаиморасчетыОстатки.Сумма > 0\n\t|\";\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tВыборка.Следующий();\n\tВозврат Выборка.СуммаДолга;\nКонецФункции",
+      "response_hash": "5d0c8ec5b01d69a7cf25a41d5cfe5aa6656da884bea189ef9efcf2b364612032",
+      "tokens_input": 498,
+      "tokens_output": 2757,
+      "tokens_total": 3255,
+      "elapsed_time": 18.990558385849,
+      "cost_input": 0.0011703,
+      "cost_output": 0.012985469999999999,
+      "cost_total": 0.014155769999999998,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "5d0c8ec5b01d69a7cf25a41d5cfe5aa6656da884bea189ef9efcf2b364612032",
+    "most_common_count": 1,
+    "hashes": [
+      "5d0c8ec5b01d69a7cf25a41d5cfe5aa6656da884bea189ef9efcf2b364612032"
+    ]
+  },
+  "total_tokens": 3255,
+  "total_cost": 0.03469395,
+  "avg_time": 18.991
+}

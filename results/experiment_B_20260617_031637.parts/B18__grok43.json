@@ -1,0 +1,40 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "grok-4.3",
+  "model_name": "Grok 4.3",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.00528612,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ВыделитьСуммуНДС(СуммаСНДС) Экспорт\n\tСтавка = Константы.СтавкаНДС.Получить();\n\tЕсли Ставка = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\tВозврат СуммаСНДС * Ставка / (100 + Ставка);\nКонецФункции",
+      "response_hash": "807399fe7d6219273cedddb6366d0b78f16994290a526b9c193ffd0b782e2d51",
+      "tokens_input": 345,
+      "tokens_output": 450,
+      "tokens_total": 795,
+      "elapsed_time": 6.662509918212891,
+      "cost_input": 0.0010142999999999999,
+      "cost_output": 0.002646,
+      "cost_total": 0.0036603,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "807399fe7d6219273cedddb6366d0b78f16994290a526b9c193ffd0b782e2d51",
+    "most_common_count": 1,
+    "hashes": [
+      "807399fe7d6219273cedddb6366d0b78f16994290a526b9c193ffd0b782e2d51"
+    ]
+  },
+  "total_tokens": 795,
+  "total_cost": 0.00894642,
+  "avg_time": 6.663
+}
