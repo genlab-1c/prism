@@ -71,11 +71,12 @@ models:
       supports_tools: true
 
   sonnet:
-    id: "anthropic/claude-sonnet-4.6"    # через OpenRouter, Anthropic, с tools
+    id: "claude-sonnet-4.6"              # через AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Claude Sonnet 4.6"
     vendor: anthropic
     access:
-      adapter: openrouter
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
     capabilities:
       context_window: 1000000
       supports_seed: false
