@@ -705,7 +705,11 @@ def score_report(
         highlight=False,
     )
     print_report(result, experiment_path, full=full)
-    console.print(f"\n→ {out_path.relative_to(PRISM)}", style="green", highlight=False)
+    try:
+        out_display = out_path.relative_to(PRISM)
+    except ValueError:
+        out_display = out_path  # --out вне репозитория — показываем абсолютный путь
+    console.print(f"\n→ {out_display}", style="green", highlight=False)
     console.print(
         "  детали по прогонам: --full · переоткрыть без пересчёта: prism leaderboard",
         style="dim",
