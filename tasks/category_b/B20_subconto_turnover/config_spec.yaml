@@ -1,0 +1,27 @@
+# Синтетическая конфигурация под B20: план счетов «Основной» с субконто (ПВХ
+# «ВидыСубконто» — Контрагент и Договор), max 2 субконто на счёт. Регистр бухгалтерии
+# «Хозрасчетный» с корреспонденцией. Документ «Операция» — регистратор.
+
+catalogs:
+  Контрагенты:
+    hierarchical: false
+  Договоры:
+    hierarchical: false
+
+chart_of_characteristic_types:
+  ВидыСубконто:
+    value_types: [СправочникСсылка.Контрагенты, СправочникСсылка.Договоры]
+
+charts_of_accounts:
+  Основной:
+    ext_dimension_types: ВидыСубконто
+    max_ext_dimension_count: 2
+
+documents:
+  Операция:
+    accounting_registers: [Хозрасчетный]
+
+accounting_registers:
+  Хозрасчетный:
+    chart_of_accounts: Основной
+    correspondence: true
