@@ -51,31 +51,31 @@ description: "Что в бенчмарке PRISM уже работает: авт
 <!-- prism:status:lb -->
 | Модель | Q · категория A | Q · категория B |
 |---|:---:|:---:|
-| **Gemini 3.5 Flash** | **9.78** | **9.30** |
-| Gemini 3.1 Pro | 9.78 | 4.98 |
-| GPT-5.5 | 9.00 | 8.59 |
-| Grok Build 0.1 | 8.33 | 8.43 |
-| MiniMax M3 | 8.07 | 6.99 |
-| MiMo-V2.5 | 7.87 | 8.75 |
-| DeepSeek V4-Flash | 7.82 | 6.23 |
-| Grok 4.3 | 7.62 | 9.41 |
-| Claude Opus 4.8 | 7.22 | 7.52 |
+| **Gemini 3.5 Flash** | **9.78** | **9.06** |
+| Gemini 3.1 Pro | 9.78 | 4.86 |
+| GPT-5.5 | 9.00 | 8.80 |
+| Grok Build 0.1 | 8.33 | 8.25 |
+| MiniMax M3 | 8.07 | 6.64 |
+| MiMo-V2.5 | 7.87 | 8.69 |
+| DeepSeek V4-Flash | 7.82 | 6.34 |
+| Grok 4.3 | 7.62 | 9.23 |
+| Claude Opus 4.8 | 7.22 | 7.82 |
 | Alice AI LLM Flash | 6.86 | 4.60 |
-| Qwen3.7 Plus | 6.48 | 6.07 |
-| GLM-4.7 Flash | 6.32 | 5.77 |
-| Claude Sonnet 4.6 | 6.22 | 8.97 |
-| GPT-5 Mini | 6.11 | 4.29 |
+| Qwen3.7 Plus | 6.48 | 5.63 |
+| GLM-4.7 Flash | 6.32 | 5.71 |
+| Claude Sonnet 4.6 | 6.22 | 8.73 |
+| GPT-5 Mini | 6.11 | 4.34 |
 | GPT-OSS 120B | 5.89 | 4.90 |
-| Alice AI LLM | 5.56 | 5.00 |
-| Gemini 2.5 Flash Lite | 5.44 | 4.50 |
-| Qwen3.6-35B-A3B | 5.04 | 5.29 |
-| Qwen3-235B-A22B | 5.00 | 4.96 |
-| GigaChat 2 Max | 4.89 | 4.13 |
-| YandexGPT 5 Pro | 4.78 | 4.37 |
-| YandexGPT 5 Lite | 4.50 | 4.93 |
-| YandexGPT 5.1 Pro | 4.00 | 4.59 |
-| GigaChat 2 Lite | 3.00 | 4.27 |
-| GigaChat 2 Pro | 2.44 | 4.07 |
+| Alice AI LLM | 5.56 | 5.15 |
+| Gemini 2.5 Flash Lite | 5.44 | 4.53 |
+| Qwen3.6-35B-A3B | 5.04 | 5.14 |
+| Qwen3-235B-A22B | 5.00 | 4.84 |
+| GigaChat 2 Max | 4.89 | 4.42 |
+| YandexGPT 5 Pro | 4.78 | 4.42 |
+| YandexGPT 5 Lite | 4.50 | 4.88 |
+| YandexGPT 5.1 Pro | 4.00 | 4.57 |
+| GigaChat 2 Lite | 3.00 | 4.33 |
+| GigaChat 2 Pro | 2.44 | 4.12 |
 <!-- /prism:status:lb -->
 
 *(прогон: A — 10 алгоритмических задач, B — 15 платформенных; банк с тех пор подрос до 17
