@@ -371,14 +371,13 @@ def render_badges() -> str:
     a = [t for t in tasks if t.category == "A"]
     b = [t for t in tasks if t.category == "B"]
     a_cases = sum(len(t.tests.tests) for t in a if t.tests)
-    b_proc = 0
-    for t in b:  # кат. B: сценарные процедуры в tests.bsl
-        p = t.dir / "tests.bsl"
+    b_cases = 0
+    for t in b:  # кат. B: число проверок внутри ПрогнатьТест() — заявленный TOTAL (Всего = N),
+        p = t.dir / "tests.bsl"  # а НЕ число процедур (там ещё хелперы, а тесты — в одной функции)
         if p.exists():
-            b_proc += len(
-                re.findall(r"(?im)^\s*(?:Процедура|Функция)\b", p.read_text(encoding="utf-8"))
-            )
-    cases = a_cases + b_proc
+            m = re.search(r"Всего\s*=\s*(\d+)", p.read_text(encoding="utf-8"))
+            b_cases += int(m.group(1)) if m else 0
+    cases = a_cases + b_cases
 
     res_a, res_b = _load("A"), _load("B")
     models = len({t["model_name"] for r in (res_a, res_b) if r for t in r["tasks"]})
