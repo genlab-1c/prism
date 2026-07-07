@@ -1,0 +1,42 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "mimo-v2.5",
+  "model_name": "MiMo-V2.5",
+  "context_loaded": true,
+  "context_objects": [
+    "Константа.СтавкаНДС"
+  ],
+  "context_analysis_cost": 0.00425162,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```1c\nФункция ВыделитьНДС(СуммаСНДС) Экспорт\n    Ставка = Константы.СтавкаНДС.Получить();\n    Если Ставка = 0 Тогда\n        Возврат 0;\n    КонецЕсли;\n    Возврат СуммаСНДС * Ставка / (100 + Ставка);\nКонецФункции\n```",
+      "response_hash": "ca051df2a1df674e7c53468a217cadd401c9825112e3049ebad441674381b27f",
+      "tokens_input": 301,
+      "tokens_output": 251,
+      "tokens_total": 552,
+      "elapsed_time": 4.620315074920654,
+      "cost_input": 0.00028293999999999997,
+      "cost_output": 0.0011796999999999999,
+      "cost_total": 0.0014626399999999999,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "ca051df2a1df674e7c53468a217cadd401c9825112e3049ebad441674381b27f",
+    "most_common_count": 1,
+    "hashes": [
+      "ca051df2a1df674e7c53468a217cadd401c9825112e3049ebad441674381b27f"
+    ]
+  },
+  "total_tokens": 552,
+  "total_cost": 0.0057142600000000005,
+  "avg_time": 4.62
+}
