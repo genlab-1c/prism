@@ -1,0 +1,42 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "minimax-m3",
+  "model_name": "MiniMax M3",
+  "context_loaded": true,
+  "context_objects": [
+    "Константа.СтавкаНДС"
+  ],
+  "context_analysis_cost": 0.0035328499999999997,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```1c\nФункция ВыделитьНДС(СуммаСНДС) Экспорт\n    Ставка = Константы.СтавкаНДС.Получить();\n    СуммаБезНДС = СуммаСНДС / (1 + Ставка / 100);\n    СуммаНДС = СуммаСНДС - СуммаБезНДС;\n    Возврат СуммаНДС;\nКонецФункции\n```",
+      "response_hash": "e7151fb733bc9c5f8cb43f118087afe200e193abb6d57acd8b27f2b0bb78a6fe",
+      "tokens_input": 446,
+      "tokens_output": 208,
+      "tokens_total": 654,
+      "elapsed_time": 4.288784503936768,
+      "cost_input": 0.00031665999999999997,
+      "cost_output": 0.00058656,
+      "cost_total": 0.0009032199999999999,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "e7151fb733bc9c5f8cb43f118087afe200e193abb6d57acd8b27f2b0bb78a6fe",
+    "most_common_count": 1,
+    "hashes": [
+      "e7151fb733bc9c5f8cb43f118087afe200e193abb6d57acd8b27f2b0bb78a6fe"
+    ]
+  },
+  "total_tokens": 654,
+  "total_cost": 0.004436069999999999,
+  "avg_time": 4.289
+}

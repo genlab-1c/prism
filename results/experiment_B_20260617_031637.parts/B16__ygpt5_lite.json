@@ -1,0 +1,40 @@
+{
+  "task_id": "B16",
+  "task_name": "Договор, действующий на дату",
+  "model_id": "yandexgpt-5-lite/latest",
+  "model_name": "YandexGPT 5 Lite",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0001653,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```\nФункция НайтиДействующийДоговор(Контрагент, ДатаСреза)\n    СправочникДоговоры = Справочники.Договоры;\n    Выборка = СправочникДоговоры.Выбрать();\n    Пока Выборка.Следующий() Цикл\n        Если Выборка.Владелец = Контрагент И\n           (Выборка.ДатаНачала <= ДатаСреза) И\n           ((Выборка.ДатаОкончания > ДатаСреза) ИЛИ (Выборка.ДатаОкончания = Неопределено)) Тогда\n            Возврат Выборка;\n        КонецЕсли;\n    КонецЦикла;\n    Возврат Неопределено;\nКонецФункции\n```",
+      "response_hash": "fa004cd49e039be8a300eda50b855faa63bbdf920d5b7a229531b54c1b381c2b",
+      "tokens_input": 245,
+      "tokens_output": 129,
+      "tokens_total": 374,
+      "elapsed_time": 2.8179759979248047,
+      "cost_input": 3.675e-05,
+      "cost_output": 5.8049999999999995e-05,
+      "cost_total": 9.48e-05,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "fa004cd49e039be8a300eda50b855faa63bbdf920d5b7a229531b54c1b381c2b",
+    "most_common_count": 1,
+    "hashes": [
+      "fa004cd49e039be8a300eda50b855faa63bbdf920d5b7a229531b54c1b381c2b"
+    ]
+  },
+  "total_tokens": 374,
+  "total_cost": 0.0002601,
+  "avg_time": 2.818
+}

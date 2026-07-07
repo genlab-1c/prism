@@ -1,0 +1,40 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "yandexgpt-5-lite/latest",
+  "model_name": "YandexGPT 5 Lite",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 6.840000000000001e-05,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```\nФункция ВыделитьНДС(СуммаСндс)\n    Ставка = СтавкаНДС;\n    Возврат СуммаСндс * Ставка / (100 + Ставка);\nКонецФункции\n```",
+      "response_hash": "b766622bf7601ff7a6f8e3cc116a476031860dd8e8d987eee2e0e850cf409724",
+      "tokens_input": 172,
+      "tokens_output": 41,
+      "tokens_total": 213,
+      "elapsed_time": 1.8304147720336914,
+      "cost_input": 2.58e-05,
+      "cost_output": 1.845e-05,
+      "cost_total": 4.4250000000000005e-05,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "b766622bf7601ff7a6f8e3cc116a476031860dd8e8d987eee2e0e850cf409724",
+    "most_common_count": 1,
+    "hashes": [
+      "b766622bf7601ff7a6f8e3cc116a476031860dd8e8d987eee2e0e850cf409724"
+    ]
+  },
+  "total_tokens": 213,
+  "total_cost": 0.00011265000000000001,
+  "avg_time": 1.83
+}

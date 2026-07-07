@@ -1,0 +1,40 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "GigaChat-2-Pro",
+  "model_name": "GigaChat 2 Pro",
+  "context_loaded": false,
+  "context_objects": [],
+  "context_analysis_cost": 0.0,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ВыделитьНДС(СуммаСНДС)\n\t// Получаем значение ставки НДС из константы\n\tСтавка = Константы.Статус().СтавкаНДС;\n\t\n\t// Рассчитываем сумму НДС\n\tЕсли Ставка <> 0 Тогда\n\t\tВозврат СуммСНДС * Ставка / (100 + Ставка);\nИначе\n\t\tВозврат 0;\n\tКонецЕсли;\nКонецФункции",
+      "response_hash": "837c8d79df1c06c5313e6a418d6ac9a71d1cbed21675c3fcce108287dc8cc110",
+      "tokens_input": 193,
+      "tokens_output": 99,
+      "tokens_total": 292,
+      "elapsed_time": 2.91892147064209,
+      "cost_input": 0.00037635,
+      "cost_output": 0.00019304999999999998,
+      "cost_total": 0.0005694,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "837c8d79df1c06c5313e6a418d6ac9a71d1cbed21675c3fcce108287dc8cc110",
+    "most_common_count": 1,
+    "hashes": [
+      "837c8d79df1c06c5313e6a418d6ac9a71d1cbed21675c3fcce108287dc8cc110"
+    ]
+  },
+  "total_tokens": 292,
+  "total_cost": 0.0005694,
+  "avg_time": 2.919
+}
