@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "prism-bench"
-version = "1.5.0"                       # команда prism charts + графики и выгрузка таблиц на сайте
+version = "1.6.0"                       # бух-задачи B16-20 + оценка всех 25 моделей + prism score --task
 description = "PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP: Syntax · Meaning · Optimization · Platform)"
 readme = "README.md"
 license = { text = "MIT" }
