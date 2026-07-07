@@ -24,7 +24,7 @@
 <p align="center">
 <!-- prism:badges -->
   <img src="https://img.shields.io/badge/задач-29-success" alt="задач: 29">
-  <img src="https://img.shields.io/badge/тест--кейсов-87-blue" alt="тест-кейсов: 87">
+  <img src="https://img.shields.io/badge/тест--кейсов-108-blue" alt="тест-кейсов: 108">
   <img src="https://img.shields.io/badge/генераций_в_прогоне-725-blue" alt="генераций: 725">
   <img src="https://img.shields.io/badge/в_лидерборде-25_моделей-blue" alt="в лидерборде 25 моделей">
   <img src="https://img.shields.io/badge/прогон-2026-07-07-informational" alt="прогон: 2026-07-07">
@@ -265,16 +265,16 @@ PRISM отвечает на этот вопрос числом, а не мнен
 | 13 | GLM-4.7 Flash | 🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥 33% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
 | 14 | GPT-5 Mini | 🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥 33% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
 | 15 | Alice AI LLM | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
-| 16 | Qwen3-235B-A22B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
-| 17 | GPT-OSS 120B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
+| 16 | GPT-OSS 120B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
+| 17 | Qwen3-235B-A22B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
 | 18 | Gemini 2.5 Flash Lite | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
 | 19 | Qwen3.6-35B-A3B | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 11% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
 | 20 | YandexGPT 5 Lite | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 11% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
 | 21 | GigaChat 2 Max | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
-| 22 | GigaChat 2 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 23 | YandexGPT 5 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 24 | YandexGPT 5.1 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 25 | GigaChat 2 Lite | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
+| 22 | GigaChat 2 Lite | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
+| 23 | YandexGPT 5.1 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
+| 24 | YandexGPT 5 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
+| 25 | GigaChat 2 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
 
 </div>
 <!-- /prism:lb:summary -->
