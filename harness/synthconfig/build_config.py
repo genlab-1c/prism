@@ -63,15 +63,52 @@ INFOREG_TYPES = [
 # ENUM_TYPES — перечисления грузятся в реальную 1С: задачи со статусами/видами проходят
 # эталон на 100% (prism check).
 #
-# CONST_TYPES — ⚠️ КОНСТАНТЫ ПОКА НЕ ЗАГРУЖАЮТСЯ. LoadConfigFromFiles отвергает любой
-# опробованный набор GeneratedType: один Manager → «отсутствует один или более типов
-# объекта Constant»; два Manager → «тип содержит не уникальное значение»; Manager + второй
-# тип в любой валидной категории (ValueManager/Object/Ref/List/Record*/Selection/…) → снова
-# «отсутствует». Точный набор чёрным ящиком не выводится и в образе платформы отсутствует —
-# нужен реальный DumpConfigToFiles константы для калибровки. До этого `constants:` в
-# config_spec приведёт к незагружаемой базе (задачи с константой не добавлять).
+# CONST_TYPES — РАЗБЛОКИРОВАНО. Точный набор откалиброван по реальной выгрузке
+# (DumpConfigToFiles константы): ТРИ типа — ConstantManager (Manager),
+# ConstantValueManager (ValueManager) и недостающее звено ConstantValueKey (ValueKey).
+# Прежние попытки падали именно из-за отсутствия ValueKey (один/два Manager → «отсутствует
+# один или более типов» / «не уникальное значение»). Проверено загрузкой: база с константой
+# проходит LoadConfigFromFiles + UpdateDBCfg, значение ставится Константы.X.Установить(...).
 ENUM_TYPES = [("EnumRef", "Ref"), ("EnumManager", "Manager"), ("EnumList", "List")]
-CONST_TYPES = [("ConstantManager", "Manager"), ("ConstantValueManager", "ValueManager")]
+CONST_TYPES = [
+    ("ConstantManager", "Manager"),
+    ("ConstantValueManager", "ValueManager"),
+    ("ConstantValueKey", "ValueKey"),
+]
+# Бухгалтерия и характеристики — наборы GeneratedType откалиброваны по реальной выгрузке
+# 1С:Бухгалтерии (work/_onec/ref_accounting). Без точного набора LoadConfigFromFiles
+# отвергает объект — поэтому категории здесь дословные.
+#
+# План видов характеристик (ПВХ) — типы субконто/характеристик. Спец-тип Characteristic.
+COCT_TYPES = [
+    ("ChartOfCharacteristicTypesObject", "Object"),
+    ("ChartOfCharacteristicTypesRef", "Ref"),
+    ("ChartOfCharacteristicTypesSelection", "Selection"),
+    ("ChartOfCharacteristicTypesList", "List"),
+    ("Characteristic", "Characteristic"),
+    ("ChartOfCharacteristicTypesManager", "Manager"),
+]
+# План счетов — 5 обычных + ExtDimensionTypes/Row (стандартная ТЧ «Виды субконто»,
+# присутствует структурно всегда, даже без подключённого ПВХ).
+COA_TYPES = [
+    ("ChartOfAccountsObject", "Object"),
+    ("ChartOfAccountsRef", "Ref"),
+    ("ChartOfAccountsSelection", "Selection"),
+    ("ChartOfAccountsList", "List"),
+    ("ChartOfAccountsManager", "Manager"),
+    ("ChartOfAccountsExtDimensionTypes", "ExtDimensionTypes"),
+    ("ChartOfAccountsExtDimensionTypesRow", "ExtDimensionTypesRow"),
+]
+# Регистр бухгалтерии — Record + ExtDimensions (субконто проводки) + обычная пятёрка.
+AREG_TYPES = [
+    ("AccountingRegisterRecord", "Record"),
+    ("AccountingRegisterExtDimensions", "ExtDimensions"),
+    ("AccountingRegisterRecordSet", "RecordSet"),
+    ("AccountingRegisterRecordKey", "RecordKey"),
+    ("AccountingRegisterSelection", "Selection"),
+    ("AccountingRegisterList", "List"),
+    ("AccountingRegisterManager", "Manager"),
+]
 
 
 def _u() -> str:
@@ -98,6 +135,7 @@ def catalog_xml(
     hierarchical: bool = False,
     attributes: dict | None = None,
     tabular_sections: dict | None = None,
+    owners: list[str] | None = None,
 ) -> str:
     """Справочник: иерархия (опц.) + реквизиты (опц.) + табличные части (опц.).
 
@@ -105,6 +143,10 @@ def catalog_xml(
     Дата/Булево/СправочникСсылка/ДокументСсылка/ПеречислениеСсылка/составной).
     tabular_sections — {Имя: {attributes: {...}}} (напр. справочник-спецификация
     с ТЧ Материалы) — для разузлования/упаковок без документа.
+    owners — имена справочников-владельцев → ПОДЧИНЁННЫЙ справочник (договоры/контакты
+    контрагента). Набор GeneratedType тот же, что у обычного справочника; отличается лишь
+    блок <Owners>+<SubordinationUse>. У элемента подчинённого справочника обязателен
+    Владелец (фикстуры ставят его через ключ owner).
     """
     types = "".join(_gt(p, name, c) for p, c in CATALOG_TYPES)
     hier = (
@@ -113,6 +155,15 @@ def catalog_xml(
         if hierarchical
         else "\t\t\t<Hierarchical>false</Hierarchical>\n"
     )
+    owners_block = ""
+    if owners:
+        items = "".join(
+            f'\t\t\t\t<xr:Item xsi:type="xr:MDObjectRef">Catalog.{o}</xr:Item>\n' for o in owners
+        )
+        owners_block = (
+            f"\t\t\t<Owners>\n{items}\t\t\t</Owners>\n"
+            "\t\t\t<SubordinationUse>ToItems</SubordinationUse>\n"
+        )
     attrs = "".join(_field("Attribute", n, s) for n, s in (attributes or {}).items())
     attrs += "".join(
         _tabular_section_xml(name, ts, spec.get("attributes", {}), "Catalog")
@@ -124,7 +175,7 @@ def catalog_xml(
     return (
         HDR
         + f'\t<Catalog uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n\t\t<Properties>\n'
-        f"\t\t\t<Name>{name}</Name>\n{_syn(name)}{hier}"
+        f"\t\t\t<Name>{name}</Name>\n{_syn(name)}{hier}{owners_block}"
         "\t\t\t<CodeLength>9</CodeLength>\n\t\t\t<DescriptionLength>50</DescriptionLength>\n"
         "\t\t\t<CodeType>String</CodeType>\n\t\t</Properties>\n"
         + child_block
@@ -272,12 +323,15 @@ def document_xml(
     attributes: dict | None = None,
     tabular_sections: dict | None = None,
     info_registers: list[str] | None = None,
+    accounting_registers: list[str] | None = None,
 ) -> str:
     """Документ: регистратор (RegisterRecords) + шапочные реквизиты + табличные части.
 
     registers — регистры накопления, по которым документ делает движения;
     info_registers — подчинённые регистры сведений (write_mode RecorderSubordinate),
-    которые документ записывает проведением.
+    которые документ записывает проведением;
+    accounting_registers — регистры бухгалтерии (проводки), по которым документ —
+    регистратор (без регистратора проводки не записать, как и движения накопления).
     """
     types = "".join(_gt(p, name, c) for p, c in DOC_TYPES)
     items = "".join(
@@ -287,6 +341,10 @@ def document_xml(
     items += "".join(
         f'\t\t\t\t<xr:Item xsi:type="xr:MDObjectRef">InformationRegister.{r}</xr:Item>\n'
         for r in (info_registers or [])
+    )
+    items += "".join(
+        f'\t\t\t\t<xr:Item xsi:type="xr:MDObjectRef">AccountingRegister.{r}</xr:Item>\n'
+        for r in (accounting_registers or [])
     )
     reg_block = (
         f"\t\t\t<RegisterRecords>\n{items}\t\t\t</RegisterRecords>\n"
@@ -353,6 +411,98 @@ def constant_xml(name: str, type_spec: dict) -> str:
     )
 
 
+def chart_of_characteristic_types_xml(name: str, value_types: list[str]) -> str:
+    """План видов характеристик (ПВХ): виды субконто/характеристик.
+
+    value_types — какие объекты могут быть значением характеристики (тип субконто):
+    список ссылок СправочникСсылка.X / ДокументСсылка.X / ПеречислениеСсылка.X →
+    составной <Type>. Используется и самостоятельно (доп. свойства), и как набор
+    видов субконто плана счетов (поле ExtDimensionTypes плана ссылается на этот ПВХ).
+    """
+    types = "".join(_gt(p, name, c) for p, c in COCT_TYPES)
+    inner = "".join(_one_type_inner(t, {}, "\t\t\t\t") for t in value_types)
+    return (
+        HDR
+        + f'\t<ChartOfCharacteristicTypes uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n'
+        f"\t\t<Properties>\n\t\t\t<Name>{name}</Name>\n{_syn(name)}"
+        f"\t\t\t<Type>\n{inner}\t\t\t</Type>\n"
+        "\t\t\t<Hierarchical>false</Hierarchical>\n"
+        "\t\t\t<CodeLength>5</CodeLength>\n\t\t\t<CodeAllowedLength>Variable</CodeAllowedLength>\n"
+        "\t\t\t<DescriptionLength>50</DescriptionLength>\n"
+        "\t\t</Properties>\n\t\t<ChildObjects/>\n\t</ChartOfCharacteristicTypes>\n</MetaDataObject>\n"
+    )
+
+
+def chart_of_accounts_xml(
+    name: str, ext_dimension_types: str | None = None, max_ext_dimension_count: int = 3
+) -> str:
+    """План счетов. Счета (с видом Актив/Пассив/АктивПассив) создаются данными (фикстуры),
+    не метаданными.
+
+    ext_dimension_types — имя ПВХ видов субконто (опц.): план получает аналитику
+    (субконто), в проводках доступны СубконтоДт/СубконтоКт. Без него — план без субконто
+    (хватает для оборотов/сальдо по счёту). MaxExtDimensionCount — макс. число субконто.
+    """
+    types = "".join(_gt(p, name, c) for p, c in COA_TYPES)
+    subconto = ""
+    if ext_dimension_types:
+        subconto = (
+            f"\t\t\t<ExtDimensionTypes>ChartOfCharacteristicTypes.{ext_dimension_types}</ExtDimensionTypes>\n"
+            f"\t\t\t<MaxExtDimensionCount>{max_ext_dimension_count}</MaxExtDimensionCount>\n"
+        )
+    return (
+        HDR + f'\t<ChartOfAccounts uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n'
+        f"\t\t<Properties>\n\t\t\t<Name>{name}</Name>\n{_syn(name)}"
+        + subconto
+        + "\t\t\t<CodeLength>5</CodeLength>\n"
+        "\t\t\t<DescriptionLength>80</DescriptionLength>\n"
+        "\t\t</Properties>\n\t\t<ChildObjects/>\n\t</ChartOfAccounts>\n</MetaDataObject>\n"
+    )
+
+
+def _acc_field(tag: str, name: str, type_spec: dict, balance: bool) -> str:
+    """Измерение/Ресурс регистра бухгалтерии: как _field, плюс <Balance> и пустой
+    <AccountingFlag/> (признак учёта по счёту; для синтетики не привязываем к флагу плана)."""
+    i = "\t\t\t"
+    return (
+        f'{i}<{tag} uuid="{_u()}">\n{i}\t<Properties>\n{i}\t\t<Name>{name}</Name>\n'
+        + _syn(name, i + "\t\t")
+        + _type_xml(type_spec, i + "\t\t")
+        + f"{i}\t\t<Balance>{'true' if balance else 'false'}</Balance>\n{i}\t\t<AccountingFlag/>\n"
+        + f"{i}\t</Properties>\n{i}</{tag}>\n"
+    )
+
+
+def accounting_register_xml(
+    name: str,
+    chart: str,
+    dimensions: dict | None = None,
+    resources: dict | None = None,
+    correspondence: bool = True,
+) -> str:
+    """Регистр бухгалтерии, привязанный к плану счетов.
+
+    correspondence=True — двойная запись (СчётДт/СчётКт в проводке). resources по
+    умолчанию — один балансовый ресурс «Сумма». dimensions — доп. измерения учёта
+    (напр. Организация); измерение/ресурс с balance=True попадает в остатки.
+    """
+    resources = resources or {"Сумма": {"type": "Число", "length": 15, "precision": 2}}
+    types = "".join(_gt(p, name, c) for p, c in AREG_TYPES)
+    childs = "".join(
+        _acc_field("Resource", n, {"type": "Число", **s}, True) for n, s in resources.items()
+    )
+    childs += "".join(_acc_field("Dimension", n, s, True) for n, s in (dimensions or {}).items())
+    return (
+        HDR
+        + f'\t<AccountingRegister uuid="{_u()}">\n\t\t<InternalInfo>\n{types}\t\t</InternalInfo>\n'
+        f"\t\t<Properties>\n\t\t\t<Name>{name}</Name>\n{_syn(name)}"
+        f"\t\t\t<ChartOfAccounts>ChartOfAccounts.{chart}</ChartOfAccounts>\n"
+        f"\t\t\t<Correspondence>{'true' if correspondence else 'false'}</Correspondence>\n"
+        "\t\t</Properties>\n"
+        f"\t\t<ChildObjects>\n{childs}\t\t</ChildObjects>\n\t</AccountingRegister>\n</MetaDataObject>\n"
+    )
+
+
 def predefined_xml(items: list) -> str:
     """Предопределённые элементы справочника → Catalogs/<Имя>/Ext/Predefined.xml.
 
@@ -401,6 +551,12 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
         (out_cfg / "Constants").mkdir(exist_ok=True)
     if spec.get("enums"):
         (out_cfg / "Enums").mkdir(exist_ok=True)
+    if spec.get("chart_of_characteristic_types"):
+        (out_cfg / "ChartsOfCharacteristicTypes").mkdir(exist_ok=True)
+    if spec.get("charts_of_accounts"):
+        (out_cfg / "ChartsOfAccounts").mkdir(exist_ok=True)
+    if spec.get("accounting_registers"):
+        (out_cfg / "AccountingRegisters").mkdir(exist_ok=True)
 
     # порядок в Configuration.xml — канонический 1С: Константы, Справочники, Документы,
     # Перечисления, РегистрыНакопления, РегистрыСведений
@@ -414,6 +570,7 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
                 cat.get("hierarchical", False),
                 cat.get("attributes", {}),
                 cat.get("tabular_sections", {}),
+                cat.get("owners"),
             ),
             encoding="utf-8",
         )
@@ -430,6 +587,7 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
                 doc.get("attributes", {}),
                 doc.get("tabular_sections", {}),
                 doc.get("info_registers", []),
+                doc.get("accounting_registers", []),
             ),
             encoding="utf-8",
         )
@@ -437,6 +595,21 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
     for nm, values in spec.get("enums", {}).items():
         (out_cfg / "Enums" / f"{nm}.xml").write_text(enum_xml(nm, values), encoding="utf-8")
         child.append(f"\t\t\t<Enum>{nm}</Enum>")
+    for nm, pvc in spec.get("chart_of_characteristic_types", {}).items():
+        (out_cfg / "ChartsOfCharacteristicTypes" / f"{nm}.xml").write_text(
+            chart_of_characteristic_types_xml(nm, pvc.get("value_types", [])), encoding="utf-8"
+        )
+        child.append(f"\t\t\t<ChartOfCharacteristicTypes>{nm}</ChartOfCharacteristicTypes>")
+    for nm, coa in spec.get("charts_of_accounts", {}).items():
+        (out_cfg / "ChartsOfAccounts" / f"{nm}.xml").write_text(
+            chart_of_accounts_xml(
+                nm,
+                coa.get("ext_dimension_types"),
+                coa.get("max_ext_dimension_count", 3),
+            ),
+            encoding="utf-8",
+        )
+        child.append(f"\t\t\t<ChartOfAccounts>{nm}</ChartOfAccounts>")
     for nm, reg in spec.get("accumulation_registers", {}).items():
         (out_cfg / "AccumulationRegisters" / f"{nm}.xml").write_text(
             accumreg_xml(
@@ -460,6 +633,18 @@ def build(spec: dict, empty_cfg: Path, out_cfg: Path) -> None:
             encoding="utf-8",
         )
         child.append(f"\t\t\t<InformationRegister>{nm}</InformationRegister>")
+    for nm, reg in spec.get("accounting_registers", {}).items():
+        (out_cfg / "AccountingRegisters" / f"{nm}.xml").write_text(
+            accounting_register_xml(
+                nm,
+                reg["chart_of_accounts"],
+                reg.get("dimensions", {}),
+                reg.get("resources"),
+                reg.get("correspondence", True),
+            ),
+            encoding="utf-8",
+        )
+        child.append(f"\t\t\t<AccountingRegister>{nm}</AccountingRegister>")
 
     conf = out_cfg / "Configuration.xml"
     s = conf.read_text(encoding="utf-8-sig")

@@ -20,6 +20,11 @@ _KINDS = {
     "documents": "Документ",
     "accumulation_registers": "РегистрНакопления",
     "information_registers": "РегистрСведений",
+    "charts_of_accounts": "ПланСчетов",
+    "accounting_registers": "РегистрБухгалтерии",
+    "chart_of_characteristic_types": "ПланВидовХарактеристик",
+    "constants": "Константа",
+    "enums": "Перечисление",
 }
 
 
@@ -149,6 +154,8 @@ class SpecMetadataProvider(MetadataProvider):
                 "иерархический (группы и элементы)" if s.get("hierarchical") else "не иерархический"
             )
             out.append(f"  {hier}")
+            if s.get("owners"):
+                out.append(f"  подчинён: {', '.join(s['owners'])} (поле Владелец)")
             out += _fields("реквизиты", s.get("attributes") or {})
         elif section == "documents":
             out += _fields("реквизиты", s.get("attributes") or {})
@@ -159,6 +166,10 @@ class SpecMetadataProvider(MetadataProvider):
                 out.append(f"  табличная часть {ts}: {cols}")
             if s.get("registers"):
                 out.append(f"  движения по регистрам: {', '.join(s['registers'])}")
+            if s.get("accounting_registers"):
+                out.append(
+                    f"  проводки по регистрам бухгалтерии: {', '.join(s['accounting_registers'])}"
+                )
         elif section == "accumulation_registers":
             kind = "остатки" if s.get("register_type", "Balance") == "Balance" else "обороты"
             out.append(f"  вид: {kind}")
@@ -168,5 +179,36 @@ class SpecMetadataProvider(MetadataProvider):
             out.append(f"  периодический: {s.get('periodicity', 'Day')}, независимый")
             out += _fields("измерения", s.get("dimensions") or {})
             out += _fields("ресурсы", s.get("resources") or {})
+        elif section == "charts_of_accounts":
+            if s.get("ext_dimension_types"):
+                out.append(
+                    f"  субконто (аналитика): ПланВидовХарактеристик.{s['ext_dimension_types']}, "
+                    f"до {s.get('max_ext_dimension_count', 3)} видов"
+                )
+            else:
+                out.append("  без субконто")
+            out.append(
+                "  стандартные реквизиты счёта: Код, Наименование, "
+                "Вид (ВидСчета: Активный/Пассивный/АктивноПассивный)"
+            )
+        elif section == "accounting_registers":
+            corr = (
+                "с корреспонденцией (поля СчетДт, СчетКт)"
+                if s.get("correspondence", True)
+                else "без корреспонденции (поле Счет)"
+            )
+            out.append(f"  план счетов: {s['chart_of_accounts']}; {corr}")
+            out += _fields("измерения", s.get("dimensions") or {})
+            out += _fields("ресурсы", s.get("resources") or {"Сумма": {"type": "Число"}})
+            out.append(
+                "  субконто проводок — в виртуальной таблице .ДвиженияССубконто "
+                "(СубконтоДт1, СубконтоКт1, …)"
+            )
+        elif section == "chart_of_characteristic_types":
+            out.append("  тип значения характеристики: " + ", ".join(s.get("value_types") or []))
+        elif section == "constants":
+            out.append(f"  значение: {_fmt_type(s)}")
+        elif section == "enums":
+            out.append("  значения: " + ", ".join(s if isinstance(s, list) else []))
 
         return "\n".join(out)

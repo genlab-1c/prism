@@ -155,7 +155,8 @@ def render_schema(spec: dict) -> str:
         for name in sorted(spec["catalogs"]):
             cat = spec["catalogs"][name]
             hier = " (иерархический: группы и элементы)" if cat.get("hierarchical") else ""
-            lines.append(f"- Справочник.{name}{hier}")
+            subord = f" (подчинён: {', '.join(cat['owners'])})" if cat.get("owners") else ""
+            lines.append(f"- Справочник.{name}{hier}{subord}")
             for attr, t in cat.get("attributes", {}).items():
                 lines.append(f"    Реквизит: {attr} ({_t(t)})")
             for ts, ts_spec in cat.get("tabular_sections", {}).items():
@@ -204,6 +205,47 @@ def render_schema(spec: dict) -> str:
                 f"- РегистрСведений.{name} (периодический: {reg.get('periodicity', 'Day')}, {mode})"
             )
             lines.append(f"    Измерения: {dims}")
+            lines.append(f"    Ресурсы: {ress}")
+
+    if spec.get("chart_of_characteristic_types"):
+        lines.append("\nПланыВидовХарактеристик:")
+        for name in sorted(spec["chart_of_characteristic_types"]):
+            pvc = spec["chart_of_characteristic_types"][name]
+            vt = ", ".join(pvc.get("value_types", []))
+            lines.append(f"- ПланВидовХарактеристик.{name}")
+            lines.append(f"    Тип значения характеристики: {vt}")
+
+    if spec.get("charts_of_accounts"):
+        lines.append("\nПланыСчетов:")
+        for name in sorted(spec["charts_of_accounts"]):
+            coa = spec["charts_of_accounts"][name]
+            sub = (
+                f" (субконто: ПланВидовХарактеристик.{coa['ext_dimension_types']}, "
+                f"до {coa.get('max_ext_dimension_count', 3)})"
+                if coa.get("ext_dimension_types")
+                else ""
+            )
+            lines.append(f"- ПланСчетов.{name}{sub}")
+            lines.append(
+                "    Стандартные реквизиты счёта: Код, Наименование, Вид (Актив/Пассив/АктивноПассив)"
+            )
+
+    if spec.get("accounting_registers"):
+        lines.append("\nРегистрыБухгалтерии:")
+        for name in sorted(spec["accounting_registers"]):
+            reg = spec["accounting_registers"][name]
+            corr = (
+                "с корреспонденцией (СчётДт/СчётКт)"
+                if reg.get("correspondence", True)
+                else "без корреспонденции"
+            )
+            dims = ", ".join(f"{d} ({_t(t)})" for d, t in reg.get("dimensions", {}).items())
+            ress = ", ".join(reg.get("resources", {"Сумма": {}}))
+            lines.append(
+                f"- РегистрБухгалтерии.{name} (план счетов: {reg['chart_of_accounts']}, {corr})"
+            )
+            if dims:
+                lines.append(f"    Измерения: {dims}")
             lines.append(f"    Ресурсы: {ress}")
 
     return "\n".join(lines) + "\n"
