@@ -198,7 +198,12 @@ def cmd_score(args: argparse.Namespace) -> int:
     _apply_runtime_flags(args)
     if args.experiment:  # явный набор генераций — считаем именно его
         orchestrate.score_report(
-            args.experiment, args.edition, args.out, full=args.full, model_keys=args.models
+            args.experiment,
+            args.edition,
+            args.out,
+            full=args.full,
+            model_keys=args.models,
+            task_ids=args.task,
         )
         return 0
     if args.out:  # без --experiment пишем в свой auto_l1 на категорию → один --out неоднозначен
@@ -209,7 +214,9 @@ def cmd_score(args: argparse.Namespace) -> int:
     for i, (_cat, path) in enumerate(experiments.items()):
         if i:
             console.print()
-        orchestrate.score_report(path, args.edition, None, full=args.full, model_keys=args.models)
+        orchestrate.score_report(
+            path, args.edition, None, full=args.full, model_keys=args.models, task_ids=args.task
+        )
     return 0
 
 
@@ -571,6 +578,8 @@ def build_parser() -> argparse.ArgumentParser:
             "  prism score --full                   + построчные детали S·M·O·P·Q\n"
             "  prism score --models ygpt5_lite ygpt51_pro\n"
             "                                       оценить только эти модели, дозаписать в auto_l1\n"
+            "  prism score --task B16 B17 B18 B19 B20\n"
+            "                                       оценить только эти задачи на всех моделях\n"
             "  prism score --runner docker          ось M в песочнице Docker"
         ),
     )
@@ -588,6 +597,14 @@ def build_parser() -> argparse.ArgumentParser:
         metavar="KEY",
         help="оценить только эти модели (ключи каталога) с дозаписью в существующий auto_l1; "
         "прежние модели не пересчитываются",
+    )
+    sc.add_argument(
+        "--task",
+        nargs="*",
+        default=None,
+        metavar="ID",
+        help="оценить только эти задачи (напр. --task B16 B17) с дозаписью в auto_l1; "
+        "прочие задачи не пересчитываются. Комбинируется с --models",
     )
     sc.add_argument(
         "--out",
