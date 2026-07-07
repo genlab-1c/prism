@@ -1,0 +1,42 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "gpt-5.5",
+  "model_name": "GPT-5.5",
+  "context_loaded": true,
+  "context_objects": [
+    "Константа.СтавкаНДС"
+  ],
+  "context_analysis_cost": 0.014048499999999998,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "Функция ВыделитьНДС(СуммаСНДС) Экспорт\n\t\n\tСтавкаНДС = Константы.СтавкаНДС.Получить();\n\t\n\tЕсли СтавкаНДС = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tВозврат СуммаСНДС * СтавкаНДС / (100 + СтавкаНДС);\n\t\nКонецФункции",
+      "response_hash": "a4469d23507afca274fc02d248864883da9becbee098886fc4cdd279cbb094a5",
+      "tokens_input": 247,
+      "tokens_output": 262,
+      "tokens_total": 509,
+      "elapsed_time": 7.498479843139648,
+      "cost_input": 0.00029145999999999995,
+      "cost_output": 0.018497200000000002,
+      "cost_total": 0.018788660000000002,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "a4469d23507afca274fc02d248864883da9becbee098886fc4cdd279cbb094a5",
+    "most_common_count": 1,
+    "hashes": [
+      "a4469d23507afca274fc02d248864883da9becbee098886fc4cdd279cbb094a5"
+    ]
+  },
+  "total_tokens": 509,
+  "total_cost": 0.032837160000000004,
+  "avg_time": 7.498
+}

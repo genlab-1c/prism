@@ -1,0 +1,42 @@
+{
+  "task_id": "B16",
+  "task_name": "Договор, действующий на дату",
+  "model_id": "gemini-3.1-pro-preview",
+  "model_name": "Gemini 3.1 Pro",
+  "context_loaded": true,
+  "context_objects": [
+    "Справочник.Договоры"
+  ],
+  "context_analysis_cost": 0.01799207,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```bsl\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза)\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tДоговоры.Ссылка КАК Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Договоры КАК Договоры\n\t\t|ГДЕ\n\t\t|\tДоговоры.Владелец = &Контрагент\n\t\t|\tИ Договоры.ДатаНачала <= &ДатаСреза\n\t\t|\tИ (Договоры.ДатаОкончания >= &ДатаСреза\n\t\t|\t\tИЛИ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1))\n\t\t|\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tДоговоры.ДатаНачала УБЫВ\";\n\t\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tЗапрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Ссылка;\n\tКонецЕсли;\n\t\n\tВозврат Неопределено;\n\t\nКонецФункции\n```",
+      "response_hash": "d457c6b89fe1b70183e8eabb80a2bdae69c1b20caa7d3878709cd9688eb61387",
+      "tokens_input": 362,
+      "tokens_output": 1554,
+      "tokens_total": 1916,
+      "elapsed_time": 12.276105165481567,
+      "cost_input": 0.00017014,
+      "cost_output": 0.0438228,
+      "cost_total": 0.04399294,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "d457c6b89fe1b70183e8eabb80a2bdae69c1b20caa7d3878709cd9688eb61387",
+    "most_common_count": 1,
+    "hashes": [
+      "d457c6b89fe1b70183e8eabb80a2bdae69c1b20caa7d3878709cd9688eb61387"
+    ]
+  },
+  "total_tokens": 1916,
+  "total_cost": 0.06198501,
+  "avg_time": 12.276
+}

@@ -1,0 +1,42 @@
+{
+  "task_id": "B18",
+  "task_name": "Выделить НДС из суммы с налогом",
+  "model_id": "gemini-3.1-pro-preview",
+  "model_name": "Gemini 3.1 Pro",
+  "context_loaded": true,
+  "context_objects": [
+    "Константа.СтавкаНДС"
+  ],
+  "context_analysis_cost": 0.011726029999999998,
+  "runs": [
+    {
+      "run_index": 0,
+      "seed": null,
+      "temperature": 0.1,
+      "response": "```bsl\nФункция ВыделитьНДС(СуммаСНДС)\n\tСтавка = Константы.СтавкаНДС.Получить();\n\tВозврат Окр((СуммаСНДС * Ставка) / (100 + Ставка), 2);\nКонецФункции\n```",
+      "response_hash": "8a3e31581212fae3cd9ccb24f7d1eb00a36ef9586785172a7a9eeb3086a353d1",
+      "tokens_input": 232,
+      "tokens_output": 815,
+      "tokens_total": 1047,
+      "elapsed_time": 8.327915906906128,
+      "cost_input": 0.00010904,
+      "cost_output": 0.022983,
+      "cost_total": 0.02309204,
+      "success": true,
+      "error": null
+    }
+  ],
+  "determinism": {
+    "total_runs": 1,
+    "unique_responses": 1,
+    "match_rate": 1.0,
+    "most_common_hash": "8a3e31581212fae3cd9ccb24f7d1eb00a36ef9586785172a7a9eeb3086a353d1",
+    "most_common_count": 1,
+    "hashes": [
+      "8a3e31581212fae3cd9ccb24f7d1eb00a36ef9586785172a7a9eeb3086a353d1"
+    ]
+  },
+  "total_tokens": 1047,
+  "total_cost": 0.03481807,
+  "avg_time": 8.328
+}
