@@ -17,7 +17,7 @@
   <a href="https://github.com/genlab-1c/prism/actions/workflows/ci.yml"><img src="https://github.com/genlab-1c/prism/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/coverage-75%25-green" alt="coverage 75%">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/версия-1.6.0-success" alt="версия 1.6.0">
+  <img src="https://img.shields.io/badge/версия-1.6.1-success" alt="версия 1.6.1">
   <a href="https://github.com/genlab-1c/prism/stargazers"><img src="https://img.shields.io/github/stars/genlab-1c/prism?style=flat&logo=github" alt="stars"></a>
   <a href="https://prism.genlab-1c.ru"><img src="https://img.shields.io/badge/сайт-prism.genlab--1c.ru-22d3ee" alt="сайт"></a>
 </p>
