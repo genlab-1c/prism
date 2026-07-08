@@ -25,6 +25,7 @@ from pathlib import Path
 from harness.execute import bsl_ls
 from harness.execute.onec import runner as onec
 from harness.execute.runner import get_runner
+from harness.generate.pricing import load_pricing
 from harness.loaders import (
     PRISM,
     load_constitution,
@@ -111,6 +112,27 @@ def _check_contracts() -> Section:
         items.append(("ok", f"генерация: параметры покрывают все {len(gen.models)} моделей"))
     else:
         items.append(("fail", "генерация: params не покрывают каталог моделей"))
+
+    # цены: у каждой модели каталога есть тариф, и нет тарифов-сирот
+    # (гейт против рассинхрона pricing.yaml ↔ models.yaml — цена не влияет на баллы, но врёт в витрине)
+    try:
+        pricing = load_pricing()
+        model_ids = {m.id for m in gen.models.values()}
+        no_price = sorted(mid for mid in model_ids if not pricing.known(mid))
+        orphans = sorted(set(pricing.prices) - model_ids)
+        if no_price:
+            items.append(("fail", f"цены: модели без тарифа в pricing.yaml — {no_price}"))
+        if orphans:
+            items.append(("fail", f"цены: тариф-сирота (нет такой модели в каталоге) — {orphans}"))
+        if not no_price and not orphans:
+            items.append(
+                (
+                    "ok",
+                    f"цены: тариф есть у всех {len(model_ids)} моделей, сирот нет (as_of {pricing.as_of})",
+                )
+            )
+    except Exception as e:  # noqa: BLE001 — битый pricing.yaml показываем как fail, а не роняем check
+        items.append(("fail", f"цены: pricing.yaml не загрузился — {e}"))
     return {"title": "Контракты метрики", "items": items}
 
 
