@@ -2,7 +2,7 @@
    Управляется снаружи (metric задаёт Economy). Зона «выгода» (дёшево+сильно) подсвечена,
    все точки подписаны, без абстрактного пунктира-Парето. Точка → страница модели. */
 import React from 'react';
-import { fmtRub } from '../../lib/insights.js';
+import { fmtRubFine } from '../../lib/insights.js';
 
 const VB_W = 920, VB_H = 470;
 const M = { l: 58, r: 26, t: 26, b: 50 };
@@ -10,7 +10,7 @@ const PW = VB_W - M.l - M.r;
 const PH = VB_H - M.t - M.b;
 
 export const METRICS = {
-  cost: { key: 'runCost', label: 'стоимость полного прогона', log: true, fmt: fmtRub, better: 'дешевле' },
+  cost: { key: 'genCost', label: 'цена одной генерации', log: true, fmt: fmtRubFine, better: 'дешевле' },
   time: { key: 'avgTime', label: 'среднее время на задачу', log: false, fmt: (v) => `${v}с`, better: 'быстрее' },
 };
 

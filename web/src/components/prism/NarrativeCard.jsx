@@ -52,7 +52,7 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
       <div style={{ padding: '20px 22px' }}>
         {/* шапка */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>разбор прогона · L1</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>разбор оценки · L1</span>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, fontWeight: 700, color: 'var(--brand)', letterSpacing: '0.02em' }}>prism</span>
         </div>
 
@@ -95,9 +95,9 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
           )}
         </div>
 
-        {/* экономика прогона */}
+        {/* экономика генерации */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: 16, padding: '16px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-          <Stat label="за прогон" value={ins.runCostFmt} color="var(--axis-o)" icon="zap" />
+          <Stat label="за генерацию" value={ins.genCostFmt} color="var(--axis-o)" icon="zap" />
           <Stat label="токены-выход" value={fmtTokens(ins.tokensOut)} sub={ins.economical ? 'по делу' : null} />
           <Stat label="время" value={ins.avgTime != null ? `${ins.avgTime}с` : '—'} sub={ins.slowest ? 'медленный' : 'на задачу'} color={ins.slowest ? 'var(--warn)' : null} icon="clock" />
           <Stat label="Q общий" value={ins.qOverall != null ? ins.qOverall.toFixed(2) : '—'} />

@@ -146,8 +146,12 @@ function econOf(name, id) {
   }
   const p = pricing[id];
   const runCost = p ? (tokIn * p.input + tokOut * p.output) / 1e6 : null;
+  const genCount = tasks.length; // число генераций (задач A+B) в прогоне модели
   return {
     runCost: runCost == null ? null : Math.round(runCost * 1000) / 1000,
+    // цена ОДНОЙ генерации = стоимость полного прогона ÷ число генераций (понятнее юзеру, чем «прогон»)
+    genCost: runCost == null ? null : Math.round((runCost / genCount) * 1e5) / 1e5,
+    genCount,
     priceIn: p ? p.input : null,
     priceOut: p ? p.output : null,
     tokensOut: tokOut,
