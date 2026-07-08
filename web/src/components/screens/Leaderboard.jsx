@@ -342,7 +342,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="тест-кейсов" value={String(meta.cases || '—')} />
           <Shield label="генераций" value={String(meta.gens || '—')} />
           <Shield label="моделей" value={String(meta.models || models.length)} />
-          <Shield label="прогон" value={meta.lastRun || '—'} tone="ok" />
+          <Shield label="обновлено" value={meta.lastRun || '—'} tone="ok" />
           <Shield label="уровень" value="L1 · машина" tone="s" icon="cpu" />
         </div>
         <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>

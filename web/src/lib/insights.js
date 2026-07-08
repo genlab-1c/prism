@@ -44,7 +44,15 @@ export const fmtRub = (usd) => {
   const r = usd * RUB_PER_USD;
   return r < 1 ? `${r.toFixed(1)} ₽` : r < 100 ? `${Math.round(r)} ₽` : `${Math.round(r)} ₽`;
 };
-const fmtCost = fmtRub;
+// цена одной генерации мелкая — показываем с копейками, иначе всё схлопывается в «0 ₽»
+export const fmtRubFine = (usd) => {
+  if (usd == null) return '—';
+  const r = usd * RUB_PER_USD;
+  if (r >= 10) return `${Math.round(r)} ₽`;
+  if (r >= 1) return `${r.toFixed(1)} ₽`;
+  if (r >= 0.01) return `${r.toFixed(2)} ₽`;
+  return '<0.01 ₽';
+};
 
 /* Главная: структурные факты о модели относительно остальных. */
 export function buildInsights(model, models, tagLabels = {}) {
@@ -83,21 +91,21 @@ export function buildInsights(model, models, tagLabels = {}) {
     : weakCat === 'B' ? weakestTag(model.B, tagLabels) : null;
 
   // экономика: дешевле ли всех, кто выше; множители против названных конкурентов
-  const myCost = model.econ?.runCost ?? null;
+  const myCost = model.econ?.genCost ?? null;
   const named = [...losesTo, ...beats];
   const cheaperThan = [];
   if (myCost != null && myCost > 0) {
     for (const nm of named) {
       const other = models.find((m) => m.name === nm);
-      const oc = other?.econ?.runCost;
+      const oc = other?.econ?.genCost;
       if (oc != null && oc / myCost >= 1.3) cheaperThan.push({ name: nm, mult: fmtMult(oc / myCost) });
     }
   }
-  const aboveCosts = above.map((m) => m.econ?.runCost).filter((c) => c != null);
+  const aboveCosts = above.map((m) => m.econ?.genCost).filter((c) => c != null);
   const cheaperThanAllAbove = myCost != null && aboveCosts.length > 0 && aboveCosts.every((c) => c > myCost);
   // кто дешевле, но слабее (как DeepSeek) — честная оговорка
   const cheaperButWeaker = below
-    .filter((m) => m.econ?.runCost != null && myCost != null && m.econ.runCost < myCost)
+    .filter((m) => m.econ?.genCost != null && myCost != null && m.econ.genCost < myCost)
     .map((m) => m.name);
 
   // скорость и токены относительно группы
@@ -116,7 +124,7 @@ export function buildInsights(model, models, tagLabels = {}) {
     rankB: b.rank[model.id], totalB: b.total, qB: model.qB,
     losesTo, beats,
     strongCat, strongQ, strongS, weakCat, weakSpot, weakTag,
-    runCost: myCost, runCostFmt: fmtCost(myCost),
+    genCost: myCost, genCostFmt: fmtRubFine(myCost),
     cheaperThan, cheaperThanAllAbove, cheaperButWeaker,
     tokensOut: model.econ?.tokensOut ?? null, economical,
     avgTime: model.econ?.avgTime ?? null, slowest,
@@ -150,8 +158,8 @@ export function narrativeText(ins, opts = {}) {
     L.push(w + '.');
   }
 
-  if (ins.runCost != null) {
-    let c = `${ins.runCostFmt} за полный прогон`;
+  if (ins.genCost != null) {
+    let c = `${ins.genCostFmt} за одну генерацию`;
     if (ins.cheaperThan.length) c += ` — ${list(ins.cheaperThan.map((x) => `в ${x.mult} дешевле ${x.name}`))}`;
     L.push(c + '.');
     if (ins.cheaperThanAllAbove) L.push('дешевле всех, кто выше по рейтингу — а всё, что дешевле, уступает в качестве.');
@@ -174,6 +182,6 @@ export function shortSummary(ins) {
   const parts = [];
   parts.push(ins.rankOverall <= 3 ? `ТОП-${ins.rankOverall} общего зачёта` : `${ins.rankOverall}-е из ${ins.total} в общем зачёте`);
   if (ins.strongCat) parts.push(`силён на категории ${ins.strongCat} (Q̄ ${ins.strongQ?.toFixed(2)})`);
-  if (ins.runCost != null) parts.push(`${ins.runCostFmt} за прогон`);
+  if (ins.genCost != null) parts.push(`${ins.genCostFmt} за генерацию`);
   return parts.join(' · ');
 }

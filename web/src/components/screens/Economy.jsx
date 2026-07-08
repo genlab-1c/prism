@@ -92,7 +92,7 @@ function ValueRanking({ models, navigate, metric }) {
         <span />
         <span style={head}>модель</span>
         <span style={head}>качество</span>
-        <span style={head}>{metric === 'cost' ? 'цена / прогон' : 'время / задача'}</span>
+        <span style={head}>{metric === 'cost' ? 'цена / генерация' : 'время / задача'}</span>
         <span style={{ ...head, textAlign: 'right' }}>выгода</span>
       </div>
       {optimum.map((p) => <Row key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum dominator={null} onClick={() => navigate('model', p.id)} />)}
@@ -132,7 +132,7 @@ export function EconomyView({ models = [], navigate = () => {} }) {
         </div>
       </div>
 
-      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: 0 }}>стоимость — ОЦЕНКА по тарифам (pricing.yaml) × фактическим токенам прогона A+B; общий Q взвешен по числу задач</p>
+      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: 0 }}>цена генерации — средняя стоимость одного ответа модели (по всем задачам) = прайс-лист провайдера × реально сгенерированные токены. Зарубежные — тариф OpenRouter, Sber и Yandex — прайс-лист провайдера. Q взвешен по числу задач.</p>
     </div>
   );
 }
