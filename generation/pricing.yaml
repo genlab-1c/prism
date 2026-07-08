@@ -8,36 +8,34 @@
 #
 # Обновление: правьте as_of + source при сверке с тарифами. Это снимок, не истина.
 
-as_of: "2026-06-17"
-source: "тарифы OpenRouter (точные) + оценка для Yandex; снимок, проверять перед прогоном"
+as_of: "2026-07-08"
+source: "ЕДИНАЯ база — прайс-лист провайдера. Зарубежные: OpenRouter API (снимок). Sber: прайс-лист дев-документации (₽/1M ÷85). Yandex AI Studio: тариф из фактического счёта, sync-режим, вход=«входящие» (не кеш) (₽/1M ÷85). Оценочных цен НЕ осталось. Канал доступа (AITUNNEL/OpenRouter) на цену НЕ влияет — берём прайс модели, не розницу реселлера."
 
 prices:
-  "aliceai-llm/latest":            { input: 1.0,  output: 1.0 }    # Yandex, ОЦЕНКА (нет USD-тарифа)
-  "google/gemini-2.5-flash-lite":  { input: 0.1,  output: 0.4 }
-  "deepseek/deepseek-v4-flash":    { input: 0.09, output: 0.18 }
-  "qwen/qwen3-235b-a22b-2507":     { input: 0.09, output: 0.1 }
-  "z-ai/glm-4.7-flash":            { input: 0.06, output: 0.4 }
-  "anthropic/claude-sonnet-4.6":   { input: 3.0,  output: 15.0 }   # OpenRouter, точный тариф
-  "anthropic/claude-opus-4.8":     { input: 5.0,  output: 25.0 }   # OpenRouter, точный тариф
-  "yandexgpt-5-lite/latest":       { input: 0.15, output: 0.45 }   # Yandex, ОЦЕНКА (уточнить тариф)
-  "yandexgpt-5.1/latest":          { input: 0.6,  output: 1.8 }    # Yandex, ОЦЕНКА (уточнить тариф)
-  "yandexgpt-5-pro/latest":        { input: 0.6,  output: 1.8 }    # Yandex, ОЦЕНКА (тариф Pro-тира)
-  "qwen3.6-35b-a3b/latest":        { input: 0.2,  output: 0.6 }    # Yandex, ОЦЕНКА (уточнить тариф)
-  "aliceai-llm-flash/latest":      { input: 0.2,  output: 0.6 }    # Yandex, ОЦЕНКА (Flash-тир, дешевле обычной Alice)
-  "GigaChat-2-Max":                { input: 1.95, output: 1.95 }   # Сбер, ОЦЕНКА в USD (тариф в рублях/токенах)
-  "GigaChat-2-Pro":                { input: 1.95, output: 1.95 }   # Сбер, ОЦЕНКА
-  "GigaChat-2":                    { input: 0.2,  output: 0.2 }    # Сбер, ОЦЕНКА (Lite-тир)
-  # AITUNNEL (openai_compat) — id отличаются от OpenRouter/Yandex; цены ОЦЕНКА по тарифу той же модели
-  "claude-opus-4.8":               { input: 5.0,  output: 25.0 }   # AITUNNEL, ОЦЕНКА (= тариф Opus 4.8)
-  "claude-sonnet-4.6":             { input: 3.0,  output: 15.0 }   # AITUNNEL, ОЦЕНКА (= тариф Sonnet 4.6)
-  "qwen3.6-35b-a3b":               { input: 0.2,  output: 0.6 }    # AITUNNEL, ОЦЕНКА (= тариф Qwen3.6)
-  "gpt-5.5":                       { input: 1.18, output: 70.6 }   # AITUNNEL, ОЦЕНКА (тариф 100/6000 ₽ ÷ ~85 ₽/$)
-  "gpt-5-mini":                    { input: 0.06, output: 4.7 }    # AITUNNEL, ОЦЕНКА (тариф 5/400 ₽ ÷ ~85)
-  "gpt-oss-120b":                  { input: 0.35, output: 1.4 }    # AITUNNEL, ОЦЕНКА (тариф 30/120 ₽ ÷ ~85)
-  "gemini-3.1-pro-preview":        { input: 0.47, output: 28.2 }   # AITUNNEL, ОЦЕНКА (тариф 40/2400 ₽ ÷ ~85)
-  "gemini-3.5-flash":              { input: 3.53, output: 21.2 }   # AITUNNEL, ОЦЕНКА (тариф 300/1800 ₽ ÷ ~85)
-  "mimo-v2.5":                     { input: 0.94, output: 4.7 }    # AITUNNEL, ОЦЕНКА (тариф 80/400 ₽ ÷ ~85)
-  "minimax-m3":                    { input: 0.71, output: 2.82 }   # AITUNNEL, ОЦЕНКА (тариф 60/240 ₽ ÷ ~85)
-  "qwen3.7-plus":                  { input: 0.94, output: 3.76 }   # AITUNNEL, ОЦЕНКА (тариф 80/320 ₽ ÷ ~85)
-  "grok-build-0.1":                { input: 2.35, output: 4.71 }   # AITUNNEL, ОЦЕНКА (тариф 200/400 ₽ ÷ ~85)
-  "grok-4.3":                      { input: 2.94, output: 5.88 }   # AITUNNEL, ОЦЕНКА (тариф 250/500 ₽ ÷ ~85)
+  "aliceai-llm/latest":            { input: 5.88, output: 14.12 }  # Yandex AI Studio, счёт 500/1200 ₽/1M ÷85 (sync)
+  "google/gemini-2.5-flash-lite":  { input: 0.1,  output: 0.4 }    # OpenRouter/Google, прайс-лист
+  "deepseek/deepseek-v4-flash":    { input: 0.09, output: 0.18 }   # OpenRouter, прайс-лист (сверено с API)
+  "qwen/qwen3-235b-a22b-2507":     { input: 0.09, output: 0.1 }    # OpenRouter, прайс-лист
+  "z-ai/glm-4.7-flash":            { input: 0.06, output: 0.4 }    # OpenRouter, прайс-лист
+  "anthropic/claude-opus-4.8":     { input: 5.0,  output: 25.0 }   # OpenRouter/Anthropic, прайс-лист (сверено с API)
+  "yandexgpt-5-lite/latest":       { input: 2.35,  output: 2.35 }  # Yandex AI Studio, счёт 200/200 ₽/1M ÷85 (sync)
+  "yandexgpt-5.1/latest":          { input: 9.41,  output: 9.41 }  # Yandex AI Studio, счёт 800/800 ₽/1M ÷85 (sync)
+  "yandexgpt-5-pro/latest":        { input: 14.12, output: 14.12 } # Yandex AI Studio, счёт 1200/1200 ₽/1M ÷85 (sync)
+  "qwen3.6-35b-a3b/latest":        { input: 2.35,  output: 3.53 }  # Yandex AI Studio, счёт 200/300 ₽/1M ÷85 (sync)
+  "aliceai-llm-flash/latest":      { input: 1.18,  output: 2.35 }  # Yandex AI Studio, счёт 100/200 ₽/1M ÷85 (sync)
+  "GigaChat-2-Max":                { input: 7.65, output: 7.65 }   # Сбер, прайс-лист 650 ₽/1M ÷85 (плоско, без деления вход/выход)
+  "GigaChat-2-Pro":                { input: 5.88, output: 5.88 }   # Сбер, прайс-лист 500 ₽/1M ÷85
+  "GigaChat-2":                    { input: 0.76, output: 0.76 }   # Сбер, прайс-лист 65 ₽/1M ÷85 (Lite-тир)
+  # Модели канала AITUNNEL (openai_compat): id свои, но цена — по ПРАЙС-ЛИСТУ провайдера
+  # (OpenRouter API, снимок as_of), НЕ по рублёвой рознице реселлера. Канал на цену не влияет.
+  "claude-sonnet-4.6":             { input: 3.0,  output: 15.0 }   # Anthropic, прайс-лист (= anthropic/claude-sonnet-4.6)
+  "gpt-5.5":                       { input: 5.0,  output: 30.0 }   # OpenRouter openai/gpt-5.5
+  "gpt-5-mini":                    { input: 0.25, output: 2.0 }    # OpenAI, прайс-лист (gpt-5-mini)
+  "gpt-oss-120b":                  { input: 0.03, output: 0.15 }   # OpenRouter openai/gpt-oss-120b
+  "gemini-3.1-pro-preview":        { input: 2.0,  output: 12.0 }   # OpenRouter google/gemini-3.1-pro-preview (<200K ctx)
+  "gemini-3.5-flash":              { input: 1.5,  output: 9.0 }    # OpenRouter google/gemini-3.5-flash
+  "mimo-v2.5":                     { input: 0.75, output: 5.0 }    # OpenRouter xiaomi/mimo-v2.5
+  "minimax-m3":                    { input: 0.3,  output: 1.2 }    # OpenRouter minimax/minimax-m3
+  "qwen3.7-plus":                  { input: 0.32, output: 1.28 }   # OpenRouter qwen/qwen3.7-plus
+  "grok-build-0.1":                { input: 1.0,  output: 2.0 }    # OpenRouter x-ai/grok-build-0.1
+  "grok-4.3":                      { input: 1.25, output: 2.5 }    # OpenRouter x-ai/grok-4.3
