@@ -219,10 +219,28 @@ def _score_optimization(
         )
         # score=None (кандидат не исполнился / не нашли функцию) → N/A, не потолок O-авто
         return res.score, {**res.model_dump(exclude={"score"}), "leg": "O-исп"}
-    # Задачи без perf (категория B): O-авто — статические perf/арх-антипаттерны BSL LS.
+    # Задачи без perf (категория B): O-авто (статические perf/арх-антипаттерны BSL LS) —
+    # но ТОЛЬКО для кода, который ИСПОЛНИЛСЯ. Гейт по исполнению: не скомпилировался /
+    # не запустился → O = N/A. Не оцениваем оптимальность кода, который не видели работающим,
+    # иначе статика льстит неисполнимому коду (ставила бы высокий балл мёртвому — см.
+    # docs/measurement-gap.md). Прогон корректности кэширован (общий с осями M/P), без доп. докера.
+    if task.category == "B":
+        run = _onec_run_for(task, code, work_dir, instr) if task.testable else None
+        if run is None:
+            return None, {
+                "reason": f"O-авто(B): прогон недоступен — {onec.unavailable_reason()}",
+                "leg": "O-авто",
+            }
+        if run.status != "ok":
+            return None, {
+                "reason": f"O-авто(B): код не исполнился (статус {run.status}) → N/A",
+                "leg": "O-авто",
+                "run_status": run.status,
+            }
     if instr.diagnostics is None:
         return None, {"reason": f"BSL LS недоступен — {bsl_ls.unavailable_reason()}"}
-    return score_o(instr.diagnostics, protocol)
+    o, detail = score_o(instr.diagnostics, protocol)
+    return o, {**detail, "leg": "O-авто"}
 
 
 def _score_platform(
