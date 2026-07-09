@@ -104,6 +104,9 @@ class L1Axis(BaseModel):
     exec_scoring: Scoring | None = (
         None  # O: исполнительная нога (категория A): отклонение роста от оптимума → балл
     )
+    b_exec_scoring: Scoring | None = (
+        None  # O: исполнительная нога (категория B): рост обращений к данным с ростом базы
+    )
     pre_check: dict | None = None  # сразу 0 в обход таблицы баллов (оси S, P)
     cluster_gap: int | None = None  # S: соседние ParseError ≤N строк = одна причина
     compile_blocker_codes: list[str] | None = (
@@ -142,6 +145,11 @@ class ProtocolL1(BaseModel):
         assert s, "у оси O в протоколе L1 нет блока exec_scoring (исполнительная нога)"
         return s
 
+    def o_b_exec_scoring(self) -> Scoring:
+        s = self.axes["O"].b_exec_scoring
+        assert s, "у оси O в протоколе L1 нет блока b_exec_scoring (исполнительная нога кат. B)"
+        return s
+
 
 def load_protocol_l1(root: Path = PRISM) -> ProtocolL1:
     doc = _read(root / "metrics" / "smop_l1_auto.yaml")
@@ -159,17 +167,23 @@ class TaskTests(BaseModel):
 
 
 class TaskPerf(BaseModel):
-    """perf.yaml: данные исполнительной оценки O (категория A).
+    """perf.yaml: данные исполнительной оценки O.
 
-    gen — BSL, строит вход размера {n}; call — вызов функции кандидата ({entry} — её имя,
-    детектится в коде); sizes — лесенка размеров; p_opt — оптимальный показатель роста
-    задачи (балл O ставится по ОТКЛОНЕНИЮ роста кандидата от p_opt, а не «квадрат=плохо»).
+    Общее: sizes — лесенка размеров входа; p_opt — оптимальный показатель роста задачи
+    (балл O — по ОТКЛОНЕНИЮ роста кандидата от p_opt); call — замерочный вызов кандидата.
+    Категория A: gen — BSL, строит вход размера {n} (call с {entry}).
+    Категория B: grow — спека роста БАЗЫ (harness/execute/onec/perf_run.scale_fixtures),
+    count — метрика роста обращений к СУБД (sdbl | register); call c {{ENTRY}}.
     """
+
+    model_config = ConfigDict(extra="forbid")
 
     p_opt: float
     sizes: list[int]
-    gen: str
     call: str
+    gen: str | None = None  # A: BSL строит вход размера {n}
+    grow: dict | None = None  # B: спека роста базы (композиция блоков)
+    count: str = "sdbl"  # B: метрика роста (sdbl | register)
 
 
 class Task(BaseModel):
