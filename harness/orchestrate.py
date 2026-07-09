@@ -46,6 +46,7 @@ from harness.loaders import (
 from harness.score.meaning import band as m_band
 from harness.score.meaning import fine_m, score_m
 from harness.score.optimization import score_o
+from harness.score.optimization_b_exec import score_o_b_exec
 from harness.score.optimization_exec import score_o_exec
 from harness.score.platform import score_p
 from harness.score.quality import SCORER_TO_AXIS, compute_q
@@ -187,9 +188,23 @@ def _score_syntax(
 def _score_optimization(
     task: Task, code: str, protocol: ProtocolL1, work_dir: Path, instr: Instruments
 ) -> tuple[int | None, dict]:
-    # Категория A (есть perf.yaml): O мерится ТОЛЬКО исполнением (O-исп). Статический O-авто
-    # в алгоритмике бесполезен (потолок 10), поэтому отката на него НЕТ: не измерилось → N/A.
+    # Есть perf.yaml → O мерится ИСПОЛНЕНИЕМ (O-исп). Статический O-авто как откат НЕ берём:
+    # в алгоритмике A он бесполезен (потолок 10), для B — исполнение честнее и полнее.
     if task.perf is not None:
+        if task.category == "B":
+            # O-исп категории B: оптимальность обращений к СУБД (техжурнал), растущая база.
+            if not onec.available():
+                return None, {"reason": f"O-исп(B): {onec.unavailable_reason()}", "leg": "O-исп-B"}
+            res = score_o_b_exec(
+                code,
+                task.dir,
+                task.perf,
+                protocol,
+                work_dir / "oexecb",
+                task.entry_point_patterns,
+            )
+            return res.score, {**res.model_dump(exclude={"score"}), "leg": "O-исп-B"}
+        # Категория A: O-исп кодстатом (OneScript).
         if instr.runner is None or not instr.runner.available():
             return None, {"reason": "O-исп: раннер OneScript недоступен", "leg": "O-исп"}
         patterns = task.tests.entry_point_patterns if task.tests else []
