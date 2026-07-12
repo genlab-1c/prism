@@ -53,6 +53,10 @@ from harness.score.quality import SCORER_TO_AXIS, compute_q
 from harness.score.syntax import _cluster_lines, score_s
 from harness.ui import brand_title, console, progress_bar
 
+# Порог корректности для оси O: ниже него задача считается нерешённой и O = N/A (оптимальность
+# неверного кода бессмысленна). TODO: вынести в metrics/smop_l1_auto.yaml (ось O), пока константа.
+O_CORRECTNESS_GATE = 5.0
+
 
 def _concurrency() -> int:
     """Сколько кандидатов считать параллельно (env PRISM_CONCURRENCY; по умолчанию ≤4).
@@ -299,6 +303,17 @@ def score_candidate(
             detail[axis] = {"reason": "скорер оси не реализован"}
         else:
             scores[axis], detail[axis] = SCORERS[axis](task, code, protocol, work_dir, instr)
+    # Гейт корректности O: оптимальность НЕрешённой задачи бессмысленна — «эффективно, но неверно»
+    # не должно давать высокий O. Меряем O только если решение по сути верное (M ≥ порога), иначе N/A.
+    if (
+        scores.get("M") is not None
+        and scores["M"] < O_CORRECTNESS_GATE
+        and scores.get("O") is not None
+    ):
+        scores["O"] = None
+        og = detail.setdefault("O", {})
+        og["gated_by_m"] = True
+        og["note"] = f"оптимальность не оцениваем — задача не решена (M<{O_CORRECTNESS_GATE:g})"
     scores["Q"] = compute_q(scores, task.category, constitution)
     return scores, detail
 
