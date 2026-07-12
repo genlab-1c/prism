@@ -3,8 +3,51 @@
 import Base from '../layouts/Base.astro';
 import App from '../components/App.jsx';
 import data from '../data/leaderboard.json';
+
+// schema.org для главной: результаты бенчмарка — это Dataset, а сам харнесс — SoftwareSourceCode.
+// Помогает Google/Yandex понять, что это, и претендовать на rich-результаты.
+const meta = data.meta || {};
+const site = 'https://prism.genlab-1c.ru';
+const repo = meta.repo?.url || 'https://github.com/genlab-1c/prism';
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Dataset',
+    name: 'PRISM — бенчмарк генерации кода 1С:Предприятие (BSL) по методике SMOP',
+    description:
+      'Открытый исполняемый бенчмарк: результаты оценки нейросетей (Claude, GPT, Gemini, GigaChat, YandexGPT, DeepSeek, Qwen…) по генерации кода 1С по четырём осям SMOP — Syntax · Meaning · Optimization · Platform.',
+    url: site,
+    inLanguage: 'ru',
+    isAccessibleForFree: true,
+    license: 'https://opensource.org/licenses/MIT',
+    keywords: [
+      '1С:Предприятие', 'BSL', 'OneScript', 'генерация кода 1С', 'бенчмарк нейросетей 1С',
+      'LLM benchmark', 'SMOP', 'GigaChat', 'YandexGPT', 'DeepSeek', 'code generation',
+    ],
+    creator: { '@type': 'Organization', name: 'GenLab-1C', url: 'https://github.com/genlab-1c' },
+    variableMeasured: ['Syntax', 'Meaning', 'Optimization', 'Platform'],
+    measurementTechnique:
+      'Исполнение кода: компилятор 1С / BSL Language Server, скрытые тесты, headless-1С против синтетической базы',
+    distribution: {
+      '@type': 'DataDownload',
+      encodingFormat: 'application/json',
+      contentUrl: `${repo}/tree/main/results`,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareSourceCode',
+    name: 'PRISM',
+    description: 'Исполняемый бенчмарк генерации кода 1С:Предприятие 8 (BSL) с помощью ИИ по методике SMOP.',
+    url: site,
+    codeRepository: repo,
+    programmingLanguage: ['1C:Enterprise (BSL)', 'Python', 'OneScript'],
+    license: 'https://opensource.org/licenses/MIT',
+    author: { '@type': 'Organization', name: 'GenLab-1C' },
+  },
+];
 ---
 
-<Base active="leaderboard">
+<Base active="leaderboard" jsonLd={jsonLd}>
   <App client:load data={data} />
 </Base>

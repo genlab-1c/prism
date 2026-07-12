@@ -1,0 +1,5 @@
+# PRISM — витрина бенчмарка. Индексируется целиком.
+User-agent: *
+Allow: /
+
+Sitemap: https://prism.genlab-1c.ru/sitemap-index.xml

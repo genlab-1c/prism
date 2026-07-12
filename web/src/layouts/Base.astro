@@ -14,17 +14,25 @@ interface Props {
   description?: string;
   active?: 'leaderboard' | 'methodology' | 'tasks' | 'docs';
   ogImage?: string;
+  jsonLd?: any[];
 }
 const {
   title = 'PRISM — многомерная оценка генерации кода 1С',
   description = 'Исполняемый бенчмарк кода 1С (BSL): код запускается по-настоящему и оценивается по четырём осям SMOP — Syntax · Meaning · Optimization · Platform.',
   active = 'leaderboard',
-  ogImage,
+  ogImage = 'og/home.png', // обложка по умолчанию; страницы моделей передают свою
+  jsonLd = [],
 } = Astro.props;
 const version = data.meta?.version || '';
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, Astro.site || Astro.url.origin).href;
 const ogImageUrl = ogImage ? new URL(ogImage, Astro.site || Astro.url.origin).href : undefined;
+const siteUrl = (Astro.site || Astro.url.origin).toString().replace(/\/$/, '');
+// site-wide schema.org (WebSite); конкретная страница добавляет свои объекты через prop jsonLd
+const schemas = [
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: 'PRISM', url: siteUrl, inLanguage: 'ru', description },
+  ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]),
+];
 ---
 
 <!doctype html>
@@ -36,6 +44,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site || Astro.url.origin).hr
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="apple-touch-icon" href={`${base}assets/lockdark.png`} />
     <title>{title}</title>
+    <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="PRISM" />
     <meta property="og:title" content={title} />
@@ -52,6 +61,7 @@ const ogImageUrl = ogImage ? new URL(ogImage, Astro.site || Astro.url.origin).hr
         if (t) document.documentElement.setAttribute('data-theme', t);
       } catch (e) {}
     </script>
+    {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
   </head>
   <body>
     <SiteHeader client:load active={active} version={version} repo={data.meta?.repo} />
