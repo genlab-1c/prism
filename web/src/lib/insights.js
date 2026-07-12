@@ -148,7 +148,7 @@ export function narrativeText(ins, opts = {}) {
 
   if (ins.strongCat) {
     const lead = ins.strongQ >= 7 ? 'особенно силён на категории' : 'из двух категорий лучше даётся';
-    let s = `${lead} ${ins.strongCat} — ${catName(ins.strongCat)}, Q̄ ${ins.strongQ?.toFixed(2)}`;
+    let s = `${lead} ${ins.strongCat} — ${catName(ins.strongCat)}, Q ${ins.strongQ?.toFixed(2)}`;
     if (ins.strongS === 10) s += ', при идеальном синтаксисе (S 10)';
     L.push(s + '.');
   }
@@ -181,7 +181,7 @@ export function narrativeText(ins, opts = {}) {
 export function shortSummary(ins) {
   const parts = [];
   parts.push(ins.rankOverall <= 3 ? `ТОП-${ins.rankOverall} общего зачёта` : `${ins.rankOverall}-е из ${ins.total} в общем зачёте`);
-  if (ins.strongCat) parts.push(`силён на категории ${ins.strongCat} (Q̄ ${ins.strongQ?.toFixed(2)})`);
+  if (ins.strongCat) parts.push(`силён на категории ${ins.strongCat} (Q ${ins.strongQ?.toFixed(2)})`);
   if (ins.genCost != null) parts.push(`${ins.genCostFmt} за генерацию`);
   return parts.join(' · ');
 }

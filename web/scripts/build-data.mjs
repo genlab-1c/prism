@@ -33,7 +33,10 @@ const pricing = readYAML(path.join(REPO, 'generation', 'pricing.yaml')).prices |
 const VENDOR = {
   anthropic: 'Anthropic', openai: 'OpenAI', google: 'Google', deepseek: 'DeepSeek',
   alibaba: 'Alibaba', zhipu: 'Zhipu', yandex: 'Yandex', sber: 'Sber',
+  xai: 'xAI', xiaomi: 'Xiaomi', minimax: 'MiniMax', moonshot: 'Moonshot', meta: 'Meta', mistral: 'Mistral',
 };
+// незнакомый вендор — хотя бы с заглавной, а не сырой id вроде «xai»
+const vendorName = (v) => VENDOR[v] || (v ? v[0].toUpperCase() + v.slice(1) : '');
 
 const findFile = (dir, prefix, suffix) =>
   fs.readdirSync(dir).find((f) => f.startsWith(prefix) && f.endsWith(suffix));
@@ -43,8 +46,38 @@ const expFile = (cat) => findFile(RESULTS, `experiment_${cat}_`, '.json');
 const mean = (a) => (a.length ? a.reduce((x, y) => x + y, 0) / a.length : null);
 const r1 = (v) => (v == null ? null : Math.round(v * 10) / 10);
 const r2 = (v) => (v == null ? null : Math.round(v * 100) / 100);
+// класс роста как настоящая формула: N в степени p, надстрочными знаками (юникод —
+// чтобы читалось и в тексте, и в SVG-экспорте). 1.0 → N¹, 1.5 → N¹·⁵, 0 → N⁰.
+const SUP = { 0: '⁰', 1: '¹', 2: '²', 3: '³', 4: '⁴', 5: '⁵', 6: '⁶', 7: '⁷', 8: '⁸', 9: '⁹', '.': '·', '-': '⁻' };
+const powN = (p) => (p == null ? '' : 'N' + [...String(p)].map((c) => SUP[c] ?? c).join(''));
+// формула для показа: округляем до 0.1 и зажимаем отрицательную степень к N⁰ (небольшой минус —
+// это шум замера на плоском/оптимальном решении, «операции не растут», а не «убывают»).
+const growF = (v) => powN(v == null ? null : Math.max(0, r1(v)));
 const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 const taskNum = (id) => parseInt(String(id).replace(/\D/g, ''), 10) || 0;
+
+// B-задачи с нагрузочным замером O (есть perf.yaml) — у них O мерится ИСПОЛНЕНИЕМ,
+// а не статикой; вердикт по O формулируется иначе.
+const PERF_B = new Set(
+  fs.readdirSync(path.join(REPO, 'tasks', 'category_b'))
+    .filter((d) => fs.existsSync(path.join(REPO, 'tasks', 'category_b', d, 'perf.yaml')))
+    .map((d) => d.split('_')[0]),
+);
+// коды perf/арх-антипаттернов BSL LS → человеческое имя (для оси O статикой)
+const ANTI = {
+  CreateQueryInCycle: 'запрос в цикле', VirtualTableCallWithoutParameters: 'ВТ без параметров',
+  JoinWithVirtualTable: 'соединение с виртуальной таблицей', JoinWithSubQuery: 'соединение с подзапросом',
+  QueryNestedFieldsByDot: 'поля через точку в запросе', SelectTopWithoutOrderBy: 'ПЕРВЫЕ без сортировки',
+  LogicalOrInTheWhereSectionOfQuery: 'ИЛИ в условии ГДЕ', RefOveruse: 'лишние обращения .Ссылка',
+  DeprecatedCurrentDate: 'устаревший ТекущаяДата',
+};
+const plural = (n, a, b, c) => {
+  const nn = Math.abs(n) % 100, n1 = nn % 10;
+  if (nn > 10 && nn < 20) return c;
+  if (n1 > 1 && n1 < 5) return b;
+  if (n1 === 1) return a;
+  return c;
+};
 
 /* ---- 1. Оценки: агрегат по модели + срез по (модель, задача) ----
    Средние по задачам = те же числа, что `prism leaderboard`. */
@@ -60,9 +93,18 @@ function loadAuto(cat) {
     (perTask[t.model_name] ||= {})[t.task_id] = { scores, detail: run.detail || {} };
     for (const ax of ['S', 'M', 'O', 'P', 'Q']) if (scores[ax] != null) a[ax].push(scores[ax]);
   }
+  // Ось O имеет смысл, только если измерена на ДОСТАТОЧНОМ числе задач. Слабая модель может решить
+  // 2 тривиальные задачи оптимально → её «O=10» стоит на 2 ячейках и вводит в заблуждение. Требуем
+  // минимум задач с измеренным O, иначе агрегат O = N/A (оптимальность не оцениваем — мало решённого).
+  const MIN_O_TASKS = 3;
   const summary = {};
   for (const [name, a] of Object.entries(agg)) {
-    summary[name] = { id: a.id, taskCount: a.tasks.size, S: mean(a.S), M: mean(a.M), O: mean(a.O), P: mean(a.P), Q: mean(a.Q) };
+    summary[name] = {
+      id: a.id, taskCount: a.tasks.size,
+      S: mean(a.S), M: mean(a.M),
+      O: a.O.length >= MIN_O_TASKS ? mean(a.O) : null,
+      P: mean(a.P), Q: mean(a.Q),
+    };
   }
   return { exp: auto.experiment_id, summary, perTask };
 }
@@ -73,7 +115,8 @@ const B = loadAuto('B');
 /* ---- 2. Код: код, который писали модели (из рулона эксперимента) ---- */
 function extractCode(resp) {
   if (!resp) return '';
-  const m = resp.match(/```[a-zA-Z0-9]*\n([\s\S]*?)```/); // вынимаем из markdown-фенса
+  // язык-тег фенса может быть любым, включая кириллический «1с» — берём всё до конца строки
+  const m = resp.match(/```[^\n]*\r?\n([\s\S]*?)```/);
   return (m ? m[1] : resp).trim();
 }
 function loadExperiment(cat) {
@@ -156,6 +199,8 @@ function econOf(name, id) {
     priceOut: p ? p.output : null,
     tokensOut: tokOut,
     tokensTotal: tokTot,
+    // токенов на одну генерацию (вход+выход) — метрика экономичности, НЕ зависит от тарифа
+    tokPerGen: genCount ? Math.round(tokTot / genCount) : null,
     avgTime: n ? Math.round((timeSum / n) * 10) / 10 : null,
   };
 }
@@ -172,7 +217,7 @@ const models = [...names].map((name) => {
     id: slug(name),
     name,
     vendor: meta.vendor || '',
-    family: VENDOR[meta.vendor] || meta.vendor || '',
+    family: vendorName(meta.vendor),
     cost: costOf(meta.id),
     econ: econOf(name, meta.id),
     A: a ? { S: r1(a.S), M: r1(a.M), O: r1(a.O) } : null,
@@ -219,6 +264,149 @@ fs.mkdirSync(GEN_DIR, { recursive: true });
 
 const pick = (s) => (s == null ? null : r1(s)); // оси задачи — к одному знаку
 
+/* Ошибки компиляции с МЕСТОМ (строка) и текстом. A: из OneScript (M.errors —
+   «Error in line 7,21 / Expecting symbol: Equal»); B: компилятор 1С (M.compile_errors +
+   строки M.compile_error_lines). Возвращает «строка N · текст», человекочитаемо. */
+// Перевод частых сообщений компилятора (OneScript — по-английски) на человеческий русский.
+const SYM = {
+  Equal: '«=»', Plus: '«+»', Semicolon: '«;»', Comma: '«,»', In: '«Из»', Do: '«Цикл»',
+  Then: '«Тогда»', EndDo: '«КонецЦикла»', EndIf: '«КонецЕсли»', EndFunction: '«КонецФункции»',
+  RoundBracketClose: '«)»', RoundBracketOpen: '«(»', SquareBracketClose: '«]»',
+};
+const ruMsg = (m) => String(m)
+  .replace(/Expecting symbol:\s*([A-Za-z]+)/i, (_, s) => `ожидается ${SYM[s] || `«${s}»`}`)
+  .replace(/Identifier expecting/i, 'ожидается имя (идентификатор)')
+  .replace(/Expression syntax error/i, 'ошибка в выражении')
+  .replace(/Unexpected/i, 'неожиданный оператор');
+
+function compileErrors(cat, detail) {
+  const M = detail.M || {};
+  const out = [];
+  if (cat === 'B') {
+    const msgs = M.compile_errors || [], lines = M.compile_error_lines || [];
+    msgs.forEach((m, i) => out.push(lines[i] != null ? `строка ${lines[i]} · ${ruMsg(m)}` : ruMsg(m)));
+  } else {
+    for (const e of M.errors || []) {
+      const mm = String(e).match(/Error in line\s+(\d+)(?:,\d+)?\s*\/\s*([^}]+)/);
+      out.push(mm ? `строка ${mm[1]} · ${ruMsg(mm[2].trim())}`
+        : ruMsg(String(e).replace(/^compile_error:\s*/, '').replace(/\{Модуль[^/]*\/\s*/, '').replace(/\}\s*$/, '').trim()));
+    }
+  }
+  return out.filter(Boolean);
+}
+
+/* Номера строк ошибок в коде кандидата — чтобы подсветить их в панели кода.
+   A: OneScript «Error in line N»; B: строки компилятора 1С + лог «…Модуль(N)». */
+function errLines(cat, detail) {
+  const M = detail.M || {}, set = new Set();
+  (M.compile_error_lines || []).forEach((n) => Number.isFinite(n) && set.add(n));
+  const scan = (s) => {
+    const str = String(s);
+    let m; const re1 = /Error in line\s+(\d+)/g, re2 = /Модуль\((\d+)/g;
+    while ((m = re1.exec(str))) set.add(+m[1]);
+    while ((m = re2.exec(str))) set.add(+m[1]);
+  };
+  (M.errors || []).forEach(scan);
+  if (M.log) scan(M.log);
+  return [...set].filter((n) => n > 0).sort((a, b) => a - b);
+}
+
+/* Человеческий перевод рантайм-ошибок 1С — чтобы было ясно, это код модели или тест.
+   «Метод объекта не обнаружен (X)»: тест зовёт КодКандидата.X (X — обнаруженная точка входа),
+   а 1С её не видит как метод модуля → функция НЕ экспортирована (забыт «Экспорт») или названа иначе.
+   Это всегда ошибка кода модели, не теста. */
+function humanizeBError(msg, mod) {
+  const s = String(msg).trim();
+  let m;
+  if ((m = s.match(/Метод объекта не обнаружен\s*\(([^)]+)\)/i))) {
+    // Тесты.Модуль → тест не смог позвать точку входа (не экспортирована); КодКандидата.Модуль →
+    // кандидат сам вызвал несуществующий метод у объекта (напр. .Выбрать() у Неопределено) — баг кода.
+    if (mod === 'Тесты')
+      return `функция «${m[1]}» не вызывается извне — не экспортирована (нет «Экспорт») или названа иначе`;
+    return `метод «${m[1]}» не найден — вызван у неподходящего значения (напр. у Неопределено или не того типа)`;
+  }
+  if ((m = s.match(/Поле объекта не обнаружено?\s*\(([^)]+)\)/i)))
+    return `обращение к несуществующему полю/объекту «${m[1]}» — выдуманные метаданные`;
+  if ((m = s.match(/Неверные параметры\s*"([^"]+)"/i)))
+    return `неверные параметры виртуальной таблицы «${m[1]}» в запросе`;
+  if ((m = s.match(/вызове конструктора\s*\(([^)]+)\):\s*Несоответствие типов\s*\(параметр номер\s*'?(\d+)'?\)/i)))
+    return `неверный тип параметра ${m[2]} при создании «${m[1]}»`;
+  if ((m = s.match(/вызове метода контекста\s*\(([^)]+)\):\s*Несоответствие типов\s*\(параметр номер\s*'?(\d+)'?\)/i)))
+    return `неверный тип параметра ${m[2]} в вызове «${m[1]}»`;
+  if ((m = s.match(/вызове конструктора\s*\(([^)]+)\)/i)))
+    return `ошибка при создании объекта «${m[1]}» — неверные аргументы`;
+  if ((m = s.match(/вызове метода контекста\s*\(([^)]+)\)/i)))
+    return `ошибка при вызове «${m[1]}» — неверные аргументы`;
+  if ((m = s.match(/Значение не является значением объектного типа\s*\(([^)]+)?\)?/i)))
+    return `обращение как к объекту к неподходящему значению${m[1] ? ` («${m[1]}»)` : ''}`;
+  // почистить остаточный шум: позиция {(N, N)}: и указатель запроса <<?>>…
+  return s.replace(/\{\(\d+,\s*\d+\)\}:\s*/g, '').replace(/\s*<<\?>>[\s\S]*$/, '').trim();
+}
+
+/* Разобрать M.log категории B по тестам: «тест1 ИСКЛЮЧЕНИЕ: {…Тесты.Модуль(68)}: сообщение; тест2 …».
+   Схлопываем одинаковые сообщения (три теста упали одинаково → одна строка), переводим на человеческий,
+   отмечаем, упало ли ВНУТРИ кода модели (КодКандидата → есть строка кода) или на вызове из теста. */
+function parseBLog(log) {
+  if (!log) return { items: [], cause: null };
+  const parts = String(log).split(/;+/).map((x) => x.trim()).filter(Boolean);
+  const groups = new Map();
+  let cause = null;
+  for (const p of parts) {
+    const m = p.match(/тест\s*(\d+)[^{]*\{[^}]*\.(КодКандидата|Тесты)\.Модул[ья]?\((\d+)\)\}\s*:?\s*(.+)$/i);
+    let test = null, mod = null, line = null, raw = p;
+    if (m) { test = +m[1]; mod = m[2]; line = +m[3]; raw = m[4].trim(); }
+    const human = humanizeBError(raw, mod);
+    if (/не вызывается извне/.test(human)) cause = 'entry';
+    if (!groups.has(human)) groups.set(human, { human, tests: new Set(), inCand: mod === 'КодКандидата', line });
+    if (test != null) groups.get(human).tests.add(test);
+  }
+  const items = [];
+  for (const g of groups.values()) {
+    const ts = [...g.tests].sort((a, b) => a - b);
+    const where = !ts.length ? '' : ts.length >= 3 ? `тесты ${ts[0]}–${ts[ts.length - 1]}` : `тест ${ts.join(', ')}`;
+    const src = g.inCand ? ` — в коде модели, строка ${g.line}` : '';
+    items.push(`${where ? where + ': ' : ''}${g.human}${src}`);
+  }
+  return { items, cause };
+}
+
+/* Человеческий перевод рантайм-ошибок категории A (OneScript). Частый случай: модель применила
+   платформенный тип (Запрос, РегистрыСведений…) в алгоритмической задаче — в OneScript его нет. */
+function humanizeAMsg(msg) {
+  const s = String(msg);
+  let m;
+  if ((m = s.match(/Type is not defined\s*\(([^)]+)\)/i)))
+    return `применён тип «${m[1]}» — платформенный объект 1С, недоступный в алгоритмической задаче (чистый язык, без платформы)`;
+  if ((m = s.match(/Method not found\s*\(([^)]+)\)/i)))
+    return `метод «${m[1]}» не найден`;
+  if ((m = s.match(/Variable not defined\s*\(([^)]+)\)/i)))
+    return `переменная «${m[1]}» не определена`;
+  if (/Invalid type of argument/i.test(s)) return 'неверный тип аргумента';
+  if (/Division by zero|Деление на ноль/i.test(s)) return 'деление на ноль';
+  if (/out of bound|за пределами|индекс/i.test(s)) return 'выход за границы массива или строки';
+  return ruMsg(s);
+}
+
+/* Разобрать ошибки исполнения A (OneScript): «PRISM_ERR N {Модуль …cand.test.os / Error in line: L / MSG}».
+   Достаём строку и текст, переводим, схлопываем дубли по тестам. Возвращаем причину для пояснения. */
+function parseALog(errors) {
+  const groups = new Map();
+  let cause = null;
+  for (const e of errors || []) {
+    const s = (typeof e === 'string' ? e : JSON.stringify(e)).trim();
+    if (!s || s === '{}' || s === '""') continue;
+    const mm = s.match(/Error in line:?\s*(\d+)(?:,\d+)?\s*\/\s*([^}]+)/);
+    let line = null, raw = s;
+    if (mm) { line = Number(mm[1]); raw = mm[2].trim(); }
+    const human = humanizeAMsg(raw);
+    if (/платформенный объект/.test(human)) cause = 'platform-type';
+    const key = `${human}|${line || ''}`;
+    if (!groups.has(key)) groups.set(key, { human, line });
+  }
+  const items = [...groups.values()].map((g) => (g.line ? `строка ${g.line} · ${g.human}` : g.human));
+  return { items, cause };
+}
+
 /* Диагностика задачи: что и где упало (исход + трейсбеки из auto_l1 detail).
    Исход — упрощённо для показа (агрегатная воронка считается харнессом). */
 function diagnose(cat, detail) {
@@ -233,22 +421,145 @@ function diagnose(cat, detail) {
   };
   const tests = { passed: m.passed ?? null, total: m.total ?? null };
   let outcome = 'unknown';
+  let cause = null; // 'entry' — точка входа не найдена/не экспортирована (пояснение на витрине)
   if (cat === 'B') {
-    if (m.status === 'candidate_error') { outcome = 'compile'; push(m.compile_errors); push(s.errors); }
-    else if (m.status === 'no_entry') { outcome = 'runtime'; }
+    if (m.status === 'candidate_error') { outcome = 'compile'; push(compileErrors('B', detail)); }
+    else if (m.status === 'no_entry') {
+      outcome = 'runtime'; cause = 'entry';
+      errors.push('точка входа не найдена — модель не создала ожидаемую функцию или не экспортировала её');
+    }
     else if ((m.total || 0) === 0 || (m.passed || 0) < (m.total || 0)) {
-      outcome = (m.platform_errors?.length || m.platform_error_tests?.length) ? 'runtime' : 'wrong';
-      push(m.platform_errors); push(m.compile_errors); if (m.log) push([m.log]);
+      const parsed = parseBLog(m.log);
+      cause = parsed.cause;
+      parsed.items.forEach((e) => errors.push(e));
+      // платформенные маркеры / компиляцию добавляем ТОЛЬКО если разбор лога пуст — иначе дублируют
+      if (!parsed.items.length) {
+        (m.platform_errors || []).forEach((e) => errors.push(humanizeBError(e)));
+        if (!(m.platform_errors || []).length) push(m.compile_errors);
+      }
+      outcome = (parsed.items.length || m.platform_errors?.length || m.platform_error_tests?.length) ? 'runtime' : 'wrong';
     } else outcome = 'solved';
   } else {
-    if ((s.root_causes || 0) > 0) { outcome = 'compile'; push(s.errors); push(s.error_codes); }
-    else if (!(m.executed && m.entry_point != null)) { outcome = 'runtime'; push(m.errors); }
-    else if ((m.total || 0) === 0 || (m.passed || 0) < (m.total || 0)) {
-      outcome = m.errors?.length ? 'runtime' : 'wrong';
-      push(m.errors);
+    if ((s.root_causes || 0) > 0) { outcome = 'compile'; push(compileErrors('A', detail)); }
+    else if (!(m.executed && m.entry_point != null)) {
+      outcome = 'runtime';
+      const p = parseALog(m.errors); cause = p.cause; p.items.forEach((e) => errors.push(e));
+    } else if ((m.total || 0) === 0 || (m.passed || 0) < (m.total || 0)) {
+      const p = parseALog(m.errors); cause = p.cause;
+      outcome = p.items.length ? 'runtime' : 'wrong';
+      p.items.forEach((e) => errors.push(e));
     } else outcome = 'solved';
   }
-  return { outcome, tests, errors: [...new Set(errors)].slice(0, 6) };
+  // какие тесты упали (кат. A): в ошибках «PRISM_ERR N» — N это 0-based индекс теста
+  let failedIdx = null;
+  if (cat === 'A') {
+    const idx = new Set();
+    for (const e of m.errors || []) { const mm = String(e).match(/PRISM_ERR\s+(\d+)/); if (mm) idx.add(Number(mm[1])); }
+    failedIdx = [...idx].sort((a, b) => a - b);
+  }
+  return { outcome, tests, errors: [...new Set(errors)].slice(0, 6), cause, failedIdx };
+}
+
+/* Разбор оценки: по каждой оси — балл, человеческая причина, конкретная метрика, тег
+   (full | warn | minus | na). Аргументирует, ЗА ЧТО балл, прямо из auto_l1 detail.
+   Единица работы оси O категории B: perf-задачи мерятся исполнением (набором vs цикл),
+   прочие — статикой (конкретный антипаттерн из detail.O.codes). */
+function breakdown(cat, taskId, scores, detail) {
+  const S = detail.S || {}, M = detail.M || {}, O = detail.O || {}, P = detail.P || {};
+  const isPerf = cat === 'B' && PERF_B.has(taskId);
+  const out = [];
+  const add = (ax, score, head, metric, tag) =>
+    out.push({ ax, score: score == null ? null : r1(score), head, metric, tag });
+
+  // S — компилируется ли модуль
+  const rc = S.root_causes ?? 0;
+  if (rc === 0) add('S', scores.S, 'Компилируется без ошибок', 'синтаксис модуля чистый', 'full');
+  else {
+    // счёт берём из показываемых ошибок (не из кластеров BSL LS — иначе «2 ошибки, а видно одну»)
+    const ce = compileErrors(cat, detail);
+    const metric = (ce[0] || 'разбор модуля с ошибками') + (ce.length > 1 ? ` · и ещё ${ce.length - 1}` : '');
+    add('S', scores.S, 'Не компилируется', metric, 'minus');
+  }
+
+  // M — верный ли ответ (исполнение скрытых тестов)
+  const st = M.status, pd = M.passed, tt = M.total;
+  if (cat === 'B' && st === 'candidate_error')
+    add('M', scores.M, 'Код не исполнился', 'модуль не скомпилировался — тесты не запускались', 'minus');
+  else if (tt > 0 && pd === tt)
+    add('M', scores.M, 'Все скрытые тесты пройдены', `${pd}/${tt} проверок дали верный ответ`, 'full');
+  else if (tt > 0 && pd > 0)
+    add('M', scores.M, 'Часть тестов не пройдена', `${pd}/${tt} верны · балл = доля × 10`, 'warn');
+  else {
+    const plat = (M.platform_error_tests || 0) > 0;
+    add('M', scores.M, plat ? 'Падает при обращении к базе' : 'Ответы неверны',
+      tt > 0 ? `0/${tt} тестов пройдено` : 'тесты не пройдены', 'minus');
+  }
+
+  // O — оптимальность. Приоритет источника: замер ИСПОЛНЕНИЕМ (есть detail.O.growth —
+  // A всегда по числу операций, B — по обращениям к СУБД после нагрузочного прогона) →
+  // N/A с причиной (гейт: у нерабочего кода O не меряем) → статический разбор антипаттернов.
+  const oG = O.growth, oPo = O.p_opt;
+  if (oG != null) {
+    const ok = oPo != null ? oG - oPo <= 0.2 : oG <= 0.2;
+    if (cat === 'A') {
+      add('O', scores.O, ok ? 'Оптимальный класс роста' : 'Класс роста хуже оптимума',
+        `число операций растёт как ${growF(oG)}${oPo != null ? ` (оптимум ${growF(oPo)})` : ''}`,
+        scores.O >= 8 ? 'full' : 'minus');
+    } else { // B — обращения к СУБД на растущей базе
+      const cs = O.counts || [], sz = O.sizes || [];
+      const nums = (cs.length >= 2 && cs[0] != null && sz.length >= 2)
+        ? `обращений к СУБД ${cs[0]}→${cs[cs.length - 1]} при росте базы ×${Math.round(sz[sz.length - 1] / sz[0])} · ` : '';
+      add('O', scores.O, ok ? 'Оптимально: берёт данные набором' : 'Запрос в цикле',
+        `${nums}растёт как ${growF(oG)}${oPo != null ? ` (оптимум ${growF(oPo)})` : ''}`, ok ? 'full' : 'minus');
+    }
+  } else if (scores.O == null) {
+    add('O', null, cat === 'A' ? 'Не измерено' : 'Оптимальность не оценивается',
+      cat === 'B' && st === 'candidate_error' ? 'код не скомпилировался — у нерабочего кода O не меряем'
+        : (O.note ? String(O.note).slice(0, 90) : 'код не исполнился на нагрузочном прогоне'), 'na');
+  } else { // статический разбор антипаттернов (B без нагрузочного замера)
+    const wait = isPerf ? ' · нагрузочный замер не прогнан' : '';
+    if (scores.O >= 10) add('O', scores.O, 'Явных антипаттернов нет', 'статический разбор кода чистый' + wait, 'full');
+    else {
+      const codes = (O.codes || []).map((c) => ANTI[c] || c);
+      add('O', scores.O, 'Есть тяжёлый антипаттерн',
+        (codes.length ? `статика: ${codes.join(', ')}` : 'статический разбор кода') + wait, 'minus');
+    }
+  }
+
+  // P — платформа (только B)
+  if (cat === 'B') {
+    if (st === 'candidate_error')
+      add('P', scores.P, 'Обращения к метаданным не подтверждены', 'код не запустился — проверить нечего', 'minus');
+    else if ((scores.P ?? 0) >= 10)
+      add('P', scores.P, 'Все обращения к метаданным отработали', '0 платформенных ошибок', 'full');
+    else {
+      const pe = M.platform_error_tests || 0, mk = (M.platform_errors || [])[0];
+      add('P', scores.P, 'Падает на обращении к платформе',
+        `${pe} ${plural(pe, 'тест', 'теста', 'тестов')} с ошибкой поля/объекта${mk ? ` · «${mk}»` : ''}`, 'minus');
+    }
+  }
+  return out;
+}
+
+/* Данные нагрузочного замера O для графика: как растёт «стоимость» с размером входа/базы.
+   A: число операций (codestat) на растущем входе; B: обращения к СУБД на растущей базе (после прогона).
+   Есть только если замер реально исполнялся (detail.O.growth задан) — иначе вкладки нет. */
+function perfData(cat, detail) {
+  const O = detail.O || {};
+  if (O.growth == null) return null;
+  const sizes = O.sizes || [];
+  const series = O.ops || O.counts || [];
+  if (sizes.length < 2 || series.length !== sizes.length) return null;
+  return {
+    sizes,
+    series,
+    growth: r2(O.growth),                              // число — для расчёта «близко ли к оптимуму»
+    pOpt: O.p_opt == null ? null : r2(O.p_opt),
+    growthF: growF(O.growth),                       // формула для подписи (N¹, N¹·⁵)
+    pOptF: growF(O.p_opt),
+    unit: cat === 'A' ? 'операций' : 'обращений к СУБД',
+    xlabel: cat === 'A' ? 'размер входа' : 'размер базы',
+  };
 }
 
 function genTasks(name) {
@@ -265,6 +576,9 @@ function genTasks(name) {
         category: cat,
         scores: { S: pick(sc.S), M: pick(sc.M), O: pick(sc.O), P: pick(sc.P), Q: r2(sc.Q) },
         diag: diagnose(cat, s.detail || {}),
+        breakdown: breakdown(cat, t.taskId, sc, s.detail || {}),
+        errorLines: errLines(cat, s.detail || {}),
+        perf: perfData(cat, s.detail || {}),
         meta: t.meta,
         codeHtml: highlight(t.code),
         empty: !t.code,
