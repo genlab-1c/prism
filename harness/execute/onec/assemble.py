@@ -15,6 +15,7 @@
 
 from __future__ import annotations
 
+import re
 import uuid
 from pathlib import Path
 
@@ -72,6 +73,27 @@ def _add_common_module(out_cfg: Path, name: str, body: str, servercall: bool) ->
     (ext / "Module.bsl").write_text(BOM + body, encoding="utf-8")
 
 
+def ensure_exported(code: str, entry: str) -> str:
+    """Дописать «Экспорт» точке входа, если его нет.
+
+    Точку входа тесты зовут из ДРУГОГО модуля (Тесты → КодКандидата.<entry>), а в 1С метод
+    общего модуля виден снаружи только с «Экспорт». Промпт про это не говорит — модель не знает,
+    что её код идёт «библиотекой» под тесты. Поэтому меряем ЛОГИКУ, а не угаданную конвенцию вызова:
+    рабочая функция без «Экспорт» больше не проваливается на «Метод объекта не обнаружен».
+    """
+    pat = re.compile(
+        r"(?im)^([ \t]*(?:Функция|Процедура)[ \t]+"
+        + re.escape(entry)
+        + r"[ \t]*\([^)]*\))([ \t]*)(Экспорт\b)?"
+    )
+
+    def repl(m: re.Match) -> str:
+        return m.group(0) if m.group(3) else m.group(1) + " Экспорт"
+
+    new, n = pat.subn(repl, code, count=1)
+    return new if n else code
+
+
 def assemble_run_config(
     task_dir: Path,
     candidate_code: str,
@@ -84,8 +106,11 @@ def assemble_run_config(
     spec = yaml.safe_load((task_dir / "config_spec.yaml").read_text(encoding="utf-8"))
     build_base_config(spec, empty_cfg, out_cfg)
 
-    # кандидат — как есть (его ошибки должен ловить прогон, не сборка)
-    _add_common_module(out_cfg, "КодКандидата", candidate_code, servercall=False)
+    # кандидат: логические ошибки ловит прогон, но точку входа авто-экспортируем — чтобы её
+    # вообще можно было позвать из модуля Тесты (промпт про «Экспорт» умалчивает, см. ensure_exported)
+    _add_common_module(
+        out_cfg, "КодКандидата", ensure_exported(candidate_code, entry), servercall=False
+    )
 
     # тесты: сгенерённые фикстуры + проверки задачи с подставленным именем функции
     fixtures = yaml.safe_load((task_dir / "fixtures.yaml").read_text(encoding="utf-8"))
