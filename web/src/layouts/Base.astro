@@ -65,6 +65,19 @@ const schemas = [
       } catch (e) {}
     </script>
     {schemas.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+    <!-- Yandex.Metrika counter (is:inline — чтобы Astro не трогал сниппет) -->
+    <script is:inline>
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=110619968', 'ym');
+
+      ym(110619968, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/110619968" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
   </head>
   <body>
     <SiteHeader client:load active={active} version={version} repo={data.meta?.repo} />
