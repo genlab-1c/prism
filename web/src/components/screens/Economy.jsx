@@ -70,9 +70,11 @@ function ValueRanking({ models, navigate, metric }) {
   const minX = Math.min(...pts.map((p) => p.x));
   const qMax = Math.max(...pts.map((p) => p.q));
   // подсказки для крайних значений
+  const HINT_MIN = { cost: 'дешевле всех', time: 'быстрее всех', tokens: 'экономнее всех' };
+  const HINT_MAX = { cost: 'дороже всех', time: 'медленнее всех', tokens: 'прожорливее всех' };
   for (const p of pts) {
-    if (p.x === minX) p.hint = metric === 'cost' ? 'дешевле всех' : 'быстрее всех';
-    else if (p.x === maxX) p.hint = metric === 'cost' ? 'дороже всех' : 'медленнее всех';
+    if (p.x === minX) p.hint = HINT_MIN[metric];
+    else if (p.x === maxX) p.hint = HINT_MAX[metric];
   }
   const dominatorOf = (p) => {
     const doms = pts.filter((o) => o.id !== p.id && o.x <= p.x && o.q >= p.q && (o.x < p.x || o.q > p.q));
@@ -92,7 +94,7 @@ function ValueRanking({ models, navigate, metric }) {
         <span />
         <span style={head}>модель</span>
         <span style={head}>качество</span>
-        <span style={head}>{metric === 'cost' ? 'цена / генерация' : 'время / задача'}</span>
+        <span style={head}>{metric === 'cost' ? 'цена / генерация' : metric === 'time' ? 'время / задача' : 'токенов / генерация'}</span>
         <span style={{ ...head, textAlign: 'right' }}>выгода</span>
       </div>
       {optimum.map((p) => <Row key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum dominator={null} onClick={() => navigate('model', p.id)} />)}
@@ -113,12 +115,12 @@ export function EconomyView({ models = [], navigate = () => {} }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
         <div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink-100)' }}>Что выгоднее: качество за {metric === 'cost' ? 'деньги' : 'время'}</div>
+          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink-100)' }}>{metric === 'cost' ? 'Качество за деньги' : metric === 'time' ? 'Качество за время' : 'Качество на токен'}</div>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', marginTop: 3 }}>
-            <span style={{ color: 'var(--axis-o)' }}>оптимум</span> = нет модели одновременно {metric === 'cost' ? 'дешевле' : 'быстрее'} И сильнее · отсортировано по качеству
+            <span style={{ color: 'var(--axis-o)' }}>оптимум</span> — чтобы получить больше качества, придётся взять {metric === 'cost' ? 'дороже' : metric === 'time' ? 'медленнее' : 'прожорливее по токенам'} · сортировка по качеству
           </div>
         </div>
-        <Segmented items={[{ key: 'cost', label: 'Цена' }, { key: 'time', label: 'Скорость' }]} value={metric} onChange={setMetric} />
+        <Segmented items={[{ key: 'cost', label: 'Цена' }, { key: 'time', label: 'Скорость' }, { key: 'tokens', label: 'Токены' }]} value={metric} onChange={setMetric} />
       </div>
 
       <ValueRanking models={models} navigate={navigate} metric={metric} />
@@ -132,7 +134,12 @@ export function EconomyView({ models = [], navigate = () => {} }) {
         </div>
       </div>
 
-      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: 0 }}>цена генерации — средняя стоимость одного ответа модели (по всем задачам) = прайс-лист провайдера × реально сгенерированные токены. Зарубежные — тариф OpenRouter, Sber и Yandex — прайс-лист провайдера. Q взвешен по числу задач.</p>
+      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: 0 }}>
+        {metric === 'tokens'
+          ? '«токенов на генерацию» — среднее число токенов (вход + выход) на один ответ. Меньше = лаконичнее, и не зависит от тарифа. Важно: мало токенов ≠ дёшево — дорогая модель бывает экономной по токенам (например, GPT‑5.5 краток, но токен у него дорогой). '
+          : 'цена генерации — средняя стоимость одного ответа модели (по всем задачам) = прайс-лист провайдера × реально сгенерированные токены. Зарубежные — тариф OpenRouter, Sber и Yandex — прайс-лист провайдера. '}
+        Q взвешен по числу задач.
+      </p>
     </div>
   );
 }

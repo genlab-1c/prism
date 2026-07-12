@@ -12,6 +12,7 @@ const PH = VB_H - M.t - M.b;
 export const METRICS = {
   cost: { key: 'genCost', label: 'цена одной генерации', log: true, fmt: fmtRubFine, better: 'дешевле' },
   time: { key: 'avgTime', label: 'среднее время на задачу', log: false, fmt: (v) => `${v}с`, better: 'быстрее' },
+  tokens: { key: 'tokPerGen', label: 'токенов на генерацию', log: true, fmt: (v) => (v >= 1000 ? `${(v / 1000).toFixed(1)}к` : `${Math.round(v)}`), better: 'экономнее' },
 };
 
 // Парето-оптимальные: никто не лучше И по качеству, И по метрике (меньше = лучше)

@@ -3,15 +3,11 @@
    Рядом — ShareBar: ссылка на модель + готовый текст поста. */
 import React from 'react';
 import { Icon } from '../chrome/Chrome.jsx';
-import { Badge } from '../core/Badge.jsx';
 import { Button } from '../core/Button.jsx';
-import { Tag } from '../core/Tag.jsx';
 import { VendorLogo } from './VendorLogo.jsx';
-import { ScoreVector } from './ScoreVector.jsx';
-import { buildInsights, narrativeText } from '../../lib/insights.js';
+import { buildInsights } from '../../lib/insights.js';
 
 const BASE = import.meta.env.BASE_URL;
-const fmtTokens = (n) => (n == null ? '—' : n < 1000 ? `${n}` : `${(n / 1000).toFixed(0)}k`);
 
 // строка-вердикт: ярлык слева, чипы-модели справа
 function VerdictRow({ label, color, names }) {
@@ -28,14 +24,119 @@ function VerdictRow({ label, color, names }) {
   );
 }
 
-function Stat({ label, value, sub, color, icon }) {
+// категория по-человечески: что это + «решает X% задач» (понятнее, чем «Q 9.78»)
+function CatBlock({ title, desc, solved, s, q }) {
+  const pct = solved != null ? Math.round(solved * 100) : null;
+  const good = pct != null ? pct >= 65 : (q ?? 0) >= 7;
+  const line = pct != null ? `решает ${pct}% задач` : (q != null ? `оценка ${q.toFixed(1)} из 10` : 'не измерялось');
+  return (
+    <div style={{ flex: 1, minWidth: 210, background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', padding: '13px 15px' }}>
+      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
+      <div style={{ fontSize: 12, color: 'var(--ink-400)', marginTop: 2, lineHeight: 1.4 }}>{desc}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15, fontWeight: 700, color: good ? 'var(--axis-o)' : 'var(--axis-p)', marginTop: 10 }}>{line}</div>
+      {s === 10 && <div style={{ fontSize: 11.5, color: 'var(--ink-400)', marginTop: 4 }}>код всегда компилируется</div>}
+    </div>
+  );
+}
+
+// значение экономики + человеческий смысл под ним (не голая цифра)
+function EconStat({ label, value, meaning, tone, icon }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
-        {icon && <Icon name={icon} size={11} />}{label}
-      </span>
-      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 19, fontWeight: 700, letterSpacing: '-0.01em', color: color || 'var(--ink-100)' }}>{value}</span>
-      {sub && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>{sub}</span>}
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>{icon && <Icon name={icon} size={11} />}{label}</span>
+      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 19, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--ink-100)' }}>{value}</span>
+      {meaning && <span style={{ fontSize: 11, fontWeight: 600, color: tone || 'var(--ink-400)' }}>{meaning}</span>}
+    </div>
+  );
+}
+
+const fmtTok = (n) => (n == null ? '—' : n >= 1000 ? `${(n / 1000).toFixed(1)}к` : `${Math.round(n)}`);
+const median = (arr) => {
+  const s = [...arr].sort((a, b) => a - b); const n = s.length;
+  return n ? (n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2) : null;
+};
+const TIER_TEXT = {
+  cost: ['дешевле большинства', 'средняя цена', 'дороже большинства'],
+  time: ['быстрее большинства', 'средняя скорость', 'медленнее большинства'],
+  tokens: ['экономнее большинства', 'средний расход', 'многословнее большинства'],
+};
+// ярлык по отношению к МЕДИАНЕ (не к рангу — цены скошены длинным хвостом дорогих моделей).
+// «меньше = лучше»: заметно ниже медианы → лучше, заметно выше → хуже, рядом → средне.
+function tier(models, key, val, kind) {
+  const vals = models.map((m) => m.econ?.[key]).filter((v) => v != null && v > 0);
+  const med = median(vals);
+  if (med == null || val == null || val <= 0) return null;
+  const ratio = val / med;
+  const [better, mid, worse] = TIER_TEXT[kind];
+  if (ratio <= 0.6) return { text: better, tone: 'var(--axis-o)' };
+  if (ratio <= 1.6) return { text: mid, tone: 'var(--ink-300)' };
+  return { text: worse, tone: 'var(--axis-p)' };
+}
+
+const qualityWord = (q) => (q == null ? '—' : q >= 8.5 ? 'отлично' : q >= 7 ? 'хорошо' : q >= 5 ? 'средне' : 'слабо');
+
+// человеческие названия осей + что балл значит на трёх уровнях
+const AXIS_NAME = { S: 'Синтаксис', M: 'Логика', O: 'Оптимальность', P: 'Платформа 1С' };
+const AXIS_SAY = {
+  S: { top: 'код всегда компилируется', hi: 'почти всегда пишет компилируемый код', mid: 'иногда синтаксические ошибки в коде', lo: 'часто не компилируется' },
+  M: { top: 'логика всегда верна — все тесты пройдены', hi: 'решения логически верны, проходят скрытые тесты', mid: 'логика местами хромает — часть тестов не проходит', lo: 'часто выдаёт неверный результат' },
+  O: { top: 'оптимальный код без лишней работы', hi: 'эффективный код — без лишних переборов и запросов в цикле', mid: 'местами лишние обращения к данным', lo: 'неоптимально — запросы в цикле, лишние переборы' },
+  P: { top: 'безупречно работает с метаданными 1С', hi: 'уверенно работает с объектами и метаданными 1С', mid: 'иногда ошибается в объектах и полях 1С', lo: 'путается в метаданных — обращается к несуществующим полям и объектам' },
+};
+
+// вердикт по одной оси: топ (≈10) / плюс / минус, с учётом СИЛЬНОГО расхождения между A и B
+// (модель бывает отличной в алгоритмике и провальной в платформе — тогда «отлично там, но слабо тут»).
+function axisLine(ax, a, b, ins) {
+  const vals = [a, b].filter((v) => v != null);
+  if (!vals.length) return null;
+  const avg = vals.reduce((x, y) => x + y, 0) / vals.length;
+  const say = AXIS_SAY[ax];
+  if (a != null && b != null && Math.abs(a - b) >= 3.5) {
+    const aBetter = a >= b;
+    return { side: 'minus', text: `отлично ${aBetter ? 'в алгоритмике' : 'в платформенных задачах'}, но слабо ${aBetter ? 'в платформенных задачах' : 'в алгоритмике'}` };
+  }
+  if (avg >= 9.7) return { side: 'plus', text: say.top || say.hi };
+  if (avg >= 8) return { side: 'plus', text: say.hi };
+  let t = avg >= 6 ? say.mid : say.lo;
+  if (ax === ins.weakSpot?.axis && ins.weakTag) t += ` (слабее на «${ins.weakTag.label}»)`;
+  return { side: 'minus', text: t };
+}
+
+// подробный вердикт: по каждой оси — плюс/минус простым языком. Представитель оси — СРЕДНЕЕ A и B
+// (без перекоса в худшую категорию, чтобы согласовать с долей решённых). Сильная категория — тоже по solved%.
+function verdictDetail(model, ins) {
+  const pluses = [], minuses = [];
+  for (const ax of ['M', 'O', 'P', 'S']) {
+    const line = axisLine(ax, model.A?.[ax], model.B?.[ax], ins);
+    if (!line) continue;
+    (line.side === 'plus' ? pluses : minuses).push({ ax, name: AXIS_NAME[ax], text: line.text });
+  }
+  // сильная категория — по доле решённых (то, что показано ниже в карточке), а не по Q — иначе рассинхрон
+  const aS = model.A?.solved, bS = model.B?.solved;
+  const strongCat = (aS != null && bS != null) ? (aS >= bS ? 'A' : 'B') : (ins.strongCat || 'A');
+  const strong = strongCat === 'A' ? 'алгоритмике' : 'платформенных задачах';
+  let lead;
+  if (ins.rankOverall === 1) lead = `Лучший результат прогона по качеству кода 1С. Сильнее всего в ${strong}.`;
+  else if (ins.rankOverall <= 3) lead = `Один из лидеров рейтинга. Сильнее всего в ${strong}.`;
+  else if (ins.rankOverall <= Math.ceil(ins.total * 0.5)) lead = `Выше среднего. Лучше даётся ${strong}.`;
+  else lead = `Ниже среднего по 1С. Лучше даётся ${strong}.`;
+  return { lead, pluses, minuses };
+}
+
+// группа вердикта (Плюсы / Минусы): заголовок + список «маркер · Ось — что значит»
+function VGroup({ title, tone, mark, items }) {
+  if (!items.length) return null;
+  return (
+    <div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: tone, marginBottom: 7 }}>{title}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {items.map((it) => (
+          <div key={it.ax} style={{ display: 'flex', gap: 8, fontSize: 12.5, lineHeight: 1.4 }}>
+            <span style={{ flex: 'none', fontFamily: 'var(--font-mono)', fontWeight: 700, color: tone }}>{mark}</span>
+            <span style={{ color: 'var(--ink-300)' }}><b style={{ color: 'var(--ink-100)' }}>{it.name}</b> — {it.text}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -44,6 +145,10 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
   const ins = buildInsights(model, models, tagLabels);
   const podium = ins.rankOverall <= 3;
   const rankText = podium ? `ТОП-${ins.rankOverall}` : `#${ins.rankOverall}`;
+  const costTier = tier(models, 'genCost', model.econ?.genCost, 'cost');
+  const timeTier = tier(models, 'avgTime', model.econ?.avgTime, 'time');
+  const tokTier = tier(models, 'tokPerGen', model.econ?.tokPerGen, 'tokens');
+  const vd = verdictDetail(model, ins);
 
   return (
     <div id="prism-verdict-card" style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
@@ -65,45 +170,34 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', height: 30, padding: '0 14px', borderRadius: 'var(--radius-pill)', background: podium ? 'var(--prism)' : 'var(--surface-sunken)', border: podium ? 'none' : '1px solid var(--line)', color: podium ? 'var(--brand-ink)' : 'var(--ink-200)', fontFamily: 'var(--font-mono)', fontSize: 14, fontWeight: 700, letterSpacing: '0.02em' }}>{rankText}</span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>из {ins.total} в общем зачёте</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>из {ins.total} моделей</span>
           </div>
         </div>
 
-        {/* вердикт: кого обходит / кому уступает */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 9, margin: '18px 0', paddingTop: 16, borderTop: '1px solid var(--line)' }}>
-          <VerdictRow label="обходит" color="var(--axis-o)" names={ins.beats} />
-          <VerdictRow label="уступает" color="var(--ink-400)" names={ins.losesTo} />
+        {/* вердикт: лид одной фразой + подробные плюсы/минусы по осям */}
+        <div style={{ margin: '16px 0 0' }}>
+          <p style={{ margin: 0, fontSize: 14, color: 'var(--ink-100)', lineHeight: 1.5 }}>{vd.lead}</p>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 16, marginTop: 12 }}>
+            <VGroup title="Плюсы" tone="var(--axis-o)" mark="+" items={vd.pluses} />
+            <VGroup title="Минусы" tone="var(--axis-p)" mark="−" items={vd.minuses} />
+          </div>
         </div>
 
-        {/* сильная / слабая стороны */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 18 }}>
-          {ins.strongCat && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', fontSize: 13, color: 'var(--ink-200)' }}>
-              <Tag color={ins.strongCat === 'B' ? 'p' : 'm'}>силён · {ins.strongCat}</Tag>
-              <span>{ins.strongCat === 'B' ? 'платформа 1С — запросы, регистры, метаданные' : 'алгоритмика'}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--ink-400)' }}>Q̄ {ins.strongQ?.toFixed(2)}</span>
-              {ins.strongS === 10 && <Badge tone="ok" dot={false} size="sm">S 10 · синтаксис идеален</Badge>}
-            </div>
-          )}
-          {ins.weakSpot && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', fontSize: 13, color: 'var(--ink-300)' }}>
-              <Tag color="neutral">слабее · {ins.weakCat}</Tag>
-              <span>проседает {ins.weakSpot.label}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--ink-400)' }}>{ins.weakSpot.axis} {ins.weakSpot.value}</span>
-              {ins.weakTag && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>· «{ins.weakTag.label}»</span>}
-            </div>
-          )}
+        {/* что умеет — по-человечески, в доле решённых задач */}
+        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', margin: '18px 0' }}>
+          {model.A && <CatBlock title="Алгоритмика" desc="Чистый код: расчёты, строки, коллекции — без базы 1С." solved={model.A.solved} s={model.A.S} q={model.qA} />}
+          {model.B && <CatBlock title="Платформенные задачи" desc="Запросы, регистры, работа с реальной базой 1С." solved={model.B.solved} s={model.B.S} q={model.qB} />}
         </div>
 
-        {/* экономика генерации */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: 16, padding: '16px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-          <Stat label="за генерацию" value={ins.genCostFmt} color="var(--axis-o)" icon="zap" />
-          <Stat label="токены-выход" value={fmtTokens(ins.tokensOut)} sub={ins.economical ? 'по делу' : null} />
-          <Stat label="время" value={ins.avgTime != null ? `${ins.avgTime}с` : '—'} sub={ins.slowest ? 'медленный' : 'на задачу'} color={ins.slowest ? 'var(--warn)' : null} icon="clock" />
-          <Stat label="Q общий" value={ins.qOverall != null ? ins.qOverall.toFixed(2) : '—'} />
+        {/* цена · скорость · общая оценка — с человеческим смыслом */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 16, padding: '16px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+          <EconStat label="цена ответа" value={ins.genCostFmt} meaning={costTier?.text} tone={costTier?.tone} icon="zap" />
+          <EconStat label="скорость" value={ins.avgTime != null ? `${ins.avgTime} с` : '—'} meaning={timeTier?.text} tone={timeTier?.tone} icon="clock" />
+          <EconStat label="токенов на ответ" value={fmtTok(model.econ?.tokPerGen)} meaning={tokTier?.text} tone={tokTier?.tone} />
+          <EconStat label="общая оценка" value={ins.qOverall != null ? `${ins.qOverall.toFixed(1)} / 10` : '—'} meaning={qualityWord(ins.qOverall)} tone={(ins.qOverall ?? 0) >= 7 ? 'var(--axis-o)' : 'var(--ink-400)'} />
         </div>
 
-        {/* множители цены — главный козырь */}
+        {/* дешевле конкретных конкурентов — понятный козырь */}
         {ins.cheaperThan.length > 0 && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>дешевле</span>
@@ -114,17 +208,17 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
             ))}
           </div>
         )}
-        {ins.cheaperThanAllAbove && (
-          <p style={{ margin: '12px 0 0', fontFamily: 'var(--font-mono)', fontSize: 12, lineHeight: 1.5, color: 'var(--ink-400)' }}>
-            Дешевле всех, кто выше по рейтингу — а всё, что дешевле, уступает в качестве.
-          </p>
-        )}
 
-        {/* векторы SMOP по категориям */}
-        <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap', marginTop: 18 }}>
-          {model.A && <div><div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 8 }}>категория A</div><ScoreVector scores={model.A} layout="compact" /></div>}
-          {model.B && <div><div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 8 }}>категория B</div><ScoreVector scores={model.B} layout="compact" /></div>}
-        </div>
+        {/* с кем сравнивать: сильнее / слабее по общему качеству */}
+        {(ins.beats.length > 0 || ins.losesTo.length > 0) && (
+          <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 10 }}>по общему качеству кода 1С</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+              <VerdictRow label="сильнее" color="var(--axis-o)" names={ins.beats} />
+              <VerdictRow label="слабее" color="var(--ink-400)" names={ins.losesTo} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -132,28 +226,23 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
 
 /* Панель действий: ссылка на модель + готовый текст поста (тот формат, что заходит).
    В пост зашиваем версию бенчмарка и канонический адрес — атрибуция авторства. */
-export function ShareBar({ model, models = [], tagLabels = {}, meta = {} }) {
+export function ShareBar({ model }) {
   const [doneLink, setDoneLink] = React.useState(false);
-  const [donePost, setDonePost] = React.useState(false);
   const url = (typeof window !== 'undefined' ? window.location.origin : '') + BASE + 'm/' + model.id;
 
   const flash = (set) => { set(true); setTimeout(() => set(false), 1400); };
-  const copy = async (text, set) => { try { await navigator.clipboard.writeText(text); } catch (e) {} flash(set); };
   const shareLink = async () => {
     if (typeof navigator !== 'undefined' && navigator.share) {
-      try { await navigator.share({ title: `${model.name} · prism`, url }); return; } catch (e) {}
+      try { await navigator.share({ title: `${model.name} · prism`, url }); return; } catch (e) { /* отменили — копируем */ }
     }
-    copy(url, setDoneLink);
+    try { await navigator.clipboard.writeText(url); } catch (e) { /* нет буфера */ }
+    flash(setDoneLink);
   };
-  const copyPost = () => copy(narrativeText(buildInsights(model, models, tagLabels), { version: meta.version, url }), setDonePost);
 
   return (
     <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
       <Button variant="primary" size="sm" iconLeft={<Icon name={doneLink ? 'check' : 'share'} size={15} />} onClick={shareLink}>
         {doneLink ? 'ссылка скопирована' : 'Поделиться'}
-      </Button>
-      <Button variant="secondary" size="sm" iconLeft={<Icon name={donePost ? 'check' : 'copy'} size={15} />} onClick={copyPost}>
-        {donePost ? 'пост скопирован' : 'Скопировать пост'}
       </Button>
     </div>
   );

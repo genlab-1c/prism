@@ -25,3 +25,49 @@
 [data-theme='light'] .code-pane pre.shiki span {
   color: var(--shiki-light);
 }
+/* Номера строк как в IDE. Строки Shiki инлайновые и разделены литеральным \n;
+   делаем их блочными, а межстрочные \n схлопываем нормальным white-space на code —
+   иначе получаются двойные пустые строки. Каждая строка своя ширина → фон ошибки на всю строку. */
+.code-pane pre.shiki code {
+  white-space: normal;        /* схлопнуть \n между строками */
+  counter-reset: prism-ln;
+}
+.code-pane pre.shiki .line {
+  display: block;
+  white-space: pre;           /* внутри строки — отступы сохраняем */
+  counter-increment: prism-ln;
+}
+.code-pane pre.shiki .line::before {
+  content: counter(prism-ln);
+  display: inline-block;
+  width: 2.4em;
+  margin-right: 16px;
+  text-align: right;
+  color: var(--ink-400);
+  opacity: 0.4;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* строка с ошибкой компиляции/исполнения — подсветка на всю строку + левый маркер + номер красным.
+   background с !important, т.к. token-spans выше принудительно прозрачны. */
+.code-pane .line.code-error-line {
+  background: var(--danger-soft) !important;
+  box-shadow: inset 3px 0 0 var(--danger);
+}
+.code-pane .line.code-error-line::before {
+  color: var(--danger);
+  opacity: 1;
+  font-weight: 700;
+}
+/* строка, к которой прокрутили по клику на ошибку — короткая вспышка */
+.code-pane .line.code-focus-line {
+  animation: prism-line-flash 1.2s ease-out 1;
+}
+@keyframes prism-line-flash {
+  0%, 25% { background: var(--danger-soft); }
+  100% { background: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .code-pane .line.code-focus-line { animation: none; }
+}

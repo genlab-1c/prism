@@ -60,7 +60,7 @@ function ConfigSummary({ config }) {
   if (!parts.length) return null;
   return (
     <div style={{ marginTop: 12 }}>
-      <div className="prism-eyebrow" style={{ marginBottom: 6, color: 'var(--axis-p)' }}>объекты учебной базы</div>
+      <div className="prism-eyebrow" style={{ marginBottom: 6, color: 'var(--axis-p)' }}>объекты синтетической базы</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {parts.map(([label, names]) => (
           <div key={label} style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'baseline' }}>
@@ -91,7 +91,7 @@ function TaskRow({ t, info }) {
           <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: 'var(--ink-200)', whiteSpace: 'pre-wrap' }}>{info.prompt || 'условие недоступно'}</p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 12, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>
             {testsCount != null && <span>скрытых тест-кейсов: <span style={{ color: 'var(--ink-200)', fontWeight: 600 }}>{testsCount}</span></span>}
-            {t.category === 'B' && info.testsHtml && <span>проверки исполняются в 1С против учебной базы</span>}
+            {t.category === 'B' && info.testsHtml && <span>проверки исполняются в 1С против синтетической базы</span>}
           </div>
           <ConfigSummary config={info.config} />
         </div>
@@ -118,7 +118,7 @@ export default function TasksPage() {
   if (err) return <main style={wrap}><p style={{ padding: '40px 0', color: 'var(--ink-400)', fontFamily: 'var(--font-mono)' }}>данные задач не найдены.</p></main>;
   if (!info || !meta) return <main style={wrap}><p style={{ padding: '40px 0', color: 'var(--ink-400)', fontFamily: 'var(--font-mono)' }}>загрузка…</p></main>;
 
-  const groups = [['A', 'Категория A · алгоритмика', 'чистый язык 1С, исполнение в OneScript'], ['B', 'Категория B · платформа 1С', 'реальная платформа против учебной базы']];
+  const groups = [['A', 'Категория A · алгоритмика', 'чистый язык 1С, исполнение в OneScript'], ['B', 'Категория B · платформа 1С', 'реальная платформа против синтетической базы']];
 
   return (
     <main style={{ ...wrap, paddingBottom: 60 }}>

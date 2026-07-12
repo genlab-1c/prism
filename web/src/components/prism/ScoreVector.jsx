@@ -11,11 +11,11 @@ const AXIS_COLOR = { S: 'var(--axis-s)', M: 'var(--axis-m)', O: 'var(--axis-o)',
  *  - layout="compact" → inline mini meters + mono values (leaderboard rows)
  * `scores` is { S, M, O, P } (a null/undefined axis renders as «—», "не измерено").
  */
-export function ScoreVector({ scores = {}, layout = 'compact', style = {}, ...rest }) {
+export function ScoreVector({ scores = {}, layout = 'compact', axes = AXES, style = {}, ...rest }) {
   if (layout === 'bars') {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, ...style }} {...rest}>
-        {AXES.map(a => (
+        {axes.map(a => (
           <ScoreBar key={a} axis={a} value={scores[a] ?? 0} />
         ))}
       </div>
@@ -25,7 +25,7 @@ export function ScoreVector({ scores = {}, layout = 'compact', style = {}, ...re
   // compact
   return (
     <div style={{ display: 'flex', gap: 16, ...style }} {...rest}>
-      {AXES.map(a => {
+      {axes.map(a => {
         const v = scores[a];
         const has = v !== null && v !== undefined;
         const color = AXIS_COLOR[a];
