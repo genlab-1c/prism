@@ -302,6 +302,54 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning по reasoning_effort; tool calling
 
+  sonnet5:
+    id: "claude-sonnet-5"                # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Claude Sonnet 5"
+    vendor: anthropic
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
+  gpt56_terra:
+    id: "gpt-5.6-terra"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-5.6 Terra"
+    vendor: openai
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1050000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
+  gpt56_sol:
+    id: "gpt-5.6-sol"                    # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-5.6 Sol"
+    vendor: openai
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1050000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель (флагман тира): для кат. B поднимать max_tokens
+
+  mimo25_pro:
+    id: "mimo-v2.5-pro"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "MiMo-V2.5 Pro"
+    vendor: xiaomi
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: function calling заявлен; риск на агентной B (как Qwen3.6/MiniMax)
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:

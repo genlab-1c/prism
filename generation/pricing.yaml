@@ -39,3 +39,7 @@ prices:
   "qwen3.7-plus":                  { input: 0.32, output: 1.28 }   # OpenRouter qwen/qwen3.7-plus
   "grok-build-0.1":                { input: 1.0,  output: 2.0 }    # OpenRouter x-ai/grok-build-0.1
   "grok-4.3":                      { input: 1.25, output: 2.5 }    # OpenRouter x-ai/grok-4.3
+  "claude-sonnet-5":               { input: 2.0,  output: 10.0 }   # OpenRouter anthropic/claude-sonnet-5
+  "gpt-5.6-terra":                 { input: 2.5,  output: 15.0 }   # OpenRouter openai/gpt-5.6-terra
+  "gpt-5.6-sol":                   { input: 5.0,  output: 30.0 }   # OpenRouter openai/gpt-5.6-sol
+  "mimo-v2.5-pro":                 { input: 0.44, output: 0.87 }   # OpenRouter xiaomi/mimo-v2.5-pro

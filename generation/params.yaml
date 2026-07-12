@@ -33,3 +33,7 @@ defaults:
     qwen37_plus: { temperature: 0.1, runs: 1 }      # Qwen3.7 Plus через AITUNNEL (reasoning)
     grok_build:  { temperature: 0.1, runs: 1 }      # Grok Build 0.1 через AITUNNEL (reasoning)
     grok43:      { temperature: 0.1, runs: 1 }      # Grok 4.3 через AITUNNEL (reasoning)
+    sonnet5:     { temperature: 0.1, runs: 1 }      # Claude Sonnet 5 через AITUNNEL
+    gpt56_terra: { temperature: 0.1, runs: 1 }      # GPT-5.6 Terra через AITUNNEL (reasoning)
+    gpt56_sol:   { temperature: 0.1, runs: 1 }      # GPT-5.6 Sol через AITUNNEL (reasoning, флагман)
+    mimo25_pro:  { temperature: 0.1, runs: 1 }      # MiMo-V2.5 Pro через AITUNNEL (reasoning)
