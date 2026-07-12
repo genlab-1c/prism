@@ -51,10 +51,14 @@ description: "Что в бенчмарке PRISM уже работает: авт
 <!-- prism:status:lb -->
 | Модель | Q · категория A | Q · категория B |
 |---|:---:|:---:|
-| **Gemini 3.1 Pro** | **9.78** | **9.30** |
-| Gemini 3.5 Flash | 9.78 | 9.18 |
+| **Gemini 3.5 Flash** | **9.78** | **9.18** |
+| Gemini 3.1 Pro | 9.78 | 9.30 |
+| GPT-5.6 Sol | 9.33 | 9.59 |
+| MiMo-V2.5 Pro | 9.22 | 8.07 |
 | GPT-5.5 | 9.00 | 8.63 |
+| GPT-5.6 Terra | 8.78 | 7.97 |
 | Grok Build 0.1 | 8.33 | 7.91 |
+| Claude Sonnet 5 | 8.30 | 8.68 |
 | MiniMax M3 | 7.89 | 9.24 |
 | MiMo-V2.5 | 7.87 | 8.55 |
 | DeepSeek V4-Flash | 7.82 | 7.39 |
