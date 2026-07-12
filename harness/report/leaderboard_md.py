@@ -401,7 +401,10 @@ def render_badges() -> str:
         _badge("в_лидерборде", f"{models}_моделей", "blue", f"в лидерборде {models} моделей"),
     ]
     if last_run:
-        badges.append(_badge("прогон", last_run, "informational", f"прогон: {last_run}"))
+        # дефисы в дате экранируем как `--`: иначе shields.io примет их за разделитель label-value-color
+        badges.append(
+            _badge("прогон", last_run.replace("-", "--"), "informational", f"прогон: {last_run}")
+        )
     return "\n".join(badges)
 
 
