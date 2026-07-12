@@ -5,6 +5,7 @@
    Тема полотна следует теме сайта (data-theme) и обновляется при переключении.
    Цвета в <svg> — конкретные hex (из палитры темы), не CSS-var: иначе не сериализуются в экспорт. */
 import React from 'react';
+import { vendorGlyph } from './VendorLogo.jsx';
 
 const AXIS = { S: '#7c7ef8', M: '#22d3ee', O: '#34d399', P: '#fbbf24' };
 const PALETTE = ['#22d3ee', '#34d399', '#fbbf24', '#f472b6', '#7c7ef8', '#fb923c', '#4ade80', '#e879f9', '#38bdf8', '#a78bfa'];
@@ -161,11 +162,39 @@ function BarsSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate }) {
   );
 }
 
-/* ── таблица сводки для выгрузки картинкой (доля решённых A/B) ── */
+/* Знак вендора внутри выгружаемого <svg>: бейдж + inline-путь бренда (или монограмма
+   для неизвестного вендора). Пути 24×24 из VendorLogo — масштабируем в бейдж size×size. */
+function LogoGlyph({ x, cy, size, m, C }) {
+  const gl = vendorGlyph(m.vendor);
+  const s2 = size / 2;
+  if (!gl) {
+    const ch = (m.family || m.name || '?').trim()[0]?.toUpperCase() || '?';
+    return (
+      <g>
+        <rect x={x} y={cy - s2} width={size} height={size} rx={7} fill={C.head} stroke={C.grid} />
+        <text x={x + s2} y={cy + 4} textAnchor="middle" fontSize={size * 0.5} fontWeight="700" fill={C.sub}>{ch}</text>
+      </g>
+    );
+  }
+  const col = gl.color.startsWith('#') ? gl.color : C.ink; // 'var(--ink-100)' (xAI) → ink темы
+  const gs = size * 0.62, off = (size - gs) / 2, k = gs / 24;
+  return (
+    <g>
+      <rect x={x} y={cy - s2} width={size} height={size} rx={7} fill={col} fillOpacity={0.14} stroke={C.grid} />
+      <g transform={`translate(${x + off}, ${cy - s2 + off}) scale(${k})`}
+        fill={gl.stroke ? 'none' : col} stroke={gl.stroke ? col : undefined}
+        strokeWidth={gl.stroke ? 2.3 : undefined} strokeLinecap="round" strokeLinejoin="round">
+        {gl.paths.map((d, i) => <path key={i} d={d} />)}
+      </g>
+    </g>
+  );
+}
+
+/* ── таблица сводки для выгрузки картинкой (доля полностью решённых A/B) ── */
 export function SummaryTableSvg({ svgRef, rows, meta, C }) {
-  const W = 900, headTop = 56, headH = 28, bodyTop = 90, rowH = 46;
+  const W = 900, headTop = 104, headH = 27, bodyTop = 140, rowH = 46;
   const H = bodyTop + rows.length * rowH + 40;
-  const rankX = 40, nameX = 66, aX = 452, bX = 672, barOff = 62, barW = 128;
+  const rankX = 36, logoX = 56, logoSz = 30, nameX = 96, aX = 452, bX = 672, barOff = 62, barW = 128;
   const cell = (x, s, cy) => {
     if (s == null) return <text x={x} y={cy + 5} fontSize="12" fill={C.muted}>не измерялось</text>;
     const pct = Math.round(s * 100); const col = solvedHex(C, s);
@@ -179,13 +208,21 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
   };
   return (
     <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
-      <text x={24} y={30} fontSize="17" fontWeight="700" fill={C.ink}>Рейтинг PRISM — доля решённых задач</text>
-      <text x={24} y={48} fontSize="11.5" fill={C.sub}>алгоритмика (OneScript) · платформа 1С (реальная 1С в Docker) · {rows.length} моделей</text>
+      <text x={24} y={30} fontSize="18" fontWeight="700" fill={C.ink}>Рейтинг PRISM — доля полностью решённых задач</text>
+      <text x={24} y={53} fontSize="12.5" fill={C.sub}>
+        <tspan fontWeight="700" fill={C.ink}>Категория A — алгоритмические:</tspan>
+        <tspan dx="6"> чистый код без базы. Движок — OneScript + BSL LS.</tspan>
+      </text>
+      <text x={24} y={72} fontSize="12.5" fill={C.sub}>
+        <tspan fontWeight="700" fill={C.ink}>Категория B — платформенные:</tspan>
+        <tspan dx="6"> запросы, регистры, метаданные. Движок — реальная 1С в Docker.</tspan>
+      </text>
+      <text x={24} y={91} fontSize="11" fill={C.muted}>«решено» — код прошёл все скрытые проверки · {rows.length} моделей</text>
       <rect x={0} y={headTop} width={W} height={headH} fill={C.head} />
       <text x={rankX} y={headTop + 18} textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>#</text>
-      <text x={nameX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
-      <text x={aX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>АЛГОРИТМИКА · A</text>
-      <text x={bX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>ПЛАТФОРМА 1С · B</text>
+      <text x={logoX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
+      <text x={aX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>АЛГОРИТМИЧЕСКИЕ · A</text>
+      <text x={bX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>ПЛАТФОРМЕННЫЕ · B</text>
       {rows.map((m, i) => {
         const y0 = bodyTop + i * rowH; const cy = y0 + rowH / 2; const top = i === 0;
         return (
@@ -193,6 +230,7 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
             <rect x={0} y={y0} width={W} height={rowH} fill={top ? C.tint : (i % 2 ? C.zebra : 'transparent')} />
             <rect x={rankX - 13} y={cy - 13} width={26} height={26} rx={7} fill={top ? C.brand : C.head} />
             <text x={rankX} y={cy + 4} textAnchor="middle" fontSize="12" fontWeight="700" fill={top ? C.brandInk : C.sub}>{i + 1}</text>
+            <LogoGlyph x={logoX} cy={cy} size={logoSz} m={m} C={C} />
             <text x={nameX} y={cy - 2} fontSize="14" fontWeight={top ? 700 : 600} fill={C.ink}>{m.name}</text>
             <text x={nameX} y={cy + 13} fontSize="10.5" fill={C.muted}>{m.family || m.vendor || ''}</text>
             {cell(aX, m.A?.solved, cy)}
@@ -209,16 +247,20 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
 export function ScoresTableSvg({ svgRef, cat, rows, meta, C }) {
   const qKey = cat === 'A' ? 'qA' : 'qB';
   const axes = CAT_AXES[cat];
-  const W = 900, headTop = 64, headH = 26, bodyTop = 98, rowH = 44;
+  const W = 900, headTop = 84, headH = 25, bodyTop = 116, rowH = 44;
   const H = bodyTop + rows.length * rowH + 40;
-  const rankX = 38, nameX = 62, axStart = 306, axEnd = 772, qX = 838;
+  const rankX = 34, logoX = 52, logoSz = 28, nameX = 90, axStart = 306, axEnd = 772, qX = 838;
   const colW = (axEnd - axStart) / axes.length;
+  const engine = cat === 'A'
+    ? 'категория A · алгоритмические — чистый код без базы. Движок — OneScript + BSL LS'
+    : 'категория B · платформенные — запросы, регистры, метаданные. Движок — реальная 1С в Docker';
   return (
     <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
       <text x={24} y={30} fontSize="17" fontWeight="700" fill={C.ink}>Рейтинг PRISM — категория {cat} · баллы SMOP</text>
-      <text x={24} y={48} fontSize="11.5" fill={C.sub}>{cat === 'A' ? 'алгоритмика · OneScript' : 'платформа 1С · реальная 1С в Docker'} · {axes.map((a) => `${a} ${AXIS_NAME[a]}`).join(' · ')} · Q — средний балл · {rows.length} моделей</text>
+      <text x={24} y={51} fontSize="12" fill={C.sub}>{engine}</text>
+      <text x={24} y={69} fontSize="11" fill={C.muted}>{axes.map((a) => `${a} — ${AXIS_NAME[a]}`).join(' · ')} · Q — средний балл по осям · {rows.length} моделей</text>
       <rect x={0} y={headTop} width={W} height={headH} fill={C.head} />
-      <text x={nameX} y={headTop + 17} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
+      <text x={logoX} y={headTop + 17} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
       {axes.map((a, i) => <text key={a} x={axStart + i * colW + colW / 2} y={headTop + 17} textAnchor="middle" fontSize="11.5" fontWeight="700" fill={AXIS[a]}>{a}</text>)}
       <text x={qX} y={headTop + 17} textAnchor="middle" fontSize="11.5" fontWeight="700" fill={C.ink}>Q</text>
       {rows.map((m, i) => {
@@ -228,6 +270,7 @@ export function ScoresTableSvg({ svgRef, cat, rows, meta, C }) {
             <rect x={0} y={y0} width={W} height={rowH} fill={top ? C.tint : (i % 2 ? C.zebra : 'transparent')} />
             <rect x={rankX - 12} y={cy - 12} width={24} height={24} rx={6} fill={top ? C.brand : C.head} />
             <text x={rankX} y={cy + 4} textAnchor="middle" fontSize="11" fontWeight="700" fill={top ? C.brandInk : C.sub}>{i + 1}</text>
+            <LogoGlyph x={logoX} cy={cy} size={logoSz} m={m} C={C} />
             <text x={nameX} y={cy - 1} fontSize="13" fontWeight={top ? 700 : 600} fill={C.ink}>{m.name}</text>
             <text x={nameX} y={cy + 12} fontSize="10" fill={C.muted}>{m.family || m.vendor || ''}</text>
             {axes.map((a, ai) => {

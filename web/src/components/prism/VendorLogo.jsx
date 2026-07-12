@@ -44,6 +44,21 @@ const CUSTOM = {
   },
 };
 
+// Данные знака вендора для отрисовки в чужом <svg> (напр. выгружаемый чарт лидерборда),
+// где компонент VendorLogo с его <span>/CSS-переменными не годится: возвращаем голые пути
+// (24×24), цвет и режим. color может быть 'var(--ink-100)' — вызывающий подставит свой ink.
+export function vendorGlyph(vendor) {
+  const icon = ICONS[vendor];
+  const custom = !icon && CUSTOM[vendor];
+  if (!icon && !custom) return null; // неизвестный вендор → монограмма на стороне вызова
+  return {
+    paths: icon ? [icon.path] : custom.paths,
+    color: icon ? `#${icon.hex}` : custom.color,
+    stroke: !!custom && custom.mode === 'stroke',
+    title: icon ? icon.title : custom.title,
+  };
+}
+
 export function VendorLogo({ vendor, name = '?', size = 32, style = {} }) {
   const icon = ICONS[vendor];
   const custom = !icon && CUSTOM[vendor];

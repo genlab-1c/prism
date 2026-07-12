@@ -38,10 +38,10 @@ function Shield({ label, value, tone = 'neutral', icon }) {
 // быстрый старт: git clone + раскрывающийся список команд (как в README)
 const QUICK_CMDS = [
   ['cd prism && make setup-all', 'окружение (uv) + инструменты осей + учебная 1С'],
+  ['uv run prism doctor', 'проверить окружение, инструменты, ключи'],
   ['uv run prism leaderboard', 'лидерборд из готовых оценок (мгновенно)'],
   ['uv run prism generate --category A --models claude', 'генерация одной моделью'],
   ['uv run prism score', 'исполнить код и пересчитать оценки L1'],
-  ['uv run prism doctor', 'проверить окружение, инструменты, ключи'],
 ];
 function CmdLine({ cmd, hint, primary }) {
   const [copied, setCopied] = React.useState(false);
@@ -118,15 +118,32 @@ function TableScroll({ minWidth = 640, children }) {
     </div>
   );
 }
-function ListRow({ grid, i, top, onClick, children }) {
-  const [h, setH] = React.useState(false);
+// кастомный тултип в родной палитре (приподнятая поверхность, обычный текст, тонкая рамка),
+// следует за курсором — не дефолтный белый и без инверсии цветов.
+function Tooltip({ x, y, text }) {
   return (
-    <div role="button" tabIndex={0} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} onClick={onClick}
+    <span style={{ position: 'fixed', left: x + 14, top: y + 16, zIndex: 60, pointerEvents: 'none',
+      background: 'var(--surface-raised)', color: 'var(--ink-200)', border: '1px solid var(--line)',
+      borderRadius: 'var(--radius-sm)', padding: '5px 9px', fontFamily: 'var(--font-mono)', fontSize: 11.5,
+      whiteSpace: 'nowrap', boxShadow: '0 6px 18px rgba(0,0,0,0.22)' }}>{text}</span>
+  );
+}
+function ListRow({ grid, i, top, onClick, tip, children }) {
+  const [h, setH] = React.useState(false);
+  const [pos, setPos] = React.useState(null);
+  return (
+    <div role="button" tabIndex={0} onClick={onClick}
+      onMouseEnter={() => setH(true)}
+      onMouseLeave={() => { setH(false); setPos(null); }}
+      onMouseMove={tip ? (e) => setPos({ x: e.clientX, y: e.clientY }) : undefined}
       style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '14px 20px', cursor: 'pointer',
         borderTop: i ? '1px solid var(--line)' : 'none',
         background: h ? 'var(--surface-raised)' : (top ? 'var(--top-tint)' : 'transparent'),
         boxShadow: top && !h ? 'inset 2px 0 0 var(--brand)' : 'none',
-        transition: 'background var(--dur) var(--ease)' }}>{children}</div>
+        transition: 'background var(--dur) var(--ease)' }}>
+      {children}
+      {tip && h && pos && <Tooltip x={pos.x} y={pos.y} text={tip} />}
+    </div>
   );
 }
 const colHead = (extra = {}) => ({ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--ink-400)', ...extra });
@@ -214,10 +231,10 @@ function SummaryView({ models, navigate }) {
     <TableScroll minWidth={620}>
       <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
         <span style={colHead()}>#</span><span style={colHead()}>модель</span>
-        <span style={colHead()}>алгоритмика · A</span><span style={colHead()}>платформа 1С · B</span>
+        <span style={colHead()}>алгоритмика</span><span style={colHead()}>платформенные</span>
       </div>
       {rows.map((m, i) => (
-        <ListRow key={m.id} grid={grid} i={i} top={i === 0} onClick={() => navigate('model', m.id)}>
+        <ListRow key={m.id} grid={grid} i={i} top={i === 0} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
           <RankBadge rank={i + 1} />
           <Identity m={m} />
           <SolvedStat solved={m.A?.solved} />
@@ -253,7 +270,7 @@ function FunnelView({ cat, models, navigate }) {
           const f = m[cat].funnel;
           const pct = Math.round((m[cat].solved || 0) * 100);
           return (
-            <ListRow key={m.id} grid={grid} i={i} top={i === 0} onClick={() => navigate('model', m.id)}>
+            <ListRow key={m.id} grid={grid} i={i} top={i === 0} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
               <RankBadge rank={i + 1} />
               <Identity m={m} />
               <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 19, fontWeight: 700, letterSpacing: '-0.01em', color: pct === 0 ? 'var(--ink-400)' : 'var(--ink-100)' }}>{pct}%</span>
@@ -281,7 +298,7 @@ function ProfileView({ cat, models, cols, labels, navigate }) {
   return (
     <>
       <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: '0 0 14px' }}>
-        срез <span style={{ color: AXIS_COLOR[cat === 'A' ? 'M' : 'P'], fontWeight: 600 }}>{cat === 'A' ? 'M̄ — семантика по навыкам' : 'P̄ — платформа по конструкциям 1С'}</span> · насыщенность ∝ баллу · сравнивать модели внутри столбца
+балл <span style={{ color: AXIS_COLOR[cat === 'A' ? 'M' : 'P'], fontWeight: 600 }}>{cat === 'A' ? 'M — логика, по типам задач' : 'P — работа с 1С, по видам конструкций'}</span> · чем ярче клетка, тем выше балл · сравнивайте модели по столбцу
       </p>
       <div style={{ ...card, overflowX: 'auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: grid, alignItems: 'center', background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)' }}>
@@ -333,9 +350,17 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           prism <span style={{ color: 'var(--ink-400)', fontWeight: 400 }}>— многомерная оценка генерации кода 1С</span>
         </h1>
         <p style={{ margin: '12px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
-          Открытый бенчмарк качества генерации кода 1С. Код, который написала модель, мы <span style={{ color: 'var(--ink-100)' }}>по-настоящему исполняем</span> — компилятор, скрытые тесты, живая база&nbsp;1С — и оцениваем по четырём осям&nbsp;<span style={{ color: 'var(--axis-s)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>S</span> <span style={{ color: 'var(--axis-m)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>M</span> <span style={{ color: 'var(--axis-o)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>O</span> <span style={{ color: 'var(--axis-p)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>P</span> (синтаксис · смысл · оптимальность · платформа), а не по принципу «прошло&nbsp;/ не&nbsp;прошло».
+          Открытый бенчмарк качества генерации кода 1С. Код, который написала модель, мы <span style={{ color: 'var(--ink-100)' }}>по-настоящему исполняем</span> — компилятор, скрытые и нагрузочные тесты, живая база&nbsp;1С — и оцениваем по четырём осям&nbsp;<span style={{ color: 'var(--axis-s)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>S</span> <span style={{ color: 'var(--axis-m)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>M</span> <span style={{ color: 'var(--axis-o)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>O</span> <span style={{ color: 'var(--axis-p)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>P</span> (синтаксис · семантика · оптимальность · платформа), а не по принципу «прошло&nbsp;/ не&nbsp;прошло».
         </p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 16, alignItems: 'center' }}>
+
+        <p style={{ margin: '14px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
+          <b style={{ color: 'var(--ink-100)' }}>Категория A — алгоритмические задачи.</b> Чистый код без базы (расчёты, строки, коллекции). Движок — OneScript и BSL LS.
+        </p>
+        <p style={{ margin: '8px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
+          <b style={{ color: 'var(--ink-100)' }}>Категория B — платформенные задачи.</b> Запросы, регистры и метаданные против синтетической базы. Движок — реальная 1С в Docker.
+        </p>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 20, alignItems: 'center' }}>
           <Shield label="версия" value={`v${meta.version || '—'}`} tone="brand" />
           <Shield label="лицензия" value="MIT" />
           <Shield label="задач" value={String(totalTasks)} />
@@ -354,8 +379,8 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
 
       <div style={{ display: 'flex', gap: 28, borderBottom: '1px solid var(--line)', marginBottom: 24 }}>
         <Tab label="Сводка" sub="кто лучше в целом" active={view === 'summary'} onClick={() => setView('summary')} />
-        <Tab label="Категория A" sub="алгоритмика · OneScript" active={view === 'A'} onClick={() => setView('A')} />
-        <Tab label="Категория B" sub="платформа · реальная 1С" active={view === 'B'} onClick={() => setView('B')} />
+        <Tab label="Категория A" sub="алгоритмика" active={view === 'A'} onClick={() => setView('A')} />
+        <Tab label="Категория B" sub="платформенные" active={view === 'B'} onClick={() => setView('B')} />
         <Tab label="Экономика" sub="качество ↔ цена" active={view === 'econ'} onClick={() => setView('econ')} />
       </div>
 
