@@ -17,7 +17,7 @@
   <a href="https://github.com/genlab-1c/prism/actions/workflows/ci.yml"><img src="https://github.com/genlab-1c/prism/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <img src="https://img.shields.io/badge/coverage-75%25-green" alt="coverage 75%">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
-  <img src="https://img.shields.io/badge/версия-1.6.1-success" alt="версия 1.6.1">
+  <img src="https://img.shields.io/badge/версия-1.7.0-success" alt="версия 1.7.0">
   <a href="https://github.com/genlab-1c/prism/stargazers"><img src="https://img.shields.io/github/stars/genlab-1c/prism?style=flat&logo=github" alt="stars"></a>
   <a href="https://prism.genlab-1c.ru"><img src="https://img.shields.io/badge/сайт-prism.genlab--1c.ru-22d3ee" alt="сайт"></a>
 </p>
@@ -27,7 +27,7 @@
   <img src="https://img.shields.io/badge/тест--кейсов-108-blue" alt="тест-кейсов: 108">
   <img src="https://img.shields.io/badge/генераций_в_прогоне-725-blue" alt="генераций: 725">
   <img src="https://img.shields.io/badge/в_лидерборде-25_моделей-blue" alt="в лидерборде 25 моделей">
-  <img src="https://img.shields.io/badge/прогон-2026-07-07-informational" alt="прогон: 2026-07-07">
+  <img src="https://img.shields.io/badge/прогон-2026--07--07-informational" alt="прогон: 2026-07-07">
 <!-- /prism:badges -->
 </p>
 <p align="center">
@@ -51,6 +51,13 @@
 GigaChat), занимаетесь **вайбкодингом 1С** или исследуете применимость **ИИ для генерации
 кода 1С** — это инструмент, который даёт воспроизводимый, проверяемый ответ, а не
 впечатление.
+
+<p align="center">
+  <a href="https://prism.genlab-1c.ru">
+    <img src="docs/assets/showcase.png" alt="PRISM: лидерборд нейросетей по коду 1С, разбор оси O под нагрузкой и CLI бенчмарка" width="820">
+  </a>
+</p>
+<p align="center"><sub>Лидерборд · разбор оси O «под нагрузкой» · CLI. Живьём и интерактивно — <a href="https://prism.genlab-1c.ru">prism.genlab-1c.ru</a></sub></p>
 
 **Что умеет:**
 
@@ -250,31 +257,31 @@ PRISM отвечает на этот вопрос числом, а не мнен
 
 | № | Модель | Алгоритмика (A) | Платформа 1С (B) |
 |:---:|--------|:---|:---|
-| 1 | **Gemini 3.5 Flash** | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 85% |
-| 2 | GPT-5.5 | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟥 89% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 75% |
-| 3 | Grok Build 0.1 | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 78% | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 70% |
-| 4 | Grok 4.3 | 🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥 56% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 85% |
-| 5 | MiMo-V2.5 | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 67% | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 70% |
-| 6 | Claude Opus 4.8 | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 67% | 🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥 60% |
-| 7 | Claude Sonnet 4.6 | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 44% | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 70% |
-| 8 | MiniMax M3 | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 78% | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 35% |
-| 9 | Gemini 3.1 Pro | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 10 | DeepSeek V4-Flash | 🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥 56% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
-| 11 | Qwen3.7 Plus | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 44% | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 15% |
-| 12 | Alice AI LLM Flash | 🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥 56% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 13 | GLM-4.7 Flash | 🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥 33% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
-| 14 | GPT-5 Mini | 🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥 33% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 15 | Alice AI LLM | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
-| 16 | GPT-OSS 120B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
-| 17 | Qwen3-235B-A22B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
-| 18 | Gemini 2.5 Flash Lite | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
+| 1 | **Gemini 3.1 Pro** | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 85% |
+| 2 | Gemini 3.5 Flash | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟩 100% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 85% |
+| 3 | GPT-5.5 | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟥 89% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 75% |
+| 4 | MiniMax M3 | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 78% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 85% |
+| 5 | Claude Opus 4.8 | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 67% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 85% |
+| 6 | Grok Build 0.1 | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 78% | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 70% |
+| 7 | Grok 4.3 | 🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥 56% | 🟩🟩🟩🟩🟩🟩🟩🟩🟩🟥 90% |
+| 8 | MiMo-V2.5 | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 67% | 🟩🟩🟩🟩🟩🟩🟩🟥🟥🟥 70% |
+| 9 | Claude Sonnet 4.6 | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 44% | 🟩🟩🟩🟩🟩🟩🟩🟩🟥🟥 80% |
+| 10 | Alice AI LLM Flash | 🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥 56% | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 35% |
+| 11 | DeepSeek V4-Flash | 🟩🟩🟩🟩🟩🟩🟥🟥🟥🟥 56% | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 35% |
+| 12 | Qwen3.7 Plus | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 44% | 🟩🟩🟩🟩🟥🟥🟥🟥🟥🟥 40% |
+| 13 | GLM-4.7 Flash | 🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥 33% | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 20% |
+| 14 | Gemini 2.5 Flash Lite | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 25% |
+| 15 | GPT-5 Mini | 🟩🟩🟩🟥🟥🟥🟥🟥🟥🟥 33% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
+| 16 | GPT-OSS 120B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
+| 17 | Alice AI LLM | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
+| 18 | Qwen3-235B-A22B | 🟩🟩🟥🟥🟥🟥🟥🟥🟥🟥 22% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
 | 19 | Qwen3.6-35B-A3B | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 11% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
-| 20 | YandexGPT 5 Lite | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 11% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 21 | GigaChat 2 Max | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
-| 22 | GigaChat 2 Lite | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 23 | YandexGPT 5.1 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 24 | YandexGPT 5 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
-| 25 | GigaChat 2 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
+| 20 | YandexGPT 5 Lite | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 11% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 5% |
+| 21 | GigaChat 2 Max | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
+| 22 | YandexGPT 5 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
+| 23 | YandexGPT 5.1 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟩🟥🟥🟥🟥🟥🟥🟥🟥🟥 10% |
+| 24 | GigaChat 2 Pro | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
+| 25 | GigaChat 2 Lite | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% | 🟥🟥🟥🟥🟥🟥🟥🟥🟥🟥 0% |
 
 </div>
 <!-- /prism:lb:summary -->
