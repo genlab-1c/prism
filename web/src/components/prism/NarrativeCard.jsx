@@ -6,18 +6,19 @@ import { Icon } from '../chrome/Chrome.jsx';
 import { Button } from '../core/Button.jsx';
 import { VendorLogo } from './VendorLogo.jsx';
 import { buildInsights } from '../../lib/insights.js';
+import { useIsMobile } from '../../lib/useMediaQuery.js';
 
 const BASE = import.meta.env.BASE_URL;
 
 // строка-вердикт: ярлык слева, чипы-модели справа
-function VerdictRow({ label, color, names }) {
+function VerdictRow({ label, color, names, mHref }) {
   if (!names?.length) return null;
   return (
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
       <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color, flex: 'none', minWidth: 64 }}>{label}</span>
       <span style={{ display: 'inline-flex', flexWrap: 'wrap', gap: 6 }}>
         {names.map((n) => (
-          <span key={n} style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-200)', background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-xs)', padding: '2px 8px' }}>{n}</span>
+          <a key={n} href={mHref?.(n) || undefined} style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-200)', background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-xs)', padding: '2px 8px', textDecoration: 'none', cursor: mHref?.(n) ? 'pointer' : 'default' }}>{n}</a>
         ))}
       </span>
     </div>
@@ -30,11 +31,10 @@ function CatBlock({ title, desc, solved, s, q }) {
   const good = pct != null ? pct >= 65 : (q ?? 0) >= 7;
   const line = pct != null ? `решает ${pct}% задач` : (q != null ? `оценка ${q.toFixed(1)} из 10` : 'не измерялось');
   return (
-    <div style={{ flex: 1, minWidth: 210, background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', padding: '13px 15px' }}>
-      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
-      <div style={{ fontSize: 12, color: 'var(--ink-400)', marginTop: 2, lineHeight: 1.4 }}>{desc}</div>
-      <div style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15, fontWeight: 700, color: good ? 'var(--axis-o)' : 'var(--axis-p)', marginTop: 10 }}>{line}</div>
-      {s === 10 && <div style={{ fontSize: 11.5, color: 'var(--ink-400)', marginTop: 4 }}>код всегда компилируется</div>}
+    <div style={{ flex: 1, minWidth: 200, background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', padding: '10px 13px' }}>
+      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
+      <div style={{ fontSize: 11.5, color: 'var(--ink-400)', marginTop: 2, lineHeight: 1.35 }}>{desc}</div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 14, fontWeight: 700, color: good ? 'var(--axis-o)' : 'var(--axis-p)', marginTop: 7 }}>{line}</div>
     </div>
   );
 }
@@ -42,7 +42,7 @@ function CatBlock({ title, desc, solved, s, q }) {
 // значение экономики + человеческий смысл под ним (не голая цифра)
 function EconStat({ label, value, meaning, tone, icon }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 3, minWidth: 0 }}>
       <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', display: 'inline-flex', alignItems: 'center', gap: 5 }}>{icon && <Icon name={icon} size={11} />}{label}</span>
       <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 19, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--ink-100)' }}>{value}</span>
       {meaning && <span style={{ fontSize: 11, fontWeight: 600, color: tone || 'var(--ink-400)' }}>{meaning}</span>}
@@ -142,6 +142,7 @@ function VGroup({ title, tone, mark, items }) {
 }
 
 export function NarrativeCard({ model, models = [], tagLabels = {} }) {
+  const isMobile = useIsMobile();
   const ins = buildInsights(model, models, tagLabels);
   const podium = ins.rankOverall <= 3;
   const rankText = podium ? `ТОП-${ins.rankOverall}` : `#${ins.rankOverall}`;
@@ -149,12 +150,15 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
   const timeTier = tier(models, 'avgTime', model.econ?.avgTime, 'time');
   const tokTier = tier(models, 'tokPerGen', model.econ?.tokPerGen, 'tokens');
   const vd = verdictDetail(model, ins);
+  // клик по имени модели в чипах сравнения → её страница (реальный роут /m/<id>)
+  const idByName = React.useMemo(() => Object.fromEntries(models.map((m) => [m.name, m.id])), [models]);
+  const mHref = (name) => (idByName[name] ? `${BASE}m/${idByName[name]}` : null);
 
   return (
     <div id="prism-verdict-card" style={{ position: 'relative', background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
       {/* акцентная полоса призмы сверху */}
       <div style={{ height: 3, background: 'var(--prism)', opacity: podium ? 1 : 0.4 }} />
-      <div style={{ padding: '20px 22px' }}>
+      <div style={{ padding: isMobile ? '16px 14px' : '20px 22px' }}>
         {/* шапка */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>разбор оценки · L1</span>
@@ -162,10 +166,10 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
         </div>
 
         {/* герой: модель + ранг */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
-          <VendorLogo vendor={model.vendor} name={model.name} size={52} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 12 : 16, flexWrap: 'wrap' }}>
+          <VendorLogo vendor={model.vendor} name={model.name} size={isMobile ? 44 : 52} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 700, color: 'var(--ink-100)', letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{model.name}</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: isMobile ? 19 : 22, fontWeight: 700, color: 'var(--ink-100)', letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{model.name}</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-400)', marginTop: 2 }}>{model.family}</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
@@ -177,20 +181,20 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
         {/* вердикт: лид одной фразой + подробные плюсы/минусы по осям */}
         <div style={{ margin: '16px 0 0' }}>
           <p style={{ margin: 0, fontSize: 14, color: 'var(--ink-100)', lineHeight: 1.5 }}>{vd.lead}</p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 16, marginTop: 12 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: isMobile ? 12 : 16, marginTop: isMobile ? 10 : 12 }}>
             <VGroup title="Плюсы" tone="var(--axis-o)" mark="+" items={vd.pluses} />
             <VGroup title="Минусы" tone="var(--axis-p)" mark="−" items={vd.minuses} />
           </div>
         </div>
 
         {/* что умеет — по-человечески, в доле решённых задач */}
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', margin: '18px 0' }}>
+        <div style={{ display: 'flex', gap: isMobile ? 10 : 12, flexWrap: 'wrap', margin: isMobile ? '14px 0' : '18px 0' }}>
           {model.A && <CatBlock title="Алгоритмика" desc="Чистый код: расчёты, строки, коллекции — без базы 1С." solved={model.A.solved} s={model.A.S} q={model.qA} />}
           {model.B && <CatBlock title="Платформенные задачи" desc="Запросы, регистры, работа с реальной базой 1С." solved={model.B.solved} s={model.B.S} q={model.qB} />}
         </div>
 
         {/* цена · скорость · общая оценка — с человеческим смыслом */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: 16, padding: '16px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: isMobile ? 12 : 16, padding: isMobile ? '14px 0' : '16px 0', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
           <EconStat label="цена ответа" value={ins.genCostFmt} meaning={costTier?.text} tone={costTier?.tone} icon="zap" />
           <EconStat label="скорость" value={ins.avgTime != null ? `${ins.avgTime} с` : '—'} meaning={timeTier?.text} tone={timeTier?.tone} icon="clock" />
           <EconStat label="токенов на ответ" value={fmtTok(model.econ?.tokPerGen)} meaning={tokTier?.text} tone={tokTier?.tone} />
@@ -202,9 +206,9 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>дешевле</span>
             {ins.cheaperThan.map((x) => (
-              <span key={x.name} style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--axis-o)', background: 'var(--axis-o-soft)', borderRadius: 'var(--radius-xs)', padding: '2px 9px' }}>
+              <a key={x.name} href={mHref(x.name) || undefined} style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--axis-o)', background: 'var(--axis-o-soft)', borderRadius: 'var(--radius-xs)', padding: '2px 9px', textDecoration: 'none', cursor: mHref(x.name) ? 'pointer' : 'default' }}>
                 <b>{x.mult}</b> {x.name}
-              </span>
+              </a>
             ))}
           </div>
         )}
@@ -214,8 +218,8 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
           <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', marginBottom: 10 }}>по общему качеству кода 1С</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-              <VerdictRow label="сильнее" color="var(--axis-o)" names={ins.beats} />
-              <VerdictRow label="слабее" color="var(--ink-400)" names={ins.losesTo} />
+              <VerdictRow label="сильнее" color="var(--axis-o)" names={ins.beats} mHref={mHref} />
+              <VerdictRow label="слабее" color="var(--ink-400)" names={ins.losesTo} mHref={mHref} />
             </div>
           </div>
         )}

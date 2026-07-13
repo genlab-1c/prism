@@ -71,3 +71,10 @@
 @media (prefers-reduced-motion: reduce) {
   .code-pane .line.code-focus-line { animation: none; }
 }
+
+/* мобила: код плотнее — мельче шрифт, уже номера строк, ниже панель (больше влезает до скролла) */
+@media (max-width: 720px) {
+  .code-pane { max-height: 440px; }
+  .code-pane pre.shiki { font-size: 11.5px; padding: 12px; line-height: 1.55; }
+  .code-pane pre.shiki .line::before { width: 2em; margin-right: 10px; }
+}

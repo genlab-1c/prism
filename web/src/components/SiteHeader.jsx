@@ -49,6 +49,7 @@ function ThemeToggle({ theme, onToggle }) {
 
 function StarButton({ repo }) {
   const [hover, setHover] = React.useState(false);
+  const isMobile = useIsMobile();
   const url = repo?.url || 'https://github.com/genlab-1c/prism';
   const slug = url.replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, '');
   // счётчик тянем с GitHub API на клиенте (near real-time); build-значение — стартовое/фолбэк
@@ -70,7 +71,7 @@ function StarButton({ repo }) {
         background: hover ? 'var(--navy-600)' : 'var(--surface-raised)', color: 'var(--ink-100)',
         fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: 500, transition: 'background var(--dur-fast) var(--ease)',
       }}>
-        <span style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span>Star
+        <span style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span>{!isMobile && 'Star'}
       </span>
       {stars != null && (
         <span style={{

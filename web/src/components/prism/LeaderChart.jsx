@@ -6,6 +6,7 @@
    Цвета в <svg> — конкретные hex (из палитры темы), не CSS-var: иначе не сериализуются в экспорт. */
 import React from 'react';
 import { vendorGlyph } from './VendorLogo.jsx';
+import { useIsMobile } from '../../lib/useMediaQuery.js';
 
 const AXIS = { S: '#7c7ef8', M: '#22d3ee', O: '#34d399', P: '#fbbf24' };
 const PALETTE = ['#22d3ee', '#34d399', '#fbbf24', '#f472b6', '#7c7ef8', '#fb923c', '#4ade80', '#e879f9', '#38bdf8', '#a78bfa'];
@@ -309,8 +310,8 @@ function ModelScope({ ranked, scope, setScope, custom, setCustom }) {
     <div style={{ marginBottom: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
         <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>модели:</span>
-        <Btn active={scope === 'top10'} onClick={() => setScope('top10')}>Топ-10</Btn>
         <Btn active={scope === 'all'} onClick={() => setScope('all')}>Все ({ranked.length})</Btn>
+        <Btn active={scope === 'top10'} onClick={() => setScope('top10')}>Топ-10</Btn>
         <Btn active={scope === 'custom'} onClick={() => { if (!custom.size) setCustom(new Set(ranked.slice(0, 10).map((m) => m.id))); setScope('custom'); }}>Выбрать{scope === 'custom' ? ` (${custom.size})` : ''}</Btn>
       </div>
       {scope === 'custom' && (
@@ -333,7 +334,7 @@ export function LeaderChart({ cat, models = [], meta = {}, navigate }) {
   const qKey = cat === 'A' ? 'qA' : 'qB';
   const [kind, setKind] = React.useState('radar');
   const [hover, setHover] = React.useState(null);
-  const [scope, setScope] = React.useState('top10');
+  const [scope, setScope] = React.useState('all');
   const [custom, setCustom] = React.useState(new Set());
   const ref = React.useRef(null);
   const name = `prism_${kind}_${cat}`;
@@ -367,18 +368,24 @@ export function LeaderChart({ cat, models = [], meta = {}, navigate }) {
 export function TableExport({ scope, setScope, count, name, render }) {
   const theme = useTheme();
   const C = THEME[theme];
+  const isMobile = useIsMobile();
   const ref = React.useRef(null);
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginBottom: 14 }}>
-      <Btn active={scope === 'top10'} onClick={() => setScope('top10')}>Топ-10</Btn>
       <Btn active={scope === 'all'} onClick={() => setScope('all')}>Все ({count})</Btn>
-      <span style={{ flex: 1 }} />
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>скачать:</span>
-      <Btn onClick={() => ref.current && exportSvg(ref.current, name)}>↓ SVG</Btn>
-      <Btn primary onClick={() => ref.current && exportPng(ref.current, name, C.bg)}>↓ PNG</Btn>
-      <div style={{ position: 'absolute', left: -99999, top: 0, width: 900, pointerEvents: 'none' }} aria-hidden="true">
-        {render(ref, C)}
-      </div>
+      <Btn active={scope === 'top10'} onClick={() => setScope('top10')}>Топ-10</Btn>
+      {/* выгрузка картинки — только на десктопе (на телефоне SVG/PNG не скачивают) */}
+      {!isMobile && (
+        <>
+          <span style={{ flex: 1 }} />
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>скачать:</span>
+          <Btn onClick={() => ref.current && exportSvg(ref.current, name)}>↓ SVG</Btn>
+          <Btn primary onClick={() => ref.current && exportPng(ref.current, name, C.bg)}>↓ PNG</Btn>
+          <div style={{ position: 'absolute', left: -99999, top: 0, width: 900, pointerEvents: 'none' }} aria-hidden="true">
+            {render(ref, C)}
+          </div>
+        </>
+      )}
     </div>
   );
 }

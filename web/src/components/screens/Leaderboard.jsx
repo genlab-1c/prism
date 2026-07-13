@@ -75,11 +75,13 @@ function QuickStart({ repo }) {
   );
 }
 
-function Tab({ label, sub, active, onClick }) {
+function Tab({ label, short, sub, active, onClick, compact }) {
   return (
-    <button onClick={onClick} style={{ background: 'none', border: 'none', borderBottom: `2px solid ${active ? 'var(--brand)' : 'transparent'}`, cursor: 'pointer', padding: '0 2px 12px', display: 'flex', flexDirection: 'column', gap: 2, textAlign: 'left', marginBottom: -1 }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13.5, fontWeight: 600, color: active ? 'var(--ink-100)' : 'var(--ink-400)' }}>{label}</span>
-      {sub && <span style={{ fontSize: 11.5, color: 'var(--ink-400)' }}>{sub}</span>}
+    <button onClick={onClick} style={{ background: 'none', border: 'none', borderBottom: `2px solid ${active ? 'var(--brand)' : 'transparent'}`, cursor: 'pointer',
+      padding: compact ? '0 2px 10px' : '0 2px 12px', display: 'flex', flexDirection: 'column', gap: 2, marginBottom: -1,
+      flex: compact ? 1 : 'none', alignItems: compact ? 'center' : 'flex-start', textAlign: compact ? 'center' : 'left' }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: compact ? 12.5 : 13.5, fontWeight: 600, whiteSpace: 'nowrap', color: active ? 'var(--ink-100)' : 'var(--ink-400)' }}>{compact ? (short || label) : label}</span>
+      {sub && !compact && <span style={{ fontSize: 11.5, color: 'var(--ink-400)' }}>{sub}</span>}
     </button>
   );
 }
@@ -128,7 +130,7 @@ function Tooltip({ x, y, text }) {
       whiteSpace: 'nowrap', boxShadow: '0 6px 18px rgba(0,0,0,0.22)' }}>{text}</span>
   );
 }
-function ListRow({ grid, i, top, onClick, tip, children }) {
+function ListRow({ grid, i, top, onClick, tip, gap = 18, pad = '14px 20px', children }) {
   const [h, setH] = React.useState(false);
   const [pos, setPos] = React.useState(null);
   return (
@@ -136,7 +138,7 @@ function ListRow({ grid, i, top, onClick, tip, children }) {
       onMouseEnter={() => setH(true)}
       onMouseLeave={() => { setH(false); setPos(null); }}
       onMouseMove={tip ? (e) => setPos({ x: e.clientX, y: e.clientY }) : undefined}
-      style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '14px 20px', cursor: 'pointer',
+      style={{ display: 'grid', gridTemplateColumns: grid, gap, alignItems: 'center', padding: pad, cursor: 'pointer',
         borderTop: i ? '1px solid var(--line)' : 'none',
         background: h ? 'var(--surface-raised)' : (top ? 'var(--top-tint)' : 'transparent'),
         boxShadow: top && !h ? 'inset 2px 0 0 var(--brand)' : 'none',
@@ -223,9 +225,41 @@ function SolvedStat({ solved }) {
     </div>
   );
 }
+// компактный процент «решено» для мобильной строки: лейбл A/B сверху, число снизу
+function MobPct({ label, solved }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, minWidth: 32 }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.04em', color: 'var(--ink-400)' }}>{label}</span>
+      {solved == null
+        ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>—</span>
+        : <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15, fontWeight: 700, lineHeight: 1, color: solvedColor(solved) }}>{Math.round(solved * 100)}<span style={{ fontSize: 10, opacity: 0.7 }}>%</span></span>}
+    </div>
+  );
+}
 function SummaryView({ models, navigate }) {
+  const isMobile = useIsMobile();
   const overall = (m) => { const v = [m.A?.solved, m.B?.solved].filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : -1; };
   const rows = [...models].sort((a, b) => overall(b) - overall(a));
+
+  if (isMobile) {
+    // мобила: строка без горизонтального скролла — ранг + модель + компактные A/B + шеврон (тап → код)
+    return (
+      <div>
+        {rows.map((m, i) => (
+          <ListRow key={m.id} grid="28px 1fr auto" gap={10} pad="11px 14px" i={i} top={i === 0} onClick={() => navigate('model', m.id)}>
+            <RankBadge rank={i + 1} size={28} />
+            <Identity m={m} size={32} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <MobPct label="A" solved={m.A?.solved} />
+              <MobPct label="B" solved={m.B?.solved} />
+              <span style={{ color: 'var(--ink-400)', fontSize: 22, lineHeight: 1 }}>›</span>
+            </div>
+          </ListRow>
+        ))}
+      </div>
+    );
+  }
+
   const grid = '44px minmax(180px,1.4fr) minmax(150px,1fr) minmax(150px,1fr)';
   return (
     <TableScroll minWidth={620}>
@@ -325,10 +359,11 @@ function ProfileView({ cat, models, cols, labels, navigate }) {
 
 /* ===================== экран ===================== */
 export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} }) {
+  const isMobile = useIsMobile();
   const [view, setView] = React.useState('summary');
   const [sub, setSub] = React.useState('overall');
-  const [sumScope, setSumScope] = React.useState('top10'); // охват сводки: видимая таблица + картинка
-  const [scoreScope, setScoreScope] = React.useState('top10'); // охват таблицы баллов A/B
+  const [sumScope, setSumScope] = React.useState('all'); // охват сводки: по умолчанию ВСЕ модели (Топ-10 опционален)
+  const [scoreScope, setScoreScope] = React.useState('all'); // охват таблицы баллов A/B: по умолчанию ВСЕ
   const cols = meta.profileCols || { A: [], B: [] };
   const labels = meta.tagLabels || {};
   const totalTasks = (meta.tasksA || 0) + (meta.tasksB || 0);
@@ -345,22 +380,22 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
 
   return (
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
-      <section style={{ paddingTop: 40, paddingBottom: 24 }}>
-        <h1 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: 'var(--ink-100)', letterSpacing: '-0.01em' }}>
+      <section style={{ paddingTop: isMobile ? 22 : 40, paddingBottom: isMobile ? 14 : 24 }}>
+        <h1 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: isMobile ? 18 : 22, fontWeight: 600, color: 'var(--ink-100)', letterSpacing: '-0.01em', lineHeight: 1.25 }}>
           prism <span style={{ color: 'var(--ink-400)', fontWeight: 400 }}>— многомерная оценка генерации кода 1С</span>
         </h1>
-        <p style={{ margin: '12px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
-          Открытый бенчмарк качества генерации кода 1С. Код, который написала модель, мы <span style={{ color: 'var(--ink-100)' }}>по-настоящему исполняем</span> — компилятор, скрытые и нагрузочные тесты, живая база&nbsp;1С — и оцениваем по четырём осям&nbsp;<span style={{ color: 'var(--axis-s)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>S</span> <span style={{ color: 'var(--axis-m)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>M</span> <span style={{ color: 'var(--axis-o)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>O</span> <span style={{ color: 'var(--axis-p)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>P</span> (синтаксис · семантика · оптимальность · платформа), а не по принципу «прошло&nbsp;/ не&nbsp;прошло».
+        <p style={{ margin: isMobile ? '9px 0 0' : '12px 0 0', fontSize: isMobile ? 13.5 : 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: isMobile ? 1.5 : 1.6, textAlign: isMobile ? 'justify' : 'left' }}>
+          Открытый бенчмарк качества генерации кода 1С. Код, который написала модель, мы <span style={{ color: 'var(--ink-100)' }}>по-настоящему исполняем</span> — компилятор, скрытые и нагрузочные тесты, живая база&nbsp;1С — и оцениваем по четырём осям&nbsp;<span style={{ whiteSpace: 'nowrap' }}><span style={{ color: 'var(--axis-s)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>S</span> <span style={{ color: 'var(--axis-m)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>M</span> <span style={{ color: 'var(--axis-o)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>O</span> <span style={{ color: 'var(--axis-p)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>P</span></span> (синтаксис · семантика · оптимальность · платформа), а не по принципу «прошло&nbsp;/ не&nbsp;прошло».
         </p>
 
-        <p style={{ margin: '14px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
+        <p style={{ margin: isMobile ? '10px 0 0' : '14px 0 0', fontSize: isMobile ? 13 : 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: isMobile ? 1.5 : 1.6, textAlign: isMobile ? 'justify' : 'left' }}>
           <b style={{ color: 'var(--ink-100)' }}>Категория A — алгоритмические задачи.</b> Чистый код без базы (расчёты, строки, коллекции). Движок — OneScript и BSL LS.
         </p>
-        <p style={{ margin: '8px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
+        <p style={{ margin: isMobile ? '5px 0 0' : '8px 0 0', fontSize: isMobile ? 13 : 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: isMobile ? 1.5 : 1.6, textAlign: isMobile ? 'justify' : 'left' }}>
           <b style={{ color: 'var(--ink-100)' }}>Категория B — платформенные задачи.</b> Запросы, регистры и метаданные против синтетической базы. Движок — реальная 1С в Docker.
         </p>
 
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 20, alignItems: 'center' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: isMobile ? 14 : 20, alignItems: 'center' }}>
           <Shield label="версия" value={`v${meta.version || '—'}`} tone="brand" />
           <Shield label="лицензия" value="MIT" />
           <Shield label="задач" value={String(totalTasks)} />
@@ -370,25 +405,25 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="обновлено" value={meta.lastRun || '—'} tone="ok" />
           <Shield label="уровень" value="L1 · машина" tone="s" icon="cpu" />
         </div>
-        <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>
-        <p style={{ margin: '14px 0 0', fontSize: 13.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.55 }}>
+        {!isMobile && <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>}
+        <p style={{ margin: isMobile ? '12px 0 0' : '14px 0 0', fontSize: isMobile ? 12.5 : 13.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.55 }}>
           Участвуйте: добавьте свою модель в лидерборд или пришлите готовый прогон.{' '}
           <a href={(meta.repo?.url || 'https://github.com/genlab-1c/prism')} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Как поучаствовать</a>
         </p>
       </section>
 
-      <div style={{ display: 'flex', gap: 28, borderBottom: '1px solid var(--line)', marginBottom: 24 }}>
-        <Tab label="Сводка" sub="кто лучше в целом" active={view === 'summary'} onClick={() => setView('summary')} />
-        <Tab label="Категория A" sub="алгоритмика" active={view === 'A'} onClick={() => setView('A')} />
-        <Tab label="Категория B" sub="платформенные" active={view === 'B'} onClick={() => setView('B')} />
-        <Tab label="Экономика" sub="качество ↔ цена" active={view === 'econ'} onClick={() => setView('econ')} />
+      <div style={{ display: 'flex', gap: isMobile ? 4 : 28, borderBottom: '1px solid var(--line)', marginBottom: isMobile ? 18 : 24 }}>
+        <Tab label="Сводка" short="Сводка" sub="кто лучше в целом" compact={isMobile} active={view === 'summary'} onClick={() => setView('summary')} />
+        <Tab label="Категория A" short="Кат. A" sub="алгоритмика" compact={isMobile} active={view === 'A'} onClick={() => setView('A')} />
+        <Tab label="Категория B" short="Кат. B" sub="платформенные" compact={isMobile} active={view === 'B'} onClick={() => setView('B')} />
+        <Tab label="Экономика" short="Эконом." sub="качество ↔ цена" compact={isMobile} active={view === 'econ'} onClick={() => setView('econ')} />
       </div>
 
       {view === 'econ' && <EconomyView models={models} navigate={navigate} />}
 
       {view === 'summary' && (
         <>
-          <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.</p>
+          <p style={{ margin: isMobile ? '0 0 10px' : '0 0 14px', fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', lineHeight: 1.5, textAlign: isMobile ? 'justify' : 'left' }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.{isMobile ? ' Нажмите на модель — откроется её код по задачам.' : ''}</p>
           <TableExport scope={sumScope} setScope={setSumScope} count={sumRanked.length} name={`prism_summary_${sumScope}`}
             render={(ref, C) => <SummaryTableSvg svgRef={ref} rows={sumShown} meta={meta} C={C} />} />
           <SummaryView models={sumShown} navigate={navigate} />

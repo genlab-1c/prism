@@ -39,15 +39,16 @@ function DeltaPill({ tag, score }) {
   return <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 600, padding: '3px 9px', borderRadius: 999, color, background: bg, border: bd, whiteSpace: 'nowrap' }}>{label}</span>;
 }
 function ScoreBreakdown({ items = [] }) {
+  const isMobile = useIsMobile();
   if (!items.length) return null;
   return (
-    <div style={{ padding: '13px 16px', borderBottom: '1px solid var(--line)' }}>
+    <div style={{ padding: isMobile ? '11px 14px' : '13px 16px', borderBottom: '1px solid var(--line)' }}>
       <div className="prism-eyebrow" style={{ marginBottom: 4 }}>разбор оценки · за что балл</div>
       {items.map((it) => {
         const na = it.score == null, [c] = AXC[it.ax] || [];
         const scColor = na ? 'var(--ink-400)' : it.tag === 'full' ? 'var(--axis-o)' : it.tag === 'minus' ? 'var(--danger)' : 'var(--ink-100)';
         return (
-          <div key={it.ax} style={{ display: 'grid', gridTemplateColumns: '54px 1fr auto', gap: 14, alignItems: 'center', padding: '11px 0', borderTop: '1px solid var(--line-soft)' }}>
+          <div key={it.ax} style={{ display: 'grid', gridTemplateColumns: isMobile ? 'auto 1fr' : '54px 1fr auto', gap: isMobile ? 11 : 14, alignItems: 'center', padding: isMobile ? '9px 0' : '11px 0', borderTop: '1px solid var(--line-soft)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
               <span style={{ width: 22, height: 22, borderRadius: 6, background: AXC[it.ax]?.[1], color: c, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11.5 }}>{it.ax}</span>
               <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15.5, fontWeight: 600, color: scColor }}>{na ? 'N/A' : it.score}</span>
@@ -56,7 +57,7 @@ function ScoreBreakdown({ items = [] }) {
               <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-100)', lineHeight: 1.3 }}>{it.head}</div>
               <div style={{ fontSize: 12, color: 'var(--ink-300)', marginTop: 2, lineHeight: 1.4 }}>{it.metric}</div>
             </div>
-            <DeltaPill tag={it.tag} score={it.score} />
+            {!isMobile && <DeltaPill tag={it.tag} score={it.score} />}
           </div>
         );
       })}
@@ -64,18 +65,18 @@ function ScoreBreakdown({ items = [] }) {
   );
 }
 
-function CategoryPanel({ title, sub, q, scores, axisOrder }) {
+function CategoryPanel({ title, sub, q, scores, axisOrder, compact }) {
   if (!scores) return null;
   return (
-    <div style={{ flex: 1, minWidth: 280, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: 22 }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 18 }}>
+    <div style={{ flex: 1, minWidth: compact ? 0 : 280, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: compact ? 15 : 22 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: compact ? 12 : 18 }}>
         <div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
-          <div style={{ fontSize: 12.5, color: 'var(--ink-400)', marginTop: 2 }}>{sub}</div>
+          <div style={{ fontSize: compact ? 14 : 15, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
+          <div style={{ fontSize: 12, color: 'var(--ink-400)', marginTop: 2 }}>{sub}</div>
         </div>
         <QScore value={q ?? 0} size="md" label="Q" style={{ alignItems: 'flex-end' }} />
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 13 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: compact ? 10 : 13 }}>
         {axisOrder.map((a) => <ScoreBar key={a} axis={a} value={scores[a] ?? 0} />)}
       </div>
     </div>
@@ -123,6 +124,7 @@ const fmtType = (v) => {
 
 // одна строка дерева: треугольник (если есть потомки) + имя + бэйджи + тип; сворачивается по клику
 function TreeNode({ depth = 0, name, nameColor, badges = [], type, defaultOpen = true, children }) {
+  const isMobile = useIsMobile();
   const kids = React.Children.toArray(children).filter(Boolean);
   const has = kids.length > 0;
   const [open, setOpen] = React.useState(defaultOpen);
@@ -131,8 +133,8 @@ function TreeNode({ depth = 0, name, nameColor, badges = [], type, defaultOpen =
     <div>
       <div onClick={has ? () => setOpen((o) => !o) : undefined}
         onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-        style={{ display: 'flex', alignItems: 'center', gap: 7, minHeight: 24, borderRadius: 'var(--radius-xs)',
-          padding: '2px 8px', paddingLeft: 8 + depth * 18, cursor: has ? 'pointer' : 'default',
+        style={{ display: 'flex', alignItems: 'center', gap: 7, minHeight: 24, borderRadius: 'var(--radius-xs)', width: 'max-content', minWidth: '100%',
+          padding: '2px 8px', paddingLeft: 8 + depth * (isMobile ? 13 : 18), cursor: has ? 'pointer' : 'default',
           background: hover ? 'var(--hover-overlay)' : 'transparent', fontFamily: 'var(--font-mono)', fontSize: 12.5 }}>
         <span style={{ width: 10, flex: 'none', textAlign: 'center', fontSize: 9, color: 'var(--ink-400)',
           transform: open ? 'rotate(90deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease)', visibility: has ? 'visible' : 'hidden' }}>▶</span>
@@ -172,10 +174,11 @@ function ObjectNode({ depth, name, def = {} }) {
 }
 
 function ConfigView({ config }) {
+  const isMobile = useIsMobile();
   const known = Object.keys(KIND_LABEL);
   const keys = [...known.filter((k) => config[k]), ...Object.keys(config).filter((k) => !known.includes(k) && config[k] && typeof config[k] === 'object')];
   return (
-    <div style={{ padding: '12px 8px' }}>
+    <div style={{ padding: isMobile ? '10px 4px' : '12px 8px', overflowX: 'auto' }}>
       {keys.map((k) => {
         const objs = config[k];
         if (!objs || typeof objs !== 'object' || !Object.keys(objs).length) return null;
@@ -242,7 +245,7 @@ function TestCases({ cases = [], failed = [], passed = null, total = null }) {
 
 function CodeTab({ label, active, onClick }) {
   return (
-    <button onClick={onClick} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '11px 4px', marginRight: 18, borderBottom: `2px solid ${active ? 'var(--brand)' : 'transparent'}`, fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: active ? 600 : 500, color: active ? 'var(--ink-100)' : 'var(--ink-400)' }}>{label}</button>
+    <button onClick={onClick} style={{ flex: 'none', whiteSpace: 'nowrap', background: 'none', border: 'none', cursor: 'pointer', padding: '11px 4px', marginRight: 18, borderBottom: `2px solid ${active ? 'var(--brand)' : 'transparent'}`, fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: active ? 600 : 500, color: active ? 'var(--ink-100)' : 'var(--ink-400)' }}>{label}</button>
   );
 }
 
@@ -319,8 +322,8 @@ function PerfChart({ perf }) {
             ? `С ростом (${xlabel}) число ${unit} растёт почти пропорционально — на большой базе решение будет тормозить.`
             : `Число ${unit} растёт быстрее оптимума — на больших входах решение будет медленным.`)}
       </p>
-      <div style={{ overflowX: 'auto' }}>
-        <svg viewBox={`0 0 ${W} ${H}`} style={{ width: '100%', minWidth: 380, maxWidth: W, height: 'auto', display: 'block' }}>
+      <div>
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 'auto', display: 'block' }}>
           <line x1={M.l} y1={M.t} x2={M.l} y2={M.t + ph} stroke="var(--line)" strokeWidth="1" />
           <line x1={M.l} y1={M.t + ph} x2={M.l + pw} y2={M.t + ph} stroke="var(--line)" strokeWidth="1" />
           <polyline points={line} fill="none" stroke={color} strokeWidth="2.5" strokeLinejoin="round" />
@@ -349,6 +352,7 @@ function PerfChart({ perf }) {
 }
 
 function CodePane({ task, info = {} }) {
+  const isMobile = useIsMobile();
   const [tab, setTab] = React.useState('code');
   const [focus, setFocus] = React.useState(null); // строка, к которой прокрутить по клику на ошибку
   const goToLine = (n) => { setTab('code'); setFocus((f) => ({ line: n, seq: (f?.seq || 0) + 1 })); };
@@ -363,35 +367,49 @@ function CodePane({ task, info = {} }) {
       {/* шапка задачи */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 16px', borderBottom: '1px solid var(--line)', flexWrap: 'wrap' }}>
         <Tag color={task.category === 'B' ? 'p' : 'neutral'}>{task.taskId}</Tag>
-        <span style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--ink-100)' }}>{task.taskName}</span>
-        <div style={{ marginLeft: 'auto' }}><ScoreVector scores={task.scores} layout="compact" axes={task.category === 'A' ? ['S', 'M', 'O'] : ['S', 'M', 'O', 'P']} /></div>
+        <span style={{ fontSize: 13.5, fontWeight: 600, color: 'var(--ink-100)', flex: isMobile ? 1 : 'none', minWidth: 0 }}>{task.taskName}</span>
+        <div style={{ marginLeft: isMobile ? 0 : 'auto', flexBasis: isMobile ? '100%' : 'auto', marginTop: isMobile ? 4 : 0 }}>
+          <ScoreVector scores={task.scores} layout="compact" axes={task.category === 'A' ? ['S', 'M', 'O'] : ['S', 'M', 'O', 'P']} style={isMobile ? { justifyContent: 'center', gap: 34, width: '100%' } : undefined} />
+        </div>
       </div>
 
-      {/* исход + тесты + метаданные генерации — с подписями */}
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24, padding: '11px 16px', borderBottom: '1px solid var(--line)', flexWrap: 'wrap' }}>
-        <MetaItem label="исход">
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color, fontWeight: 700 }}><span style={{ width: 8, height: 8, borderRadius: '50%', background: color }} />{label}</span>
-        </MetaItem>
-        {tests.total != null && (
-          <MetaItem label="скрытые тесты">
-            <span style={{ color: tests.passed === tests.total ? 'var(--axis-o)' : 'var(--ink-100)', fontWeight: 700 }}>{tests.passed} / {tests.total}</span>
-            <span style={{ color: 'var(--ink-400)', marginLeft: 6 }}>пройдено</span>
+      {/* исход + тесты + метаданные генерации */}
+      {isMobile ? (
+        // мобила: одна плотная строка вместо пяти «лейбл над значением» (они разъезжались в 3 строки)
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px 16px', padding: '10px 14px', borderBottom: '1px solid var(--line)', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 12 }}>
+          <span style={{ color, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ width: 8, height: 8, borderRadius: '50%', background: color }} />{label}</span>
+          {tests.total != null && <span style={{ color: 'var(--ink-400)' }}>тесты <b style={{ color: tests.passed === tests.total ? 'var(--axis-o)' : 'var(--ink-100)' }}>{tests.passed}/{tests.total}</b></span>}
+          <span style={{ color: 'var(--ink-400)' }}>токенов <b style={{ color: 'var(--ink-100)' }}>{fmtTokens(gm.tokens)}</b></span>
+          <span style={{ color: 'var(--ink-400)' }}>время <b style={{ color: 'var(--ink-100)' }}>{fmtTime(gm.time)}</b></span>
+          <span style={{ color: 'var(--ink-400)' }}>цена <b style={{ color: 'var(--ink-100)' }}>{fmtCost(gm.cost)}</b></span>
+          {task.category === 'B' && gm.contextLoaded && <span style={{ color: 'var(--ink-400)' }}>база <b style={{ color: 'var(--axis-p)' }}>{(gm.contextObjects || []).length} об.</b></span>}
+        </div>
+      ) : (
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 24, padding: '11px 16px', borderBottom: '1px solid var(--line)', flexWrap: 'wrap' }}>
+          <MetaItem label="исход">
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color, fontWeight: 700 }}><span style={{ width: 8, height: 8, borderRadius: '50%', background: color }} />{label}</span>
           </MetaItem>
-        )}
-        <MetaItem label="токенов">
-          <span style={{ color: 'var(--ink-100)', fontWeight: 700 }}>{fmtTokens(gm.tokens)}</span>
-          {gm.tokensOut ? <span style={{ color: 'var(--ink-400)', marginLeft: 6 }}>вход {fmtTokens(Math.max(0, (gm.tokens || 0) - (gm.tokensOut || 0)))} · выход {fmtTokens(gm.tokensOut)}</span> : null}
-        </MetaItem>
-        <MetaItem label="время"><span style={{ color: 'var(--ink-100)', fontWeight: 700 }}>{fmtTime(gm.time)}</span> <span style={{ color: 'var(--ink-400)' }}>на ответ</span></MetaItem>
-        <MetaItem label="цена ответа"><span style={{ color: 'var(--ink-100)', fontWeight: 700 }}>{fmtCost(gm.cost)}</span></MetaItem>
-        {task.category === 'B' && (
-          <MetaItem label="контекст базы">
-            {gm.contextLoaded
-              ? <><span style={{ color: 'var(--axis-p)', fontWeight: 700 }}>{(gm.contextObjects || []).length} об.</span><span style={{ color: 'var(--ink-400)', marginLeft: 6 }}>подтянула модель</span></>
-              : <span style={{ color: 'var(--ink-400)', fontWeight: 600 }}>не запрашивался</span>}
+          {tests.total != null && (
+            <MetaItem label="скрытые тесты">
+              <span style={{ color: tests.passed === tests.total ? 'var(--axis-o)' : 'var(--ink-100)', fontWeight: 700 }}>{tests.passed} / {tests.total}</span>
+              <span style={{ color: 'var(--ink-400)', marginLeft: 6 }}>пройдено</span>
+            </MetaItem>
+          )}
+          <MetaItem label="токенов">
+            <span style={{ color: 'var(--ink-100)', fontWeight: 700 }}>{fmtTokens(gm.tokens)}</span>
+            {gm.tokensOut ? <span style={{ color: 'var(--ink-400)', marginLeft: 6 }}>вход {fmtTokens(Math.max(0, (gm.tokens || 0) - (gm.tokensOut || 0)))} · выход {fmtTokens(gm.tokensOut)}</span> : null}
           </MetaItem>
-        )}
-      </div>
+          <MetaItem label="время"><span style={{ color: 'var(--ink-100)', fontWeight: 700 }}>{fmtTime(gm.time)}</span> <span style={{ color: 'var(--ink-400)' }}>на ответ</span></MetaItem>
+          <MetaItem label="цена ответа"><span style={{ color: 'var(--ink-100)', fontWeight: 700 }}>{fmtCost(gm.cost)}</span></MetaItem>
+          {task.category === 'B' && (
+            <MetaItem label="контекст базы">
+              {gm.contextLoaded
+                ? <><span style={{ color: 'var(--axis-p)', fontWeight: 700 }}>{(gm.contextObjects || []).length} об.</span><span style={{ color: 'var(--ink-400)', marginLeft: 6 }}>подтянула модель</span></>
+                : <span style={{ color: 'var(--ink-400)', fontWeight: 600 }}>не запрашивался</span>}
+            </MetaItem>
+          )}
+        </div>
+      )}
 
       {/* разбор оценки — по каждой оси, за что балл */}
       <ScoreBreakdown items={task.breakdown} />
@@ -415,8 +433,8 @@ function CodePane({ task, info = {} }) {
         </div>
       )}
 
-      {/* вкладки: код модели · условие задачи · скрытые тесты */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '0 16px', borderBottom: '1px solid var(--line)' }}>
+      {/* вкладки: код модели · условие задачи · скрытые тесты (на мобиле — горизонтальный скролл, до 5 не влезают) */}
+      <div style={{ display: 'flex', alignItems: 'center', padding: isMobile ? '0 12px' : '0 16px', borderBottom: '1px solid var(--line)', overflowX: isMobile ? 'auto' : 'visible', scrollbarWidth: 'none' }}>
         <CodeTab label="Код модели" active={tab === 'code'} onClick={() => setTab('code')} />
         <CodeTab label="Условие" active={tab === 'prompt'} onClick={() => setTab('prompt')} />
         <CodeTab label="Тесты" active={tab === 'tests'} onClick={() => setTab('tests')} />
@@ -432,7 +450,12 @@ function CodePane({ task, info = {} }) {
 
       {tab === 'prompt' && (
         <div style={{ padding: '16px' }}>
-          {info.signature && <pre style={{ margin: '0 0 12px', padding: '10px 12px', background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--axis-s)', overflow: 'auto' }}>{info.signature}</pre>}
+          {info.signature && (
+            <div style={{ margin: '0 0 14px' }}>
+              <div className="prism-eyebrow" style={{ marginBottom: 5 }}>сигнатура функции</div>
+              <pre style={{ margin: 0, padding: '10px 12px', background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-200)', overflowX: 'auto', whiteSpace: 'pre' }}>{info.signature}</pre>
+            </div>
+          )}
           <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: 'var(--ink-200)', whiteSpace: 'pre-wrap' }}>{info.prompt || 'условие недоступно'}</p>
         </div>
       )}
@@ -485,6 +508,79 @@ function PaneHead({ name, vendor, onClose }) {
   );
 }
 
+// мобила: кастомная выпадашка задач — триггер выглядит как select, но ОТКРЫТЫЙ список
+// стилизован (нативный оверлей уродлив: обрезает имена, не в палитре). Переиспользуем TaskItem.
+function MobileTaskPicker({ gen, groups, sel, setSel, current }) {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <div style={{ position: 'relative' }}>
+      <button onClick={() => setOpen((o) => !o)}
+        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 9, padding: '10px 12px', cursor: 'pointer', textAlign: 'left',
+          background: 'var(--surface-sunken)', border: `1px solid ${open ? 'var(--brand)' : 'var(--line)'}`, borderRadius: 'var(--radius-sm)' }}>
+        {current && <span style={{ width: 8, height: 8, borderRadius: '50%', flex: 'none', background: outcomeColor(current.diag?.outcome) }} />}
+        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 13, color: 'var(--ink-100)' }}>
+          {current ? <><b style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: 'var(--ink-300)' }}>{current.taskId}</b> · {current.taskName}</> : 'выбери задачу'}
+        </span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', flex: 'none', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease)' }}>▾</span>
+      </button>
+      {open && (
+        <>
+          <div onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 19 }} />
+          <div style={{ position: 'absolute', top: 'calc(100% + 4px)', left: 0, right: 0, zIndex: 20, maxHeight: 340, overflowY: 'auto',
+            background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 32px rgba(0,0,0,0.4)' }}>
+            {groups.map(([cat, label]) => {
+              const items = gen.tasks.filter((t) => t.category === cat);
+              if (!items.length) return null;
+              return (
+                <div key={cat}>
+                  <div className="prism-eyebrow" style={{ padding: '9px 12px 5px', borderBottom: '1px solid var(--line)', background: 'var(--surface-sunken)', position: 'sticky', top: 0, zIndex: 1 }}>{label}</div>
+                  {items.map((t) => <TaskItem key={t.taskId} t={t} active={t.taskId === sel} onClick={() => { setSel(t.taskId); setOpen(false); }} />)}
+                </div>
+              );
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// мобила: кастомная выпадашка «сравнить с» во всю ширину (нативный select узкий + уродлив в открытии)
+function MobileComparePicker({ others, cmpId, setCmpId, cmpModel }) {
+  const [open, setOpen] = React.useState(false);
+  const rowStyle = (active) => ({ width: '100%', display: 'flex', alignItems: 'center', gap: 9, padding: '9px 12px', cursor: 'pointer', border: 'none', textAlign: 'left', background: active ? 'var(--surface-raised)' : 'transparent', borderLeft: `2px solid ${active ? 'var(--brand)' : 'transparent'}` });
+  return (
+    <div style={{ position: 'relative', marginBottom: 14 }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', marginBottom: 6 }}>сравнить с{cmpId ? ' · задача одна, код ниже' : ''}</div>
+      <button onClick={() => setOpen((o) => !o)}
+        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 9, padding: '10px 12px', cursor: 'pointer', textAlign: 'left',
+          background: 'var(--surface-sunken)', border: `1px solid ${open ? 'var(--brand)' : 'var(--line)'}`, borderRadius: 'var(--radius-sm)' }}>
+        {cmpModel && <VendorLogo vendor={cmpModel.vendor} name={cmpModel.name} size={20} />}
+        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 13, color: cmpModel ? 'var(--ink-100)' : 'var(--ink-400)' }}>{cmpModel ? cmpModel.name : '— одна модель —'}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', flex: 'none', transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease)' }}>▾</span>
+      </button>
+      {open && (
+        <>
+          <div onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 19 }} />
+          <div style={{ position: 'absolute', top: 'calc(100% + 4px)', left: 0, right: 0, zIndex: 20, maxHeight: 340, overflowY: 'auto',
+            background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 32px rgba(0,0,0,0.4)' }}>
+            <button onClick={() => { setCmpId(''); setOpen(false); }} style={rowStyle(!cmpId)}>
+              <span style={{ width: 20, flex: 'none' }} />
+              <span style={{ fontSize: 13, color: 'var(--ink-400)' }}>— одна модель —</span>
+            </button>
+            {others.map((o) => (
+              <button key={o.id} onClick={() => { setCmpId(o.id); setOpen(false); }} style={rowStyle(cmpId === o.id)}>
+                <VendorLogo vendor={o.vendor} name={o.name} size={20} />
+                <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 13, color: 'var(--ink-100)' }}>{o.name}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function GenerationsBrowser({ modelId, modelName, models = [] }) {
   const isMobile = useIsMobile();
   const [info, setInfo] = React.useState({});
@@ -514,30 +610,38 @@ function GenerationsBrowser({ modelId, modelName, models = [] }) {
   const selectStyle = { background: 'var(--surface-sunken)', color: 'var(--ink-200)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', padding: '6px 10px', fontFamily: 'var(--font-mono)', fontSize: 12.5, cursor: 'pointer' };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(220px, 300px) 1fr', gap: isMobile ? 14 : 20, alignItems: 'start' }}>
-      <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowY: 'auto', overflowX: 'hidden', position: isMobile ? 'static' : 'sticky', top: 76, maxHeight: isMobile ? 280 : 'calc(100vh - 96px)' }}>
-        {groups.map(([cat, label]) => {
-          const items = gen.tasks.filter((t) => t.category === cat);
-          if (!items.length) return null;
-          return (
-            <div key={cat}>
-              <div className="prism-eyebrow" style={{ padding: '10px 12px 6px', borderBottom: '1px solid var(--line)', background: 'var(--surface-sunken)', position: 'sticky', top: 0, zIndex: 1 }}>{label}</div>
-              {items.map((t) => <TaskItem key={t.taskId} t={t} active={t.taskId === sel} onClick={() => setSel(t.taskId)} />)}
-            </div>
-          );
-        })}
-      </div>
+    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'minmax(220px, 300px) 1fr', gap: isMobile ? 10 : 20, alignItems: 'start' }}>
+      {isMobile ? (
+        <MobileTaskPicker gen={gen} groups={groups} sel={sel} setSel={setSel} current={current} />
+      ) : (
+        <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowY: 'auto', overflowX: 'hidden', position: 'sticky', top: 76, maxHeight: 'calc(100vh - 96px)' }}>
+          {groups.map(([cat, label]) => {
+            const items = gen.tasks.filter((t) => t.category === cat);
+            if (!items.length) return null;
+            return (
+              <div key={cat}>
+                <div className="prism-eyebrow" style={{ padding: '10px 12px 6px', borderBottom: '1px solid var(--line)', background: 'var(--surface-sunken)', position: 'sticky', top: 0, zIndex: 1 }}>{label}</div>
+                {items.map((t) => <TaskItem key={t.taskId} t={t} active={t.taskId === sel} onClick={() => setSel(t.taskId)} />)}
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <div style={{ minWidth: 0 }}>
         {/* выбор второй модели для сравнения бок-о-бок */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>сравнить с</span>
-          <select value={cmpId} onChange={(e) => setCmpId(e.target.value)} style={selectStyle}>
-            <option value="">— одна модель —</option>
-            {others.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
-          </select>
-          {cmpId && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>задача одна, код — рядом</span>}
-        </div>
+        {isMobile ? (
+          <MobileComparePicker others={others} cmpId={cmpId} setCmpId={setCmpId} cmpModel={cmpModel} />
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>сравнить с</span>
+            <select value={cmpId} onChange={(e) => setCmpId(e.target.value)} style={selectStyle}>
+              <option value="">— одна модель —</option>
+              {others.map((o) => <option key={o.id} value={o.id}>{o.name}</option>)}
+            </select>
+            {cmpId && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>задача одна, код — рядом</span>}
+          </div>
+        )}
 
         {cmpId ? (
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(330px, 1fr))', gap: 16, alignItems: 'start' }}>
@@ -565,6 +669,7 @@ function GenerationsBrowser({ modelId, modelName, models = [] }) {
 }
 
 export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = () => {} }) {
+  const isMobile = useIsMobile();
   const m = models.find((x) => x.id === modelId);
   if (!m) return <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '40px 24px' }}><p>модель не найдена.</p></main>;
   const tagLabels = meta.tagLabels || {};
@@ -582,15 +687,15 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
       </section>
 
       {/* Категории */}
-      <section style={{ display: 'flex', gap: 18, marginBottom: 36, flexWrap: 'wrap' }}>
-        <CategoryPanel title="Категория A · алгоритмика" sub="оси S · M · O" q={m.qA} scores={m.A} axisOrder={['S', 'M', 'O']} />
-        <CategoryPanel title="Категория B · платформа" sub="оси S · M · O · P" q={m.qB} scores={m.B} axisOrder={['S', 'M', 'O', 'P']} />
+      <section style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 18, marginBottom: isMobile ? 24 : 36, flexWrap: 'wrap' }}>
+        <CategoryPanel title="Категория A · алгоритмика" sub="оси S · M · O" q={m.qA} scores={m.A} axisOrder={['S', 'M', 'O']} compact={isMobile} />
+        <CategoryPanel title="Категория B · платформа" sub="оси S · M · O · P" q={m.qB} scores={m.B} axisOrder={['S', 'M', 'O', 'P']} compact={isMobile} />
       </section>
 
       {/* Браузер генераций */}
       <section style={{ paddingBottom: 8 }}>
         <h2 style={{ fontSize: 'var(--text-h3)', fontWeight: 600, color: 'var(--ink-100)', margin: '0 0 4px' }}>Что написала модель</h2>
-        <p style={{ fontSize: 13, color: 'var(--ink-400)', margin: '0 0 18px' }}>Реальный код по каждой задаче — тот, что запускали против синтетической базы. Выбери задачу слева; можно поставить рядом вторую модель.</p>
+        <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: isMobile ? '0 0 12px' : '0 0 18px', lineHeight: 1.45 }}>Реальный код по каждой задаче — тот, что запускали против синтетической базы. {isMobile ? 'Выбери задачу — код появится ниже.' : 'Выбери задачу слева; можно поставить рядом вторую модель.'}</p>
         <GenerationsBrowser modelId={m.id} modelName={m.name} models={models} />
       </section>
     </main>
