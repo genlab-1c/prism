@@ -350,6 +350,30 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: function calling заявлен; риск на агентной B (как Qwen3.6/MiniMax)
 
+  glm52:
+    id: "glm-5.2"                        # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GLM-5.2"
+    vendor: zhipu
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель (флагман Zhipu); function calling → агентная B
+
+  kimi27:
+    id: "kimi-k2.7-code"                 # канал — AITUNNEL (openai_compat); кодовая версия Kimi K2.7
+    name: "Kimi K2.7 Code"
+    vendor: moonshot
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 262144
+      supports_seed: false
+      supports_tools: true               # function calling → агентная B
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
