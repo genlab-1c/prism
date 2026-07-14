@@ -14613,6 +14613,1051 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bbada7b4a85d50e319670f3c996890c1346e7f62488a62f6c081a1e1f6c87530",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                638,
+                1288,
+                2528,
+                4973
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f231824bda765c9306e235d74c055d7cc91639e1cb34c1a09ba8b9e2da6221e9",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": null,
+            "P": null,
+            "Q": 6.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Свойство)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Свойство)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Свойство)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 7 / Method not found (Свойство)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 44 / Method not found (Свойство)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1a5859f46d18dc6990a22028325a02248381a494d0f22c02554d90985c36390a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.1,
+              "ops": [
+                3602,
+                7193,
+                14367,
+                28647
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ca7f83760498733e7dd7e485e4564f0e2c1546eca7594e3c5a6f2d0c345a0d29",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2110,
+                4210,
+                8410,
+                16810
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "451ad11457e890078aaf605b1f4ea9c05b945428d9afd064416336c7a0ad3470",
+          "scores": {
+            "S": 10,
+            "M": 7.5,
+            "O": null,
+            "P": null,
+            "Q": 8.75
+          },
+          "bands": {
+            "M": 6,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 8 / Задано неправильное имя атрибута структуры ''}"
+              ],
+              "band": 6
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line: 45 / Задано неправильное имя атрибута структуры ''}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ffc463acc0f4d2590a4576834d554952d695d3ea9744a11475f92c07ec3a19d1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "Левенштейн",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.81,
+              "p_opt": 2.0,
+              "ops": [
+                491,
+                889,
+                1407,
+                2045
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "Левенштейн",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ecb3491c9cb04ca847cca60ae7f021e49e81c87dae5abcb853eda492a6ce1420",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжатие",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158506,
+                607226,
+                2338731,
+                9366155
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжатие",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cd49dd8d0fde2c75a54790b157f47ebb0b3b712bf42cc6914437d227c1ebd2cd",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 10 / Property 'Символы' is not writable}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 10 / Property 'Символы' is not writable}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 10 / Property 'Символы' is not writable}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 10 / Property 'Символы' is not writable}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 10 / Property 'Символы' is not writable}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 10 / Property 'Символы' is not writable}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 47 / Property 'Символы' is not writable}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "glm-5.2",
+      "model_name": "GLM-5.2",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ab712296d2fd50cb8b10c80b5db4df326886e48625f656ad6721e982418c7dcf",
+          "scores": {
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 0.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 4,
+              "parse_error_clusters": 4,
+              "blockers": 0,
+              "balanced": false,
+              "balance_detail": {
+                "цикл": {
+                  "open": 4,
+                  "close": 0
+                }
+              },
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line: 13 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line: 50 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c2c21d875dd3b8930409444a6a9beccba6f85754942859b4b3b85332a028cf2a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2164,
+                4344,
+                8632,
+                17166
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "80f85c84ac0bb02e030c12695c08c0734608471104e60739b391999be34fd1cf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1405,
+                2805,
+                5605,
+                11203
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2c2d28fea075aeec8129383268b63fd77ce0cc9312fdad1ee362427c1156d2b7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3598,
+                7171,
+                14303,
+                28387
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7308e4fe432373a00addb9d4be0f43a2a40d8cb9ec04e91060cde80f757510fe",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1562,
+                3112,
+                6212,
+                12412
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d78edf9da48033d26ee6607d067ed687283ec692bf13153728769402edeba36c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7142,
+                13975,
+                28024,
+                57101
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1073d453b341ae8b030c164a08638feab81d12d299780ef7fa27dcfdba741657",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.79,
+              "p_opt": 2.0,
+              "ops": [
+                270,
+                484,
+                762,
+                1104
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cb940fbe9a7c4a8249e410a21b6f684f79556c54e48d0db4ef77476fdb31f03f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2548,
+                5108,
+                10242,
+                20474
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6e1bf521fee4ce705451a23eeec8a0eacdf0ae0d2933786ccf6d16cab439df31",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "СтрокиАнаграммы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                6014,
+                12014,
+                24014,
+                48014
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "СтрокиАнаграммы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "acfd1e9db85956745862d182becc122d3b527c616f928c8cfe3ebdd34d1840ab",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаРешетоЭратосфена",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38561,
+                79764,
+                164545,
+                338592
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаРешетоЭратосфена",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
