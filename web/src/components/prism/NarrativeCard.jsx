@@ -116,10 +116,11 @@ function verdictDetail(model, ins) {
   const strongCat = (aS != null && bS != null) ? (aS >= bS ? 'A' : 'B') : (ins.strongCat || 'A');
   const strong = strongCat === 'A' ? 'алгоритмике' : 'платформенных задачах';
   let lead;
+  const leaderCut = Math.max(3, Math.ceil(ins.total * 0.15)); // «лидер» — топ ~15%, а не жёсткая тройка (#4/31 — тоже лидер)
   if (ins.rankOverall === 1) lead = `Лучший результат прогона по качеству кода 1С. Сильнее всего в ${strong}.`;
-  else if (ins.rankOverall <= 3) lead = `Один из лидеров рейтинга. Сильнее всего в ${strong}.`;
-  else if (ins.rankOverall <= Math.ceil(ins.total * 0.5)) lead = `Выше среднего. Лучше даётся ${strong}.`;
-  else lead = `Ниже среднего по 1С. Лучше даётся ${strong}.`;
+  else if (ins.rankOverall <= leaderCut) lead = `Один из лидеров рейтинга. Сильнее всего в ${strong}.`;
+  else if (ins.rankOverall <= Math.ceil(ins.total * 0.5)) lead = `Выше среднего. Увереннее в ${strong}.`;
+  else lead = `Ниже среднего по коду 1С. Лучше в ${strong}.`;
   return { lead, pluses, minuses };
 }
 

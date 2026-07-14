@@ -4,7 +4,7 @@
    т.к. в открытых наборах его нет). Неизвестный вендор → монограмма Avatar. */
 import React from 'react';
 import {
-  siClaude, siGooglegemini, siDeepseek, siQwen, siXiaomi, siYandexcloud, siMinimax,
+  siClaude, siGooglegemini, siDeepseek, siQwen, siXiaomi, siYandexcloud, siMinimax, siMoonshotai,
 } from 'simple-icons';
 import { Avatar } from '../core/Avatar.jsx';
 
@@ -17,6 +17,7 @@ const ICONS = {
   xiaomi: siXiaomi,
   yandex: siYandexcloud,
   minimax: siMinimax,
+  moonshot: siMoonshotai,
 };
 
 // вендоры без simple-icons — рисуем сами. mode: 'fill' — сплошной знак, 'stroke' — контурный.
@@ -53,7 +54,7 @@ export function vendorGlyph(vendor) {
   if (!icon && !custom) return null; // неизвестный вендор → монограмма на стороне вызова
   return {
     paths: icon ? [icon.path] : custom.paths,
-    color: icon ? `#${icon.hex}` : custom.color,
+    color: icon ? (icon.hex === '000000' ? 'var(--ink-100)' : `#${icon.hex}`) : custom.color,
     stroke: !!custom && custom.mode === 'stroke',
     title: icon ? icon.title : custom.title,
   };
@@ -65,7 +66,7 @@ export function VendorLogo({ vendor, name = '?', size = 32, style = {} }) {
   if (!icon && !custom) return <Avatar name={name} size={size} style={style} />; // неизвестный вендор
 
   const title = icon ? icon.title : custom.title;
-  const color = icon ? `#${icon.hex}` : custom.color;
+  const color = icon ? (icon.hex === '000000' ? 'var(--ink-100)' : `#${icon.hex}`) : custom.color;
   const stroke = !!custom && custom.mode === 'stroke';
   const paths = icon ? [icon.path] : custom.paths;
   const bg = color.startsWith('#') ? `${color}1f` : `color-mix(in srgb, ${color} 14%, transparent)`;
