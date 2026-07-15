@@ -3,7 +3,6 @@
    (страницы сайта раздельные), активный пункт приходит пропсом `active`. */
 import React from 'react';
 import { Icon } from './chrome/Chrome.jsx';
-import { useIsMobile } from '../lib/useMediaQuery.js';
 
 const BASE = import.meta.env.BASE_URL;
 const NAV = [
@@ -13,14 +12,14 @@ const NAV = [
   { key: 'docs', label: 'документация', href: `${BASE}docs` },
 ];
 
-function NavLink({ label, href, active, compact }) {
+function NavLink({ label, href, active }) {
   const [hover, setHover] = React.useState(false);
   return (
-    <a href={href} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+    <a href={href} className="site-nav-link" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       style={{
         textDecoration: 'none', fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: active ? 600 : 500,
         color: active ? 'var(--ink-100)' : (hover ? 'var(--ink-200)' : 'var(--ink-400)'),
-        padding: compact ? '10px 2px' : '21px 2px', position: 'relative', letterSpacing: '0.005em',
+        position: 'relative', letterSpacing: '0.005em',
         whiteSpace: 'nowrap', flex: 'none',
         transition: 'color var(--dur-fast) var(--ease)',
       }}>
@@ -49,7 +48,6 @@ function ThemeToggle({ theme, onToggle }) {
 
 function StarButton({ repo }) {
   const [hover, setHover] = React.useState(false);
-  const isMobile = useIsMobile();
   const url = repo?.url || 'https://github.com/genlab-1c/prism';
   const slug = url.replace(/^https?:\/\/github\.com\//, '').replace(/\/$/, '');
   // счётчик тянем с GitHub API на клиенте (near real-time); build-значение — стартовое/фолбэк
@@ -71,7 +69,7 @@ function StarButton({ repo }) {
         background: hover ? 'var(--navy-600)' : 'var(--surface-raised)', color: 'var(--ink-100)',
         fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: 500, transition: 'background var(--dur-fast) var(--ease)',
       }}>
-        <span style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span>{!isMobile && 'Star'}
+        <span style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span><span className="hide-mobile">Star</span>
       </span>
       {stars != null && (
         <span style={{
@@ -94,7 +92,6 @@ export default function SiteHeader({ active = 'leaderboard', version = '', repo 
     try { localStorage.setItem('prism-theme', next); } catch (e) {}
   };
   const logo = `${BASE}assets/${theme === 'light' ? 'locklight' : 'lockdark'}.png`;
-  const isMobile = useIsMobile();
 
   return (
     <header style={{
@@ -102,23 +99,23 @@ export default function SiteHeader({ active = 'leaderboard', version = '', repo 
       background: 'var(--surface-translucent)', backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)', borderBottom: '1px solid var(--line)',
     }}>
-      <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: isMobile ? '8px 16px' : '0 24px', minHeight: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: isMobile ? 'wrap' : 'nowrap', rowGap: 6 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+      {/* Раскладка — классами (CSS-медиазапросы), не через JS isMobile: иначе на мобиле
+          первый рендер десктопный и шапка прыгает при гидрации/переходах. См. styles.css. */}
+      <div className="site-header-inner">
+        <div className="site-header-left">
           <a href={BASE} style={{ display: 'flex', alignItems: 'center' }}>
             <img src={logo} alt="PRISM" style={{ height: 26, width: 'auto', display: 'block' }} />
           </a>
-          {!isMobile && <span style={{ color: 'var(--line)', fontSize: 18 }}>/</span>}
-          {!isMobile && (
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>
-              <span style={{ color: 'var(--ink-300)' }}>genlab-1c</span><span> / </span><span style={{ color: 'var(--ink-200)' }}>prism</span>
-            </span>
-          )}
+          <span className="hide-mobile" style={{ color: 'var(--line)', fontSize: 18 }}>/</span>
+          <span className="hide-mobile" style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>
+            <span style={{ color: 'var(--ink-300)' }}>genlab-1c</span><span> / </span><span style={{ color: 'var(--ink-200)' }}>prism</span>
+          </span>
         </div>
-        <nav className="nav-bar" style={{ display: 'flex', gap: isMobile ? 20 : 24, alignSelf: 'stretch', alignItems: 'center', order: isMobile ? 3 : 0, flexBasis: isMobile ? '100%' : 'auto', flexWrap: 'nowrap', overflowX: isMobile ? 'auto' : 'visible', scrollbarWidth: 'none' }}>
-          {NAV.map((n) => <NavLink key={n.key} label={n.label} href={n.href} active={active === n.key} compact={isMobile} />)}
+        <nav className="nav-bar site-header-nav">
+          {NAV.map((n) => <NavLink key={n.key} label={n.label} href={n.href} active={active === n.key} />)}
         </nav>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          {!isMobile && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>v{version || '—'}</span>}
+        <div className="site-header-right">
+          <span className="hide-mobile" style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>v{version || '—'}</span>
           <ThemeToggle theme={theme} onToggle={toggleTheme} />
           <StarButton repo={repo} />
         </div>

@@ -8,3 +8,30 @@
 @import url('tokens/spacing.css');
 @import url('tokens/themes.css');
 @import url('tokens/base.css');
+
+/* Скрыть на мобиле ЧЕРЕЗ CSS, а не через JS isMobile: хук возвращает false до монтирования,
+   поэтому SSR/первый рендер — десктопная раскладка, а useEffect потом переключает на мобилу →
+   виден флэш (мелькает десктоп-шапка при загрузке и переходах). CSS применяется до отрисовки. */
+@media (max-width: 720px) { .hide-mobile { display: none !important; } }
+
+/* Раскладка шапки — ТОЛЬКО через CSS-медиазапросы, не через JS isMobile.
+   Иначе на мобиле первый рендер (SSR + гидрация) приходит десктопным, и useEffect
+   потом «схлопывает» меню на вторую строку → шапка прыгает при каждом переходе.
+   CSS применяется до отрисовки, поэтому мобильная раскладка сразу — без рывков.
+   Боковые «рельсы» (flex:1) держат ширину независимо от содержимого: даже если тема/звезда
+   на миг исчезнут, их место зарезервировано и меню (центр) не съезжает. */
+.site-header-inner { max-width: var(--container); margin: 0 auto; padding: 0 24px; min-height: 60px; display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; row-gap: 6px; }
+.site-header-left { display: flex; align-items: center; gap: 14px; flex: 1 1 0; min-width: 0; }
+.site-header-nav { display: flex; gap: 24px; align-self: stretch; align-items: center; order: 0; flex: 0 0 auto; justify-content: center; flex-wrap: nowrap; overflow-x: visible; scrollbar-width: none; }
+.site-header-right { display: flex; align-items: center; justify-content: flex-end; gap: 10px; flex: 1 1 0; min-width: 0; }
+.site-nav-link { padding: 21px 2px; }
+
+@media (max-width: 720px) {
+  .site-header-inner { padding: 8px 16px; flex-wrap: wrap; }
+  .site-header-left { flex: 0 1 auto; }
+  /* на мобиле меню — скролл-ряд во всю ширину: прижимаем к началу (flex-start),
+     иначе center + overflow обрезает оба края и до «лидерборд» не доскроллить */
+  .site-header-nav { gap: 20px; order: 3; flex: 1 1 100%; overflow-x: auto; justify-content: flex-start; }
+  .site-header-right { flex: 0 1 auto; }
+  .site-nav-link { padding: 10px 2px; }
+}
