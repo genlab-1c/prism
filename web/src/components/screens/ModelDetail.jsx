@@ -668,11 +668,38 @@ function GenerationsBrowser({ modelId, modelName, models = [] }) {
   );
 }
 
+// пред/след модель по общему рангу — быстрый переход прямо из карточки, без возврата в лидерборд.
+// fill=true (мобила) — кнопка тянется на всю доступную ширину; иначе компактная по содержимому (ПК).
+function ModelNavBtn({ model, rank, dir, navigate, fill }) {
+  const [h, setH] = React.useState(false);
+  const prev = dir === 'prev';
+  const arrow = <span style={{ color: h ? 'var(--brand)' : 'var(--ink-400)', fontSize: 17, lineHeight: 1, flex: 'none', transition: 'color var(--dur-fast) var(--ease)' }}>{prev ? '‹' : '›'}</span>;
+  const rankBadge = <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--ink-400)', flex: 'none' }}>#{rank}</span>;
+  const name = <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-100)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{model.name}</span>;
+  return (
+    <button onClick={() => navigate('model', model.id)} title={`${prev ? 'Выше' : 'Ниже'} по рангу: ${model.name} (#${rank})`}
+      onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
+      style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0, cursor: 'pointer',
+        flex: fill ? '1 1 0' : '0 1 auto', maxWidth: fill ? 'none' : '46%',
+        justifyContent: fill ? 'center' : (prev ? 'flex-start' : 'flex-end'),
+        background: h ? 'var(--surface-raised)' : 'var(--surface)',
+        border: `1px solid ${h ? 'var(--border-strong)' : 'var(--line)'}`,
+        borderRadius: 'var(--radius-sm)', padding: '8px 13px',
+        transition: 'background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease)' }}>
+      {prev ? <>{arrow}{rankBadge}{name}</> : <>{name}{rankBadge}{arrow}</>}
+    </button>
+  );
+}
+
 export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = () => {} }) {
   const isMobile = useIsMobile();
+  const ranked = React.useMemo(() => models.filter((x) => x.qOverall != null).sort((a, b) => b.qOverall - a.qOverall), [models]);
   const m = models.find((x) => x.id === modelId);
   if (!m) return <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '40px 24px' }}><p>модель не найдена.</p></main>;
   const tagLabels = meta.tagLabels || {};
+  const idx = ranked.findIndex((x) => x.id === modelId);
+  const prevModel = idx > 0 ? ranked[idx - 1] : null; // выше по рангу
+  const nextModel = idx >= 0 && idx < ranked.length - 1 ? ranked[idx + 1] : null; // ниже по рангу
 
   return (
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
@@ -680,6 +707,16 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
         <Button variant="ghost" size="sm" iconLeft={<Icon name="arrowLeft" size={16} />} onClick={() => navigate('leaderboard')}>Лидерборд</Button>
         <ShareBar model={m} />
       </div>
+
+      {/* пред/след модель по общему рангу — листать рейтинг, не возвращаясь в лидерборд */}
+      {(prevModel || nextModel) && (
+        <div style={{ display: 'flex', gap: 8, marginTop: 12, justifyContent: 'space-between' }}>
+          {/* на ПК одинокий «след» прижимаем вправо пустым распоркой слева */}
+          {!isMobile && !prevModel && nextModel && <span style={{ flex: '0 0 auto' }} />}
+          {prevModel && <ModelNavBtn model={prevModel} rank={idx} dir="prev" navigate={navigate} fill={isMobile} />}
+          {nextModel && <ModelNavBtn model={nextModel} rank={idx + 2} dir="next" navigate={navigate} fill={isMobile} />}
+        </div>
+      )}
 
       {/* Карточка-вердикт — она же герой страницы (имя модели здесь, в шапке не дублируем) */}
       <section style={{ margin: '18px 0 28px' }}>
