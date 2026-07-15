@@ -170,7 +170,7 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 12 : 16, flexWrap: 'wrap' }}>
           <VendorLogo vendor={model.vendor} name={model.name} size={isMobile ? 44 : 52} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: 'var(--font-mono)', fontSize: isMobile ? 19 : 22, fontWeight: 700, color: 'var(--ink-100)', letterSpacing: '-0.01em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{model.name}</div>
+            <div style={{ fontFamily: 'var(--font-mono)', fontSize: isMobile ? 18 : 22, fontWeight: 700, color: 'var(--ink-100)', letterSpacing: '-0.01em', lineHeight: 1.15, ...(isMobile ? { whiteSpace: 'normal', wordBreak: 'break-word' } : { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }) }}>{model.name}</div>
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-400)', marginTop: 2 }}>{model.family}</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
