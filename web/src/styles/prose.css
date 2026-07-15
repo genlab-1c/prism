@@ -133,5 +133,33 @@
 .prose tbody tr:hover { background: var(--hover-overlay); }
 .prose td:first-child { font-family: var(--font-mono); color: var(--ink-200); }
 
+/* Скролл-обёртка таблиц (её ставит rehypeTableScroll в astro.config.mjs) — как TableScroll
+   на лидерборде: листается таблица, а не страница. min-width только широким (3+ колонки),
+   чтобы колонки не сжимались в кашу; узкие («условие | балл») помещаются и без него. */
+.prose .table-scroll { overflow-x: auto; margin: 0 0 18px; }
+.prose .table-scroll > table { margin: 0; }
+.prose .table-scroll--wide > table { min-width: 560px; }
+
 .prose img { max-width: 100%; height: auto; }
 .prose sub, .prose small { color: var(--ink-400); }
+
+/* Длинные слова, инлайн-код (`DESIGNER /CheckModules`) и ссылки не должны рвать колонку. */
+.prose { overflow-wrap: break-word; }
+
+/* --- адаптив: мобильные --- */
+@media (max-width: 720px) {
+  .doc-main { padding: 28px 16px 8px; }
+
+  /* Заголовки: десктопная шкала (h1 38 / h2 28) на телефоне слишком крупная —
+     сажаем, как в шапке лидерборда (22 → 18). */
+  .prose h1 { font-size: 26px; }
+  .prose h2 { font-size: 20px; margin: 30px 0 12px; padding-top: 14px; }
+  .prose h3 { font-size: 17px; margin: 22px 0 8px; }
+  .prose h4 { font-size: 15px; }
+
+  .prose th, .prose td { padding: 7px 10px; }
+
+  .prose blockquote { padding: 10px 14px; }
+  .prose pre { padding: 12px 14px; font-size: 12px; }
+  .prose ul, .prose ol { padding-left: 20px; }
+}
