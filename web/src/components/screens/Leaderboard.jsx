@@ -97,12 +97,16 @@ function Segmented({ items, value, onChange }) {
   );
 }
 
-function Identity({ m, size = 38 }) {
+function Identity({ m, size = 38, gap = 13, wrap = false, nameSize = 15 }) {
+  // wrap — имя переносится в 2 строки вместо обрезки многоточием (мобила: узкая колонка, длинные имена)
+  const nameStyle = wrap
+    ? { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.2 }
+    : { whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 13, minWidth: 0 }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap, minWidth: 0 }}>
       <VendorLogo vendor={m.vendor} name={m.name} size={size} />
       <div style={{ minWidth: 0 }}>
-        <div style={{ fontFamily: 'var(--font-sans)', fontSize: 15, fontWeight: 600, color: 'var(--ink-100)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{m.name}</div>
+        <div style={{ fontFamily: 'var(--font-sans)', fontSize: nameSize, fontWeight: 600, color: 'var(--ink-100)', ...nameStyle }}>{m.name}</div>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', marginTop: 1 }}>{m.family}</div>
       </div>
     </div>
@@ -246,13 +250,13 @@ function SummaryView({ models, navigate }) {
     return (
       <div>
         {rows.map((m, i) => (
-          <ListRow key={m.id} grid="28px 1fr auto" gap={10} pad="11px 14px" i={i} top={i === 0} onClick={() => navigate('model', m.id)}>
-            <RankBadge rank={i + 1} size={28} />
-            <Identity m={m} size={32} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <ListRow key={m.id} grid="26px 1fr auto" gap={9} pad="11px 12px" i={i} top={i === 0} onClick={() => navigate('model', m.id)}>
+            <RankBadge rank={i + 1} size={26} />
+            <Identity m={m} size={30} gap={9} wrap nameSize={14} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
               <MobPct label="A" solved={m.A?.solved} />
               <MobPct label="B" solved={m.B?.solved} />
-              <span style={{ color: 'var(--ink-400)', fontSize: 22, lineHeight: 1 }}>›</span>
+              <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>
             </div>
           </ListRow>
         ))}
