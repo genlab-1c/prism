@@ -52,36 +52,37 @@ description: "Что в бенчмарке PRISM уже работает: авт
 | Модель | Q · категория A | Q · категория B |
 |---|:---:|:---:|
 | **Kimi K2.7 Code** | **10.00** | **8.48** |
-| Gemini 3.1 Pro | 9.78 | 9.30 |
-| Gemini 3.5 Flash | 9.78 | 9.18 |
-| GPT-5.6 Sol | 9.33 | 9.59 |
-| MiMo-V2.5 Pro | 9.22 | 8.07 |
-| GPT-5.5 | 9.00 | 8.63 |
-| GPT-5.6 Terra | 8.78 | 7.97 |
-| Grok Build 0.1 | 8.33 | 7.91 |
-| Claude Sonnet 5 | 8.30 | 8.68 |
-| MiniMax M3 | 7.89 | 9.24 |
-| MiMo-V2.5 | 7.87 | 8.55 |
-| DeepSeek V4-Flash | 7.82 | 7.39 |
-| Grok 4.3 | 7.62 | 9.36 |
-| GLM-5.2 | 7.61 | 7.47 |
-| Claude Opus 4.8 | 7.22 | 8.93 |
-| Alice AI LLM Flash | 6.86 | 6.15 |
-| Qwen3.7 Plus | 6.48 | 6.65 |
-| GLM-4.7 Flash | 6.32 | 5.53 |
-| Claude Sonnet 4.6 | 6.22 | 9.13 |
-| GPT-5 Mini | 6.11 | 3.10 |
-| GPT-OSS 120B | 5.89 | 3.89 |
-| Alice AI LLM | 5.56 | 3.58 |
-| Gemini 2.5 Flash Lite | 5.44 | 4.89 |
+| Gemini 3.1 Pro | 9.80 | 9.30 |
+| Gemini 3.5 Flash | 9.80 | 9.18 |
+| Kimi K3 | 9.80 | 9.26 |
+| MiMo-V2.5 Pro | 9.30 | 8.07 |
+| GPT-5.6 Sol | 9.20 | 9.59 |
+| GPT-5.5 | 9.10 | 8.63 |
+| GPT-5.6 Terra | 8.70 | 7.97 |
+| Grok Build 0.1 | 8.00 | 7.91 |
+| Claude Sonnet 5 | 7.97 | 8.68 |
+| GLM-5.2 | 7.84 | 7.47 |
+| MiniMax M3 | 7.60 | 9.24 |
+| MiMo-V2.5 | 7.58 | 8.55 |
+| DeepSeek V4-Flash | 7.54 | 7.39 |
+| Grok 4.3 | 7.36 | 9.36 |
+| Claude Opus 4.8 | 7.23 | 8.93 |
+| Alice AI LLM Flash | 6.67 | 6.15 |
+| Qwen3.7 Plus | 6.33 | 6.65 |
+| GLM-4.7 Flash | 6.18 | 5.53 |
+| GPT-5 Mini | 5.90 | 3.10 |
+| Claude Sonnet 4.6 | 5.90 | 9.13 |
+| GPT-OSS 120B | 5.80 | 3.89 |
+| Alice AI LLM | 5.50 | 3.58 |
+| Gemini 2.5 Flash Lite | 5.40 | 4.89 |
 | Qwen3-235B-A22B | 5.00 | 3.68 |
-| GigaChat 2 Max | 4.89 | 3.17 |
-| Qwen3.6-35B-A3B | 4.89 | 3.86 |
-| YandexGPT 5 Pro | 4.78 | 4.30 |
-| YandexGPT 5 Lite | 4.50 | 3.91 |
-| YandexGPT 5.1 Pro | 4.00 | 3.66 |
-| GigaChat 2 Lite | 3.00 | 2.60 |
-| GigaChat 2 Pro | 2.44 | 2.17 |
+| Qwen3.6-35B-A3B | 4.90 | 3.86 |
+| GigaChat 2 Max | 4.90 | 3.17 |
+| YandexGPT 5 Pro | 4.80 | 4.30 |
+| YandexGPT 5 Lite | 4.55 | 3.91 |
+| YandexGPT 5.1 Pro | 4.10 | 3.66 |
+| GigaChat 2 Lite | 3.10 | 2.60 |
+| GigaChat 2 Pro | 2.70 | 2.17 |
 <!-- /prism:status:lb -->
 
 Таблица выше пересобирается автоматически (`prism docs`), а состав моделей и банк задач растут
