@@ -1,0 +1,36 @@
+entry_point_patterns:
+  - "Степен\\w*"
+  - "\\w*Модул\\w*"
+  - "\\w*Степен\\w*"
+tests:
+  - args: [2, 10, 1000]
+    expected: 24
+  # степень 0 → 1
+  - args: [3, 0, 7]
+    expected: 1
+  - args: [2, 5, 100]
+    expected: 32
+  # 125 mod 13 = 8
+  - args: [5, 3, 13]
+    expected: 8
+  # 2401 mod 10 = 1
+  - args: [7, 4, 10]
+    expected: 1
+  # модуль 1 → всегда 0
+  - args: [2, 10, 1]
+    expected: 0
+  # 1000 mod 6 = 4
+  - args: [10, 3, 6]
+    expected: 4
+  # большой результат до приведения: 1048576 mod 1000000 = 48576
+  - args: [2, 20, 1000000]
+    expected: 48576
+  # 243 mod 100 = 43
+  - args: [3, 5, 100]
+    expected: 43
+  # 1 в любой степени
+  - args: [1, 100, 7]
+    expected: 1
+  # основание больше модуля
+  - args: [17, 2, 5]
+    expected: 4
