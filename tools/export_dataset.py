@@ -2,9 +2,9 @@
 """
 Экспорт датасета PRISM-SMOP из results/ → JSONL для HuggingFace (genlab-1c/prism-smop).
 
-Собирает по одному полному прогону PRISM (протокол 1.2.0, июнь 2026) два конфига:
-  raw — все 899 прогонов (задача × модель) со всеми полями и оценками SMOP;
-  sft — 136 пар prompt→completion (открытые модели, прошедшие все скрытые тесты).
+Собирает по одному полному прогону PRISM (протокол 1.2.0) два конфига:
+  raw — все 1120 прогонов (32 модели × 35 задач) со всеми полями и оценками SMOP;
+  sft — 201 пара prompt→completion (открытые модели, прошедшие все скрытые тесты).
 
 Джойн: auto-оценки (results/auto/*_auto_l1.json) ⋈ ответы моделей
 (results/experiment_*.parts/*.json) по ключу (task_id, model_id, response_hash), 1:1.
@@ -32,15 +32,15 @@ from harness.loaders import load_generation, load_tasks  # noqa: E402
 # Класс весов модели (open/proprietary) — в данных: generation/models.yaml, поле weights
 # (полноту каталога гейтит prism check). Читается в build_rows; хардкода классов нет.
 
-# Ожидаемая ФОРМА замороженного прогона 1.2.0 — независимые оракулы гейта (не данные).
-# Прибиты намеренно и НЕ выводятся из каталога/банка: банк уже вырос до 30 задач
-# (добавлена A10), а прогон заморожен на 29 — вывод из load_tasks() дал бы неверное.
-# Вывести их из результатов = сделать гейт тавтологией. Канарейка живёт в карточке
-# датасета (README) — там единый источник, она и едет с данными на контаминацию.
-EXPECT_MODELS = 31
-EXPECT_TASKS = 29
-EXPECT_SFT = 136
-EXPECT_ROWS = EXPECT_MODELS * EXPECT_TASKS  # 899 — полная матрица без пропусков
+# Ожидаемая ФОРМА прогона — независимые оракулы гейта (не данные). Прибиты намеренно:
+# вывод из каталога/банка сделал бы гейт тавтологией. Снимок протокола 1.2.0: 32 модели ×
+# 35 задач. Идентичность модели — по ИМЕНИ (model_name): после переезда части моделей на
+# другой канал их id раскололся (старый id в ранних партах, новый — в поздних), а имя
+# стабильно; по имени сводим к одному каноническому id из каталога. Канарейка — и в README.
+EXPECT_MODELS = 32
+EXPECT_TASKS = 35
+EXPECT_SFT = 201
+EXPECT_ROWS = EXPECT_MODELS * EXPECT_TASKS  # 1120 — полная матрица без пропусков
 
 # Копия FENCE_RE + extract_code из harness/orchestrate.py:94,127 — чтобы не тянуть
 # импортом весь orchestrate (execute/onec/runner). Логика идентична харнессу.
@@ -133,12 +133,8 @@ def build_rows(results: Path) -> tuple[list[dict], list[dict]]:
     tasks = {t.id: t for t in load_tasks()}
     gen = load_generation()
     prompts = gen.prompts  # категория → system-промпт
-    vendor, wclass = {}, {}
-    for e in gen.models.values():
-        vendor[e.id] = e.vendor
-        vendor[norm_model(e.id)] = e.vendor
-        wclass[e.id] = e.weights
-        wclass[norm_model(e.id)] = e.weights
+    # Идентичность модели — по ИМЕНИ: id мог расколоться после переезда каналов, имя стабильно.
+    byname = {e.name: e for e in gen.models.values()}
     ctx_spec = {}  # текст config_spec.yaml для B
     for t in tasks.values():
         f = t.dir / "config_spec.yaml"
@@ -151,7 +147,17 @@ def build_rows(results: Path) -> tuple[list[dict], list[dict]]:
         for shard in sorted(parts.glob("*.json")):
             d = json.loads(shard.read_text(encoding="utf-8"))
             task_id = d["task_id"]
-            mid = norm_model(d["model_id"])
+            mid = norm_model(
+                d["model_id"]
+            )  # id из партов — ключ джойна с auto (может быть «старым»)
+            entry = byname.get(d.get("model_name"))
+            gate(
+                entry is not None,
+                f"модель '{d.get('model_name')}' (id {mid}) не найдена в каталоге по имени",
+            )
+            canon = norm_model(
+                entry.id
+            )  # канонический id из каталога (сводит расколотые id по имени)
             task = tasks[task_id]
             cat = task.category
             system = prompts[cat]
@@ -161,8 +167,11 @@ def build_rows(results: Path) -> tuple[list[dict], list[dict]]:
                 if rec is None:
                     unmatched.append(key)
                     continue
-                cls = wclass.get(mid)
-                gate(cls in ("open", "proprietary"), f"нет класса весов (weights) у модели {mid}")
+                cls = entry.weights
+                gate(
+                    cls in ("open", "proprietary"),
+                    f"нет класса весов (weights) у модели {entry.name}",
+                )
                 completion = extract_code(run["response"])
                 sc = rec["scores"]
                 scores = {k: sc.get(k) for k in ("S", "M", "O", "P", "Q")}
@@ -170,7 +179,7 @@ def build_rows(results: Path) -> tuple[list[dict], list[dict]]:
                 h = rec["header"]
                 spec = ctx_spec.get(task_id) if cat == "B" else None
                 row = {
-                    "id": f"{task_id}__{slug(mid)}",
+                    "id": f"{task_id}__{slug(canon)}",
                     "task_id": task_id,
                     "task_category": cat,
                     "task_name": d.get("task_name") or task.name,
@@ -182,9 +191,9 @@ def build_rows(results: Path) -> tuple[list[dict], list[dict]]:
                     "response": run["response"],
                     "completion": completion,
                     "response_hash": run["response_hash"],
-                    "model_id": mid,
+                    "model_id": canon,
                     "model_name": d.get("model_name"),
-                    "model_vendor": vendor.get(mid),
+                    "model_vendor": entry.vendor,
                     "model_class": cls,
                     "temperature": run.get("temperature"),
                     "seed": run.get("seed"),
@@ -224,7 +233,7 @@ def build_rows(results: Path) -> tuple[list[dict], list[dict]]:
                             "task_category": cat,
                             "prompt": prompt,
                             "completion": completion,
-                            "model_id": mid,
+                            "model_id": canon,
                             "model_name": row["model_name"],
                             "model_class": cls,
                             "scores": scores,
