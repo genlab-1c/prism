@@ -16,7 +16,7 @@
 <p align="center">
   <a href="https://github.com/genlab-1c/prism/actions/workflows/ci.yml"><img src="https://github.com/genlab-1c/prism/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/лицензия-MIT-green" alt="лицензия MIT"></a>
-  <img src="https://img.shields.io/badge/версия-1.7.0-success" alt="версия 1.7.0">
+  <img src="https://img.shields.io/badge/версия-1.8.0-success" alt="версия 1.8.0">
   <a href="https://prism.genlab-1c.ru"><img src="https://img.shields.io/badge/сайт-prism.genlab--1c.ru-22d3ee" alt="сайт"></a>
   <a href="https://huggingface.co/datasets/genlab-1c/prism-smop"><img src="https://img.shields.io/badge/датасет-prism--smop-ff9d00?logo=huggingface&logoColor=white" alt="датасет PRISM-SMOP на HuggingFace"></a>
 </p>
