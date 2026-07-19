@@ -3,6 +3,8 @@
 #
 # Схема записи:
 #   vendor — кто сделал модель (факт о модели);
+#   weights — open (веса опубликованы) | proprietary (закрытая модель); факт о модели,
+#     тянется в датасет PRISM-SMOP как model_class;
 #   access.adapter — каким адаптером харнесса ходим (канал доступа, harness/generate/adapters/):
 #     openrouter    — шлюз OpenRouter;
 #     openai_compat — любой OpenAI-совместимый API (Ollama, vLLM, LM Studio; нужен endpoint);
@@ -19,6 +21,7 @@ models:
     id: "aliceai-llm/latest"        # Yandex Cloud Foundation Models → gpt://<folder>/aliceai-llm/latest
     name: "Alice AI LLM"
     vendor: yandex
+    weights: proprietary
     access:
       adapter: yandexgpt
     capabilities:
@@ -30,6 +33,7 @@ models:
     id: "google/gemini-2.5-flash-lite"   # через OpenRouter, дёшево, с tools
     name: "Gemini 2.5 Flash Lite"
     vendor: google
+    weights: proprietary
     access:
       adapter: openrouter
     capabilities:
@@ -41,6 +45,7 @@ models:
     id: "deepseek/deepseek-v4-flash"     # через OpenRouter, дёшево, с tools
     name: "DeepSeek V4-Flash"
     vendor: deepseek
+    weights: open
     access:
       adapter: openrouter
     capabilities:
@@ -52,6 +57,7 @@ models:
     id: "qwen/qwen3-235b-a22b-2507"      # через OpenRouter, большой MoE дёшево, с tools
     name: "Qwen3-235B-A22B"
     vendor: alibaba
+    weights: open
     access:
       adapter: openrouter
     capabilities:
@@ -63,6 +69,7 @@ models:
     id: "z-ai/glm-4.7-flash"             # через OpenRouter, дёшево, с tools
     name: "GLM-4.7 Flash"
     vendor: zhipu
+    weights: open
     access:
       adapter: openrouter
     capabilities:
@@ -74,6 +81,7 @@ models:
     id: "claude-sonnet-4.6"              # через AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Claude Sonnet 4.6"
     vendor: anthropic
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -86,6 +94,7 @@ models:
     id: "anthropic/claude-opus-4.8"      # через OpenRouter, Anthropic, с tools
     name: "Claude Opus 4.8"
     vendor: anthropic
+    weights: proprietary
     access:
       adapter: openrouter
     capabilities:
@@ -97,6 +106,7 @@ models:
     id: "yandexgpt-5-lite/latest"        # Yandex Cloud Responses API
     name: "YandexGPT 5 Lite"
     vendor: yandex
+    weights: proprietary
     access:
       adapter: yandex_responses
     capabilities:
@@ -108,6 +118,7 @@ models:
     id: "yandexgpt-5.1/latest"           # Yandex Cloud Responses API
     name: "YandexGPT 5.1 Pro"
     vendor: yandex
+    weights: proprietary
     access:
       adapter: yandex_responses
     capabilities:
@@ -119,6 +130,7 @@ models:
     id: "qwen3.6-35b-a3b/latest"         # Yandex Cloud Responses API
     name: "Qwen3.6-35B-A3B"
     vendor: alibaba
+    weights: open
     access:
       adapter: yandex_responses
       reasoning_effort: "none"           # гасим reasoning: быстрее и дешевле, на качество кода влияет слабо
@@ -131,6 +143,7 @@ models:
     id: "yandexgpt-5-pro/latest"         # Yandex Cloud Responses API
     name: "YandexGPT 5 Pro"
     vendor: yandex
+    weights: proprietary
     access:
       adapter: yandex_responses
     capabilities:
@@ -142,6 +155,7 @@ models:
     id: "aliceai-llm-flash/latest"       # Yandex Cloud Responses API
     name: "Alice AI LLM Flash"
     vendor: yandex
+    weights: proprietary
     access:
       adapter: yandex_responses
     capabilities:
@@ -153,6 +167,7 @@ models:
     id: "GigaChat-2-Max"
     name: "GigaChat 2 Max"
     vendor: sber
+    weights: proprietary
     access:
       adapter: gigachat
     capabilities:
@@ -164,6 +179,7 @@ models:
     id: "GigaChat-2-Pro"
     name: "GigaChat 2 Pro"
     vendor: sber
+    weights: proprietary
     access:
       adapter: gigachat
     capabilities:
@@ -175,6 +191,7 @@ models:
     id: "GigaChat-2"
     name: "GigaChat 2 Lite"
     vendor: sber
+    weights: proprietary
     access:
       adapter: gigachat
     capabilities:
@@ -186,6 +203,7 @@ models:
     id: "gpt-5.5"                        # канал — AITUNNEL (openai_compat)
     name: "GPT-5.5"
     vendor: openai
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -198,6 +216,7 @@ models:
     id: "gpt-5-mini"                     # канал — AITUNNEL (openai_compat), дешёвый GPT-5
     name: "GPT-5 Mini"
     vendor: openai
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -210,6 +229,7 @@ models:
     id: "gpt-oss-120b"                   # канал — AITUNNEL (openai_compat), открытая 120B OpenAI
     name: "GPT-OSS 120B"
     vendor: openai
+    weights: open
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -222,6 +242,7 @@ models:
     id: "gemini-3.1-pro-preview"         # канал — AITUNNEL (openai_compat), флагман Google
     name: "Gemini 3.1 Pro"
     vendor: google
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -234,6 +255,7 @@ models:
     id: "gemini-3.5-flash"               # канал — AITUNNEL (openai_compat), новейший flash Google
     name: "Gemini 3.5 Flash"
     vendor: google
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -246,6 +268,7 @@ models:
     id: "mimo-v2.5"                      # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "MiMo-V2.5"
     vendor: xiaomi
+    weights: open
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -258,6 +281,7 @@ models:
     id: "minimax-m3"                     # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "MiniMax M3"
     vendor: minimax
+    weights: open
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -270,6 +294,7 @@ models:
     id: "qwen3.7-plus"                   # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Qwen3.7 Plus"
     vendor: alibaba
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -282,6 +307,7 @@ models:
     id: "grok-build-0.1"                 # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Grok Build 0.1"
     vendor: xai
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -294,6 +320,7 @@ models:
     id: "grok-4.3"                       # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Grok 4.3"
     vendor: xai
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -306,6 +333,7 @@ models:
     id: "claude-sonnet-5"                # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Claude Sonnet 5"
     vendor: anthropic
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -318,6 +346,7 @@ models:
     id: "gpt-5.6-terra"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "GPT-5.6 Terra"
     vendor: openai
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -330,6 +359,7 @@ models:
     id: "gpt-5.6-sol"                    # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "GPT-5.6 Sol"
     vendor: openai
+    weights: proprietary
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -342,6 +372,7 @@ models:
     id: "mimo-v2.5-pro"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "MiMo-V2.5 Pro"
     vendor: xiaomi
+    weights: open
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -354,6 +385,7 @@ models:
     id: "glm-5.2"                        # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "GLM-5.2"
     vendor: zhipu
+    weights: open
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -366,6 +398,7 @@ models:
     id: "kimi-k2.7-code"                 # канал — AITUNNEL (openai_compat); кодовая версия Kimi K2.7
     name: "Kimi K2.7 Code"
     vendor: moonshot
+    weights: open
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"

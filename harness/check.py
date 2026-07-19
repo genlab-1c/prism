@@ -117,6 +117,21 @@ def _check_contracts() -> Section:
     else:
         items.append(("fail", "генерация: params не покрывают каталог моделей"))
 
+    # генерация: у каждой модели каталога указан класс весов (open/proprietary) —
+    # он тянется в датасет PRISM-SMOP как model_class; хардкода классов в коде нет
+    bad_weights = sorted(
+        k for k, m in gen.models.items() if m.weights not in ("open", "proprietary")
+    )
+    if bad_weights:
+        items.append(
+            (
+                "fail",
+                f"генерация: не проставлен weights (open/proprietary) у моделей — {bad_weights}",
+            )
+        )
+    else:
+        items.append(("ok", f"генерация: класс весов проставлен у всех {len(gen.models)} моделей"))
+
     # цены: у каждой модели каталога есть тариф, и нет тарифов-сирот
     # (гейт против рассинхрона pricing.yaml ↔ models.yaml — цена не влияет на баллы, но врёт в витрине)
     try:

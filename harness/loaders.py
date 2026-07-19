@@ -329,6 +329,7 @@ class ModelEntry(BaseModel):
     id: str
     name: str
     vendor: str
+    weights: str | None = None  # open | proprietary; полноту каталога гейтит prism check
     access: ModelAccess
     capabilities: dict
 
