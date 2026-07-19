@@ -59,6 +59,20 @@ models:
       supports_seed: false
       supports_tools: true
 
+  deepseek_pro:
+    id: "deepseek-v4-pro"     # через AITUNNEL (openai_compat); id по GET /v1/models
+    name: "DeepSeek V4 Pro"
+    vendor: deepseek
+    weights: open
+    released: "2026-04-24"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # function calling → агентная B
+
   qwen:
     id: "qwen3-235b-a22b-2507"   # через AITUNNEL (openai_compat); id по GET /v1/models
     name: "Qwen3-235B-A22B"
