@@ -132,6 +132,13 @@ def _check_contracts() -> Section:
     else:
         items.append(("ok", f"генерация: класс весов проставлен у всех {len(gen.models)} моделей"))
 
+    # генерация: у каждой модели указана дата релиза (провенанс, тянется в датасет)
+    no_release = sorted(k for k, m in gen.models.items() if not m.released)
+    if no_release:
+        items.append(("fail", f"генерация: не указан released у моделей — {no_release}"))
+    else:
+        items.append(("ok", f"генерация: дата релиза проставлена у всех {len(gen.models)} моделей"))
+
     # цены: у каждой модели каталога есть тариф, и нет тарифов-сирот
     # (гейт против рассинхрона pricing.yaml ↔ models.yaml — цена не влияет на баллы, но врёт в витрине)
     try:

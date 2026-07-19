@@ -5,6 +5,7 @@
 #   vendor — кто сделал модель (факт о модели);
 #   weights — open (веса опубликованы) | proprietary (закрытая модель); факт о модели,
 #     тянется в датасет PRISM-SMOP как model_class;
+#   released — дата релиза модели (YYYY-MM-DD; YYYY-MM, если известен только месяц);
 #   access.adapter — каким адаптером харнесса ходим (канал доступа, harness/generate/adapters/):
 #     openrouter    — шлюз OpenRouter;
 #     openai_compat — любой OpenAI-совместимый API (Ollama, vLLM, LM Studio; нужен endpoint);
@@ -22,6 +23,7 @@ models:
     name: "Alice AI LLM"
     vendor: yandex
     weights: proprietary
+    released: "2026-03-03"
     access:
       adapter: yandexgpt
     capabilities:
@@ -34,6 +36,7 @@ models:
     name: "Gemini 2.5 Flash Lite"
     vendor: google
     weights: proprietary
+    released: "2025-07-22"
     access:
       adapter: openrouter
     capabilities:
@@ -46,6 +49,7 @@ models:
     name: "DeepSeek V4-Flash"
     vendor: deepseek
     weights: open
+    released: "2026-04-24"
     access:
       adapter: openrouter
     capabilities:
@@ -58,6 +62,7 @@ models:
     name: "Qwen3-235B-A22B"
     vendor: alibaba
     weights: open
+    released: "2025-07-21"
     access:
       adapter: openrouter
     capabilities:
@@ -70,6 +75,7 @@ models:
     name: "GLM-4.7 Flash"
     vendor: zhipu
     weights: open
+    released: "2026-01-19"
     access:
       adapter: openrouter
     capabilities:
@@ -82,6 +88,7 @@ models:
     name: "Claude Sonnet 4.6"
     vendor: anthropic
     weights: proprietary
+    released: "2026-02-17"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -95,6 +102,7 @@ models:
     name: "Claude Opus 4.8"
     vendor: anthropic
     weights: proprietary
+    released: "2026-05-28"
     access:
       adapter: openrouter
     capabilities:
@@ -107,6 +115,7 @@ models:
     name: "YandexGPT 5 Lite"
     vendor: yandex
     weights: proprietary
+    released: "2025-03-31"
     access:
       adapter: yandex_responses
     capabilities:
@@ -119,6 +128,7 @@ models:
     name: "YandexGPT 5.1 Pro"
     vendor: yandex
     weights: proprietary
+    released: "2025-08-28"
     access:
       adapter: yandex_responses
     capabilities:
@@ -131,6 +141,7 @@ models:
     name: "Qwen3.6-35B-A3B"
     vendor: alibaba
     weights: open
+    released: "2026-04"
     access:
       adapter: yandex_responses
       reasoning_effort: "none"           # гасим reasoning: быстрее и дешевле, на качество кода влияет слабо
@@ -144,6 +155,7 @@ models:
     name: "YandexGPT 5 Pro"
     vendor: yandex
     weights: proprietary
+    released: "2025-02-25"
     access:
       adapter: yandex_responses
     capabilities:
@@ -156,6 +168,7 @@ models:
     name: "Alice AI LLM Flash"
     vendor: yandex
     weights: proprietary
+    released: "2026-03-03"
     access:
       adapter: yandex_responses
     capabilities:
@@ -168,6 +181,7 @@ models:
     name: "GigaChat 2 Max"
     vendor: sber
     weights: proprietary
+    released: "2025-03-13"
     access:
       adapter: gigachat
     capabilities:
@@ -180,6 +194,7 @@ models:
     name: "GigaChat 2 Pro"
     vendor: sber
     weights: proprietary
+    released: "2025-03-13"
     access:
       adapter: gigachat
     capabilities:
@@ -192,6 +207,7 @@ models:
     name: "GigaChat 2 Lite"
     vendor: sber
     weights: proprietary
+    released: "2025-03-13"
     access:
       adapter: gigachat
     capabilities:
@@ -204,6 +220,7 @@ models:
     name: "GPT-5.5"
     vendor: openai
     weights: proprietary
+    released: "2026-04-23"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -217,6 +234,7 @@ models:
     name: "GPT-5 Mini"
     vendor: openai
     weights: proprietary
+    released: "2025-08-07"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -230,6 +248,7 @@ models:
     name: "GPT-OSS 120B"
     vendor: openai
     weights: open
+    released: "2025-08-05"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -243,6 +262,7 @@ models:
     name: "Gemini 3.1 Pro"
     vendor: google
     weights: proprietary
+    released: "2026-02-19"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -256,6 +276,7 @@ models:
     name: "Gemini 3.5 Flash"
     vendor: google
     weights: proprietary
+    released: "2026-05-19"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -269,6 +290,7 @@ models:
     name: "MiMo-V2.5"
     vendor: xiaomi
     weights: open
+    released: "2026-04"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -282,6 +304,7 @@ models:
     name: "MiniMax M3"
     vendor: minimax
     weights: open
+    released: "2026-06-01"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -295,6 +318,7 @@ models:
     name: "Qwen3.7 Plus"
     vendor: alibaba
     weights: proprietary
+    released: "2026-06-01"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -308,6 +332,7 @@ models:
     name: "Grok Build 0.1"
     vendor: xai
     weights: proprietary
+    released: "2026-06"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -321,6 +346,7 @@ models:
     name: "Grok 4.3"
     vendor: xai
     weights: proprietary
+    released: "2026-04-17"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -334,6 +360,7 @@ models:
     name: "Claude Sonnet 5"
     vendor: anthropic
     weights: proprietary
+    released: "2026-06-30"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -347,6 +374,7 @@ models:
     name: "GPT-5.6 Terra"
     vendor: openai
     weights: proprietary
+    released: "2026-07-09"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -360,6 +388,7 @@ models:
     name: "GPT-5.6 Sol"
     vendor: openai
     weights: proprietary
+    released: "2026-07-09"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -373,6 +402,7 @@ models:
     name: "MiMo-V2.5 Pro"
     vendor: xiaomi
     weights: open
+    released: "2026-04-22"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -386,6 +416,7 @@ models:
     name: "GLM-5.2"
     vendor: zhipu
     weights: open
+    released: "2026-06-13"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"
@@ -399,6 +430,7 @@ models:
     name: "Kimi K2.7 Code"
     vendor: moonshot
     weights: open
+    released: "2026-06-12"
     access:
       adapter: openai_compat
       endpoint: "https://api.aitunnel.ru/v1"

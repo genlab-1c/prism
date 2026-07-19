@@ -330,6 +330,7 @@ class ModelEntry(BaseModel):
     name: str
     vendor: str
     weights: str | None = None  # open | proprietary; полноту каталога гейтит prism check
+    released: str | None = None  # дата релиза модели, YYYY-MM-DD (или YYYY-MM, если известен месяц)
     access: ModelAccess
     capabilities: dict
 
