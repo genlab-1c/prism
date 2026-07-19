@@ -37,10 +37,14 @@ from harness.loaders import (
 )
 from harness.report import catalog
 from harness.score.meaning import score_m
-from harness.score.optimization import score_o
+from harness.score.optimization_exec import score_o_exec
 from harness.score.quality import SCORER_TO_AXIS
 from harness.score.syntax import score_s
 from harness.ui import progress_bar
+
+# Якорная проверка оси O (кат. A): baseline мерится лишь на «медленный», точное число не нужно —
+# короткий лимит на размер, иначе патологический O(n²)-якорь ждёт полные 60с на большом входе.
+ANCHOR_O_TIMEOUT_S = 30
 
 # Статусы пунктов: ok — норма; warn — деградация (не ошибка); fail — нарушение; skip — не проверяли
 Item = tuple[str, str]  # (status, text)
@@ -229,21 +233,64 @@ def _check_canonicals(only: set[str] | None = None, category: str | None = None)
     def _check_a(t) -> Item:
         code = t.canonical.read_text(encoding="utf-8")
         # M — ЖЁСТКИЙ гейт: эталон обязан пройти свои тесты на 100%
-        m = score_m(code, t.tests, proto, work / t.id, name=f"canon_{t.id}", runner=runner)
-        gate = m.executed and m.passed == m.total and m.score == 10
-        m_txt = (
-            f"M=10 ({m.passed}/{m.total})"
-            if gate
-            else f"M={m.score} ({m.passed}/{m.total}) — {m.errors[:1]}"
+        m = score_m(code, t.tests, proto, work / f"{t.id}_cm", name=f"cm_{t.id}", runner=runner)
+        m_ok = m.executed and m.passed == m.total and m.score == 10
+        # S — статикой, для показа (эталон ожидаем чистым по синтаксису)
+        s_txt = "S:LS n/a" if diags is None else f"S={score_s(diags.get(t.id, []), proto, code)[0]}"
+
+        # Ось O — ДВА ЯКОРЯ. Эталон должен мериться оптимальным (O≥8), а нарочно медленный,
+        # но КОРРЕКТНЫЙ baseline — низким (≤4). Так задача машинно доказывает, что метрика
+        # видит её сложность (нет слепой зоны cost_model: тормоз baseline сидит в
+        # инструментированной встроенной или в явном цикле, а не в невидимой команде).
+        # Только для A-задач с perf.yaml.
+        if t.perf is None:
+            return (
+                "ok" if m_ok else "fail",
+                f"{t.id}: эталон M={m.score} ({m.passed}/{m.total}) · {s_txt} · O: без perf.yaml",
+            )
+        if t.perf_baseline is None:
+            return (
+                "fail",
+                f"{t.id}: есть perf.yaml, но нет perf_baseline.bsl — ось O не доказана "
+                "(нужен корректный, но медленный якорь; см. CONTRIBUTING)",
+            )
+
+        pats = t.tests.entry_point_patterns if t.tests else []
+        oc = score_o_exec(
+            code, t.perf, pats, proto, work / f"{t.id}_oc", name=f"oc_{t.id}", runner=runner
         )
-        # S/O — пока только показываем, не гейтим (эталон ожидаем образцовым)
-        if diags is None:
-            so_txt = "S/O: BSL LS недоступен"
+        bcode = t.perf_baseline.read_text(encoding="utf-8")
+        bm = score_m(bcode, t.tests, proto, work / f"{t.id}_bm", name=f"bm_{t.id}", runner=runner)
+        ob = score_o_exec(
+            bcode,
+            t.perf,
+            pats,
+            proto,
+            work / f"{t.id}_ob",
+            name=f"ob_{t.id}",
+            runner=runner,
+            timeout=ANCHOR_O_TIMEOUT_S,
+        )
+
+        canon_ok = m_ok and oc.score is not None and oc.score >= 8
+        base_ok = bm.executed and bm.passed == bm.total and bm.score == 10
+        base_slow = ob.score is not None and ob.score <= 4
+        gate = canon_ok and base_ok and base_slow
+
+        txt = f"{t.id}: эталон M={m.score} O={oc.score} · baseline M={bm.score} O={ob.score} · {s_txt}"
+        if gate:
+            reason = ""
+        elif not m_ok:
+            reason = f" — эталон не проходит тесты (M={m.score})"
+        elif oc.score is None or oc.score < 8:
+            reason = f" — эталон не мерится оптимальным (O={oc.score}): проверьте canonical/p_opt"
+        elif not base_ok:
+            reason = f" — baseline некорректен (M={bm.score}): якорь обязан быть верным решением"
+        elif ob.score is None:
+            reason = f" — baseline не измерен ({ob.note})"
         else:
-            s, _ = score_s(diags.get(t.id, []), proto, code)
-            o, _ = score_o(diags.get(t.id, []), proto)
-            so_txt = f"S={s} · O={o}"
-        return ("ok" if gate else "fail", f"{t.id}: эталон {m_txt} · {so_txt}")
+            reason = " — baseline не пойман (O>4): СЛЕПАЯ ЗОНА — сложность в неинструментированной встроенной или perf-вход не худший"
+        return ("ok" if gate else "fail", txt + reason)
 
     if tasks_a:
         with ThreadPoolExecutor(max_workers=workers) as pool:

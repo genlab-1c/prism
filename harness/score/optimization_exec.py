@@ -69,8 +69,13 @@ def score_o_exec(
     work_dir: Path,
     name: str = "candidate",
     runner: Runner | None = None,
+    timeout: int = O_EXEC_TIMEOUT_S,
 ) -> OptExecResult:
-    """Прогнать кандидата на лесенке perf.sizes, оценить класс роста против p_opt."""
+    """Прогнать кандидата на лесенке perf.sizes, оценить класс роста против p_opt.
+
+    timeout — лимит на размер (сек). Меньший лимит уместен для якорной проверки в check:
+    там достаточно факта «медленный» (таймаут → балл «слишком медленно»), точное число не нужно.
+    """
     runner = runner or get_runner()
     if not runner.available():
         return OptExecResult(score=None, note=runner.unavailable_reason())
@@ -95,7 +100,7 @@ def score_o_exec(
         stat = work_dir / f"{name}.operf.json"
         stat.unlink(missing_ok=True)
         script.write_text(code + "\n" + body, encoding="utf-8")
-        res = runner.run_os_codestat(script, stat, timeout=O_EXEC_TIMEOUT_S)
+        res = runner.run_os_codestat(script, stat, timeout=timeout)
         if res.timed_out:
             if ops:  # на меньших размерах считалось, а тут завис → слишком медленно
                 return OptExecResult(

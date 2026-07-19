@@ -208,6 +208,7 @@ class Task(BaseModel):
     tests: TaskTests | None = None  # A: скрытые кейсы (tests.yaml)
     perf: TaskPerf | None = None  # A: данные исполнительной оценки O (perf.yaml)
     canonical: Path | None = None  # эталон, если есть
+    perf_baseline: Path | None = None  # A: медленный якорь оси O (perf_baseline.bsl), если есть
     m_testing: str | None = None  # пометка вроде pending_harness
     tags: dict[str, list[str]] = Field(default_factory=dict)  # измерение → теги (срезы анализа)
 
@@ -236,6 +237,7 @@ def load_tasks(root: Path = PRISM, category: str | None = None) -> list[Task]:
         tests_path = task_dir / "tests.yaml"
         perf_path = task_dir / "perf.yaml"
         canonical_path = task_dir / "canonical.bsl"
+        baseline_path = task_dir / "perf_baseline.bsl"
         tasks.append(
             Task(
                 **doc,
@@ -243,6 +245,7 @@ def load_tasks(root: Path = PRISM, category: str | None = None) -> list[Task]:
                 tests=_read(tests_path) if tests_path.exists() else None,
                 perf=_read(perf_path) if perf_path.exists() else None,
                 canonical=canonical_path if canonical_path.exists() else None,
+                perf_baseline=baseline_path if baseline_path.exists() else None,
             )
         )
     return tasks
