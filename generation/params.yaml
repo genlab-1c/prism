@@ -39,3 +39,4 @@ defaults:
     mimo25_pro:  { temperature: 0.1, runs: 1 }      # MiMo-V2.5 Pro через AITUNNEL (reasoning)
     glm52:       { temperature: 0.1, runs: 1 }      # GLM-5.2 через AITUNNEL (reasoning, флагман Zhipu)
     kimi27:      { temperature: 0.1, runs: 1 }      # Kimi K2.7 Code через AITUNNEL (Moonshot)
+    kimi3:       { temperature: 0.1, runs: 1 }      # Kimi K3 (флагман) через AITUNNEL (Moonshot)

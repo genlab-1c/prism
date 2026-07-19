@@ -32,52 +32,56 @@ models:
       supports_tools: true          # Alice умеет function calling → агентный сбор метаданных в кат. B
 
   gemini:
-    id: "google/gemini-2.5-flash-lite"   # через OpenRouter, дёшево, с tools
+    id: "gemini-2.5-flash-lite"   # через AITUNNEL (openai_compat); id по GET /v1/models
     name: "Gemini 2.5 Flash Lite"
     vendor: google
     weights: proprietary
     released: "2025-07-22"
     access:
-      adapter: openrouter
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
     capabilities:
       context_window: 1000000
       supports_seed: false
       supports_tools: true
 
   deepseek:
-    id: "deepseek/deepseek-v4-flash"     # через OpenRouter, дёшево, с tools
+    id: "deepseek-v4-flash"   # через AITUNNEL (openai_compat); id по GET /v1/models
     name: "DeepSeek V4-Flash"
     vendor: deepseek
     weights: open
     released: "2026-04-24"
     access:
-      adapter: openrouter
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
     capabilities:
       context_window: 163840
       supports_seed: false
       supports_tools: true
 
   qwen:
-    id: "qwen/qwen3-235b-a22b-2507"      # через OpenRouter, большой MoE дёшево, с tools
+    id: "qwen3-235b-a22b-2507"   # через AITUNNEL (openai_compat); id по GET /v1/models
     name: "Qwen3-235B-A22B"
     vendor: alibaba
     weights: open
     released: "2025-07-21"
     access:
-      adapter: openrouter
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
     capabilities:
       context_window: 262144
       supports_seed: false
       supports_tools: true
 
   glm:
-    id: "z-ai/glm-4.7-flash"             # через OpenRouter, дёшево, с tools
+    id: "glm-4.7-flash"   # через AITUNNEL (openai_compat); id по GET /v1/models
     name: "GLM-4.7 Flash"
     vendor: zhipu
     weights: open
     released: "2026-01-19"
     access:
-      adapter: openrouter
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
     capabilities:
       context_window: 200000
       supports_seed: false
@@ -98,13 +102,14 @@ models:
       supports_tools: true
 
   opus:
-    id: "anthropic/claude-opus-4.8"      # через OpenRouter, Anthropic, с tools
+    id: "claude-opus-4.8"   # через AITUNNEL (openai_compat); id по GET /v1/models
     name: "Claude Opus 4.8"
     vendor: anthropic
     weights: proprietary
     released: "2026-05-28"
     access:
-      adapter: openrouter
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
     capabilities:
       context_window: 1000000
       supports_seed: false
@@ -436,6 +441,20 @@ models:
       endpoint: "https://api.aitunnel.ru/v1"
     capabilities:
       context_window: 262144
+      supports_seed: false
+      supports_tools: true               # function calling → агентная B
+
+  kimi3:
+    id: "kimi-k3"                        # канал — AITUNNEL (openai_compat); флагман Moonshot Kimi K3
+    name: "Kimi K3"
+    vendor: moonshot
+    weights: open
+    released: "2026-07-16"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
       supports_seed: false
       supports_tools: true               # function calling → агентная B
 
