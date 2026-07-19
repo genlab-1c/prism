@@ -40119,6 +40119,1263 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "115a2405d7b1d2e3d4ec848a8edd153fa529e0aa25242a9bc22e4883b7643546",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЭлементыНоменклатурыГруппы",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": -0.111,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                7,
+                6
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ab2df1c7f0a5b9c56e26ced141e8d2c38a1f67bd72a5881bd2594cfd28c0b397",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 10.0,
+            "Q": 6.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 4,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(3)}: Ошибка при вызове метода контекста (Остатки): Недопустимое значение параметра (параметр номер '3'); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(3)}: Ошибка при вызове метода контекста (Остатки): Недопустимое значение параметра (параметр номер '3'); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(3)}: Ошибка при вызове метода контекста (Остатки): Недопустимое значение параметра (параметр номер '3'); тест4 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.К",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДостаточноТовара",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 4,
+              "total": 4,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9c0e6e40eab5bd71998ed82f023fe35d351e87febf7dadfd81ff120fbdf822f8",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПроверитьУникальностьИНН",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a95fc2c181c2b05bca7624d83c337e29222ac17a06dab92424373d3005c51318",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПеревестиВБазовуюЕдиницу",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ca5aeb9dd59b7ce291c4c73eba98f6fee08b05d53117d725bbf5943b75353267",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(20)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объекта данных может быть выбрано только во временную таблицу; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(20)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объекта данных может быть выбрано только во временную таблицу; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(20)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объекта данных может быть ",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СвободныйОстаток",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(20)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9abfeafc9d9cc16cf79ddd610ad676111b46bef5387362fc31e8a6f0300f98c9",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(21)}: Ошибка при вызове метода контекста (Выполнить): {(3, 25)}: Поле не найдено \"ПродажиОбороты.Сумма\"\nСУММА(ПродажиОбороты.<<?>>Сумма) КАК СуммаОборот; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(21)}: Ошибка при вызове метода контекста (Выполнить): {(3, 25)}: Поле не найдено \"ПродажиОбороты.Сумма\"\nСУММА(ПродажиОбороты.<<?>>Сумма) КАК СуммаОборот; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(21)}: Ошибка при вызове метода контекст",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификацияНоменклатуры",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(21)}: Ошибка при вызове метода контекста (Выполнить): {(3, 25)}: Пол",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B16",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "49c1bee8d34435acaf6f8362925f7ece2cd944cf0a9b7ba20cf0d202a98cd6dc",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 10.0,
+            "Q": 9.18
+          },
+          "bands": {
+            "M": 6,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест2 FAIL (ожидался Д-200, получено );",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДействующийДоговор",
+              "infra_detail": "",
+              "band": 6
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B17",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7e0c39bdb9fb7c3d550f3972d9eed883ffcd9c449d1efaab612ec176883e0e06",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(7, 14)}: Поле не найдено \"СуммаОстаток\"\nИ <<?>>СуммаОстаток > 0; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(7, 14)}: Поле не найдено \"СуммаОстаток\"\nИ <<?>>СуммаОстаток > 0; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(7, 14)}: Поле не найдено \"СуммаОстаток\"\nИ <<?>>Су",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СуммарныйДолгКонтрагента",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(7, 14)}: Пол",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B18",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b35769236186e7949fb25b38dc81912229c8d4e75fcc0f19d3753b69565af92f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ВыделитьНДС",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "34fe549318f91bfc769ce8e3a5090e08bec4c2dde768c3c3a6d24bc273c01c61",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(26)}: Ошибка при вызове метода контекста (Выполнить): {(9, 81)}: Неверные параметры \"РегистрБухгалтерии.Хозрасчетный.Обороты, 2\"\nРегистрБухгалтерии.Хозрасчетный.Обороты(&НачПериода, &КонПериода, СчетДт <<?>>В ИЕРАРХИИ (&Счет)) КАК ХозрасчетныйОбороты; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(26)}: Ошибка при вызове метода контекста (Выполнить): {(9, 81)}: Неверные параметры \"РегистрБухгалтерии.Хозрасчетный.Обороты, 2\"\nРегистрБухгалтери",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьСальдоСчета",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2036d281c32e30c3534f7293953ad68c66fdfd1f530fe0284efdc122b9c75d9e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": -0.096,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                8,
+                7
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b677f31ca9957be0e296d2a8d76097c6803aac502f6f4da692f4cd1c02be9c56",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 6,
+            "P": 10.0,
+            "Q": 9.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery",
+                "VirtualTableCallWithoutParameters"
+              ],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "29f410dc9d0d3d985f3413034c82b05bf116e1d2fe9d2aedcc97ef4a324c8c55",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦены",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a3d5fed5da7cb2c58aaf05c9784defd84f18d291d2dd33d51632bd2b851c86ed",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 3.3,
+            "Q": 4.43
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(39)}: Ошибка при вызове метода контекста (Выполнить): {(10, 9)}: Неверные параметры \"РегистрНакопления.ПартииТоваровНаСкладах.Остатки, 0\"\n<<?>>И Номенклатура В (&СписокНоменклатур)) КАК ПартииТоваровНаСкладахОстатки; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(39)}: Ошибка при вызове метода контекста (Выполнить): {(10, 9)}: Неверные параметры \"РегистрНакопления.ПартииТоваровНаСкладах.Остатки, 0\"\n<<?>>И Номенклатура В (&СписокНоменклатур))",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыFIFO",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(39)}: Ошибка при вызове метода контекста (Выполнить): {(10, 9)}: Нев",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2ff9c284d73b6dfe5570094468b4891a74cd036eb8013b73d9c6de19d12305ff",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСреднююСебестоимость",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2eb502bf3a8cbf29896d6ee1973172e407b3b7e415dd270f31f989da7ab01e64",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 10.0,
+            "Q": 9.18
+          },
+          "bands": {
+            "M": 6,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест3 FAIL (исключение без имени валюты: {ОбщийМодуль.КодКандидата.Модуль(20)}: Деление на 0);",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "band": 6
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9911670339e6da84da146ea1389680330ddeeb5e2592813b04d4de5afe420363",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродажЗаПериод",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c20168625a043395268c611b7194cbca28de67f184cc31cec945ace71bb0d5e6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b47062fafb80d352bc1e604cc3321d1fd7ce6e7f68add729f4be39fd488f69ae",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 2,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(10, 9)}: Поле не найдено \"Количество\"\n<<?>>Количество КАК НачальныйОстаток; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(10, 9)}: Поле не найдено \"Количество\"\n<<?>>Количество КАК НачальныйОстаток;",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДвиженияПоНоменклатуре",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(10, 9)}: Пол",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 2,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0963c0d965a6227c66ae4d92af858194d24780f5b97896c5b6995ddd584f4b56",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СводТоваров",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
     }
   ]
 }

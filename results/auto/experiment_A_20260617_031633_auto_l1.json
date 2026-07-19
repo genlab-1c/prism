@@ -27274,6 +27274,872 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7f49e7e0b31742ad87f69a80f662ffb46c1de679e278497f1683e6f0c4130c47",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (СортироватьПоЗначению)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьМассивы",
+              "note": "не исполнился на размере 400: {Модуль /sandbox/cand.operf.os / Error in line: 66 / Method not found (СортироватьПоЗначению)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a5b132ed9cb7c9fff50efd81923dad3fcd435d8da21424a1721fd20dca57b2d1",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 12,
+              "entry_point": "РабочиеДни",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 32,23 / Symbol not found ДобавитьКДате}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РабочиеДни",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 89,23 / Symbol not found ДобавитьКДате}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a2c0d898ea56f34ea74f9dff269282475c9261c9eaff0c383616d33788b7a57e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9b78b2b704d24d68331f7f3ee9d29613b1655cd9252907b392499e8b7a8c1dc3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6f146d488a1bfc20753a8c09055faf5c26f9daabba516e67dd9fb3b1aa1d4b2a",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 9,
+              "entry_point": "ОбратныйПорядокСлов",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 3 / Method not found (Обратить)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбратныйПорядокСлов",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 60 / Method not found (Обратить)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4049e389605423a77e00d6e4cec84a8c75c5fc37c77e2f9e241d818ac86a470c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.1,
+              "p_opt": 0.0,
+              "ops": [
+                75,
+                81,
+                87,
+                93
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5b5941e1446f74212c6352baf35b83171d23d6ba29df6c96e94b40bd2887ecb0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2039,
+                4089,
+                8129,
+                16174
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b0dd8aacf21b4af50760e543ceaae06aa187fe29b9066c47c40129cb8481f41a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                101304,
+                402604,
+                1605204,
+                6405609
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3ef3cc0dc09f46764d1b6dd341a106c72dafb4e2e14cdc6c90d29f2106bd7006",
+          "scores": {
+            "S": 10,
+            "M": 1.7,
+            "O": null,
+            "P": null,
+            "Q": 5.85
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 21 / Value is not of object type}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 21 / Value is not of object type}",
+                "PRISM_FAIL 3",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 21 / Value is not of object type}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 21 / Value is not of object type}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 78 / Value is not of object type}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0ffeffe0d469e4452462a26e567104aba1eaab50750ac3826f57f4b5f281efc1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53763,
+                212513,
+                845013,
+                3370013
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящееСреднее",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2ee5788aec96903abda9d36dbd6cade131d7dcd4347efddbeaba24d6f44064f7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПосчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                8181,
+                16058,
+                32179,
+                65320
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПосчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6069da032036ea8fb31162b390186d5c82238006bd6c995ce3c33438780324d1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.64,
+              "p_opt": 2.0,
+              "ops": [
+                212,
+                358,
+                544,
+                770
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "49f8642644e12efff6096f31f242c2a0bd97fef9876d44dee7bf5b305ea9708b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ed5ddff59f2c49f20dbda906df26b0028e4c51973a46c531dc6680624bd060f1",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "Анаграмма",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 21,5 / Symbol not found СортироватьЗначение}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "Анаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 78,5 / Symbol not found СортироватьЗначение}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "deepseek-v4-pro",
+      "model_name": "DeepSeek V4 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e3edca9f820a31ec1df7d4424c8646839ed9fff6a1876fd2df1312298a2c3c1b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38561,
+                79764,
+                164545,
+                338592
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
