@@ -146,27 +146,31 @@ def model_stats(auto: dict) -> list[ModelStat]:
     задачам. Сортировка — по убыванию Q̄. Работает и при runs=1 (тогда выборка = по одному
     значению на задачу → ДИ показывает межзадачный разброс)."""
     per_model: dict[str, dict[str, list[float]]] = defaultdict(lambda: {ax: [] for ax in AXES})
-    names: dict[str, str] = {}
+    ids: dict[str, str] = {}
     tasks_seen: dict[str, set] = defaultdict(set)
 
+    # Ключ агрегации — ИМЯ модели, а НЕ model_id: id одной модели может разойтись при смене
+    # канала доступа (миграция OpenRouter↔AITUNNEL, разные слаги одного веса). Группировка по id
+    # тогда бьёт статистику модели на осколки (например, A10 под новым id → n=1 → ДИ=0), а имя —
+    # стабильный ключ, по нему же собирает витрину build-data.
     for t in auto.get("tasks", []):
-        mid = t.get("model_id", "")
-        names[mid] = t.get("model_name", mid)
-        tasks_seen[mid].add(t.get("task_id"))
+        name = t.get("model_name", "") or t.get("model_id", "")
+        ids.setdefault(name, t.get("model_id", name))
+        tasks_seen[name].add(t.get("task_id"))
         runs = t.get("runs", [])
         for ax in AXES:
             vals = [r["scores"][ax] for r in runs if r.get("scores", {}).get(ax) is not None]
             if vals:  # ось измерена хотя бы в одном прогоне этой задачи
-                per_model[mid][ax].append(mean([float(v) for v in vals]))
+                per_model[name][ax].append(mean([float(v) for v in vals]))
 
     out = [
         ModelStat(
-            model_id=mid,
-            model_name=names.get(mid, mid),
-            n_tasks=len(tasks_seen[mid]),
-            axes={ax: axis_stat(per_model[mid][ax]) for ax in AXES},
+            model_id=ids.get(name, name),
+            model_name=name,
+            n_tasks=len(tasks_seen[name]),
+            axes={ax: axis_stat(per_model[name][ax]) for ax in AXES},
         )
-        for mid in per_model
+        for name in per_model
     ]
     out.sort(key=lambda m: -m.q.mean)
     return out
