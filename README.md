@@ -18,7 +18,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/лицензия-MIT-green" alt="лицензия MIT"></a>
   <img src="https://img.shields.io/badge/версия-1.7.0-success" alt="версия 1.7.0">
   <a href="https://prism.genlab-1c.ru"><img src="https://img.shields.io/badge/сайт-prism.genlab--1c.ru-22d3ee" alt="сайт"></a>
-  <a href="https://huggingface.co/datasets/genlab-1c/prism-smop"><img src="https://img.shields.io/badge/🤗_датасет-prism--smop-ff9d00" alt="датасет PRISM-SMOP на HuggingFace"></a>
+  <a href="https://huggingface.co/datasets/genlab-1c/prism-smop"><img src="https://img.shields.io/badge/датасет-prism--smop-ff9d00?logo=huggingface&logoColor=white" alt="датасет PRISM-SMOP на HuggingFace"></a>
 </p>
 <p align="center">
 <!-- prism:badges -->
