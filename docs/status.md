@@ -53,8 +53,8 @@ description: "Что в бенчмарке PRISM уже работает: авт
 |---|:---:|:---:|
 | **Kimi K3** | **9.73** | **9.26** |
 | Gemini 3.5 Flash | 9.68 | 9.18 |
-| Gemini 3.1 Pro | 9.47 | 9.30 |
 | Kimi K2.7 Code | 9.47 | 8.48 |
+| Gemini 3.1 Pro | 9.47 | 9.30 |
 | GPT-5.6 Sol | 9.33 | 9.59 |
 | MiMo-V2.5 Pro | 9.22 | 8.07 |
 | GPT-5.5 | 9.09 | 8.63 |
@@ -63,6 +63,7 @@ description: "Что в бенчмарке PRISM уже работает: авт
 | MiniMax M3 | 8.27 | 9.24 |
 | GLM-5.2 | 8.21 | 7.47 |
 | MiMo-V2.5 | 8.13 | 8.55 |
+| DeepSeek V4 Pro | 7.99 | 7.76 |
 | Claude Opus 4.8 | 7.89 | 8.93 |
 | Claude Sonnet 5 | 7.88 | 8.68 |
 | DeepSeek V4-Flash | 7.72 | 7.39 |
