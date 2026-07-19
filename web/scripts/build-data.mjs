@@ -673,6 +673,51 @@ const nodeGens = Object.values(expA).reduce((s, l) => s + l.length, 0) + Object.
 const gens = badgeNum(/badge\/генераций[^-]*-(\d+)/) ?? nodeGens;
 const cases = badgeNum(/badge\/тест--кейсов-(\d+)/) ?? taskInfo.cases;
 
+/* ---- 5d. Журнал изменений витрины (курируемый, человеческий) ----
+   Единственный источник — docs/changelog.md. Питает и ленту «что нового» на лидерборде
+   (верхняя запись), и страницу /changelog. Формат записи:
+     ## ГГГГ-ММ-ДД · заголовок
+     <необязательное пояснение в пару строк>
+     - пункт
+     - пункт
+   Дату держим ISO (машиночитаемо), для показа переводим в «19 июля» здесь же. */
+const MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+  'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+const ruDate = (iso) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+  if (!m) return { short: iso, full: iso };
+  const d = Number(m[3]), mon = MONTHS_RU[Number(m[2]) - 1] || '';
+  return { short: `${d} ${mon}`, full: `${d} ${mon} ${m[1]}` };
+};
+function loadChangelog() {
+  const p = path.join(REPO, 'docs', 'changelog.md');
+  if (!fs.existsSync(p)) return [];
+  const lines = fs.readFileSync(p, 'utf8').split('\n');
+  const entries = [];
+  let cur = null;
+  for (const raw of lines) {
+    const h = raw.match(/^##\s+(\d{4}-\d{2}-\d{2})\s*·\s*(.+?)\s*$/);
+    if (h) {
+      if (cur) entries.push(cur);
+      const { short, full } = ruDate(h[1]);
+      cur = { date: h[1], dateShort: short, dateFull: full, title: h[2].trim(), summary: '', items: [] };
+      continue;
+    }
+    if (!cur) continue;            // всё до первой записи (заголовок H1, интро) — пропускаем
+    if (/^#{1,2}\s/.test(raw)) { entries.push(cur); cur = null; continue; }
+    const b = raw.match(/^\s*[-*]\s+(.+?)\s*$/);
+    if (b) { cur.items.push(b[1].trim()); continue; }
+    const t = raw.trim();
+    if (!t) continue;
+    // не пункт и не заголовок: продолжение (перенос строки) последнего пункта, иначе — пояснение записи
+    if (cur.items.length) cur.items[cur.items.length - 1] += ' ' + t;
+    else cur.summary = (cur.summary ? cur.summary + ' ' : '') + t;
+  }
+  if (cur) entries.push(cur);
+  return entries;
+}
+const changelog = loadChangelog();
+
 /* ---- 6. Мета для шапки/чипов ---- */
 const pyproject = fs.readFileSync(path.join(REPO, 'pyproject.toml'), 'utf8');
 const version = (pyproject.match(/version\s*=\s*"([^"]+)"/) || [])[1] || '';
@@ -700,9 +745,9 @@ try {
 const OUT = path.join(WEB, 'src', 'data', 'leaderboard.json');
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify({
-  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun, profileCols, tagLabels, repo: { url: `https://github.com/${GH_REPO}`, stars: repoStars } },
+  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun, profileCols, tagLabels, changelog, repo: { url: `https://github.com/${GH_REPO}`, stars: repoStars } },
   models,
 }, null, 2) + '\n');
 
-console.log(`✓ leaderboard.json — ${models.length} моделей · A ${tasksA} / B ${tasksB} задач · v${version}`);
+console.log(`✓ leaderboard.json — ${models.length} моделей · A ${tasksA} / B ${tasksB} задач · v${version} · журнал ${changelog.length} записей`);
 console.log(`✓ public/data/gen — ${models.length} файлов, ${genCount} генераций с подсветкой BSL`);

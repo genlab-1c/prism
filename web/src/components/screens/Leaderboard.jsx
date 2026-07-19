@@ -12,8 +12,72 @@ import { EconomyView } from './Economy.jsx';
 import { LeaderChart, TableExport, SummaryTableSvg, ScoresTableSvg } from '../prism/LeaderChart.jsx';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
 
+const BASE = import.meta.env.BASE_URL;
+
 // закреплённая слева колонка (имя модели остаётся видимым при горизонтальной прокрутке)
 const stickyLeft = (bg) => ({ position: 'sticky', left: 0, zIndex: 1, background: bg });
+
+// **жирный** внутри строки журнала → <b> (единственная разметка, которую поддерживаем)
+const inlineBold = (text) => String(text).split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
+  p.startsWith('**') && p.endsWith('**') ? <b key={i}>{p.slice(2, -2)}</b> : p);
+
+// модалка журнала: весь список записей, закрывается по фону / Esc / крестику
+function ChangelogModal({ entries, onClose }) {
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = prev; };
+  }, [onClose]);
+  return (
+    <div className="cl-modal-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-label="Журнал изменений">
+      <div className="cl-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="cl-modal-head">
+          <h2>Журнал изменений</h2>
+          <button className="cl-modal-close" onClick={onClose} aria-label="Закрыть">✕</button>
+        </div>
+        <div className="cl-modal-body">
+          <p className="cl-modal-intro">
+            Мы регулярно добавляем новые модели и задачи и пересчитываем оценки —
+            поэтому <b>лидерборд постоянно меняется</b>. Здесь видно, что и когда поменялось.
+          </p>
+          <div className="changelog-list">
+            {entries.map((e, i) => (
+              <article key={e.date} className={i === 0 ? 'changelog-entry is-latest' : 'changelog-entry'}>
+                <div className="changelog-date">{e.dateFull}</div>
+                <h3 className="changelog-title">{inlineBold(e.title)}</h3>
+                {e.summary && <p className="changelog-summary">{inlineBold(e.summary)}</p>}
+                {e.items?.length > 0 && <ul className="changelog-items">{e.items.map((it, j) => <li key={j}>{inlineBold(it)}</li>)}</ul>}
+              </article>
+            ))}
+          </div>
+        </div>
+        <div className="cl-modal-foot">
+          <a href="https://github.com/genlab-1c/prism/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">полный список изменений на GitHub →</a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// лента «что нового»: тонкая строка с верхней записью; по клику — модалка со всем журналом
+function WhatsNew({ entries }) {
+  const [open, setOpen] = React.useState(false);
+  const entry = entries?.[0];
+  if (!entry) return null;
+  return (
+    <>
+      <button className="whatsnew" onClick={() => setOpen(true)} aria-label="Что нового — открыть журнал изменений">
+        <span className="whatsnew-eyebrow"><span className="whatsnew-dot" />что нового</span>
+        <span className="whatsnew-date">{entry.dateShort}</span>
+        <span className="whatsnew-title">{inlineBold(entry.title)}</span>
+        <span className="whatsnew-more">все изменения <span className="whatsnew-arrow">→</span></span>
+      </button>
+      {open && <ChangelogModal entries={entries} onClose={() => setOpen(false)} />}
+    </>
+  );
+}
 
 const AXIS_COLOR = { S: 'var(--axis-s)', M: 'var(--axis-m)', O: 'var(--axis-o)', P: 'var(--axis-p)' };
 // исходы воронки: цвет на каждый, от лучшего к худшему
@@ -409,10 +473,13 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="обновлено" value={meta.lastRun || '—'} tone="ok" />
           <Shield label="уровень" value="L1 · машина" tone="s" icon="cpu" />
         </div>
+        <WhatsNew entries={meta.changelog || []} />
         {!isMobile && <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>}
         <p style={{ margin: isMobile ? '12px 0 0' : '14px 0 0', fontSize: isMobile ? 12.5 : 13.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.55 }}>
           Участвуйте: добавьте свою модель в лидерборд или пришлите готовый прогон.{' '}
           <a href={(meta.repo?.url || 'https://github.com/genlab-1c/prism')} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Как поучаствовать</a>
+          <span style={{ color: 'var(--ink-400)' }}> · </span>
+          <a href="https://huggingface.co/datasets/genlab-1c/prism-smop" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Датасет на Hugging Face</a>
         </p>
       </section>
 

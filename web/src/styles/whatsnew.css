@@ -1,0 +1,152 @@
+/* ============================================================
+   PRISM — лента «что нового» (лидерборд) и таймлайн страницы /changelog.
+   Источник данных — meta.changelog (из docs/changelog.md). Лента кликается
+   целиком и ведёт на /changelog. Пульс и сдвиг стрелки уважают
+   prefers-reduced-motion. Обе темы — через токены.
+   ============================================================ */
+
+/* ---- тонкая лента-кнопка под чипами лидерборда ---- */
+.whatsnew {
+  position: relative; display: flex; align-items: center; gap: 11px;
+  width: fit-content; max-width: 100%; margin-top: 12px; padding: 6px 12px 6px 14px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); overflow: hidden; cursor: pointer;
+  font: inherit; color: inherit; text-align: left;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.whatsnew::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--prism); }
+.whatsnew:hover { border-color: var(--border-strong); background: var(--surface-raised); }
+.whatsnew:hover .whatsnew-more { color: var(--brand-strong); }
+.whatsnew:hover .whatsnew-arrow { transform: translateX(3px); }
+
+.whatsnew-eyebrow {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em;
+  text-transform: uppercase; font-weight: 600; color: var(--ok);
+}
+.whatsnew-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--ok); flex: none;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+  animation: whatsnew-pulse 2.6s var(--ease-out) infinite;
+}
+@keyframes whatsnew-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45); }
+  70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+.whatsnew-date {
+  flex: none; font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-400); font-variant-numeric: tabular-nums;
+}
+.whatsnew-title {
+  flex: 0 1 auto; min-width: 0; max-width: 46ch; font-size: 13px; color: var(--ink-200);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.whatsnew-title b { color: var(--ink-100); font-weight: 600; }
+.whatsnew-more {
+  flex: none; display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  color: var(--brand); white-space: nowrap;
+}
+.whatsnew-arrow { transition: transform var(--dur) var(--ease); }
+
+@media (max-width: 640px) {
+  /* на мобиле лента — во всю ширину: «что нового · дата · заголовок (обрезается) · →» */
+  .whatsnew { width: 100%; gap: 9px; padding: 8px 12px 8px 13px; }
+  .whatsnew-title { flex: 1; max-width: none; }  /* заполняет ширину, обрезается многоточием */
+  .whatsnew-more { font-size: 0; }               /* прячем слова «все изменения», оставляем стрелку */
+  .whatsnew-arrow { font-size: 14px; color: var(--brand); }
+}
+
+/* ---- модалка журнала изменений ---- */
+.cl-modal-backdrop {
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(6, 12, 22, 0.62); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 8vh 16px 24px; overflow-y: auto; animation: cl-fade var(--dur) var(--ease);
+}
+.cl-modal {
+  width: 100%; max-width: 640px; background: var(--surface);
+  border: 1px solid var(--border-strong); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); overflow: hidden; animation: cl-rise var(--dur) var(--ease-out);
+}
+.cl-modal-head {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 18px; border-bottom: 1px solid var(--line);
+}
+.cl-modal-head::before { content: ""; position: absolute; left: 0; top: 0; right: 0; height: 2px; background: var(--prism); }
+.cl-modal-head h2 { margin: 0; font-size: 16px; font-weight: 600; color: var(--ink-100); }
+.cl-modal-close {
+  display: grid; place-items: center; width: 28px; height: 28px; flex: none;
+  background: none; border: 1px solid var(--line); border-radius: var(--radius-sm);
+  color: var(--ink-400); cursor: pointer; font-size: 13px; line-height: 1;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.cl-modal-close:hover { background: var(--surface-raised); color: var(--ink-100); }
+.cl-modal-body { padding: 20px 18px 6px; max-height: 62vh; overflow-y: auto; }
+.cl-modal-intro {
+  margin: 0 0 18px; padding: 0 0 16px; border-bottom: 1px solid var(--line);
+  color: var(--ink-300); font-size: 13.5px; line-height: 1.6;
+}
+.cl-modal-intro b { color: var(--ink-100); font-weight: 600; }
+.cl-modal-body .changelog-list { margin: 0; }
+.cl-modal-foot {
+  padding: 12px 18px; border-top: 1px solid var(--line);
+  font-family: var(--font-mono); font-size: 12.5px;
+}
+.cl-modal-foot a { color: var(--brand); }
+@keyframes cl-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cl-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ---- таймлайн журнала (тело модалки) ---- */
+.changelog-list { margin: 0; }
+.changelog-entry {
+  position: relative; padding: 0 0 30px 30px;
+  border-left: 1px solid var(--line);
+}
+.changelog-entry:last-child { border-left-color: transparent; padding-bottom: 4px; }
+.changelog-entry::before {
+  content: ""; position: absolute; left: -5px; top: 5px;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--ink-400); border: 2px solid var(--bg);
+}
+.changelog-entry.is-latest::before { background: var(--prism); }
+
+.changelog-date {
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-400);
+  letter-spacing: 0.02em;
+}
+.changelog-title {
+  margin: 5px 0 8px; font-size: 19px; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--ink-100); line-height: 1.3; text-wrap: balance;
+}
+.changelog-summary { margin: 0 0 13px; color: var(--ink-300); line-height: 1.6; }
+.changelog-items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.changelog-items li {
+  position: relative; padding-left: 18px; color: var(--ink-200);
+  font-size: 14px; line-height: 1.55;
+}
+.changelog-items li::before {
+  content: ""; position: absolute; left: 2px; top: 9px;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--axis-o); opacity: 0.7;
+}
+.changelog-items li b { color: var(--ink-100); font-weight: 600; }
+
+@media (max-width: 640px) {
+  /* модалка — почти на весь экран (лист), скролл внутри тела */
+  .cl-modal-backdrop { padding: 10px; align-items: stretch; backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+  .cl-modal { max-width: none; display: flex; flex-direction: column; border-radius: var(--radius-md); }
+  .cl-modal-head { padding: 13px 14px; }
+  .cl-modal-head h2 { font-size: 15px; }
+  .cl-modal-body { flex: 1; min-height: 0; max-height: none; padding: 16px 14px 4px; }
+  .cl-modal-intro { font-size: 13px; margin-bottom: 14px; padding-bottom: 13px; }
+  .cl-modal-foot { padding: 11px 14px; }
+  .changelog-entry { padding-left: 22px; padding-bottom: 24px; }
+  .changelog-title { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsnew-dot { animation: none; }
+  .whatsnew-arrow, .whatsnew { transition: none; }
+  .cl-modal, .cl-modal-backdrop { animation: none; }
+}

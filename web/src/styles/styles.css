@@ -8,6 +8,7 @@
 @import url('tokens/spacing.css');
 @import url('tokens/themes.css');
 @import url('tokens/base.css');
+@import url('whatsnew.css');
 
 /* Скрыть на мобиле ЧЕРЕЗ CSS, а не через JS isMobile: хук возвращает false до монтирования,
    поэтому SSR/первый рендер — десктопная раскладка, а useEffect потом переключает на мобилу →
