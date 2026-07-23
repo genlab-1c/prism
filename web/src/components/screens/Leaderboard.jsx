@@ -236,20 +236,59 @@ function ScoreCell({ v, axis }) {
     </div>
   );
 }
-function OverallTable({ cat, models, navigate }) {
+function OverallTable({ cat, models, navigate, rankSource }) {
+  const isMobile = useIsMobile();
   const axes = cat === 'A' ? ['S', 'M', 'O'] : ['S', 'M', 'O', 'P'];
   const grid = cat === 'A' ? '34px minmax(170px,1fr) 52px 52px 52px 64px 50px 78px' : '34px minmax(160px,1fr) 48px 48px 48px 48px 60px 50px 76px';
   const [sortKey, setSortKey] = React.useState('q');
   const [dir, setDir] = React.useState('desc');
   const onSort = (k) => { if (k === sortKey) setDir((d) => (d === 'desc' ? 'asc' : 'desc')); else { setSortKey(k); setDir('desc'); } };
   const qKey = cat === 'A' ? 'qA' : 'qB';
+  // ранг по Q — из полного зачёта (rankSource), даже когда строки отфильтрованы
   const qRank = {};
-  [...models].filter((m) => m[qKey] != null).sort((a, b) => b[qKey] - a[qKey]).forEach((m, i) => { qRank[m.id] = i + 1; });
+  [...(rankSource || models)].filter((m) => m[qKey] != null).sort((a, b) => b[qKey] - a[qKey]).forEach((m, i) => { qRank[m.id] = i + 1; });
   const rows = models.filter((m) => m[qKey] != null && m[cat]).sort((a, b) => {
     const av = sortKey === 'q' ? a[qKey] : (a[cat][sortKey] ?? -1);
     const bv = sortKey === 'q' ? b[qKey] : (b[cat][sortKey] ?? -1);
     return dir === 'desc' ? bv - av : av - bv;
   });
+  if (!rows.length) return <EmptyNote />;
+
+  if (isMobile) {
+    // мобила: без горизонтального скролла (как сводка) — ранг + модель + оси строкой + Q + шеврон
+    return (
+      <div>
+        {rows.map((m, i) => {
+          const r = qRank[m.id];
+          return (
+            <ListRow key={m.id} grid="26px 1fr auto" gap={9} pad="11px 12px" i={i} top={r === 1} onClick={() => navigate('model', m.id)}>
+              <RankBadge rank={r} size={26} />
+              <div style={{ minWidth: 0 }}>
+                <Identity m={m} size={30} gap={9} wrap nameSize={14} />
+                <div style={{ display: 'flex', gap: 10, marginTop: 6, flexWrap: 'wrap' }}>
+                  {axes.map((a) => (
+                    <span key={a} style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', fontVariantNumeric: 'tabular-nums' }}>
+                      <span style={{ color: AXIS_COLOR[a], fontWeight: 700 }}>{a}</span>{' '}
+                      <span style={{ color: 'var(--ink-100)', fontWeight: 600 }}>{m[cat][a] != null ? m[cat][a].toFixed(1) : '—'}</span>
+                    </span>
+                  ))}
+                  {m[cat].margin != null && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>±{m[cat].margin.toFixed(1)}</span>}
+                </div>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.04em', color: 'var(--ink-400)' }}>Q</span>
+                  <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15, fontWeight: 700, lineHeight: 1.1, color: 'var(--ink-100)' }}>{m[qKey].toFixed(2)}</span>
+                </div>
+                <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>
+              </div>
+            </ListRow>
+          );
+        })}
+      </div>
+    );
+  }
+
   return (
     <TableScroll minWidth={cat === 'A' ? 680 : 720}>
       <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 14, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
@@ -275,6 +314,174 @@ function OverallTable({ cat, models, navigate }) {
         );
       })}
     </TableScroll>
+  );
+}
+
+/* ===================== фильтры лидерборда =====================
+   Одна панель на все вкладки (Сводка · A · B · Экономика), состояние общее:
+   настроил срез — и ходишь по вкладкам. Поиск + поставщики + цена + свежесть
+   релиза + веса. Фильтры сужают список, но НЕ меняют ранги: место модели
+   считается по полному зачёту (иначе «№1 среди Google» читался бы как №1
+   лидерборда). */
+const PRICE_BANDS = [
+  { key: 'all', label: 'любая' },
+  { key: 'lo', label: 'до 100 ₽/1M', test: (v) => v != null && v < 100 },
+  { key: 'mid', label: '100–500 ₽/1M', test: (v) => v != null && v >= 100 && v <= 500 },
+  { key: 'hi', label: 'дороже 500 ₽/1M', test: (v) => v != null && v > 500 },
+];
+const AGE_BANDS = [
+  { key: 'all', label: 'любой давности' },
+  { key: 'm3', label: 'последние 3 мес', months: 3 },
+  { key: 'm6', label: 'последние 6 мес', months: 6 },
+  { key: 'old', label: 'старше полугода' },
+];
+// weights из каталога: open — веса опубликованы, proprietary — закрытая модель
+const WEIGHTS_BANDS = [
+  { key: 'all', label: 'любые' },
+  { key: 'open', label: 'открытые' },
+  { key: 'proprietary', label: 'закрытые' },
+];
+// released из каталога: «2026-07-21» или «2026-04» (только месяц) → возраст в месяцах
+const ageMonths = (released) => {
+  const t = Date.parse(released.length === 7 ? `${released}-01` : released);
+  return Number.isFinite(t) ? (Date.now() - t) / (30.44 * 24 * 3600e3) : null;
+};
+const inAgeBand = (band, released) => {
+  if (band.key === 'all') return true;
+  const a = ageMonths(released || '');
+  if (a == null) return false; // дата неизвестна → в конкретный диапазон не попадает
+  return band.months != null ? a <= band.months : a > 6;
+};
+
+// выпадашка фильтра в идиоме проекта (как MobileTaskPicker/MobileComparePicker в ModelDetail):
+// триггер выглядит как select, открытый список стилизован в палитре — нативный оверлей не в теме.
+// grow — мобильный вариант: контрол на всю строку, подписи фиксированной ширины (одна вертикаль)
+function FilterDropdown({ label, value, onChange, options, grow }) {
+  const [open, setOpen] = React.useState(false);
+  const cur = options.find((o) => o.key === value) || options[0];
+  const isDefault = value === options[0].key;
+  const rowStyle = (active) => ({ width: '100%', display: 'flex', alignItems: 'center', padding: '8px 11px', cursor: 'pointer', border: 'none', textAlign: 'left', whiteSpace: 'nowrap', fontFamily: 'var(--font-mono)', fontSize: 12, color: active ? 'var(--ink-100)' : 'var(--ink-300)', background: active ? 'var(--surface-raised)' : 'transparent', borderLeft: `2px solid ${active ? 'var(--brand)' : 'transparent'}` });
+  return (
+    <div style={{ position: 'relative', width: grow ? '100%' : undefined }}>
+      <button onClick={() => setOpen((o) => !o)} aria-expanded={open}
+        style={{ width: grow ? '100%' : undefined, display: 'flex', alignItems: 'center', gap: 8, height: grow ? 32 : 30, padding: '0 10px', cursor: 'pointer', textAlign: 'left',
+          background: 'var(--surface-sunken)', border: `1px solid ${open ? 'var(--brand)' : 'var(--line)'}`, borderRadius: 'var(--radius-sm)',
+          fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>
+        <span style={{ flex: 'none', width: grow ? 48 : undefined }}>{label}</span>
+        <span style={{ flex: grow ? 1 : 'none', minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 12, color: isDefault ? 'var(--ink-200)' : 'var(--ink-100)', fontWeight: isDefault ? 400 : 600 }}>{cur.label}</span>
+        <span style={{ flex: 'none', fontSize: 10, transform: open ? 'rotate(180deg)' : 'none', transition: 'transform var(--dur-fast) var(--ease)' }}>▾</span>
+      </button>
+      {open && (
+        <>
+          <div onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 19 }} />
+          <div style={{ position: 'absolute', top: 'calc(100% + 4px)', left: 0, zIndex: 20, minWidth: '100%', width: grow ? '100%' : 'max-content', maxHeight: 300, overflowY: 'auto',
+            background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', boxShadow: '0 12px 32px rgba(0,0,0,0.4)' }}>
+            {options.map((o) => (
+              <button key={o.key} onClick={() => { onChange(o.key); setOpen(false); }} style={rowStyle(o.key === value)}>{o.label}</button>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+// пустой результат фильтрации — один вид на все таблицы
+const EmptyNote = () => (
+  <div style={{ ...card, padding: '30px 20px', textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-400)' }}>
+    под выбранные фильтры не попала ни одна модель
+  </div>
+);
+
+function LeaderFilters({ models, q, setQ, vendors, setVendors, price, setPrice, age, setAge, weights, setWeights, shown, total }) {
+  const isMobile = useIsMobile();
+  const [open, setOpen] = React.useState(false); // мобила: селекты и поставщики спрятаны за кнопкой «фильтры»
+  // поставщики из данных (не хардкод): по убыванию числа моделей
+  const vendorList = React.useMemo(() => {
+    const cnt = new Map();
+    for (const m of models) if (m.family) cnt.set(m.family, (cnt.get(m.family) || 0) + 1);
+    return [...cnt.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  }, [models]);
+  const toggleVendor = (v) => setVendors((prev) => { const n = new Set(prev); if (n.has(v)) n.delete(v); else n.add(v); return n; });
+  const activeCount = (q.trim() ? 1 : 0) + (vendors.size ? 1 : 0) + (price !== 'all' ? 1 : 0) + (age !== 'all' ? 1 : 0) + (weights !== 'all' ? 1 : 0);
+  const active = activeCount > 0;
+  const reset = () => { setQ(''); setVendors(new Set()); setPrice('all'); setAge('all'); setWeights('all'); };
+
+  const searchBox = (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', padding: '0 10px', height: 30, flex: '1 1 170px', maxWidth: isMobile ? 'none' : 250, minWidth: 0 }}>
+      <Icon name="search" size={13} style={{ color: 'var(--ink-400)', flex: 'none' }} />
+      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="поиск модели…" aria-label="Поиск модели"
+        style={{ background: 'none', border: 'none', outline: 'none', width: '100%', fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--ink-100)' }} />
+    </span>
+  );
+  const resetBtn = (
+    <button onClick={reset} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand)', fontFamily: 'var(--font-mono)', fontSize: 11.5, padding: 0, fontWeight: 600 }}>сбросить ✕</button>
+  );
+  const vendorChip = ([v, n]) => {
+    const on = vendors.has(v);
+    return (
+      <button key={v} onClick={() => toggleVendor(v)} aria-pressed={on}
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '4px 10px', borderRadius: 'var(--radius-pill)', cursor: 'pointer', flex: 'none', whiteSpace: 'nowrap',
+          border: `1px solid ${on ? 'var(--brand)' : 'var(--line)'}`,
+          background: on ? 'color-mix(in srgb, var(--brand) 14%, transparent)' : 'var(--surface-sunken)',
+          color: on ? 'var(--ink-100)' : 'var(--ink-300)', fontFamily: 'var(--font-mono)', fontSize: 11.5, fontWeight: on ? 600 : 500 }}>
+        {v}<span style={{ color: 'var(--ink-400)', fontSize: 10.5 }}>{n}</span>
+      </button>
+    );
+  };
+
+  if (isMobile) {
+    return (
+      <div style={{ ...card, padding: '10px 12px', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 9 }}>
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+          {searchBox}
+          <button onClick={() => setOpen((v) => !v)} aria-expanded={open}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, height: 30, padding: '0 11px', flex: 'none', cursor: 'pointer',
+              border: `1px solid ${active ? 'var(--brand)' : 'var(--line)'}`, borderRadius: 'var(--radius-sm)',
+              background: open ? 'var(--surface-raised)' : 'var(--surface-sunken)',
+              color: active ? 'var(--ink-100)' : 'var(--ink-300)', fontFamily: 'var(--font-mono)', fontSize: 12 }}>
+            фильтры{activeCount - (q.trim() ? 1 : 0) > 0 ? <span style={{ color: 'var(--brand)', fontWeight: 700 }}>{activeCount - (q.trim() ? 1 : 0)}</span> : null}
+            <Icon name={open ? 'arrowUp' : 'arrowDown'} size={12} />
+          </button>
+        </div>
+        {open && (
+          <>
+            <FilterDropdown grow label="цена" value={price} onChange={setPrice} options={PRICE_BANDS} />
+            <FilterDropdown grow label="релиз" value={age} onChange={setAge} options={AGE_BANDS} />
+            <FilterDropdown grow label="веса" value={weights} onChange={setWeights} options={WEIGHTS_BANDS} />
+            {/* поставщики — одна строка с горизонтальной прокруткой, не съедают пол-экрана */}
+            <div style={{ display: 'flex', gap: 6, alignItems: 'center', overflowX: 'auto', paddingBottom: 2, WebkitOverflowScrolling: 'touch' }}>
+              {vendorList.map(vendorChip)}
+            </div>
+          </>
+        )}
+        {(active || open) && (
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>
+            <span>{active ? `${shown} из ${total}` : `${total} моделей`}</span>
+            {active ? resetBtn : null}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ ...card, padding: '11px 14px', marginBottom: 14, display: 'flex', flexDirection: 'column', gap: 9 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, alignItems: 'center' }}>
+        {searchBox}
+        <FilterDropdown label="цена" value={price} onChange={setPrice} options={PRICE_BANDS} />
+        <FilterDropdown label="релиз" value={age} onChange={setAge} options={AGE_BANDS} />
+        <FilterDropdown label="веса" value={weights} onChange={setWeights} options={WEIGHTS_BANDS} />
+        <span style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 10, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>
+          {active ? `${shown} из ${total}` : `${total} моделей`}
+          {active ? resetBtn : null}
+        </span>
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', marginRight: 2 }}>поставщик</span>
+        {vendorList.map(vendorChip)}
+      </div>
+    </div>
   );
 }
 
@@ -304,18 +511,22 @@ function MobPct({ label, solved }) {
     </div>
   );
 }
-function SummaryView({ models, navigate }) {
+function SummaryView({ models, navigate, ranks }) {
   const isMobile = useIsMobile();
   const overall = (m) => { const v = [m.A?.solved, m.B?.solved].filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : -1; };
   const rows = [...models].sort((a, b) => overall(b) - overall(a));
+  // ранг — из полного зачёта (фильтры сужают список, но не перенумеровывают места)
+  const rankOf = (m, i) => ranks?.[m.id] ?? i + 1;
+
+  if (!rows.length) return <EmptyNote />;
 
   if (isMobile) {
     // мобила: строка без горизонтального скролла — ранг + модель + компактные A/B + шеврон (тап → код)
     return (
       <div>
         {rows.map((m, i) => (
-          <ListRow key={m.id} grid="26px 1fr auto" gap={9} pad="11px 12px" i={i} top={i === 0} onClick={() => navigate('model', m.id)}>
-            <RankBadge rank={i + 1} size={26} />
+          <ListRow key={m.id} grid="26px 1fr auto" gap={9} pad="11px 12px" i={i} top={rankOf(m, i) === 1} onClick={() => navigate('model', m.id)}>
+            <RankBadge rank={rankOf(m, i)} size={26} />
             <Identity m={m} size={30} gap={9} wrap nameSize={14} />
             <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
               <MobPct label="A" solved={m.A?.solved} />
@@ -336,8 +547,8 @@ function SummaryView({ models, navigate }) {
         <span style={colHead()}>алгоритмика</span><span style={colHead()}>платформенные</span>
       </div>
       {rows.map((m, i) => (
-        <ListRow key={m.id} grid={grid} i={i} top={i === 0} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
-          <RankBadge rank={i + 1} />
+        <ListRow key={m.id} grid={grid} i={i} top={rankOf(m, i) === 1} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
+          <RankBadge rank={rankOf(m, i)} />
           <Identity m={m} />
           <SolvedStat solved={m.A?.solved} />
           <SolvedStat solved={m.B?.solved} />
@@ -356,14 +567,83 @@ function OutcomeBar({ f }) {
     </div>
   );
 }
-function FunnelView({ cat, models, navigate }) {
-  const rows = models.filter((m) => m[cat]?.funnel?.n).sort((a, b) => (b[cat].solved ?? -1) - (a[cat].solved ?? -1));
+function FunnelView({ cat, models, navigate, rankSource }) {
+  // фильтр вида: клик по исходу в легенде — модели, у которых этот исход ЕСТЬ (хоть раз),
+  // отсортированные по его доле (худшие сверху); повторный клик снимает фильтр.
+  // Не «главный исход»: неверные ответы размазаны понемногу и главными почти не бывают —
+  // чип с нулём выглядел бы сломанным при жёлтых сегментах в барах.
+  const [selBucket, setSelBucket] = React.useState(null);
+  const isMobile = useIsMobile();
+  const bySolved = (a, b) => (b[cat].solved ?? -1) - (a[cat].solved ?? -1);
+  const share = (m, k) => { const f = m[cat].funnel; return (f.buckets[k] || 0) / f.n; };
+  const all = models.filter((m) => m[cat]?.funnel?.n).sort(bySolved);
+  const rows = selBucket
+    ? all.filter((m) => share(m, selBucket) > 0).sort((a, b) => share(b, selBucket) - share(a, selBucket))
+    : all;
+  // ранг — по полному зачёту вида (rankSource), фильтры не перенумеровывают места
+  const rankMap = {};
+  [...(rankSource || models)].filter((m) => m[cat]?.funnel?.n).sort(bySolved).forEach((m, i) => { rankMap[m.id] = i + 1; });
+  const domCount = {};
+  for (const [k] of BUCKETS) domCount[k] = all.filter((m) => share(m, k) > 0).length;
   const grid = '44px minmax(150px,1fr) 66px minmax(200px,1.5fr) minmax(140px,0.9fr)';
+  if (!all.length) return <EmptyNote />;
+  const legend = (
+    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center', marginBottom: 14 }}>
+      {BUCKETS.map(([k, c]) => {
+        const on = selBucket === k;
+        return (
+          <button key={k} onClick={() => setSelBucket(on ? null : k)} aria-pressed={on}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '4px 10px', borderRadius: 'var(--radius-pill)', cursor: 'pointer',
+              border: `1px solid ${on ? c : 'var(--line)'}`, background: on ? `color-mix(in srgb, ${c} 14%, transparent)` : 'transparent',
+              fontFamily: 'var(--font-mono)', fontSize: 12, color: on ? 'var(--ink-100)' : 'var(--ink-300)' }}>
+            <span style={{ width: 9, height: 9, borderRadius: 3, background: c }} />{k}
+            <span style={{ color: 'var(--ink-400)', fontSize: 10.5 }}>{domCount[k] || 0}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  if (isMobile) {
+    // мобила: без горизонтального скролла — ранг + модель + % решено, воронка на всю ширину под именем
+    return (
+      <>
+        {legend}
+        {!rows.length ? <EmptyNote /> : (
+          <div>
+            {rows.map((m, i) => {
+              const f = m[cat].funnel;
+              const pct = Math.round((m[cat].solved || 0) * 100);
+              const rk = rankMap[m.id] ?? i + 1;
+              return (
+                <ListRow key={m.id} grid="26px 1fr auto" gap={9} pad="11px 12px" i={i} top={rk === 1} onClick={() => navigate('model', m.id)}>
+                  <RankBadge rank={rk} size={26} />
+                  <div style={{ minWidth: 0 }}>
+                    <Identity m={m} size={30} gap={9} wrap nameSize={14} />
+                    <div style={{ marginTop: 7 }}><OutcomeBar f={f} /></div>
+                    {f.cause && (
+                      <div style={{ marginTop: 5, fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--ink-400)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        {f.cause[0]} ×{f.cause[1]}
+                      </div>
+                    )}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15, fontWeight: 700, color: pct === 0 ? 'var(--ink-400)' : 'var(--ink-100)' }}>{pct}%</span>
+                    <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>
+                  </div>
+                </ListRow>
+              );
+            })}
+          </div>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
-      <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap', marginBottom: 14 }}>
-        {BUCKETS.map(([k, c]) => <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-300)' }}><span style={{ width: 9, height: 9, borderRadius: 3, background: c }} />{k}</span>)}
-      </div>
+      {legend}
+      {!rows.length ? <EmptyNote /> : (
       <TableScroll minWidth={680}>
         <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
           <span style={colHead()}>#</span><span style={colHead()}>модель</span><span style={colHead({ textAlign: 'right' })}>решено</span><span style={colHead()}>исход всех попыток</span><span style={colHead()}>частая поломка</span>
@@ -371,9 +651,10 @@ function FunnelView({ cat, models, navigate }) {
         {rows.map((m, i) => {
           const f = m[cat].funnel;
           const pct = Math.round((m[cat].solved || 0) * 100);
+          const rk = rankMap[m.id] ?? i + 1;
           return (
-            <ListRow key={m.id} grid={grid} i={i} top={i === 0} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
-              <RankBadge rank={i + 1} />
+            <ListRow key={m.id} grid={grid} i={i} top={rk === 1} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
+              <RankBadge rank={rk} />
               <Identity m={m} />
               <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 19, fontWeight: 700, letterSpacing: '-0.01em', color: pct === 0 ? 'var(--ink-400)' : 'var(--ink-100)' }}>{pct}%</span>
               <OutcomeBar f={f} />
@@ -382,6 +663,7 @@ function FunnelView({ cat, models, navigate }) {
           );
         })}
       </TableScroll>
+      )}
     </>
   );
 }
@@ -393,15 +675,42 @@ function ProfileView({ cat, models, cols, labels, navigate }) {
   const axis = cat === 'A' ? 'm' : 'p';
   const rows = models.filter((m) => m[qKey] != null && m[cat]?.profile).sort((a, b) => b[qKey] - a[qKey]);
   if (!cols.length) return <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>нет тегов с достаточным числом задач.</p>;
-  const grid = `${isMobile ? '128px' : 'minmax(180px,1.4fr)'} ${cols.map(() => (isMobile ? '64px' : 'minmax(64px,1fr)')).join(' ')}`;
+  if (!rows.length) return <EmptyNote />;
   const heat = (v) => v == null
     ? { background: 'transparent', color: 'var(--ink-400)' }
     : { background: `color-mix(in srgb, var(--axis-${axis}) ${Math.round(10 + (v / 10) * 36)}%, transparent)`, color: v >= 4 ? 'var(--ink-100)' : 'var(--ink-300)' };
+
+  if (isMobile) {
+    // мобила: сетка не влезает — карточка на модель, теги с баллами чипами (та же тепловая подсветка)
+    return (
+      <div>
+        {rows.map((m, i) => (
+          <ListRow key={m.id} grid="1fr auto" gap={9} pad="11px 12px" i={i} top={i === 0} onClick={() => navigate('model', m.id)}>
+            <div style={{ minWidth: 0 }}>
+              <Identity m={m} size={30} gap={9} wrap nameSize={14} />
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 7 }}>
+                {cols.map((c) => {
+                  const v = m[cat].profile[c]?.value;
+                  const st = heat(v);
+                  return (
+                    <span key={c} style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '3px 8px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--line)', fontFamily: 'var(--font-mono)', fontSize: 11, background: st.background }}>
+                      <span style={{ color: 'var(--ink-300)' }}>{labels[c] || c}</span>
+                      <span style={{ fontWeight: 700, fontVariantNumeric: 'tabular-nums', color: st.color }}>{v != null ? v.toFixed(1) : '—'}</span>
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
+            <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>
+          </ListRow>
+        ))}
+      </div>
+    );
+  }
+
+  const grid = `minmax(180px,1.4fr) ${cols.map(() => 'minmax(64px,1fr)').join(' ')}`;
   return (
     <>
-      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: '0 0 14px' }}>
-балл <span style={{ color: AXIS_COLOR[cat === 'A' ? 'M' : 'P'], fontWeight: 600 }}>{cat === 'A' ? 'M — логика, по типам задач' : 'P — работа с 1С, по видам конструкций'}</span> · чем ярче клетка, тем выше балл · сравнивайте модели по столбцу
-      </p>
       <div style={{ ...card, overflowX: 'auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: grid, alignItems: 'center', background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)' }}>
           <span style={{ ...colHead(), padding: '12px 20px', ...stickyLeft('var(--surface-sunken)'), zIndex: 2 }}>модель</span>
@@ -437,14 +746,38 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
   const totalTasks = (meta.tasksA || 0) + (meta.tasksB || 0);
   const SUBS = [{ key: 'overall', label: 'Баллы' }, { key: 'funnel', label: 'Где ломается' }, { key: 'profile', label: 'Профиль' }, { key: 'charts', label: 'График' }];
 
-  // сводка: сортировка по средней доле решённых A/B, срез по охвату
+  // общее состояние фильтров — одно на все вкладки: настроил срез и ходишь по видам
+  const [fltQ, setFltQ] = React.useState('');
+  const [fltVendors, setFltVendors] = React.useState(() => new Set());
+  const [fltPrice, setFltPrice] = React.useState('all');
+  const [fltAge, setFltAge] = React.useState('all');
+  const [fltWeights, setFltWeights] = React.useState('all');
+  const filtered = React.useMemo(() => {
+    const query = fltQ.trim().toLowerCase();
+    const price = PRICE_BANDS.find((b) => b.key === fltPrice);
+    const age = AGE_BANDS.find((b) => b.key === fltAge) || AGE_BANDS[0];
+    return models.filter((m) =>
+      (!query || `${m.name} ${m.family}`.toLowerCase().includes(query))
+      && (!fltVendors.size || fltVendors.has(m.family))
+      && (!price?.test || price.test(m.costRub))
+      && inAgeBand(age, m.released)
+      && (fltWeights === 'all' || m.weights === fltWeights));
+  }, [models, fltQ, fltVendors, fltPrice, fltAge, fltWeights]);
+
+  // сводка: сортировка по средней доле решённых A/B; ранги — по полному зачёту
   const sumOverall = (m) => { const v = [m.A?.solved, m.B?.solved].filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : -1; };
-  const sumRanked = React.useMemo(() => [...models].sort((a, b) => sumOverall(b) - sumOverall(a)), [models]);
-  const sumShown = sumScope === 'all' ? sumRanked : sumRanked.slice(0, 10);
-  // баллы A/B: сортировка по Q, срез по охвату
+  const sumRanks = React.useMemo(() => {
+    const r = {};
+    [...models].sort((a, b) => sumOverall(b) - sumOverall(a)).forEach((m, i) => { r[m.id] = i + 1; });
+    return r;
+  }, [models]);
+  const sumFiltered = React.useMemo(() => [...filtered].sort((a, b) => sumOverall(b) - sumOverall(a)), [filtered]);
+  const sumShown = sumScope === 'all' ? sumFiltered : sumFiltered.slice(0, 10);
+  // баллы A/B: сортировка по Q; полный список — источник рангов, фильтрованный — строки
   const qKey = view === 'A' ? 'qA' : 'qB';
-  const scoreRanked = React.useMemo(() => models.filter((m) => m[qKey] != null && m[view]).sort((a, b) => b[qKey] - a[qKey]), [models, qKey, view]);
-  const scoreShown = scoreScope === 'all' ? scoreRanked : scoreRanked.slice(0, 10);
+  const scoreAll = React.useMemo(() => models.filter((m) => m[qKey] != null && m[view]).sort((a, b) => b[qKey] - a[qKey]), [models, qKey, view]);
+  const scoreFiltered = React.useMemo(() => filtered.filter((m) => m[qKey] != null && m[view]).sort((a, b) => b[qKey] - a[qKey]), [filtered, qKey, view]);
+  const scoreShown = scoreScope === 'all' ? scoreFiltered : scoreFiltered.slice(0, 10);
 
   return (
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
@@ -490,14 +823,19 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
         <Tab label="Экономика" short="Эконом." sub="качество ↔ цена" compact={isMobile} active={view === 'econ'} onClick={() => setView('econ')} />
       </div>
 
-      {view === 'econ' && <EconomyView models={models} navigate={navigate} />}
+      <LeaderFilters models={models} q={fltQ} setQ={setFltQ} vendors={fltVendors} setVendors={setFltVendors}
+        price={fltPrice} setPrice={setFltPrice} age={fltAge} setAge={setFltAge}
+        weights={fltWeights} setWeights={setFltWeights}
+        shown={filtered.length} total={models.length} />
+
+      {view === 'econ' && (filtered.length ? <EconomyView models={filtered} navigate={navigate} /> : <EmptyNote />)}
 
       {view === 'summary' && (
         <>
           <p style={{ margin: isMobile ? '0 0 10px' : '0 0 14px', fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', lineHeight: 1.5, textAlign: isMobile ? 'justify' : 'left' }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.{isMobile ? ' Нажмите на модель — откроется её код по задачам.' : ''}</p>
-          <TableExport scope={sumScope} setScope={setSumScope} count={sumRanked.length} name={`prism_summary_${sumScope}`}
+          <TableExport scope={sumScope} setScope={setSumScope} count={sumFiltered.length} name={`prism_summary_${sumScope}`}
             render={(ref, C) => <SummaryTableSvg svgRef={ref} rows={sumShown} meta={meta} C={C} />} />
-          <SummaryView models={sumShown} navigate={navigate} />
+          <SummaryView models={sumShown} navigate={navigate} ranks={sumRanks} />
         </>
       )}
 
@@ -505,12 +843,12 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
         <>
           <div style={{ marginBottom: 16 }}><Segmented items={SUBS} value={sub} onChange={setSub} /></div>
           {sub === 'overall' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>{view === 'A' ? `${meta.tasksA || 0} алгоритмических задач` : `${meta.tasksB || 0} платформенных задач`}. Q — средний балл по осям. ± — погрешность оценки (95% доверительный интервал).</p>}
-          {sub === 'overall' && <TableExport scope={scoreScope} setScope={setScoreScope} count={scoreRanked.length} name={`prism_scores_${view}_${scoreScope}`}
+          {sub === 'overall' && <TableExport scope={scoreScope} setScope={setScoreScope} count={scoreFiltered.length} name={`prism_scores_${view}_${scoreScope}`}
             render={(ref, C) => <ScoresTableSvg svgRef={ref} cat={view} rows={scoreShown} meta={meta} C={C} />} />}
-          {sub === 'overall' && <OverallTable cat={view} models={scoreShown} navigate={navigate} />}
-          {sub === 'funnel' && <FunnelView cat={view} models={models} navigate={navigate} />}
-          {sub === 'profile' && <ProfileView cat={view} models={models} cols={cols[view]} labels={labels} navigate={navigate} />}
-          {sub === 'charts' && <LeaderChart key={view} cat={view} models={models} meta={meta} navigate={navigate} />}
+          {sub === 'overall' && <OverallTable cat={view} models={scoreShown} rankSource={scoreAll} navigate={navigate} />}
+          {sub === 'funnel' && <FunnelView cat={view} models={filtered} rankSource={models} navigate={navigate} />}
+          {sub === 'profile' && <ProfileView cat={view} models={filtered} cols={cols[view]} labels={labels} navigate={navigate} />}
+          {sub === 'charts' && (filtered.length ? <LeaderChart key={view} cat={view} models={filtered} meta={meta} navigate={navigate} /> : <EmptyNote />)}
         </>
       )}
     </main>

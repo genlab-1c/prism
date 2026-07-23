@@ -27,7 +27,7 @@ const readYAML = (p) => yaml.load(fs.readFileSync(p, 'utf8'));
 // --- каталог моделей (имя → id, вендор) и цены (id → тариф)
 const catalog = readYAML(path.join(REPO, 'generation', 'models.yaml')).models;
 const byName = {};
-for (const m of Object.values(catalog)) byName[m.name] = { id: m.id, vendor: m.vendor };
+for (const m of Object.values(catalog)) byName[m.name] = { id: m.id, vendor: m.vendor, released: m.released || '', weights: m.weights || '' };
 const pricing = readYAML(path.join(REPO, 'generation', 'pricing.yaml')).prices || {};
 
 const VENDOR = {
@@ -171,6 +171,11 @@ const costOf = (id) => {
   if (!p) return '—';
   return `${Math.round(((p.input + p.output) / 2) * RUB)} ₽/1M`; // средняя цена за 1 млн токенов
 };
+// то же число без форматирования — для фильтра по цене на витрине
+const costNum = (id) => {
+  const p = pricing[id];
+  return p ? Math.round(((p.input + p.output) / 2) * RUB) : null;
+};
 
 /* Экономика прогона по модели: суммарные токены, ср. время на задачу и стоимость
    ВСЕГО прогона (A+B). Стоимость считаем по тарифу × фактическим токенам с разделением
@@ -218,7 +223,11 @@ const models = [...names].map((name) => {
     name,
     vendor: meta.vendor || '',
     family: vendorName(meta.vendor),
+    released: meta.released || '',
+    weights: meta.weights || '', // open | proprietary — фильтр «открытая/закрытая» на витрине
+
     cost: costOf(meta.id),
+    costRub: costNum(meta.id),
     econ: econOf(name, meta.id),
     A: a ? { S: r1(a.S), M: r1(a.M), O: r1(a.O) } : null,
     B: b ? { S: r1(b.S), M: r1(b.M), O: r1(b.O), P: r1(b.P) } : null,
