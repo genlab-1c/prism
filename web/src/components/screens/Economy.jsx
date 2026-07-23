@@ -1,11 +1,11 @@
-/* PRISM web — вкладка «Экономика»: понятный рейтинг цена/качество (основной вид)
-   + наглядная карта-разброс ниже. Общий переключатель Цена/Скорость управляет обоими.
+/* PRISM web — вкладка «Экономика»: понятный рейтинг цена/качество.
    Рейтинг читается сверху вниз: каждая модель подписана, полосы качества и цены,
    значок «оптимум» = нет варианта одновременно дешевле/быстрее И сильнее. */
 import React from 'react';
 import { Badge } from '../core/Badge.jsx';
 import { VendorLogo } from '../prism/VendorLogo.jsx';
-import { METRICS, paretoSet, QuadrantView } from './Quadrant.jsx';
+import { METRICS, paretoSet } from './Quadrant.jsx';
+import { useIsMobile } from '../../lib/useMediaQuery.js';
 
 function Segmented({ items, value, onChange }) {
   return (
@@ -58,7 +58,35 @@ function Row({ p, cfg, maxX, qMax, optimum, dominator, onClick }) {
   );
 }
 
+// мобильная строка рейтинга: модель + бейдж сверху, полосы качества и цены парой под ними —
+// без горизонтального скролла и без шапки-таблицы (подписи живут в самих полосах)
+function MobileRow({ p, cfg, maxX, qMax, optimum, dominator, first, onClick }) {
+  return (
+    <div role="button" tabIndex={0} onClick={onClick}
+      style={{ display: 'flex', flexDirection: 'column', gap: 8, padding: '12px 12px', cursor: 'pointer',
+        borderTop: first ? 'none' : '1px solid var(--line)',
+        background: optimum ? 'var(--top-tint)' : 'transparent',
+        boxShadow: optimum ? 'inset 2px 0 0 var(--axis-o)' : 'none', opacity: optimum ? 1 : 0.92 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+        <VendorLogo vendor={p.vendor} name={p.name} size={28} />
+        <div style={{ minWidth: 0, flex: 1 }}>
+          <div style={{ fontFamily: 'var(--font-sans)', fontSize: 14, fontWeight: 600, color: 'var(--ink-100)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--ink-400)', marginTop: 1 }}>{dominator ? `уступает ${dominator}` : p.family}</div>
+        </div>
+        {optimum
+          ? <Badge tone="ok" dot={false} size="sm">оптимум</Badge>
+          : <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>}
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+        <Bar frac={p.q / qMax} color={qColor(p.q)} label={`Q ${p.q.toFixed(2)}`} />
+        <Bar frac={p.x / maxX} color="var(--ink-300)" label={cfg.fmt(p.x)} sub={p.hint} />
+      </div>
+    </div>
+  );
+}
+
 function ValueRanking({ models, navigate, metric }) {
+  const isMobile = useIsMobile();
   const cfg = METRICS[metric];
   const pts = models
     .filter((m) => m.qOverall != null && m.econ && m.econ[cfg.key] != null && m.econ[cfg.key] > 0)
@@ -87,6 +115,21 @@ function ValueRanking({ models, navigate, metric }) {
   const rest = pts.filter((p) => !front.has(p.id)).sort((a, b) => b.q - a.q);
 
   const head = { fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)' };
+
+  if (isMobile) {
+    return (
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflow: 'hidden' }}>
+        {optimum.map((p, i) => <MobileRow key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum dominator={null} first={i === 0} onClick={() => navigate('model', p.id)} />)}
+        {rest.length > 0 && (
+          <div style={{ padding: '9px 12px', background: 'var(--surface-sunken)', borderTop: '1px solid var(--line)' }}>
+            <span style={{ ...head, color: 'var(--ink-400)' }}>остальные — есть вариант дешевле и сильнее</span>
+          </div>
+        )}
+        {rest.map((p) => <MobileRow key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum={false} dominator={dominatorOf(p)} onClick={() => navigate('model', p.id)} />)}
+      </div>
+    );
+  }
+
   return (
     <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflowX: 'auto' }}>
      <div style={{ minWidth: 600 }}>
@@ -112,29 +155,15 @@ function ValueRanking({ models, navigate, metric }) {
 export function EconomyView({ models = [], navigate = () => {} }) {
   const [metric, setMetric] = React.useState('cost');
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
-        <div>
-          <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink-100)' }}>{metric === 'cost' ? 'Качество за деньги' : metric === 'time' ? 'Качество за время' : 'Качество на токен'}</div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', marginTop: 3 }}>
-            <span style={{ color: 'var(--axis-o)' }}>оптимум</span> — чтобы получить больше качества, придётся взять {metric === 'cost' ? 'дороже' : metric === 'time' ? 'медленнее' : 'прожорливее по токенам'} · сортировка по качеству
-          </div>
-        </div>
+    <div>
+      {/* отступ до таблицы 16 — как у переключателя видов на вкладках A/B */}
+      <div style={{ marginBottom: 16 }}>
         <Segmented items={[{ key: 'cost', label: 'Цена' }, { key: 'time', label: 'Скорость' }, { key: 'tokens', label: 'Токены' }]} value={metric} onChange={setMetric} />
       </div>
 
       <ValueRanking models={models} navigate={navigate} metric={metric} />
 
-      {/* наглядная карта-разброс — вторичный вид для тех, кто хочет общую картину */}
-      <div>
-        <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink-100)', marginBottom: 4 }}>Карта разброса</div>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', marginBottom: 12 }}>выше и левее — выгоднее · <span style={{ color: 'var(--axis-o)' }}>зелёные</span> = оптимум (подписаны) · наведи на точку — имя, клик — открыть</div>
-        <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
-          <QuadrantView models={models} navigate={navigate} metric={metric} />
-        </div>
-      </div>
-
-      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: 0 }}>
+      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: '22px 0 0' }}>
         {metric === 'tokens'
           ? '«токенов на генерацию» — среднее число токенов (вход + выход) на один ответ. Меньше = лаконичнее, и не зависит от тарифа. Важно: мало токенов ≠ дёшево — дорогая модель бывает экономной по токенам (например, GPT‑5.5 краток, но токен у него дорогой). '
           : 'цена генерации — средняя стоимость одного ответа модели (по всем задачам) = прайс-лист провайдера × реально сгенерированные токены. Зарубежные — тариф OpenRouter, Sber и Yandex — прайс-лист провайдера. '}
