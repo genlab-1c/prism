@@ -47,3 +47,5 @@ prices:
   "glm-5.2":                       { input: 0.92, output: 2.9 }    # OpenRouter z-ai/glm-5.2
   "kimi-k2.7-code":                { input: 0.72, output: 3.49 }   # OpenRouter moonshotai/kimi-k2.7-code
   "kimi-k3":                       { input: 3.0,  output: 15.0 }   # Moonshot/OpenRouter kimi-k3, прайс-лист (сверено веб-поиском)
+  "gemini-3.6-flash":              { input: 1.5,  output: 7.5 }    # Google (ai.google.dev) = OpenRouter, прайс-лист 2026-07-23; розница AITUNNEL ~2x выше
+  "gemini-3.5-flash-lite":         { input: 0.3,  output: 2.5 }    # Google (ai.google.dev) = OpenRouter, прайс-лист 2026-07-23; розница AITUNNEL ~2x выше

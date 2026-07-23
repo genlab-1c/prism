@@ -472,6 +472,34 @@ models:
       supports_seed: false
       supports_tools: true               # function calling → агентная B
 
+  gemini36_flash:
+    id: "gemini-3.6-flash"               # канал — AITUNNEL (openai_compat); id по странице модели, сверить GET /v1/models
+    name: "Gemini 3.6 Flash"
+    vendor: google
+    weights: proprietary
+    released: "2026-07-21"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
+  gemini35_lite:
+    id: "gemini-3.5-flash-lite"          # канал — AITUNNEL (openai_compat); id по странице модели, сверить GET /v1/models
+    name: "Gemini 3.5 Flash Lite"
+    vendor: google
+    weights: proprietary
+    released: "2026-07-21"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
