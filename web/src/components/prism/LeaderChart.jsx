@@ -65,9 +65,36 @@ const STAMP = (meta) => `PRISM · genlab-1c/prism${meta?.version ? ` · v${meta.
 const svgStyle = { width: '100%', height: 'auto', display: 'block', borderRadius: 8 };
 
 /* ── рейтинг по Q (горизонтальные бары) ── */
-function RankingSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate }) {
+function RankingSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobile }) {
   const qKey = cat === 'A' ? 'qA' : 'qB';
   const rows = shown; // уже отсортировано лучшая→худшая; лучший сверху
+  if (mobile) {
+    // мобила: узкий холст, имя и балл СТРОКОЙ над баром — левого поля под подписи нет
+    const W = 440, L = 16, R = W - 16, top = 40, rh = 42, H = top + rows.length * rh + 34;
+    const x = (q) => L + (q / 10) * (R - L);
+    return (
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
+        <text x={12} y={22} fontSize="13" fontWeight="700" fill={C.ink}>Рейтинг PRISM — категория {cat} · Q</text>
+        {[0, 2, 4, 6, 8, 10].map((t) => (
+          <g key={t}>
+            <line x1={x(t)} y1={top - 4} x2={x(t)} y2={H - 26} stroke={C.grid} strokeDasharray="2 4" />
+            <text x={x(t)} y={H - 12} textAnchor="middle" fontSize="9" fill={C.muted}>{t}</text>
+          </g>
+        ))}
+        {rows.map((m, i) => {
+          const y = top + i * rh; const q = m[qKey]; const rank = i + 1;
+          return (
+            <g key={m.id} style={{ cursor: 'pointer' }} onClick={() => navigate && navigate('model', m.id)}>
+              <text x={L} y={y + 12} fontSize="11.5" fill={C.ink} fontWeight={rank === 1 ? 700 : 400}>{`${rank}. ${m.name}`}</text>
+              <text x={R} y={y + 12} textAnchor="end" fontSize="11" fontWeight="600" fill={C.sub}>{q.toFixed(2)}</text>
+              <rect x={L} y={y + 18} width={Math.max(2, x(q) - L)} height={13} rx={3} fill={qColor(q)} opacity={0.9} />
+            </g>
+          );
+        })}
+        <text x={W - 10} y={H - 3} textAnchor="end" fontSize="8" fill={C.muted}>{STAMP(meta)}</text>
+      </svg>
+    );
+  }
   const L = 210, R = 858, top = 44, rh = 30, W = 900, H = top + rows.length * rh + 50;
   const x = (q) => L + (q / 10) * (R - L);
   return (
@@ -96,9 +123,46 @@ function RankingSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate }) 
 }
 
 /* ── радар SMOP ── */
-function RadarSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate }) {
+function RadarSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobile }) {
   const qKey = cat === 'A' ? 'qA' : 'qB';
   const axes = CAT_AXES[cat];
+  if (mobile) {
+    // мобила: радар сверху по центру, легенда КОЛОНКОЙ ПОД ним (справа не помещается)
+    const W = 440, cx = 220, cy = 226, R = 140;
+    const legTop = cy + R + 42;
+    const H = legTop + shown.length * 20 + 16;
+    const ang = (i) => -Math.PI / 2 + (i / axes.length) * 2 * Math.PI;
+    const pt = (i, v) => [cx + Math.cos(ang(i)) * R * (v / 10), cy + Math.sin(ang(i)) * R * (v / 10)];
+    return (
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
+        <text x={12} y={22} fontSize="13" fontWeight="700" fill={C.ink}>Профиль SMOP — категория {cat} ({shown.length})</text>
+        {[2, 4, 6, 8, 10].map((r) => (
+          <polygon key={r} points={axes.map((_, i) => pt(i, r).join(',')).join(' ')} fill="none" stroke={C.grid} strokeDasharray="2 3" />
+        ))}
+        {axes.map((a, i) => {
+          const [ex, ey] = pt(i, 11.2);
+          return (<g key={a}><line x1={cx} y1={cy} x2={pt(i, 10)[0]} y2={pt(i, 10)[1]} stroke={C.grid} /><text x={ex} y={ey + 4} textAnchor="middle" fontSize="12" fontWeight="700" fill={AXIS[a]}>{a}</text></g>);
+        })}
+        {shown.map((m, idx) => {
+          const col = PALETTE[idx % PALETTE.length];
+          const pts = axes.map((a, i) => pt(i, (m[cat] && m[cat][a]) || 0).join(',')).join(' ');
+          return <polygon key={m.id} points={pts} fill={col} fillOpacity={0.05} stroke={col} strokeWidth={1.4}
+            style={{ cursor: 'pointer' }} onClick={() => navigate && navigate('model', m.id)} />;
+        })}
+        {shown.map((m, idx) => {
+          const col = PALETTE[idx % PALETTE.length]; const y = legTop + idx * 20;
+          return (
+            <g key={m.id} style={{ cursor: 'pointer' }} onClick={() => navigate && navigate('model', m.id)}>
+              <circle cx={22} cy={y - 3} r={4.5} fill={col} />
+              <text x={34} y={y} fontSize="11" fill={C.ink}>{m.name}</text>
+              <text x={W - 18} y={y} textAnchor="end" fontSize="10.5" fontWeight="600" fill={C.sub}>{m[qKey].toFixed(2)}</text>
+            </g>
+          );
+        })}
+        <text x={W - 10} y={H - 3} textAnchor="end" fontSize="8" fill={C.muted}>{STAMP(meta)}</text>
+      </svg>
+    );
+  }
   const cx = 300, cy = 300, R = 210, W = 900, H = Math.max(560, 92 + shown.length * 24);
   const ang = (i) => -Math.PI / 2 + (i / axes.length) * 2 * Math.PI;
   const pt = (i, v) => [cx + Math.cos(ang(i)) * R * (v / 10), cy + Math.sin(ang(i)) * R * (v / 10)];
@@ -135,8 +199,48 @@ function RadarSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate }) {
 }
 
 /* ── оси SMOP: сгруппированные бары ── */
-function BarsSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate }) {
+function BarsSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobile }) {
   const axes = CAT_AXES[cat];
+  if (mobile) {
+    // мобила: имя над группой баров; легенда осей с переносом строк
+    const W = 440, L = 16, R = W - 46;
+    const x = (v) => L + (v / 10) * (R - L);
+    const chips = []; let lx = L, ly = 42;
+    for (const a of axes) {
+      const label = `${a} · ${AXIS_NAME[a]}`;
+      const w = 12 + 6 + label.length * 5.6 + 14;
+      if (lx + w > W - 12) { lx = L; ly += 16; }
+      chips.push({ a, label, x: lx, y: ly });
+      lx += w;
+    }
+    const T = ly + 20;
+    const bh = 10, rowH = 18 + axes.length * (bh + 1) + 8;
+    const H = T + shown.length * rowH + 28;
+    return (
+      <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
+        <text x={12} y={22} fontSize="13" fontWeight="700" fill={C.ink}>Профиль по осям SMOP — кат. {cat} ({shown.length})</text>
+        {chips.map((ch) => (
+          <g key={ch.a}><rect x={ch.x} y={ch.y - 9} width={11} height={11} fill={AXIS[ch.a]} rx={2} /><text x={ch.x + 16} y={ch.y} fontSize="10" fill={C.sub}>{ch.label}</text></g>
+        ))}
+        {[0, 2, 4, 6, 8, 10].map((t) => (
+          <g key={t}><line x1={x(t)} y1={T - 4} x2={x(t)} y2={H - 22} stroke={C.grid} strokeDasharray="2 4" /><text x={x(t)} y={H - 9} textAnchor="middle" fontSize="9" fill={C.muted}>{t}</text></g>
+        ))}
+        {shown.map((m, ri) => {
+          const y0 = T + ri * rowH;
+          return (
+            <g key={m.id} style={{ cursor: 'pointer' }} onClick={() => navigate && navigate('model', m.id)}>
+              <text x={L} y={y0 + 12} fontSize="11.5" fill={C.ink} fontWeight={ri === 0 ? 700 : 400}>{`${ri + 1}. ${m.name}`}</text>
+              {axes.map((a, ai) => {
+                const v = (m[cat] && m[cat][a]) || 0; const by = y0 + 18 + ai * (bh + 1);
+                return (<g key={a}><rect x={L} y={by} width={Math.max(1, x(v) - L)} height={bh} fill={AXIS[a]} opacity={0.9} /><text x={x(v) + 4} y={by + bh - 2} fontSize="8.5" fill={C.sub}>{v.toFixed(1)}</text></g>);
+              })}
+            </g>
+          );
+        })}
+        <text x={W - 10} y={H - 3} textAnchor="end" fontSize="8" fill={C.muted}>{STAMP(meta)}</text>
+      </svg>
+    );
+  }
   const L = 210, R = 830, T = 70, rowH = 48, W = 900, H = T + shown.length * rowH + 46;
   const x = (v) => L + (v / 10) * (R - L);
   const bh = (rowH - 16) / axes.length;
@@ -331,6 +435,7 @@ function ModelScope({ ranked, scope, setScope, custom, setCustom }) {
 export function LeaderChart({ cat, models = [], meta = {}, navigate }) {
   const theme = useTheme();
   const C = THEME[theme];
+  const isMobile = useIsMobile();
   const qKey = cat === 'A' ? 'qA' : 'qB';
   const [kind, setKind] = React.useState('radar');
   const [hover, setHover] = React.useState(null);
@@ -350,15 +455,18 @@ export function LeaderChart({ cat, models = [], meta = {}, navigate }) {
     <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: 16 }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12, marginBottom: 12 }}>
         <div>{tab('radar', 'Радар SMOP')}{tab('ranking', 'Рейтинг Q')}{tab('bars', 'Оси SMOP')}</div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <Btn onClick={() => ref.current && exportSvg(ref.current, name)}>↓ SVG</Btn>
-          <Btn primary onClick={() => ref.current && exportPng(ref.current, name, C.bg)}>↓ PNG</Btn>
-        </div>
+        {/* выгрузка картинки — только на десктопе (как в TableExport) */}
+        {!isMobile && (
+          <div style={{ display: 'flex', gap: 8 }}>
+            <Btn onClick={() => ref.current && exportSvg(ref.current, name)}>↓ SVG</Btn>
+            <Btn primary onClick={() => ref.current && exportPng(ref.current, name, C.bg)}>↓ PNG</Btn>
+          </div>
+        )}
       </div>
       <ModelScope ranked={ranked} scope={scope} setScope={setScope} custom={custom} setCustom={setCustom} />
       {shown.length === 0
         ? <p style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)', padding: '30px 0', textAlign: 'center' }}>выбери хотя бы одну модель</p>
-        : <Chart svgRef={ref} cat={cat} shown={shown} meta={meta} C={C} hover={hover} setHover={setHover} navigate={navigate} />}
+        : <Chart svgRef={ref} cat={cat} shown={shown} meta={meta} C={C} hover={hover} setHover={setHover} navigate={navigate} mobile={isMobile} />}
     </div>
   );
 }
