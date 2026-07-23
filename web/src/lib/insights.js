@@ -94,11 +94,14 @@ export function buildInsights(model, models, tagLabels = {}) {
   const myCost = model.econ?.genCost ?? null;
   const named = [...losesTo, ...beats];
   const cheaperThan = [];
+  const pricierThan = []; // симметрия «дешевле»: против кого эта модель заметно дороже (та же граница 1.3×)
   if (myCost != null && myCost > 0) {
     for (const nm of named) {
       const other = models.find((m) => m.name === nm);
       const oc = other?.econ?.genCost;
-      if (oc != null && oc / myCost >= 1.3) cheaperThan.push({ name: nm, mult: fmtMult(oc / myCost) });
+      if (oc == null) continue;
+      if (oc / myCost >= 1.3) cheaperThan.push({ name: nm, mult: fmtMult(oc / myCost) });
+      else if (oc > 0 && myCost / oc >= 1.3) pricierThan.push({ name: nm, mult: fmtMult(myCost / oc) });
     }
   }
   const aboveCosts = above.map((m) => m.econ?.genCost).filter((c) => c != null);
@@ -125,7 +128,7 @@ export function buildInsights(model, models, tagLabels = {}) {
     losesTo, beats,
     strongCat, strongQ, strongS, weakCat, weakSpot, weakTag,
     genCost: myCost, genCostFmt: fmtRubFine(myCost),
-    cheaperThan, cheaperThanAllAbove, cheaperButWeaker,
+    cheaperThan, pricierThan, cheaperThanAllAbove, cheaperButWeaker,
     tokensOut: model.econ?.tokensOut ?? null, economical,
     avgTime: model.econ?.avgTime ?? null, slowest,
     bScores: model.B, aScores: model.A,

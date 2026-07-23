@@ -214,6 +214,18 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
           </div>
         )}
 
+        {/* дороже конкретных конкурентов — честная симметрия «дешевле», а не только козыри */}
+        {(ins.pricierThan || []).length > 0 && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: ins.cheaperThan.length ? 8 : 14 }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>дороже</span>
+            {ins.pricierThan.map((x) => (
+              <a key={x.name} href={mHref(x.name) || undefined} style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: 'var(--warn)', background: 'color-mix(in srgb, var(--warn) 12%, transparent)', borderRadius: 'var(--radius-xs)', padding: '2px 9px', textDecoration: 'none', cursor: mHref(x.name) ? 'pointer' : 'default' }}>
+                <b>{x.mult}</b> {x.name}
+              </a>
+            ))}
+          </div>
+        )}
+
         {/* с кем сравнивать: сильнее / слабее по общему качеству */}
         {(ins.beats.length > 0 || ins.losesTo.length > 0) && (
           <div style={{ marginTop: 18, paddingTop: 16, borderTop: '1px solid var(--line)' }}>
