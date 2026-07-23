@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_A_20260617_031633",
   "category": "A",
-  "timestamp": "2026-07-19T23:38:11.610277",
+  "timestamp": "2026-07-23T20:53:11.510459",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -35,7 +35,9 @@
     "MiMo-V2.5 Pro",
     "GLM-5.2",
     "Kimi K2.7 Code",
-    "Kimi K3"
+    "Kimi K3",
+    "Gemini 3.6 Flash",
+    "Gemini 3.5 Flash Lite"
   ],
   "tasks_count": 15,
   "runs_per_task": 1,
@@ -1361,6 +1363,86 @@
       "avg_time": 37.4
     },
     {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОбъединитьИОтсортироватьМассивы(Знач ИсходныйМассив, Знач МассивНовыхЗначений)\n\t\n\tСписокЗначенийДляСортировки = Новый СписокЗначений;\n\t\n\tДля Каждого Значение Из ИсходныйМассив Цикл\n\t\tСписокЗначенийДляСортировки.Добавить(Значение);\n\tКонецЦикла;\n\t\n\tДля Каждого Значение Из МассивНовыхЗначений Цикл\n\t\tСписокЗначенийДляСортировки.Добавить(Значение);\n\tКонецЦикла;\n\t\n\tСписокЗначенийДляСортировки.СортироватьПоЗначению(НаправлениеСортировки.Возрастание);\n\t\n\tВозврат СписокЗначенийДляСортировки.ВыгрузитьЗначения();\n\nКонецФункции\n```",
+          "response_hash": "7acc20fabb64ea4c397d6286ff5fdf34fbb231ca67dfff469151249ecb5e3d43",
+          "tokens_input": 180,
+          "tokens_output": 1717,
+          "tokens_total": 1897,
+          "elapsed_time": 11.222850799560547,
+          "cost_input": 0.00027,
+          "cost_output": 0.0128775,
+          "cost_total": 0.0131475,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7acc20fabb64ea4c397d6286ff5fdf34fbb231ca67dfff469151249ecb5e3d43",
+        "most_common_count": 1,
+        "hashes": [
+          "7acc20fabb64ea4c397d6286ff5fdf34fbb231ca67dfff469151249ecb5e3d43"
+        ]
+      },
+      "total_tokens": 1897,
+      "total_cost": 0.0131475,
+      "avg_time": 11.223
+    },
+    {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОбъединитьИОтсортироватьМассивы(ИсходныйОтсортированный, НовыеЗначения) Экспорт\n    \n    Результат = Новый Массив;\n    \n    Если (ИсходныйОтсортированный = Неопределено Или ИсходныйОтсортированный.Количество() = 0) \n        И (НовыеЗначения = Неопределено Или НовыеЗначения.Количество() = 0) Тогда\n        Возврат Результат;\n    КонецЕсли;\n    \n    // Копируем исходный массив\n    Если ИсходныйОтсортированный <> Неопределено Тогда\n        Для Каждого Элемент Из ИсходныйОтсортированный Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    \n    // Добавляем новые значения\n    Если НовыеЗначения <> Неопределено Тогда\n        Для Каждого Элемент Из НовыеЗначения Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    \n    // Сортируем результирующий массив\n    КоличествоЭлементов = Результат.Количество();\n    Если КоличествоЭлементов > 1 Тогда\n        \n        // Быстрая сортировка (реализация без рекурсии или простая сортировка вставками для надежности)\n        // Для простоты и производительности на встроенном языке используем алгоритм сортировки вставками с бинарным поиском или стандартный перебор\n        Для Инд1 = 1 по КоличествоЭлементов - 1 Цикл\n            ТекущийЭлемент = Результат[Инд1];\n            Инд2 = Инд1 - 1;\n            Пока Инд2 >= 0 И Результат[Инд2] > ТекущийЭлемент Цикл\n                Результат[Инд2 + 1] = Результат[Инд2];\n                Инд2 = Инд2 - 1;\n            КонецЦикла;\n            Результат[Инд2 + 1] = ТекущийЭлемент;\n        КонецЦикла;\n        \n    КонецЕсли;\n    \n    Возврат Результат;\n    \nКонецФункции\n```",
+          "response_hash": "e512b789dc549adcdb5888972258d061cf10e52a09762448720c1e427b922b6e",
+          "tokens_input": 182,
+          "tokens_output": 525,
+          "tokens_total": 707,
+          "elapsed_time": 2.252782106399536,
+          "cost_input": 5.46e-05,
+          "cost_output": 0.0013124999999999999,
+          "cost_total": 0.0013670999999999998,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e512b789dc549adcdb5888972258d061cf10e52a09762448720c1e427b922b6e",
+        "most_common_count": 1,
+        "hashes": [
+          "e512b789dc549adcdb5888972258d061cf10e52a09762448720c1e427b922b6e"
+        ]
+      },
+      "total_tokens": 707,
+      "total_cost": 0.0013670999999999998,
+      "avg_time": 2.253
+    },
+    {
       "task_id": "A11",
       "task_name": "Рабочие дни между датами",
       "model_id": "aliceai-llm/latest",
@@ -2679,6 +2761,86 @@
       "total_tokens": 1427,
       "total_cost": 0.017265000000000003,
       "avg_time": 28.901
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьКоличествоРабочихДней(ДатаНачала, ДатаОкончания, МассивПраздников) Экспорт\n\n\tСДНачала = НачалоДня(ДатаНачала);\n\tСДОкончания = НачалоДня(ДатаОкончания);\n\n\tЕсли СДОкончания < СДНачала Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tПраздникиСоответствие = Новый Соответствие;\n\tДля Каждого Праздник Из МассивПраздников Цикл\n\t\tПраздникиСоответствие.Вставить(НачалоДня(Праздник), Истина);\n\tКонецЦикла;\n\n\tКоличествоРабочихДней = 0;\n\tТекущаяДата = СДНачала;\n\n\tПока ТекущаяДата <= СДОкончания Цикл\n\t\tНомерДняНедели = ДеньНедели(ТекущаяДата);\n\t\t\n\t\tЕсли НомерДняНедели >= 1 И НомерДняНедели <= 5 Тогда\n\t\t\tЕсли ПраздникиСоответствие[ТекущаяДата] = Неопределено Тогда\n\t\t\t\tКоличествоРабочихДней = КоличествоРабочихДней + 1;\n\t\t\tКонецЕсли;\n\t\tКонецЕсли;\n\t\t\n\t\tТекущаяДата = ТекущаяДата + 86400;\n\tКонецЦикла;\n\n\tВозврат КоличествоРабочихДней;\n\nКонецФункции\n```",
+          "response_hash": "f6cb293a1ae06b854cb32157ff833b03faf26b85dbca30646fd12bfdc3d1defa",
+          "tokens_input": 182,
+          "tokens_output": 1507,
+          "tokens_total": 1689,
+          "elapsed_time": 7.451387882232666,
+          "cost_input": 0.000273,
+          "cost_output": 0.0113025,
+          "cost_total": 0.0115755,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f6cb293a1ae06b854cb32157ff833b03faf26b85dbca30646fd12bfdc3d1defa",
+        "most_common_count": 1,
+        "hashes": [
+          "f6cb293a1ae06b854cb32157ff833b03faf26b85dbca30646fd12bfdc3d1defa"
+        ]
+      },
+      "total_tokens": 1689,
+      "total_cost": 0.0115755,
+      "avg_time": 7.451
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьКоличествоРабочихДней(НачалоПериода, КонецПериода, МассивПраздников) Экспорт\n\t\n\tЕсли КонецПериода < НачалоПериода Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tКоличествоРабочихДней = 0;\n\tТекущаяДата = НачалоПериода;\n\t\n\tПока ТекущаяДата <= КонецПериода Цикл\n\t\t\n\t\tДеньНеделиНомер = ДеньНедели(ТекущаяДата);\n\t\t\n\t\t// 1 - Понедельник, ..., 5 - Пятница\n\t\tЕсли ДеньНеделиНомер >= 1 И ДеньНеделиНомер <= 5 Тогда\n\t\t\t\n\t\t\tЕсли МассивПраздников.Найти(ТекущаяДата) = Неопределено Тогда\n\t\t\t\tКоличествоРабочихДней = КоличествоРабочихДней + 1;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\tКонецЕсли;\n\t\t\n\t\tТекущаяДата = ТекущаяДата + 86400; // Прибавляем один день в секундах\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат КоличествоРабочихДней;\n\nКонецФункции\n```",
+          "response_hash": "780cc21ae76833500c0c1d68b0fca472597dbfeb11c71a1a7953e7a7e853ae7a",
+          "tokens_input": 180,
+          "tokens_output": 288,
+          "tokens_total": 468,
+          "elapsed_time": 1.696749210357666,
+          "cost_input": 5.4000000000000005e-05,
+          "cost_output": 0.00072,
+          "cost_total": 0.0007740000000000001,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "780cc21ae76833500c0c1d68b0fca472597dbfeb11c71a1a7953e7a7e853ae7a",
+        "most_common_count": 1,
+        "hashes": [
+          "780cc21ae76833500c0c1d68b0fca472597dbfeb11c71a1a7953e7a7e853ae7a"
+        ]
+      },
+      "total_tokens": 468,
+      "total_cost": 0.0007740000000000001,
+      "avg_time": 1.697
     },
     {
       "task_id": "A12",
@@ -4001,6 +4163,86 @@
       "avg_time": 17.284
     },
     {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция УдалитьЗначенияИзМассива(ИсходныйМассив, УдаляемоеЗначение)\n\n\tНовыйМассив = Новый Массив;\n\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Элемент <> УдаляемоеЗначение Тогда\n\t\t\tНовыйМассив.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат НовыйМассив;\n\nКонецФункции\n```",
+          "response_hash": "49225e5d166239fd164a5e8a6d5829e5139e21d39f2a1b6e996ba07e3df99a7c",
+          "tokens_input": 147,
+          "tokens_output": 652,
+          "tokens_total": 799,
+          "elapsed_time": 4.512183904647827,
+          "cost_input": 0.0002205,
+          "cost_output": 0.00489,
+          "cost_total": 0.0051105000000000005,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "49225e5d166239fd164a5e8a6d5829e5139e21d39f2a1b6e996ba07e3df99a7c",
+        "most_common_count": 1,
+        "hashes": [
+          "49225e5d166239fd164a5e8a6d5829e5139e21d39f2a1b6e996ba07e3df99a7c"
+        ]
+      },
+      "total_tokens": 799,
+      "total_cost": 0.0051105000000000005,
+      "avg_time": 4.512
+    },
+    {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УдалитьЗначениеИзМассива(ИсходныйМассив, ЗначениеДляУдаления)\n    \n    НовыйМассив = Новый Массив;\n    \n    Для Каждого Элемент Из ИсходныйМассив Цикл\n        Если Элемент <> ЗначениеДляУдаления Тогда\n            НовыйМассив.Добавить(Элемент);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат НовыйМассив;\n    \nКонецФункции",
+          "response_hash": "1e92de0ae4635376f14c4bffad0707f9005af794a09f30e93b9acb457d2c9773",
+          "tokens_input": 145,
+          "tokens_output": 116,
+          "tokens_total": 261,
+          "elapsed_time": 2.2674200534820557,
+          "cost_input": 4.35e-05,
+          "cost_output": 0.00029,
+          "cost_total": 0.00033350000000000003,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1e92de0ae4635376f14c4bffad0707f9005af794a09f30e93b9acb457d2c9773",
+        "most_common_count": 1,
+        "hashes": [
+          "1e92de0ae4635376f14c4bffad0707f9005af794a09f30e93b9acb457d2c9773"
+        ]
+      },
+      "total_tokens": 261,
+      "total_cost": 0.00033350000000000003,
+      "avg_time": 2.267
+    },
+    {
       "task_id": "A13",
       "task_name": "Максимальная сумма подмассива",
       "model_id": "aliceai-llm/latest",
@@ -5319,6 +5561,86 @@
       "total_tokens": 859,
       "total_cost": 0.008913,
       "avg_time": 19.165
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция НайтиМаксимальнуюСуммуПодмассива(Массив)\n\n\tЕсли Массив.Количество() = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tМаксСумма = Массив[0];\n\tТекущаяСумма = Массив[0];\n\n\tДля Индекс = 1 По Массив.Количество() - 1 Цикл\n\t\tЭлемент = Массив[Индекс];\n\t\tТекущаяСумма = ?(ТекущаяСумма + Элемент > Элемент, ТекущаяСумма + Элемент, Элемент);\n\t\tМаксСумма = ?(ТекущаяСумма > МаксСумма, ТекущаяСумма, МаксСумма);\n\tКонецЦикла;\n\n\tВозврат МаксСумма;\n\nКонецФункции\n```",
+          "response_hash": "0831f9145a0b3c4ca9eabbb9c7b51125e7ca66e937cadd46c4f7769e0e935c10",
+          "tokens_input": 184,
+          "tokens_output": 1461,
+          "tokens_total": 1645,
+          "elapsed_time": 6.738289833068848,
+          "cost_input": 0.000276,
+          "cost_output": 0.0109575,
+          "cost_total": 0.0112335,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "0831f9145a0b3c4ca9eabbb9c7b51125e7ca66e937cadd46c4f7769e0e935c10",
+        "most_common_count": 1,
+        "hashes": [
+          "0831f9145a0b3c4ca9eabbb9c7b51125e7ca66e937cadd46c4f7769e0e935c10"
+        ]
+      },
+      "total_tokens": 1645,
+      "total_cost": 0.0112335,
+      "avg_time": 6.738
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция НайтиМаксимальнуюСуммуПодмассива(МассивЧисел) Экспорт\n    \n    Если МассивЧисел = Неопределено Или МассивЧисел.Количество() = 0 Тогда\n        Возврат 0;\n    КонецЕсли;\n    \n    МаксимальнаяСумма = МассивЧисел[0];\n    ТекущаяСумма = МассивЧисел[0];\n    \n    Для Индекс = 1 по МассивЧисел.Количество() - 1 Цикл\n        ТекущееЧисло = МассивЧисел[Индекс];\n        \n        ТекущаяСумма = Макс(ТекущееЧисло, ТекущаяСумма + ТекущееЧисло);\n        МаксимальнаяСумма = Макс(МаксимальнаяСумма, ТекущаяСумма);\n    КонецЦикла;\n    \n    Возврат МаксимальнаяСумма;\n    \nКонецФункции\n```",
+          "response_hash": "99a537572e33b07a0ab9b827830c3882cf6c5f83b42939a02c9b7f8795261120",
+          "tokens_input": 184,
+          "tokens_output": 230,
+          "tokens_total": 414,
+          "elapsed_time": 1.229243516921997,
+          "cost_input": 5.52e-05,
+          "cost_output": 0.000575,
+          "cost_total": 0.0006302,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "99a537572e33b07a0ab9b827830c3882cf6c5f83b42939a02c9b7f8795261120",
+        "most_common_count": 1,
+        "hashes": [
+          "99a537572e33b07a0ab9b827830c3882cf6c5f83b42939a02c9b7f8795261120"
+        ]
+      },
+      "total_tokens": 414,
+      "total_cost": 0.0006302,
+      "avg_time": 1.229
     },
     {
       "task_id": "A14",
@@ -6641,6 +6963,86 @@
       "avg_time": 25.903
     },
     {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПеревернутьПорядокСлов(Знач ИсходнаяСтрока)\n\n\tМассивСлов = СтрРазделить(ИсходнаяСтрока, \" \", Ложь);\n\tРезультатМассив = Новый Массив;\n\t\n\tКоличествоСлов = МассивСлов.Количество();\n\tДля Индекс = 1 По КоличествоСлов Цикл\n\t\tРезультатМассив.Добавить(МассивСлов[КоличествоСлов - Индекс]);\n\tКонецЦикла;\n\t\n\tВозврат СтрСоединить(РезультатМассив, \" \");\n\nКонецФункции",
+          "response_hash": "1559f600ae31b173c660093487b8fbe57521a51b009f05b7d4d16448f0c610cf",
+          "tokens_input": 180,
+          "tokens_output": 1090,
+          "tokens_total": 1270,
+          "elapsed_time": 5.51643967628479,
+          "cost_input": 0.00027,
+          "cost_output": 0.008175,
+          "cost_total": 0.008445,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1559f600ae31b173c660093487b8fbe57521a51b009f05b7d4d16448f0c610cf",
+        "most_common_count": 1,
+        "hashes": [
+          "1559f600ae31b173c660093487b8fbe57521a51b009f05b7d4d16448f0c610cf"
+        ]
+      },
+      "total_tokens": 1270,
+      "total_cost": 0.008445,
+      "avg_time": 5.516
+    },
+    {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПеревернутьСловаВСтроке(ИсходнаяСтрока) Экспорт\n\n    МассивСлов = СтрРазделить(СокрЛП(ИсходнаяСтрока), \" \", Истина);\n    \n    Если МассивСлов.Количество() = 0 Тогда\n        Возврат \"\";\n    КонецЕсли;\n    \n    РезультатМассив = Новый Массив;\n    Для Сч = -МассивСлов.Количество() По -1 Цикл\n        РезультатМассив.Добавить(МассивСлов[-Сч]);\n    КонецЦикла;\n    \n    Возврат СтрСоединить(РезультатМассив, \" \");\n\nКонецФункции",
+          "response_hash": "823f7f228a8496da70ed4013e9e16c05e59f0a1bd6d952697d0fe6821431c9cc",
+          "tokens_input": 178,
+          "tokens_output": 157,
+          "tokens_total": 335,
+          "elapsed_time": 1.2076051235198975,
+          "cost_input": 5.34e-05,
+          "cost_output": 0.0003925,
+          "cost_total": 0.0004459,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "823f7f228a8496da70ed4013e9e16c05e59f0a1bd6d952697d0fe6821431c9cc",
+        "most_common_count": 1,
+        "hashes": [
+          "823f7f228a8496da70ed4013e9e16c05e59f0a1bd6d952697d0fe6821431c9cc"
+        ]
+      },
+      "total_tokens": 335,
+      "total_cost": 0.0004459,
+      "avg_time": 1.208
+    },
+    {
       "task_id": "A15",
       "task_name": "Возведение в степень по модулю",
       "model_id": "aliceai-llm/latest",
@@ -7959,6 +8361,86 @@
       "total_tokens": 1240,
       "total_cost": 0.014100000000000001,
       "avg_time": 25.43
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СтепеньПоМодулю(Знач Основание, Знач Показатель, Знач Модуль) Экспорт\n\n\tЕсли Модуль = 1 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tРезультат = 1;\n\tТекущееОснование = Основание % Модуль;\n\tТекущийПоказатель = Показатель;\n\n\tПока ТекущийПоказатель > 0 Цикл\n\t\tЕсли ТекущийПоказатель % 2 = 1 Тогда\n\t\t\tРезультат = (Результат * ТекущееОснование) % Модуль;\n\t\tКонецЕсли;\n\t\t\n\t\tТекущееОснование = (ТекущееОснование * ТекущееОснование) % Модуль;\n\t\tТекущийПоказатель = Цел(ТекущийПоказатель / 2);\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n```",
+          "response_hash": "e01b609440cba8971a3f478e9d267aa7f23d0e92412713496d5d531f878e03a6",
+          "tokens_input": 221,
+          "tokens_output": 1441,
+          "tokens_total": 1662,
+          "elapsed_time": 7.780473709106445,
+          "cost_input": 0.0003315,
+          "cost_output": 0.0108075,
+          "cost_total": 0.011139,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e01b609440cba8971a3f478e9d267aa7f23d0e92412713496d5d531f878e03a6",
+        "most_common_count": 1,
+        "hashes": [
+          "e01b609440cba8971a3f478e9d267aa7f23d0e92412713496d5d531f878e03a6"
+        ]
+      },
+      "total_tokens": 1662,
+      "total_cost": 0.011139,
+      "avg_time": 7.78
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СтепеньПоМодулю(Основание, Показатель, Модуль)\n    \n    Если Модуль = 1 Тогда\n        Возврат 0;\n    КонецЕсли;\n    \n    Результат = 1;\n    Основание = Основание % Модуль;\n    ТекущийПоказатель = Показатель;\n    \n    Пока ТекущийПоказатель > 0 Цикл\n        Если ТекущийПоказатель % 2 = 1 Тогда\n            Результат = (Результат * Основание) % Модуль;\n        КонецЕсли;\n        \n        Основание = (Основание * Основание) % Модуль;\n        ТекущийПоказатель = Цел(ТекущийПоказатель / 2);\n    КонецЦикла;\n    \n    Возврат Результат;\n    \nКонецФункции",
+          "response_hash": "65b97b45f2998b1f146fa9a38cbcbf488b66f644a65492f0c87fc63bbab73978",
+          "tokens_input": 221,
+          "tokens_output": 205,
+          "tokens_total": 426,
+          "elapsed_time": 1.2867047786712646,
+          "cost_input": 6.63e-05,
+          "cost_output": 0.0005124999999999999,
+          "cost_total": 0.0005788,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "65b97b45f2998b1f146fa9a38cbcbf488b66f644a65492f0c87fc63bbab73978",
+        "most_common_count": 1,
+        "hashes": [
+          "65b97b45f2998b1f146fa9a38cbcbf488b66f644a65492f0c87fc63bbab73978"
+        ]
+      },
+      "total_tokens": 426,
+      "total_cost": 0.0005788,
+      "avg_time": 1.287
     },
     {
       "task_id": "A1",
@@ -9281,6 +9763,86 @@
       "avg_time": 111.3
     },
     {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицу(ТаблицаИсточник, ИмяКолонкиГруппировки, ИмяКолонкиСуммы) Экспорт\n\n\tРезультат = ТаблицаИсточник.Скопировать(, ИмяКолонкиГруппировки + \", \" + ИмяКолонкиСуммы);\n\tРезультат.Свернуть(ИмяКолонкиГруппировки, ИмяКолонкиСуммы);\n\t\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "a95770b657d1e0fc37a59ad6436c687fe9a1afdf48dbb490913a53309206d153",
+          "tokens_input": 140,
+          "tokens_output": 1255,
+          "tokens_total": 1395,
+          "elapsed_time": 6.400168418884277,
+          "cost_input": 0.00020999999999999998,
+          "cost_output": 0.0094125,
+          "cost_total": 0.0096225,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "a95770b657d1e0fc37a59ad6436c687fe9a1afdf48dbb490913a53309206d153",
+        "most_common_count": 1,
+        "hashes": [
+          "a95770b657d1e0fc37a59ad6436c687fe9a1afdf48dbb490913a53309206d153"
+        ]
+      },
+      "total_tokens": 1395,
+      "total_cost": 0.0096225,
+      "avg_time": 6.4
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьИСубмироватьТаблицу(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяЧисловойКолонки)\n\t\n\tРезультирующаяТаблица = ИсходнаяТаблица.СкопироватьКолонки();\n\tРезультирующаяТаблица.Очистить();\n\t\n\tРезультирующаяТаблица.Колонки.Очистить();\n\tРезультирующаяТаблица.Колонки.Добавить(ИмяКолонкиГруппировки, ИсходнаяТаблица.Колонки[ИмяКолонкиГруппировки].ТипЗначений);\n\tРезультирующаяТаблица.Колонки.Добавить(ИмяЧисловойКолонки, ИсходнаяТаблица.Колонки[ИмяЧисловойКолонки].ТипЗначений);\n\t\n\tДля Каждого СтрокаТЗ Из ИсходнаяТаблица Цикл\n\t\t\n\t\tСтруктураОтбора = Новый Структура(ИмяКолонкиГруппировки, СтрокаТЗ[ИмяКолонкиГруппировки]);\n\t\tНайденныеСтроки = РезультирующаяТаблица.НайтиСтроки(СтруктураОтбора);\n\t\t\n\t\tЕсли НайденныеСтроки.Количество() > 0 Тогда\n\t\t\tНайденнаяСтрока = НайденныеСтроки[0];\n\t\t\tНайденнаяСтрока[ИмяЧисловойКолонки] = НайденнаяСтрока[ИмяЧисловойКолонки] + СтрокаТЗ[ИмяЧисловойКолонки];\n\t\tИначе\n\t\t\tНоваяСтрока = РезультирующаяТаблица.Добавить();\n\t\t\tНоваяСтрока[ИмяКолонкиГруппировки] = СтрокаТЗ[ИмяКолонкиГруппировки];\n\t\t\tНоваяСтрока[ИмяЧисловойКолонки] = СтрокаТЗ[ИмяЧисловойКолонки];\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат РезультирующаяТаблица;\n\t\nКонецФункции",
+          "response_hash": "6e6d01e756659bec67848a7b8dc954a867acccad30fe9035ac81d1f8093eeaa7",
+          "tokens_input": 138,
+          "tokens_output": 494,
+          "tokens_total": 632,
+          "elapsed_time": 1.9841420650482178,
+          "cost_input": 4.14e-05,
+          "cost_output": 0.001235,
+          "cost_total": 0.0012764,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "6e6d01e756659bec67848a7b8dc954a867acccad30fe9035ac81d1f8093eeaa7",
+        "most_common_count": 1,
+        "hashes": [
+          "6e6d01e756659bec67848a7b8dc954a867acccad30fe9035ac81d1f8093eeaa7"
+        ]
+      },
+      "total_tokens": 632,
+      "total_cost": 0.0012764,
+      "avg_time": 1.984
+    },
+    {
       "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "aliceai-llm/latest",
@@ -10601,6 +11163,86 @@
       "avg_time": 22.198
     },
     {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьУникальныеЭлементыМассива(ИсходныйМассив) Экспорт\n\n\tРезультат = Новый Массив;\n\tВстреченные = Новый Соответствие;\n\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Встреченные[Элемент] = Неопределено Тогда\n\t\t\tВстреченные.Вставить(Элемент, Истина);\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "20b354ee93556377ae6f5ceb5a1484851fbe9de46b793ba97d7b6dad66705e70",
+          "tokens_input": 124,
+          "tokens_output": 1461,
+          "tokens_total": 1585,
+          "elapsed_time": 7.371013164520264,
+          "cost_input": 0.00018600000000000002,
+          "cost_output": 0.0109575,
+          "cost_total": 0.0111435,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "20b354ee93556377ae6f5ceb5a1484851fbe9de46b793ba97d7b6dad66705e70",
+        "most_common_count": 1,
+        "hashes": [
+          "20b354ee93556377ae6f5ceb5a1484851fbe9de46b793ba97d7b6dad66705e70"
+        ]
+      },
+      "total_tokens": 1585,
+      "total_cost": 0.0111435,
+      "avg_time": 7.371
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьУникальныеЭлементы(ИсходныйМассив)\n    \n    НовыйМассив = Новый Массив;\n    \n    Если ИсходныйМассив = Неопределено Или ИсходныйМассив.Количество() = 0 Тогда\n        Возврат НовыйМассив;\n    КонецЕсли;\n    \n    ВременноеСоответствие = Новый Соответствие;\n    \n    Для Каждого Элемент Из ИсходныйМассив Цикл\n        Если ВременноеСоответствие.Получить(Элемент) = Неопределено Тогда\n            ВременноеСоответствие.Вставить(Элемент, Истина);\n            НовыйМассив.Добавить(Элемент);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат НовыйМассив;\n\nКонецФункции",
+          "response_hash": "bac7f3f1b9c78f71336625943290cdb945d79e6be313c51510d9b6c3c024f31a",
+          "tokens_input": 124,
+          "tokens_output": 193,
+          "tokens_total": 317,
+          "elapsed_time": 1.156662940979004,
+          "cost_input": 3.72e-05,
+          "cost_output": 0.0004825,
+          "cost_total": 0.0005197,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bac7f3f1b9c78f71336625943290cdb945d79e6be313c51510d9b6c3c024f31a",
+        "most_common_count": 1,
+        "hashes": [
+          "bac7f3f1b9c78f71336625943290cdb945d79e6be313c51510d9b6c3c024f31a"
+        ]
+      },
+      "total_tokens": 317,
+      "total_cost": 0.0005197,
+      "avg_time": 1.157
+    },
+    {
       "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "aliceai-llm/latest",
@@ -11910,6 +12552,86 @@
       "total_tokens": 3836,
       "total_cost": 0.05332799999999999,
       "avg_time": 100.835
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОбъединитьИнтервалы(МассивИнтервалов)\n\n\tЕсли МассивИнтервалов.Количество() <= 1 Тогда\n\t\tВозврат МассивИнтервалов;\n\tКонецЕсли;\n\n\tТЗ = Новый ТаблицаЗначений;\n\tТЗ.Колонки.Добавить(\"Начало\");\n\tТЗ.Колонки.Добавить(\"Конец\");\n\n\tДля Каждого Интервал Из МассивИнтервалов Цикл\n\t\tСтр = ТЗ.Добавить();\n\t\tСтр.Начало = Интервал[0];\n\t\tСтр.Конец  = Интервал[1];\n\tКонецЦикла;\n\n\tТЗ.Сортировать(\"Начало Возр, Конец Возр\");\n\n\tРезультат = Новый Массив;\n\n\tТекущееНачало = ТЗ[0].Начало;\n\tТекущийКонец  = ТЗ[0].Конец;\n\n\tДля Индекс = 1 По ТЗ.Количество() - 1 Цикл\n\t\tСтр = ТЗ[Индекс];\n\n\t\tЕсли Стр.Начало <= ТекущийКонец Тогда\n\t\t\tТекущийКонец = Макс(ТекущийКонец, Стр.Конец);\n\t\tИначе\n\t\t\tНовыйИнтервал = Новый Массив;\n\t\t\tНовыйИнтервал.Добавить(ТекущееНачало);\n\t\t\tНовыйИнтервал.Добавить(ТекущийКонец);\n\t\t\tРезультат.Добавить(НовыйИнтервал);\n\n\t\t\tТекущееНачало = Стр.Начало;\n\t\t\tТекущийКонец  = Стр.Конец;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tНовыйИнтервал = Новый Массив;\n\tНовыйИнтервал.Добавить(ТекущееНачало);\n\tНовыйИнтервал.Добавить(ТекущийКонец);\n\tРезультат.Добавить(НовыйИнтервал);\n\n\tВозврат Результат;\n\nКонецФункции\n```",
+          "response_hash": "dcfd45861965a3241d74e0063cbb44485a7e84705caa9705544e510e7162cf53",
+          "tokens_input": 188,
+          "tokens_output": 1984,
+          "tokens_total": 2172,
+          "elapsed_time": 9.082561731338501,
+          "cost_input": 0.00028199999999999997,
+          "cost_output": 0.01488,
+          "cost_total": 0.015162,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "dcfd45861965a3241d74e0063cbb44485a7e84705caa9705544e510e7162cf53",
+        "most_common_count": 1,
+        "hashes": [
+          "dcfd45861965a3241d74e0063cbb44485a7e84705caa9705544e510e7162cf53"
+        ]
+      },
+      "total_tokens": 2172,
+      "total_cost": 0.015162,
+      "avg_time": 9.083
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИнтервалы(ВходныеИнтервалы) Экспорт\n\n    Если ВходныеИнтервалы = Неопределено Или ВходныеИнтервалы.Количество() = 0 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n\n    // Создаем копию массива, чтобы не менять исходный\n    Интервалы = Новый Массив;\n    Для Каждого ТекИнтервал Из ВходныеИнтервалы Цикл\n        Интервалы.Добавить(Новый Массив);\n        Интервалы[Интервалы.Количество() - 1].Добавить(ТекИнтервал[0]);\n        Интервалы[Интервалы.Количество() - 1].Добавить(ТекИнтервал[1]);\n    КонецЦикла;\n\n    // Сортировка пузырьком по началу интервала\n    КоличествоИнтервалов = Интервалы.Количество();\n    Для Сч1 = 0 По КоличествоИнтервалов - 2 Цикл\n        Для Сч2 = Сч1 + 1 По КоличествоИнтервалов - 1 Цикл\n            Если Интервалы[Сч2][0] < Интервалы[Сч1][0] Тогда\n                Временный = Интервалы[Сч1];\n                Интервалы[Сч1] = Интервалы[Сч2];\n                Интервалы[Сч2] = Временный;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n\n    Результат = Новый Массив;\n    ТекущийИнтервал = Новый Массив;\n    ТекущийИнтервал.Добавить(Интервалы[0][0]);\n    ТекущийИнтервал.Добавить(Интервалы[0][1]);\n\n    Для Индекс = 1 По КоличествоИнтервалов - 1 Цикл\n        СледующийИнтервал = Интервалы[Индекс];\n\n        Если СледующийИнтервал[0] <= ТекущийИнтервал[1] Тогда\n            // Есть пересечение или соприкосновение\n            Если СледующийИнтервал[1] > ТекущийИнтервал[1] Тогда\n                ТекущийИнтервал[1] = СледующийИнтервал[1];\n            КонецЕсли;\n        Иначе\n            // Нет пересечения, сохраняем текущий и переходим к следующему\n            Результат.Добавить(ТекущийИнтервал);\n            ТекущийИнтервал = Новый Массив;\n            ТекущийИнтервал.Добавить(СледующийИнтервал[0]);\n            ТекущийИнтервал.Добавить(СледующийИнтервал[1]);\n        КонецЕсли;\n    КонецЦикла;\n\n    Результат.Добавить(ТекущийИнтервал);\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "db807ebebd9ad762b7eee1b2ca798e14bf1616be464c7e94f5f7b7b26b7fc06f",
+          "tokens_input": 188,
+          "tokens_output": 677,
+          "tokens_total": 865,
+          "elapsed_time": 2.354870557785034,
+          "cost_input": 5.6399999999999995e-05,
+          "cost_output": 0.0016925,
+          "cost_total": 0.0017489,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "db807ebebd9ad762b7eee1b2ca798e14bf1616be464c7e94f5f7b7b26b7fc06f",
+        "most_common_count": 1,
+        "hashes": [
+          "db807ebebd9ad762b7eee1b2ca798e14bf1616be464c7e94f5f7b7b26b7fc06f"
+        ]
+      },
+      "total_tokens": 865,
+      "total_cost": 0.0017489,
+      "avg_time": 2.355
     },
     {
       "task_id": "A4",
@@ -13232,6 +13954,86 @@
       "avg_time": 32.939
     },
     {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьСкользящееСреднее(МассивЧисел, РазмерОкна)\n\t\n\tРезультат = Новый Массив;\n\tКоличество = МассивЧисел.Количество();\n\t\n\tЕсли РазмерОкна < 1 Или РазмерОкна > Количество Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tТекущаяСумма = 0;\n\tДля Индекс = 0 По РазмерОкна - 1 Цикл\n\t\tТекущаяСумма = ТекущаяСумма + МассивЧисел[Индекс];\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(ТекущаяСумма / РазмерОкна);\n\t\n\tДля Индекс = РазмерОкна По Количество - 1 Цикл\n\t\tТекущаяСумма = ТекущаяСумма + МассивЧисел[Индекс] - МассивЧисел[Индекс - РазмерОкна];\n\t\tРезультат.Добавить(ТекущаяСумма / РазмерОкна);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\nКонецФункции\n```",
+          "response_hash": "86924a01be754477b910a2cb96bd7a36f5ae6697dc1da98336d06fdca6e40032",
+          "tokens_input": 149,
+          "tokens_output": 1283,
+          "tokens_total": 1432,
+          "elapsed_time": 6.16071891784668,
+          "cost_input": 0.00022349999999999998,
+          "cost_output": 0.0096225,
+          "cost_total": 0.009846,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "86924a01be754477b910a2cb96bd7a36f5ae6697dc1da98336d06fdca6e40032",
+        "most_common_count": 1,
+        "hashes": [
+          "86924a01be754477b910a2cb96bd7a36f5ae6697dc1da98336d06fdca6e40032"
+        ]
+      },
+      "total_tokens": 1432,
+      "total_cost": 0.009846,
+      "avg_time": 6.161
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьСкользящиеСредние(ИсходныйМассив, РазмерОкна)\n\t\n\tРезультат = Новый Массив;\n\t\n\tДлинаМассива = ИсходныйМассив.Количество();\n\t\n\tЕсли РазмерОкна <= 0 Или РазмерОкна > ДлинаМассива Или ДлинаМассива = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Вычисляем сумму первого окна\n\tТекущаяСумма = 0;\n\tДля Ист = 0 по РазмерОкна - 1 Цикл\n\t\tТекущаяСумма = ТекущаяСумма + ИсходныйМассив[Ист];\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(ТекущаяСумма / РазмерОкна);\n\t\n\t// Сдвигаем окно методом скользящего суммирования\n\tДля Ист = РазмерОкна по ДлинаМассива - 1 Цикл\n\t\tТекущаяСумма = ТекущаяСумма - ИсходныйМассив[Ист - РазмерОкна] + ИсходныйМассив[Ист];\n\t\tРезультат.Добавить(ТекущаяСумма / РазмерОкна);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "ca288250dc32b0d6501e2190dee06dfaf1290cffcc08e8d0e5be902d828f6fd7",
+          "tokens_input": 151,
+          "tokens_output": 306,
+          "tokens_total": 457,
+          "elapsed_time": 2.5368340015411377,
+          "cost_input": 4.53e-05,
+          "cost_output": 0.0007650000000000001,
+          "cost_total": 0.0008103,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ca288250dc32b0d6501e2190dee06dfaf1290cffcc08e8d0e5be902d828f6fd7",
+        "most_common_count": 1,
+        "hashes": [
+          "ca288250dc32b0d6501e2190dee06dfaf1290cffcc08e8d0e5be902d828f6fd7"
+        ]
+      },
+      "total_tokens": 457,
+      "total_cost": 0.0008103,
+      "avg_time": 2.537
+    },
+    {
       "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "aliceai-llm/latest",
@@ -14541,6 +15343,86 @@
       "total_tokens": 2758,
       "total_cost": 0.037913999999999996,
       "avg_time": 83.727
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПодсчитатьКоличествоСлов(Текст)\n\n    Результат = Новый Структура;\n    ТекстНРег = НРег(Текст);\n\n    ОчищенныйТекст = \"\";\n    Для Индекс = 1 По СтрДлина(ТекстНРег) Цикл\n        Символ = Сред(ТекстНРег, Индекс, 1);\n        Код = КодСимвола(Символ);\n        \n        // Оставляем только кириллицу, латиницу, цифры и знак подчеркивания\n        Если (Код >= 1072 И Код <= 1103) Или Код = 1105 \n            Или (Код >= 97 И Код <= 122) \n            Или (Код >= 48 И Код <= 57) \n            Или Код = 95 Тогда\n            ОчищенныйТекст = ОчищенныйТекст + Символ;\n        Иначе\n            ОчищенныйТекст = ОчищенныйТекст + \" \";\n        КонецЕсли;\n    КонецЦикла;\n\n    МассивСлов = СтрРазбить(ОчищенныйТекст, \" \", Ложь);\n\n    Для Каждого Слово Из МассивСлов Цикл\n        Слово = СокрЛП(Слово);\n        Если ПустаяСтрока(Слово) Тогда\n            Продолжить;\n        КонецЕсли;\n\n        ТекущееКоличество = 0;\n        Если Результат.Свойство(Слово, ТекущееКоличество) Тогда\n            Результат.Вставить(Слово, ТекущееКоличество + 1);\n        Иначе\n            Попытка\n                Результат.Вставить(Слово, 1);\n            Исключение\n                // Пропускаем слова, не удовлетворяющие правилам наименования ключей структуры (например, начинающиеся с цифры)\n            КонецПопытки;\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "cf272361bb17a56478d43c85d9092c12a1730eb13853956608aa7ce6d4070948",
+          "tokens_input": 146,
+          "tokens_output": 4611,
+          "tokens_total": 4757,
+          "elapsed_time": 21.094006776809692,
+          "cost_input": 0.000219,
+          "cost_output": 0.034582499999999995,
+          "cost_total": 0.03480149999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cf272361bb17a56478d43c85d9092c12a1730eb13853956608aa7ce6d4070948",
+        "most_common_count": 1,
+        "hashes": [
+          "cf272361bb17a56478d43c85d9092c12a1730eb13853956608aa7ce6d4070948"
+        ]
+      },
+      "total_tokens": 4757,
+      "total_cost": 0.03480149999999999,
+      "avg_time": 21.094
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bscript\nФункция ПолучитьЧастотуСлов(ИсходныйТекст) Экспорт\n    \n    Результат = Новый Структура;\n    \n    Если ПустаяСтрока(ИсходныйТекст) Тогда\n        Возврат Результат;\n    КонецЕсли;\n    \n    // Заменяем все не буквенно-цифровые символы на пробелы\n    РегулярноеВыражение = Новый РегулярноеВыражение;\n    РегулярноеВыражение.Шаблон = \"[^\\p{L}\\p{N}]+\";\n    РегулярноеВыражение.IgnoreCase = Истина;\n    РегулярноеВыражение.Global = Истина;\n    \n    ОчищенныйТекст = РегулярноеВыражение.Заменить(ИсходныйТекст, \" \");\n    ОчищенныйТекст = НРег(СокрЛП(ОчищенныйТекст));\n    \n    МассивСлов = СтрРазделить(ОчищенныйТекст, \" \", Истина);\n    \n    Для Каждого Слово Из МассивСлов Цикл\n        Если Результат.Свойство(Слово) Тогда\n            Результат[Слово] = Результат[Слово] + 1;\n        Иначе\n            Результат.Вставить(Слово, 1);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\n    \nКонецФункции\n```",
+          "response_hash": "6eee3a764ac6bb2668e710b218d486864964c8d44eb808e46e6919d281dacbf5",
+          "tokens_input": 148,
+          "tokens_output": 340,
+          "tokens_total": 488,
+          "elapsed_time": 1.4988749027252197,
+          "cost_input": 4.4399999999999995e-05,
+          "cost_output": 0.0008500000000000001,
+          "cost_total": 0.0008944000000000001,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "6eee3a764ac6bb2668e710b218d486864964c8d44eb808e46e6919d281dacbf5",
+        "most_common_count": 1,
+        "hashes": [
+          "6eee3a764ac6bb2668e710b218d486864964c8d44eb808e46e6919d281dacbf5"
+        ]
+      },
+      "total_tokens": 488,
+      "total_cost": 0.0008944000000000001,
+      "avg_time": 1.499
     },
     {
       "task_id": "A6",
@@ -15854,6 +16736,86 @@
       "avg_time": 53.217
     },
     {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция РасстояниеЛевенштейна(Знач Строка1, Знач Строка2)\n\t\n\tДлина1 = СтрДлина(Строка1);\n\tДлина2 = СтрДлина(Строка2);\n\t\n\tЕсли Длина1 = 0 Тогда\n\t\tВозврат Длина2;\n\tКонецЕсли;\n\t\n\tЕсли Длина2 = 0 Тогда\n\t\tВозврат Длина1;\n\tКонецЕсли;\n\t\n\tСтрокаПред = Новый Массив(Длина2 + 1);\n\tСтрокаСлед = Новый Массив(Длина2 + 1);\n\t\n\tДля Индекс2 = 0 По Длина2 Цикл\n\t\tСтрокаПред[Индекс2] = Индекс2;\n\tКонецЦикла;\n\t\n\tДля Индекс1 = 1 По Длина1 Цикл\n\t\tСтрокаСлед[0] = Индекс1;\n\t\tСимвол1 = Сред(Строка1, Индекс1, 1);\n\t\t\n\t\tДля Индекс2 = 1 По Длина2 Цикл\n\t\t\tСимвол2 = Сред(Строка2, Индекс2, 1);\n\t\t\tЦенаЗамены = ?(Символ1 = Символ2, 0, 1);\n\t\t\t\n\t\t\tСтрокаСлед[Индекс2] = Мин(\n\t\t\t\tСтрокаСлед[Индекс2 - 1] + 1,\n\t\t\t\tМин(\n\t\t\t\t\tСтрокаПред[Индекс2] + 1,\n\t\t\t\t\tСтрокаПред[Индекс2 - 1] + ЦенаЗамены\n\t\t\t\t)\n\t\t\t);\n\t\tКонецЦикла;\n\t\t\n\t\tДля Индекс2 = 0 По Длина2 Цикл\n\t\t\tСтрокаПред[Индекс2] = СтрокаСлед[Индекс2];\n\t\tКонецЦикла;\n\tКонецЦикла;\n\t\n\tВозврат СтрокаСлед[Длина2];\n\nКонецФункции\n```",
+          "response_hash": "727711bfa2e95276974e0ba9dc1c9c06fd7404f5b0477dc15c54350a10c4ff09",
+          "tokens_input": 121,
+          "tokens_output": 1681,
+          "tokens_total": 1802,
+          "elapsed_time": 8.105328559875488,
+          "cost_input": 0.0001815,
+          "cost_output": 0.0126075,
+          "cost_total": 0.012789,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "727711bfa2e95276974e0ba9dc1c9c06fd7404f5b0477dc15c54350a10c4ff09",
+        "most_common_count": 1,
+        "hashes": [
+          "727711bfa2e95276974e0ba9dc1c9c06fd7404f5b0477dc15c54350a10c4ff09"
+        ]
+      },
+      "total_tokens": 1802,
+      "total_cost": 0.012789,
+      "avg_time": 8.105
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ВычислитьРасстояниеЛевенштейна(Строка1, Строка2) Экспорт\n    \n    Длина1 = СтрДлина(Строка1);\n    Длина2 = СтрДлина(Строка2);\n    \n    Если Длина1 = 0 Тогда\n        Возврат Длина2;\n    КонецЕсли;\n    \n    Если Длина2 = 0 Тогда\n        Возврат Длина1;\n    КонецЕсли;\n    \n    // Инициализация двух строк для экономии памяти вместо полной матрицы\n    ПредыдущаяСтрока = Новый Массив(Длина2 + 1);\n    ТекущаяСтрока = Новый Массив(Длина2 + 1);\n    \n    Для j = 0 По Длина2 Цикл\n        ПредыдущаяСтрока[j] = j;\n    КонецЦикла;\n    \n    Для i = 1 По Длина1 Цикл\n        ТекущаяСтрока[0] = i;\n        Символ1 = Сред(Строка1, i, 1);\n        \n        Для j = 1 По Длина2 Цикл\n            Символ2 = Сред(Строка2, j, 1);\n            \n            Если Символ1 = Символ2 Тогда\n                ЦенаЗамены = 0;\n            Иначе\n                ЦенаЗамены = 1;\n            КонецЕсли;\n            \n            Минимум = Мин(ПредыдущаяСтрока[j] + 1, ТекущаяСтрока[j - 1] + 1);\n            ТекущаяСтрока[j] = Мин(Минимум, ПредыдущаяСтрока[j - 1] + ЦенаЗамены);\n        КонецЦикла;\n        \n        Для j = 0 По Длина2 Цикл\n            ПредыдущаяСтрока[j] = ТекущаяСтрока[j];\n        КонецЦикла;\n    КонецЦикла;\n    \n    Возврат ТекущаяСтрока[Длина2];\n    \nКонецФункции\n```",
+          "response_hash": "69fbf3812d749297693d108b1def5394bf89a718d79c76e75ef6af2635b93355",
+          "tokens_input": 119,
+          "tokens_output": 473,
+          "tokens_total": 592,
+          "elapsed_time": 1.9228711128234863,
+          "cost_input": 3.57e-05,
+          "cost_output": 0.0011825,
+          "cost_total": 0.0012182,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "69fbf3812d749297693d108b1def5394bf89a718d79c76e75ef6af2635b93355",
+        "most_common_count": 1,
+        "hashes": [
+          "69fbf3812d749297693d108b1def5394bf89a718d79c76e75ef6af2635b93355"
+        ]
+      },
+      "total_tokens": 592,
+      "total_cost": 0.0012182,
+      "avg_time": 1.923
+    },
+    {
       "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "aliceai-llm/latest",
@@ -17165,6 +18127,86 @@
       "avg_time": 62.972
     },
     {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СжатьСтрокуRLE(ИсходнаяСтрока)\n\t\n\tДлина = СтрДлина(ИсходнаяСтрока);\n\tЕсли Длина = 0 Тогда\n\t\tВозврат \"\";\n\tКонецЕсли;\n\t\n\tРезультат = \"\";\n\tТекущийКод = КодСимвола(ИсходнаяСтрока, 1);\n\tТекущийСимвол = Сред(ИсходнаяСтрока, 1, 1);\n\tКоличество = 1;\n\t\n\tДля Индекс = 2 По Длина Цикл\n\t\tКод = КодСимвола(ИсходнаяСтрока, Индекс);\n\t\t\n\t\tЕсли Код = ТекущийКод Тогда\n\t\t\tКоличество = Количество + 1;\n\t\tИначе\n\t\t\tРезультат = Результат + ТекущийСимвол + Формат(Количество, \"ЧГ=0\");\n\t\t\tТекущийСимвол = Сред(ИсходнаяСтрока, Индекс, 1);\n\t\t\tТекущийКод = Код;\n\t\t\tКоличество = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат = Результат + ТекущийСимвол + Формат(Количество, \"ЧГ=0\");\n\t\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "5e7a613612fc2f8d97e2e3ff95bb679c6cf48effbdcb412d0330b55a13cade87",
+          "tokens_input": 167,
+          "tokens_output": 1693,
+          "tokens_total": 1860,
+          "elapsed_time": 8.230985879898071,
+          "cost_input": 0.00025049999999999996,
+          "cost_output": 0.0126975,
+          "cost_total": 0.012948000000000001,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5e7a613612fc2f8d97e2e3ff95bb679c6cf48effbdcb412d0330b55a13cade87",
+        "most_common_count": 1,
+        "hashes": [
+          "5e7a613612fc2f8d97e2e3ff95bb679c6cf48effbdcb412d0330b55a13cade87"
+        ]
+      },
+      "total_tokens": 1860,
+      "total_cost": 0.012948000000000001,
+      "avg_time": 8.231
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СжатьRLE(ИсходнаяСтрока) Экспорт\n\n\tЕсли ПустаяСтрока(ИсходнаяСтрока) Тогда\n\t\tВозврат \"\";\n\tКонецЕсли;\n\t\n\tРезультат = Новый СправочникМенеджер; // заглушка, используем Строку\n\tСобранныеЧасти = Новый Массив;\n\t\n\tДлинаСтроки = СтрДлина(ИсходнаяСтрока);\n\tТекущийСимвол = Сред(ИсходнаяСтрока, 1, 1);\n\tСчетчик = 1;\n\t\n\tДля Икс = 2 По ДлинаСтроки Цикл\n\t\tСимвол = Сред(ИсходнаяСтрока, Икс, 1);\n\t\tЕсли Символ = ТекущийСимвол Тогда\n\t\t\tСчетчик = Счетчик + 1;\n\t\tИначе\n\t\t\tСобранныеЧасти.Добавить(ТекущийСимвол + Строка(Счетчик));\n\t\t\tТекущийСимвол = Символ;\n\t\t\tСчетчик = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tСобранныеЧасти.Добавить(ТекущийСимвол + Строка(Счетчик));\n\t\n\tВозврат СтрСоединить(СобранныеЧасти, \"\");\n\nКонецФункции\n```",
+          "response_hash": "1872f0be0d806fa36ce3bcb0fead6596bf81f3337684a4463d1a98089414913a",
+          "tokens_input": 165,
+          "tokens_output": 311,
+          "tokens_total": 476,
+          "elapsed_time": 3.5704188346862793,
+          "cost_input": 4.95e-05,
+          "cost_output": 0.0007775000000000001,
+          "cost_total": 0.000827,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1872f0be0d806fa36ce3bcb0fead6596bf81f3337684a4463d1a98089414913a",
+        "most_common_count": 1,
+        "hashes": [
+          "1872f0be0d806fa36ce3bcb0fead6596bf81f3337684a4463d1a98089414913a"
+        ]
+      },
+      "total_tokens": 476,
+      "total_cost": 0.000827,
+      "avg_time": 3.57
+    },
+    {
       "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "aliceai-llm/latest",
@@ -18474,6 +19516,86 @@
       "total_tokens": 2148,
       "total_cost": 0.02892,
       "avg_time": 47.552
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ЭтоАнаграмма(Знач Строка1, Знач Строка2) Экспорт\n\n\tСтр1 = СтрЗаменить(НРег(Строка1), \" \", \"\");\n\tСтр2 = СтрЗаменить(НРег(Строка2), \" \", \"\");\n\n\tЕсли СтрДлина(Стр1) <> СтрДлина(Стр2) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\n\tСчетчик = Новый Соответствие;\n\n\tДля Поз = 1 По СтрДлина(Стр1) Цикл\n\t\tСимвол = Сред(Стр1, Поз, 1);\n\t\tКол = Счетчик[Символ];\n\t\tСчетчик.Вставить(Символ, ?(Кол = Неопределено, 1, Кол + 1));\n\tКонецЦикла;\n\n\tДля Поз = 1 По СтрДлина(Стр2) Цикл\n\t\tСимвол = Сред(Стр2, Поз, 1);\n\t\tКол = Счетчик[Символ];\n\t\tЕсли Кол = Неопределено Или Кол = 0 Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\t\tСчетчик.Вставить(Символ, Кол - 1);\n\tКонецЦикла;\n\n\tВозврат Истина;\n\nКонецФункции\n```",
+          "response_hash": "783d16ceda517e0c113712b43b52a144a93dfaf75594cb5260156b093dfcdaa4",
+          "tokens_input": 133,
+          "tokens_output": 2263,
+          "tokens_total": 2396,
+          "elapsed_time": 16.50261354446411,
+          "cost_input": 0.00019950000000000002,
+          "cost_output": 0.016972499999999998,
+          "cost_total": 0.017172,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "783d16ceda517e0c113712b43b52a144a93dfaf75594cb5260156b093dfcdaa4",
+        "most_common_count": 1,
+        "hashes": [
+          "783d16ceda517e0c113712b43b52a144a93dfaf75594cb5260156b093dfcdaa4"
+        ]
+      },
+      "total_tokens": 2396,
+      "total_cost": 0.017172,
+      "avg_time": 16.503
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ЭтоАнаграмма(Строка1, Строка2) Экспорт\n\t\n\tОчищенная1 = СтрЗаменить(СтрНижн(СокрЛП(Строка1)), \" \", \"\");\n\tОчищенная2 = СтрЗаменить(СтрНижн(СокрЛП(Строка2)), \" \", \"\");\n\t\n\tЕсли СтрДлина(Очищенная1) <> СтрДлина(Очищенная2) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\t\n\tМассив1 = Новый Массив;\n\tДля Сч = 1 По СтрДлина(Очищенная1) Цикл\n\t\tМассив1.Добавить(Сред(Очищенная1, Сч, 1));\n\tКонецЦикла;\n\tМассив1.Сортировать();\n\t\n\tМассив2 = Новый Массив;\n\tДля Сч = 1 По СтрДлина(Очищенная2) Цикл\n\t\tМассив2.Добавить(Сред(Очищенная2, Сч, 1));\n\tКонецЦикла;\n\tМассив2.Сортировать();\n\t\n\tДля Сч = 0 По Массив1.ВГраница() Цикл\n\t\tЕсли Массив1[Сч] <> Массив2[Сч] Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Истина;\n\t\nКонецФункции\n```",
+          "response_hash": "ba68927269019d20ecabc4a3697296e0c0c34a298f1b20e20d2fc125c627a30f",
+          "tokens_input": 133,
+          "tokens_output": 354,
+          "tokens_total": 487,
+          "elapsed_time": 1.584252119064331,
+          "cost_input": 3.99e-05,
+          "cost_output": 0.0008849999999999999,
+          "cost_total": 0.0009249,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ba68927269019d20ecabc4a3697296e0c0c34a298f1b20e20d2fc125c627a30f",
+        "most_common_count": 1,
+        "hashes": [
+          "ba68927269019d20ecabc4a3697296e0c0c34a298f1b20e20d2fc125c627a30f"
+        ]
+      },
+      "total_tokens": 487,
+      "total_cost": 0.0009249,
+      "avg_time": 1.584
     },
     {
       "task_id": "A9",
@@ -19794,9 +20916,89 @@
       "total_tokens": 1720,
       "total_cost": 0.022368,
       "avg_time": 38.131
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьПростыеЧисла(Граница)\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tФлаги = Новый Массив;\n\tДля Индекс = 0 По Граница Цикл\n\t\tФлаги.Добавить(Истина);\n\tКонецЦикла;\n\n\tФлаги[0] = Ложь;\n\tФлаги[1] = Ложь;\n\n\ti = 2;\n\tПока i * i <= Граница Цикл\n\t\tЕсли Флаги[i] Тогда\n\t\t\tj = i * i;\n\t\t\tПока j <= Граница Цикл\n\t\t\t\tФлаги[j] = Ложь;\n\t\t\t\tj = j + i;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\t\ti = i + 1;\n\tКонецЦикла;\n\n\tДля Индекс = 2 По Граница Цикл\n\t\tЕсли Флаги[Индекс] Тогда\n\t\t\tРезультат.Добавить(Индекс);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "ce5e95fb0c75e64a8898c119d14ece1d2cf7bd2d273b039eb4ed5b4221f4f930",
+          "tokens_input": 141,
+          "tokens_output": 2504,
+          "tokens_total": 2645,
+          "elapsed_time": 12.049679517745972,
+          "cost_input": 0.00021150000000000002,
+          "cost_output": 0.01878,
+          "cost_total": 0.0189915,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ce5e95fb0c75e64a8898c119d14ece1d2cf7bd2d273b039eb4ed5b4221f4f930",
+        "most_common_count": 1,
+        "hashes": [
+          "ce5e95fb0c75e64a8898c119d14ece1d2cf7bd2d273b039eb4ed5b4221f4f930"
+        ]
+      },
+      "total_tokens": 2645,
+      "total_cost": 0.0189915,
+      "avg_time": 12.05
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьПростыеЧисла(Граница) Экспорт\n    \n    Результат = Новый Массив;\n    \n    Если Граница < 2 Тогда\n        Возврат Результат;\n    КонецЕсли;\n    \n    // Создаем массив флагов (булево), заполненный Истина\n    // Индекс массива соответствует числу\n    ДлинаМассива = Граница + 1;\n    Решето = Новый Массив(ДлинаМассива);\n    Для Индекс = 0 По ДлинаМассива - 1 Цикл\n        Решето[Индекс] = Истина;\n    КонецЦикла;\n    \n    Решето[0] = Ложь;\n    Решето[1] = Ложь;\n    \n    КвадратныйКорень = Окр(КорьКв(Граница), 0, РежимОкругления.Традиционный);\n    Если КвадратныйКорень * КвадратныйКорень < Граница Тогда\n        КвадратныйКорень = КвадратныйКорень + 1;\n    КонецЕсли;\n    \n    Для Текущее = 2 По Граница Цикл\n        Если Решето[Текущее] Тогда\n            Если Текущее <= КвадратныйКорень Тогда\n                Множитель = Текущее * Текущее;\n                Пока Множитель <= Граница Цикл\n                    Решето[Множитель] = Ложь;\n                    Множитель = Множитель + Текущее;\n                КонецЦикла;\n            КонецЕсли;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Для Индекс = 2 По Граница Цикл\n        Если Решето[Индекс] Тогда\n            Результат.Добавить(Индекс);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\n    \nКонецФункции\n```",
+          "response_hash": "ac4a1470bc80157b0a56b2fe00737eebe365d81f0749d73492ba6f2c42c57bad",
+          "tokens_input": 139,
+          "tokens_output": 455,
+          "tokens_total": 594,
+          "elapsed_time": 2.192603349685669,
+          "cost_input": 4.17e-05,
+          "cost_output": 0.0011375,
+          "cost_total": 0.0011792,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ac4a1470bc80157b0a56b2fe00737eebe365d81f0749d73492ba6f2c42c57bad",
+        "most_common_count": 1,
+        "hashes": [
+          "ac4a1470bc80157b0a56b2fe00737eebe365d81f0749d73492ba6f2c42c57bad"
+        ]
+      },
+      "total_tokens": 594,
+      "total_cost": 0.0011792,
+      "avg_time": 2.193
     }
   ],
-  "total_tokens": 559836,
-  "total_cost": 3.8051004700000015,
+  "total_tokens": 596361,
+  "total_cost": 4.021755970000001,
   "total_time": 0.0
 }

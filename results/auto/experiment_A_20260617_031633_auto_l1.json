@@ -28140,6 +28140,1736 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7acc20fabb64ea4c397d6286ff5fdf34fbb231ca67dfff469151249ecb5e3d43",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 13 / Object property is not found (Возрастание)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "note": "не исполнился на размере 400: {Модуль /sandbox/cand.operf.os / Error in line: 70 / Object property is not found (Возрастание)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e512b789dc549adcdb5888972258d061cf10e52a09762448720c1e427b922b6e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 2,
+            "P": null,
+            "Q": 7.33
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [
+                799641,
+                3221133,
+                12819077
+              ],
+              "sizes": [
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "note": "таймаут на размере 3200 — слишком медленно",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f6cb293a1ae06b854cb32157ff833b03faf26b85dbca30646fd12bfdc3d1defa",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                7533,
+                15032,
+                30030,
+                60033
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "780cc21ae76833500c0c1d68b0fca472597dbfeb11c71a1a7953e7a7e853ae7a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                14283,
+                28565,
+                57129,
+                114283
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "49225e5d166239fd164a5e8a6d5829e5139e21d39f2a1b6e996ba07e3df99a7c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначенияИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначенияИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1e92de0ae4635376f14c4bffad0707f9005af794a09f30e93b9acb457d2c9773",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0831f9145a0b3c4ca9eabbb9c7b51125e7ca66e937cadd46c4f7769e0e935c10",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "НайтиМаксимальнуюСуммуПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "НайтиМаксимальнуюСуммуПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "99a537572e33b07a0ab9b827830c3882cf6c5f83b42939a02c9b7f8795261120",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "НайтиМаксимальнуюСуммуПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "НайтиМаксимальнуюСуммуПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1559f600ae31b173c660093487b8fbe57521a51b009f05b7d4d16448f0c610cf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ПеревернутьПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                606,
+                1206,
+                2406,
+                4806
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПеревернутьПорядокСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "823f7f228a8496da70ed4013e9e16c05e59f0a1bd6d952697d0fe6821431c9cc",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 9,
+              "entry_point": "ПеревернутьСловаВСтроке",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 11 / Index is out of range}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПеревернутьСловаВСтроке",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 68 / Index is out of range}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e01b609440cba8971a3f478e9d267aa7f23d0e92412713496d5d531f878e03a6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.1,
+              "p_opt": 0.0,
+              "ops": [
+                74,
+                80,
+                86,
+                92
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "65b97b45f2998b1f146fa9a38cbcbf488b66f644a65492f0c87fc63bbab73978",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.1,
+              "p_opt": 0.0,
+              "ops": [
+                74,
+                80,
+                86,
+                92
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a95770b657d1e0fc37a59ad6436c687fe9a1afdf48dbb490913a53309206d153",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 1.0,
+              "ops": [
+                4,
+                4,
+                4,
+                4
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6e6d01e756659bec67848a7b8dc954a867acccad30fe9035ac81d1f8093eeaa7",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьИСубмироватьТаблицу",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Object property is not found (ТипЗначений)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 7 / Object property is not found (ТипЗначений)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Object property is not found (ТипЗначений)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьИСубмироватьТаблицу",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 64 / Object property is not found (ТипЗначений)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "20b354ee93556377ae6f5ceb5a1484851fbe9de46b793ba97d7b6dad66705e70",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2005,
+                4005,
+                8005,
+                15999
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьУникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bac7f3f1b9c78f71336625943290cdb945d79e6be313c51510d9b6c3c024f31a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2007,
+                4007,
+                8007,
+                16001
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "dcfd45861965a3241d74e0063cbb44485a7e84705caa9705544e510e7162cf53",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3191,
+                6346,
+                12641,
+                24951
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "db807ebebd9ad762b7eee1b2ca798e14bf1616be464c7e94f5f7b7b26b7fc06f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.0,
+              "p_opt": 1.1,
+              "ops": [
+                111051,
+                440313,
+                1777006,
+                7056265
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "86924a01be754477b910a2cb96bd7a36f5ae6697dc1da98336d06fdca6e40032",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьСкользящееСреднее",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1560,
+                3110,
+                6210,
+                12410
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьСкользящееСреднее",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ca288250dc32b0d6501e2190dee06dfaf1290cffcc08e8d0e5be902d828f6fd7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                960,
+                1910,
+                3810,
+                7610
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьСкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cf272361bb17a56478d43c85d9092c12a1730eb13853956608aa7ce6d4070948",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьКоличествоСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 22,18 / Symbol not found СтрРазбить}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьКоличествоСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 79,18 / Symbol not found СтрРазбить}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6eee3a764ac6bb2668e710b218d486864964c8d44eb808e46e6919d281dacbf5",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПолучитьЧастотуСлов",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 10 / Constructor not found (РегулярноеВыражение)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 10 / Constructor not found (РегулярноеВыражение)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 10 / Constructor not found (РегулярноеВыражение)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 10 / Constructor not found (РегулярноеВыражение)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьЧастотуСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line: 67 / Constructor not found (РегулярноеВыражение)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "727711bfa2e95276974e0ba9dc1c9c06fd7404f5b0477dc15c54350a10c4ff09",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.78,
+              "p_opt": 2.0,
+              "ops": [
+                275,
+                491,
+                771,
+                1115
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "69fbf3812d749297693d108b1def5394bf89a718d79c76e75ef6af2635b93355",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ВычислитьРасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.83,
+              "p_opt": 2.0,
+              "ops": [
+                350,
+                638,
+                1014,
+                1478
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "ВычислитьРасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5e7a613612fc2f8d97e2e3ff95bb679c6cf48effbdcb412d0330b55a13cade87",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьСтрокуRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158270,
+                606770,
+                2337842,
+                9364382
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьСтрокуRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1872f0be0d806fa36ce3bcb0fead6596bf81f3337684a4463d1a98089414913a",
+          "scores": {
+            "S": 10,
+            "M": 1.7,
+            "O": null,
+            "P": null,
+            "Q": 5.85
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (СправочникМенеджер)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (СправочникМенеджер)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (СправочникМенеджер)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (СправочникМенеджер)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 7 / Type is not defined (СправочникМенеджер)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СжатьRLE",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line: 64 / Type is not defined (СправочникМенеджер)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "783d16ceda517e0c113712b43b52a144a93dfaf75594cb5260156b093dfcdaa4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                10009,
+                20009,
+                40009,
+                80009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ba68927269019d20ecabc4a3697296e0c0c34a298f1b20e20d2fc125c627a30f",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 3,27 / Symbol not found СтрНижн}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 60,27 / Symbol not found СтрНижн}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ce5e95fb0c75e64a8898c119d14ece1d2cf7bd2d273b039eb4ed5b4221f4f930",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ac4a1470bc80157b0a56b2fe00737eebe365d81f0749d73492ba6f2c42c57bad",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 20,48 / Symbol not found РежимОкругления}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 77,48 / Symbol not found РежимОкругления}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }

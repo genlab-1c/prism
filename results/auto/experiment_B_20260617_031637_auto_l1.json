@@ -41376,6 +41376,2534 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a0d61722cb8064e828a7c4c2be6855d2800f3fef856a15a5a28ace2ecba1ee0a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьКонечныеЭлементыГруппы",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": -0.111,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                7,
+                6
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "99b025dcce50a8408ce1518bd0434893ef9165a23f95a80f421db7282ddf2f98",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(7, 28)}: Синтаксическая ошибка \"ИЕРАРХИЧЕСКИЕ\"\nИ Номенклатура.Родитель <<?>>ИЕРАРХИЧЕСКИЕ В(&РодительскаяГруппа); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(7, 28)}: Синтаксическая ошибка \"ИЕРАРХИЧЕСКИЕ\"\nИ Номенклатура.Родитель <<?>>ИЕРАРХИЧЕСКИЕ В(&РодительскаяГруппа); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: О",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЭлементыГруппыИПодгрупп",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(7, 28)}: Син",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d82c75f6f9343d72d25ae0410c94d15c44adb5528cb49074a7c97cf1b623ebcb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 4,
+              "total": 4,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПроверитьДостаточностьТовараНаСкладе",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 4,
+              "total": 4,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1638d846321a2bf38f6e18998c40ac295bc74c148c96548d1c6ce7c804c550d6",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Переменная не определена (КодВозвратнойОперацииИлиЧтоТоПодобное)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Переменная не определена (КодВозвратнойОперацииИлиЧтоТоПодобное)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                10
+              ],
+              "compile_errors": [
+                "Переменная не определена (КодВозвратнойОперацииИлиЧтоТоПодобное)"
+              ],
+              "entry_point": "ПроверитьОстатокТовара",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "reason": "O-авто(B): код не исполнился (статус candidate_error) → N/A",
+              "leg": "O-авто",
+              "run_status": "candidate_error"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Переменная не определена (КодВозвратнойОперацииИлиЧтоТоПодобное)",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "49eabfc4a3e69621ff424e1b94100e5b4db13bb606f60c9f46c70c2e9c024cd7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПроверитьУникальностьИНН",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3de466cc0db37b1252dea236b1870e2b6946e1edd40e6dec1ec9e8474b6185f1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПроверитьУникальностьИНН",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cae67b22d345b39fa6753819bbb946847352d55e94a0c9748eb46dbc805254b3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПеревестиВБазовуюЕдиницу",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "80ab12b2644874c950af624d25ed765e8c742f84e4dae71558907c10f3834a53",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПеревестиВБазовуюЕдиницу",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "405669f62b0645ba1934ab62ff46e05cfc627556a649131d9c9d1ec5f3e7c5af",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РасчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a8099d2a5194144c5b17e422d9cfc022f9b7fc3d4265dcf57a55e99574bab19e",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(37)}: Ошибка при вызове метода контекста (Выполнить): {(5, 4)}: Неверные параметры \"МассивНоменклатуры\"\n<<?>>&МассивНоменклатуры КАК ТаблицаНоменклатуры; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(37)}: Ошибка при вызове метода контекста (Выполнить): {(5, 4)}: Неверные параметры \"МассивНоменклатуры\"\n<<?>>&МассивНоменклатуры КАК ТаблицаНоменклатуры; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(37)}: Ошибка при вызове метода контекст",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(37)}: Ошибка при вызове метода контекста (Выполнить): {(5, 4)}: Неве",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "25ae739569e2028b9ab4a787f2afda7e0b710a7fbb00691e304d540b92211fa9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификацияНоменклатуры",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "989fa0d247695081798aca0e46c279f482b7c9019ea574059802eaadd5b55459",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьABCКлассификациюНоменклатуры",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B16",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a641ae18360cdbff1202c08f3f363389e7e7acc85adc85e0d4def991e6c08a9f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДействующийДоговор",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B16",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "dda9f4f76e3d5120cd9e0520836e9b28ae1940032075d321450f5404036c8a99",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Ожидается символ ')'",
+                "Ошибка в выражении"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Ожидается символ ')'; Ошибка в выражении",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                1,
+                20
+              ],
+              "compile_errors": [
+                "Ожидается символ ')'",
+                "Ошибка в выражении"
+              ],
+              "entry_point": "ПолучитьДействующийДоговор",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Ожидается символ ')'; Ошибка в выражении",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B17",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9895a208bb7d8279239d6eded7a830ebf1d3da258a642f8a77cedaaff7f01553",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 10.0,
+            "Q": 9.18
+          },
+          "bands": {
+            "M": 6,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест1 FAIL (ожидалось 700, получено 400);",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьСуммарныйДолгКонтрагента",
+              "infra_detail": "",
+              "band": 6
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B17",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b37bce2dacb0118fc903d9c417201f45dc9ddff911ffdc221b5b58a1165879bd",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДолгКонтрагента",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B18",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ac0a5161521736f5a694c53a9bf520cc924df9dccca95400ae8d2c8dc0b57d83",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ВыделитьСуммуНДС",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B18",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "23aa5abdf7ee2f01665241bcf53ff81c3ab4319b64171b3b7d22ca99b26ac5bb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСуммуНДС",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b985c24bb8098d90d4b9f71983fea900560c9b7cc14920806966be9be09667f2",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(24)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Синтаксическая ошибка\n<<?>>ЕСТЬНУЛЛ(СУММА(ВЫБОР; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(24)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Синтаксическая ошибка\n<<?>>ЕСТЬНУЛЛ(СУММА(ВЫБОР; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(24)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Синтаксическая ошибка\n<<?>>ЕСТЬНУЛЛ(СУММА(ВЫБОР;",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьСальдоСчета",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8b7dd55dc6bfbb325636f9a9e54a4b7dd0bab3d19983c415f26a0e76d023ae7d",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается ключевое слово 'КонецФункции' ('EndFunction')",
+                "Обнаружено логическое завершение исходного текста модуля"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается ключевое слово 'КонецФункции' ('EndFunction'); Обнаружено логическое завершение исходного текста модуля",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                9,
+                10,
+                18
+              ],
+              "compile_errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается ключевое слово 'КонецФункции' ('EndFunction')",
+                "Обнаружено логическое завершение исходного текста модуля"
+              ],
+              "entry_point": "ПолучитьСальдоСчета",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "reason": "O-авто(B): код не исполнился (статус candidate_error) → N/A",
+              "leg": "O-авто",
+              "run_status": "candidate_error"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается ключевое слово 'КонецФункции' ('EndFunction'); Обнаружено логическое завершение исходного текста модуля",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "64443460ce9a90e08c52398e26315e4cda1669a02be0ce4774da06604ab79daa",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваров",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": -0.096,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                8,
+                7
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "19c9a419cfa84e7cd0c1e54e6794568385ceb072992a8989678e39a76a34c060",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 2,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 27)}: Поле не найдено \"ТоварыНаСкладахОстатки.КоличествоОстаток\"\nТоварыНаСкладахОстатки.<<?>>КоличествоОстаток КАК Остаток; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 27)}: Поле не найдено \"ТоварыНаСкладахОстатки.КоличествоОстаток\"\nТоварыНаСкладахОстатки.<<?>>КоличествоОстаток КАК Остаток;",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваров",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 27)}: Пол",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 2,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "548d9cccaa6d3884222c55fccee2f1e5bc674a64aec02a8ef0824627ba1b71a2",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Синтаксическая ошибка\n<<?>>ЕСТЬНУЛЛ(СУММА(ХозрасчетныйДвиженияССубконто.Сумма), 0) КАК Сумма; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(2, 2)}: Синтаксическая ошибка\n<<?>>ЕСТЬНУЛЛ(СУММА(ХозрасчетныйДвиженияССубконто.Сумма), 0) КАК Сумма; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода ",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8d3ec1ba28bc9d849b2ac33fb766710286822822b2a07b20ee119330fd2dd8bc",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 8,
+            "P": 10.0,
+            "Q": 9.5
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 1.0,
+              "count": 1,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery"
+              ],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f5054f463dae044aaa7603f62f5ee9752dee5be7febee27382252291cbb27935",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(24)}: Ошибка при вызове метода контекста (Выполнить): {(7, 3)}: Поле не найдено \"ВидЦены\"\n<<?>>ВидЦены = &ВидЦены; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(24)}: Ошибка при вызове метода контекста (Выполнить): {(7, 3)}: Поле не найдено \"ВидЦены\"\n<<?>>ВидЦены = &ВидЦены; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(24)}: Ошибка при вызове метода контекста (Выполнить): {(7, 3)}: Поле не найдено \"ВидЦены\"\n<<?>>ВидЦены = &ВидЦены;",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦеныВТабличнойЧасти",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(24)}: Ошибка при вызове метода контекста (Выполнить): {(7, 3)}: Поле",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9fe3dcc545634a80c902ab3f16ddd3f6ea8c7c650a9cd4bc2a59d50f6d1d1340",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается ключевое слово 'КонецПроцедуры' ('EndProcedure')",
+                "Обнаружено логическое завершение исходного текста модуля"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается ключевое слово 'КонецПроцедуры' ('EndProcedure'); Обнаружено логическое завершение исходного текста модуля",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                9,
+                10,
+                30
+              ],
+              "compile_errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается ключевое слово 'КонецПроцедуры' ('EndProcedure')",
+                "Обнаружено логическое завершение исходного текста модуля"
+              ],
+              "entry_point": "ЗаполнитьЦеныТоваров",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается ключевое слово 'КонецПроцедуры' ('EndProcedure'); Обнаружено логическое завершение исходного текста модуля",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "83746d1890445af0835e9c3543cdbd8d7f0b210cbbb72a79664498e21f13338c",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 3.3,
+            "Q": 4.43
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Сгруппировать); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Сгруппировать); тест3 FAIL (исключение без имени номенклатуры: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Сгруппировать));",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыFIFO",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Сгруппировать)",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f5b36b048db1ebc053fc53875952da22db2da55201f8ae8051fa226ce2cd7b5a",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Процедура или функция с указанным именем не определена (КодВозвратНовогоОбозначения)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Процедура или функция с указанным именем не определена (КодВозвратНовогоОбозначения)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                23
+              ],
+              "compile_errors": [
+                "Процедура или функция с указанным именем не определена (КодВозвратНовогоОбозначения)"
+              ],
+              "entry_point": "СписатьТоварыFIFO",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Процедура или функция с указанным именем не определена (КодВозвратНовогоОбозначения)",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "22d2dfdc2e5f20eb9fb7b581b3b3f41815c45e86f653d64054e186a3dedfdea3",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(3, 26)}: Поле не найдено \"СтоимостьТоваровОстатки.Количество\"\nСтоимостьТоваровОстатки.<<?>>Количество КАК Количество,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(3, 26)}: Поле не найдено \"СтоимостьТоваровОстатки.Количество\"\nСтоимостьТоваровОстатки.<<?>>Количество КАК Количество,; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Моду",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РасчетСебестоимостиСредневзвешенной",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(3, 26)}: Пол",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1476be4f50267cb72fe22e4f9e5ac071b864b460a0e42af39e47a3ef4a3bf4c0",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Ожидается ключевое слово 'КонецФункции' ('EndFunction')",
+                "Обнаружено логическое завершение исходного текста модуля"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                5,
+                5,
+                7,
+                12,
+                27
+              ],
+              "compile_errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Ожидается ключевое слово 'КонецФункции' ('EndFunction')",
+                "Обнаружено логическое завершение исходного текста модуля"
+              ],
+              "entry_point": "РассчитатьСредневзвешеннуюСтоимость",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8b82135a96f0d2858eb90cca1fe6682fef94df044a710ae70b3d94974f8588ec",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "76a9c39c4a78ec69d7234bb0aef1dbecc442d32154ce0f29d4c2f5f90166035c",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 3.3,
+            "Q": 4.43
+          },
+          "bands": {
+            "M": 0,
+            "P": 4
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Существует); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Существует); тест3 FAIL (исключение без имени валюты: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Существует));",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьЦеныИСуmмыДокумента",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Метод объекта не обнаружен (Существует)",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.333,
+              "clean": 1,
+              "total": 3,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b54d1df21f10f0311184f9bd02150970f8cd6c6d5288682263b3cd3f6f333384",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8830364239e792c3365e75db425725671dd2652ffd52f9377b5618c4918a9516",
+          "scores": {
+            "S": 10,
+            "M": 3.3,
+            "O": null,
+            "P": 10.0,
+            "Q": 7.77
+          },
+          "bands": {
+            "M": 2,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 1,
+              "total": 3,
+              "log": "тест1 FAIL (февраль без склада); тест3 FAIL (квартал, строк=0);",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "band": 2
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)",
+              "leg": "O-исп-B",
+              "gated_by_m": true
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d8c5e76e7661bac937a337fdc3e497dcaf28957304e90f1e9b3da9d2f0385380",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "64a285d7bbaedc563f546dcb1c319e18f0262af07ffa66b06a76640d4127b85e",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Переменная не определена (Номенклатура)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Переменная не определена (Номенклатура)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                3
+              ],
+              "compile_errors": [
+                "Переменная не определена (Номенклатура)"
+              ],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "reason": "O-авто(B): код не исполнился (статус candidate_error) → N/A",
+              "leg": "O-авто",
+              "run_status": "candidate_error"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Переменная не определена (Номенклатура)",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "19fa7890fc6f7293b555e8a0f178d4ac7b798ae803cdf428acb78db2ae299401",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиИОборотыТоваров",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "90b4729f1a784f62bb06c653b87484f4fb45449c09de144a336d69cbb6c4fce9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиИОборотыТоваров",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "gemini-3.6-flash",
+      "model_name": "Gemini 3.6 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a7a3010d59841e2bb435a88bc252c66a7ea468ad596175ad5ecfa2d91fd23f96",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СвернутьТабличнуюЧастьТовары",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "gemini-3.5-flash-lite",
+      "model_name": "Gemini 3.5 Flash Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8113e200f0aaf5fb4e60045c10e29960582680bb1609afa1b0bf3670e3e26bb9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СвернутьТоварыЗаказа",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
     }
   ]
 }
