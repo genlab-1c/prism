@@ -58,6 +58,7 @@ description: "Что в бенчмарке PRISM уже работает: авт
 | GPT-5.6 Sol | 9.33 | 9.59 |
 | MiMo-V2.5 Pro | 9.22 | 8.07 |
 | GPT-5.5 | 9.09 | 8.63 |
+| Gemini 3.6 Flash | 9.07 | 8.35 |
 | GPT-5.6 Terra | 8.80 | 7.97 |
 | Grok Build 0.1 | 8.53 | 7.91 |
 | MiniMax M3 | 8.27 | 9.24 |
@@ -68,6 +69,7 @@ description: "Что в бенчмарке PRISM уже работает: авт
 | Claude Sonnet 5 | 7.88 | 8.68 |
 | DeepSeek V4-Flash | 7.72 | 7.39 |
 | Grok 4.3 | 7.70 | 9.36 |
+| Gemini 3.5 Flash Lite | 7.61 | 5.88 |
 | Alice AI LLM Flash | 7.25 | 6.15 |
 | GLM-4.7 Flash | 6.51 | 5.53 |
 | Claude Sonnet 4.6 | 6.33 | 9.13 |
