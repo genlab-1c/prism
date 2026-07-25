@@ -49,3 +49,4 @@ prices:
   "kimi-k3":                       { input: 3.0,  output: 15.0 }   # Moonshot/OpenRouter kimi-k3, прайс-лист (сверено веб-поиском)
   "gemini-3.6-flash":              { input: 1.5,  output: 7.5 }    # Google (ai.google.dev) = OpenRouter, прайс-лист 2026-07-23; розница AITUNNEL ~2x выше
   "gemini-3.5-flash-lite":         { input: 0.3,  output: 2.5 }    # Google (ai.google.dev) = OpenRouter, прайс-лист 2026-07-23; розница AITUNNEL ~2x выше
+  "claude-opus-5":                 { input: 5.0,  output: 25.0 }   # Anthropic, прайс-лист (= anthropic/claude-opus-5, тариф Opus без изменений); розница AITUNNEL ~2x выше

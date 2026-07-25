@@ -500,6 +500,20 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
 
+  opus5:
+    id: "claude-opus-5"                  # канал — AITUNNEL (openai_compat); флагман Anthropic, id по странице модели
+    name: "Claude Opus 5"
+    vendor: anthropic
+    weights: proprietary
+    released: "2026-07-24"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:

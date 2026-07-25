@@ -43,3 +43,4 @@ defaults:
     kimi3:       { temperature: 0.1, runs: 1 }      # Kimi K3 (флагман) через AITUNNEL (Moonshot)
     gemini36_flash: { temperature: 0.1, runs: 1 }   # Gemini 3.6 Flash через AITUNNEL (reasoning)
     gemini35_lite:  { temperature: 0.1, runs: 1 }   # Gemini 3.5 Flash Lite через AITUNNEL (reasoning)
+    opus5:       { temperature: 0.1, runs: 1 }       # Claude Opus 5 через AITUNNEL (reasoning, флагман Anthropic)
