@@ -7,6 +7,8 @@
 import React from 'react';
 import { vendorGlyph } from './VendorLogo.jsx';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
+import { buildInsights } from '../../lib/insights.js';
+import { verdictDetail } from './NarrativeCard.jsx';
 
 const AXIS = { S: '#7c7ef8', M: '#22d3ee', O: '#34d399', P: '#fbbf24' };
 const PALETTE = ['#22d3ee', '#34d399', '#fbbf24', '#f472b6', '#7c7ef8', '#fb923c', '#4ade80', '#e879f9', '#38bdf8', '#a78bfa'];
@@ -299,21 +301,27 @@ function LogoGlyph({ x, cy, size, m, C }) {
 export function SummaryTableSvg({ svgRef, rows, meta, C }) {
   const W = 900, headTop = 104, headH = 27, bodyTop = 140, rowH = 46;
   const H = bodyTop + rows.length * rowH + 40;
-  const rankX = 36, logoX = 56, logoSz = 30, nameX = 96, aX = 452, bX = 672, barOff = 62, barW = 128;
+  const rankX = 36, logoX = 56, logoSz = 30, nameX = 96, aX = 300, bX = 470, qX = 712, barOff = 52, barW = 104;
+  // «решено %» — контекстная колонка; цвет по уровню, как на витрине
   const cell = (x, s, cy) => {
-    if (s == null) return <text x={x} y={cy + 5} fontSize="12" fill={C.muted}>не измерялось</text>;
+    if (s == null) return <text x={x} y={cy + 5} fontSize="12" fill={C.muted}>—</text>;
     const pct = Math.round(s * 100); const col = solvedHex(C, s);
     return (
       <g>
-        <text x={x} y={cy + 7}><tspan fontSize="21" fontWeight="700" fill={col}>{pct}</tspan><tspan fontSize="12" fontWeight="600" fill={col} dx="1">%</tspan></text>
+        <text x={x} y={cy + 7}><tspan fontSize="19" fontWeight="700" fill={col}>{pct}</tspan><tspan fontSize="11" fontWeight="600" fill={col} dx="1">%</tspan></text>
         <rect x={x + barOff} y={cy - 4} width={barW} height={7} rx={3.5} fill={C.grid} />
         <rect x={x + barOff} y={cy - 4} width={Math.max(2, barW * s)} height={7} rx={3.5} fill={col} />
       </g>
     );
   };
+  // балл Q — главная (сортирующая) цифра
+  const qCell = (x, q, cy) => {
+    if (q == null) return <text x={x} y={cy + 5} fontSize="12" fill={C.muted}>—</text>;
+    return <text x={x} y={cy + 7}><tspan fontSize="23" fontWeight="700" fill={C.ink}>{q.toFixed(2)}</tspan><tspan fontSize="11" fill={C.muted} dx="3">/10</tspan></text>;
+  };
   return (
     <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
-      <text x={24} y={30} fontSize="18" fontWeight="700" fill={C.ink}>Рейтинг PRISM — доля полностью решённых задач</text>
+      <text x={24} y={30} fontSize="18" fontWeight="700" fill={C.ink}>Рейтинг PRISM — по среднему баллу Q (метрика SMOP)</text>
       <text x={24} y={53} fontSize="12.5" fill={C.sub}>
         <tspan fontWeight="700" fill={C.ink}>Категория A — алгоритмические:</tspan>
         <tspan dx="6"> чистый код без базы. Движок — OneScript + BSL LS.</tspan>
@@ -322,12 +330,13 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
         <tspan fontWeight="700" fill={C.ink}>Категория B — платформенные:</tspan>
         <tspan dx="6"> запросы, регистры, метаданные. Движок — реальная 1С в Docker.</tspan>
       </text>
-      <text x={24} y={91} fontSize="11" fill={C.muted}>«решено» — код прошёл все скрытые проверки · {rows.length} моделей</text>
+      <text x={24} y={91} fontSize="11" fill={C.muted}>Q — итоговый балл SMOP по 4 осям (0–10) · «решено» — доля задач со всеми пройденными тестами · {rows.length} моделей</text>
       <rect x={0} y={headTop} width={W} height={headH} fill={C.head} />
       <text x={rankX} y={headTop + 18} textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>#</text>
       <text x={logoX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
-      <text x={aX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>АЛГОРИТМИЧЕСКИЕ · A</text>
-      <text x={bX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>ПЛАТФОРМЕННЫЕ · B</text>
+      <text x={aX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>РЕШЕНО · A</text>
+      <text x={bX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>РЕШЕНО · B</text>
+      <text x={qX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>БАЛЛ Q</text>
       {rows.map((m, i) => {
         const y0 = bodyTop + i * rowH; const cy = y0 + rowH / 2; const top = i === 0;
         return (
@@ -340,6 +349,7 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
             <text x={nameX} y={cy + 13} fontSize="10.5" fill={C.muted}>{m.family || m.vendor || ''}</text>
             {cell(aX, m.A?.solved, cy)}
             {cell(bX, m.B?.solved, cy)}
+            {qCell(qX, m.qOverall, cy)}
           </g>
         );
       })}
@@ -494,6 +504,245 @@ export function TableExport({ scope, setScope, count, name, render }) {
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+/* ── инфографика карточки модели: расширенная сводка одной картинкой (SVG → SVG/PNG) ── */
+const fmtTokCard = (n) => (n == null ? '—' : n < 1000 ? `${n}` : `${(n / 1000).toFixed(1)}к`);
+const fmtReleasedCard = (r) => {
+  if (!r) return null;
+  const p = String(r).split('-');
+  if (p.length >= 3) return `${p[2]}.${p[1]}.${p[0]}`;
+  if (p.length === 2) return `${p[1]}.${p[0]}`;
+  return r;
+};
+const clip = (s, n) => (s && s.length > n ? s.slice(0, n - 1) + '…' : s);
+
+function ModelCardSvg({ svgRef, model, ins, meta, C }) {
+  const W = 820, pad = 32, cw = W - pad * 2;
+  const axA = ['S', 'M', 'O'], axB = ['S', 'M', 'O', 'P'];
+  const vd = verdictDetail(model, ins);
+  const pluses = (vd.pluses || []).slice(0, 4);
+
+  // мета-строка модели: релиз · класс весов · тариф
+  const metaBits = [];
+  const rel = fmtReleasedCard(model.released);
+  if (rel) metaBits.push(`релиз ${rel}`);
+  if (model.weights) metaBits.push(model.weights === 'open' ? 'открытые веса' : 'закрытые веса');
+  const pIn = model.econ?.priceIn, pOut = model.econ?.priceOut;
+  if (pIn != null && pOut != null) metaBits.push(`тариф $${pIn}/$${pOut} за 1M`);
+  const metaLine = metaBits.join('  ·  ');
+
+  // вертикальный курсор для гибкого верхнего блока (мета, вердикт, сильные стороны)
+  let y = 132; // после шапки
+  const leadY = y; y += 32;
+  const plusHeadY = pluses.length ? y : null; if (pluses.length) y += 24;
+  const plusYs = pluses.map((_, i) => plusHeadY + 24 + i * 24);
+  if (pluses.length) y = plusYs[plusYs.length - 1] + 22;
+
+  const boxTop = y + 6;
+  const boxHeadH = 58, rowH = 27, maxAx = 4;
+  const boxH = boxHeadH + 14 + maxAx * rowH + 10;
+  const bw = (cw - 16) / 2;
+  const econTop = boxTop + boxH + 40;
+  // сравнение: сильнее / слабее / дешевле-дороже
+  const cmp = [];
+  if (ins.beats?.length) cmp.push(['СИЛЬНЕЕ', C.ok, ins.beats.slice(0, 5).join(', ')]);
+  if (ins.losesTo?.length) cmp.push(['СЛАБЕЕ', C.muted, ins.losesTo.slice(0, 5).join(', ')]);
+  if (ins.cheaperThan?.length) cmp.push(['ДЕШЕВЛЕ', C.ok, ins.cheaperThan.slice(0, 4).map((x) => `${x.mult} ${x.name}`).join(', ')]);
+  else if (ins.pricierThan?.length) cmp.push(['ДОРОЖЕ', C.warn, ins.pricierThan.slice(0, 4).map((x) => `${x.mult} ${x.name}`).join(', ')]);
+  const econBottom = econTop + 44;
+  const cmpTop = econBottom + 34;                      // воздух между экономикой и «сильнее/дороже»
+  const cmpBottom = cmp.length ? cmpTop + (cmp.length - 1) * 24 + 8 : econBottom;
+
+  // где ломается — воронка исходов по категориям (те, где есть прогон)
+  const OUTCOME = [['решено', C.ok], ['неверный ответ', '#d8b13e'], ['ошибка выполнения', '#dd7a3b'], ['не компилируется', C.danger]];
+  const funCats = [];
+  if (model.A?.funnel?.n) funCats.push(['A', model.A.funnel]);
+  if (model.B?.funnel?.n) funCats.push(['B', model.B.funnel]);
+  const hasFun = funCats.length > 0;
+  const funHeadY = cmpBottom + 40;
+  const funLegendY = funHeadY + 22;
+  const funRowsTop = funLegendY + 26;
+  const funRowH = 28;
+  const funBottom = hasFun ? funRowsTop + funCats.length * funRowH - 4 : cmpBottom;
+
+  // профиль навыков — балл по видам задач (тегам) из meta.profileCols
+  const pc = meta.profileCols || { A: [], B: [] };
+  const colsA = pc.A || [], colsB = pc.B || [];
+  const tagLabels = meta.tagLabels || {};
+  const profN = Math.max(colsA.length, colsB.length);
+  const hasProf = profN > 0 && (model.A?.profile || model.B?.profile);
+  const profHeadY = (hasFun ? funBottom : cmpBottom) + 40;
+  const profBoxTop = profHeadY + 16;
+  const profBoxH = 46 + profN * 22 + 12;
+  const profBottom = hasProf ? profBoxTop + profBoxH : (hasFun ? funBottom : cmpBottom);
+
+  const H = profBottom + 36;
+
+  const axisRow = (bx, by, w, a, v) => {
+    // labelW шире самого длинного имени оси («оптимальность»), чтобы подпись не налезала на полосу
+    const col = AXIS[a], labelW = 128, valW = 30, barX = bx + labelW, barW = w - labelW - valW - 6;
+    return (
+      <g key={a}>
+        <rect x={bx} y={by - 9} width={18} height={18} rx={4} fill={col} fillOpacity={0.16} />
+        <text x={bx + 9} y={by + 4} textAnchor="middle" fontSize="10.5" fontWeight="700" fill={col}>{a}</text>
+        <text x={bx + 25} y={by + 4} fontSize="11.5" fill={C.sub}>{AXIS_NAME[a]}</text>
+        {v == null
+          ? <text x={bx + w} y={by + 4} textAnchor="end" fontSize="10.5" fill={C.muted}>не изм.</text>
+          : (<>
+            <rect x={barX} y={by - 3} width={barW} height={6} rx={3} fill={C.grid} />
+            <rect x={barX} y={by - 3} width={Math.max(2, barW * (v / 10))} height={6} rx={3} fill={col} />
+            <text x={bx + w} y={by + 4} textAnchor="end" fontSize="11.5" fontWeight="600" fill={C.ink}>{v.toFixed(1)}</text>
+          </>)}
+      </g>
+    );
+  };
+  const catBox = (bx, title, sub, q, solved, axes, scores) => (
+    <g>
+      <rect x={bx} y={boxTop} width={bw} height={boxH} rx={12} fill={C.head} stroke={C.grid} />
+      <text x={bx + 16} y={boxTop + 25} fontSize="13.5" fontWeight="700" fill={C.ink}>{title}</text>
+      <text x={bx + 16} y={boxTop + 42} fontSize="11" fill={C.muted}>{sub}</text>
+      <text x={bx + bw - 16} y={boxTop + 30} textAnchor="end"><tspan fontSize="26" fontWeight="700" fill={C.ink}>{q != null ? q.toFixed(2) : '—'}</tspan><tspan fontSize="11" fill={C.muted} dx="2">/10</tspan></text>
+      <text x={bx + bw - 16} y={boxTop + 47} textAnchor="end" fontSize="11" fontWeight="600" fill={solvedHex(C, solved)}>решено {solved != null ? Math.round(solved * 100) : '—'}%</text>
+      {axes.map((a, i) => axisRow(bx + 16, boxTop + boxHeadH + 12 + i * rowH, bw - 32, a, scores?.[a]))}
+    </g>
+  );
+  const econ = [
+    ['цена ответа', ins.genCostFmt || '—'],
+    ['скорость', ins.avgTime != null ? `${ins.avgTime} с` : '—'],
+    ['токенов', fmtTokCard(model.econ?.tokPerGen)],
+    ['общая оценка', ins.qOverall != null ? `${ins.qOverall.toFixed(1)} / 10` : '—'],
+  ];
+  const ew = cw / econ.length;
+  const rankTxt = ins.rankOverall <= 3 ? `ТОП-${ins.rankOverall}` : `#${ins.rankOverall}`;
+
+  // строка воронки: метка категории + сегментированная полоса исходов + % решено
+  const funRow = (label, f, by) => {
+    const lw = 26, cntW = 76, barX = pad + lw, barW = cw - lw - cntW - 8;
+    const pct = Math.round((f.buckets['решено'] || 0) / f.n * 100);
+    let x = barX;
+    return (
+      <g key={label}>
+        <text x={pad} y={by + 3} fontSize="11.5" fontWeight="700" fill={C.sub}>{label}</text>
+        <rect x={barX} y={by - 6} width={barW} height={12} rx={3} fill={C.grid} />
+        {OUTCOME.map(([k, c]) => { const w = (f.buckets[k] || 0) / f.n * barW; const s = w > 0 ? <rect key={k} x={x} y={by - 6} width={w} height={12} fill={c} /> : null; x += w; return s; })}
+        <text x={pad + cw} y={by + 3} textAnchor="end" fontSize="11" fontWeight="600" fill={C.ink}>{pct}% решено</text>
+      </g>
+    );
+  };
+  // колонка профиля навыков: тег + мини-полоса балла
+  const skillBox = (bx, title, cols, profile, col) => (
+    <g>
+      <rect x={bx} y={profBoxTop} width={bw} height={profBoxH} rx={12} fill={C.head} stroke={C.grid} />
+      <text x={bx + 16} y={profBoxTop + 25} fontSize="12.5" fontWeight="700" fill={C.ink}>{title}</text>
+      {cols.map((c, i) => {
+        const v = profile?.[c]?.value, label = tagLabels[c] || c;
+        const ry = profBoxTop + 48 + i * 22, lw = 120, vw = 26, barX = bx + 16 + lw, barW = bw - 32 - lw - vw - 6;
+        return (
+          <g key={c}>
+            <text x={bx + 16} y={ry + 3} fontSize="10.5" fill={C.sub}>{clip(label, 17)}</text>
+            {v == null
+              ? <text x={bx + bw - 16} y={ry + 3} textAnchor="end" fontSize="10" fill={C.muted}>—</text>
+              : (<>
+                <rect x={barX} y={ry - 2} width={barW} height={5} rx={2.5} fill={C.grid} />
+                <rect x={barX} y={ry - 2} width={Math.max(2, barW * (v / 10))} height={5} rx={2.5} fill={col} />
+                <text x={bx + bw - 16} y={ry + 3} textAnchor="end" fontSize="10.5" fontWeight="600" fill={C.ink}>{v.toFixed(1)}</text>
+              </>)}
+          </g>
+        );
+      })}
+    </g>
+  );
+
+  return (
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
+      <rect x={0} y={0} width={W} height={4} fill={C.brand} />
+      <text x={pad} y={32} fontSize="10.5" fontWeight="700" letterSpacing="0.08em" fill={C.muted}>PRISM · РАЗБОР ОЦЕНКИ · L1</text>
+      <text x={W - pad} y={32} textAnchor="end" fontSize="12" fontWeight="700" fill={C.brand}>prism</text>
+      <LogoGlyph x={pad} cy={70} size={44} m={model} C={C} />
+      <text x={pad + 58} y={64} fontSize="22" fontWeight="700" fill={C.ink}>{model.name}</text>
+      <text x={pad + 58} y={83} fontSize="12" fill={C.muted}>{model.family || model.vendor || ''}</text>
+      {metaLine && <text x={pad + 58} y={101} fontSize="11" fill={C.sub}>{metaLine}</text>}
+      <text x={W - pad} y={66} textAnchor="end"><tspan fontSize="32" fontWeight="700" fill={C.ink}>{ins.qOverall != null ? ins.qOverall.toFixed(2) : '—'}</tspan><tspan fontSize="12" fill={C.muted} dx="2">/10</tspan></text>
+      <text x={W - pad} y={86} textAnchor="end" fontSize="11" fontWeight="600" fill={C.brand}>{rankTxt} из {ins.total} · по Q</text>
+
+      <text x={pad} y={leadY} fontSize="14" fill={C.sub}>{vd.lead}</text>
+
+      {pluses.length > 0 && (
+        <>
+          <text x={pad} y={plusHeadY} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.ok}>СИЛЬНЫЕ СТОРОНЫ</text>
+          {pluses.map((p, i) => (
+            <text key={p.ax} x={pad} y={plusYs[i]} fontSize="12.5">
+              <tspan fill={AXIS[p.ax]} fontWeight="700">+ {p.ax}</tspan>
+              <tspan fill={C.ink} fontWeight="700" dx="6">{p.name}</tspan>
+              <tspan fill={C.sub} dx="4">— {clip(p.text, 82)}</tspan>
+            </text>
+          ))}
+        </>
+      )}
+
+      {catBox(pad, 'Категория A · алгоритмика', 'чистый код без базы', model.qA, model.A?.solved, axA, model.A)}
+      {catBox(pad + bw + 16, 'Категория B · платформа', 'запросы, регистры, метаданные 1С', model.qB, model.B?.solved, axB, model.B)}
+
+      <line x1={pad} y1={econTop - 16} x2={W - pad} y2={econTop - 16} stroke={C.grid} />
+      {econ.map(([label, val], i) => (
+        <g key={label}>
+          <text x={pad + ew * i + ew / 2} y={econTop + 6} textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="0.05em" fill={C.muted}>{label.toUpperCase()}</text>
+          <text x={pad + ew * i + ew / 2} y={econTop + 30} textAnchor="middle" fontSize="17" fontWeight="700" fill={C.ink}>{val}</text>
+        </g>
+      ))}
+
+      {cmp.length > 0 && <line x1={pad} y1={cmpTop - 16} x2={W - pad} y2={cmpTop - 16} stroke={C.grid} />}
+      {cmp.map(([label, col, val], i) => (
+        <text key={label} x={pad} y={cmpTop + i * 22} fontSize="12">
+          <tspan fill={col} fontWeight="700" letterSpacing="0.04em">{label}</tspan>
+          <tspan fill={C.sub} dx="8">{clip(val, 96)}</tspan>
+        </text>
+      ))}
+
+      {hasFun && (<>
+        <line x1={pad} y1={funHeadY - 14} x2={W - pad} y2={funHeadY - 14} stroke={C.grid} />
+        <text x={pad} y={funHeadY} fontSize="11" fontWeight="700" letterSpacing="0.05em" fill={C.ink}>ГДЕ ЛОМАЕТСЯ</text>
+        {OUTCOME.map(([k, c], i) => (
+          <g key={k}>
+            <rect x={pad + i * (cw / 4)} y={funLegendY - 8} width={9} height={9} rx={2.5} fill={c} />
+            <text x={pad + i * (cw / 4) + 14} y={funLegendY} fontSize="10.5" fill={C.sub}>{k}</text>
+          </g>
+        ))}
+        {funCats.map(([label, f], i) => funRow(label, f, funRowsTop + i * funRowH))}
+      </>)}
+
+      {hasProf && (<>
+        <line x1={pad} y1={profHeadY - 14} x2={W - pad} y2={profHeadY - 14} stroke={C.grid} />
+        <text x={pad} y={profHeadY} fontSize="11" fontWeight="700" letterSpacing="0.05em" fill={C.ink}>ПРОФИЛЬ НАВЫКОВ<tspan fontWeight="400" fill={C.muted} dx="8">балл по видам задач</tspan></text>
+        {skillBox(pad, 'Категория A · алгоритмика', colsA, model.A?.profile, AXIS.M)}
+        {skillBox(pad + bw + 16, 'Категория B · платформа', colsB, model.B?.profile, AXIS.P)}
+      </>)}
+
+      <text x={W - pad} y={H - 12} textAnchor="end" fontSize="9" fill={C.muted}>{STAMP(meta)}</text>
+    </svg>
+  );
+}
+
+// Кнопки выгрузки инфографики модели (десктоп, как у таблиц лидерборда). SVG рисуется скрыто.
+export function ModelCardExport({ model, models = [], meta = {}, tagLabels = {} }) {
+  const theme = useTheme();
+  const C = THEME[theme];
+  const isMobile = useIsMobile();
+  const ref = React.useRef(null);
+  if (isMobile || !model) return null; // картинку скачивают с десктопа
+  const ins = buildInsights(model, models, tagLabels);
+  const name = `prism_model_${model.id}`;
+  return (
+    <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>скачать:</span>
+      <Btn onClick={() => ref.current && exportSvg(ref.current, name)}>↓ SVG</Btn>
+      <Btn onClick={() => ref.current && exportPng(ref.current, name, C.bg)}>↓ PNG</Btn>
+      <div style={{ position: 'absolute', left: -99999, top: 0, width: 820, pointerEvents: 'none' }} aria-hidden="true">
+        <ModelCardSvg svgRef={ref} model={model} ins={ins} meta={meta} C={C} />
+      </div>
     </div>
   );
 }

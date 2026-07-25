@@ -9,8 +9,8 @@ import { Button } from '../core/Button.jsx';
 import { Tag } from '../core/Tag.jsx';
 import { ScoreBar } from '../prism/ScoreBar.jsx';
 import { ScoreVector } from '../prism/ScoreVector.jsx';
-import { QScore } from '../prism/QScore.jsx';
 import { NarrativeCard, ShareBar } from '../prism/NarrativeCard.jsx';
+import { ModelCardExport } from '../prism/LeaderChart.jsx';
 import { fmtRub } from '../../lib/insights.js';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
 
@@ -31,6 +31,82 @@ const AXC = {
   S: ['var(--axis-s)', 'var(--axis-s-soft)'], M: ['var(--axis-m)', 'var(--axis-m-soft)'],
   O: ['var(--axis-o)', 'var(--axis-o-soft)'], P: ['var(--axis-p)', 'var(--axis-p-soft)'],
 };
+// человеческие названия осей — рядом с буквой, чтобы карточка читалась без знания SMOP
+const AXIS_NAME = { S: 'синтаксис', M: 'логика', O: 'оптимальность', P: 'платформа 1С' };
+
+// исходы попыток (воронка «где ломается») — цвет на каждый, от лучшего к худшему
+const OUTCOME_BUCKETS = [
+  ['решено', 'var(--axis-o)'],
+  ['неверный ответ', '#d8b13e'],
+  ['ошибка выполнения', '#dd7a3b'],
+  ['не компилируется', 'var(--danger)'],
+];
+
+// одна воронка исходов модели по категории: доля решённых + полоса + расшифровка + частая поломка
+function FunnelPanel({ title, sub, funnel }) {
+  const isMobile = useIsMobile();
+  if (!funnel?.n) return null;
+  const f = funnel;
+  const pct = Math.round((f.buckets['решено'] || 0) / f.n * 100);
+  return (
+    <div style={{ flex: 1, minWidth: isMobile ? 0 : 300, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: isMobile ? 15 : 20 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, marginBottom: 12 }}>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
+          <div style={{ fontSize: 12, color: 'var(--ink-400)', marginTop: 2 }}>{sub}</div>
+        </div>
+        <div style={{ textAlign: 'right', flex: 'none' }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 22, fontWeight: 700, color: pct >= 70 ? 'var(--axis-o)' : pct >= 40 ? 'var(--warn)' : 'var(--danger)' }}>{pct}%</span>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', marginLeft: 5 }}>решено</span>
+        </div>
+      </div>
+      <div style={{ display: 'flex', width: '100%', height: 16, borderRadius: 'var(--radius-pill)', overflow: 'hidden', background: 'var(--track-bg)', border: '1px solid var(--line)' }}>
+        {OUTCOME_BUCKETS.map(([k, c]) => { const w = (f.buckets[k] || 0) / f.n * 100; return w ? <div key={k} title={`${k}: ${f.buckets[k]} из ${f.n}`} style={{ width: `${w}%`, background: c }} /> : null; })}
+      </div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '7px 14px', marginTop: 12 }}>
+        {OUTCOME_BUCKETS.map(([k, c]) => {
+          const cnt = f.buckets[k] || 0;
+          return (
+            <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: cnt ? 'var(--ink-300)' : 'var(--ink-400)' }}>
+              <span style={{ width: 9, height: 9, borderRadius: 3, background: c, opacity: cnt ? 1 : 0.4 }} />{k} <b style={{ color: cnt ? 'var(--ink-100)' : 'var(--ink-400)' }}>{cnt}</b>
+            </span>
+          );
+        })}
+      </div>
+      {f.cause && (
+        <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--line-soft, var(--line))', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>
+          частая поломка: <b style={{ color: 'var(--ink-200)' }}>{f.cause[0]}</b> ×{f.cause[1]}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// профиль навыков модели по категории: балл на каждый вид задач (тег) — полосы, где сильна / проседает
+function SkillPanel({ title, sub, profile, cols, labels, axis }) {
+  const isMobile = useIsMobile();
+  if (!profile || !cols?.length) return null;
+  const rows = cols.map((c) => ({ key: c, label: labels[c] || c, v: profile[c]?.value ?? null })).filter((r) => r.v != null);
+  if (!rows.length) return null;
+  const col = axis === 'A' ? 'var(--axis-m)' : 'var(--axis-p)';
+  return (
+    <div style={{ flex: 1, minWidth: isMobile ? 0 : 300, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: isMobile ? 15 : 20 }}>
+      <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
+      <div style={{ fontSize: 12, color: 'var(--ink-400)', marginTop: 2, marginBottom: 14 }}>{sub}</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {rows.map((r) => (
+          <div key={r.key} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ width: isMobile ? 108 : 132, flex: 'none', fontSize: 12, color: 'var(--ink-300)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.label}</span>
+            <div style={{ flex: 1, height: 7, borderRadius: 'var(--radius-pill)', background: 'var(--track-bg)', overflow: 'hidden' }}>
+              <div style={{ width: `${(r.v / 10) * 100}%`, height: '100%', background: col, borderRadius: 'var(--radius-pill)' }} />
+            </div>
+            <span style={{ width: 34, flex: 'none', textAlign: 'right', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 12.5, fontWeight: 600, color: 'var(--ink-100)' }}>{r.v.toFixed(1)}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 function DeltaPill({ tag, score }) {
   let label = 'полный балл', color = 'var(--axis-o)', bg = 'var(--axis-o-soft)', bd = 'none';
   if (tag === 'warn') { label = 'частично'; color = 'var(--axis-p)'; bg = 'var(--axis-p-soft)'; }
@@ -68,16 +144,37 @@ function ScoreBreakdown({ items = [] }) {
 function CategoryPanel({ title, sub, q, scores, axisOrder, compact }) {
   if (!scores) return null;
   return (
-    <div style={{ flex: 1, minWidth: compact ? 0 : 280, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: compact ? 15 : 22 }}>
-      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: compact ? 12 : 18 }}>
-        <div>
+    <div style={{ flex: 1, minWidth: compact ? 0 : 300, background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', padding: compact ? 15 : 22 }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12, marginBottom: compact ? 14 : 18 }}>
+        <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: compact ? 14 : 15, fontWeight: 600, color: 'var(--ink-100)' }}>{title}</div>
           <div style={{ fontSize: 12, color: 'var(--ink-400)', marginTop: 2 }}>{sub}</div>
         </div>
-        <QScore value={q ?? 0} size="md" label="Q" style={{ alignItems: 'flex-end' }} />
+        {/* итоговый балл — крупно и с явной подписью «/ 10 · итоговый балл Q», не голое число */}
+        <div style={{ textAlign: 'right', flex: 'none' }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 3, justifyContent: 'flex-end' }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontWeight: 700, fontSize: compact ? 32 : 40, lineHeight: 1, letterSpacing: '-0.02em', color: 'var(--ink-100)' }}>{(q ?? 0).toFixed(2)}</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>/ 10</span>
+          </div>
+          <div style={{ fontSize: 10.5, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', fontWeight: 600, marginTop: 3 }}>итоговый балл Q</div>
+        </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: compact ? 10 : 13 }}>
-        {axisOrder.map((a) => <ScoreBar key={a} axis={a} value={scores[a] ?? 0} />)}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: compact ? 11 : 13 }}>
+        {axisOrder.map((a) => {
+          const [c, soft] = AXC[a] || [];
+          const v = scores[a];
+          return (
+            <div key={a} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 7, width: compact ? 106 : 130, flex: 'none' }}>
+                <span style={{ width: 20, height: 20, flex: 'none', borderRadius: 5, background: soft, color: c, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11 }}>{a}</span>
+                <span style={{ fontSize: 12, color: 'var(--ink-300)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{AXIS_NAME[a]}</span>
+              </span>
+              {v == null
+                ? <span style={{ flex: 1, textAlign: 'right', fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>не измерено</span>
+                : <ScoreBar axis={a} value={v} showLetter={false} style={{ flex: 1 }} />}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
@@ -705,7 +802,10 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
       <div style={{ paddingTop: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
         <Button variant="ghost" size="sm" iconLeft={<Icon name="arrowLeft" size={16} />} onClick={() => navigate('leaderboard')}>Лидерборд</Button>
-        <ShareBar model={m} />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
+          <ModelCardExport model={m} models={models} meta={meta} tagLabels={tagLabels} />
+          <ShareBar model={m} />
+        </div>
       </div>
 
       {/* пред/след модель по общему рангу — листать рейтинг, не возвращаясь в лидерборд */}
@@ -724,10 +824,44 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
       </section>
 
       {/* Категории */}
-      <section style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 18, marginBottom: isMobile ? 24 : 36, flexWrap: 'wrap' }}>
-        <CategoryPanel title="Категория A · алгоритмика" sub="оси S · M · O" q={m.qA} scores={m.A} axisOrder={['S', 'M', 'O']} compact={isMobile} />
-        <CategoryPanel title="Категория B · платформа" sub="оси S · M · O · P" q={m.qB} scores={m.B} axisOrder={['S', 'M', 'O', 'P']} compact={isMobile} />
+      <section style={{ marginBottom: isMobile ? 24 : 36 }}>
+        <h2 style={{ fontSize: 'var(--text-h3)', fontWeight: 600, color: 'var(--ink-100)', margin: '0 0 4px' }}>Оценка по категориям</h2>
+        <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: '0 0 14px', lineHeight: 1.5 }}>
+          Балл <b style={{ color: 'var(--ink-200)' }}>Q</b> — среднее по осям метрики SMOP (шкала 0–10). Разбор по осям:{' '}
+          <span style={{ color: 'var(--axis-s)', fontWeight: 700 }}>S</span> синтаксис ·{' '}
+          <span style={{ color: 'var(--axis-m)', fontWeight: 700 }}>M</span> логика ·{' '}
+          <span style={{ color: 'var(--axis-o)', fontWeight: 700 }}>O</span> оптимальность ·{' '}
+          <span style={{ color: 'var(--axis-p)', fontWeight: 700 }}>P</span> платформа 1С.
+        </p>
+        <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 18, flexWrap: 'wrap' }}>
+          <CategoryPanel title="Категория A · алгоритмика" sub="чистый код: расчёты, строки, коллекции" q={m.qA} scores={m.A} axisOrder={['S', 'M', 'O']} compact={isMobile} />
+          <CategoryPanel title="Категория B · платформа" sub="запросы, регистры, метаданные 1С" q={m.qB} scores={m.B} axisOrder={['S', 'M', 'O', 'P']} compact={isMobile} />
+        </div>
       </section>
+
+      {/* Где ломается — воронка исходов модели по категориям */}
+      {(m.A?.funnel?.n || m.B?.funnel?.n) && (
+        <section style={{ marginBottom: isMobile ? 24 : 36 }}>
+          <h2 style={{ fontSize: 'var(--text-h3)', fontWeight: 600, color: 'var(--ink-100)', margin: '0 0 4px' }}>Где ломается</h2>
+          <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: '0 0 14px', lineHeight: 1.5 }}>Из чего сложились все попытки модели: сколько задач решено полностью и на чём падают остальные — неверный ответ, ошибка выполнения или код не компилируется.</p>
+          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 18, flexWrap: 'wrap' }}>
+            <FunnelPanel title="Категория A · алгоритмика" sub={`${m.A?.funnel?.n || 0} задач`} funnel={m.A?.funnel} />
+            <FunnelPanel title="Категория B · платформа" sub={`${m.B?.funnel?.n || 0} задач`} funnel={m.B?.funnel} />
+          </div>
+        </section>
+      )}
+
+      {/* Профиль навыков — балл модели по видам задач (тегам) */}
+      {(m.A?.profile || m.B?.profile) && (
+        <section style={{ marginBottom: isMobile ? 24 : 36 }}>
+          <h2 style={{ fontSize: 'var(--text-h3)', fontWeight: 600, color: 'var(--ink-100)', margin: '0 0 4px' }}>Профиль навыков</h2>
+          <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: '0 0 14px', lineHeight: 1.5 }}>Средний балл по типам задач — видно, где модель сильна, а где проседает. В алгоритмике — по оси <b style={{ color: 'var(--axis-m)' }}>M</b> (логика), в платформенных — по оси <b style={{ color: 'var(--axis-p)' }}>P</b> (работа с 1С).</p>
+          <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 18, flexWrap: 'wrap' }}>
+            <SkillPanel title="Категория A · алгоритмика" sub="по типам алгоритмов" profile={m.A?.profile} cols={(meta.profileCols || {}).A} labels={tagLabels} axis="A" />
+            <SkillPanel title="Категория B · платформа" sub="по видам конструкций 1С" profile={m.B?.profile} cols={(meta.profileCols || {}).B} labels={tagLabels} axis="B" />
+          </div>
+        </section>
+      )}
 
       {/* Браузер генераций */}
       <section style={{ paddingBottom: 8 }}>
