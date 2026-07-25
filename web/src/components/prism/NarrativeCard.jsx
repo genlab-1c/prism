@@ -104,7 +104,7 @@ function axisLine(ax, a, b, ins) {
 
 // подробный вердикт: по каждой оси — плюс/минус простым языком. Представитель оси — СРЕДНЕЕ A и B
 // (без перекоса в худшую категорию, чтобы согласовать с долей решённых). Сильная категория — тоже по solved%.
-function verdictDetail(model, ins) {
+export function verdictDetail(model, ins) {
   const pluses = [], minuses = [];
   for (const ax of ['M', 'O', 'P', 'S']) {
     const line = axisLine(ax, model.A?.[ax], model.B?.[ax], ins);
@@ -145,6 +145,10 @@ function VGroup({ title, tone, mark, items }) {
 export function NarrativeCard({ model, models = [], tagLabels = {} }) {
   const isMobile = useIsMobile();
   const ins = buildInsights(model, models, tagLabels);
+  // два ранга рядом: по Q (пилюля-акцент) и по решаемости (метрика вкладки «Сводка»). Расходятся,
+  // когда модель дожимает меньше задач, но средний балл SMOP выше — см. insights.js. Каждый со своей
+  // подписью, чтобы не путались и не дублировали друг друга.
+  // единый сквозной рейтинг — по Q (средний балл SMOP); та же метрика сортирует сводку
   const podium = ins.rankOverall <= 3;
   const rankText = podium ? `ТОП-${ins.rankOverall}` : `#${ins.rankOverall}`;
   const costTier = tier(models, 'genCost', model.econ?.genCost, 'cost');
@@ -175,7 +179,7 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', height: 30, padding: '0 14px', borderRadius: 'var(--radius-pill)', background: podium ? 'var(--prism)' : 'var(--surface-sunken)', border: podium ? 'none' : '1px solid var(--line)', color: podium ? 'var(--brand-ink)' : 'var(--ink-200)', fontFamily: 'var(--font-mono)', fontSize: 14, fontWeight: 700, letterSpacing: '0.02em' }}>{rankText}</span>
-            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>из {ins.total} моделей</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)' }}>из {ins.total} моделей · по Q</span>
           </div>
         </div>
 

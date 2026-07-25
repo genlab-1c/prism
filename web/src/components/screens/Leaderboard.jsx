@@ -511,9 +511,28 @@ function MobPct({ label, solved }) {
     </div>
   );
 }
+// крупный балл Q — главная (сортирующая) цифра сводки; цвет по уровню, как у «решено»
+const qColorSum = (q) => (q == null ? 'var(--ink-400)' : q >= 8 ? 'var(--axis-o)' : q >= 6 ? 'var(--brand)' : q >= 4 ? 'var(--warn)' : 'var(--danger)');
+function QStat({ q }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1, color: qColorSum(q) }}>{q != null ? q.toFixed(2) : '—'}</span>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--ink-400)' }}>/ 10</span>
+    </div>
+  );
+}
+// компактный Q для мобильной строки: лейбл сверху, балл снизу
+function MobQ({ q }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, minWidth: 42 }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.04em', color: 'var(--ink-400)' }}>Q</span>
+      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 16, fontWeight: 700, lineHeight: 1, color: qColorSum(q) }}>{q != null ? q.toFixed(2) : '—'}</span>
+    </div>
+  );
+}
 function SummaryView({ models, navigate, ranks }) {
   const isMobile = useIsMobile();
-  const overall = (m) => { const v = [m.A?.solved, m.B?.solved].filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : -1; };
+  const overall = (m) => m.qOverall ?? -1; // сквозной рейтинг по Q (совпадает с картой модели)
   const rows = [...models].sort((a, b) => overall(b) - overall(a));
   // ранг — из полного зачёта (фильтры сужают список, но не перенумеровывают места)
   const rankOf = (m, i) => ranks?.[m.id] ?? i + 1;
@@ -521,16 +540,17 @@ function SummaryView({ models, navigate, ranks }) {
   if (!rows.length) return <EmptyNote />;
 
   if (isMobile) {
-    // мобила: строка без горизонтального скролла — ранг + модель + компактные A/B + шеврон (тап → код)
+    // мобила: строка без горизонтального скролла — ранг + модель + Q + компактные A/B + шеврон (тап → код)
     return (
       <div>
         {rows.map((m, i) => (
-          <ListRow key={m.id} grid="26px 1fr auto" gap={9} pad="11px 12px" i={i} top={rankOf(m, i) === 1} onClick={() => navigate('model', m.id)}>
+          <ListRow key={m.id} grid="26px 1fr auto" gap={8} pad="11px 12px" i={i} top={rankOf(m, i) === 1} onClick={() => navigate('model', m.id)}>
             <RankBadge rank={rankOf(m, i)} size={26} />
             <Identity m={m} size={30} gap={9} wrap nameSize={14} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
               <MobPct label="A" solved={m.A?.solved} />
               <MobPct label="B" solved={m.B?.solved} />
+              <MobQ q={m.qOverall} />
               <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>
             </div>
           </ListRow>
@@ -539,12 +559,13 @@ function SummaryView({ models, navigate, ranks }) {
     );
   }
 
-  const grid = '44px minmax(180px,1.4fr) minmax(150px,1fr) minmax(150px,1fr)';
+  const grid = '44px minmax(160px,1.3fr) minmax(130px,1fr) minmax(130px,1fr) 104px';
   return (
-    <TableScroll minWidth={620}>
+    <TableScroll minWidth={680}>
       <div style={{ display: 'grid', gridTemplateColumns: grid, gap: 18, alignItems: 'center', padding: '0 20px', height: 40, background: 'var(--surface-sunken)', borderBottom: '1px solid var(--line)', ...headStick }}>
         <span style={colHead()}>#</span><span style={colHead()}>модель</span>
         <span style={colHead()}>алгоритмика</span><span style={colHead()}>платформенные</span>
+        <span style={colHead({ textAlign: 'right' })}>балл Q</span>
       </div>
       {rows.map((m, i) => (
         <ListRow key={m.id} grid={grid} i={i} top={rankOf(m, i) === 1} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
@@ -552,6 +573,7 @@ function SummaryView({ models, navigate, ranks }) {
           <Identity m={m} />
           <SolvedStat solved={m.A?.solved} />
           <SolvedStat solved={m.B?.solved} />
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}><QStat q={m.qOverall} /></div>
         </ListRow>
       ))}
     </TableScroll>
@@ -765,7 +787,8 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
   }, [models, fltQ, fltVendors, fltPrice, fltAge, fltWeights]);
 
   // сводка: сортировка по средней доле решённых A/B; ранги — по полному зачёту
-  const sumOverall = (m) => { const v = [m.A?.solved, m.B?.solved].filter((x) => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : -1; };
+  // единый сквозной рейтинг — по среднему баллу Q (SMOP). Тот же ключ ранжирует карточку модели.
+  const sumOverall = (m) => m.qOverall ?? -1;
   const sumRanks = React.useMemo(() => {
     const r = {};
     [...models].sort((a, b) => sumOverall(b) - sumOverall(a)).forEach((m, i) => { r[m.id] = i + 1; });
@@ -832,7 +855,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
 
       {view === 'summary' && (
         <>
-          <p style={{ margin: isMobile ? '0 0 10px' : '0 0 14px', fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', lineHeight: 1.5, textAlign: isMobile ? 'justify' : 'left' }}>Модели отсортированы по доле решённых задач в категориях A и B. «Решено» — код прошёл все скрытые проверки.{isMobile ? ' Нажмите на модель — откроется её код по задачам.' : ''}</p>
+          <p style={{ margin: isMobile ? '0 0 10px' : '0 0 14px', fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', lineHeight: 1.5, textAlign: isMobile ? 'justify' : 'left' }}>Модели отсортированы по среднему баллу <b style={{ color: 'var(--ink-200)' }}>Q</b> — итоговой оценке метрики SMOP по четырём осям. «Решено» рядом — доля задач, где код прошёл все скрытые тесты (для контекста).{isMobile ? ' Нажмите на модель — откроется её код по задачам.' : ''}</p>
           <TableExport scope={sumScope} setScope={setSumScope} count={sumFiltered.length} name={`prism_summary_${sumScope}`}
             render={(ref, C) => <SummaryTableSvg svgRef={ref} rows={sumShown} meta={meta} C={C} />} />
           <SummaryView models={sumShown} navigate={navigate} ranks={sumRanks} />
