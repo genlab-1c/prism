@@ -73,6 +73,28 @@ def _add_common_module(out_cfg: Path, name: str, body: str, servercall: bool) ->
     (ext / "Module.bsl").write_text(BOM + body, encoding="utf-8")
 
 
+# Директивы компиляции модуля ФОРМЫ (&НаКлиенте/&НаСервере/…БезКонтекста). Порядок альтернатив —
+# от длинной к короткой, иначе «&НаКлиентеНаСервере» частично съест «&НаКлиенте».
+_FORM_DIRECTIVE_RE = re.compile(
+    r"(?im)^[ \t]*&(?:"
+    r"НаКлиентеНаСервереБезКонтекста|НаКлиентеНаСервере|"
+    r"НаСервереБезКонтекста|НаСервере|НаКлиенте"
+    r")[ \t]*(?:\r?\n|$)"
+)
+
+
+def strip_form_directives(code: str) -> str:
+    """Убрать директивы компиляции модуля формы (&НаСервере… / &НаКлиенте…).
+
+    Кандидат собирается ОБЩИМ модулем, а эти директивы валидны только в модуле формы: в общем
+    модуле помеченный ими метод компилируется, но не виден снаружи → тесты падают на «Метод
+    объекта не обнаружен», хотя логика цела. Промпт не говорит, что код идёт «библиотекой» под
+    тесты, — модель угадывает, будто пишет серверный обработчик формы. Та же угаданная конвенция
+    окружения, что и с «Экспорт» (см. ensure_exported): снимаем директивы, чтобы M мерил ЛОГИКУ.
+    """
+    return _FORM_DIRECTIVE_RE.sub("", code)
+
+
 def ensure_exported(code: str, entry: str) -> str:
     """Дописать «Экспорт» точке входа, если его нет.
 
@@ -106,11 +128,11 @@ def assemble_run_config(
     spec = yaml.safe_load((task_dir / "config_spec.yaml").read_text(encoding="utf-8"))
     build_base_config(spec, empty_cfg, out_cfg)
 
-    # кандидат: логические ошибки ловит прогон, но точку входа авто-экспортируем — чтобы её
-    # вообще можно было позвать из модуля Тесты (промпт про «Экспорт» умалчивает, см. ensure_exported)
-    _add_common_module(
-        out_cfg, "КодКандидата", ensure_exported(candidate_code, entry), servercall=False
-    )
+    # кандидат: логические ошибки ловит прогон, но конвенции окружения (промпт про них молчит)
+    # нормализуем — снимаем директивы модуля формы и авто-экспортируем точку входа, чтобы её
+    # вообще можно было позвать из модуля Тесты (см. strip_form_directives / ensure_exported)
+    prepared = ensure_exported(strip_form_directives(candidate_code), entry)
+    _add_common_module(out_cfg, "КодКандидата", prepared, servercall=False)
 
     # тесты: сгенерённые фикстуры + проверки задачи с подставленным именем функции
     fixtures = yaml.safe_load((task_dir / "fixtures.yaml").read_text(encoding="utf-8"))
