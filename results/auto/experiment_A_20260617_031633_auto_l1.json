@@ -29870,6 +29870,881 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "664326c6e19b84a9da650c94a9818d7551b2df9b5a16c73029b443326a8dee14",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьОтсортированныйМассивСНовымиЗначениями",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                9620,
+                19220,
+                38420,
+                76820
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьОтсортированныйМассивСНовымиЗначениями",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "63fe5b93635cc76a44ecb55b952af861463a8a7d7fcc476ff6234fea020ae1cb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "ops": [
+                118,
+                67,
+                141,
+                118
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0dd2a5980f3a4f165411b8f39adbd45c045c8ab5a11d8052a4dc835c6a1b37b8",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2006,
+                4006,
+                8006,
+                16006
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f5f2c4bcf8d1f8d10aa2fbe97d30ab03efeeb40c755ffa9382b116cc855493e4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2418,
+                4814,
+                9625,
+                19243
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2cfdb910715cf5c549c9ad90fd08fecc09bee368059423ff8140d6d4a4505033",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ОбратныйПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.04,
+              "p_opt": 1.0,
+              "ops": [
+                526640,
+                2147940,
+                8630540,
+                36897837
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбратныйПорядокСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9d9ba967462178e5e634b00e47b01063cc284b1939e562c0fec85fc6ca7b8caa",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                93,
+                101,
+                109,
+                117
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "30c57e8dc70e14cb67bdf4873b2501cfa1944f9bdd3f1eb58f4804942403f58a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": null,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 77,51 / Symbol not found Колонки}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ec8dbd9ef3304e1ec34d84394667e77667051fd9c7e148014d0da8ea57725f8e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2808,
+                5608,
+                11208,
+                22402
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f6bcbed79f4f4b8221c58daa2413af7a227f4653164e84ac6583952cf5e69053",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3196,
+                6369,
+                12701,
+                25185
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d3e89e7eae57c4eb7301b276ab550149d3b7b3cfe35e401dbdb6006bf7627b89",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1564,
+                3114,
+                6214,
+                12414
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящееСреднее",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e6753cd29b1c5757e1c950a5b920557d17885ccce5d368e8a9f24dd3be4e1bba",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСловаВТексте",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7700,
+                15042,
+                30107,
+                61132
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСловаВТексте",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bbde73da3365912ca39b47b8bf1200a792d1b3990b679af5fb8d5ea121283e65",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.8,
+              "p_opt": 2.0,
+              "ops": [
+                414,
+                745,
+                1178,
+                1709
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2043ae162721d2acc166c542c255053f8d4ae12f61d3d34805d060d70b0bbecb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158043,
+                606323,
+                2336962,
+                9362618
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2c61bc44edd9d64a8b792ef61d640893d170f4e61a47c32b7e861bbf1e5138d9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                8509,
+                17009,
+                34009,
+                68009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "claude-opus-5",
+      "model_name": "Claude Opus 5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fc641272294809b0f806074ccf5eb33b8932d986dbc2f4604cc952feb62dd24d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38780,
+                80078,
+                164989,
+                339221
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
