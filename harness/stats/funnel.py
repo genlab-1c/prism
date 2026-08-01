@@ -164,15 +164,20 @@ def funnel(result: dict, taxonomy: dict) -> list[tuple[str, dict]]:
 
     result — структура auto_l1; группы {model_id, model_name, runs} как в orchestrate.
     Прогоны помечаются task_id, чтобы run_outcome выбрал ворота по категории.
+
+    Группировка — по ИМЕНИ модели, а не по (id, имя): у одной модели в результате может
+    быть несколько id, если между прогонами сменился канал доступа (deepseek/deepseek-v4-flash
+    на OpenRouter → deepseek-v4-flash на AITUNNEL). Ключ с id разрезал такую модель на две
+    воронки, и в витрину уходила та, что осталась после dict(...) — доля решённых считалась
+    по части задач. Ранжир по осям (_ranked) всегда группировал по имени; воронка обязана так же.
     """
-    by_model: dict[tuple, list] = {}
+    by_model: dict[str, list] = {}
     for t in result.get("tasks", []):
-        key = (t["model_id"], t["model_name"])
         for r in t["runs"]:
-            by_model.setdefault(key, []).append({**r, "task_id": t["task_id"]})
+            by_model.setdefault(t["model_name"], []).append({**r, "task_id": t["task_id"]})
 
     rows: list[tuple[str, dict]] = []
-    for (_mid, mname), runs in by_model.items():
+    for mname, runs in by_model.items():
         f = model_funnel(runs, taxonomy)
         if f is not None:
             rows.append((mname, f))
