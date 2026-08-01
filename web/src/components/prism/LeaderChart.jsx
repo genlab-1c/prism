@@ -407,6 +407,78 @@ export function ScoresTableSvg({ svgRef, cat, rows, meta, C }) {
   );
 }
 
+/* ── рейтинг «Экономики» для выгрузки картинкой (качество ↔ цена/скорость/токены) ──
+   rows приходят готовыми из Economy.jsx — тот же порядок и те же доли полос, что на экране:
+   сначала парето-оптимум (по Q), затем остальные. */
+const ECON_TITLE = { cost: 'цена одной генерации', time: 'среднее время на задачу', tokens: 'токенов на генерацию' };
+const ECON_NOTE = {
+  cost: 'цена = прайс-лист провайдера × реально сгенерированные токены (средняя по всем задачам)',
+  time: 'время ответа модели на одну задачу, секунды (замер прогона, зависит от нагрузки провайдера)',
+  tokens: 'вход + выход, среднее на один ответ; от тарифа не зависит — мало токенов ≠ дёшево',
+};
+const ECON_BETTER = { cost: 'дешевле', time: 'быстрее', tokens: 'экономнее' };
+const ECON_COL = { cost: 'ЦЕНА / ГЕНЕРАЦИЯ', time: 'ВРЕМЯ / ЗАДАЧА', tokens: 'ТОКЕНОВ / ГЕНЕРАЦИЯ' };
+
+export function EconomyTableSvg({ svgRef, rows, metric, fmt, meta, C }) {
+  const W = 900, headTop = 96, headH = 26, bodyTop = 130, rowH = 44, bandH = 28;
+  const firstRest = rows.findIndex((r) => !r.optimum);
+  const band = firstRest > 0 ? firstRest : -1; // полосу-разделитель рисуем, только если оптимум не один сплошной блок
+  const H = bodyTop + rows.length * rowH + (band >= 0 ? bandH : 0) + 40;
+  const rankX = 34, logoX = 52, logoSz = 28, nameX = 90;
+  const qX = 300, xX = 520, barW = 150, chipX = 800;
+  const qMax = Math.max(...rows.map((r) => r.q), 1);
+  const maxX = Math.max(...rows.map((r) => r.x), 1);
+  let shift = 0; // сдвиг строк после полосы-разделителя
+  return (
+    <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
+      <text x={24} y={30} fontSize="17" fontWeight="700" fill={C.ink}>Экономика PRISM — качество ↔ {ECON_TITLE[metric]}</text>
+      <text x={24} y={51} fontSize="12" fill={C.sub}>{ECON_NOTE[metric]}</text>
+      <text x={24} y={69} fontSize="11" fill={C.muted}>«оптимум» — нет модели одновременно {ECON_BETTER[metric]} И сильнее · Q — итоговый балл SMOP по 4 осям (0–10) · {rows.length} моделей</text>
+      <rect x={0} y={headTop} width={W} height={headH} fill={C.head} />
+      <text x={logoX} y={headTop + 17} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
+      <text x={qX} y={headTop + 17} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>КАЧЕСТВО</text>
+      <text x={xX} y={headTop + 17} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>{ECON_COL[metric]}</text>
+      <text x={W - 24} y={headTop + 17} textAnchor="end" fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>ВЫГОДА</text>
+      {rows.map((m, i) => {
+        if (i === band) shift = bandH;
+        const y0 = bodyTop + i * rowH + shift; const cy = y0 + rowH / 2;
+        const qw = Math.max(2, barW * (m.q / qMax)), xw = Math.max(2, barW * (m.x / maxX));
+        return (
+          <g key={m.id}>
+            {i === band && (
+              <g>
+                <rect x={0} y={y0 - bandH} width={W} height={bandH} fill={C.head} />
+                <text x={24} y={y0 - bandH / 2 + 4} fontSize="10.5" fontWeight="600" letterSpacing="0.04em" fill={C.muted}>ОСТАЛЬНЫЕ — ЕСТЬ ВАРИАНТ {ECON_BETTER[metric].toUpperCase()} И СИЛЬНЕЕ</text>
+              </g>
+            )}
+            <rect x={0} y={y0} width={W} height={rowH} fill={m.optimum ? C.tint : (i % 2 ? C.zebra : 'transparent')} />
+            {m.optimum && <rect x={0} y={y0} width={3} height={rowH} fill={C.ok} />}
+            <rect x={rankX - 12} y={cy - 12} width={24} height={24} rx={6} fill={i === 0 ? C.brand : C.head} />
+            <text x={rankX} y={cy + 4} textAnchor="middle" fontSize="11" fontWeight="700" fill={i === 0 ? C.brandInk : C.sub}>{i + 1}</text>
+            <LogoGlyph x={logoX} cy={cy} size={logoSz} m={m} C={C} />
+            <text x={nameX} y={cy - 1} fontSize="13" fontWeight={i === 0 ? 700 : 600} fill={C.ink}>{m.name}</text>
+            <text x={nameX} y={cy + 12} fontSize="10" fill={C.muted}>{m.dominator ? `уступает ${clip(m.dominator, 26)}` : (m.family || m.vendor || '')}</text>
+            <text x={qX} y={cy - 5} fontSize="12.5" fontWeight="700" fill={qColor(m.q)}>{m.q.toFixed(2)}</text>
+            <rect x={qX} y={cy + 3} width={barW} height={7} rx={3.5} fill={C.grid} />
+            <rect x={qX} y={cy + 3} width={qw} height={7} rx={3.5} fill={qColor(m.q)} />
+            <text x={xX} y={cy - 5} fontSize="12.5" fontWeight="700" fill={C.ink}>{fmt(m.x)}</text>
+            {m.hint && <text x={xX + 62} y={cy - 5} fontSize="10" fill={C.muted}>{m.hint}</text>}
+            <rect x={xX} y={cy + 3} width={barW} height={7} rx={3.5} fill={C.grid} />
+            <rect x={xX} y={cy + 3} width={xw} height={7} rx={3.5} fill={C.sub} />
+            {m.optimum && (
+              <g>
+                <rect x={chipX} y={cy - 11} width={76} height={22} rx={11} fill={C.ok} fillOpacity={0.16} stroke={C.ok} strokeOpacity={0.5} />
+                <text x={chipX + 38} y={cy + 4} textAnchor="middle" fontSize="10.5" fontWeight="700" fill={C.ok}>оптимум</text>
+              </g>
+            )}
+          </g>
+        );
+      })}
+      <text x={W - 16} y={H - 14} textAnchor="end" fontSize="9.5" fill={C.muted}>{STAMP(meta)}</text>
+    </svg>
+  );
+}
+
 function Btn({ children, onClick, active, primary }) {
   const [h, setH] = React.useState(false);
   return (

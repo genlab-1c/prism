@@ -5,6 +5,7 @@ import React from 'react';
 import { Badge } from '../core/Badge.jsx';
 import { VendorLogo } from '../prism/VendorLogo.jsx';
 import { METRICS, paretoSet } from './Quadrant.jsx';
+import { TableExport, EconomyTableSvg } from '../prism/LeaderChart.jsx';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
 
 function Segmented({ items, value, onChange }) {
@@ -85,21 +86,23 @@ function MobileRow({ p, cfg, maxX, qMax, optimum, dominator, first, onClick }) {
   );
 }
 
-function ValueRanking({ models, navigate, metric }) {
-  const isMobile = useIsMobile();
+// подсказки для крайних значений
+const HINT_MIN = { cost: 'дешевле всех', time: 'быстрее всех', tokens: 'экономнее всех' };
+const HINT_MAX = { cost: 'дороже всех', time: 'медленнее всех', tokens: 'прожорливее всех' };
+
+/* Рейтинг «Экономики» одним списком: оптимум первыми (по Q), затем остальные (по Q).
+   Считается один раз на вид — из него живёт и таблица на экране, и выгружаемая картинка. */
+function buildRanking(models, metric) {
   const cfg = METRICS[metric];
   const pts = models
     .filter((m) => m.qOverall != null && m.econ && m.econ[cfg.key] != null && m.econ[cfg.key] > 0)
     .map((m) => ({ id: m.id, name: m.name, family: m.family, vendor: m.vendor, q: m.qOverall, x: m.econ[cfg.key] }));
-  if (!pts.length) return <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>нет данных.</p>;
+  if (!pts.length) return { cfg, rows: [], maxX: 1, qMax: 1 };
 
   const front = paretoSet(pts);
   const maxX = Math.max(...pts.map((p) => p.x));
   const minX = Math.min(...pts.map((p) => p.x));
   const qMax = Math.max(...pts.map((p) => p.q));
-  // подсказки для крайних значений
-  const HINT_MIN = { cost: 'дешевле всех', time: 'быстрее всех', tokens: 'экономнее всех' };
-  const HINT_MAX = { cost: 'дороже всех', time: 'медленнее всех', tokens: 'прожорливее всех' };
   for (const p of pts) {
     if (p.x === minX) p.hint = HINT_MIN[metric];
     else if (p.x === maxX) p.hint = HINT_MAX[metric];
@@ -110,9 +113,21 @@ function ValueRanking({ models, navigate, metric }) {
     return doms.sort((a, b) => b.q - a.q)[0].name; // самый качественный из тех, кто доминирует
   };
 
-  // порядок: оптимум первыми (по Q), затем остальные (по Q)
   const optimum = pts.filter((p) => front.has(p.id)).sort((a, b) => b.q - a.q);
   const rest = pts.filter((p) => !front.has(p.id)).sort((a, b) => b.q - a.q);
+  const rows = [
+    ...optimum.map((p) => ({ ...p, optimum: true, dominator: null })),
+    ...rest.map((p) => ({ ...p, optimum: false, dominator: dominatorOf(p) })),
+  ];
+  return { cfg, rows, maxX, qMax };
+}
+
+function ValueRanking({ rows, cfg, maxX, qMax, navigate, metric }) {
+  const isMobile = useIsMobile();
+  if (!rows.length) return <p style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 13 }}>нет данных.</p>;
+
+  const optimum = rows.filter((p) => p.optimum);
+  const rest = rows.filter((p) => !p.optimum);
 
   const head = { fontFamily: 'var(--font-mono)', fontSize: 11, fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)' };
 
@@ -125,7 +140,7 @@ function ValueRanking({ models, navigate, metric }) {
             <span style={{ ...head, color: 'var(--ink-400)' }}>остальные — есть вариант дешевле и сильнее</span>
           </div>
         )}
-        {rest.map((p) => <MobileRow key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum={false} dominator={dominatorOf(p)} onClick={() => navigate('model', p.id)} />)}
+        {rest.map((p) => <MobileRow key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum={false} dominator={p.dominator} onClick={() => navigate('model', p.id)} />)}
       </div>
     );
   }
@@ -146,14 +161,31 @@ function ValueRanking({ models, navigate, metric }) {
           <span style={{ ...head, color: 'var(--ink-400)' }}>остальные — есть вариант дешевле и сильнее</span>
         </div>
       )}
-      {rest.map((p) => <Row key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum={false} dominator={dominatorOf(p)} onClick={() => navigate('model', p.id)} />)}
+      {rest.map((p) => <Row key={p.id} p={p} cfg={cfg} maxX={maxX} qMax={qMax} optimum={false} dominator={p.dominator} onClick={() => navigate('model', p.id)} />)}
      </div>
     </div>
   );
 }
 
-export function EconomyView({ models = [], navigate = () => {} }) {
+// подпись над таблицей — что именно меряет вид (как на вкладках A/B)
+const LEAD = {
+  cost: <>Сколько стоит <b style={{ color: 'var(--ink-200)' }}>один ответ</b> модели: прайс-лист провайдера × реально сгенерированные токены, в среднем по всем задачам. Q — итоговый балл SMOP, взвешен по числу задач. «Оптимум» — нет модели одновременно дешевле и сильнее.</>,
+  time: <>Сколько модель отвечает на <b style={{ color: 'var(--ink-200)' }}>одну задачу</b>, секунды. Это замер прогона: зависит от загрузки провайдера и длины ответа, на баллы не влияет. «Оптимум» — нет модели одновременно быстрее и сильнее.</>,
+  tokens: <>Сколько токенов (вход + выход) уходит на <b style={{ color: 'var(--ink-200)' }}>один ответ</b>. От тарифа не зависит, поэтому сравнимо между провайдерами: мало токенов ≠ дёшево. «Оптимум» — нет модели одновременно экономнее и сильнее.</>,
+};
+
+// сноска под таблицей — оговорки к цифрам
+const FOOT = {
+  cost: 'цена генерации — средняя стоимость одного ответа модели (по всем задачам) = прайс-лист провайдера × реально сгенерированные токены. Зарубежные — тариф OpenRouter, Sber и Yandex — прайс-лист провайдера. Q взвешен по числу задач.',
+  time: 'время — сумма ожидания ответа от провайдера, делённая на число задач. Замерено в одном прогоне и не усреднялось по повторам, поэтому годится для порядка величин, а не для точного сравнения близких значений. Исполнение кода в песочнице сюда не входит.',
+  tokens: '«токенов на генерацию» — среднее число токенов (вход + выход) на один ответ. Меньше = лаконичнее, и не зависит от тарифа. Важно: мало токенов ≠ дёшево — дорогая модель бывает экономной по токенам (например, GPT‑5.5 краток, но токен у него дорогой). У рассуждающих моделей размышления попадают в выход и раздувают счёт.',
+};
+
+export function EconomyView({ models = [], navigate = () => {}, meta = {} }) {
   const [metric, setMetric] = React.useState('cost');
+  const [scope, setScope] = React.useState('all'); // охват: по умолчанию ВСЕ модели (Топ-10 опционален)
+  const { cfg, rows, maxX, qMax } = React.useMemo(() => buildRanking(models, metric), [models, metric]);
+  const shown = scope === 'all' ? rows : rows.slice(0, 10);
   return (
     <div>
       {/* отступ до таблицы 16 — как у переключателя видов на вкладках A/B */}
@@ -161,14 +193,14 @@ export function EconomyView({ models = [], navigate = () => {} }) {
         <Segmented items={[{ key: 'cost', label: 'Цена' }, { key: 'time', label: 'Скорость' }, { key: 'tokens', label: 'Токены' }]} value={metric} onChange={setMetric} />
       </div>
 
-      <ValueRanking models={models} navigate={navigate} metric={metric} />
+      <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>{LEAD[metric]}</p>
 
-      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: '22px 0 0' }}>
-        {metric === 'tokens'
-          ? '«токенов на генерацию» — среднее число токенов (вход + выход) на один ответ. Меньше = лаконичнее, и не зависит от тарифа. Важно: мало токенов ≠ дёшево — дорогая модель бывает экономной по токенам (например, GPT‑5.5 краток, но токен у него дорогой). '
-          : 'цена генерации — средняя стоимость одного ответа модели (по всем задачам) = прайс-лист провайдера × реально сгенерированные токены. Зарубежные — тариф OpenRouter, Sber и Yandex — прайс-лист провайдера. '}
-        Q взвешен по числу задач.
-      </p>
+      <TableExport scope={scope} setScope={setScope} count={rows.length} name={`prism_econ_${metric}_${scope}`}
+        render={(ref, C) => <EconomyTableSvg svgRef={ref} rows={shown} metric={metric} fmt={cfg.fmt} meta={meta} C={C} />} />
+
+      <ValueRanking rows={shown} cfg={cfg} maxX={maxX} qMax={qMax} navigate={navigate} metric={metric} />
+
+      <p style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', margin: '22px 0 0' }}>{FOOT[metric]}</p>
     </div>
   );
 }

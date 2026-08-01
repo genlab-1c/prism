@@ -851,7 +851,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
         weights={fltWeights} setWeights={setFltWeights}
         shown={filtered.length} total={models.length} />
 
-      {view === 'econ' && (filtered.length ? <EconomyView models={filtered} navigate={navigate} /> : <EmptyNote />)}
+      {view === 'econ' && (filtered.length ? <EconomyView models={filtered} navigate={navigate} meta={meta} /> : <EmptyNote />)}
 
       {view === 'summary' && (
         <>
@@ -869,8 +869,9 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           {sub === 'overall' && <TableExport scope={scoreScope} setScope={setScoreScope} count={scoreFiltered.length} name={`prism_scores_${view}_${scoreScope}`}
             render={(ref, C) => <ScoresTableSvg svgRef={ref} cat={view} rows={scoreShown} meta={meta} C={C} />} />}
           {sub === 'overall' && <OverallTable cat={view} models={scoreShown} rankSource={scoreAll} navigate={navigate} />}
-          {sub === 'funnel' && <FunnelView cat={view} models={filtered} rankSource={models} navigate={navigate} />}
-          {sub === 'profile' && <ProfileView cat={view} models={filtered} cols={cols[view]} labels={labels} navigate={navigate} />}
+          {sub === 'funnel' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>На чём именно спотыкается модель: каждая из {view === 'A' ? (meta.tasksA || 0) : (meta.tasksB || 0)} задач попадает в один исход — код не компилируется, упал при выполнении, отработал но дал неверный ответ, решено. Строки отсортированы по доле решённых; клик по исходу в легенде оставит модели, у которых он есть.</p>}
+          {sub === 'profile' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>Средний балл {view === 'A' ? 'M (смысл)' : 'P (платформа)'} по темам задач — где у модели провал, а где сильная сторона. В колонках только темы, набравшие достаточно задач; насыщенность клетки = балл, прочерк — тема этой модели не попадалась.</p>}
+          {sub === 'charts' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>Те же баллы картинкой: радар сравнивает форму по осям SMOP, рейтинг — общий балл Q, «оси SMOP» разбирают его по S · M · O{view === 'B' ? ' · P' : ''}. Охват задаётся ниже, вид скачивается в SVG или PNG.</p>}
           {sub === 'charts' && (filtered.length ? <LeaderChart key={view} cat={view} models={filtered} meta={meta} navigate={navigate} /> : <EmptyNote />)}
         </>
       )}
