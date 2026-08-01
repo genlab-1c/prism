@@ -30745,6 +30745,1724 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cd09a0a961572b34acb311023f27e38b394a6e382b094fea8cb6a267f10990c2",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьМассивы",
+              "note": "не исполнился на размере 400: {Модуль /sandbox/cand.operf.os / Error in line: 66 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bbc46d53e150e1ea80e0b46d8a879c9d1a64aeb12cbb8f303f79e28f696bb598",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 34,44 / Symbol not found День}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 91,44 / Symbol not found День}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fb03c5ba41c9dbb6aad5bc428a7ec2f3b8887089b9d49150272dfc0b81a0a279",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьРавныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьРавныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "aec6c57b34486c1ff3997de3ef6a67475e42198e82d5e58464495bc2fb3a181c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2219,
+                4415,
+                8826,
+                17644
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c81051e8c4371ef468cb6b54a858f40a6e9f710a9905826a4500f46be0564482",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 2,
+            "P": null,
+            "Q": 7.33
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ОбратныйПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [
+                1048883,
+                4287083,
+                17243483
+              ],
+              "sizes": [
+                200,
+                400,
+                800
+              ],
+              "entry_point": "ОбратныйПорядокСлов",
+              "note": "таймаут на размере 1600 — слишком медленно",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1041e07137f95c29fb06cdc6ba163f7dea7870670eba66db04303f74ab681011",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                71,
+                77,
+                83,
+                89
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6b5fb4cc9c5af176b57907703f9d1b0d83ac6962f8b01cf9b10bc61a47440fef",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": null,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 60,51 / Symbol not found Колонки}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5c928d71f1f09ac9863032247976eb48e0de30029ed2284657b913b9e84a1672",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                101304,
+                402604,
+                1605204,
+                6405609
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ea158a8665c13a73f59c6414cd11b1e778a565507eb67714f79988f339228484",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.1,
+              "ops": [
+                76434,
+                293468,
+                1141469,
+                4528660
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "69fb9dc09df9de02ad518f6e9d9c895d611c991bf2df1f25d99a0bfdd6cdd75f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                960,
+                1910,
+                3810,
+                7610
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7260c3cedf0c416cde90ccf5229f7bedfe29df98e500fb3d825e5d866885bde5",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьКоличествоСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 16,42 / Symbol not found Количество}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьКоличествоСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 73,42 / Symbol not found Количество}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0b913af933fa81607a619f0d31c213846a065404ac76067eb17d12f1241bbede",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.85,
+              "p_opt": 2.0,
+              "ops": [
+                349,
+                642,
+                1029,
+                1506
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3c2ac92776f477077a0caa6f337aa6320c9f909fe2f258388d7910ea96cceb07",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c75bddc64a1c4e185e85f302da4a705a745fdda0958170e9085f152c9359acb7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                11509,
+                23009,
+                46009,
+                92009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "gpt-5.6-luna-pro",
+      "model_name": "GPT-5.6 Luna Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7b5a9712a9d8fbfef0f7ba74e4982cb2f23db4387c1e88ce957086ae6f0d899c",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 21,47 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 78,47 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b7a5bd3118a2dd0602c6c62b8c709740fc07fbbc8e7a9eb7258b4805c639b86b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                163239,
+                668331,
+                2593475,
+                10331795
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьМассивы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "179c1c5c143ea381e9fe91ff86b5cc0e9be5fd101b42456c14378cddc7b1ee81",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 24,23 / Symbol not found ДобавитьКДате}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 81,23 / Symbol not found ДобавитьКДате}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1c2f94240f5df6174043886ae6052400dd16c5b836b2aa104271e69c6652e4aa",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "099caf869ac0943c43056403799fad6b02fe65e235149f1d93f9e7eb964eeb50",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                803,
+                1603,
+                3203,
+                6403
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c224edc8bfdc3a5d6c8e291634fce5cc3bba5009629c1b7e8a0a430d4478f14e",
+          "scores": {
+            "S": 10,
+            "M": 3.3,
+            "O": null,
+            "P": null,
+            "Q": 6.65
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 9,
+              "entry_point": "ПеревернутьСлова",
+              "errors": [
+                "PRISM_FAIL 0",
+                "PRISM_FAIL 1",
+                "PRISM_FAIL 5",
+                "PRISM_FAIL 6",
+                "PRISM_FAIL 7",
+                "PRISM_FAIL 8"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 1.0,
+              "ops": [
+                7,
+                7,
+                7,
+                7
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПеревернутьСлова",
+              "note": "оптимальность не оцениваем — задача не решена (M<5)",
+              "leg": "O-исп",
+              "gated_by_m": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c0bb474f4836ae6ed3533fcc99563542cd0f26f84fb1d432f02c41c2b2cfdc9a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                73,
+                79,
+                85,
+                91
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b88635122a5db7183101dc5c75d2b194433c3d46165f0eb14bb285d2ebb94fb0",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 10,57 / Symbol not found ИндексСтроки}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 67,57 / Symbol not found ИндексСтроки}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "10427d2f97efeeedd1927ea0df44906813c5857248fceca1964de0d9ab4dcc43",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                81004,
+                322004,
+                1284004,
+                5124170
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8f96ec3d8ef14120f4ede326ef84d62d24e8a10c65932fbdb958bccca1850e67",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.0,
+              "p_opt": 1.1,
+              "ops": [
+                40606,
+                158852,
+                659581,
+                2576099
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "90e70776b49359be1773b050eb73ddb1cb1942cd5976e2d29cf3657f9d1500e1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                960,
+                1910,
+                3810,
+                7610
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "31bf6ef0ded14e5a62b94ff38867b1922dba486aca3dc75162c85acf16f8e608",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.95,
+              "p_opt": 1.0,
+              "ops": [
+                549,
+                1044,
+                2034,
+                3937
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "28936f3a3785e0f06c4d2f336cf94ecb99fd9a11abf397bc105aa6bcfd208ccf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "Левенштейн",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.71,
+              "p_opt": 2.0,
+              "ops": [
+                189,
+                329,
+                509,
+                729
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "Левенштейн",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9580d4dc98b3f3503132ce1c370d974c517f547dce7cf67a2cc2ea30bbd69d07",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "de8a05e9810b5822e4979806060521069d3f832103fc5e6e527982b3a38b8d8f",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "Анаграмма",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "Анаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 69 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "deepseek-v4-flash-0731",
+      "model_name": "DeepSeek V4 Flash 0731",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b77575c262fd0e56ed6c14dfd803b7afbc55d56778c1007a6aabe847c4e64c7a",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "Решето_Эратосфена",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 17,22 / Symbol not found Корень}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "Решето_Эратосфена",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 74,22 / Symbol not found Корень}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }

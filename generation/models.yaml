@@ -416,6 +416,35 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель (флагман тира): для кат. B поднимать max_tokens
 
+  deepseek_flash_0731:
+    id: "deepseek-v4-flash-0731"         # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "DeepSeek V4 Flash 0731"
+    vendor: deepseek
+    weights: open
+    released: "2026-07-31"               # обновление V4-Flash: заявлен рост в агентных и кодовых задачах
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
+  gpt56_luna_pro:
+    id: "gpt-5.6-luna-pro"               # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-5.6 Luna Pro"
+    vendor: openai
+    weights: proprietary
+    released: "2026-07-09"               # GA тира GPT-5.6 (Sol/Terra/Luna) — одна дата на семейство
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1050000
+      supports_seed: false
+      supports_tools: true               # тот же Luna с reasoning.mode=pro: размышления идут в выход,
+                                         # для кат. B поднимать max_tokens
+
   mimo25_pro:
     id: "mimo-v2.5-pro"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "MiMo-V2.5 Pro"
