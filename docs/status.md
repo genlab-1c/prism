@@ -57,35 +57,37 @@ description: "Что в бенчмарке PRISM уже работает: авт
 | Gemini 3.1 Pro | 9.47 | 9.30 |
 | Kimi K2.7 Code | 9.47 | 8.48 |
 | GPT-5.6 Sol | 9.33 | 9.59 |
-| MiMo-V2.5 Pro | 9.22 | 8.07 |
+| MiMo-V2.5 Pro | 9.22 | 8.02 |
 | GPT-5.5 | 9.09 | 8.63 |
 | Gemini 3.6 Flash | 9.07 | 8.35 |
 | GPT-5.6 Terra | 8.80 | 7.97 |
 | Grok Build 0.1 | 8.53 | 7.91 |
+| DeepSeek V4 Pro 0813 | 8.50 | 8.13 |
 | MiniMax M3 | 8.27 | 9.24 |
 | GLM-5.2 | 8.21 | 7.47 |
 | MiMo-V2.5 | 8.13 | 8.55 |
 | GPT-5.6 Luna Pro | 8.02 | 7.84 |
 | DeepSeek V4 Pro | 7.99 | 7.76 |
 | DeepSeek V4 Flash 0731 | 7.96 | 7.08 |
-| Claude Opus 4.8 | 7.89 | 8.93 |
-| Claude Sonnet 5 | 7.88 | 8.68 |
+| Claude Opus 4.8 | 7.89 | 8.88 |
+| Claude Sonnet 5 | 7.88 | 8.63 |
 | DeepSeek V4-Flash | 7.72 | 7.39 |
 | Grok 4.3 | 7.70 | 9.36 |
-| Gemini 3.5 Flash Lite | 7.61 | 5.88 |
+| Gemini 3.5 Flash Lite | 7.61 | 5.83 |
 | Alice AI LLM Flash | 7.25 | 6.15 |
-| GLM-4.7 Flash | 6.51 | 5.53 |
-| Claude Sonnet 4.6 | 6.33 | 9.13 |
+| GLM-4.7 Flash | 6.51 | 5.47 |
+| Claude Sonnet 4.6 | 6.33 | 9.08 |
 | Gemini 2.5 Flash Lite | 6.29 | 4.89 |
 | Alice AI LLM | 6.20 | 3.58 |
 | Qwen3.7 Plus | 5.89 | 6.65 |
 | GPT-5 Mini | 5.76 | 3.10 |
 | Qwen3-235B-A22B | 5.57 | 3.68 |
 | Qwen3.6-35B-A3B | 5.53 | 3.86 |
+| Seed 2.0 Code | 5.49 | 5.15 |
 | YandexGPT 5 Pro | 5.43 | 4.30 |
 | GPT-OSS 120B | 5.40 | 3.89 |
 | GigaChat 2 Max | 5.13 | 3.17 |
-| YandexGPT 5 Lite | 4.90 | 3.91 |
+| YandexGPT 5 Lite | 4.90 | 3.86 |
 | YandexGPT 5.1 Pro | 4.77 | 3.66 |
 | GigaChat 2 Pro | 3.52 | 2.17 |
 | GigaChat 2 Lite | 2.93 | 2.60 |
