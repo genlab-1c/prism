@@ -32463,6 +32463,1700 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b64c94fcd0ff053a286a8234aeee947333d8d282e5832fc4d472046b2d417e03",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (Сортировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "note": "не исполнился на размере 400: {Модуль /sandbox/cand.operf.os / Error in line: 72 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e162bbe227cc4aea37957280f0c4a908e45f316015f9da3bc5c6fb775c7207d7",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 8,5 / Expecting symbol: EndFunction}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 65,5 / Expecting symbol: EndFunction}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1a07f47d04a545a4a57f9c37234d2edac0a235fce87059cd37a3059d9408737a",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "УдалитьЭлементыПоЗначению",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,25 / Expecting symbol: In}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "УдалитьЭлементыПоЗначению",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 61,25 / Expecting symbol: In}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0b1b53168efb0222965ad69adc1535ea8e50847c53e8e281fde35071ea84c7b3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаНепрерывногоПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаНепрерывногоПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "06a5ef667de3678bcb4595478ebeb18624dec4f692682065f9b50ff5d56b092d",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 9,
+              "entry_point": "ПеревернутьСловаВСтроке",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 9,-4 / Expecting symbol: To}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПеревернутьСловаВСтроке",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 66,-4 / Expecting symbol: To}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "97224f8b092b91dbf37d2c889f5ab8f82ba3f587b143ebfcca5db8202fea2541",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 21,23 / Symbol not found Целое}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "не исполнился на размере 1000: {Модуль /sandbox/cand.operf.os / Error in line 78,23 / Symbol not found Целое}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "701170bb733a9d890754887486c126e4f92c179ca97952059aadb1b903ae274c",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуПоСумме",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Выбрать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Выбрать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Выбрать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуПоСумме",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 69 / Method not found (Выбрать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f8a28e323c459fd01f1e88d7437da74d57cdc27bd34e5a24d250e132ee3758b3",
+          "scores": {
+            "S": 10,
+            "M": 2.0,
+            "O": null,
+            "P": null,
+            "Q": 6.0
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 6 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 6 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 6 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 6 / Method not found (СодержитКлюч)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 63 / Method not found (СодержитКлюч)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "27d0a941e32f260f6e84f7c6c133c97d7a0474211b65b6c61275d9eb3410c229",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 11,27 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 68,27 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d7c5f77e062f45e84353fc1da46742fc3ce29af122ef09be2f0efbe85edc75e9",
+          "scores": {
+            "S": 10,
+            "M": 3.3,
+            "O": null,
+            "P": null,
+            "Q": 6.65
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 2,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Расширить)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Расширить)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Расширить)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 10 / Method not found (Расширить)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 67 / Method not found (Расширить)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "89684069fc6f53b2ccb00ed8232b0505aa6e7664419ac9ffb34ed995cf42146c",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьСловаВТексте",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 16,30 / Symbol not found СтрНижний}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьСловаВТексте",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 73,30 / Symbol not found СтрНижний}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9f318401295618bc6245f7c4df29469187bce094303d22f1cc0e63b121e69ef3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.76,
+              "p_opt": 2.0,
+              "ops": [
+                421,
+                747,
+                1169,
+                1687
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "00fd13e0bb5927de67c207e7d44cfcfefb3c998e6671cc7338d8371c441979b0",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 2,13 / Symbol not found Заполнено}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СжатьRLE",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 59,13 / Symbol not found Заполнено}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7f626d08d119e10eb300216e4856ad358632e90b7b92edc96411e64277465b87",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 19 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line: 76 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1ea41ebd31c8d818df10126be6ee95308c6152fcc6f3e54baf1af74b00a388f8",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧислаРешетомЭратосфена",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 19,61 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧислаРешетомЭратосфена",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 76,61 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cfc19e99fcf0c6263ae9ff69de6d9b4c5f3ce32429cd72046e394debe5988957",
+          "scores": {
+            "S": 10,
+            "M": 1.0,
+            "O": null,
+            "P": null,
+            "Q": 5.5
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортировать",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 14 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИОтсортировать",
+              "note": "не исполнился на размере 400: {Модуль /sandbox/cand.operf.os / Error in line: 71 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "31a10c7cba6545e248ebb560871d3bdf0a93a495ff0fd7e8161297e360c6d737",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 12,
+              "entry_point": "РабочиеДниПериода",
+              "errors": [
+                "таймаут исполнения"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РабочиеДниПериода",
+              "note": "таймаут уже на минимальном размере 500",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c805b5b131bf822b01556f536147a4c4c20b8a22da7a340f83b4ab13e7867f93",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УбратьЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УбратьЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5b5ce4c2581495688de2200137957eca7625d92a2421134452d394acf555e701",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2219,
+                4415,
+                8826,
+                17644
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c8e32407a5a1f95bbee7b319570b4c586e2c04b840a8afa0d86f229b85e02cc6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ОбратныйПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1008,
+                2008,
+                4008,
+                8008
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбратныйПорядокСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b878f05f6fd448c4ed32d84b61ec9147bfd70e8026395ed5b6f79e3c86df647c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                73,
+                79,
+                85,
+                91
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a16711c3d20ad853a2392ef2393917dfab592e5936683cabce7d3f3fcc2e8780",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2440,
+                4890,
+                9730,
+                19375
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "baa3a355066ba17ff2cbe714bfce39e7873c9491d6cf91fda7d0e1ee2d229e0a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                81004,
+                322004,
+                1284004,
+                5124170
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2927fba941f7953c2fa4fb6b24c00cfaf8f1f46d54d8c33f00d1c8efe302a895",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.98,
+              "p_opt": 1.1,
+              "ops": [
+                42193,
+                161994,
+                665818,
+                2588246
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "052a1398f9006bed0ca4d4e4f3e95942b82215ef75e951ebac7616eb39cefe6e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53612,
+                212212,
+                844412,
+                3368812
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8c4bbfda20ea805173e5ba863b9ae45d6f6f8fce10efade5d86ac7b46904152c",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ЭтоСимволСлова",
+              "errors": [
+                "PRISM_FAIL 0",
+                "PRISM_FAIL 1",
+                "PRISM_FAIL 2",
+                "PRISM_FAIL 3"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 1.0,
+              "ops": [
+                3,
+                3,
+                3,
+                3
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ЭтоСимволСлова",
+              "note": "оптимальность не оцениваем — задача не решена (M<5)",
+              "leg": "O-исп",
+              "gated_by_m": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "496c65ecf7bc1fc697052fd8aca90702cb2d86ada9d2dc7cdfe7570900ea5132",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.86,
+              "p_opt": 2.0,
+              "ops": [
+                497,
+                916,
+                1469,
+                2152
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4c60bf9cbd6ea7fe543da64d2ec48593a6bc9b6711468a2fb87575dd55f13fa3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3c425e56c3736a7a3e6234ff1540a51e81f98b4ab96cf7c899b19bef11e829f2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЯвляютсяАнаграммами",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7009,
+                14009,
+                28009,
+                56009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЯвляютсяАнаграммами",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a964548048cd3d300c29f974f563562132bf4c80c4d095c49df246fd3dbabd48",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }

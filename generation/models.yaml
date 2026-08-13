@@ -416,6 +416,51 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель (флагман тира): для кат. B поднимать max_tokens
 
+  seed2_code:
+    id: "seed-2.0-code"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Seed 2.0 Code"
+    vendor: bytedance
+    weights: proprietary                 # семейство Seed 2.0 закрытое (только API); открытые чекпойнты
+                                         # у ByteDance есть лишь для прежних Seed-OSS
+    released: "2026-07-30"               # дата карточки канала; OpenRouter показывает 12.08.2026
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 262144
+      supports_seed: false
+      supports_tools: true
+
+  deepseek_pro_0813:
+    id: "deepseek-v4-pro-0813"           # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "DeepSeek V4 Pro 0813"
+    vendor: deepseek
+    weights: open
+    released: "2026-08-12"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
+  qwen38_max:
+    id: "qwen3.8-max"                    # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Qwen3.8 Max"
+    vendor: alibaba
+    weights: proprietary                 # на 2026-08-13 веса ещё не выложены: Alibaba обещала неделю
+                                         # 10 августа (первый Max-класс в открытом доступе) — репозитория
+                                         # на HF нет. Появятся — переключить на open
+    released: "2026-08-03"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
   deepseek_flash_0731:
     id: "deepseek-v4-flash-0731"         # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "DeepSeek V4 Flash 0731"
