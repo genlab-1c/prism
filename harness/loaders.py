@@ -13,7 +13,7 @@ from __future__ import annotations
 from pathlib import Path
 
 import yaml
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 PRISM = Path(__file__).resolve().parents[1]
 
@@ -79,6 +79,7 @@ class Scoring(BaseModel):
 
     direction: str  # lower_is_better | higher_is_better
     table: list[ScoringRule]
+    anchor_max: int | None = None  # предел балла для «пойманного» якоря (гейт двух якорей)
 
     def score_for(self, signal: float) -> int:
         """Балл по сигналу: строки сверху вниз, первый подходящий порог."""
@@ -106,6 +107,9 @@ class L1Axis(BaseModel):
     )
     b_exec_scoring: Scoring | None = (
         None  # O: исполнительная нога (категория B): рост обращений к данным с ростом базы
+    )
+    b_rows_scoring: Scoring | None = (
+        None  # O: та же нога, но счётчик СТРОК — своя, более мягкая шкала (см. протокол)
     )
     pre_check: dict | None = None  # сразу 0 в обход таблицы баллов (оси S, P)
     cluster_gap: int | None = None  # S: соседние ParseError ≤N строк = одна причина
@@ -150,6 +154,18 @@ class ProtocolL1(BaseModel):
         assert s, "у оси O в протоколе L1 нет блока b_exec_scoring (исполнительная нога кат. B)"
         return s
 
+    def o_b_scoring_for(self, count_mode: str) -> Scoring:
+        """Таблица балла кат. B под выбранный счётчик: рост строк судится своей шкалой.
+
+        Рост обращений («запрос в цикле») и рост объёма («подними строки и сложи в коде») —
+        пороки разной цены, мерить одной линейкой нечестно. См. b_rows_scoring в протоколе.
+        """
+        if count_mode in ROWS_COUNT_MODES:
+            s = self.axes["O"].b_rows_scoring
+            assert s, "у оси O в протоколе L1 нет блока b_rows_scoring (счётчик строк кат. B)"
+            return s
+        return self.o_b_exec_scoring()
+
 
 def load_protocol_l1(root: Path = PRISM) -> ProtocolL1:
     doc = _read(root / "metrics" / "smop_l1_auto.yaml")
@@ -157,6 +173,11 @@ def load_protocol_l1(root: Path = PRISM) -> ProtocolL1:
 
 
 # ── задачи ───────────────────────────────────────────────────────────────────
+
+# Чем меряется рост в кат. B (perf.count). Числом обращений — ловит «N+1»; числом
+# поднятых строк — ловит «подними всё и разберись в коде». См. score/optimization_b_exec.
+ROWS_COUNT_MODES = frozenset({"rows", "reg_rows"})
+COUNT_MODES = frozenset({"sdbl", "register"}) | ROWS_COUNT_MODES
 
 
 class TaskTests(BaseModel):
@@ -173,7 +194,8 @@ class TaskPerf(BaseModel):
     (балл O — по ОТКЛОНЕНИЮ роста кандидата от p_opt); call — замерочный вызов кандидата.
     Категория A: gen — BSL, строит вход размера {n} (call с {entry}).
     Категория B: grow — спека роста БАЗЫ (harness/execute/onec/perf_run.scale_fixtures),
-    count — метрика роста обращений к СУБД (sdbl | register); call c {{ENTRY}}.
+    count — что растёт: число обращений к СУБД (sdbl | register) или число поднятых
+    строк (rows | reg_rows); call c {{ENTRY}}.
     """
 
     model_config = ConfigDict(extra="forbid")
@@ -183,7 +205,14 @@ class TaskPerf(BaseModel):
     call: str
     gen: str | None = None  # A: BSL строит вход размера {n}
     grow: dict | None = None  # B: спека роста базы (композиция блоков)
-    count: str = "sdbl"  # B: метрика роста (sdbl | register)
+    count: str = "sdbl"  # B: метрика роста (sdbl | register | rows | reg_rows)
+
+    @field_validator("count")
+    @classmethod
+    def _known_count(cls, v: str) -> str:
+        # Опечатка в count молча уехала бы в дефолт sdbl и тихо сменила смысл замера.
+        assert v in COUNT_MODES, f"perf.count: {v!r} — допустимо {sorted(COUNT_MODES)}"
+        return v
 
 
 class Task(BaseModel):
