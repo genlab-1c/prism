@@ -318,8 +318,19 @@ def site_data() -> dict:
         for name, m in ranked.items():
             f = funnels.get(name, {})
             prof = tag_profile(groups[name], tasks_by_id).get(dim, {})
+            # На скольких задачах реально измерена ось O. Она считается только там, где код
+            # дошёл до замера (у слабых моделей это единичные задачи), и среднее по двум
+            # задачам рядом со средним по восемнадцати выглядит сравнимым, не будучи им, —
+            # витрина обязана показать покрытие.
+            o_n = sum(
+                1
+                for t in groups[name]
+                for r in t["runs"]
+                if (r.get("scores") or {}).get("O") is not None
+            )
             out[name] = {
                 **{a: m.get(a) for a in axes},
+                "oN": o_n,
                 "margin": margins.get(name),
                 "solved": f.get("solved"),
                 "funnel": {

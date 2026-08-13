@@ -256,6 +256,7 @@ if (fs.existsSync(sdPath)) {
       if (m[cat] && s[cat]) {
         m[cat].margin = s[cat].margin == null ? null : r1(s[cat].margin);
         m[cat].solved = s[cat].solved;
+        m[cat].oN = s[cat].oN ?? null; // на скольких задачах измерена ось O (покрытие)
         m[cat].funnel = s[cat].funnel;
         m[cat].profile = s[cat].profile;
       }

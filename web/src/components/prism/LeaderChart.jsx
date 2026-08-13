@@ -391,10 +391,13 @@ export function ScoresTableSvg({ svgRef, cat, rows, meta, C }) {
             {axes.map((a, ai) => {
               const v = m[cat] && m[cat][a]; const cx = axStart + ai * colW + colW / 2; const cw = Math.min(colW - 10, 70);
               if (v == null) return <text key={a} x={cx} y={cy + 4} textAnchor="middle" fontSize="12" fill={C.muted}>—</text>;
+              // O с малым покрытием (замер меньше чем на половине задач) — приглушаем и подписываем
+              const low = a === 'O' && m[cat].oN != null && m[cat].funnel?.n && m[cat].oN < m[cat].funnel.n / 2;
               return (
                 <g key={a}>
-                  <rect x={cx - cw / 2} y={cy - 13} width={cw} height={26} rx={6} fill={AXIS[a]} fillOpacity={0.12 + (v / 10) * 0.5} />
-                  <text x={cx} y={cy + 4} textAnchor="middle" fontSize="12.5" fontWeight="600" fill={v >= 4 ? C.ink : C.sub}>{v.toFixed(1)}</text>
+                  <rect x={cx - cw / 2} y={cy - 13} width={cw} height={26} rx={6} fill={AXIS[a]} fillOpacity={low ? 0.06 : 0.12 + (v / 10) * 0.5} />
+                  <text x={cx} y={cy + (low ? 0 : 4)} textAnchor="middle" fontSize="12.5" fontWeight="600" fill={low ? C.muted : (v >= 4 ? C.ink : C.sub)}>{v.toFixed(1)}</text>
+                  {low && <text x={cx} y={cy + 11} textAnchor="middle" fontSize="8" fill={C.muted}>{m[cat].oN}/{m[cat].funnel.n}</text>}
                 </g>
               );
             })}

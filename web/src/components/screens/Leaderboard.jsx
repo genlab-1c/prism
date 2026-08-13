@@ -227,12 +227,21 @@ function SortHead({ label, axis, sortKey, dir, onSort }) {
     </button>
   );
 }
-function ScoreCell({ v, axis }) {
+// Мало ли покрытие у оси O: она считается только на дошедших до замера задачах, и среднее
+// по паре задач рядом со средним по восемнадцати выглядит сравнимым, не будучи им.
+// Порог — половина задач категории; ниже — значение приглушаем и подписываем покрытием.
+export const oLowCover = (c) => c && c.oN != null && c.n && c.oN < c.n / 2;
+
+function ScoreCell({ v, axis, cover }) {
   const has = v != null;
+  const low = axis === 'O' && has && oLowCover(cover);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5 }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 14, fontWeight: 600, color: has ? 'var(--ink-100)' : 'var(--ink-400)' }}>{has ? v.toFixed(1) : '—'}</span>
-      <div style={{ width: 38, height: 3, borderRadius: 2, background: 'var(--track-bg)', overflow: 'hidden' }}>{has && <div style={{ width: `${(v / 10) * 100}%`, height: '100%', background: AXIS_COLOR[axis] }} />}</div>
+    <div title={low ? `O измерена только на ${cover.oN} задачах из ${cover.n} — остальной код не дошёл до замера` : undefined}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5 }}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 14, fontWeight: 600, color: has && !low ? 'var(--ink-100)' : 'var(--ink-400)' }}>{has ? v.toFixed(1) : '—'}</span>
+      {low
+        ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, lineHeight: '3px', color: 'var(--ink-400)' }}>{cover.oN}/{cover.n}</span>
+        : <div style={{ width: 38, height: 3, borderRadius: 2, background: 'var(--track-bg)', overflow: 'hidden' }}>{has && <div style={{ width: `${(v / 10) * 100}%`, height: '100%', background: AXIS_COLOR[axis] }} />}</div>}
     </div>
   );
 }
@@ -266,12 +275,16 @@ function OverallTable({ cat, models, navigate, rankSource }) {
               <div style={{ minWidth: 0 }}>
                 <Identity m={m} size={30} gap={9} wrap nameSize={14} />
                 <div style={{ display: 'flex', gap: 10, marginTop: 6, flexWrap: 'wrap' }}>
-                  {axes.map((a) => (
-                    <span key={a} style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', fontVariantNumeric: 'tabular-nums' }}>
-                      <span style={{ color: AXIS_COLOR[a], fontWeight: 700 }}>{a}</span>{' '}
-                      <span style={{ color: 'var(--ink-100)', fontWeight: 600 }}>{m[cat][a] != null ? m[cat][a].toFixed(1) : '—'}</span>
-                    </span>
-                  ))}
+                  {axes.map((a) => {
+                    const low = a === 'O' && m[cat][a] != null && oLowCover({ oN: m[cat].oN, n: m[cat].funnel?.n });
+                    return (
+                      <span key={a} style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', fontVariantNumeric: 'tabular-nums' }}>
+                        <span style={{ color: AXIS_COLOR[a], fontWeight: 700 }}>{a}</span>{' '}
+                        <span style={{ color: low ? 'var(--ink-400)' : 'var(--ink-100)', fontWeight: 600 }}>{m[cat][a] != null ? m[cat][a].toFixed(1) : '—'}</span>
+                        {low && <span style={{ fontSize: 9.5 }}> {m[cat].oN}/{m[cat].funnel?.n}</span>}
+                      </span>
+                    );
+                  })}
                   {m[cat].margin != null && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>±{m[cat].margin.toFixed(1)}</span>}
                 </div>
               </div>
@@ -306,7 +319,7 @@ function OverallTable({ cat, models, navigate, rankSource }) {
             onMouseLeave={(e) => (e.currentTarget.style.background = r === 1 ? 'var(--top-tint)' : 'transparent')}>
             <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 13, fontWeight: 700, color: r === 1 ? 'var(--brand)' : 'var(--ink-400)' }}>{r}</span>
             <Identity m={m} size={30} />
-            {axes.map((a) => <ScoreCell key={a} v={m[cat][a]} axis={a} />)}
+            {axes.map((a) => <ScoreCell key={a} v={m[cat][a]} axis={a} cover={a === 'O' ? { oN: m[cat].oN, n: m[cat].funnel?.n } : null} />)}
             <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 17, fontWeight: 700, color: 'var(--ink-100)' }}>{m[qKey].toFixed(2)}</span>
             <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>{m[cat].margin != null ? `±${m[cat].margin.toFixed(1)}` : '—'}</span>
             <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>{m.cost}</span>
@@ -865,7 +878,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
       {(view === 'A' || view === 'B') && (
         <>
           <div style={{ marginBottom: 16 }}><Segmented items={SUBS} value={sub} onChange={setSub} /></div>
-          {sub === 'overall' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>{view === 'A' ? `${meta.tasksA || 0} алгоритмических задач` : `${meta.tasksB || 0} платформенных задач`}. Q — средний балл по осям. ± — погрешность оценки (95% доверительный интервал).</p>}
+          {sub === 'overall' && <p style={{ margin: '0 0 14px', fontSize: 13, color: 'var(--ink-400)', lineHeight: 1.5 }}>{view === 'A' ? `${meta.tasksA || 0} алгоритмических задач` : `${meta.tasksB || 0} платформенных задач`}. Q — средний балл по осям. ± — погрешность оценки (95% доверительный интервал). O считается только на задачах, где код дошёл до замера: если таких меньше половины, значение приглушено и подписано покрытием (например 4/20) — сравнивать его с полноценно измеренными нельзя.</p>}
           {sub === 'overall' && <TableExport scope={scoreScope} setScope={setScoreScope} count={scoreFiltered.length} name={`prism_scores_${view}_${scoreScope}`}
             render={(ref, C) => <ScoresTableSvg svgRef={ref} cat={view} rows={scoreShown} meta={meta} C={C} />} />}
           {sub === 'overall' && <OverallTable cat={view} models={scoreShown} rankSource={scoreAll} navigate={navigate} />}
