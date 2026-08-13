@@ -11,6 +11,8 @@ harness/settings.py):
 
 from __future__ import annotations
 
+import os
+
 from harness.settings import credentials_env
 
 from ..transport import RequestsTransport, Transport
@@ -68,6 +70,14 @@ def build_adapter(
     """Сконструировать адаптер по имени. endpoint — из access.endpoint (для openai_compat);
     reasoning_effort — из access.reasoning_effort (Responses API: "none" гасит reasoning)."""
     env = credentials_env() if env is None else env
+
+    # Потолок ожидания ответа. Медленной модели 120 с не хватает, и ретраи не спасают — каждая
+    # попытка упирается в тот же потолок, прогон остаётся неполным. PRISM_HTTP_TIMEOUT поднимает
+    # его на весь прогон (рантайм-ручка, как PRISM_CONCURRENCY); мусор в значении игнорируем,
+    # чтобы опечатка в .env не валила генерацию.
+    raw = os.environ.get("PRISM_HTTP_TIMEOUT", "").strip()
+    if raw.isdigit():
+        timeout = max(timeout, int(raw))
 
     # прокси на группу каналов: явный transport (тесты) приоритетнее; иначе при заданном
     # PRISM_PROXY_* строим транспорт с прокси, без него — None (адаптер берёт default_transport)
