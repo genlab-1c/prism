@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_A_20260617_031633",
   "category": "A",
-  "timestamp": "2026-08-01T21:19:20.918611",
+  "timestamp": "2026-08-13T05:24:56.354592",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -32,6 +32,9 @@
     "Claude Sonnet 5",
     "GPT-5.6 Terra",
     "GPT-5.6 Sol",
+    "Seed 2.0 Code",
+    "DeepSeek V4 Pro 0813",
+    "Qwen3.8 Max",
     "DeepSeek V4 Flash 0731",
     "GPT-5.6 Luna Pro",
     "MiMo-V2.5 Pro",
@@ -1204,6 +1207,126 @@
       "total_tokens": 825,
       "total_cost": 0.019925,
       "avg_time": 10.536
+    },
+    {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьОтсортированныеМассивы(ИсходныйОтсортированный, НовыеЗначения)\n    Результат = Новый Массив;\n    \n    // Копируем элементы исходного отсортированного массива\n    Для Каждого Число Из ИсходныйОтсортированный Цикл\n        Результат.Добавить(Число);\n    КонецЦикла;\n    \n    // Добавляем все новые значения\n    Для Каждого Число Из НовыеЗначения Цикл\n        Результат.Добавить(Число);\n    КонецЦикла;\n    \n    // Сортируем итоговый массив по возрастанию\n    Результат.Сортировать();\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "b64c94fcd0ff053a286a8234aeee947333d8d282e5832fc4d472046b2d417e03",
+          "tokens_input": 247,
+          "tokens_output": 1324,
+          "tokens_total": 1571,
+          "elapsed_time": 21.334272623062134,
+          "cost_input": 0.0001235,
+          "cost_output": 0.003972,
+          "cost_total": 0.0040955,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b64c94fcd0ff053a286a8234aeee947333d8d282e5832fc4d472046b2d417e03",
+        "most_common_count": 1,
+        "hashes": [
+          "b64c94fcd0ff053a286a8234aeee947333d8d282e5832fc4d472046b2d417e03"
+        ]
+      },
+      "total_tokens": 1571,
+      "total_cost": 0.0040955,
+      "avg_time": 21.334
+    },
+    {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОбъединитьИОтсортировать(МассивИсходный, МассивНовых)\n    Если МассивИсходный.Количество() = 0 И МассивНовых.Количество() = 0 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n    \n    Результат = Новый Массив;\n    Для Каждого Элемент Из МассивИсходный Цикл\n        Результат.Добавить(Элемент);\n    КонецЦикла;\n    Для Каждого Элемент Из МассивНовых Цикл\n        Результат.Добавить(Элемент);\n    КонецЦикла;\n    \n    Результат.Сортировать();\n    \n    Возврат Результат;\nКонецФункции\n```",
+          "response_hash": "cfc19e99fcf0c6263ae9ff69de6d9b4c5f3ce32429cd72046e394debe5988957",
+          "tokens_input": 281,
+          "tokens_output": 1702,
+          "tokens_total": 1983,
+          "elapsed_time": 21.02056360244751,
+          "cost_input": 0.000122235,
+          "cost_output": 0.00148074,
+          "cost_total": 0.001602975,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cfc19e99fcf0c6263ae9ff69de6d9b4c5f3ce32429cd72046e394debe5988957",
+        "most_common_count": 1,
+        "hashes": [
+          "cfc19e99fcf0c6263ae9ff69de6d9b4c5f3ce32429cd72046e394debe5988957"
+        ]
+      },
+      "total_tokens": 1983,
+      "total_cost": 0.001602975,
+      "avg_time": 21.021
+    },
+    {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьОтсортированныеМассивы(ИсходныйМассив, НовыеЗначения)\n    Результат = Новый Массив;\n    Таблица = Новый ТаблицаЗначений;\n    Таблица.Колонки.Добавить(\"Значение\");\n\n    Если ИсходныйМассив <> Неопределено Тогда\n        Для Каждого Элемент Из ИсходныйМассив Цикл\n            НоваяСтрока = Таблица.Добавить();\n            НоваяСтрока.Значение = Элемент;\n        КонецЦикла;\n    КонецЕсли;\n\n    Если НовыеЗначения <> Неопределено Тогда\n        Для Каждого Элемент Из НовыеЗначения Цикл\n            НоваяСтрока = Таблица.Добавить();\n            НоваяСтрока.Значение = Элемент;\n        КонецЦикла;\n    КонецЕсли;\n\n    Таблица.Сортировать(\"Значение Возр\");\n\n    Для Каждого Строка Из Таблица Цикл\n        Результат.Добавить(Строка.Значение);\n    КонецЦикла;\n\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "4e91deb8e44987c2966a4674800ebcc4bbf13242defe0c21335c44a1125bd7d1",
+          "tokens_input": 231,
+          "tokens_output": 4688,
+          "tokens_total": 4919,
+          "elapsed_time": 86.26536774635315,
+          "cost_input": 0.000462,
+          "cost_output": 0.028128,
+          "cost_total": 0.02859,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4e91deb8e44987c2966a4674800ebcc4bbf13242defe0c21335c44a1125bd7d1",
+        "most_common_count": 1,
+        "hashes": [
+          "4e91deb8e44987c2966a4674800ebcc4bbf13242defe0c21335c44a1125bd7d1"
+        ]
+      },
+      "total_tokens": 4919,
+      "total_cost": 0.02859,
+      "avg_time": 86.265
     },
     {
       "task_id": "A10",
@@ -2728,6 +2851,126 @@
     {
       "task_id": "A11",
       "task_name": "Рабочие дни между датами",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция КоличествоРабочихДней(НачалоПериода, КонецПериода, Праздники)\n    Если НачалоПериода > КонецПериода Тогда\n        Возврат 0;\n    КонецЕсли;\n\n    КоличествоРабочих = 0;\n\n    Цикл ТекущаяДата От НачалоПериода До КонецПериода Шаг 1\n        ДеньНедели = ДеньНедели(ТекущаяДата);\n\n        Если (ДеньНедели >= 1) И (ДеньНедели <= 5) Тогда\n            Если Праздники.Найти(ТекущаяДата) = Неопределено Тогда\n                КоличествоРабочих = КоличествоРабочих + 1;\n            КонецЕсли;\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат КоличествоРабочих;\nКонецФункции",
+          "response_hash": "e162bbe227cc4aea37957280f0c4a908e45f316015f9da3bc5c6fb775c7207d7",
+          "tokens_input": 236,
+          "tokens_output": 1201,
+          "tokens_total": 1437,
+          "elapsed_time": 18.986048221588135,
+          "cost_input": 0.000118,
+          "cost_output": 0.0036030000000000003,
+          "cost_total": 0.0037210000000000003,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e162bbe227cc4aea37957280f0c4a908e45f316015f9da3bc5c6fb775c7207d7",
+        "most_common_count": 1,
+        "hashes": [
+          "e162bbe227cc4aea37957280f0c4a908e45f316015f9da3bc5c6fb775c7207d7"
+        ]
+      },
+      "total_tokens": 1437,
+      "total_cost": 0.0037210000000000003,
+      "avg_time": 18.986
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция РабочиеДниПериода(ДатаНачала, ДатаОкончания, МассивПраздников) Экспорт\n    Если ДатаОкончания < ДатаНачала Тогда\n        Возврат 0;\n    КонецЕсли;\n    \n    ДатаНачала = НачалоДня(ДатаНачала);\n    ДатаОкончания = НачалоДня(ДатаОкончания);\n    \n    МассивПраздниковБезВремени = Новый Массив;\n    Для Каждого Праздник Из МассивПраздников Цикл\n        МассивПраздниковБезВремени.Добавить(НачалоДня(Праздник));\n    КонецЦикла;\n    \n    КоличествоРабочихДней = 0;\n    ТекущаяДата = ДатаНачала;\n    \n    Пока ТекущаяДата <= ДатаОкончания Цикл\n        Если ДеньНедели(ТекущаяДата) <= 5 Тогда\n            Если МассивПраздниковБезВремени.Найти(ТекущаяДата) = Неопределено Тогда\n                КоличествоРабочихДней = КоличествоРабочихДней + 1;\n            КонецЕсли;\n        КонецЕсли;\n        ТекущаяДата = ТекущаяДата + 1;\n    КонецЦикла;\n    \n    Возврат КоличествоРабочихДней;\nКонецФункции\n```",
+          "response_hash": "31a10c7cba6545e248ebb560871d3bdf0a93a495ff0fd7e8161297e360c6d737",
+          "tokens_input": 275,
+          "tokens_output": 3467,
+          "tokens_total": 3742,
+          "elapsed_time": 37.22610545158386,
+          "cost_input": 0.00011962500000000001,
+          "cost_output": 0.00301629,
+          "cost_total": 0.003135915,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "31a10c7cba6545e248ebb560871d3bdf0a93a495ff0fd7e8161297e360c6d737",
+        "most_common_count": 1,
+        "hashes": [
+          "31a10c7cba6545e248ebb560871d3bdf0a93a495ff0fd7e8161297e360c6d737"
+        ]
+      },
+      "total_tokens": 3742,
+      "total_cost": 0.003135915,
+      "avg_time": 37.226
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция КоличествоРабочихДней(ДатаНачала, ДатаОкончания, МассивПраздников) Экспорт\n\n\tНач = НачалоДня(ДатаНачала);\n\tКон = НачалоДня(ДатаОкончания);\n\n\tЕсли Кон < Нач Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tВсегоДней = Цел((Кон - Нач) / 86400) + 1;\n\tРабочихДней = Цел(ВсегоДней / 7) * 5;\n\tОстатокДней = ВсегоДней % 7;\n\n\tЕсли ОстатокДней > 0 Тогда\n\t\tДеньНеделиНачала = ДеньНедели(Нач);\n\t\tДля НомерДня = 0 По ОстатокДней - 1 Цикл\n\t\t\tДеньНедели = ДеньНеделиНачала + НомерДня;\n\t\t\tЕсли ДеньНедели > 7 Тогда\n\t\t\t\tДеньНедели = ДеньНедели - 7;\n\t\t\tКонецЕсли;\n\t\t\tЕсли ДеньНедели <= 5 Тогда\n\t\t\t\tРабочихДней = РабочихДней + 1;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЕсли;\n\n\tЕсли ТипЗнч(МассивПраздников) = Тип(\"Массив\") Тогда\n\t\tОбработанныеПраздники = Новый Соответствие;\n\t\tДля Каждого Праздник Из МассивПраздников Цикл\n\t\t\tЕсли ТипЗнч(Праздник) <> Тип(\"Дата\") Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\n\t\t\tДатаПраздника = НачалоДня(Праздник);\n\n\t\t\tЕсли ДатаПраздника < Нач Или ДатаПраздника > Кон Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\n\t\t\tЕсли ОбработанныеПраздники.Получить(ДатаПраздника) <> Неопределено Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\n\t\t\tОбработанныеПраздники.Вставить(ДатаПраздника, Истина);\n\n\t\t\tЕсли ДеньНедели(ДатаПраздника) <= 5 Тогда\n\t\t\t\tРабочихДней = РабочихДней - 1;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЕсли;\n\n\tВозврат РабочихДней;\n\nКонецФункции",
+          "response_hash": "38a84bda441f0762c8d2fe8673e6e51286e96c76216edea24da18b43b60718e1",
+          "tokens_input": 224,
+          "tokens_output": 5067,
+          "tokens_total": 5291,
+          "elapsed_time": 96.78657746315002,
+          "cost_input": 0.000448,
+          "cost_output": 0.030402000000000002,
+          "cost_total": 0.030850000000000002,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "38a84bda441f0762c8d2fe8673e6e51286e96c76216edea24da18b43b60718e1",
+        "most_common_count": 1,
+        "hashes": [
+          "38a84bda441f0762c8d2fe8673e6e51286e96c76216edea24da18b43b60718e1"
+        ]
+      },
+      "total_tokens": 5291,
+      "total_cost": 0.030850000000000002,
+      "avg_time": 96.787
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -4244,6 +4487,126 @@
       "total_tokens": 336,
       "total_cost": 0.0063549999999999995,
       "avg_time": 4.766
+    },
+    {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УдалитьЭлементыПоЗначению(ИсходныйМассив, ИскомоеЗначение) Экспорт\n    НовыйМассив = Новый Массив;\n    \n    Для каждого Элемент Массива ИЗ ИсходныйМассив Цикл\n        Если НЕ ЭлементМассива = ИскомоеЗначение Тогда\n            НовыйМассив.Добавить(ЭлементМассива);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат НовыйМассив;\nКонецФункции",
+          "response_hash": "1a07f47d04a545a4a57f9c37234d2edac0a235fce87059cd37a3059d9408737a",
+          "tokens_input": 206,
+          "tokens_output": 494,
+          "tokens_total": 700,
+          "elapsed_time": 9.384727239608765,
+          "cost_input": 0.000103,
+          "cost_output": 0.0014819999999999998,
+          "cost_total": 0.0015849999999999998,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1a07f47d04a545a4a57f9c37234d2edac0a235fce87059cd37a3059d9408737a",
+        "most_common_count": 1,
+        "hashes": [
+          "1a07f47d04a545a4a57f9c37234d2edac0a235fce87059cd37a3059d9408737a"
+        ]
+      },
+      "total_tokens": 700,
+      "total_cost": 0.0015849999999999998,
+      "avg_time": 9.385
+    },
+    {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УбратьЭлементы(Массив, Значение)\n    Результат = Новый Массив;\n    Для Каждого Элемент Из Массив Цикл\n        Если Элемент <> Значение Тогда\n            Результат.Добавить(Элемент);\n        КонецЕсли;\n    КонецЦикла;\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "c805b5b131bf822b01556f536147a4c4c20b8a22da7a340f83b4ab13e7867f93",
+          "tokens_input": 242,
+          "tokens_output": 1829,
+          "tokens_total": 2071,
+          "elapsed_time": 29.173537969589233,
+          "cost_input": 0.00010527,
+          "cost_output": 0.00159123,
+          "cost_total": 0.0016964999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c805b5b131bf822b01556f536147a4c4c20b8a22da7a340f83b4ab13e7867f93",
+        "most_common_count": 1,
+        "hashes": [
+          "c805b5b131bf822b01556f536147a4c4c20b8a22da7a340f83b4ab13e7867f93"
+        ]
+      },
+      "total_tokens": 2071,
+      "total_cost": 0.0016964999999999999,
+      "avg_time": 29.174
+    },
+    {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УбратьИзМассива(ИсходныйМассив, ИскомоеЗначение) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Элемент <> ИскомоеЗначение Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "711b8d0611ed0eb511c631f3094f9035a2f2c2935dd4362009a9a8512a774f9b",
+          "tokens_input": 194,
+          "tokens_output": 3002,
+          "tokens_total": 3196,
+          "elapsed_time": 64.95170617103577,
+          "cost_input": 0.000388,
+          "cost_output": 0.018012,
+          "cost_total": 0.0184,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "711b8d0611ed0eb511c631f3094f9035a2f2c2935dd4362009a9a8512a774f9b",
+        "most_common_count": 1,
+        "hashes": [
+          "711b8d0611ed0eb511c631f3094f9035a2f2c2935dd4362009a9a8512a774f9b"
+        ]
+      },
+      "total_tokens": 3196,
+      "total_cost": 0.0184,
+      "avg_time": 64.952
     },
     {
       "task_id": "A12",
@@ -5768,6 +6131,126 @@
     {
       "task_id": "A13",
       "task_name": "Максимальная сумма подмассива",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МаксимальнаяСуммаНепрерывногоПодмассива(МассивЧисел)\n    Если МассивЧисел.Количество() = 0 Тогда\n        Возврат 0;\n    КонецЕсли;\n    \n    ТекущаяСумма = МассивЧисел[0];\n    МаксимальнаяСумма = МассивЧисел[0];\n    \n    Для индекс = 1 По МассивЧисел.Количество() - 1 Цикл\n        ТекущийЭлемент = МассивЧисел[индекс];\n        ТекущаяСумма = Макс(ТекущийЭлемент, ТекущаяСумма + ТекущийЭлемент);\n        МаксимальнаяСумма = Макс(МаксимальнаяСумма, ТекущаяСумма);\n    КонецЦикла;\n    \n    Возврат МаксимальнаяСумма;\nКонецФункции",
+          "response_hash": "0b1b53168efb0222965ad69adc1535ea8e50847c53e8e281fde35071ea84c7b3",
+          "tokens_input": 239,
+          "tokens_output": 941,
+          "tokens_total": 1180,
+          "elapsed_time": 15.93120002746582,
+          "cost_input": 0.0001195,
+          "cost_output": 0.002823,
+          "cost_total": 0.0029425,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "0b1b53168efb0222965ad69adc1535ea8e50847c53e8e281fde35071ea84c7b3",
+        "most_common_count": 1,
+        "hashes": [
+          "0b1b53168efb0222965ad69adc1535ea8e50847c53e8e281fde35071ea84c7b3"
+        ]
+      },
+      "total_tokens": 1180,
+      "total_cost": 0.0029425,
+      "avg_time": 15.931
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МаксимальнаяСуммаПодмассива(МассивЧисел)\n    Перем ТекущаяСумма, МаксимальнаяСумма, Индекс;\n    \n    Если МассивЧисел.Количество() = 0 Тогда\n        Возврат 0;\n    КонецЕсли;\n    \n    ТекущаяСумма = МассивЧисел[0];\n    МаксимальнаяСумма = МассивЧисел[0];\n    \n    Для Индекс = 1 По МассивЧисел.ВГраница() Цикл\n        Если ТекущаяСумма + МассивЧисел[Индекс] > МассивЧисел[Индекс] Тогда\n            ТекущаяСумма = ТекущаяСумма + МассивЧисел[Индекс];\n        Иначе\n            ТекущаяСумма = МассивЧисел[Индекс];\n        КонецЕсли;\n        \n        Если ТекущаяСумма > МаксимальнаяСумма Тогда\n            МаксимальнаяСумма = ТекущаяСумма;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат МаксимальнаяСумма;\nКонецФункции",
+          "response_hash": "5b5ce4c2581495688de2200137957eca7625d92a2421134452d394acf555e701",
+          "tokens_input": 273,
+          "tokens_output": 2548,
+          "tokens_total": 2821,
+          "elapsed_time": 35.469406604766846,
+          "cost_input": 0.00011875500000000001,
+          "cost_output": 0.00221676,
+          "cost_total": 0.002335515,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5b5ce4c2581495688de2200137957eca7625d92a2421134452d394acf555e701",
+        "most_common_count": 1,
+        "hashes": [
+          "5b5ce4c2581495688de2200137957eca7625d92a2421134452d394acf555e701"
+        ]
+      },
+      "total_tokens": 2821,
+      "total_cost": 0.002335515,
+      "avg_time": 35.469
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МаксимальнаяСуммаПодмассива(Массив) Экспорт\n\n    Если Массив = Неопределено ИЛИ Массив.Количество() = 0 Тогда\n        Возврат 0;\n    КонецЕсли;\n\n    ЛучшаяСумма = Массив[0];\n    ТекущаяСумма = 0;\n\n    Для Каждого Элемент Из Массив Цикл\n        Если ТекущаяСумма + Элемент > Элемент Тогда\n            ТекущаяСумма = ТекущаяСумма + Элемент;\n        Иначе\n            ТекущаяСумма = Элемент;\n        КонецЕсли;\n\n        Если ТекущаяСумма > ЛучшаяСумма Тогда\n            ЛучшаяСумма = ТекущаяСумма;\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат ЛучшаяСумма;\n\nКонецФункции",
+          "response_hash": "5ba0c12c6aedcae949c97345b1757a312703ad448dd5cd7ad8bb17fb183bc20c",
+          "tokens_input": 236,
+          "tokens_output": 1086,
+          "tokens_total": 1322,
+          "elapsed_time": 20.662153959274292,
+          "cost_input": 0.000472,
+          "cost_output": 0.006515999999999999,
+          "cost_total": 0.006987999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5ba0c12c6aedcae949c97345b1757a312703ad448dd5cd7ad8bb17fb183bc20c",
+        "most_common_count": 1,
+        "hashes": [
+          "5ba0c12c6aedcae949c97345b1757a312703ad448dd5cd7ad8bb17fb183bc20c"
+        ]
+      },
+      "total_tokens": 1322,
+      "total_cost": 0.006987999999999999,
+      "avg_time": 20.662
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -7284,6 +7767,126 @@
       "total_tokens": 592,
       "total_cost": 0.012984999999999998,
       "avg_time": 5.918
+    },
+    {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПеревернутьСловаВСтроке(ИсходнаяСтрока)\n    МассивСлов = СтрРазделить(ИсходнаяСтрока, \" \", Истина);\n    Если МассивСлов.Количество() = 0 Тогда\n        Возврат \"\";\n    КонецЕсли;\n\n    ПеревернутыйМассив = Новый Массив;\n    Для индекс = МассивСлов.Количество() - 1 Цикл\n        ПеревернутыйМассив.Добавить(МассивСлов[индекс]);\n    КонецЦикла;\n\n    Возврат СтрСоединить(ПеревернутыйМассив, \" \");\nКонецФункции",
+          "response_hash": "06a5ef667de3678bcb4595478ebeb18624dec4f692682065f9b50ff5d56b092d",
+          "tokens_input": 244,
+          "tokens_output": 752,
+          "tokens_total": 996,
+          "elapsed_time": 12.274953126907349,
+          "cost_input": 0.000122,
+          "cost_output": 0.0022559999999999998,
+          "cost_total": 0.002378,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "06a5ef667de3678bcb4595478ebeb18624dec4f692682065f9b50ff5d56b092d",
+        "most_common_count": 1,
+        "hashes": [
+          "06a5ef667de3678bcb4595478ebeb18624dec4f692682065f9b50ff5d56b092d"
+        ]
+      },
+      "total_tokens": 996,
+      "total_cost": 0.002378,
+      "avg_time": 12.275
+    },
+    {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбратныйПорядокСлов(ИсходнаяСтрока)\n    ИсходнаяСтрока = СокрЛП(ИсходнаяСтрока);\n    Если ИсходнаяСтрока = \"\" Тогда\n        Возврат \"\";\n    КонецЕсли;\n\n    МассивСлов = СтрРазделить(ИсходнаяСтрока, \" \", Ложь);\n    Результат = \"\";\n\n    Для Каждого Слово Из МассивСлов Цикл\n        Если Результат = \"\" Тогда\n            Результат = Слово;\n        Иначе\n            Результат = Слово + \" \" + Результат;\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "c8e32407a5a1f95bbee7b319570b4c586e2c04b840a8afa0d86f229b85e02cc6",
+          "tokens_input": 284,
+          "tokens_output": 7503,
+          "tokens_total": 7787,
+          "elapsed_time": 92.12326884269714,
+          "cost_input": 0.00012354,
+          "cost_output": 0.00652761,
+          "cost_total": 0.00665115,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c8e32407a5a1f95bbee7b319570b4c586e2c04b840a8afa0d86f229b85e02cc6",
+        "most_common_count": 1,
+        "hashes": [
+          "c8e32407a5a1f95bbee7b319570b4c586e2c04b840a8afa0d86f229b85e02cc6"
+        ]
+      },
+      "total_tokens": 7787,
+      "total_cost": 0.00665115,
+      "avg_time": 92.123
+    },
+    {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РазвернутьСлова(Знач ИсходнаяСтрока) Экспорт\n\n    Текст = СокрЛП(ИсходнаяСтрока);\n\n    Если Текст = \"\" Тогда\n        Возврат \"\";\n    КонецЕсли;\n\n    Слова = СтрРазделить(Текст, \" \", Истина);\n    Результат = \"\";\n\n    Для Индекс = Слова.ВГраница() По 0 Шаг -1 Цикл\n        Если Результат = \"\" Тогда\n            Результат = Слова[Индекс];\n        Иначе\n            Результат = Результат + \" \" + Слова[Индекс];\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "c5f6a3ec29dc239f24c046b0d3a9a3df4bb66a0e29dd553c0bf21f260c3200b7",
+          "tokens_input": 241,
+          "tokens_output": 1667,
+          "tokens_total": 1908,
+          "elapsed_time": 33.77411675453186,
+          "cost_input": 0.000482,
+          "cost_output": 0.010002,
+          "cost_total": 0.010484,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c5f6a3ec29dc239f24c046b0d3a9a3df4bb66a0e29dd553c0bf21f260c3200b7",
+        "most_common_count": 1,
+        "hashes": [
+          "c5f6a3ec29dc239f24c046b0d3a9a3df4bb66a0e29dd553c0bf21f260c3200b7"
+        ]
+      },
+      "total_tokens": 1908,
+      "total_cost": 0.010484,
+      "avg_time": 33.774
     },
     {
       "task_id": "A14",
@@ -8808,6 +9411,126 @@
     {
       "task_id": "A15",
       "task_name": "Возведение в степень по модулю",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СтепеньПоМодулю(Основание, Показатель, Модуль)\n\t\n\tЕсли Модуль = 1 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tЕсли Показатель = 0 Тогда\n\t\tВозврат 1 % Модуль;\n\tКонецЕсли;\n\t\n\tРезультат = 1;\n\tТекущееОснование = Основание % Модуль;\n\tТекущийПоказатель = Показатель;\n\t\n\tПока ТекущийПоказатель > 0 Цикл\n\t\tЕсли ТекущийПоказатель % 2 <> 0 Тогда\n\t\t\tРезультат = (Результат * ТекущееОснование) % Модуль;\n\t\tКонецЕсли;\n\t\t\n\t\tТекущееОснование = (ТекущееОснование * ТекущееОснование) % Модуль;\n\t\tТекущийПоказатель = Целое(ТекущийПоказатель / 2);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "97224f8b092b91dbf37d2c889f5ab8f82ba3f587b143ebfcca5db8202fea2541",
+          "tokens_input": 277,
+          "tokens_output": 1699,
+          "tokens_total": 1976,
+          "elapsed_time": 27.96955418586731,
+          "cost_input": 0.0001385,
+          "cost_output": 0.005097,
+          "cost_total": 0.0052355,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "97224f8b092b91dbf37d2c889f5ab8f82ba3f587b143ebfcca5db8202fea2541",
+        "most_common_count": 1,
+        "hashes": [
+          "97224f8b092b91dbf37d2c889f5ab8f82ba3f587b143ebfcca5db8202fea2541"
+        ]
+      },
+      "total_tokens": 1976,
+      "total_cost": 0.0052355,
+      "avg_time": 27.97
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1C\nФункция СтепеньПоМодулю(Основание, Показатель, Модуль) Экспорт\n    Перем Результат, База;\n    Если Модуль = 1 Тогда\n        Возврат 0;\n    КонецЕсли;\n\n    Результат = 1;\n    База = Основание % Модуль;\n    Пока Показатель > 0 Цикл\n        Если Показатель % 2 = 1 Тогда\n            Результат = (Результат * База) % Модуль;\n        КонецЕсли;\n        База = (База * База) % Модуль;\n        Показатель = Цел(Показатель / 2);\n    КонецЦикла;\n    Возврат Результат;\nКонецФункции\n```",
+          "response_hash": "b878f05f6fd448c4ed32d84b61ec9147bfd70e8026395ed5b6f79e3c86df647c",
+          "tokens_input": 306,
+          "tokens_output": 3353,
+          "tokens_total": 3659,
+          "elapsed_time": 49.52948045730591,
+          "cost_input": 0.00013311,
+          "cost_output": 0.00291711,
+          "cost_total": 0.00305022,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b878f05f6fd448c4ed32d84b61ec9147bfd70e8026395ed5b6f79e3c86df647c",
+        "most_common_count": 1,
+        "hashes": [
+          "b878f05f6fd448c4ed32d84b61ec9147bfd70e8026395ed5b6f79e3c86df647c"
+        ]
+      },
+      "total_tokens": 3659,
+      "total_cost": 0.00305022,
+      "avg_time": 49.529
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СтепеньПоМодулю(Основание, Показатель, Модуль) Экспорт\n\n\tЕсли Модуль = 1 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tРезультат = 1 % Модуль;\n\tОснование = Основание % Модуль;\n\n\tПока Показатель > 0 Цикл\n\t\tЕсли Показатель % 2 = 1 Тогда\n\t\t\tРезультат = (Результат * Основание) % Модуль;\n\t\tКонецЕсли;\n\n\t\tПоказатель = Цел(Показатель / 2);\n\t\tОснование = (Основание * Основание) % Модуль;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "fb74aeda71156fea7fb567f0220e90dd30e5155375022e97ed98abb67829cad5",
+          "tokens_input": 274,
+          "tokens_output": 2217,
+          "tokens_total": 2491,
+          "elapsed_time": 47.66447138786316,
+          "cost_input": 0.000548,
+          "cost_output": 0.013301999999999998,
+          "cost_total": 0.013849999999999998,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "fb74aeda71156fea7fb567f0220e90dd30e5155375022e97ed98abb67829cad5",
+        "most_common_count": 1,
+        "hashes": [
+          "fb74aeda71156fea7fb567f0220e90dd30e5155375022e97ed98abb67829cad5"
+        ]
+      },
+      "total_tokens": 2491,
+      "total_cost": 0.013849999999999998,
+      "avg_time": 47.664
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -10324,6 +11047,126 @@
       "total_tokens": 1573,
       "total_cost": 0.04344,
       "avg_time": 20.904
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицуПоСумме(ТаблицаИсходная, КолонкаГруппировки, КолонкаСуммирования)\n    // Создание таблицы результата\n    ТаблицаРезультат = Новый ТаблицаЗначений;\n    \n    // Формирование параметров группировки для выборки\n    ВыбираемыеКолонки = КолонкаГруппировки + \" КАК ЗначениеГруппировки, СУММА(\" + КолонкаСуммирования + \") КАК Сумма\";\n    УсловиеОтбора = \"\"; // Без отбора\n    ПорядокСортировки = \"\"; // Без сортировки\n    Группировка = КолонкаГруппировки;\n    \n    // Получение выборки с группировкой из исходной таблицы (не изменяет исходную)\n    ВыборкаСгруппированная = ТаблицаИсходная.Выбрать(ВыбираемыеКолонки, УсловиеОтбора, ПорядокСортировки, Группировка);\n    \n    // Загрузка результатов в новую таблицу\n    ТаблицаРезультат.Загрузить(ВыборкаСгруппированная);\n    \n    Возврат ТаблицаРезультат;\nКонецФункции",
+          "response_hash": "701170bb733a9d890754887486c126e4f92c179ca97952059aadb1b903ae274c",
+          "tokens_input": 196,
+          "tokens_output": 1646,
+          "tokens_total": 1842,
+          "elapsed_time": 27.167177438735962,
+          "cost_input": 9.8e-05,
+          "cost_output": 0.004938,
+          "cost_total": 0.005036,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "701170bb733a9d890754887486c126e4f92c179ca97952059aadb1b903ae274c",
+        "most_common_count": 1,
+        "hashes": [
+          "701170bb733a9d890754887486c126e4f92c179ca97952059aadb1b903ae274c"
+        ]
+      },
+      "total_tokens": 1842,
+      "total_cost": 0.005036,
+      "avg_time": 27.167
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицуЗначений(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяКолонкиСуммирования)\n    РезультирующаяТаблица = Новый ТаблицаЗначений;\n    \n    КолонкаГруппировки = ИсходнаяТаблица.Колонки[ИмяКолонкиГруппировки];\n    КолонкаСуммирования = ИсходнаяТаблица.Колонки[ИмяКолонкиСуммирования];\n    \n    РезультирующаяТаблица.Колонки.Добавить(ИмяКолонкиГруппировки, КолонкаГруппировки.ТипЗначения);\n    РезультирующаяТаблица.Колонки.Добавить(\"Сумма\", Новый ОписаниеТипов(\"Число\"));\n    \n    Суммы = Новый Соответствие;\n    \n    Для Каждого Строка Из ИсходнаяТаблица Цикл\n        Ключ = Строка[ИмяКолонкиГруппировки];\n        ЗначениеСуммы = Строка[ИмяКолонкиСуммирования];\n        \n        Если ЗначениеСуммы = Неопределено Или ЗначениеСуммы = Null Тогда\n            ЗначениеСуммы = 0;\n        КонецЕсли;\n        \n        Если Суммы[Ключ] = Неопределено Тогда\n            Суммы[Ключ] = ЗначениеСуммы;\n        Иначе\n            Суммы[Ключ] = Суммы[Ключ] + ЗначениеСуммы;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Для Каждого КлючИЗначение Из Суммы Цикл\n        НоваяСтрока = РезультирующаяТаблица.Добавить();\n        НоваяСтрока[ИмяКолонкиГруппировки] = КлючИЗначение.Ключ;\n        НоваяСтрока[\"Сумма\"] = КлючИЗначение.Значение;\n    КонецЦикла;\n    \n    Возврат РезультирующаяТаблица;\nКонецФункции",
+          "response_hash": "a16711c3d20ad853a2392ef2393917dfab592e5936683cabce7d3f3fcc2e8780",
+          "tokens_input": 236,
+          "tokens_output": 3083,
+          "tokens_total": 3319,
+          "elapsed_time": 34.36068630218506,
+          "cost_input": 0.00010266,
+          "cost_output": 0.00268221,
+          "cost_total": 0.00278487,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "a16711c3d20ad853a2392ef2393917dfab592e5936683cabce7d3f3fcc2e8780",
+        "most_common_count": 1,
+        "hashes": [
+          "a16711c3d20ad853a2392ef2393917dfab592e5936683cabce7d3f3fcc2e8780"
+        ]
+      },
+      "total_tokens": 3319,
+      "total_cost": 0.00278487,
+      "avg_time": 34.361
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицуЗначений(Таблица, ИмяКолонкиГруппировки, ИмяКолонкиСуммирования) Экспорт\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"ЗначениеГруппировки\");\n\tРезультат.Колонки.Добавить(\"Сумма\");\n\t\n\tСуммы = Новый Соответствие;\n\tКлючи = Новый Массив;\n\t\n\tДля Каждого СтрокаТаблицы Из Таблица Цикл\n\t\t\n\t\tКлюч = СтрокаТаблицы[ИмяКолонкиГруппировки];\n\t\tЗначениеСуммы = СтрокаТаблицы[ИмяКолонкиСуммирования];\n\t\t\n\t\tЕсли ТипЗнч(ЗначениеСуммы) = Тип(\"Число\") Тогда\n\t\t\tСумма = ЗначениеСуммы;\n\t\tИначе\n\t\t\tСумма = 0;\n\t\tКонецЕсли;\n\t\t\n\t\tТекущаяСумма = Суммы.Получить(Ключ);\n\t\t\n\t\tЕсли ТекущаяСумма = Неопределено Тогда\n\t\t\tКлючи.Добавить(Ключ);\n\t\t\tСуммы.Вставить(Ключ, Сумма);\n\t\tИначе\n\t\t\tСуммы.Вставить(Ключ, ТекущаяСумма + Сумма);\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tДля Каждого Ключ Из Ключи Цикл\n\t\tСтрокаРезультата = Результат.Добавить();\n\t\tСтрокаРезультата.ЗначениеГруппировки = Ключ;\n\t\tСтрокаРезультата.Сумма = Суммы.Получить(Ключ);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "edeff2db6522bea7f2f70bcad4cf3ae8088b032c2b9c92a88f000700516ce7ea",
+          "tokens_input": 187,
+          "tokens_output": 6282,
+          "tokens_total": 6469,
+          "elapsed_time": 116.75260877609253,
+          "cost_input": 0.000374,
+          "cost_output": 0.037692,
+          "cost_total": 0.038066,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "edeff2db6522bea7f2f70bcad4cf3ae8088b032c2b9c92a88f000700516ce7ea",
+        "most_common_count": 1,
+        "hashes": [
+          "edeff2db6522bea7f2f70bcad4cf3ae8088b032c2b9c92a88f000700516ce7ea"
+        ]
+      },
+      "total_tokens": 6469,
+      "total_cost": 0.038066,
+      "avg_time": 116.753
     },
     {
       "task_id": "A1",
@@ -11848,6 +12691,126 @@
     {
       "task_id": "A2",
       "task_name": "Уникальные элементы массива",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УникальныеЭлементыМассива(ИсходныйМассив)\n    Результат = Новый Массив;\n    УжеДобавлены = Новый Соответствие;\n\n    Для Каждого Элемент Из ИсходныйМассив Цикл\n        Если НЕ УжеДобавлены.СодержитКлюч(Элемент) Тогда\n            Результат.Добавить(Элемент);\n            УжеДобавлены.Вставить(Элемент, Истина);\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "f8a28e323c459fd01f1e88d7437da74d57cdc27bd34e5a24d250e132ee3758b3",
+          "tokens_input": 179,
+          "tokens_output": 897,
+          "tokens_total": 1076,
+          "elapsed_time": 15.278825998306274,
+          "cost_input": 8.95e-05,
+          "cost_output": 0.002691,
+          "cost_total": 0.0027805,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f8a28e323c459fd01f1e88d7437da74d57cdc27bd34e5a24d250e132ee3758b3",
+        "most_common_count": 1,
+        "hashes": [
+          "f8a28e323c459fd01f1e88d7437da74d57cdc27bd34e5a24d250e132ee3758b3"
+        ]
+      },
+      "total_tokens": 1076,
+      "total_cost": 0.0027805,
+      "avg_time": 15.279
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УникальныеЭлементы(Массив)\n    Результат = Новый Массив;\n    \n    Для Каждого Элемент Из Массив Цикл\n        Найден = Ложь;\n        \n        Для Каждого Существующий Из Результат Цикл\n            Если Существующий = Элемент Тогда\n                Найден = Истина;\n                Прервать;\n            КонецЕсли;\n        КонецЦикла;\n        \n        Если НЕ Найден Тогда\n            Результат.Добавить(Элемент);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "baa3a355066ba17ff2cbe714bfce39e7873c9491d6cf91fda7d0e1ee2d229e0a",
+          "tokens_input": 222,
+          "tokens_output": 2867,
+          "tokens_total": 3089,
+          "elapsed_time": 38.659034729003906,
+          "cost_input": 9.657e-05,
+          "cost_output": 0.00249429,
+          "cost_total": 0.00259086,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "baa3a355066ba17ff2cbe714bfce39e7873c9491d6cf91fda7d0e1ee2d229e0a",
+        "most_common_count": 1,
+        "hashes": [
+          "baa3a355066ba17ff2cbe714bfce39e7873c9491d6cf91fda7d0e1ee2d229e0a"
+        ]
+      },
+      "total_tokens": 3089,
+      "total_cost": 0.00259086,
+      "avg_time": 38.659
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ВыделитьУникальныеЭлементыМассива(Массив) Экспорт\n\tРезультат = Новый Массив;\n\tНайденные = Новый Соответствие;\n\t\n\tДля Каждого Элемент Из Массив Цикл\n\t\tЕсли Найденные.Получить(Элемент) = Неопределено Тогда\n\t\t\tНайденные.Вставить(Элемент, Истина);\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "93c8c40d06eb3bf21f700da5c5fe110a359fd15b4468c19d8f3d7452ef720db9",
+          "tokens_input": 171,
+          "tokens_output": 5003,
+          "tokens_total": 5174,
+          "elapsed_time": 103.14743447303772,
+          "cost_input": 0.000342,
+          "cost_output": 0.030017999999999996,
+          "cost_total": 0.030359999999999995,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "93c8c40d06eb3bf21f700da5c5fe110a359fd15b4468c19d8f3d7452ef720db9",
+        "most_common_count": 1,
+        "hashes": [
+          "93c8c40d06eb3bf21f700da5c5fe110a359fd15b4468c19d8f3d7452ef720db9"
+        ]
+      },
+      "total_tokens": 5174,
+      "total_cost": 0.030359999999999995,
+      "avg_time": 103.147
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -13355,6 +14318,126 @@
       "total_tokens": 1259,
       "total_cost": 0.03292,
       "avg_time": 12.741
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИнтервалы(ИсходныеИнтервалы) Экспорт\n    Если ИсходныеИнтервалы.Количество() = 0 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n    \n    Интервалы = Новый Массив;\n    Для Каждого ИсходныйИнт Из ИсходныеИнтервалы Цикл\n        Интервалы.Добавить(ИсходныйИнт.Копировать());\n    КонецЦикла;\n    \n    Интервалы.Сортировать(Функция(Инт1, Инт2)\n        Возврат Сравнение(Инт1[0], Инт2[0]);\n    КонецФункции);\n    \n    Результат = Новый Массив;\n    Результат.Добавить(Интервалы[0]);\n    \n    Для н = 1 По Интервалы.Количество() - 1 Цикл\n        ТекущийИнтервал = Интервалы[н];\n        ПоследнийРезультата = Результат[Результат.Количество() - 1];\n        \n        Если ТекущийИнтервал[0] <= ПоследнийРезультата[1] Тогда\n            ПоследнийРезультата[1] = Макс(ПоследнийРезультата[1], ТекущийИнтервал[1]);\n        Иначе\n            Результат.Добавить(ТекущийИнтервал);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "27d0a941e32f260f6e84f7c6c133c97d7a0474211b65b6c61275d9eb3410c229",
+          "tokens_input": 246,
+          "tokens_output": 2396,
+          "tokens_total": 2642,
+          "elapsed_time": 37.22277855873108,
+          "cost_input": 0.000123,
+          "cost_output": 0.007188,
+          "cost_total": 0.007311,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "27d0a941e32f260f6e84f7c6c133c97d7a0474211b65b6c61275d9eb3410c229",
+        "most_common_count": 1,
+        "hashes": [
+          "27d0a941e32f260f6e84f7c6c133c97d7a0474211b65b6c61275d9eb3410c229"
+        ]
+      },
+      "total_tokens": 2642,
+      "total_cost": 0.007311,
+      "avg_time": 37.223
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1c\nФункция ОбъединитьИнтервалы(Интервалы)\n    Результат = Новый Массив;\n\n    Если ТипЗнч(Интервалы) <> Тип(\"Массив\") Тогда\n        Возврат Результат;\n    КонецЕсли;\n\n    Если Интервалы.Количество() = 0 Тогда\n        Возврат Результат;\n    КонецЕсли;\n\n    Рабочий = Новый Массив;\n    Для Каждого Исходный Из Интервалы Цикл\n        Пара = Новый Массив;\n        Пара.Добавить(Исходный[0]);\n        Пара.Добавить(Исходный[1]);\n        Рабочий.Добавить(Пара);\n    КонецЦикла;\n\n    Для i = 1 По Рабочий.Количество() - 1 Цикл\n        Текущий = Рабочий[i];\n        j = i - 1;\n        Пока j >= 0 И Рабочий[j][0] > Текущий[0] Цикл\n            Рабочий[j + 1] = Рабочий[j];\n            j = j - 1;\n        КонецЦикла;\n        Рабочий[j + 1] = Текущий;\n    КонецЦикла;\n\n    ТекНачало = Рабочий[0][0];\n    ТекКонец = Рабочий[0][1];\n\n    Для i = 1 По Рабочий.Количество() - 1 Цикл\n        НачалоИнтервала = Рабочий[i][0];\n        КонецИнтервала = Рабочий[i][1];\n\n        Если НачалоИнтервала <= ТекКонец Тогда\n            Если КонецИнтервала > ТекКонец Тогда\n                ТекКонец = КонецИнтервала;\n            КонецЕсли;\n        Иначе\n            Пара = Новый Массив;\n            Пара.Добавить(ТекНачало);\n            Пара.Добавить(ТекКонец);\n            Результат.Добавить(Пара);\n\n            ТекНачало = НачалоИнтервала;\n            ТекКонец = КонецИнтервала;\n        КонецЕсли;\n    КонецЦикла;\n\n    Пара = Новый Массив;\n    Пара.Добавить(ТекНачало);\n    Пара.Добавить(ТекКонец);\n    Результат.Добавить(Пара);\n\n    Возврат Результат;\nКонецФункции\n```",
+          "response_hash": "2927fba941f7953c2fa4fb6b24c00cfaf8f1f46d54d8c33f00d1c8efe302a895",
+          "tokens_input": 289,
+          "tokens_output": 10412,
+          "tokens_total": 10701,
+          "elapsed_time": 118.17226266860962,
+          "cost_input": 0.00012571499999999998,
+          "cost_output": 0.00905844,
+          "cost_total": 0.009184155,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2927fba941f7953c2fa4fb6b24c00cfaf8f1f46d54d8c33f00d1c8efe302a895",
+        "most_common_count": 1,
+        "hashes": [
+          "2927fba941f7953c2fa4fb6b24c00cfaf8f1f46d54d8c33f00d1c8efe302a895"
+        ]
+      },
+      "total_tokens": 10701,
+      "total_cost": 0.009184155,
+      "avg_time": 118.172
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИнтервалы(Интервалы) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tЕсли Интервалы = Неопределено Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tЕсли Интервалы.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tТаблица = Новый ТаблицаЗначений;\n\tТаблица.Колонки.Добавить(\"Начало\");\n\tТаблица.Колонки.Добавить(\"Конец\");\n\n\tДля Каждого Интервал Из Интервалы Цикл\n\t\tСтрока = Таблица.Добавить();\n\t\tСтрока.Начало = Интервал[0];\n\t\tСтрока.Конец = Интервал[1];\n\tКонецЦикла;\n\n\tТаблица.Сортировать(\"Начало Возр\");\n\n\tТекущееНачало = Таблица[0].Начало;\n\tТекущийКонец = Таблица[0].Конец;\n\n\tДля Индекс = 1 По Таблица.Количество() - 1 Цикл\n\t\tСтрока = Таблица[Индекс];\n\n\t\tЕсли Строка.Начало <= ТекущийКонец Тогда\n\t\t\tЕсли Строка.Конец > ТекущийКонец Тогда\n\t\t\t\tТекущийКонец = Строка.Конец;\n\t\t\tКонецЕсли;\n\t\tИначе\n\t\t\tИнтервалРезультата = Новый Массив;\n\t\t\tИнтервалРезультата.Добавить(ТекущееНачало);\n\t\t\tИнтервалРезультата.Добавить(ТекущийКонец);\n\t\t\tРезультат.Добавить(ИнтервалРезультата);\n\n\t\t\tТекущееНачало = Строка.Начало;\n\t\t\tТекущийКонец = Строка.Конец;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tИнтервалРезультата = Новый Массив;\n\tИнтервалРезультата.Добавить(ТекущееНачало);\n\tИнтервалРезультата.Добавить(ТекущийКонец);\n\tРезультат.Добавить(ИнтервалРезультата);\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "d3c521d39501cbf4f1a987fcc80cf7df05dcab2a2532b384cad695de26536fac",
+          "tokens_input": 238,
+          "tokens_output": 2004,
+          "tokens_total": 2242,
+          "elapsed_time": 38.06161642074585,
+          "cost_input": 0.000476,
+          "cost_output": 0.012024,
+          "cost_total": 0.0125,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d3c521d39501cbf4f1a987fcc80cf7df05dcab2a2532b384cad695de26536fac",
+        "most_common_count": 1,
+        "hashes": [
+          "d3c521d39501cbf4f1a987fcc80cf7df05dcab2a2532b384cad695de26536fac"
+        ]
+      },
+      "total_tokens": 2242,
+      "total_cost": 0.0125,
+      "avg_time": 38.062
     },
     {
       "task_id": "A3",
@@ -14879,6 +15962,126 @@
     {
       "task_id": "A4",
       "task_name": "Скользящее среднее",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СкользящиеСредние(МассивЧисел, Окно)\n    ДлинаМассива = МассивЧисел.Количество();\n    Результат = Новый Массив;\n    \n    Если Окно < 1 ИЛИ Окно > ДлинаМассива Тогда\n        Возврат Результат;\n    КонецЕсли;\n    \n    ДлинаРезультата = ДлинаМассива - Окно + 1;\n    Результат.Расширить(ДлинаРезультата);\n    \n    // Расчет суммы первого окна\n    ТекущаяСумма = 0;\n    Для н = 0 По Окно - 1 Цикл\n        ТекущаяСумма = ТекущаяСумма + МассивЧисел[н];\n    КонецЦикла;\n    Результат[0] = ТекущаяСумма / Окно;\n    \n    // Расчет остальных окон с оптимизацией суммы\n    Для i = 1 По ДлинаРезультата - 1 Цикл\n        ТекущаяСумма = ТекущаяСумма - МассивЧисел[i - 1];\n        ТекущаяСумма = ТекущаяСумма + МассивЧисел[i + Окно - 1];\n        Результат[i] = ТекущаяСумма / Окно;\n    КонецЦикла;\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "d7c5f77e062f45e84353fc1da46742fc3ce29af122ef09be2f0efbe85edc75e9",
+          "tokens_input": 210,
+          "tokens_output": 1635,
+          "tokens_total": 1845,
+          "elapsed_time": 24.854931116104126,
+          "cost_input": 0.000105,
+          "cost_output": 0.004905,
+          "cost_total": 0.00501,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d7c5f77e062f45e84353fc1da46742fc3ce29af122ef09be2f0efbe85edc75e9",
+        "most_common_count": 1,
+        "hashes": [
+          "d7c5f77e062f45e84353fc1da46742fc3ce29af122ef09be2f0efbe85edc75e9"
+        ]
+      },
+      "total_tokens": 1845,
+      "total_cost": 0.00501,
+      "avg_time": 24.855
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СкользящиеСредние(МассивЧисел, Окно)\n    Результат = Новый Массив;\n    Длина = МассивЧисел.Количество();\n\n    Если Окно > Длина Тогда\n        Возврат Результат;\n    КонецЕсли;\n\n    Для i = 0 По Длина - Окно Цикл\n        Сумма = 0;\n        Для j = 0 По Окно - 1 Цикл\n            Сумма = Сумма + МассивЧисел[i + j];\n        КонецЦикла;\n        Результат.Добавить(Сумма / Окно);\n    КонецЦикла;\n\n    Возврат Результат;\nКонецФункции\n```",
+          "response_hash": "052a1398f9006bed0ca4d4e4f3e95942b82215ef75e951ebac7616eb39cefe6e",
+          "tokens_input": 248,
+          "tokens_output": 1979,
+          "tokens_total": 2227,
+          "elapsed_time": 24.42182970046997,
+          "cost_input": 0.00010788,
+          "cost_output": 0.0017217299999999999,
+          "cost_total": 0.00182961,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "052a1398f9006bed0ca4d4e4f3e95942b82215ef75e951ebac7616eb39cefe6e",
+        "most_common_count": 1,
+        "hashes": [
+          "052a1398f9006bed0ca4d4e4f3e95942b82215ef75e951ebac7616eb39cefe6e"
+        ]
+      },
+      "total_tokens": 2227,
+      "total_cost": 0.00182961,
+      "avg_time": 24.422
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СкользящиеСредние(Массив, Окно) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tЕсли Массив = Неопределено Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tКоличество = Массив.Количество();\n\n\tЕсли Окно < 1 Или Окно > Количество Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tСумма = 0;\n\n\tДля Индекс = 0 По Окно - 1 Цикл\n\t\tСумма = Сумма + Массив.Получить(Индекс);\n\tКонецЦикла;\n\n\tРезультат.Добавить(Сумма / Окно);\n\n\tДля Индекс = Окно По Количество - 1 Цикл\n\t\tСумма = Сумма + Массив.Получить(Индекс) - Массив.Получить(Индекс - Окно);\n\t\tРезультат.Добавить(Сумма / Окно);\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "4b01ad10001375bb142ea2f49fc69e10a888ee6fb81353cbc351debd452fa8b2",
+          "tokens_input": 201,
+          "tokens_output": 1510,
+          "tokens_total": 1711,
+          "elapsed_time": 31.473050355911255,
+          "cost_input": 0.000402,
+          "cost_output": 0.00906,
+          "cost_total": 0.009462,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4b01ad10001375bb142ea2f49fc69e10a888ee6fb81353cbc351debd452fa8b2",
+        "most_common_count": 1,
+        "hashes": [
+          "4b01ad10001375bb142ea2f49fc69e10a888ee6fb81353cbc351debd452fa8b2"
+        ]
+      },
+      "total_tokens": 1711,
+      "total_cost": 0.009462,
+      "avg_time": 31.473
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -16386,6 +17589,126 @@
       "total_tokens": 1154,
       "total_cost": 0.030844999999999997,
       "avg_time": 12.98
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПодсчитатьСловаВТексте(ИсходныйТекст) Экспорт\n    РезультатПодсчета = Новый Структура;\n    \n    Если НЕ ЗначениеЗаполнено(ИсходныйТекст) Тогда\n        Возврат РезультатПодсчета;\n    КонецЕсли;\n\n    // Регулярное выражение для поиска слов (последовательности букв, цифр, включая русские символы)\n    РегВыражение = Новый РегулярноеВыражение;\n    РегВыражение.Шаблон = \"[\\wА-Яа-яЁё]+\";\n    РегВыражение.ИгнорироватьРегистр = Истина;\n\n    НайденныеСлова = РегВыражение.НайтиСовпадения(ИсходныйТекст);\n\n    Для Каждого ТекущееСовпадение Из НайденныеСлова Цикл\n        СловоНижнийРегистр = СтрНижний(ТекущееСовпадение.Значение);\n        \n        Если РезультатПодсчета.СодержитКлюч(СловоНижнийРегистр) Тогда\n            РезультатПодсчета[СловоНижнийРегистр] = РезультатПодсчета[СловоНижнийРегистр] + 1;\n        Иначе\n            РезультатПодсчета.Вставить(СловоНижнийРегистр, 1);\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат РезультатПодсчета;\nКонецФункции",
+          "response_hash": "89684069fc6f53b2ccb00ed8232b0505aa6e7664419ac9ffb34ed995cf42146c",
+          "tokens_input": 195,
+          "tokens_output": 1734,
+          "tokens_total": 1929,
+          "elapsed_time": 26.00889301300049,
+          "cost_input": 9.75e-05,
+          "cost_output": 0.005202,
+          "cost_total": 0.0052995,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "89684069fc6f53b2ccb00ed8232b0505aa6e7664419ac9ffb34ed995cf42146c",
+        "most_common_count": 1,
+        "hashes": [
+          "89684069fc6f53b2ccb00ed8232b0505aa6e7664419ac9ffb34ed995cf42146c"
+        ]
+      },
+      "total_tokens": 1929,
+      "total_cost": 0.0052995,
+      "avg_time": 26.009
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЭтоСимволСлова(Символ)\n    Код = КодСимвола(Символ);\n    Возврат (Код >= 48 И Код <= 57)\n        ИЛИ (Код >= 65 И Код <= 90)\n        ИЛИ (Код >= 97 И Код <= 122)\n        ИЛИ (Код >= 1040 И Код <= 1103)\n        ИЛИ Код = 1105\n        ИЛИ Код = 1025;\nКонецФункции\n\nФункция ПосчитатьСлова(Текст)\n    Результат = Новый Структура;\n    Текст = НРег(Текст);\n    ТекущееСлово = \"\";\n    Для Инд = 1 По СтрДлина(Текст) Цикл\n        Символ = Сред(Текст, Инд, 1);\n        Если ЭтоСимволСлова(Символ) Тогда\n            ТекущееСлово = ТекущееСлово + Символ;\n        Иначе\n            Если ТекущееСлово <> \"\" Тогда\n                Если Результат.Свойство(ТекущееСлово) Тогда\n                    Результат[ТекущееСлово] = Результат[ТекущееСлово] + 1;\n                Иначе\n                    Результат.Вставить(ТекущееСлово, 1);\n                КонецЕсли;\n                ТекущееСлово = \"\";\n            КонецЕсли;\n        КонецЕсли;\n    КонецЦикла;\n    Если ТекущееСлово <> \"\" Тогда\n        Если Результат.Свойство(ТекущееСлово) Тогда\n            Результат[ТекущееСлово] = Результат[ТекущееСлово] + 1;\n        Иначе\n            Результат.Вставить(ТекущееСлово, 1);\n        КонецЕсли;\n    КонецЕсли;\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "8c4bbfda20ea805173e5ba863b9ae45d6f6f8fce10efade5d86ac7b46904152c",
+          "tokens_input": 237,
+          "tokens_output": 4082,
+          "tokens_total": 4319,
+          "elapsed_time": 47.926894664764404,
+          "cost_input": 0.00010309499999999999,
+          "cost_output": 0.0035513399999999996,
+          "cost_total": 0.0036544349999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "8c4bbfda20ea805173e5ba863b9ae45d6f6f8fce10efade5d86ac7b46904152c",
+        "most_common_count": 1,
+        "hashes": [
+          "8c4bbfda20ea805173e5ba863b9ae45d6f6f8fce10efade5d86ac7b46904152c"
+        ]
+      },
+      "total_tokens": 4319,
+      "total_cost": 0.0036544349999999997,
+      "avg_time": 47.927
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПодсчитатьСлова(Текст) Экспорт\n\n\tРезультат = Новый Структура;\n\n\tЕсли ТипЗнч(Текст) <> Тип(\"Строка\") Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tТекущееСлово = \"\";\n\tДлинаТекста = СтрДлина(Текст);\n\n\tДля Позиция = 1 По ДлинаТекста Цикл\n\n\t\tСимвол = Сред(Текст, Позиция, 1);\n\t\tКод = КодСимвола(Символ);\n\n\t\tЭтоСимволСлова = Ложь;\n\n\t\tЕсли (Код >= 48 И Код <= 57)\n\t\t\tИЛИ (Код >= 65 И Код <= 90)\n\t\t\tИЛИ (Код >= 97 И Код <= 122)\n\t\t\tИЛИ (Код >= 1040 И Код <= 1103)\n\t\t\tИЛИ Код = 1025\n\t\t\tИЛИ Код = 1105 Тогда\n\n\t\t\tЭтоСимволСлова = Истина;\n\n\t\tКонецЕсли;\n\n\t\tЕсли ЭтоСимволСлова Тогда\n\n\t\t\tТекущееСлово = ТекущееСлово + Символ;\n\n\t\tИначе\n\n\t\t\tЕсли ТекущееСлово <> \"\" Тогда\n\n\t\t\t\tКлюч = НРег(ТекущееСлово);\n\n\t\t\t\tЕсли Результат.Свойство(Ключ) Тогда\n\t\t\t\t\tРезультат[Ключ] = Результат[Ключ] + 1;\n\t\t\t\tИначе\n\t\t\t\t\tРезультат.Вставить(Ключ, 1);\n\t\t\t\tКонецЕсли;\n\n\t\t\t\tТекущееСлово = \"\";\n\n\t\t\tКонецЕсли;\n\n\t\tКонецЕсли;\n\n\tКонецЦикла;\n\n\tЕсли ТекущееСлово <> \"\" Тогда\n\n\t\tКлюч = НРег(ТекущееСлово);\n\n\t\tЕсли Результат.Свойство(Ключ) Тогда\n\t\t\tРезультат[Ключ] = Результат[Ключ] + 1;\n\t\tИначе\n\t\t\tРезультат.Вставить(Ключ, 1);\n\t\tКонецЕсли;\n\n\tКонецЕсли;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "1583d337d8f2ea18a75f447a46b09267ddbcdbf230f990e709892122d5700b80",
+          "tokens_input": 194,
+          "tokens_output": 3135,
+          "tokens_total": 3329,
+          "elapsed_time": 57.08911895751953,
+          "cost_input": 0.000388,
+          "cost_output": 0.01881,
+          "cost_total": 0.019198,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1583d337d8f2ea18a75f447a46b09267ddbcdbf230f990e709892122d5700b80",
+        "most_common_count": 1,
+        "hashes": [
+          "1583d337d8f2ea18a75f447a46b09267ddbcdbf230f990e709892122d5700b80"
+        ]
+      },
+      "total_tokens": 3329,
+      "total_cost": 0.019198,
+      "avg_time": 57.089
     },
     {
       "task_id": "A5",
@@ -17901,6 +19224,126 @@
     {
       "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(Строка1, Строка2)\n    длина1 = СтрДлина(Строка1);\n    длина2 = СтрДлина(Строка2);\n    \n    Если длина1 = 0 Тогда\n        Возврат длина2;\n    КонецЕсли;\n    Если длина2 = 0 Тогда\n        Возврат длина1;\n    КонецЕсли;\n    \n    матрица = Новый Массив;\n    Для i = 0 По длина1 Цикл\n        матрица.Добавить(Новый Массив);\n        Для j = 0 По длина2 Цикл\n            матрица[i].Добавить(0);\n        КонецЦикла;\n    КонецЦикла;\n    \n    Для j = 0 По длина2 Цикл\n        матрица[0][j] = j;\n    КонецЦикла;\n    Для i = 0 По длина1 Цикл\n        матрица[i][0] = i;\n    КонецЦикла;\n    \n    Для i = 1 По длина1 Цикл\n        Для j = 1 По длина2 Цикл\n            символ1 = Сред(Строка1, i, 1);\n            символ2 = Сред(Строка2, j, 1);\n            стоимостьЗамены = ?(символ1 = символ2, 0, 1);\n            \n            удаление = матрица[i-1][j] + 1;\n            вставка = матрица[i][j-1] + 1;\n            замена = матрица[i-1][j-1] + стоимостьЗамены;\n            \n            матрица[i][j] = Мин(Мин(удаление, вставка), замена);\n        КонецЦикла;\n    КонецЦикла;\n    \n    Возврат матрица[длина1][длина2];\nКонецФункции",
+          "response_hash": "9f318401295618bc6245f7c4df29469187bce094303d22f1cc0e63b121e69ef3",
+          "tokens_input": 175,
+          "tokens_output": 1976,
+          "tokens_total": 2151,
+          "elapsed_time": 29.889981746673584,
+          "cost_input": 8.75e-05,
+          "cost_output": 0.005927999999999999,
+          "cost_total": 0.006015499999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "9f318401295618bc6245f7c4df29469187bce094303d22f1cc0e63b121e69ef3",
+        "most_common_count": 1,
+        "hashes": [
+          "9f318401295618bc6245f7c4df29469187bce094303d22f1cc0e63b121e69ef3"
+        ]
+      },
+      "total_tokens": 2151,
+      "total_cost": 0.006015499999999999,
+      "avg_time": 29.89
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1C\nФункция РасстояниеЛевенштейна(Строка1, Строка2) Экспорт\n    Длина1 = СтрДлина(Строка1);\n    Длина2 = СтрДлина(Строка2);\n    \n    Если Длина1 = 0 Тогда\n        Возврат Длина2;\n    КонецЕсли;\n    Если Длина2 = 0 Тогда\n        Возврат Длина1;\n    КонецЕсли;\n    \n    Матрица = Новый Массив(Длина1 + 1);\n    Для i = 0 по Длина1 Цикл\n        Матрица[i] = Новый Массив(Длина2 + 1);\n    КонецЦикла;\n    \n    Для i = 0 по Длина1 Цикл\n        Матрица[i][0] = i;\n    КонецЦикла;\n    Для j = 0 по Длина2 Цикл\n        Матрица[0][j] = j;\n    КонецЦикла;\n    \n    Для i = 1 по Длина1 Цикл\n        Для j = 1 по Длина2 Цикл\n            Символ1 = Сред(Строка1, i, 1);\n            Символ2 = Сред(Строка2, j, 1);\n            \n            Если Символ1 = Символ2 Тогда\n                Стоимость = 0;\n            Иначе\n                Стоимость = 1;\n            КонецЕсли;\n            \n            Вариант1 = Матрица[i-1][j] + 1;        // удаление\n            Вариант2 = Матрица[i][j-1] + 1;        // вставка\n            Вариант3 = Матрица[i-1][j-1] + Стоимость; // замена или совпадение\n            \n            Мин = Вариант1;\n            Если Вариант2 < Мин Тогда\n                Мин = Вариант2;\n            КонецЕсли;\n            Если Вариант3 < Мин Тогда\n                Мин = Вариант3;\n            КонецЕсли;\n            \n            Матрица[i][j] = Мин;\n        КонецЦикла;\n    КонецЦикла;\n    \n    Возврат Матрица[Длина1][Длина2];\nКонецФункции\n```",
+          "response_hash": "496c65ecf7bc1fc697052fd8aca90702cb2d86ada9d2dc7cdfe7570900ea5132",
+          "tokens_input": 215,
+          "tokens_output": 1813,
+          "tokens_total": 2028,
+          "elapsed_time": 20.3169686794281,
+          "cost_input": 9.3525e-05,
+          "cost_output": 0.00157731,
+          "cost_total": 0.0016708349999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "496c65ecf7bc1fc697052fd8aca90702cb2d86ada9d2dc7cdfe7570900ea5132",
+        "most_common_count": 1,
+        "hashes": [
+          "496c65ecf7bc1fc697052fd8aca90702cb2d86ada9d2dc7cdfe7570900ea5132"
+        ]
+      },
+      "total_tokens": 2028,
+      "total_cost": 0.0016708349999999999,
+      "avg_time": 20.317
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(Строка1, Строка2) Экспорт\n\n\tДлина1 = СтрДлина(Строка1);\n\tДлина2 = СтрДлина(Строка2);\n\n\tЕсли Длина1 = 0 Тогда\n\t\tВозврат Длина2;\n\tКонецЕсли;\n\n\tЕсли Длина2 = 0 Тогда\n\t\tВозврат Длина1;\n\tКонецЕсли;\n\n\tШирина = Длина2 + 1;\n\tТаблица = Новый Массив((Длина1 + 1) * Ширина);\n\n\tДля i = 0 По Длина1 Цикл\n\t\tТаблица[i * Ширина] = i;\n\tКонецЦикла;\n\n\tДля j = 0 По Длина2 Цикл\n\t\tТаблица[j] = j;\n\tКонецЦикла;\n\n\tДля i = 1 По Длина1 Цикл\n\t\tСимвол1 = Сред(Строка1, i, 1);\n\t\tДля j = 1 По Длина2 Цикл\n\t\t\tСимвол2 = Сред(Строка2, j, 1);\n\t\t\tСтоимость = ?(Символ1 = Символ2, 0, 1);\n\t\t\tИндекс = i * Ширина + j;\n\t\t\tТаблица[Индекс] = Мин(\n\t\t\t\tМин(Таблица[(i - 1) * Ширина + j] + 1, Таблица[i * Ширина + (j - 1)] + 1),\n\t\t\t\tТаблица[(i - 1) * Ширина + (j - 1)] + Стоимость\n\t\t\t);\n\t\tКонецЦикла;\n\tКонецЦикла;\n\n\tВозврат Таблица[Длина1 * Ширина + Длина2];\n\nКонецФункции",
+          "response_hash": "bde69154cfe1632997b34c8790705395dbeaaa8279bcd59ee3f90e95b75317e1",
+          "tokens_input": 168,
+          "tokens_output": 2282,
+          "tokens_total": 2450,
+          "elapsed_time": 45.47233748435974,
+          "cost_input": 0.000336,
+          "cost_output": 0.013692000000000001,
+          "cost_total": 0.014028,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bde69154cfe1632997b34c8790705395dbeaaa8279bcd59ee3f90e95b75317e1",
+        "most_common_count": 1,
+        "hashes": [
+          "bde69154cfe1632997b34c8790705395dbeaaa8279bcd59ee3f90e95b75317e1"
+        ]
+      },
+      "total_tokens": 2450,
+      "total_cost": 0.014028,
+      "avg_time": 45.472
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -19412,6 +20855,126 @@
     {
       "task_id": "A7",
       "task_name": "RLE-сжатие строки",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СжатьRLE(СтрокаСжатия)\n    Если НЕ Заполнено(СтрокаСжатия) Тогда\n        Возврат \"\";\n    КонецЕсли;\n\n    Результат = \"\";\n    ДлинаСтроки = СтрДлина(СтрокаСжатия);\n    ТекущийСимвол = Сред(СтрокаСжатия, 1, 1);\n    Счетчик = 1;\n\n    Для i = 2 По ДлинаСтроки Цикл\n        Символ = Сред(СтрокаСжатия, i, 1);\n        Если Символ = ТекущийСимвол Тогда\n            Счетчик = Счетчик + 1;\n        Иначе\n            Результат = Результат + ТекущийСимвол + Строка(Счетчик);\n            ТекущийСимвол = Символ;\n            Счетчик = 1;\n        КонецЕсли;\n    КонецЦикла;\n\n    Результат = Результат + ТекущийСимвол + Строка(Счетчик);\n\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "00fd13e0bb5927de67c207e7d44cfcfefb3c998e6671cc7338d8371c441979b0",
+          "tokens_input": 223,
+          "tokens_output": 1496,
+          "tokens_total": 1719,
+          "elapsed_time": 23.07817792892456,
+          "cost_input": 0.0001115,
+          "cost_output": 0.004488,
+          "cost_total": 0.004599499999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "00fd13e0bb5927de67c207e7d44cfcfefb3c998e6671cc7338d8371c441979b0",
+        "most_common_count": 1,
+        "hashes": [
+          "00fd13e0bb5927de67c207e7d44cfcfefb3c998e6671cc7338d8371c441979b0"
+        ]
+      },
+      "total_tokens": 1719,
+      "total_cost": 0.004599499999999999,
+      "avg_time": 23.078
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```1C\nФункция СжатьRLE(Знач ИсходнаяСтрока)\n    Если ПустаяСтрока(ИсходнаяСтрока) Тогда\n        Возврат \"\";\n    КонецЕсли;\n    \n    Результат = \"\";\n    ТекущийСимвол = Сред(ИсходнаяСтрока, 1, 1);\n    Счетчик = 1;\n    \n    Для Индекс = 2 По СтрДлина(ИсходнаяСтрока) Цикл\n        Символ = Сред(ИсходнаяСтрока, Индекс, 1);\n        Если Символ = ТекущийСимвол Тогда\n            Счетчик = Счетчик + 1;\n        Иначе\n            Результат = Результат + ТекущийСимвол + Строка(Счетчик);\n            ТекущийСимвол = Символ;\n            Счетчик = 1;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Результат = Результат + ТекущийСимвол + Строка(Счетчик);\n    \n    Возврат Результат;\nКонецФункции\n```",
+          "response_hash": "4c60bf9cbd6ea7fe543da64d2ec48593a6bc9b6711468a2fb87575dd55f13fa3",
+          "tokens_input": 263,
+          "tokens_output": 2069,
+          "tokens_total": 2332,
+          "elapsed_time": 27.173872709274292,
+          "cost_input": 0.000114405,
+          "cost_output": 0.00180003,
+          "cost_total": 0.001914435,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4c60bf9cbd6ea7fe543da64d2ec48593a6bc9b6711468a2fb87575dd55f13fa3",
+        "most_common_count": 1,
+        "hashes": [
+          "4c60bf9cbd6ea7fe543da64d2ec48593a6bc9b6711468a2fb87575dd55f13fa3"
+        ]
+      },
+      "total_tokens": 2332,
+      "total_cost": 0.001914435,
+      "avg_time": 27.174
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция RLEСжать(Текст) Экспорт\n    Длина = СтрДлина(Текст);\n    Если Длина = 0 Тогда\n        Возврат \"\";\n    КонецЕсли;\n\n    Результат = \"\";\n    ТекущийСимвол = Сред(Текст, 1, 1);\n    Количество = 1;\n\n    Для Позиция = 2 По Длина Цикл\n        Символ = Сред(Текст, Позиция, 1);\n        Если Символ = ТекущийСимвол Тогда\n            Количество = Количество + 1;\n        Иначе\n            Результат = Результат + ТекущийСимвол + Формат(Количество, \"ЧГ=0\");\n            ТекущийСимвол = Символ;\n            Количество = 1;\n        КонецЕсли;\n    КонецЦикла;\n\n    Результат = Результат + ТекущийСимвол + Формат(Количество, \"ЧГ=0\");\n\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "484b0977b73ddb9f1b7b7ff4fe11cc0bfcbeb2a86d9ecf33e5cd286a7c1be142",
+          "tokens_input": 216,
+          "tokens_output": 1313,
+          "tokens_total": 1529,
+          "elapsed_time": 27.496575832366943,
+          "cost_input": 0.000432,
+          "cost_output": 0.007878,
+          "cost_total": 0.00831,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "484b0977b73ddb9f1b7b7ff4fe11cc0bfcbeb2a86d9ecf33e5cd286a7c1be142",
+        "most_common_count": 1,
+        "hashes": [
+          "484b0977b73ddb9f1b7b7ff4fe11cc0bfcbeb2a86d9ecf33e5cd286a7c1be142"
+        ]
+      },
+      "total_tokens": 1529,
+      "total_cost": 0.00831,
+      "avg_time": 27.497
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -20919,6 +22482,126 @@
       "total_tokens": 816,
       "total_cost": 0.021105,
       "avg_time": 10.618
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЭтоАнаграмма(Строка1, Строка2)\n    ОбрабСтрока1 = НРег(СтрЗаменить(Строка1, \" \", \"\"));\n    ОбрабСтрока2 = НРег(СтрЗаменить(Строка2, \" \", \"\"));\n    \n    Если СтрДлина(ОбрабСтрока1) <> СтрДлина(ОбрабСтрока2) Тогда\n        Возврат Ложь;\n    КонецЕсли;\n    \n    МассивСимволов1 = Новый Массив;\n    Для н = 1 По СтрДлина(ОбрабСтрока1) Цикл\n        МассивСимволов1.Добавить(Сред(ОбрабСтрока1, н, 1));\n    КонецЦикла;\n    \n    МассивСимволов2 = Новый Массив;\n    Для н = 1 По СтрДлина(ОбрабСтрока2) Цикл\n        МассивСимволов2.Добавить(Сред(ОбрабСтрока2, н, 1));\n    КонецЦикла;\n    \n    МассивСимволов1.Сортировать();\n    МассивСимволов2.Сортировать();\n    \n    Возврат МассивСимволов1 = МассивСимволов2;\nКонецФункции",
+          "response_hash": "7f626d08d119e10eb300216e4856ad358632e90b7b92edc96411e64277465b87",
+          "tokens_input": 185,
+          "tokens_output": 1144,
+          "tokens_total": 1329,
+          "elapsed_time": 18.05726909637451,
+          "cost_input": 9.25e-05,
+          "cost_output": 0.003432,
+          "cost_total": 0.0035245000000000003,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7f626d08d119e10eb300216e4856ad358632e90b7b92edc96411e64277465b87",
+        "most_common_count": 1,
+        "hashes": [
+          "7f626d08d119e10eb300216e4856ad358632e90b7b92edc96411e64277465b87"
+        ]
+      },
+      "total_tokens": 1329,
+      "total_cost": 0.0035245000000000003,
+      "avg_time": 18.057
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```\nФункция ЯвляютсяАнаграммами(Строка1, Строка2)\n    Строка1 = НРег(СтрЗаменить(Строка1, \" \", \"\"));\n    Строка2 = НРег(СтрЗаменить(Строка2, \" \", \"\"));\n    \n    Если СтрДлина(Строка1) <> СтрДлина(Строка2) Тогда\n        Возврат Ложь;\n    КонецЕсли;\n    \n    Счетчики = Новый Соответствие;\n    \n    Для Позиция = 1 По СтрДлина(Строка1) Цикл\n        Символ = Сред(Строка1, Позиция, 1);\n        Текущее = Счетчики[Символ];\n        Если Текущее = Неопределено Тогда\n            Счетчики[Символ] = 1;\n        Иначе\n            Счетчики[Символ] = Текущее + 1;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Для Позиция = 1 По СтрДлина(Строка2) Цикл\n        Символ = Сред(Строка2, Позиция, 1);\n        Текущее = Счетчики[Символ];\n        Если Текущее = Неопределено Или Текущее = 0 Тогда\n            Возврат Ложь;\n        Иначе\n            Счетчики[Символ] = Текущее - 1;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Истина;\nКонецФункции\n```",
+          "response_hash": "3c425e56c3736a7a3e6234ff1540a51e81f98b4ab96cf7c899b19bef11e829f2",
+          "tokens_input": 225,
+          "tokens_output": 3366,
+          "tokens_total": 3591,
+          "elapsed_time": 39.203972816467285,
+          "cost_input": 9.7875e-05,
+          "cost_output": 0.00292842,
+          "cost_total": 0.003026295,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3c425e56c3736a7a3e6234ff1540a51e81f98b4ab96cf7c899b19bef11e829f2",
+        "most_common_count": 1,
+        "hashes": [
+          "3c425e56c3736a7a3e6234ff1540a51e81f98b4ab96cf7c899b19bef11e829f2"
+        ]
+      },
+      "total_tokens": 3591,
+      "total_cost": 0.003026295,
+      "avg_time": 39.204
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция Анаграмма(Строка1, Строка2) Экспорт\n\t\n\tС1 = НРег(СтрЗаменить(Строка1, \" \", \"\"));\n\tС2 = НРег(СтрЗаменить(Строка2, \" \", \"\"));\n\t\n\tЕсли СтрДлина(С1) <> СтрДлина(С2) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\t\n\tСчетчик = Новый Соответствие;\n\t\n\tДля i = 1 По СтрДлина(С1) Цикл\n\t\tСимвол = Сред(С1, i, 1);\n\t\tЗначение = Счетчик[Символ];\n\t\tЕсли Значение = Неопределено Тогда\n\t\t\tЗначение = 0;\n\t\tКонецЕсли;\n\t\tСчетчик[Символ] = Значение + 1;\n\tКонецЦикла;\n\t\n\tДля i = 1 По СтрДлина(С2) Цикл\n\t\tСимвол = Сред(С2, i, 1);\n\t\tЗначение = Счетчик[Символ];\n\t\t\n\t\tЕсли Значение = Неопределено Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\t\t\n\t\tЗначение = Значение - 1;\n\t\t\n\t\tЕсли Значение < 0 Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\t\t\n\t\tСчетчик[Символ] = Значение;\n\tКонецЦикла;\n\t\n\tВозврат Истина;\n\t\nКонецФункции",
+          "response_hash": "5ca54c29fd8e6b514b1ea08ef725371c8cf6afdaaf672fdcf61be636b44ff02e",
+          "tokens_input": 184,
+          "tokens_output": 2342,
+          "tokens_total": 2526,
+          "elapsed_time": 44.73924946784973,
+          "cost_input": 0.000368,
+          "cost_output": 0.014051999999999999,
+          "cost_total": 0.014419999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5ca54c29fd8e6b514b1ea08ef725371c8cf6afdaaf672fdcf61be636b44ff02e",
+        "most_common_count": 1,
+        "hashes": [
+          "5ca54c29fd8e6b514b1ea08ef725371c8cf6afdaaf672fdcf61be636b44ff02e"
+        ]
+      },
+      "total_tokens": 2526,
+      "total_cost": 0.014419999999999999,
+      "avg_time": 44.739
     },
     {
       "task_id": "A8",
@@ -22443,6 +24126,126 @@
     {
       "task_id": "A9",
       "task_name": "Простые числа до границы",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьПростыеЧислаРешетомЭратосфена(Знач Граница)\n\t\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Новый Массив;\n\tКонецЕсли;\n\t\n\tКоличествоЭлементов = Граница + 1;\n\tРешето = Новый Массив(КоличествоЭлементов);\n\t\n\tДля н = 0 По КоличествоЭлементов - 1 Цикл\n\t\tРешето[н] = Истина;\n\tКонецЦикла;\n\tРешето[0] = Ложь;\n\tРешето[1] = Ложь;\n\t\n\tМаксимальноеПроверяемое = Целое(КвадратныйКорень(Граница));\n\tДля ТекущееПростое = 2 По МаксимальноеПроверяемое Цикл\n\t\tЕсли Решето[ТекущееПростое] Тогда\n\t\t\tДля Кратное = ТекущееПростое * ТекущееПростое По Граница Шаг ТекущееПростое Цикл\n\t\t\t\tРешето[Кратное] = Ложь;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат = Новый Массив;\n\tДля н = 2 По Граница Цикл\n\t\tЕсли Решето[н] Тогда\n\t\t\tРезультат.Добавить(н);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "1ea41ebd31c8d818df10126be6ee95308c6152fcc6f3e54baf1af74b00a388f8",
+          "tokens_input": 189,
+          "tokens_output": 2096,
+          "tokens_total": 2285,
+          "elapsed_time": 31.343854188919067,
+          "cost_input": 9.45e-05,
+          "cost_output": 0.006288,
+          "cost_total": 0.0063825,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1ea41ebd31c8d818df10126be6ee95308c6152fcc6f3e54baf1af74b00a388f8",
+        "most_common_count": 1,
+        "hashes": [
+          "1ea41ebd31c8d818df10126be6ee95308c6152fcc6f3e54baf1af74b00a388f8"
+        ]
+      },
+      "total_tokens": 2285,
+      "total_cost": 0.0063825,
+      "avg_time": 31.344
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "deepseek-v4-pro-0813",
+      "model_name": "DeepSeek V4 Pro 0813",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПростыеЧисла(Граница)\n    Если Граница < 2 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n    \n    Флаги = Новый Массив(Граница + 1);\n    Для Индекс = 0 По Граница Цикл\n        Флаги[Индекс] = Истина;\n    КонецЦикла;\n    \n    Флаги[0] = Ложь;\n    Флаги[1] = Ложь;\n    \n    Число = 2;\n    Пока Число * Число <= Граница Цикл\n        Если Флаги[Число] Тогда\n            Кратное = Число * Число;\n            Пока Кратное <= Граница Цикл\n                Флаги[Кратное] = Ложь;\n                Кратное = Кратное + Число;\n            КонецЦикла;\n        КонецЕсли;\n        Число = Число + 1;\n    КонецЦикла;\n    \n    Результат = Новый Массив;\n    Для Число = 2 По Граница Цикл\n        Если Флаги[Число] Тогда\n            Результат.Добавить(Число);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\nКонецФункции",
+          "response_hash": "a964548048cd3d300c29f974f563562132bf4c80c4d095c49df246fd3dbabd48",
+          "tokens_input": 230,
+          "tokens_output": 6959,
+          "tokens_total": 7189,
+          "elapsed_time": 91.43037247657776,
+          "cost_input": 0.00010005,
+          "cost_output": 0.00605433,
+          "cost_total": 0.00615438,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "a964548048cd3d300c29f974f563562132bf4c80c4d095c49df246fd3dbabd48",
+        "most_common_count": 1,
+        "hashes": [
+          "a964548048cd3d300c29f974f563562132bf4c80c4d095c49df246fd3dbabd48"
+        ]
+      },
+      "total_tokens": 7189,
+      "total_cost": 0.00615438,
+      "avg_time": 91.43
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПростыеЧисла(Граница) Экспорт\n\n    Если Граница < 2 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n\n    Решето = Новый Массив(Граница + 1, Истина);\n    Решето[0] = Ложь;\n    Решето[1] = Ложь;\n\n    Для Индекс = 2 Пока Индекс * Индекс <= Граница Цикл\n        Если Решето[Индекс] = Истина Тогда\n            Для Кратное = Индекс * Индекс Пока Кратное <= Граница Цикл\n                Решето[Кратное] = Ложь;\n            КонецЦикла;\n        КонецЕсли;\n    КонецЦикла;\n\n    Результат = Новый Массив;\n    Для Индекс = 2 По Граница Цикл\n        Если Решето[Индекс] = Истина Тогда\n            Результат.Добавить(Индекс);\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "3a98db6b71686e8131467a12269c5ffde6a3f936e9730e866e5a8338e5a3c854",
+          "tokens_input": 187,
+          "tokens_output": 3691,
+          "tokens_total": 3878,
+          "elapsed_time": 70.46754193305969,
+          "cost_input": 0.000374,
+          "cost_output": 0.022146,
+          "cost_total": 0.02252,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3a98db6b71686e8131467a12269c5ffde6a3f936e9730e866e5a8338e5a3c854",
+        "most_common_count": 1,
+        "hashes": [
+          "3a98db6b71686e8131467a12269c5ffde6a3f936e9730e866e5a8338e5a3c854"
+        ]
+      },
+      "total_tokens": 3878,
+      "total_cost": 0.02252,
+      "avg_time": 70.468
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
       "model_id": "deepseek-v4-flash-0731",
       "model_name": "DeepSeek V4 Flash 0731",
       "context_loaded": false,
@@ -22801,7 +24604,7 @@
       "avg_time": 8.661
     }
   ],
-  "total_tokens": 758460,
-  "total_cost": 4.466239290000006,
+  "total_tokens": 892431,
+  "total_cost": 4.861463940000004,
   "total_time": 0.0
 }
