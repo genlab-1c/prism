@@ -23,7 +23,16 @@ SCHEMA_VERSION = 1
 
 # Файлы задачи, определяющие сравнимость прогона (условие + скрытые проверки).
 # canonical.bsl НЕ входит: эталон — не то, что измеряется у кандидата.
-_TASK_FILES = ("task.yaml", "tests.yaml", "tests.bsl", "config_spec.yaml", "fixtures.yaml")
+# perf.yaml — тоже определение задачи: он задаёт метрику роста оси O (счётчик, p_opt, размеры),
+# и его правка меняет баллы кандидатов так же, как правка тестов.
+_TASK_FILES = (
+    "task.yaml",
+    "tests.yaml",
+    "tests.bsl",
+    "config_spec.yaml",
+    "fixtures.yaml",
+    "perf.yaml",
+)
 
 try:
     from importlib.metadata import version as _pkg_version
