@@ -37,6 +37,7 @@ from harness.loaders import (
 )
 from harness.report import catalog
 from harness.score.meaning import score_m
+from harness.score.optimization_b_exec import score_o_b_exec
 from harness.score.optimization_exec import score_o_exec
 from harness.score.quality import SCORER_TO_AXIS
 from harness.score.syntax import score_s
@@ -323,25 +324,82 @@ def _check_canonicals(only: set[str] | None = None, category: str | None = None)
         items.append(("skip", f"кат. B: пропуск (M/P — гейт): {onec.unavailable_reason()}"))
         tasks_b = []
 
-    def _check_b(t) -> Item:
-        code = t.canonical.read_text(encoding="utf-8-sig")
-        run = onec.run_candidate(code, t.dir, work / t.id, t.entry_point_patterns)
-        gate = (
+    def _run_b(t, code: str, tag: str):
+        """Корректность решения кат. B против синтетической базы: (прошёл ли гейт, run)."""
+        run = onec.run_candidate(code, t.dir, work / f"{t.id}_{tag}", t.entry_point_patterns)
+        ok = (
             run.status == "ok"
             and run.total > 0
             and run.passed == run.total
             and not run.platform_errors
             and not run.compile_error_lines
         )
-        txt = (
+        return ok, run
+
+    def _check_b(t) -> Item:
+        code = t.canonical.read_text(encoding="utf-8-sig")
+        m_ok, run = _run_b(t, code, "cm")
+        m_txt = (
             f"S=10 · M=10 ({run.passed}/{run.total}) · P чисто"
-            if gate
+            if m_ok
             else f"{run.status}: {run.passed}/{run.total}"
             f"{' · компиляция: ' + str(run.compile_errors[:1]) if run.compile_error_lines else ''}"
             f"{' · платформенные ошибки: ' + str(run.platform_errors) if run.platform_errors else ''}"
-            f"{' · ' + (run.log or run.infra_detail)[:120] if not gate else ''}"
+            f"{' · ' + (run.log or run.infra_detail)[:120] if not m_ok else ''}"
         )
-        return ("ok" if gate else "fail", f"{t.id}: эталон (1С) {txt}")
+
+        # Ось O — ДВА ЯКОРЯ, как в категории A. Эталон обязан мериться оптимальным (O≥8), а
+        # нарочно дорогой, но КОРРЕКТНЫЙ baseline — низким (≤4). Так задача машинно доказывает,
+        # что её нагрузочный профиль ловит порок: и что perf.grow растит то, что надо, и что
+        # выбранный perf.count видит именно эту разницу (для строчных метрик это критично —
+        # при росте базы внутрь ответа растёт и правильное решение, см. b_exec_scoring).
+        if t.perf is None:
+            return ("ok" if m_ok else "fail", f"{t.id}: эталон (1С) {m_txt} · O: без perf.yaml")
+        if t.perf_baseline is None:
+            return (
+                "fail",
+                f"{t.id}: есть perf.yaml, но нет perf_baseline.bsl — ось O не доказана "
+                "(нужен корректный, но дорогой якорь; см. CONTRIBUTING)",
+            )
+
+        oc = score_o_b_exec(code, t.dir, t.perf, proto, work / f"{t.id}_oc", t.entry_point_patterns)
+        bcode = t.perf_baseline.read_text(encoding="utf-8-sig")
+        base_ok, brun = _run_b(t, bcode, "bm")
+        ob = score_o_b_exec(
+            bcode, t.dir, t.perf, proto, work / f"{t.id}_ob", t.entry_point_patterns
+        )
+
+        # Порог «якорь пойман» — из протокола: у шкалы строк он свой, потому что её нижний
+        # балл выше (рост объёма дешевле роста числа обращений, см. b_rows_scoring).
+        anchor_max = proto.o_b_scoring_for(t.perf.count).anchor_max or 4
+
+        canon_ok = m_ok and oc.score is not None and oc.score >= 8
+        base_slow = ob.score is not None and ob.score <= anchor_max
+        gate = canon_ok and base_ok and base_slow
+
+        txt = (
+            f"{t.id}: эталон (1С) {m_txt} · O={oc.score} ({oc.metric} {oc.counts}) · "
+            f"якорь M={brun.passed}/{brun.total} O={ob.score} ({ob.counts})"
+        )
+        if gate:
+            reason = ""
+        elif not m_ok:
+            reason = " — эталон не проходит тесты"
+        elif oc.score is None or oc.score < 8:
+            reason = (
+                f" — эталон не мерится оптимальным (O={oc.score}"
+                f"{', ' + oc.note if oc.note else ''}): проверьте canonical/p_opt/count"
+            )
+        elif not base_ok:
+            reason = " — якорь некорректен: он обязан быть ВЕРНЫМ решением, просто дорогим"
+        elif ob.score is None:
+            reason = f" — якорь не измерен ({ob.note})"
+        else:
+            reason = (
+                f" — якорь не пойман (O={ob.score}>{anchor_max}): СЛЕПАЯ ЗОНА — либо perf.grow "
+                f"растит базу внутрь ответа, либо счётчик {ob.metric} этот порок не видит"
+            )
+        return ("ok" if gate else "fail", txt + reason)
 
     if tasks_b:
         with (
