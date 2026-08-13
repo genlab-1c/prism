@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "prism-bench"
-version = "1.8.0"                       # банк A 9→15, гейт O «двух якорей», расширенная инструментовка O (Массив.Вставить/Удалить), новые модели и журнал изменений на витрине
+version = "1.9.0"                       # ось O кат. B считает объём выборки, гейт двух якорей в B, шесть новых моделей, фильтры и мобильная витрина, фикс директив модуля формы
 description = "PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP: Syntax · Meaning · Optimization · Platform)"
 readme = "README.md"
 license = { text = "MIT" }
