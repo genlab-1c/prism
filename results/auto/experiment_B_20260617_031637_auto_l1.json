@@ -50254,6 +50254,1335 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "145ebe95ed4840c5f8d775b41614a2a3f1a1a85dc9f677243894d2d65fa79112",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьКонечныеЭлементыНоменклатуры",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": -0.111,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                7,
+                6
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5cf2eac16297caefd8974861f03dbd15ea4b8188985f138c7876fa540404af6f",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 4,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(15)}: Ошибка при вызове метода контекста (Выполнить): {(2, 38)}: Поле не найдено \"ОстаткиТоваровОстатки.Количество\"\nЕСТЬNULL(СУММ(ОстаткиТоваровОстатки.<<?>>Количество), 0) КАК Количество; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(15)}: Ошибка при вызове метода контекста (Выполнить): {(2, 38)}: Поле не найдено \"ОстаткиТоваровОстатки.Количество\"\nЕСТЬNULL(СУММ(ОстаткиТоваровОстатки.<<?>>Количество), 0) КАК Количество; тест3 ИСКЛЮЧЕНИЕ: {О",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 4,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПроверитьДостаточностьТовараНаСкладе",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 4,
+              "platform_error_tests": 4,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "47832ec2cf516a4b1761faca8dd519a85de5ef91d2e0d8bc11ecb80c01e3e1b0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПроверитьУникальностьИНН",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "98bd57f5677e7f0c21862a637ae8f6fbbd4f136a0b877bd6398e45de5828196a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "КоличествоВБазовойЕдинице",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "97513adabfec8db3ae1264b437c87d981fd8436e47e791a99dbd64806563eb39",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(39)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объекта данных может быть выбрано только во временную таблицу; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(39)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объекта данных может быть выбрано только во временную таблицу; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(39)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объекта данных может быть ",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстатокТоваровНаСкладе",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(39)}: Ошибка при вызове метода контекста (Выполнить): Содержимое объ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6d8f828e717d854c7ac4c86fe0fbc643e21c8d1bf9ff5748dabe4e324ded1227",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификацияНоменклатуры",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B16",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ecf68f36c8071ff4ecb05e3c82e84a6b51400b47c12ae45db75963bf8c26f3a6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДействующийДоговор",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B17",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7afa6c0c21b4616a1812f42ab30fc610afac5d8ca29416afd1b37de79df7f3a1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СуммарныйДолгКонтрагента",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "rows",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B18",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6a3a586bfc16de6bf6068e62c9a4000394b7fc2b950d0ee647d42d4fc5c6931a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ВыделитьНДС",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a5d0c7b9423c5e43b5a088aefbfa5c71e5f21b33048b41226d3aef9d08ba4614",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(2, 60)}: Ожидается выражение \"(\"\nЕСТЬNULL(СУММА(ВЫБОР КОГДА Хозрасчетный.СчетДт В ИЕРАРХИИ <<?>>&Счет ТОГДА Хозрасчетный.Сумма ИНАЧЕ 0 КОНЕЦ), 0) КАК ОборотДт,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(2, 60)}: Ожидается выражение \"(\"\nЕСТЬNULL(СУММА(ВЫБОР КОГДА Хозрасчетный.СчетДт В ИЕРАРХИИ <<?>>&Счет ТОГДА Хозрасчетный.Сумм",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СальдоСчета",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f609a22316e2c41d3130b270b86b5221c8773a6e50293d1bca34c5d91f2194ff",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(6, 26)}: Не задано значение параметра \"СсылкаНаСчет\"\nПланСчетов.Родитель = <<?>>&СсылкаНаСчет; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(6, 26)}: Не задано значение параметра \"СсылкаНаСчет\"\nПланСчетов.Родитель = <<?>>&СсылкаНаСчет; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Вып",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьСальдоПоСчету",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 2.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery"
+              ],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "aefaddeac2b175eab6b023abc945e598b2bf792e36a0738388189091e19e7b52",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 2,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Поле не найдено \"ТоварыНаСкладахОстатки.ВНаличии\"\nСУММА(ТоварыНаСкладахОстатки.<<?>>ВНаличии) КАК Остаток; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Поле не найдено \"ТоварыНаСкладахОстатки.ВНаличии\"\nСУММА(ТоварыНаСкладахОстатки.<<?>>ВНаличии) КАК Остаток;",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(59)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Пол",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 2,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "035040c081a6542e7b1768bb472e0af050db4256370dae5c405e1438cb82b994",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 6,
+            "P": 10.0,
+            "Q": 9.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДебетовыйОборотПоСчетуИКонтрагенту",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery",
+                "VirtualTableCallWithoutParameters"
+              ],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6a87aadfe5f9f702feaa3a748af8d4ee1f6b719383a6a96fa4a9a450361490a5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦеныВТабличнойЧасти",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "420bb436c0c76bbf9baaa4cc9bcd79180b3d47327dccae62c0a99bdaab40370c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыСоСкладаFIFO",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "44c756242d306fe4c0bf49942aecc2dff34369a04687fe72db7277a8abe5c6ee",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(36)}: Ошибка при вызове метода контекста (Выполнить): {(3, 16)}: Поле не найдено \"Остатки.Количество\"\nСУММА(Остатки.<<?>>Количество) КАК Количество,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(36)}: Ошибка при вызове метода контекста (Выполнить): {(3, 16)}: Поле не найдено \"Остатки.Количество\"\nСУММА(Остатки.<<?>>Количество) КАК Количество,; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(36)}: Ошибка при вызове метода контекста (Выпол",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСредневзвешеннуюСебестоимость",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(36)}: Ошибка при вызове метода контекста (Выполнить): {(3, 16)}: Пол",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d83738594346a702bbf68cfd25e410be029f9becc01b19c9737fd2c4ed69fcd2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7d8fe08b8c05c60dd5ad2129ae726eb65888f8f6470f2218dab7379368ab44e6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b8ae43c35fef9777b341af4dd19c2be0655d8d8c0271e3e39e5a16bae11f0450",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупкиНаДату",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5fbf79dc2426337f962cba65036d78afbe82eb0733641896eba1baabd530d63f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиИОборотыПоНоменклатуре",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1ca896b0f3ba0a49f9fcf941d86476eb221a2912359e10dbcc2054e22df45f2d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СводТабличнойЧастиТовары",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 2,
+              "total": 2,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
     }
   ]
 }

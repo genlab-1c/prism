@@ -34157,6 +34157,879 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4e91deb8e44987c2966a4674800ebcc4bbf13242defe0c21335c44a1125bd7d1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                5613,
+                11213,
+                22413,
+                44813
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "38a84bda441f0762c8d2fe8673e6e51286e96c76216edea24da18b43b60718e1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "ops": [
+                111,
+                66,
+                131,
+                111
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "711b8d0611ed0eb511c631f3094f9035a2f2c2935dd4362009a9a8512a774f9b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УбратьИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УбратьИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5ba0c12c6aedcae949c97345b1757a312703ad448dd5cd7ad8bb17fb183bc20c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2226,
+                4422,
+                8833,
+                17651
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c5f6a3ec29dc239f24c046b0d3a9a3df4bb66a0e29dd553c0bf21f260c3200b7",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 9,
+              "entry_point": "РазвернутьСлова",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 12,40 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РазвернутьСлова",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 69,40 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fb74aeda71156fea7fb567f0220e90dd30e5155375022e97ed98abb67829cad5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                73,
+                79,
+                85,
+                91
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "edeff2db6522bea7f2f70bcad4cf3ae8088b032c2b9c92a88f000700516ce7ea",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3765,
+                7545,
+                15033,
+                29967
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "93c8c40d06eb3bf21f700da5c5fe110a359fd15b4468c19d8f3d7452ef720db9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2005,
+                4005,
+                8005,
+                15999
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВыделитьУникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d3c521d39501cbf4f1a987fcc80cf7df05dcab2a2532b384cad695de26536fac",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3198,
+                6371,
+                12703,
+                25187
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4b01ad10001375bb142ea2f49fc69e10a888ee6fb81353cbc351debd452fa8b2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1562,
+                3112,
+                6212,
+                12412
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1583d337d8f2ea18a75f447a46b09267ddbcdbf230f990e709892122d5700b80",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                8734,
+                17155,
+                34364,
+                69689
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bde69154cfe1632997b34c8790705395dbeaaa8279bcd59ee3f90e95b75317e1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.73,
+              "p_opt": 2.0,
+              "ops": [
+                219,
+                383,
+                595,
+                855
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "484b0977b73ddb9f1b7b7ff4fe11cc0bfcbeb2a86d9ecf33e5cd286a7c1be142",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжать",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158043,
+                606323,
+                2336962,
+                9362618
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжать",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5ca54c29fd8e6b514b1ea08ef725371c8cf6afdaaf672fdcf61be636b44ff02e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "Анаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                9009,
+                18009,
+                36009,
+                72009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "Анаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "qwen3.8-max",
+      "model_name": "Qwen3.8 Max",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3a98db6b71686e8131467a12269c5ffde6a3f936e9730e866e5a8338e5a3c854",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 11,20 / Expecting symbol: To}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 68,20 / Expecting symbol: To}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
