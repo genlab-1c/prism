@@ -588,6 +588,20 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
 
+  gemini37_flash:
+    id: "gemini-3.7-flash"               # канал — AITUNNEL (openai_compat); id сверен по странице модели
+    name: "Gemini 3.7 Flash"
+    vendor: google
+    weights: proprietary
+    released: "2026-08-13"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
