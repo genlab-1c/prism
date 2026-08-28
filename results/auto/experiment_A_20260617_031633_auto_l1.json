@@ -35030,6 +35030,4329 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "54b03d41ee43c85af35667059dd910035f645fc1ad2eba717f00e89b785af2ff",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2407,
+                4807,
+                9607,
+                19207
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9df5877617ed9ff6c409f7ed82ff1b904b6d9e1f93519301890eda126ab8e348",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 17 / Method not found (Сортировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьМассивы",
+              "note": "не исполнился на размере 400: {Модуль /sandbox/cand.operf.os / Error in line: 74 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "47d4ffa2c693a0f7bd8e534b4bb700d494169a1f300906e2c8c1aa4f399a46fc",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "СлитьОтсортированныеМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                8415,
+                16815,
+                33615,
+                67215
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "СлитьОтсортированныеМассивы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0e2b221bee0cee273958532d3e0540ef4d7cc3a16245461aa071e4a02b9d7eb7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                9214,
+                18414,
+                36814,
+                73614
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a52aaa2e694989797e2f9afb6516419f9324e73b58f45f5da2dc6fc71b41e71e",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 9 / Method not found (Сортировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьМассивы",
+              "note": "не исполнился на размере 400: {Модуль /sandbox/cand.operf.os / Error in line: 66 / Method not found (Сортировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7ed3173e716d47b3192f5cb25a2ea79d3953c49489606ab7e95d8bf91778f4bf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6318,
+                12603,
+                25173,
+                50318
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "894e5d0d0f3e7a71c769755fe613a98b5da38608e1bc8e071e34b17a5f317d44",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "РабочиеДниВПериоде",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "ops": [
+                117,
+                72,
+                137,
+                117
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "РабочиеДниВПериоде",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "eff93e4f27217eaf261ff2d33082994dd05355b30fce405650a79adf4aa409ce",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "ЧислоРабочихДнейВПериоде",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6315,
+                12600,
+                25170,
+                50315
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЧислоРабочихДнейВПериоде",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "31c55c484903a7d64c9f6f419071cf750e68bf650b464d3cfa67e23709bd164c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6317,
+                12602,
+                25172,
+                50317
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d9072a767d88ee1e3aa636349db387a2398f459e9202a5ae710faae21d11d9c2",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 12,
+              "entry_point": "ЧислоРабочихДней",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 2,14 / Symbol not found Дату}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЧислоРабочихДней",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 59,14 / Symbol not found Дату}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "55ba8eb37b12f98811b3fad23a3b69589932f645dd611b2d03c657a49efa12a2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5dcb6efdf7b2f176e31c588915657a324bc20a54df241069ccdc76fc4f0ac5f2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1adabe377a5df46048d01c441d483facd2be0cde856e521cb53220e403672751",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначенияИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначенияИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8896b17f9fb18e51a8a3e66d9431960ce237c29399093a61179af273fada9f18",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УбратьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УбратьЗначениеИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9b1d6c98defd6e59c97c85cc4946615e774c50c96a87c62dc4eb628954b33d72",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ea037723a6581b1071890dc43473d84c6d724669baa092a907755c595fdf94d0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c3ea2dad0993da20248421220fefbaca60a879ed4c0bbfc8420ec99d7329371f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаНепрерывногоПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                1831,
+                3631,
+                7242,
+                14460
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаНепрерывногоПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "aca098c5d8b2b3c5771b102d8b463b82537401a74452a7a96cade9865a15be4b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.97,
+              "p_opt": 1.0,
+              "ops": [
+                853,
+                1653,
+                3253,
+                6453
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "025778587c950b4ce814a1bbb94184da21f27386d486f2e83204b7414a8e617d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2d0eb2bfd1a14cc61beafa39ed9806534def5e1747826bc43199cf9c0c2bc066",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаНепрерывногоПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаНепрерывногоПодмассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f2ab835eaf534865f21bdce7c6b90400b852594c24cc43103be0ce9d8a1e6fec",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "РазвернутьСловаВСтроке",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                606,
+                1206,
+                2406,
+                4806
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "РазвернутьСловаВСтроке",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "82a956637998383f502ee7ff09f4bed1dcbc7556fb33228ae760208b9e84bc94",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 9,
+              "entry_point": "ПеревернутьСлова",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 23,45 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПеревернутьСлова",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 80,45 / Expecting symbol: Do}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "220935b59721d331e2c8f54c5c1df50aeacfbffaacb6fbf4b21c8a5c90934298",
+          "scores": {
+            "S": 10,
+            "M": 3.3,
+            "O": null,
+            "P": null,
+            "Q": 6.65
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 9,
+              "entry_point": "СловаВОбратномПорядке",
+              "errors": [
+                "PRISM_FAIL 0",
+                "PRISM_FAIL 1",
+                "PRISM_FAIL 5",
+                "PRISM_FAIL 6",
+                "PRISM_FAIL 7",
+                "PRISM_FAIL 8"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 1.0,
+              "ops": [
+                7,
+                7,
+                7,
+                7
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СловаВОбратномПорядке",
+              "note": "оптимальность не оцениваем — задача не решена (M<5)",
+              "leg": "O-исп",
+              "gated_by_m": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5387303dc31ac1067896ccee9b4743cd89bd109475a720b0b11ad2940bac64e2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "РазвернутьПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1406,
+                2806,
+                5606,
+                11206
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "РазвернутьПорядокСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a1aec50615960b9686734faea2c9d2371585ab6694592a02c3dc7d5a0fb38c5b",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "parse_error_clusters": 3,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 9,
+              "entry_point": "РазвернутьСлова",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,23 / Expecting symbol: In}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РазвернутьСлова",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 61,23 / Expecting symbol: In}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7b5d00290cc7f80493a3d1d3a54a04ac74d9010032a124911bb1241169a3fb58",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.1,
+              "p_opt": 0.0,
+              "ops": [
+                74,
+                80,
+                86,
+                92
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cdda02452675006603dafb79fd7dfa4b3dd4f25a640d1e14c47a8965986abd4c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                94,
+                102,
+                110,
+                118
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "db1fb3e34bfbc0b2d23ceb6b0f805e5b49d056ceaa2cef7da61a0b97984043c4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                92,
+                100,
+                108,
+                116
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "46993b3f2cbe94dd401b0b98622a78a75242f0fe898ebc83f6315d11b310789b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                73,
+                79,
+                85,
+                91
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "91df40a0ff2a9c74908de7b8c5ee24da73c937b4793d8dbf1deec68d0cb26b06",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 14,33 / Неизвестный символ \\}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "не исполнился на размере 1000: {Модуль /sandbox/cand.operf.os / Error in line 71,33 / Неизвестный символ \\}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "56337fc3729c135600e86c2a5c532eec9a6d64745a25a5496484b4eca0814bec",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 1.0,
+              "ops": [
+                5,
+                5,
+                5,
+                5
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "64023bb572e2b4c240fe4d752c0352042c84cf37501062bb5de99765a94fb7f0",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 8 / Method not found (Содержит)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 8 / Method not found (Содержит)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 8 / Method not found (Содержит)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 65 / Method not found (Содержит)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "85ec1555fdd8b394603ef85e5473bd6471ad8292cd57508befc2a771c100b836",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3038,
+                6088,
+                12128,
+                24173
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d14d0568d4bb08d7ddbc234cd3e6d07a4a8167b68591d2e0cb008f2d55a4eb75",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": null,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 60,35 / Symbol not found Колонки}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "89a782aa40018a32184eebb2accc501bc2b86a7982df4df2661432cb46c090d3",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 2 / Method not found (Сгруппировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 2 / Method not found (Сгруппировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 2 / Method not found (Сгруппировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ГруппировкаТаблицыЗначений",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 59 / Method not found (Сгруппировать)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6df60351031182376892438b570f12c056e62ed7dabffaefeea45459279524c0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2005,
+                4005,
+                8005,
+                15999
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9964f17c726a2a744e35f8034295cdab7a87095f35e39688b47ed33884349227",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                81006,
+                322006,
+                1284006,
+                5124172
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1c37f48bc6d2299288a10d0eeb8525c41e8be096dc386f8af1d6c06932b52315",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2208,
+                4408,
+                8808,
+                17602
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "55ce9e96ec4cfeebd2fc3760d04ac4d0f6e9c7925ff8543362f10410ff7e6c1c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2005,
+                4005,
+                8005,
+                15999
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9782475119350e4774c6d1c8535f7d89d936fb042bfa5790782e3215e28c3434",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                101304,
+                402604,
+                1605204,
+                6405609
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b395c0bf53547110cde7d1716ec89232260a4a9dd5f881f3617fbe60b8b4c099",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3191,
+                6346,
+                12641,
+                24951
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "96b733ab2b0e983b16caafdfba8cda57d3ed4ab275ca9dc9f023c731c3f6aab1",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 18,15 / Expecting symbol: To}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 75,15 / Expecting symbol: To}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8cde5ddbd04af33bb1a338ca5319484193bbbb33beb30854e90f5f0fdcbb467d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.98,
+              "p_opt": 1.1,
+              "ops": [
+                42598,
+                162817,
+                667483,
+                2591707
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "84fe826894bce3529c4766fa98a78aa6833ced9167c5be42e0aa6d4a068f53b2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3598,
+                7153,
+                14243,
+                28131
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f39590a2546abea87fa0a42e0590e8daf807c3834d56955e79686b71034de05c",
+          "scores": {
+            "S": 10,
+            "M": 1.7,
+            "O": null,
+            "P": null,
+            "Q": 5.85
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 19 / Object property is not found (Элементы)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 19 / Object property is not found (Элементы)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 19 / Object property is not found (Элементы)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 19 / Object property is not found (Элементы)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 19 / Object property is not found (Элементы)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.1,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line: 76 / Object property is not found (Элементы)}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e17c9ed8b07358dd4d3d3bb4cbae0871dc9097e64b6b24453dc632ac03124bbb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящееСреднее",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1560,
+                3110,
+                6210,
+                12410
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящееСреднее",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0661afbd043c04b97fa7003785d149c445dbe2fc8ae1114f1bedfc9f8680d726",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,20 / Expecting symbol: To}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 72,20 / Expecting symbol: To}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d6bcdfb67b164ec453ab5aefe9665c57dd72f6d291fb199d9facfd21bd5b3684",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1560,
+                3110,
+                6210,
+                12410
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "71cad162fd867e2ca1a369e1a05d415991bc1bd32f09db5e1ef15cc635f7b9c4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2509,
+                5009,
+                10009,
+                20009
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a6b26ca4c0134224086cf281c3108309f4670bfa1bc5c29ac318de5e226ccbba",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 19,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СкользящиеСредние",
+              "note": "не исполнился на размере 200: {Модуль /sandbox/cand.operf.os / Error in line 76,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "16f80b13c45a8ac9a8c9b4ca3f7cad76eeb89e5b885f22e5dd809b2bd88aad78",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.88,
+              "p_opt": 1.0,
+              "ops": [
+                577,
+                1036,
+                1938,
+                3613
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "30020e029f53929be1b5e66a9d447f2c366ed5d9a7437bd663f00e2cecd5a689",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчетСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,18 / Symbol not found Разделить}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчетСлов",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 72,18 / Symbol not found Разделить}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e8665772aa82abb76b7c2036ba408927d64e95dc285f64a1cc4b5e2eb17f148b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.94,
+              "p_opt": 1.0,
+              "ops": [
+                512,
+                962,
+                1862,
+                3592
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "44276be24b06fb38f8adcf88911f725d375c95bb8ea7912ff625616544b2ae60",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ЧастотаСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.92,
+              "p_opt": 1.0,
+              "ops": [
+                637,
+                1177,
+                2257,
+                4333
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ЧастотаСлов",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ff7dc632148baf43cebc01480a604d849018f8429cdb3584d7548c868009f599",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,21 / Symbol not found СтрНижнийРегистр}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "не исполнился на размере 300: {Модуль /sandbox/cand.operf.os / Error in line 72,21 / Symbol not found СтрНижнийРегистр}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cd47d2f1f3f2bcd3c2736bb1fc1eb455b195d9579c831c092e78068edef10d27",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.83,
+              "p_opt": 2.0,
+              "ops": [
+                350,
+                638,
+                1014,
+                1478
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c62ab67832035abb1da9743b101362641113eb7ac4a88a0e9b450b288d734d8f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.75,
+              "p_opt": 2.0,
+              "ops": [
+                247,
+                437,
+                683,
+                985
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ac7a6b7af1d9254968f940757bd1698d0c561ed11e3aa8a125d3c58aecefc299",
+          "scores": {
+            "S": 4,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 4,
+              "parse_error_clusters": 4,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 20,20 / Expression syntax error}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: {Модуль /sandbox/cand.operf.os / Error in line 77,20 / Expression syntax error}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c94cfed74b59af444470f2d0f2051cd65c3ee3d3ca6fca3332daddbb5ebc695e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.65,
+              "p_opt": 2.0,
+              "ops": [
+                254,
+                432,
+                658,
+                932
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1b539421829d82103a6fc093a5a92987f81b7d0d0b2932e8ac5176cf4c9088cb",
+          "scores": {
+            "S": 10,
+            "M": 8.6,
+            "O": 10,
+            "P": null,
+            "Q": 9.53
+          },
+          "bands": {
+            "M": 8,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "PRISM_FAIL 6"
+              ],
+              "band": 8
+            },
+            "O": {
+              "growth": 1.8,
+              "p_opt": 2.0,
+              "ops": [
+                260,
+                468,
+                740,
+                1076
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5a74f26c8c51357d1f702fc67ae22a70e1898378651ba911c89fd3ad892ca67e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158270,
+                606770,
+                2337842,
+                9364382
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "112c6716fcb929113f1dbf461063f65e2453813da37bd1307984c7d1e45d1842",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатиеRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158507,
+                607227,
+                2338732,
+                9366156
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатиеRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "33f6d7510a91c1d059350416a8121daf0e3816f7431598890c6fd0cbf408a36f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжатьСтроку",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2548,
+                5108,
+                10242,
+                20474
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжатьСтроку",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f62b1a76227426dd0dcf034be590b4e183336396d2a53cd1ab4566fbc18a7b52",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжатие",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2558,
+                5118,
+                10252,
+                20484
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжатие",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0488907e4e32946e6f6a112ef523160e6948d27cbd3d759f7aa467d24e2d8548",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158503,
+                607223,
+                2338728,
+                9366152
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "536babdee2cca695fe21f0c9a7396b9532e61d3e15d5702c9a99ce83d22dc400",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                6010,
+                12010,
+                24010,
+                48010
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ed3ded3291d530bd62fcde800a740320d7a8819705aa6bb97cfd8c05b59f94ea",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 3,31 / Symbol not found Регистрон}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 60,31 / Symbol not found Регистрон}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7dd3fbbb3b21c730266cc7911915285bbfdd10ca535e9b0ab0dd7e3bb64467d8",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                11009,
+                22009,
+                44009,
+                88009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "96de7aa90b713a63551a34ff2482df5b1f1fdf2b67ae5deae10196ad00471cd5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                6009,
+                12009,
+                24009,
+                48009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0f26530cb928e6d9a09c359e7ee892ca09ab3daf659a7e04d985d61898f4f806",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,18 / Symbol not found СтрСимвол}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: {Модуль /sandbox/cand.operf.os / Error in line 72,18 / Symbol not found СтрСимвол}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "gemini-3.7-flash",
+      "model_name": "Gemini 3.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4a8dd356161db3e5a30225451928027a34f7349a8ec3f6ba03ed843ba01db1af",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "qwen3.8-flash",
+      "model_name": "Qwen3.8 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c45718484c2fcc2d3dc06adf84dfdf2d4f5ac085d590b801574a35922cddc29d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.03,
+              "p_opt": 1.0,
+              "ops": [
+                48773,
+                100071,
+                204982,
+                419214
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "glm-5.3-flash",
+      "model_name": "GLM 5.3 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "075ca8ae1a92dca27ce1c24a8b186678f1ed6a98a57dce6bf91b7a4e72d77d34",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38562,
+                79765,
+                164546,
+                338593
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "glm-5.3",
+      "model_name": "GLM 5.3",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9d289aafcbc42c3e60518edfa2d12de38cc19194e7f4f56336824e2f79203251",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": []
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧисла",
+              "note": "",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "qwen3.8-27b",
+      "model_name": "Qwen3.8 27b",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c5ff7d54a70924642eb9a6648e230a2e60b9e074771aba4798927d9e455b686f",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 4.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ]
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 10,9 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПростыеЧисла",
+              "note": "не исполнился на размере 2000: {Модуль /sandbox/cand.operf.os / Error in line 67,9 / Identifier expecting}",
+              "leg": "O-исп"
+            }
+          }
+        }
+      ]
     }
   ]
 }
