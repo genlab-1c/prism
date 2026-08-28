@@ -602,6 +602,62 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
 
+  qwen38_flash:
+    id: "qwen3.8-flash"                  # канал — AITUNNEL (openai_compat); id сверен по странице модели
+    name: "Qwen3.8 Flash"
+    vendor: alibaba
+    weights: open
+    released: "2026-08-26"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
+  glm53_flash:
+    id: "glm-5.3-flash"                  # канал — AITUNNEL (openai_compat); id сверен по странице модели
+    name: "GLM 5.3 Flash"
+    vendor: zhipu
+    weights: open
+    released: "2026-08-26"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
+  glm53:
+    id: "glm-5.3"                        # канал — AITUNNEL (openai_compat); id сверен по странице модели
+    name: "GLM 5.3"
+    vendor: zhipu
+    weights: open
+    released: "2026-08-18"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель (флагман Zhipu): для кат. B поднимать max_tokens
+
+  qwen38_27b:
+    id: "qwen3.8-27b"                    # канал — AITUNNEL (openai_compat); id сверен по странице модели
+    name: "Qwen3.8 27b"
+    vendor: alibaba
+    weights: open
+    released: "2026-08-14"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 262144
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
