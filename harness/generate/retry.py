@@ -51,6 +51,17 @@ def is_transient(error: str | None) -> bool:
     return any(m in e for m in _TRANSIENT)
 
 
+def is_empty_response(res: LLMResult) -> bool:
+    """Успех, но модель не выдала ответ: пустой content и нет вызовов инструментов.
+
+    Флаки reasoning-модели (напр. Qwen3.8 27b) иногда рассуждают и останавливаются,
+    не выдав финальный ответ (finish_reason=stop, бюджет НЕ исчерпан) — content пустой.
+    Для бенчмарка кода пустая генерация невалидна, повторяем как транзиентный сбой:
+    повтор почти всегда даёт непустой ответ.
+    """
+    return res.success and not (res.content or "").strip() and not res.tool_calls
+
+
 def with_retry(
     call: Callable[[], LLMResult],
     *,
@@ -67,12 +78,15 @@ def with_retry(
     last = LLMResult.failure("вызов не выполнен")
     for attempt in range(retries + 1):
         last = call()
-        if last.success:
+        if last.success and not is_empty_response(last):
             return last
-        if attempt >= retries or not is_transient(last.error):
+        # повторяем: сетевой транзиент ИЛИ успех-но-пусто (флаки reasoning, см. is_empty_response)
+        empty = is_empty_response(last)
+        retriable = empty or (not last.success and is_transient(last.error))
+        if attempt >= retries or not retriable:
             break
         delay = base_delay * (2**attempt)
         if on_retry:
-            on_retry(attempt + 1, last.error, delay)
+            on_retry(attempt + 1, last.error or "пустой ответ модели", delay)
         sleep(delay)
     return last

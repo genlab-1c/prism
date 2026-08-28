@@ -117,3 +117,33 @@ def test_with_retry_exhausts_and_returns_last():
 
     res = with_retry(call, retries=2, base_delay=1.0, sleep=slept.append)
     assert not res.success and len(calls) == 3 and slept == [1.0, 2.0]  # 1 + 2 повтора
+
+
+def test_with_retry_retries_empty_success():
+    # success=True, но content пустой (флаки reasoning-модель молчит) — повторяем как транзиент
+    calls, slept = [], []
+    script = [
+        LLMResult(success=True, content="   "),  # пусто (пробелы)
+        LLMResult(success=True, content=""),  # пусто
+        LLMResult(success=True, content="Функция Ф() Экспорт КонецФункции"),
+    ]
+
+    def call():
+        calls.append(1)
+        return script.pop(0)
+
+    res = with_retry(call, retries=3, base_delay=1.0, sleep=slept.append)
+    assert res.success and res.content.strip()
+    assert len(calls) == 3 and slept == [1.0, 2.0]  # два пустых → два повтора
+
+
+def test_with_retry_keeps_empty_after_exhaust():
+    # если пусто до конца — отдаём последний (не зацикливаемся)
+    calls = []
+
+    def call():
+        calls.append(1)
+        return LLMResult(success=True, content="")
+
+    res = with_retry(call, retries=2, base_delay=1.0, sleep=lambda _: None)
+    assert res.success and not res.content and len(calls) == 3
