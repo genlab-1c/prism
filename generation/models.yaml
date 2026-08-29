@@ -658,6 +658,20 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
 
+  grok46:
+    id: "grok-4.6"                       # канал — AITUNNEL (openai_compat); id сверен по странице модели
+    name: "Grok 4.6"
+    vendor: xai
+    weights: proprietary
+    released: "2026-08-12"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 500000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
