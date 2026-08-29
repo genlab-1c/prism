@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "prism-bench"
-version = "1.9.0"                       # ось O кат. B считает объём выборки, гейт двух якорей в B, шесть новых моделей, фильтры и мобильная витрина, фикс директив модуля формы
+version = "1.9.1"                       # патч: харнесс повторяет пустые ответы reasoning-моделей (retry.py) вместо ложного M=0; потолок max_tokens поднят до 65536
 description = "PRISM — исполняемый бенчмарк кодогенерации 1С (методика SMOP: Syntax · Meaning · Optimization · Platform)"
 readme = "README.md"
 license = { text = "MIT" }
