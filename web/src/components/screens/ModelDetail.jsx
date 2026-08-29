@@ -788,6 +788,19 @@ function ModelNavBtn({ model, rank, dir, navigate, fill }) {
   );
 }
 
+// полоса пред/след по рангу — переиспользуется и вверху страницы, и внизу (чтобы на мобилке
+// не листать наверх для смены модели). Кнопка та же — ModelNavBtn.
+function ModelNav({ prevModel, nextModel, idx, isMobile, navigate, style }) {
+  if (!prevModel && !nextModel) return null;
+  return (
+    <div style={{ display: 'flex', gap: 8, justifyContent: 'space-between', ...style }}>
+      {!isMobile && !prevModel && nextModel && <span style={{ flex: '0 0 auto' }} />}
+      {prevModel && <ModelNavBtn model={prevModel} rank={idx} dir="prev" navigate={navigate} fill={isMobile} />}
+      {nextModel && <ModelNavBtn model={nextModel} rank={idx + 2} dir="next" navigate={navigate} fill={isMobile} />}
+    </div>
+  );
+}
+
 export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = () => {} }) {
   const isMobile = useIsMobile();
   const ranked = React.useMemo(() => models.filter((x) => x.qOverall != null).sort((a, b) => b.qOverall - a.qOverall), [models]);
@@ -809,14 +822,7 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
       </div>
 
       {/* пред/след модель по общему рангу — листать рейтинг, не возвращаясь в лидерборд */}
-      {(prevModel || nextModel) && (
-        <div style={{ display: 'flex', gap: 8, marginTop: 12, justifyContent: 'space-between' }}>
-          {/* на ПК одинокий «след» прижимаем вправо пустым распоркой слева */}
-          {!isMobile && !prevModel && nextModel && <span style={{ flex: '0 0 auto' }} />}
-          {prevModel && <ModelNavBtn model={prevModel} rank={idx} dir="prev" navigate={navigate} fill={isMobile} />}
-          {nextModel && <ModelNavBtn model={nextModel} rank={idx + 2} dir="next" navigate={navigate} fill={isMobile} />}
-        </div>
-      )}
+      <ModelNav prevModel={prevModel} nextModel={nextModel} idx={idx} isMobile={isMobile} navigate={navigate} style={{ marginTop: 12 }} />
 
       {/* Карточка-вердикт — она же герой страницы (имя модели здесь, в шапке не дублируем) */}
       <section style={{ margin: '18px 0 28px' }}>
@@ -869,6 +875,9 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
         <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: isMobile ? '0 0 12px' : '0 0 18px', lineHeight: 1.45 }}>Реальный код по каждой задаче — тот, что запускали против синтетической базы. {isMobile ? 'Выбери задачу — код появится ниже.' : 'Выбери задачу слева; можно поставить рядом вторую модель.'}</p>
         <GenerationsBrowser modelId={m.id} modelName={m.name} models={models} />
       </section>
+
+      {/* мобила: дубль переключателя пред/след внизу — чтобы не листать наверх после кода */}
+      {isMobile && <ModelNav prevModel={prevModel} nextModel={nextModel} idx={idx} isMobile={isMobile} navigate={navigate} style={{ marginTop: 4, marginBottom: 8 }} />}
     </main>
   );
 }
