@@ -600,12 +600,27 @@ function genTasks(name) {
 
 let genCount = 0;
 const writtenGen = new Set();
+// Второй срез тех же генераций — по ЗАДАЧАМ (для карты банка задач). Собираем в том же
+// проходе: genTasks() дорогая (внутри Shiki), второй раз её звать нельзя.
+const byTask = new Map(); // taskId → [клетка по модели, в порядке models]
 for (const m of models) {
   const tasks = genTasks(m.name);
   if (!tasks.length) continue;
   fs.writeFileSync(path.join(GEN_DIR, `${m.id}.json`), JSON.stringify({ id: m.id, name: m.name, tasks }));
   writtenGen.add(`${m.id}.json`);
   genCount += tasks.length;
+  for (const t of tasks) {
+    if (!byTask.has(t.taskId)) byTask.set(t.taskId, []);
+    byTask.get(t.taskId).push({
+      m: m.id,
+      Q: t.scores.Q, S: t.scores.S, M: t.scores.M, O: t.scores.O, P: t.scores.P,
+      o: t.diag.outcome,
+      p: t.diag.tests?.passed ?? null,
+      t: t.diag.tests?.total ?? null,
+      why: t.diag.errors[0] || null,      // короткая человеческая причина падения
+      tok: t.meta.tokens, cost: t.meta.cost, sec: r1(t.meta.time),
+    });
+  }
 }
 // подчистить файлы моделей, которых больше нет в прогоне
 for (const f of fs.readdirSync(GEN_DIR)) if (f.endsWith('.json') && !writtenGen.has(f)) fs.rmSync(path.join(GEN_DIR, f));
@@ -675,6 +690,49 @@ const tasksMeta = {
     .sort((a, b) => (a.category === b.category ? taskNum(a.id) - taskNum(b.id) : a.category < b.category ? -1 : 1)),
 };
 fs.writeFileSync(path.join(WEB, 'public', 'data', 'tasks_meta.json'), JSON.stringify(tasksMeta));
+
+/* ---- 5d. Карта банка задач: агрегаты по задаче + матрица «задача × модель» ----
+   Строки — задачи, столбцы — модели В ПОРЯДКЕ РАНГА (сильнейшая слева): так на карте
+   видна «лестница». Клетки — те же генерации, что в gen/<model>.json, только повёрнутые. */
+const ranked = [...models].sort((a, b) => (b.qOverall ?? -1) - (a.qOverall ?? -1));
+const matrix = {
+  tagLabels, // человеческие подписи тегов задач (те же, что в лидерборде)
+  models: ranked.map((m) => ({ id: m.id, name: m.name, family: m.family, vendor: m.vendor, q: m.qOverall })),
+  tasks: tasksMeta.order.map((t) => {
+    const info = taskInfo.info[t.id] || {};
+    const byModel = Object.fromEntries((byTask.get(t.id) || []).map((r) => [r.m, r]));
+    const cells = ranked.map((m) => {
+      const r = byModel[m.id];
+      if (!r) return null;
+      const { m: _id, ...cell } = r;
+      return cell;
+    });
+    const got = cells.filter(Boolean);
+    const avg = (k) => {
+      const v = got.map((c) => c[k]).filter((x) => x != null);
+      return v.length ? r1(v.reduce((a, b) => a + b, 0) / v.length) : null;
+    };
+    const outcomes = {};
+    const causes = {};
+    for (const c of got) {
+      outcomes[c.o] = (outcomes[c.o] || 0) + 1;
+      if (c.o !== 'solved' && c.why) causes[c.why] = (causes[c.why] || 0) + 1;
+    }
+    return {
+      id: t.id, name: t.name, cat: t.category, difficulty: t.difficulty,
+      tags: info.tags || {},
+      nTests: Array.isArray(info.tests) ? info.tests.length : null,
+      hasCfg: !!info.config,
+      n: got.length,
+      solved: outcomes.solved || 0,
+      avg: { S: avg('S'), M: avg('M'), O: avg('O'), P: avg('P'), Q: avg('Q') },
+      outcomes,
+      causes: Object.entries(causes).sort((a, b) => b[1] - a[1]).slice(0, 3),
+      cells,
+    };
+  }),
+};
+fs.writeFileSync(path.join(WEB, 'public', 'data', 'task_matrix.json'), JSON.stringify(matrix));
 
 // тест-кейсы и генерации — берём из бейджей README (их считает `prism docs`), чтобы 1:1 с публикацией
 const readme = fs.readFileSync(path.join(REPO, 'README.md'), 'utf8');
@@ -761,3 +819,8 @@ fs.writeFileSync(OUT, JSON.stringify({
 
 console.log(`✓ leaderboard.json — ${models.length} моделей · A ${tasksA} / B ${tasksB} задач · v${version} · журнал ${changelog.length} записей`);
 console.log(`✓ public/data/gen — ${models.length} файлов, ${genCount} генераций с подсветкой BSL`);
+{
+  const s = matrix.tasks.map((t) => (t.n ? t.solved / t.n : 0));
+  const worst = matrix.tasks[s.indexOf(Math.min(...s))];
+  console.log(`✓ public/data/task_matrix.json — ${matrix.tasks.length} задач × ${matrix.models.length} моделей · труднее всех ${worst.id} (${Math.round(Math.min(...s) * 100)}%)`);
+}
