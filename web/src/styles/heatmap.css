@@ -1,0 +1,152 @@
+/* ============================================================
+   PRISM — карта прогона на странице банка задач.
+   Строка — задача, столбец — модель. 1645 клеток, поэтому DOM-сетка,
+   а не canvas: работают темы через переменные, hover/focus и скролл.
+   Размер клетки задаётся ТОЛЬКО из CSS (clamp/медиазапросы) — JS-хук
+   useIsMobile() на SSR возвращает false и запёк бы десктопную раскладку.
+   ============================================================ */
+
+.hm-scroll { overflow-x: auto; padding-bottom: 6px; }
+
+/* Столбцы резиновые: клетка растягивается на всю ширину панели (minmax + 1fr),
+   квадратность держит aspect-ratio. Когда места не хватает — треки упираются в
+   --cell-min и включается горизонтальный скролл обёртки. */
+.hm {
+  --cell-min: 9px;
+  --label: 200px;
+  display: grid;
+  gap: 2px;
+  padding: 14px 18px 18px;
+  width: 100%;
+}
+
+/* подписи столбцов — имена моделей вертикально */
+.hm-colhead {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  height: 118px;
+  align-self: end;
+  justify-self: center;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.02em;
+  color: var(--ink-400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hm-colhead.is-group { cursor: pointer; color: var(--ink-300); }
+.hm-colhead.is-group:hover { color: var(--brand); }
+
+/* колонка задач — липнет при горизонтальном скролле */
+.hm-corner { position: sticky; left: 0; z-index: 2; background: var(--surface); }
+.hm-rowlab {
+  position: sticky; left: 0; z-index: 2;
+  background: var(--surface);
+  display: flex; align-items: center; gap: 7px;
+  min-height: var(--cell-min);
+  padding-right: 10px;
+  font-size: 11.5px; color: var(--ink-200);
+  white-space: nowrap; overflow: hidden;
+  text-decoration: none;
+}
+.hm-rowlab:hover { color: var(--brand); }
+.hm-rowlab .tid { flex: none; width: 26px; font-family: var(--font-mono); font-size: 10px; color: var(--ink-400); }
+.hm-rowlab .nm { overflow: hidden; text-overflow: ellipsis; }
+.hm-rowlab .pc { flex: none; margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--ink-400); }
+
+.hm-cell { aspect-ratio: 1; border-radius: 2px; cursor: pointer; }
+.hm-cell.is-empty { background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--line); }
+.hm-cell:hover { outline: 2px solid var(--ink-100); outline-offset: 1px; }
+.hm-sep { grid-column: 1 / -1; height: 1px; background: var(--line); margin: 5px 0; }
+
+/* свёрнутый режим: столбцы — семейства моделей, клетка крупнее (палец) */
+.hm.is-narrow { --cell-min: 13px; --label: 96px; }
+.hm.is-narrow .hm-colhead { height: 44px; font-size: 9px; }
+.hm.is-narrow .hm-rowlab { font-size: 11px; }
+.hm.is-narrow .hm-cell { border-radius: 3px; }
+
+/* всплывашка (мышь) */
+.hm-tip {
+  position: fixed; z-index: 90; pointer-events: none; opacity: 0;
+  transition: opacity 120ms var(--ease, ease);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  padding: 9px 11px; max-width: 280px; font-size: 12px;
+}
+.hm-tip .t1 { font-weight: 600; margin-bottom: 2px; }
+.hm-tip .t2 { font-family: var(--font-mono); font-size: 11px; color: var(--ink-300); }
+.hm-tip .t3 { font-family: var(--font-mono); font-size: 11px; color: var(--ink-200); margin-top: 5px; }
+.hm-tip .t4 { font-family: var(--font-mono); font-size: 11px; color: var(--danger); margin-top: 4px; }
+
+/* нижняя плашка (палец): hover на тач-экране не существует */
+.hm-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 80;
+  background: var(--surface);
+  border-top: 1px solid var(--border-strong);
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.3);
+  padding: 14px 18px calc(16px + env(safe-area-inset-bottom));
+  transform: translateY(104%);
+  transition: transform 180ms var(--ease, ease);
+}
+.hm-sheet.is-open { transform: translateY(0); }
+.hm-sheet .s1 { font-weight: 600; font-size: 14px; }
+.hm-sheet .s2 { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-300); margin-top: 3px; }
+.hm-sheet .s3 { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-200); margin-top: 7px; }
+.hm-sheet .s4 { font-family: var(--font-mono); font-size: 11.5px; color: var(--danger); margin-top: 4px; }
+.hm-sheet .row { display: flex; gap: 10px; align-items: center; margin-top: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-tip, .hm-sheet { transition: none; }
+}
+
+/* легенда — по центру под картой, подсказка отдельной строкой */
+.hm-legend {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 18px; padding: 2px 18px 16px;
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-400);
+}
+.hm-legend button {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: none; padding: 0; cursor: pointer; font: inherit; color: inherit;
+}
+.hm-legend button[aria-pressed="true"] { color: var(--ink-100); }
+.hm-legend .sw { width: 12px; height: 12px; border-radius: 2px; }
+.hm-hint {
+  text-align: center; padding: 0 18px 16px;
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-400);
+}
+
+/* ── мобильная компоновка ───────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  /* названия задач остаются: без них колонка выглядит пустой, а номер A12 сам
+     по себе ничего не говорит. Место под них отдаём за счёт размера клетки. */
+  .hm { --label: clamp(112px, 38vw, 150px); padding: 12px 12px 14px; }
+  .hm-rowlab { gap: 5px; padding-right: 8px; font-size: 10.5px; }
+  .hm-rowlab .tid { width: 22px; font-size: 9.5px; }
+  .hm-rowlab .pc { font-size: 9.5px; }
+  .hm-colhead { font-size: 8.5px; }
+
+  /* легенда: две ровные колонки по левому краю вместо рваного центрирования */
+  .hm-legend {
+    display: grid; grid-template-columns: 1fr 1fr;
+    justify-content: stretch; justify-items: start;
+    gap: 8px 12px; padding: 4px 14px 14px;
+  }
+  .hm-hint { text-align: left; padding: 0 14px 14px; }
+}
+
+/* ── тулбар карты ───────────────────────────────────────────────────────── */
+.hm-toolbar { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 12px; }
+.hm-seg { display: inline-flex; align-items: center; gap: 8px; }
+.hm-seg-label { font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-400); white-space: nowrap; }
+
+@media (max-width: 720px) {
+  .hm-toolbar { flex-direction: column; align-items: stretch; gap: 14px; margin-top: 14px; }
+  .hm-seg { flex-direction: column; align-items: stretch; gap: 6px; width: 100%; }
+  .hm-seg-label { width: auto; }
+  .hm-seg > div { display: flex; }
+  .hm-seg > div button { flex: 1; padding: 8px 4px; }
+}
