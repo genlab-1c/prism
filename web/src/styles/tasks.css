@@ -1,0 +1,138 @@
+/* ============================================================
+   PRISM — карточки банка задач.
+   Раскладка живёт в CSS, а не в inline-стилях: иначе мобильную
+   версию не описать медиазапросом и она приезжает только после
+   гидратации (см. комментарий про isMobile в styles.css).
+   ============================================================ */
+
+.task-row {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  margin-bottom: 8px;
+  overflow: hidden;
+  scroll-margin-top: 80px;
+}
+.task-row.is-open { border-color: var(--border-strong); }
+
+/* десктоп: одна строка — id, название, полоса решаемости, сложность, шеврон.
+   Колонки полосы и бейджа фиксированы: у бейджей разная ширина («лёгкая» ≠
+   «сложная»), и на auto-колонках полосы разъезжались по вертикали. */
+.task-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 186px 88px 20px;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+.task-title { min-width: 0; }
+.task-name { display: block; font-size: 14px; font-weight: 600; color: var(--ink-100); }
+.task-facts {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px;
+  margin-top: 4px;
+  font-family: var(--font-mono); font-size: 11px; color: var(--ink-400);
+}
+.task-facts .tag { border: 1px solid var(--line); border-radius: 3px; padding: 1px 5px; }
+/* дубль сложности внутри фактов: на десктопе она живёт своей колонкой справа,
+   на мобиле — чипом в общей строке, иначе бейдж занимает целый ряд в одиночку */
+.task-facts .is-diff { display: none; }
+.diff-hard { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 40%, transparent); }
+.diff-medium { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, transparent); }
+.diff-easy { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+.task-diff { display: flex; justify-content: flex-start; }
+.task-chev { display: flex; justify-content: flex-end; color: var(--ink-400); }
+
+.task-meter-cell { min-width: 0; }
+.task-meter { display: flex; flex-direction: column; gap: 5px; width: 100%; min-width: 0; }
+.task-meter .cap {
+  display: flex; align-items: baseline; gap: 8px; white-space: nowrap;
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-400);
+}
+.task-meter .cap b { font-size: 13px; font-weight: 600; color: var(--ink-100); }
+.task-meter .cap span { margin-left: auto; }
+.task-meter .track { display: flex; height: 6px; border-radius: 4px; overflow: hidden; background: var(--track-bg); }
+
+.task-body { border-top: 1px solid var(--line); padding: 16px; }
+.task-prompt { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink-200); white-space: pre-wrap; max-width: 68ch; }
+.task-sig {
+  margin: 0 0 12px; padding: 10px 12px;
+  background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  font-family: var(--font-mono); font-size: 12px; color: var(--axis-s); overflow-x: auto;
+}
+
+/* мобильный: три ряда вместо пяти колонок — название целиком, под ним теги,
+   сложность и полоса. Ничего не обрезается и не наезжает друг на друга. */
+@media (max-width: 720px) {
+  .task-head {
+    grid-template-columns: 34px minmax(0, 1fr) 18px;
+    gap: 7px 10px;
+    padding: 12px 14px;
+  }
+  .task-id { grid-column: 1; grid-row: 1; }
+  .task-title { grid-column: 2; grid-row: 1; }
+  .task-chev { grid-column: 3; grid-row: 1; align-self: start; }
+  .task-meter-cell { grid-column: 2 / -1; grid-row: 2; }
+  .task-diff { display: none; }          /* сложность переезжает чипом в факты */
+  .task-facts .is-diff { display: inline; }
+  .task-name { font-size: 14px; line-height: 1.3; }
+  .task-facts { gap: 4px 6px; margin-top: 5px; }
+  .task-meter { gap: 4px; }
+  .task-meter .cap { font-size: 11px; }
+  .task-meter .cap b { font-size: 12.5px; }
+  .task-body { padding: 14px; }
+  .task-prompt { font-size: 13.5px; }
+}
+
+/* ── параметры прогона и системные промпты (низ страницы) ───────────────── */
+.params {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-top: 32px;
+}
+.params-head {
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 16px; padding: 16px 20px;
+}
+.params-stats { display: flex; flex-wrap: wrap; gap: 28px; }
+.params-stats div { display: flex; flex-direction: column; gap: 3px; }
+.params-stats dt {
+  margin: 0;
+  font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em;
+  text-transform: uppercase; color: var(--ink-400);
+}
+.params-stats dd { margin: 0; font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--ink-100); }
+.params-toggle {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  cursor: pointer; color: var(--ink-200);
+  font-family: var(--font-mono); font-size: 12px; padding: 7px 12px;
+}
+.params-prompts {
+  border-top: 1px solid var(--line); padding: 16px 20px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;
+}
+.params-prompts pre {
+  margin: 0; padding: 12px 14px;
+  background: var(--surface-sunken); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  font-family: var(--font-mono); font-size: 12px; color: var(--ink-200);
+  white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .params { margin-top: 24px; }
+  .params-head { padding: 14px 16px; gap: 14px; }
+  /* два столбца вместо четырёх в ряд: подписи вроде «ПАРАЛЛЕЛЬНО» не рвутся */
+  .params-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px; width: 100%; }
+  .params-toggle { width: 100%; justify-content: center; }
+  .params-prompts { grid-template-columns: 1fr; padding: 14px 16px; }
+  .params-prompts pre { font-size: 11.5px; }
+}

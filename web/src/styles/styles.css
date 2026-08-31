@@ -10,6 +10,7 @@
 @import url('tokens/base.css');
 @import url('whatsnew.css');
 @import url('heatmap.css');
+@import url('tasks.css');
 
 /* Скрыть на мобиле ЧЕРЕЗ CSS, а не через JS isMobile: хук возвращает false до монтирования,
    поэтому SSR/первый рендер — десктопная раскладка, а useEffect потом переключает на мобилу →

@@ -1,10 +1,13 @@
-/* PRISM web — страница банка задач из данных (public/data/tasks.json + tasks_meta.json),
-   а не из docs. Показывает: как мы запускаем модели (параметры генерации + системные
-   промпты) и сам банк — каждая задача раскрывается в условие, сигнатуру, тесты, объекты базы. */
+/* PRISM web — страница банка задач из данных (public/data/tasks.json + tasks_meta.json
+   + task_matrix.json). Первым экраном — карта прогона (задача × модель): страница
+   начинается с результата, как лидерборд, а не с вводного текста.
+   Ниже — сам банк: каждая задача раскрывается в условие, сигнатуру, тесты, объекты базы.
+   Параметры генерации и системные промпты — внизу, справочным блоком. */
 import React from 'react';
 import { Icon } from '../chrome/Chrome.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Tag } from '../core/Tag.jsx';
+import TaskHeatmap from '../prism/TaskHeatmap.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -13,35 +16,48 @@ const KIND_LABEL = {
   catalogs: 'Справочники', documents: 'Документы', accumulation_registers: 'Регистры накопления',
   information_registers: 'Регистры сведений', enums: 'Перечисления', constants: 'Константы',
 };
+const plural = (n, one, few, many) => {
+  const a = Math.abs(n) % 100, b = a % 10;
+  if (a > 10 && a < 20) return many;
+  if (b > 1 && b < 5) return few;
+  return b === 1 ? one : many;
+};
+
+// исходы — та же палитра, что в воронке лидерборда и на карте
+const OUTCOMES = [
+  ['solved', 'решено', 'var(--axis-o)'],
+  ['wrong', 'неверный ответ', '#d8b13e'],
+  ['runtime', 'ошибка выполнения', '#dd7a3b'],
+  ['compile', 'не компилируется', 'var(--danger)'],
+];
 
 function ParamsPanel({ params = {}, prompts = {} }) {
   const [open, setOpen] = React.useState(false);
-  const stat = (label, value) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)' }}>{label}</span>
-      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 15, fontWeight: 700, color: 'var(--ink-100)' }}>{value}</span>
-    </div>
-  );
   const fmt = (v) => (Array.isArray(v) ? v.join(' / ') : v ?? '—');
+  const stats = [
+    ['температура', fmt(params.temperature)],
+    ['прогонов', fmt(params.runs)],
+    ['max_tokens', fmt(params.max_tokens)],
+    ['параллельно', fmt(params.concurrency)],
+  ];
   return (
-    <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', marginBottom: 28 }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, padding: '16px 20px' }}>
-        <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
-          {stat('температура', fmt(params.temperature))}
-          {stat('прогонов', fmt(params.runs))}
-          {stat('max_tokens', fmt(params.max_tokens))}
-          {stat('параллельно', fmt(params.concurrency))}
-        </div>
-        <button onClick={() => setOpen((v) => !v)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', cursor: 'pointer', color: 'var(--ink-200)', fontFamily: 'var(--font-mono)', fontSize: 12, padding: '7px 12px' }}>
+    <div className="params">
+      <div className="params-head">
+        <dl className="params-stats">
+          {stats.map(([label, value]) => (
+            <div key={label}><dt>{label}</dt><dd>{value}</dd></div>
+          ))}
+        </dl>
+        <button className="params-toggle" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
           <Icon name={open ? 'arrowUp' : 'arrowDown'} size={13} />системные промпты
         </button>
       </div>
       {open && (
-        <div style={{ borderTop: '1px solid var(--line)', padding: '16px 20px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+        <div className="params-prompts">
           {['A', 'B'].map((c) => (
             <div key={c}>
               <div className="prism-eyebrow" style={{ marginBottom: 8 }}>системный промпт · категория {c}</div>
-              <pre style={{ margin: 0, padding: '12px 14px', background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-200)', whiteSpace: 'pre-wrap', lineHeight: 1.5 }}>{prompts[c] || '—'}</pre>
+              <pre>{prompts[c] || '—'}</pre>
             </div>
           ))}
         </div>
@@ -73,77 +89,140 @@ function ConfigSummary({ config }) {
   );
 }
 
-function TaskRow({ t, info }) {
-  const [open, setOpen] = React.useState(false);
-  const d = DIFF[info?.difficulty] || [info?.difficulty || '—', 'neutral'];
-  const testsCount = Array.isArray(info?.tests) ? info.tests.length : null;
+// сколько моделей справилось: доля решивших + полоса исходов
+function SolveMeter({ stat }) {
+  if (!stat || !stat.n) return null;
+  const share = Math.round((stat.solved / stat.n) * 100);
   return (
-    <div style={{ border: '1px solid var(--line)', borderRadius: 'var(--radius-md)', marginBottom: 8, overflow: 'hidden', background: 'var(--surface)' }}>
-      <button onClick={() => setOpen((v) => !v)} style={{ width: '100%', display: 'grid', gridTemplateColumns: '46px 1fr auto auto', gap: 12, alignItems: 'center', padding: '12px 16px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left' }}>
-        <Tag color={t.category === 'B' ? 'p' : 'neutral'}>{t.id}</Tag>
-        <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink-100)' }}>{t.name}</span>
-        <Badge tone={d[1]} dot={false} size="sm">{d[0]}</Badge>
-        <Icon name={open ? 'arrowUp' : 'arrowDown'} size={15} style={{ color: 'var(--ink-400)' }} />
-      </button>
-      {open && info && (
-        <div style={{ borderTop: '1px solid var(--line)', padding: '16px' }}>
-          {info.signature && <pre style={{ margin: '0 0 12px', padding: '10px 12px', background: 'var(--surface-sunken)', border: '1px solid var(--line)', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--axis-s)', overflow: 'auto' }}>{info.signature}</pre>}
-          <p style={{ margin: 0, fontSize: 14, lineHeight: 1.6, color: 'var(--ink-200)', whiteSpace: 'pre-wrap' }}>{info.prompt || 'условие недоступно'}</p>
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginTop: 12, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>
-            {testsCount != null && <span>скрытых тест-кейсов: <span style={{ color: 'var(--ink-200)', fontWeight: 600 }}>{testsCount}</span></span>}
-            {t.category === 'B' && info.testsHtml && <span>проверки исполняются в 1С против синтетической базы</span>}
-          </div>
-          <ConfigSummary config={info.config} />
-        </div>
-      )}
+    <div className="task-meter">
+      <div className="cap"><b>{share}%</b><span>решили {stat.solved} из {stat.n}</span></div>
+      <span className="track">
+        {OUTCOMES.map(([key, label, color]) => {
+          const n = stat.outcomes?.[key] || 0;
+          return n ? <span key={key} title={`${label}: ${n}`} style={{ width: `${(n / stat.n) * 100}%`, background: color }} /> : null;
+        })}
+      </span>
     </div>
   );
 }
 
+// расшифровка полосы + чем именно кончались неудачные попытки
+function FailureBreakdown({ stat, avgQ }) {
+  if (!stat || !stat.n) return null;
+  return (
+    <div style={{ marginTop: 16, paddingTop: 14, borderTop: '1px solid var(--line)' }}>
+      <div className="prism-eyebrow" style={{ marginBottom: 10 }}>как справились {stat.n} моделей</div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 18px', marginBottom: 12 }}>
+        {OUTCOMES.map(([key, label, color]) => {
+          const n = stat.outcomes?.[key] || 0;
+          if (!n) return null;
+          return (
+            <span key={key} style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-300)' }}>
+              <span style={{ width: 9, height: 9, borderRadius: 2, background: color }} />
+              {label} — <span style={{ color: 'var(--ink-100)', fontWeight: 600 }}>{n}</span>
+            </span>
+          );
+        })}
+        {avgQ != null && (
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-300)' }}>
+            средний балл Q — <span style={{ color: 'var(--ink-100)', fontWeight: 600 }}>{avgQ}</span>
+          </span>
+        )}
+      </div>
+      {/* «на чём спотыкались» скрыто до разбора причин: в diag.errors попадают сырые
+          маркеры («PRISM_FAIL 0») и следствия вместо причин — показывать это нельзя.
+          Вернуть, когда причины будут классифицироваться по metrics/error_taxonomy.yaml. */}
+    </div>
+  );
+}
+
+const TaskRow = React.forwardRef(function TaskRow({ t, info, stat, tagLabels = {}, open, onToggle }, ref) {
+  const d = DIFF[info?.difficulty] || [info?.difficulty || '—', 'neutral'];
+  const testsCount = Array.isArray(info?.tests) ? info.tests.length : null;
+  const tags = [...(info?.tags?.skill || []), ...(info?.tags?.platform || [])];
+
+  return (
+    <div ref={ref} className={`task-row${open ? ' is-open' : ''}`}>
+      <button className="task-head" onClick={onToggle} aria-expanded={open}>
+        <span className="task-id"><Tag color={t.category === 'B' ? 'p' : 'neutral'}>{t.id}</Tag></span>
+        <span className="task-title">
+          <span className="task-name">{t.name}</span>
+          <span className="task-facts">
+            <span className={`tag is-diff diff-${info?.difficulty || 'none'}`}>{d[0]}</span>
+            {testsCount != null && <span>{testsCount} {plural(testsCount, 'скрытый тест', 'скрытых теста', 'скрытых тестов')}</span>}
+            {tags.map((x) => <span key={x} className="tag">{tagLabels[x] || x}</span>)}
+          </span>
+        </span>
+        <span className="task-meter-cell"><SolveMeter stat={stat} /></span>
+        <span className="task-diff"><Badge tone={d[1]} dot={false} size="sm">{d[0]}</Badge></span>
+        <span className="task-chev"><Icon name={open ? 'arrowUp' : 'arrowDown'} size={15} /></span>
+      </button>
+      {open && info && (
+        <div className="task-body">
+          <div className="prism-eyebrow" style={{ marginBottom: 8 }}>условие — ровно то, что видит модель</div>
+          {info.signature && <pre className="task-sig">{info.signature}</pre>}
+          <p className="task-prompt">{info.prompt || 'условие недоступно'}</p>
+          <ConfigSummary config={info.config} />
+          <FailureBreakdown stat={stat} avgQ={stat?.avg?.Q} />
+        </div>
+      )}
+    </div>
+  );
+});
+
 export default function TasksPage() {
   const [info, setInfo] = React.useState(null);
   const [meta, setMeta] = React.useState(null);
+  const [matrix, setMatrix] = React.useState(null);
   const [err, setErr] = React.useState(false);
+  const [openId, setOpenId] = React.useState(null);
+  const rowRefs = React.useRef({});
 
   React.useEffect(() => {
     let alive = true;
     Promise.all([
       fetch(`${BASE}data/tasks.json`).then((r) => (r.ok ? r.json() : Promise.reject())),
       fetch(`${BASE}data/tasks_meta.json`).then((r) => (r.ok ? r.json() : Promise.reject())),
-    ]).then(([i, m]) => { if (alive) { setInfo(i); setMeta(m); } }).catch(() => { if (alive) setErr(true); });
+      fetch(`${BASE}data/task_matrix.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]).then(([i, m, x]) => { if (alive) { setInfo(i); setMeta(m); setMatrix(x); } }).catch(() => { if (alive) setErr(true); });
     return () => { alive = false; };
   }, []);
+
+  // клик по карте — раскрыть задачу в списке и подвести к ней (отдельных страниц задач пока нет)
+  const openTask = React.useCallback((id) => {
+    setOpenId(id);
+    requestAnimationFrame(() => rowRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+  }, []);
+
+  const stats = React.useMemo(() => Object.fromEntries((matrix?.tasks || []).map((t) => [t.id, t])), [matrix]);
 
   const wrap = { maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' };
   if (err) return <main style={wrap}><p style={{ padding: '40px 0', color: 'var(--ink-400)', fontFamily: 'var(--font-mono)' }}>данные задач не найдены.</p></main>;
   if (!info || !meta) return <main style={wrap}><p style={{ padding: '40px 0', color: 'var(--ink-400)', fontFamily: 'var(--font-mono)' }}>загрузка…</p></main>;
 
-  const groups = [['A', 'Категория A · алгоритмика', 'чистый язык 1С, исполнение в OneScript'], ['B', 'Категория B · платформа 1С', 'реальная платформа против синтетической базы']];
+  const groups = [['A', 'Категория A · алгоритмика'], ['B', 'Категория B · платформа 1С']];
 
   return (
-    <main style={{ ...wrap, paddingBottom: 60 }}>
-      <section style={{ paddingTop: 40, paddingBottom: 8 }}>
-        <h1 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: 22, fontWeight: 600, color: 'var(--ink-100)' }}>Банк задач</h1>
-        <p style={{ margin: '12px 0 0', fontSize: 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.6 }}>
-          Каждая задача — это <span style={{ color: 'var(--ink-100)' }}>условие, скрытые тесты и эталон</span>. Модель видит только условие; тесты скрыты, чтобы под них нельзя было подогнать ответ. Эталон обязан проходить эти тесты на 100%.
-        </p>
-      </section>
+    <main style={{ ...wrap, paddingTop: 24, paddingBottom: 60 }}>
+      {matrix && <TaskHeatmap data={matrix} onOpenTask={openTask} />}
 
-      <ParamsPanel params={meta.params} prompts={meta.prompts} />
-
-      {groups.map(([cat, label, sub]) => {
+      {groups.map(([cat, label]) => {
         const list = meta.order.filter((t) => t.category === cat);
         if (!list.length) return null;
         return (
           <section key={cat} style={{ marginBottom: 32 }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, marginBottom: 14 }}>
-              <h2 style={{ margin: 0, fontSize: 16, fontWeight: 600, color: 'var(--ink-100)' }}>{label}</h2>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}>{list.length} · {sub}</span>
-            </div>
-            {list.map((t) => <TaskRow key={t.id} t={t} info={info[t.id]} />)}
+            <h2 style={{ margin: '0 0 14px', fontSize: 16, fontWeight: 600, color: 'var(--ink-100)' }}>{label}</h2>
+            {list.map((t) => (
+              <TaskRow key={t.id} t={t} info={info[t.id]} stat={stats[t.id]} tagLabels={matrix?.tagLabels || {}}
+                ref={(el) => { rowRefs.current[t.id] = el; }}
+                open={openId === t.id}
+                onToggle={() => setOpenId((cur) => (cur === t.id ? null : t.id))} />
+            ))}
           </section>
         );
       })}
+
+      <ParamsPanel params={meta.params} prompts={meta.prompts} />
     </main>
   );
 }
