@@ -335,7 +335,10 @@ class GenerationRunner:
         seeds = self._seeds_for(key, entry)
         mp = self.params.get("model_params", {}).get(key, {})
         temperature = mp.get("temperature", 0.0)
-        max_tokens = self.params.get("max_tokens", 4096)
+        # потолок выхода: на модель (model_params.max_tokens) поверх общего. Нужен дорогим
+        # моделям — провайдер резервирует предоплату ПО ПОТОЛКУ, а не по факту (см. AITUNNEL):
+        # 65536 у модели за $50/1M — это 655 ₽ заморозки на КАЖДЫЙ запрос.
+        max_tokens = mp.get("max_tokens") or self.params.get("max_tokens", 4096)
 
         hashes: list[str] = []
         for i, seed in enumerate(seeds):
