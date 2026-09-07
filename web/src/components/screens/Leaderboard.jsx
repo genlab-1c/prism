@@ -838,9 +838,10 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="задач" value={String(totalTasks)} />
           <Shield label="тест-кейсов" value={String(meta.cases || '—')} />
           <Shield label="генераций" value={String(meta.gens || '—')} />
+          {/* сожжено на генерациях за всё время; пока захардкожено — см. выгрузку биллинга канала */}
+          <Shield label="токенов" value="7.8M" tone="brand" />
           <Shield label="моделей" value={String(meta.models || models.length)} />
           <Shield label="обновлено" value={meta.lastRun || '—'} tone="ok" />
-          <Shield label="уровень" value="L1 · машина" tone="s" icon="cpu" />
         </div>
         <WhatsNew entries={meta.changelog || []} />
         {!isMobile && <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>}
