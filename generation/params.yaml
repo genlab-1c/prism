@@ -54,6 +54,11 @@ defaults:
     grok46:       { temperature: 0.1, runs: 1 }     # Grok 4.6 через AITUNNEL (reasoning)
     gpt56_luna_pro: { temperature: 0.1, runs: 1 }    # GPT-5.6 Luna Pro через AITUNNEL (Luna с reasoning.mode=pro)
     deepseek_flash_0731: { temperature: 0.1, runs: 1 } # DeepSeek V4 Flash 0731 через AITUNNEL
+    gemini38_flash: { temperature: 0.1, runs: 1 }  # Gemini 3.8 Flash через AITUNNEL
+    qwen38_max_0902: { temperature: 0.1, runs: 1 } # Qwen3.8 Max 0902 (снимок 02.09) через AITUNNEL
+    gpt6_astra: { temperature: 0.1, runs: 1, max_tokens: 16384 }  # GPT-6 Astra через AITUNNEL.
+      # max_tokens урезан с общих 65536: канал резервирует предоплату ПО ПОТОЛКУ, а при $50/1M
+      # это 655 ₽ заморозки на запрос. 16384 — двадцатикратный запас к факту тира (~700 ток/задачу)
     deepseek_pro_0813:   { temperature: 0.1, runs: 1 } # DeepSeek V4 Pro 0813 через AITUNNEL
     qwen38_max:          { temperature: 0.1, runs: 1 } # Qwen3.8 Max через AITUNNEL (флагман тира Max)
     seed2_code:          { temperature: 0.1, runs: 1 } # Seed 2.0 Code (ByteDance) через AITUNNEL

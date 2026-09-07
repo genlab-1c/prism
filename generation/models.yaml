@@ -672,6 +672,49 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
 
+  gemini38_flash:
+    id: "gemini-3.8-flash"               # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Gemini 3.8 Flash"
+    vendor: google
+    weights: proprietary
+    released: "2026-09-02"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
+  qwen38_max_0902:
+    id: "qwen3.8-max-0902"               # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Qwen3.8 Max 0902"
+    vendor: alibaba
+    weights: proprietary                 # снимок того же закрытого Max-класса, что и qwen38_max:
+                                         # веса по-прежнему не выложены. Появятся — переключить на open
+    released: "2026-09-02"               # дата снимка в id; карточка канала показывает 03.09.2026
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true               # дообучен на коде и агентной работе: для кат. B держать max_tokens высоким
+
+  gpt6_astra:
+    id: "gpt-6-astra"                    # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-6 Astra"
+    vendor: openai
+    weights: proprietary
+    released: "2026-09-03"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1100000
+      supports_seed: false
+      supports_tools: true               # reasoning-флагман: рассуждения идут в выходной бюджет
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
