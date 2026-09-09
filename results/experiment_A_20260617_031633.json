@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_A_20260617_031633",
   "category": "A",
-  "timestamp": "2026-09-07T06:23:35.791465",
+  "timestamp": "2026-09-09T04:49:01.219671",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -52,7 +52,8 @@
     "Grok 4.6",
     "Gemini 3.8 Flash",
     "Qwen3.8 Max 0902",
-    "GPT-6 Astra"
+    "GPT-6 Astra",
+    "GPT-5.6 Luna Max"
   ],
   "tasks_count": 15,
   "runs_per_task": 1,
@@ -2058,6 +2059,46 @@
       "avg_time": 16.767
     },
     {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИОтсортироватьМассивы(ИсходныйМассив, НовыеЗначения) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tДля Каждого Значение Из ИсходныйМассив Цикл\n\t\tРезультат.Добавить(Значение);\n\tКонецЦикла;\n\t\n\tДля Каждого Значение Из НовыеЗначения Цикл\n\t\tРезультат.Добавить(Значение);\n\tКонецЦикла;\n\t\n\tРезультат.Сортировать();\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "546a8bdf0e55e06cbf727bbaf7d5c150dc2f0f34167c32c977a7a2495466e38a",
+          "tokens_input": 193,
+          "tokens_output": 2738,
+          "tokens_total": 2931,
+          "elapsed_time": 25.677390336990356,
+          "cost_input": 3.86e-05,
+          "cost_output": 0.0032856,
+          "cost_total": 0.0033242000000000002,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "546a8bdf0e55e06cbf727bbaf7d5c150dc2f0f34167c32c977a7a2495466e38a",
+        "most_common_count": 1,
+        "hashes": [
+          "546a8bdf0e55e06cbf727bbaf7d5c150dc2f0f34167c32c977a7a2495466e38a"
+        ]
+      },
+      "total_tokens": 2931,
+      "total_cost": 0.0033242000000000002,
+      "avg_time": 25.677
+    },
+    {
       "task_id": "A11",
       "task_name": "Рабочие дни между датами",
       "model_id": "aliceai-llm/latest",
@@ -4056,6 +4097,46 @@
       "total_tokens": 902,
       "total_cost": 0.03774,
       "avg_time": 18.937
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция КоличествоРабочихДней(НачалоПериода, КонецПериода, Праздники) Экспорт\n\t\n\tНачалоПериода = НачалоДня(НачалоПериода);\n\tКонецПериода = НачалоДня(КонецПериода);\n\t\n\tЕсли КонецПериода < НачалоПериода Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tКоличество = 0;\n\tТекущаяДата = НачалоПериода;\n\t\n\tПока ТекущаяДата <= КонецПериода Цикл\n\t\t\n\t\tЕсли ДеньНедели(ТекущаяДата) <= 5 Тогда\n\t\t\t\n\t\t\tПраздничныйДень = Ложь;\n\t\t\t\n\t\t\tДля каждого ДатаПраздника Из Праздники Цикл\n\t\t\t\tЕсли НачалоДня(ДатаПраздника) = ТекущаяДата Тогда\n\t\t\t\t\tПраздничныйДень = Истина;\n\t\t\t\t\tПрервать;\n\t\t\t\tКонецЕсли;\n\t\t\tКонецЦикла;\n\t\t\t\n\t\t\tЕсли НЕ ПраздничныйДень Тогда\n\t\t\t\tКоличество = Количество + 1;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\tКонецЕсли;\n\t\t\n\t\tТекущаяДата = ДобавитьКДате(ТекущаяДата, \"День\", 1);\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Количество;\n\t\nКонецФункции",
+          "response_hash": "683aae416efecc8e5e52640fdd89f59ee24c0f249a7175feaa275254be49677b",
+          "tokens_input": 184,
+          "tokens_output": 4537,
+          "tokens_total": 4721,
+          "elapsed_time": 38.028883934020996,
+          "cost_input": 3.68e-05,
+          "cost_output": 0.0054444,
+          "cost_total": 0.0054812,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "683aae416efecc8e5e52640fdd89f59ee24c0f249a7175feaa275254be49677b",
+        "most_common_count": 1,
+        "hashes": [
+          "683aae416efecc8e5e52640fdd89f59ee24c0f249a7175feaa275254be49677b"
+        ]
+      },
+      "total_tokens": 4721,
+      "total_cost": 0.0054812,
+      "avg_time": 38.029
     },
     {
       "task_id": "A12",
@@ -6058,6 +6139,46 @@
       "avg_time": 3.912
     },
     {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МассивБезЗначения(ИсходныйМассив, ИскомоеЗначение)\n\tРезультат = Новый Массив;\n\t\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Элемент <> ИскомоеЗначение Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "4a748fb80abb162a4d4c3db6d6f5e3401ae4d6ae7f29e7db260f2044908d0c23",
+          "tokens_input": 149,
+          "tokens_output": 629,
+          "tokens_total": 778,
+          "elapsed_time": 6.9995245933532715,
+          "cost_input": 2.98e-05,
+          "cost_output": 0.0007548,
+          "cost_total": 0.0007846,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4a748fb80abb162a4d4c3db6d6f5e3401ae4d6ae7f29e7db260f2044908d0c23",
+        "most_common_count": 1,
+        "hashes": [
+          "4a748fb80abb162a4d4c3db6d6f5e3401ae4d6ae7f29e7db260f2044908d0c23"
+        ]
+      },
+      "total_tokens": 778,
+      "total_cost": 0.0007846,
+      "avg_time": 7.0
+    },
+    {
       "task_id": "A13",
       "task_name": "Максимальная сумма подмассива",
       "model_id": "aliceai-llm/latest",
@@ -8056,6 +8177,46 @@
       "total_tokens": 375,
       "total_cost": 0.01115,
       "avg_time": 4.997
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МаксимальнаяСуммаПодмассива(Массив) Экспорт\n\t\n\tЕсли Массив.Количество() = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tТекущаяСумма = Массив[0];\n\tМаксимальнаяСумма = ТекущаяСумма;\n\t\n\tДля Индекс = 1 По Массив.Количество() - 1 Цикл\n\t\tТекущийЭлемент = Массив[Индекс];\n\t\t\n\t\tЕсли ТекущаяСумма + ТекущийЭлемент > ТекущийЭлемент Тогда\n\t\t\tТекущаяСумма = ТекущаяСумма + ТекущийЭлемент;\n\t\tИначе\n\t\t\tТекущаяСумма = ТекущийЭлемент;\n\t\tКонецЕсли;\n\t\t\n\t\tЕсли ТекущаяСумма > МаксимальнаяСумма Тогда\n\t\t\tМаксимальнаяСумма = ТекущаяСумма;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат МаксимальнаяСумма;\n\t\nКонецФункции",
+          "response_hash": "5659d6b29a215350985c234ca5c78c019751b0ffae259fa863d8f11fe0bbd888",
+          "tokens_input": 190,
+          "tokens_output": 778,
+          "tokens_total": 968,
+          "elapsed_time": 8.701139688491821,
+          "cost_input": 3.8e-05,
+          "cost_output": 0.0009336,
+          "cost_total": 0.0009716,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5659d6b29a215350985c234ca5c78c019751b0ffae259fa863d8f11fe0bbd888",
+        "most_common_count": 1,
+        "hashes": [
+          "5659d6b29a215350985c234ca5c78c019751b0ffae259fa863d8f11fe0bbd888"
+        ]
+      },
+      "total_tokens": 968,
+      "total_cost": 0.0009716,
+      "avg_time": 8.701
     },
     {
       "task_id": "A14",
@@ -10058,6 +10219,46 @@
       "avg_time": 7.939
     },
     {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РазвернутьСлова(ИсходнаяСтрока) Экспорт\n\t\n\tОчищеннаяСтрока = СокрЛП(ИсходнаяСтрока);\n\t\n\tЕсли ОчищеннаяСтрока = \"\" Тогда\n\t\tВозврат \"\";\n\tКонецЕсли;\n\t\n\tСлова = СтрРазделить(ОчищеннаяСтрока, \" \", Ложь);\n\tРезультат = \"\";\n\tИндекс = Слова.Количество() - 1;\n\t\n\tПока Индекс >= 0 Цикл\n\t\tЕсли Результат <> \"\" Тогда\n\t\t\tРезультат = Результат + \" \";\n\t\tКонецЕсли;\n\t\t\n\t\tРезультат = Результат + Слова[Индекс];\n\t\tИндекс = Индекс - 1;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "045e15f802fcf770dacafca2ff647978ed9d854c1d36a0148910f1e781fdcfcf",
+          "tokens_input": 191,
+          "tokens_output": 2277,
+          "tokens_total": 2468,
+          "elapsed_time": 21.532349109649658,
+          "cost_input": 3.820000000000001e-05,
+          "cost_output": 0.0027324,
+          "cost_total": 0.0027706,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "045e15f802fcf770dacafca2ff647978ed9d854c1d36a0148910f1e781fdcfcf",
+        "most_common_count": 1,
+        "hashes": [
+          "045e15f802fcf770dacafca2ff647978ed9d854c1d36a0148910f1e781fdcfcf"
+        ]
+      },
+      "total_tokens": 2468,
+      "total_cost": 0.0027706,
+      "avg_time": 21.532
+    },
+    {
       "task_id": "A15",
       "task_name": "Возведение в степень по модулю",
       "model_id": "aliceai-llm/latest",
@@ -12056,6 +12257,46 @@
       "total_tokens": 1042,
       "total_cost": 0.04314,
       "avg_time": 18.906
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СтепеньПоМодулю(Основание, Показатель, Модуль) Экспорт\n\tРезультат = 1 % Модуль;\n\tОснование = Основание % Модуль;\n\t\n\tПока Показатель > 0 Цикл\n\t\tЕсли Показатель % 2 = 1 Тогда\n\t\t\tРезультат = (Результат * Основание) % Модуль;\n\t\tКонецЕсли;\n\t\t\n\t\tОснование = (Основание * Основание) % Модуль;\n\t\tПоказатель = Цел(Показатель / 2);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "80c27f3fa9a356476407dd00c1b6b50af028f437bb860ca9c99bf3f1096eb891",
+          "tokens_input": 224,
+          "tokens_output": 1722,
+          "tokens_total": 1946,
+          "elapsed_time": 16.34161639213562,
+          "cost_input": 4.4800000000000005e-05,
+          "cost_output": 0.0020664,
+          "cost_total": 0.0021111999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "80c27f3fa9a356476407dd00c1b6b50af028f437bb860ca9c99bf3f1096eb891",
+        "most_common_count": 1,
+        "hashes": [
+          "80c27f3fa9a356476407dd00c1b6b50af028f437bb860ca9c99bf3f1096eb891"
+        ]
+      },
+      "total_tokens": 1946,
+      "total_cost": 0.0021111999999999997,
+      "avg_time": 16.342
     },
     {
       "task_id": "A1",
@@ -14058,6 +14299,46 @@
       "avg_time": 7.843
     },
     {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицуЗначений(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяЧисловойКолонки) Экспорт\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\n\t\t\"ЗначениеГруппировки\",\n\t\tИсходнаяТаблица.Колонки[ИмяКолонкиГруппировки].ТипЗначения\n\t);\n\tРезультат.Колонки.Добавить(\n\t\t\"Сумма\",\n\t\tИсходнаяТаблица.Колонки[ИмяЧисловойКолонки].ТипЗначения\n\t);\n\t\n\tДля каждого ИсходнаяСтрока Из ИсходнаяТаблица Цикл\n\t\t\n\t\tЗначениеГруппировки = ИсходнаяСтрока[ИмяКолонкиГруппировки];\n\t\tСтрокаРезультата = Результат.Найти(\n\t\t\tЗначениеГруппировки,\n\t\t\t\"ЗначениеГруппировки\"\n\t\t);\n\t\t\n\t\tЕсли СтрокаРезультата = Неопределено Тогда\n\t\t\tСтрокаРезультата = Результат.Добавить();\n\t\t\tСтрокаРезультата.ЗначениеГруппировки = ЗначениеГруппировки;\n\t\t\tСтрокаРезультата.Сумма = 0;\n\t\tКонецЕсли;\n\t\t\n\t\tСтрокаРезультата.Сумма = СтрокаРезультата.Сумма\n\t\t\t+ ИсходнаяСтрока[ИмяЧисловойКолонки];\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "d12542b47f8973a6de9f7301ed5a3749346598b4b04f8d5652909309a6896c15",
+          "tokens_input": 150,
+          "tokens_output": 7120,
+          "tokens_total": 7270,
+          "elapsed_time": 58.70950245857239,
+          "cost_input": 2.9999999999999997e-05,
+          "cost_output": 0.008544,
+          "cost_total": 0.008574,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d12542b47f8973a6de9f7301ed5a3749346598b4b04f8d5652909309a6896c15",
+        "most_common_count": 1,
+        "hashes": [
+          "d12542b47f8973a6de9f7301ed5a3749346598b4b04f8d5652909309a6896c15"
+        ]
+      },
+      "total_tokens": 7270,
+      "total_cost": 0.008574,
+      "avg_time": 58.71
+    },
+    {
       "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "aliceai-llm/latest",
@@ -16058,6 +16339,46 @@
       "avg_time": 6.384
     },
     {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ВыделитьУникальныеЭлементы(Массив) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tДля каждого Элемент Из Массив Цикл\n\t\tЕсли Результат.Найти(Элемент) = Неопределено Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "17f5cf651c4b412051b50498033b38c199764b8b482c386e2646291ab8793e91",
+          "tokens_input": 130,
+          "tokens_output": 626,
+          "tokens_total": 756,
+          "elapsed_time": 6.90288233757019,
+          "cost_input": 2.6e-05,
+          "cost_output": 0.0007512,
+          "cost_total": 0.0007772,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "17f5cf651c4b412051b50498033b38c199764b8b482c386e2646291ab8793e91",
+        "most_common_count": 1,
+        "hashes": [
+          "17f5cf651c4b412051b50498033b38c199764b8b482c386e2646291ab8793e91"
+        ]
+      },
+      "total_tokens": 756,
+      "total_cost": 0.0007772,
+      "avg_time": 6.903
+    },
+    {
       "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "aliceai-llm/latest",
@@ -18047,6 +18368,46 @@
       "total_tokens": 962,
       "total_cost": 0.04034,
       "avg_time": 19.147
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИнтервалы(Интервалы) Экспорт\n\n    Результат = Новый Массив;\n\n    Если Интервалы = Неопределено Тогда\n        Возврат Результат;\n    КонецЕсли;\n\n    ОтсортированныеИнтервалы = Новый Массив;\n\n    Для каждого ИсходныйИнтервал Из Интервалы Цикл\n        Интервал = Новый Массив;\n        Интервал.Добавить(ИсходныйИнтервал[0]);\n        Интервал.Добавить(ИсходныйИнтервал[1]);\n        ОтсортированныеИнтервалы.Добавить(Интервал);\n    КонецЦикла;\n\n    КоличествоИнтервалов = ОтсортированныеИнтервалы.Количество();\n\n    Если КоличествоИнтервалов = 0 Тогда\n        Возврат Результат;\n    КонецЕсли;\n\n    Для Индекс = 1 По КоличествоИнтервалов - 1 Цикл\n        ТекущийИнтервал = ОтсортированныеИнтервалы[Индекс];\n        ИндексПредыдущего = Индекс - 1;\n\n        Пока ИндексПредыдущего >= 0 Цикл\n            ПредыдущийИнтервал = ОтсортированныеИнтервалы[ИндексПредыдущего];\n\n            Если ПредыдущийИнтервал[0] <= ТекущийИнтервал[0] Тогда\n                Прервать;\n            КонецЕсли;\n\n            ОтсортированныеИнтервалы[ИндексПредыдущего + 1] = ПредыдущийИнтервал;\n            ИндексПредыдущего = ИндексПредыдущего - 1;\n        КонецЦикла;\n\n        ОтсортированныеИнтервалы[ИндексПредыдущего + 1] = ТекущийИнтервал;\n    КонецЦикла;\n\n    ЛеваяГраница = ОтсортированныеИнтервалы[0][0];\n    ПраваяГраница = ОтсортированныеИнтервалы[0][1];\n\n    Для Индекс = 1 По КоличествоИнтервалов - 1 Цикл\n        ТекущийИнтервал = ОтсортированныеИнтервалы[Индекс];\n\n        Если ТекущийИнтервал[0] <= ПраваяГраница Тогда\n            Если ТекущийИнтервал[1] > ПраваяГраница Тогда\n                ПраваяГраница = ТекущийИнтервал[1];\n            КонецЕсли;\n        Иначе\n            РезультатИнтервал = Новый Массив;\n            РезультатИнтервал.Добавить(ЛеваяГраница);\n            РезультатИнтервал.Добавить(ПраваяГраница);\n            Результат.Добавить(РезультатИнтервал);\n\n            ЛеваяГраница = ТекущийИнтервал[0];\n            ПраваяГраница = ТекущийИнтервал[1];\n        КонецЕсли;\n    КонецЦикла;\n\n    РезультатИнтервал = Новый Массив;\n    РезультатИнтервал.Добавить(ЛеваяГраница);\n    РезультатИнтервал.Добавить(ПраваяГраница);\n    Результат.Добавить(РезультатИнтервал);\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "8b506634b1dc70ac0d68de4a6ada0060ec63fb7dd593819e5a9eb769c1b334e2",
+          "tokens_input": 194,
+          "tokens_output": 4469,
+          "tokens_total": 4663,
+          "elapsed_time": 39.59694957733154,
+          "cost_input": 3.88e-05,
+          "cost_output": 0.0053628,
+          "cost_total": 0.0054016,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "8b506634b1dc70ac0d68de4a6ada0060ec63fb7dd593819e5a9eb769c1b334e2",
+        "most_common_count": 1,
+        "hashes": [
+          "8b506634b1dc70ac0d68de4a6ada0060ec63fb7dd593819e5a9eb769c1b334e2"
+        ]
+      },
+      "total_tokens": 4663,
+      "total_cost": 0.0054016,
+      "avg_time": 39.597
     },
     {
       "task_id": "A4",
@@ -20049,6 +20410,46 @@
       "avg_time": 11.609
     },
     {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СкользящиеСредние(МассивЧисел, Окно) Экспорт\n\t\n\tРезультат = Новый Массив;\n\tКоличествоЭлементов = МассивЧисел.Количество();\n\t\n\tЕсли Окно > КоличествоЭлементов Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tСумма = 0;\n\tДля Индекс = 0 По Окно - 1 Цикл\n\t\tСумма = Сумма + МассивЧисел[Индекс];\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(Сумма / Окно);\n\t\n\tДля Индекс = Окно По КоличествоЭлементов - 1 Цикл\n\t\tСумма = Сумма - МассивЧисел[Индекс - Окно] + МассивЧисел[Индекс];\n\t\tРезультат.Добавить(Сумма / Окно);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "65350e71b17a35da06c521d0ed4fcf33303ba73dfd3856faf719844de2a2407f",
+          "tokens_input": 157,
+          "tokens_output": 1283,
+          "tokens_total": 1440,
+          "elapsed_time": 13.266693830490112,
+          "cost_input": 3.14e-05,
+          "cost_output": 0.0015396000000000001,
+          "cost_total": 0.0015710000000000001,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "65350e71b17a35da06c521d0ed4fcf33303ba73dfd3856faf719844de2a2407f",
+        "most_common_count": 1,
+        "hashes": [
+          "65350e71b17a35da06c521d0ed4fcf33303ba73dfd3856faf719844de2a2407f"
+        ]
+      },
+      "total_tokens": 1440,
+      "total_cost": 0.0015710000000000001,
+      "avg_time": 13.267
+    },
+    {
       "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "aliceai-llm/latest",
@@ -22038,6 +22439,46 @@
       "total_tokens": 841,
       "total_cost": 0.03600999999999999,
       "avg_time": 21.704
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПодсчитатьСлова(Текст) Экспорт\n\t\n\tРезультат = Новый Структура;\n\tДопустимыеСимволы = \"0123456789abcdefghijklmnopqrstuvwxyzабвгдеёжзийклмнопрстуфхцчшщъыьэюя\";\n\tТекущееСлово = \"\";\n\t\n\tТекст = НРег(Текст) + \" \";\n\t\n\tДля Позиция = 1 По СтрДлина(Текст) Цикл\n\t\t\n\t\tСимвол = Сред(Текст, Позиция, 1);\n\t\t\n\t\tЕсли СтрНайти(ДопустимыеСимволы, Символ) > 0 Тогда\n\t\t\tТекущееСлово = ТекущееСлово + Символ;\n\t\tИначеЕсли ТекущееСлово <> \"\" Тогда\n\t\t\tКоличество = 0;\n\t\t\t\n\t\t\tЕсли Результат.Свойство(ТекущееСлово, Количество) Тогда\n\t\t\t\tРезультат.Вставить(ТекущееСлово, Количество + 1);\n\t\t\tИначе\n\t\t\t\tРезультат.Вставить(ТекущееСлово, 1);\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tТекущееСлово = \"\";\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "f2eecaa254131e88fbceb96dc881f551ec9ace6221786802abab3e152d9367f1",
+          "tokens_input": 151,
+          "tokens_output": 13052,
+          "tokens_total": 13203,
+          "elapsed_time": 115.76462817192078,
+          "cost_input": 3.0200000000000002e-05,
+          "cost_output": 0.0156624,
+          "cost_total": 0.0156926,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f2eecaa254131e88fbceb96dc881f551ec9ace6221786802abab3e152d9367f1",
+        "most_common_count": 1,
+        "hashes": [
+          "f2eecaa254131e88fbceb96dc881f551ec9ace6221786802abab3e152d9367f1"
+        ]
+      },
+      "total_tokens": 13203,
+      "total_cost": 0.0156926,
+      "avg_time": 115.765
     },
     {
       "task_id": "A6",
@@ -24031,6 +24472,46 @@
       "avg_time": 15.515
     },
     {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(Строка1, Строка2) Экспорт\n\t\n\tДлина1 = СтрДлина(Строка1);\n\tДлина2 = СтрДлина(Строка2);\n\t\n\tЕсли Длина1 = 0 Тогда\n\t\tВозврат Длина2;\n\tКонецЕсли;\n\t\n\tЕсли Длина2 = 0 Тогда\n\t\tВозврат Длина1;\n\tКонецЕсли;\n\t\n\tПредыдущаяСтрока = Новый Массив;\n\tДля Индекс = 0 По Длина2 Цикл\n\t\tПредыдущаяСтрока.Добавить(Индекс);\n\tКонецЦикла;\n\t\n\tДля Индекс1 = 1 По Длина1 Цикл\n\t\t\n\t\tТекущаяСтрока = Новый Массив;\n\t\tТекущаяСтрока.Добавить(Индекс1);\n\t\t\n\t\tДля Индекс2 = 1 По Длина2 Цикл\n\t\t\t\n\t\t\tЕсли Сред(Строка1, Индекс1, 1) = Сред(Строка2, Индекс2, 1) Тогда\n\t\t\t\tСтоимостьЗамены = 0;\n\t\t\tИначе\n\t\t\t\tСтоимостьЗамены = 1;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tУдаление = ПредыдущаяСтрока[Индекс2] + 1;\n\t\t\tВставка = ТекущаяСтрока[Индекс2 - 1] + 1;\n\t\t\tЗамена = ПредыдущаяСтрока[Индекс2 - 1] + СтоимостьЗамены;\n\t\t\t\n\t\t\tМинимум = Удаление;\n\t\t\t\n\t\t\tЕсли Вставка < Минимум Тогда\n\t\t\t\tМинимум = Вставка;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tЕсли Замена < Минимум Тогда\n\t\t\t\tМинимум = Замена;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tТекущаяСтрока.Добавить(Минимум);\n\t\t\t\n\t\tКонецЦикла;\n\t\t\n\t\tВременнаяСтрока = ПредыдущаяСтрока;\n\t\tПредыдущаяСтрока = ТекущаяСтрока;\n\t\tТекущаяСтрока = ВременнаяСтрока;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат ПредыдущаяСтрока[Длина2];\n\t\nКонецФункции",
+          "response_hash": "6807e4b8b9525ce138b80d1c82a14af690c7d6b513b9aee4c86a6d1274adc402",
+          "tokens_input": 129,
+          "tokens_output": 1992,
+          "tokens_total": 2121,
+          "elapsed_time": 17.79217219352722,
+          "cost_input": 2.58e-05,
+          "cost_output": 0.0023903999999999996,
+          "cost_total": 0.0024161999999999994,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "6807e4b8b9525ce138b80d1c82a14af690c7d6b513b9aee4c86a6d1274adc402",
+        "most_common_count": 1,
+        "hashes": [
+          "6807e4b8b9525ce138b80d1c82a14af690c7d6b513b9aee4c86a6d1274adc402"
+        ]
+      },
+      "total_tokens": 2121,
+      "total_cost": 0.0024161999999999994,
+      "avg_time": 17.792
+    },
+    {
       "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "aliceai-llm/latest",
@@ -26022,6 +26503,46 @@
       "avg_time": 14.7
     },
     {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СжатьRLE(ИсходнаяСтрока) Экспорт\n\t\n\tДлинаСтроки = СтрДлина(ИсходнаяСтрока);\n\tЕсли ДлинаСтроки = 0 Тогда\n\t\tВозврат \"\";\n\tКонецЕсли;\n\t\n\tРезультат = \"\";\n\tТекущийСимвол = Сред(ИсходнаяСтрока, 1, 1);\n\tКоличество = 1;\n\t\n\tДля Индекс = 2 По ДлинаСтроки Цикл\n\t\tСимвол = Сред(ИсходнаяСтрока, Индекс, 1);\n\t\t\n\t\tЕсли Символ = ТекущийСимвол Тогда\n\t\t\tКоличество = Количество + 1;\n\t\tИначе\n\t\t\tРезультат = Результат + ТекущийСимвол + Строка(Количество);\n\t\t\tТекущийСимвол = Символ;\n\t\t\tКоличество = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат = Результат + ТекущийСимвол + Строка(Количество);\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "a3badd2e4754c53228360cebffa661a982bd5662eb524e6171c7e847fa0bae55",
+          "tokens_input": 169,
+          "tokens_output": 1237,
+          "tokens_total": 1406,
+          "elapsed_time": 11.356463432312012,
+          "cost_input": 3.38e-05,
+          "cost_output": 0.0014844,
+          "cost_total": 0.0015182000000000001,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "a3badd2e4754c53228360cebffa661a982bd5662eb524e6171c7e847fa0bae55",
+        "most_common_count": 1,
+        "hashes": [
+          "a3badd2e4754c53228360cebffa661a982bd5662eb524e6171c7e847fa0bae55"
+        ]
+      },
+      "total_tokens": 1406,
+      "total_cost": 0.0015182000000000001,
+      "avg_time": 11.356
+    },
+    {
       "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "aliceai-llm/latest",
@@ -28011,6 +28532,46 @@
       "total_tokens": 623,
       "total_cost": 0.02575,
       "avg_time": 11.56
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЯвляютсяАнаграммами(Строка1, Строка2) Экспорт\n\t\n\tСтрока1 = ВРег(СтрЗаменить(Строка1, \" \", \"\"));\n\tСтрока2 = ВРег(СтрЗаменить(Строка2, \" \", \"\"));\n\t\n\tЕсли СтрДлина(Строка1) <> СтрДлина(Строка2) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\t\n\tДля Индекс = 1 По СтрДлина(Строка1) Цикл\n\t\t\n\t\tСимвол = Сред(Строка1, Индекс, 1);\n\t\tПозиция = СтрНайти(Строка2, Символ);\n\t\t\n\t\tЕсли Позиция = 0 Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\t\t\n\t\tСтрока2 = Лев(Строка2, Позиция - 1)\n\t\t\t+ Сред(Строка2, Позиция + 1, СтрДлина(Строка2) - Позиция);\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Истина;\n\t\nКонецФункции",
+          "response_hash": "3b6b1e107a9d6d92d87a1e7f7c920e1d40ad575bf7f51cd8bc273efbdab9c3cc",
+          "tokens_input": 135,
+          "tokens_output": 1822,
+          "tokens_total": 1957,
+          "elapsed_time": 17.465967178344727,
+          "cost_input": 2.7000000000000002e-05,
+          "cost_output": 0.0021864,
+          "cost_total": 0.0022134,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3b6b1e107a9d6d92d87a1e7f7c920e1d40ad575bf7f51cd8bc273efbdab9c3cc",
+        "most_common_count": 1,
+        "hashes": [
+          "3b6b1e107a9d6d92d87a1e7f7c920e1d40ad575bf7f51cd8bc273efbdab9c3cc"
+        ]
+      },
+      "total_tokens": 1957,
+      "total_cost": 0.0022134,
+      "avg_time": 17.466
     },
     {
       "task_id": "A9",
@@ -30011,9 +30572,49 @@
       "total_tokens": 581,
       "total_cost": 0.02325,
       "avg_time": 10.334
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "gpt-5.6-luna",
+      "model_name": "GPT-5.6 Luna Max",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьПростыеЧисла(Граница)\n\n    Результат = Новый Массив;\n\n    Если Граница < 2 Тогда\n        Возврат Результат;\n    КонецЕсли;\n\n    Составное = Новый Массив(Граница + 1);\n\n    Для Число = 2 По Граница Цикл\n        Составное[Число] = Ложь;\n    КонецЦикла;\n\n    Делитель = 2;\n\n    Пока Делитель * Делитель <= Граница Цикл\n\n        Если НЕ Составное[Делитель] Тогда\n\n            Кратное = Делитель * Делитель;\n\n            Пока Кратное <= Граница Цикл\n                Составное[Кратное] = Истина;\n                Кратное = Кратное + Делитель;\n            КонецЦикла;\n\n        КонецЕсли;\n\n        Делитель = Делитель + 1;\n\n    КонецЦикла;\n\n    Для Число = 2 По Граница Цикл\n        Если НЕ Составное[Число] Тогда\n            Результат.Добавить(Число);\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "90b12a88b5c68c99bb26b5d79fc41006617d5830ba872bd783181717f56c5c08",
+          "tokens_input": 145,
+          "tokens_output": 1315,
+          "tokens_total": 1460,
+          "elapsed_time": 12.39748239517212,
+          "cost_input": 2.9e-05,
+          "cost_output": 0.001578,
+          "cost_total": 0.001607,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "90b12a88b5c68c99bb26b5d79fc41006617d5830ba872bd783181717f56c5c08",
+        "most_common_count": 1,
+        "hashes": [
+          "90b12a88b5c68c99bb26b5d79fc41006617d5830ba872bd783181717f56c5c08"
+        ]
+      },
+      "total_tokens": 1460,
+      "total_cost": 0.001607,
+      "avg_time": 12.397
     }
   ],
-  "total_tokens": 1394265,
-  "total_cost": 6.602161110000002,
+  "total_tokens": 1442353,
+  "total_cost": 6.657375710000001,
   "total_time": 0.0
 }
