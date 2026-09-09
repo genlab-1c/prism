@@ -37,6 +37,10 @@ ADAPTER_REQUIRED_KEYS: dict[str, list[str]] = {
 
 _OPENROUTER_BASE = "https://openrouter.ai/api/v1"
 
+# Допустимые уровни рассуждений (access.reasoning_effort). Значение уходит в тело как есть;
+# набор гейтит prism check — иначе опечатка всплыла бы 400-й уже на боевом прогоне.
+REASONING_EFFORTS = ("none", "low", "medium", "high", "xhigh", "max")
+
 # Какой прокси использовать на адаптер: RU — отечественный (Yandex, GigaChat),
 # INTL — зарубежный (OpenRouter). openai_compat — локальный сервер, без прокси.
 _PROXY_ENV = {
@@ -96,6 +100,7 @@ def build_adapter(
                 "HTTP-Referer": "https://github.com/genlab-1c/prism",
                 "X-Title": "PRISM",
             },
+            reasoning_effort=reasoning_effort,
         )
 
     if adapter_name == "openai_compat":
@@ -106,6 +111,7 @@ def build_adapter(
             api_key=env.get("OPENAI_COMPAT_API_KEY"),
             transport=transport,
             timeout=timeout,
+            reasoning_effort=reasoning_effort,
         )
 
     if adapter_name == "gigachat":

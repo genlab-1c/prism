@@ -55,11 +55,16 @@ class OpenAICompatAdapter(Adapter):
         transport=None,
         timeout: int = 120,
         extra_headers: dict | None = None,
+        reasoning_effort: str | None = None,
     ):
         super().__init__(transport, timeout)
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
         self.extra_headers = extra_headers or {}
+        # уровень рассуждений (none|low|medium|high|xhigh|max) — ручка КАНАЛА, не факт о модели:
+        # у одного SKU провайдера бывает несколько режимов. None → поле в тело не попадает,
+        # запрос прежних моделей не меняется.
+        self.reasoning_effort = reasoning_effort
 
     def chat(
         self,
@@ -81,6 +86,8 @@ class OpenAICompatAdapter(Adapter):
             "temperature": temperature,
             "max_tokens": max_tokens,
         }
+        if self.reasoning_effort:  # набор значений гейтит prism check
+            body["reasoning_effort"] = self.reasoning_effort
         if seed is not None:
             body["seed"] = seed
         if tools:
