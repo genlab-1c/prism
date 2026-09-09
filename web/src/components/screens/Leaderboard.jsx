@@ -839,7 +839,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="тест-кейсов" value={String(meta.cases || '—')} />
           <Shield label="генераций" value={String(meta.gens || '—')} />
           {/* сожжено на генерациях за всё время; пока захардкожено — см. выгрузку биллинга канала */}
-          <Shield label="токенов" value="7.8M" tone="brand" />
+          <Shield label="токенов" value="8.1M" tone="brand" />
           <Shield label="моделей" value={String(meta.models || models.length)} />
           <Shield label="обновлено" value={meta.lastRun || '—'} tone="ok" />
         </div>
@@ -847,7 +847,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
         {!isMobile && <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>}
         <p style={{ margin: isMobile ? '12px 0 0' : '14px 0 0', fontSize: isMobile ? 12.5 : 13.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.55 }}>
           Участвуйте: добавьте свою модель в лидерборд или пришлите готовый прогон.{' '}
-          <a href={(meta.repo?.url || 'https://github.com/genlab-1c/prism')} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Как поучаствовать</a>
+          <a href={`${meta.repo?.url || 'https://github.com/genlab-1c/prism'}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Как поучаствовать</a>
           <span style={{ color: 'var(--ink-400)' }}> · </span>
           <a href="https://huggingface.co/datasets/genlab-1c/prism-smop" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Датасет на Hugging Face</a>
         </p>
