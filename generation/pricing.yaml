@@ -71,3 +71,4 @@ prices:
   "gemini-3.8-flash":              { input: 0.75, output: 3.75 }  # Google (ai.google.dev), ВВОДНАЯ цена до 2027-01-01 (та же, что у 3.7 Flash); с 01.01.2027 → 1.50/7.50
   "qwen3.8-max-0902":              { input: 2.0,  output: 6.0 }   # Alibaba, прайс-лист — тариф базового Qwen3.8 Max не изменился для снимка 0902
   "gpt-6-astra":                   { input: 10.0, output: 50.0 }  # OpenAI, прайс-лист; кеш входа 1.0, свыше 272K входа тариф 20/75
+  "gpt-5.6-luna":                  { input: 0.2,  output: 1.2 }   # OpenAI, прайс-лист; тот же SKU, что «Luna Pro» — уровень рассуждений на тариф не влияет

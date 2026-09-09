@@ -715,6 +715,22 @@ models:
       supports_seed: false
       supports_tools: true               # reasoning-флагман: рассуждения идут в выходной бюджет
 
+  gpt56_luna_max:
+    id: "gpt-5.6-luna"                   # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-5.6 Luna Max"
+    vendor: openai
+    weights: proprietary
+    released: "2026-07-09"               # GA тира GPT-5.6 (Sol/Terra/Luna) — одна дата на семейство
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+      reasoning_effort: "max"            # отдельного SKU «Luna Max» у OpenAI НЕТ: это та же Luna
+                                         # на предельном уровне рассуждений (шкала none…max)
+    capabilities:
+      context_window: 1050000
+      supports_seed: false
+      supports_tools: true               # рассуждения идут в выходной бюджет: для кат. B держать max_tokens высоким
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:
