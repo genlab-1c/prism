@@ -19,12 +19,14 @@ from __future__ import annotations
 
 import os
 import tempfile
+from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from harness.execute import bsl_ls
 from harness.execute.onec import runner as onec
 from harness.execute.runner import get_runner
+from harness.generate.adapters.registry import REASONING_EFFORTS
 from harness.generate.pricing import load_pricing
 from harness.loaders import (
     PRISM,
@@ -139,6 +141,31 @@ def _check_contracts() -> Section:
         items.append(("fail", f"генерация: не указан released у моделей — {no_release}"))
     else:
         items.append(("ok", f"генерация: дата релиза проставлена у всех {len(gen.models)} моделей"))
+
+    # генерация: уровень рассуждений — из закрытого набора. Опечатка иначе уехала бы в тело
+    # запроса и вернулась 400-й уже на платном прогоне.
+    bad_effort = sorted(
+        f"{k}={m.access.reasoning_effort!r}"
+        for k, m in gen.models.items()
+        if m.access.reasoning_effort and m.access.reasoning_effort not in REASONING_EFFORTS
+    )
+    if bad_effort:
+        items.append(
+            (
+                "fail",
+                f"генерация: недопустимый reasoning_effort — {bad_effort}; "
+                f"допустимо {list(REASONING_EFFORTS)}",
+            )
+        )
+
+    # генерация: id моделей уникальны. На паре (task_id, model_id) держится ВЕСЬ скоринг
+    # (orchestrate: имена файлов BSL LS, каталоги work/, группы auto_l1) — дубль склеил бы
+    # две записи каталога в одну строку лидерборда, молча.
+    dup_ids = sorted(i for i, n in Counter(m.id for m in gen.models.values()).items() if n > 1)
+    if dup_ids:
+        items.append(
+            ("fail", f"генерация: дубль id в каталоге — {dup_ids} (ключ скоринга не уникален)")
+        )
 
     # цены: у каждой модели каталога есть тариф, и нет тарифов-сирот
     # (гейт против рассинхрона pricing.yaml ↔ models.yaml — цена не влияет на баллы, но врёт в витрине)
