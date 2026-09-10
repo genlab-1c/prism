@@ -23,7 +23,12 @@
       "cost_output": 0.018497200000000002,
       "cost_total": 0.018788660000000002,
       "success": true,
-      "error": null
+      "error": null,
+      "tokens_reasoning": 159,
+      "tokens_cached": 0,
+      "tokens_cache_write": 0,
+      "cost_reported": 1.81,
+      "backfilled": true
     }
   ],
   "determinism": {
