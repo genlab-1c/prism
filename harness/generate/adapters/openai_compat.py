@@ -30,6 +30,12 @@ def parse_openai_chat(body: dict | None, model_id: str, elapsed: float) -> LLMRe
                 for tc in raw_tc
             ]
     usage = body.get("usage", {}) or {}
+    # Детализация usage: reasoning сидит внутри completion_tokens, кеш — внутри prompt_tokens.
+    # Отдают не все провайдеры, поэтому всё через .get с нулём.
+    pd = usage.get("prompt_tokens_details") or {}
+    cd = usage.get("completion_tokens_details") or {}
+    choice = choices[0] if choices else {}
+    msg = choice.get("message", {}) or {}
     return LLMResult(
         success=True,
         content=content,
@@ -37,6 +43,13 @@ def parse_openai_chat(body: dict | None, model_id: str, elapsed: float) -> LLMRe
         tokens_input=usage.get("prompt_tokens", 0),
         tokens_output=usage.get("completion_tokens", 0),
         tokens_total=usage.get("total_tokens", 0),
+        tokens_reasoning=cd.get("reasoning_tokens", 0) or 0,
+        tokens_cached=pd.get("cached_tokens", 0) or 0,
+        tokens_cache_write=pd.get("cache_write_tokens", 0) or 0,
+        reasoning=msg.get("reasoning") or "",
+        finish_reason=choice.get("finish_reason") or "",
+        system_fingerprint=body.get("system_fingerprint") or "",
+        cost_reported=usage.get("cost_rub"),
         elapsed=elapsed,
         model_used=body.get("model", model_id),
         raw=body,

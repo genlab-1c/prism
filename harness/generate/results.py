@@ -20,6 +20,17 @@ class RunResult(BaseModel):
     tokens_input: int = 0
     tokens_output: int = 0
     tokens_total: int = 0
+    # Детализация от провайдера (не все отдают → значения по умолчанию, старые рулоны валидны).
+    # tokens_reasoning входит в tokens_output, tokens_cached — в tokens_input.
+    tokens_reasoning: int = 0
+    tokens_cached: int = 0
+    tokens_cache_write: int = 0
+    reasoning: str = ""  # текст рассуждений, если провайдер его отдаёт
+    finish_reason: str = ""  # length → ответ обрезан потолком max_tokens, а не завершён
+    system_fingerprint: str = ""
+    cost_reported: float | None = (
+        None  # стоимость по данным канала; валюта канальная, в баллы не идёт
+    )
     elapsed_time: float = 0.0
     cost_input: float = 0.0
     cost_output: float = 0.0

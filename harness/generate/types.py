@@ -76,6 +76,17 @@ class LLMResult(BaseModel):
     tokens_input: int = 0
     tokens_output: int = 0
     tokens_total: int = 0
+    # Детализация usage — провайдеры её отдают, а раньше мы выбрасывали.
+    # reasoning сидит ВНУТРИ tokens_output (платим за него), кеш — внутри tokens_input.
+    tokens_reasoning: int = 0
+    tokens_cached: int = 0
+    tokens_cache_write: int = 0
+    reasoning: str = ""  # текст рассуждений, если провайдер его отдаёт
+    finish_reason: str = ""  # stop | length (ответ обрезан потолком) | …
+    system_fingerprint: str = ""  # отпечаток версии модели у провайдера
+    # Стоимость ПО ДАННЫМ ПРОВАЙДЕРА (в отличие от расчётной по pricing.yaml).
+    # Валюта зависит от канала, поэтому в баллы и витрину не идёт — только для сверки.
+    cost_reported: float | None = None
     elapsed: float = 0.0
     model_used: str = ""
     error: str | None = None
