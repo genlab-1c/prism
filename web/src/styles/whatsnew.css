@@ -1,22 +1,54 @@
-/* релизы: номер версии — ссылка на GitHub, прижат к правому краю мета-строки с датой */
-.changelog-date { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.changelog-versions { display: inline-flex; gap: 6px; }
-.changelog-release-tag {
-  font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--ink-300);
-  padding: 1px 7px; border: 1px solid var(--line); border-radius: var(--radius-xs);
-  background: var(--surface-sunken); text-decoration: none; line-height: 1.6;
-  transition: color 0.15s, border-color 0.15s;
-}
-.changelog-release-tag:hover { color: var(--brand); border-color: var(--brand); }
+/* ============================================================
+   PRISM — лента «что нового» (лидерборд) и таймлайн страницы /changelog.
+   Источник данных — meta.changelog (из docs/changelog.md). Лента кликается
+   целиком и ведёт на /changelog. Пульс и сдвиг стрелки уважают
+   prefers-reduced-motion. Обе темы — через токены.
+   ============================================================ */
 
-/* релиз без записи журнала: та же сетка, вместо заголовка записи — название релиза */
-.changelog-entry.is-release { padding-bottom: 20px; }
-.changelog-entry.is-release::before { background: var(--surface-raised); border-color: var(--line); }
-.changelog-release-title {
-  display: inline-block; margin-top: 6px; font-size: 15px; color: var(--ink-200);
-  text-decoration: none; line-height: 1.5;
+/* ---- тонкая лента-кнопка под чипами лидерборда ---- */
+.whatsnew {
+  position: relative; display: flex; align-items: center; gap: 11px;
+  width: fit-content; max-width: 100%; margin-top: 12px; padding: 6px 12px 6px 14px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-sm); overflow: hidden; cursor: pointer;
+  font: inherit; color: inherit; text-align: left;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
 }
-.changelog-release-title:hover { color: var(--brand); }
+.whatsnew::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--prism); }
+.whatsnew:hover { border-color: var(--border-strong); background: var(--surface-raised); }
+.whatsnew:hover .whatsnew-more { color: var(--brand-strong); }
+.whatsnew:hover .whatsnew-arrow { transform: translateX(3px); }
+
+.whatsnew-eyebrow {
+  flex: none; display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em;
+  text-transform: uppercase; font-weight: 600; color: var(--ok);
+}
+.whatsnew-dot {
+  width: 5px; height: 5px; border-radius: 50%; background: var(--ok); flex: none;
+  box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5);
+  animation: whatsnew-pulse 2.6s var(--ease-out) infinite;
+}
+@keyframes whatsnew-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.45); }
+  70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+.whatsnew-date {
+  flex: none; font-family: var(--font-mono); font-size: 12px;
+  color: var(--ink-400); font-variant-numeric: tabular-nums;
+}
+.whatsnew-title {
+  flex: 0 1 auto; min-width: 0; max-width: 46ch; font-size: 13px; color: var(--ink-200);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.whatsnew-title b { color: var(--ink-100); font-weight: 600; }
+.whatsnew-more {
+  flex: none; display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-mono); font-size: 12px; font-weight: 500;
+  color: var(--brand); white-space: nowrap;
+}
+.whatsnew-arrow { transition: transform var(--dur) var(--ease); }
 
 @media (max-width: 640px) {
   /* на мобиле лента — во всю ширину: «что нового · дата · заголовок (обрезается) · →» */
@@ -83,6 +115,8 @@
 .changelog-date {
   font-family: var(--font-mono); font-size: 12px; color: var(--ink-400);
   letter-spacing: 0.02em;
+  /* дата слева, номер версии прижат к правому краю карточки */
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
 }
 .changelog-title {
   margin: 5px 0 8px; font-size: 19px; font-weight: 600;
@@ -100,21 +134,24 @@
 }
 .changelog-items li b { color: var(--ink-100); font-weight: 600; }
 
-/* релиз в ленте: одна строка без описания — номер версии и ссылка на GitHub */
-.changelog-entry.is-release { padding-bottom: 18px; }
-.changelog-entry.is-release::before { background: var(--surface-raised); border-color: var(--line); }
-.changelog-release {
-  display: inline-flex; align-items: center; gap: 9px; margin-top: 4px;
-  color: var(--ink-200); text-decoration: none;
-}
+/* релизы: номер версии — ссылка на релиз в GitHub, живёт в строке даты справа */
+.changelog-versions { display: inline-flex; gap: 6px; }
 .changelog-release-tag {
-  font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink-100);
-  padding: 2px 7px; border: 1px solid var(--line); border-radius: var(--radius-xs);
-  background: var(--surface-sunken);
+  font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; color: var(--ink-300);
+  padding: 1px 7px; border: 1px solid var(--line); border-radius: var(--radius-xs);
+  background: var(--surface-sunken); text-decoration: none; line-height: 1.6;
+  transition: color 0.15s, border-color 0.15s;
 }
-.changelog-release-label { font-size: 13px; color: var(--ink-400); }
-.changelog-release:hover .changelog-release-label { color: var(--brand); }
-.changelog-release:hover .changelog-release-tag { border-color: var(--brand); }
+.changelog-release-tag:hover { color: var(--brand); border-color: var(--brand); }
+
+/* релиз без записи журнала: та же сетка, вместо заголовка записи — название релиза */
+.changelog-entry.is-release { padding-bottom: 20px; }
+.changelog-entry.is-release::before { background: var(--surface-raised); border-color: var(--line); }
+.changelog-release-title {
+  display: inline-block; margin-top: 6px; font-size: 15px; color: var(--ink-200);
+  text-decoration: none; line-height: 1.5;
+}
+.changelog-release-title:hover { color: var(--brand); }
 
 @media (max-width: 640px) {
   /* модалка — почти на весь экран (лист), скролл внутри тела */
