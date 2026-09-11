@@ -67,6 +67,10 @@ class OneCRunResult(BaseModel):
     compile_errors: list[str] = []  # тексты ошибок компилятора (диагностика)
     entry_point: str | None = None
     infra_detail: str = ""  # диагностика инфраструктурных падений
+    # Аварийный код завершения /CheckModules (139 = сегфолт). Компилятор платформы падает на
+    # некоторых модулях кандидатов и не пишет ни байта в лог; без кода это неотличимо от
+    # «ошибок нет». Наблюдалось на `Вызвать Исключение` двумя словами (1С 8.3.27).
+    compiler_exit: int | None = None
 
 
 def available() -> bool:
@@ -153,6 +157,10 @@ def _in_container(work_dir: Path, script: str, timeout: int) -> subprocess.Compl
         raise
 
 
+# Имя-заглушка для сборки, когда точки входа нет: тестам нужно ЧТО-ТО подставить вместо
+# {{ENTRY}}, иначе модуль Тесты не компилируется. Сам кандидат от этого не меняется.
+ENTRY_PLACEHOLDER = "ТочкаВходаНеНайдена"
+
 # Английские ключевые слова BSL принимает наравне с русскими, и модели их пишут: модуль с
 # `function ИмяФункции(...) Экспорт` компилируется без замечаний. Детектор, знавший только
 # русские слова, такую рабочую функцию не находил — прогон падал в no_entry, M и P в ноль.
@@ -186,11 +194,11 @@ def run_candidate(
     from .assemble import assemble_run_config
 
     entry = detect_entry_point(candidate_code, entry_patterns)
-    if entry is None:
-        return OneCRunResult(
-            status="no_entry", infra_detail="в коде кандидата не найдено ни одной функции"
-        )
-
+    # Точки входа нет — прогон НЕ отменяем: компилятор 1С должен высказаться о модуле.
+    # Раньше здесь стоял возврат до контейнера, и ось S выводилась из пустого списка
+    # ошибок — «компилируется без ошибок» про модуль, которого компилятор не видел.
+    # Тесты при этом звать нечего, поэтому ENTERPRISE ниже пропускается: иначе сломанный
+    # модуль Тесты не создаст result.txt и вина кандидата станет «инфраструктурой».
     work_dir.mkdir(parents=True, exist_ok=True)
 
     # 1) пустая конфа-базис: выгружается платформой ОДИН раз на машину
@@ -208,7 +216,9 @@ def run_candidate(
         shutil.copytree(cache, empty_cfg, dirs_exist_ok=True)
 
     # 2) сборка прогонной конфы (на хосте, чистый Python)
-    assemble_run_config(task_dir, candidate_code, entry, empty_cfg, work_dir / "run-cfg")
+    assemble_run_config(
+        task_dir, candidate_code, entry or ENTRY_PLACEHOLDER, empty_cfg, work_dir / "run-cfg"
+    )
 
     # 3) база + компиляция (S) + исполнение (M/P) — один вызов контейнера.
     # /CheckModules даёт ось S (ошибки модуля КодКандидата); если кандидат не
@@ -218,18 +228,22 @@ def run_candidate(
     # безусловно после успешного load (через ;), чтобы ошибки кандидата всплыли,
     # даже если UpdateDBCfg споткнулся. ENTERPRISE — только при чистой компиляции.
     script = (
-        f"rm -rf /work/ib /work/result.txt /work/check.log; "
+        f"rm -rf /work/ib /work/result.txt /work/check.log /work/check.rc /work/enterprise.rc; "
         f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib;Locale=ru_RU;' >/dev/null 2>&1 && "
         f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
         f"/LoadConfigFromFiles /work/run-cfg /Out /work/load.log >/dev/null 2>&1 && {{ "
         f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
         f"/UpdateDBCfg /Out /work/upd.log >/dev/null 2>&1; "
         f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
-        f"/CheckModules -Server /Out /work/check.log >/dev/null 2>&1; "
-        f"if grep -q 'КодКандидата' /work/check.log 2>/dev/null; then true; else "
-        f"timeout 90 xvfb-run-1c {ONEC_BIN} ENTERPRISE /IBConnectionString 'File=/work/ib;' "
-        f"/C ПрогонТеста >/dev/null 2>&1; fi; }}; "
-        f"chmod -R a+rwX /work 2>/dev/null; true"
+        f"/CheckModules -Server /Out /work/check.log >/dev/null 2>&1; echo $? > /work/check.rc; "
+        + (
+            f"if grep -q 'КодКандидата' /work/check.log 2>/dev/null; then true; else "
+            f"timeout 90 xvfb-run-1c {ONEC_BIN} ENTERPRISE /IBConnectionString 'File=/work/ib;' "
+            f"/C ПрогонТеста >/dev/null 2>&1; echo $? > /work/enterprise.rc; fi; "
+            if entry is not None
+            else ""
+        )
+        + "}; chmod -R a+rwX /work 2>/dev/null; true"
     )
     timed_out = False
     try:
@@ -239,6 +253,17 @@ def run_candidate(
 
     # ось S — ошибки компиляции модуля кандидата (компилятор 1С, не статика)
     lines, errors = _parse_compile_log(_read(work_dir / "check.log"))
+    check_rc = _read_rc(work_dir / "check.rc")
+    if not lines and check_rc:  # компилятор упал молча: лог пуст, код аварийный
+        msg = f"компилятор платформы аварийно завершился (код {check_rc}) — модуль не принят"
+        return OneCRunResult(
+            status="candidate_error",
+            entry_point=entry,
+            compile_errors=[msg],
+            compiler_exit=check_rc,
+            log=msg,
+            infra_detail="модуль кандидата роняет компилятор платформы",
+        )
     if lines:  # не компилируется → вина кандидата
         return OneCRunResult(
             status="candidate_error",
@@ -249,17 +274,33 @@ def run_candidate(
             infra_detail="модуль кандидата не компилируется",
         )
 
+    if entry is None:  # модуль собрался, но звать нечего → вина кандидата, оси M и P = 0
+        return OneCRunResult(
+            status="no_entry", infra_detail="в коде кандидата не найдено ни одной функции"
+        )
+
     # компилируется → M/P из result.txt
     result_file = work_dir / "result.txt"
     if result_file.exists():
         return parse_result(result_file.read_text(encoding="utf-8-sig", errors="replace"), entry)
 
     detail = "таймаут прогона" if timed_out else "result.txt не создан"
+    ent_rc = _read_rc(work_dir / "enterprise.rc")
+    if ent_rc:
+        detail += f"; сеанс 1С завершился с кодом {ent_rc}"
     return OneCRunResult(
         status="no_result",
         entry_point=entry,
         infra_detail=f"{detail}; load.log: {_read(work_dir / 'load.log')[:200]}",
     )
+
+
+def _read_rc(path: Path) -> int | None:
+    """Код завершения шага из файла, который пишет скрипт контейнера. Нет файла / мусор → None."""
+    try:
+        return int(path.read_text(encoding="utf-8").strip())
+    except (OSError, ValueError):
+        return None
 
 
 # лог /CheckModules: «{ОбщийМодуль.КодКандидата.Модуль(строка,колонка)}: Сообщение»

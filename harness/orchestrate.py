@@ -177,6 +177,15 @@ def _score_syntax(
         run = _onec_run_for(task, code, work_dir, instr)
         if run.status in ("infra_error", "no_result"):
             return None, {"reason": f"исполнение не состоялось ({run.status})"}
+        if run.compiler_exit:  # компилятор упал на модуле → модуль не компилируется → S=0
+            # Аналог pre_check протокола (дисбаланс парности → 0): балл минуя таблицу,
+            # потому что корневые причины посчитать нечем — компилятор не дожил до отчёта.
+            return 0, {
+                "root_causes": None,
+                "instrument": "1С /CheckModules",
+                "errors": run.compile_errors,
+                "compiler_exit": run.compiler_exit,
+            }
         gap = protocol.axes["S"].cluster_gap or 3  # соседние ошибки = одна корневая причина
         clusters = _cluster_lines(sorted(run.compile_error_lines), gap)
         return protocol.scoring("S").score_for(clusters), {
