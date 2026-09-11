@@ -259,3 +259,31 @@ def test_partial_rescore_unknown_name_selects_nothing(tmp_path, monkeypatch):
     res = orchestrate.run(path, "core", _NullRunner(), model_names={"Нет такой модели"})
 
     assert res["tasks"] == []
+
+
+# ── ось S кат. B: компилятор платформы упал на модуле ────────────────────────
+
+
+def test_compiler_crash_scores_syntax_zero(const, proto, tmp_path, monkeypatch):
+    """Сегфолт /CheckModules на модуле кандидата — модуль не компилируется, S=0.
+
+    Раньше компилятор падал молча (код 139, лог пуст), харнесс читал пустой лог как «ошибок
+    нет», сеанс тестов падал следом, и запись уходила в «инфраструктура, не измерено».
+    """
+    from harness.execute.onec.runner import OneCRunResult
+
+    crash = OneCRunResult(
+        status="candidate_error",
+        compile_errors=["компилятор платформы аварийно завершился (код 139) — модуль не принят"],
+        compiler_exit=139,
+        infra_detail="модуль кандидата роняет компилятор платформы",
+    )
+    monkeypatch.setattr(orchestrate.onec, "available", lambda: True)
+    monkeypatch.setattr(orchestrate, "_onec_run_for", lambda *a, **k: crash)
+    task = make_task(tmp_path, category="B")
+    score, detail = orchestrate._score_syntax(
+        task, "Функция Ф() КонецФункции", proto, tmp_path, NO_INSTRUMENTS
+    )
+    assert score == 0
+    assert detail["compiler_exit"] == 139
+    assert "аварийно" in detail["errors"][0]

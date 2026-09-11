@@ -72,3 +72,17 @@ def test_compile_log_parsing():
     lines, errors = _parse_compile_log(text)
     assert lines == [12, 20]
     assert "ожидается имя переменной" in errors[0]
+
+
+# ── код завершения компилятора платформы ─────────────────────────────────────
+
+
+def test_read_rc_parses_exit_code(tmp_path):
+    """Скрипт контейнера пишет код завершения шага в файл; читаем число, мусор → None."""
+    from harness.execute.onec.runner import _read_rc
+
+    (tmp_path / "check.rc").write_text("139\n", encoding="utf-8")
+    assert _read_rc(tmp_path / "check.rc") == 139
+    (tmp_path / "bad.rc").write_text("segfault", encoding="utf-8")
+    assert _read_rc(tmp_path / "bad.rc") is None
+    assert _read_rc(tmp_path / "нет.rc") is None
