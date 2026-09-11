@@ -375,6 +375,9 @@ class GenerationRunner:
                 cost_output=co,
                 cost_total=ct,
                 error=out.error,
+                max_tokens=max_tokens,
+                reasoning_effort=entry.access.reasoning_effort or "",
+                generated_at=datetime.now().isoformat(timespec="seconds"),
             )
             if out.success and out.content:
                 run.response_hash = compute_hash(out.content)
