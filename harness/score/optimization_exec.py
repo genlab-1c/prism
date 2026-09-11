@@ -15,13 +15,14 @@ from __future__ import annotations
 
 import json
 import math
+import re
 from pathlib import Path
 
 from pydantic import BaseModel
 
 from harness.execute.runner import Runner, get_runner
 from harness.loaders import ProtocolL1, TaskPerf
-from harness.score.cost_model import HELPERS, instrument
+from harness.score.cost_model import HELPERS, HELPERS_LINES, instrument
 from harness.score.meaning import detect_entry_point
 
 OK_MARKER = "PRISM_O_OK"
@@ -43,6 +44,33 @@ class OptExecResult(BaseModel):
     sizes: list[int] = []
     entry_point: str | None = None
     note: str = ""
+    # Где именно замер сорвался. Номер строки — в координатах КОДА МОДЕЛИ, а не
+    # замерочного файла: в файле выше лежит блок хелперов, и сырые номера сбивают с толку.
+    fail_size: int | None = None
+    fail_line: int | None = None
+    fail_message: str = ""
+
+
+_LINE_RE = re.compile(r"Error in line:?\s*(\d+)")
+
+
+def _locate(raw: str, candidate_lines: int) -> tuple[int | None, str]:
+    """Строка кода МОДЕЛИ и человеческий текст ошибки из вывода OneScript.
+
+    Замерочный файл — это блок хелперов, потом код модели, потом генератор входа из
+    perf.yaml. Поэтому номер строки из сообщения сдвинут на длину хелперов, и без перевода
+    «Error in line: 72» читается как несуществующая строка 72 ответа модели.
+    """
+    message = raw.rsplit(" / ", 1)[-1].strip(" }") if " / " in raw else raw.strip()
+    found = _LINE_RE.search(raw)
+    if not found:
+        return None, message
+    file_line = int(found.group(1))
+    if file_line <= HELPERS_LINES:
+        return None, f"{message} (внутри инструментированных хелперов, строка {file_line})"
+    if file_line > candidate_lines:
+        return None, f"{message} (в генераторе входа из perf.yaml)"
+    return file_line - HELPERS_LINES, message
 
 
 def _subst(snippet: str, n: int, entry: str) -> str:
@@ -119,11 +147,17 @@ def score_o_exec(
                 note=f"таймаут уже на минимальном размере {n}",
             )
         if OK_MARKER not in res.stdout or not stat.exists():
+            raw = (res.stderr or res.stdout)[-400:].strip()
+            line, message = _locate(raw, candidate_lines)
+            where = f"строка {line} кода модели" if line else "место не определилось"
             return OptExecResult(
                 score=None,
                 p_opt=perf.p_opt,
                 entry_point=entry,
-                note=f"не исполнился на размере {n}: {(res.stderr or res.stdout)[-200:].strip()}",
+                fail_size=n,
+                fail_line=line,
+                fail_message=message,
+                note=f"не исполнился на размере {n}: {where} · {message}",
             )
         ops.append(_count_ops(stat, candidate_lines))
         sizes.append(n)
