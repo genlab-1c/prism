@@ -303,6 +303,32 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_audit(args: argparse.Namespace) -> int:
+    from harness import audit
+
+    sections, ok = audit.run_audit(
+        category=args.category,
+        experiment=Path(args.experiment) if args.experiment else None,
+        auto=Path(args.auto) if args.auto else None,
+        baseline=Path(args.baseline) if args.baseline else None,
+    )
+    brand_title("аудит корпуса результатов")
+    print_status_sections(sections)
+    if args.out:
+        out = Path(args.out)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(audit.to_markdown(sections), encoding="utf-8")
+        console.print(f"  подробный отчёт: {out}\n", style="dim", highlight=False)
+    fails = sum(st == "fail" for s in sections for st, _ in s["items"])
+    warns = sum(st == "warn" for s in sections for st, _ in s["items"])
+    warn_tail = f"   [yellow]внимание: {warns}[/yellow]" if warns else ""
+    if ok:
+        console.print(f"  [dim]итог[/dim]   [green]● корпус без нарушений[/green]{warn_tail}\n")
+    else:
+        console.print(f"  [dim]итог[/dim]   [red]● нарушений: {fails}[/red]{warn_tail}\n")
+    return 0 if ok else 1
+
+
 def cmd_doctor(args: argparse.Namespace) -> int:
     from harness import preflight
 
@@ -454,6 +480,7 @@ def print_quickstart() -> None:
         ("сгенерировать код моделями", "prism generate --category A"),
         ("пересчитать оценку L1", "prism score"),
         ("посмотреть результаты", "prism leaderboard"),
+        ("проверить здоровье корпуса", "prism audit"),
         ("поделиться результатом", "prism submit"),
     ]
     for desc, cmd in steps:
@@ -659,6 +686,37 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_runtime_flags(ch)
     ch.set_defaults(func=cmd_check)
+
+    ad = sub.add_parser(
+        "audit",
+        help="аудит корпуса результатов: инварианты поверх готовых оценок",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Чем отличается от check: check проверяет ОПРЕДЕЛЕНИЕ бенчмарка (задачи, эталоны,\n"
+            "контракты), audit — его РЕЗУЛЬТАТЫ (связку рулона с оценками, согласованность осей,\n"
+            "условия прогона, дрейф). Аудит ничего не правит.\n\n"
+            "Примеры:\n"
+            "  prism audit                      оба прогона, сводка в терминал\n"
+            "  prism audit --category B         только платформенные задачи\n"
+            "  prism audit --out audit.md       плюс подробный отчёт со списками записей\n"
+            "  prism audit --baseline results/auto/snapshots/<дата>_before_hygiene\n"
+            "                                   сверить с базовой линией (что изменилось и где)"
+        ),
+    )
+    ad.add_argument("--category", default=None, choices=["A", "B"], help="только эта категория")
+    ad.add_argument(
+        "--experiment", default=None, metavar="PATH", help="рулон генерации (по умолчанию свежий)"
+    )
+    ad.add_argument(
+        "--auto", default=None, metavar="PATH", help="файл оценок (по умолчанию свежий)"
+    )
+    ad.add_argument(
+        "--baseline", default=None, metavar="DIR", help="каталог снимка для сверки дрейфа"
+    )
+    ad.add_argument(
+        "--out", default=None, metavar="PATH", help="записать подробный отчёт (markdown)"
+    )
+    ad.set_defaults(func=cmd_audit)
 
     tk = sub.add_parser(
         "tasks", help="показать банк задач (id для --task) и пересобрать tasks/README.md"
