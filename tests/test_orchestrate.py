@@ -169,3 +169,93 @@ def test_newest_autos_one_per_category(tmp_path, monkeypatch):
     ]
     # category-фильтр newest_auto берёт только свою категорию
     assert orchestrate.newest_auto("B").name == "experiment_B_20260101_000000_auto_l1.json"
+
+
+# ── частичный пересчёт: фильтр по ИМЕНИ модели, не по id ─────────────────────
+
+
+class _NullRunner:
+    """Раннер-заглушка: в этих тестах исполнение не нужно."""
+
+    name = "null"
+
+    def available(self) -> bool:
+        return False
+
+    def unavailable_reason(self) -> str:
+        return "раннер в тесте не нужен"
+
+
+def _roll(tmp_path, pairs):
+    """Минимальный рулон: pairs = [(задача, id модели, имя модели), …].
+
+    Генерации помечены success=False, поэтому оценка идёт коротким путём «N/A по всем
+    осям» — скореры и инструменты не нужны, проверяется только отбор записей.
+    """
+    import json
+
+    path = tmp_path / "experiment_A_20260101_000000.json"
+    path.write_text(
+        json.dumps(
+            {
+                "experiment_name": "experiment_A_20260101_000000",
+                "task_results": [
+                    {
+                        "task_id": t,
+                        "model_id": mid,
+                        "model_name": mname,
+                        "runs": [
+                            {
+                                "run_index": 0,
+                                "response": "",
+                                "response_hash": "h",
+                                "success": False,
+                                "error": "канал недоступен",
+                            }
+                        ],
+                    }
+                    for t, mid, mname in pairs
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
+SPLIT_ID_ROLL = [
+    ("T1", "z-ai/glm-4.7-flash", "GLM-4.7 Flash"),  # прежний канал доступа
+    ("T1", "glm-4.7-flash", "GLM-4.7 Flash"),  # нынешний канал
+    ("T1", "other/model", "Другая модель"),
+]
+
+
+def test_partial_rescore_filters_by_model_name_not_id(tmp_path, monkeypatch):
+    """Модель под двумя id (смена канала) пересчитывается целиком.
+
+    Фильтр по id промахивался: в каталоге нынешний id, а в корпусе остался прежний,
+    и частичный пересчёт молча не трогал старую группу.
+    """
+    path = _roll(tmp_path, SPLIT_ID_ROLL)
+    monkeypatch.setattr(orchestrate, "load_tasks", lambda: [make_task(tmp_path)])
+    monkeypatch.setattr(orchestrate, "_batch_diagnostics", lambda *a, **k: None)
+
+    res = orchestrate.run(path, "core", _NullRunner(), model_names={"GLM-4.7 Flash"})
+
+    assert [g["model_id"] for g in res["tasks"]] == ["z-ai/glm-4.7-flash", "glm-4.7-flash"]
+    assert all(g["model_name"] == "GLM-4.7 Flash" for g in res["tasks"])
+
+
+def test_partial_rescore_unknown_name_selects_nothing(tmp_path, monkeypatch):
+    """Фильтр, не совпавший ни с чем, даёт пустой результат.
+
+    Это предпосылка защиты в score_report: на пустом результате дозапись сохранила бы
+    ВСЁ прежнее и отчиталась об успехе, поэтому там стоит явный отказ.
+    """
+    path = _roll(tmp_path, SPLIT_ID_ROLL)
+    monkeypatch.setattr(orchestrate, "load_tasks", lambda: [make_task(tmp_path)])
+    monkeypatch.setattr(orchestrate, "_batch_diagnostics", lambda *a, **k: None)
+
+    res = orchestrate.run(path, "core", _NullRunner(), model_names={"Нет такой модели"})
+
+    assert res["tasks"] == []
