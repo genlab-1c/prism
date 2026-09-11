@@ -28,7 +28,14 @@ from pydantic import BaseModel
 from harness.execute.runner import Runner, get_runner
 from harness.loaders import ProtocolL1, TaskTests
 
-FUNC_RE = re.compile(r"^\s*Функция\s+([\wа-яА-ЯёЁ]+)\s*\(", re.MULTILINE | re.IGNORECASE)
+# Точка входа: Функция ИЛИ Процедура. Процедуру задачи A решают неверно (тесты ждут
+# возвращаемое значение), но отказ «функция не найдена» прячет настоящую причину —
+# пусть исполнение скажет её само. Детектор категории B таким был с начала
+# (harness/execute/onec/runner.py), здесь приводим к тому же виду.
+FUNC_RE = re.compile(
+    r"^\s*(?:Функция|Процедура|Function|Procedure)\s+([\wа-яА-ЯёЁ]+)\s*\(",
+    re.MULTILINE | re.IGNORECASE,
+)
 
 
 class MeaningResult(BaseModel):
@@ -72,7 +79,7 @@ def fine_m(passed: int, total: int, executed: bool) -> float:
 
 
 def detect_entry_point(code: str, patterns: list[str]) -> str | None:
-    """Первая объявленная функция, имя которой матчится приоритетным паттерном."""
+    """Первая объявленная функция или процедура, чьё имя матчится приоритетным паттерном."""
     names = FUNC_RE.findall(code)
     if not names:
         return None
