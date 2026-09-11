@@ -104,9 +104,9 @@ def ensure_exported(code: str, entry: str) -> str:
     рабочая функция без «Экспорт» больше не проваливается на «Метод объекта не обнаружен».
     """
     pat = re.compile(
-        r"(?im)^([ \t]*(?:Функция|Процедура)[ \t]+"
+        r"(?im)^([ \t]*(?:Функция|Процедура|Function|Procedure)[ \t]+"
         + re.escape(entry)
-        + r"[ \t]*\([^)]*\))([ \t]*)(Экспорт\b)?"
+        + r"[ \t]*\([^)]*\))([ \t]*)(Экспорт\b|Export\b)?"
     )
 
     def repl(m: re.Match) -> str:

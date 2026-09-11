@@ -144,3 +144,24 @@ def test_integration_clean_and_broken(proto, tmp_path):
     )
     assert s_good == 10
     assert s_bad == 0 and not det_bad["balanced"]  # обрезанная генерация
+
+
+# ── английские ключевые слова BSL ────────────────────────────────────────────
+
+
+def test_parity_counts_english_keywords(proto):
+    """BSL принимает английские ключевые слова, и модели мешают их с русскими.
+
+    Видя только русские, проверка парности звала сбалансированным код с незакрытым
+    `for each … do`: открывашку она не замечала вовсе.
+    """
+    broken = "Функция Ф()\n for each э in м do\n  если истина тогда\n КонецФункции"
+    score, detail = syntax.score_s([], proto, module_text=broken)
+    assert score == 0 and detail["balanced"] is False
+
+
+def test_parity_accepts_mixed_language_blocks(proto):
+    """Русская открывашка с английским закрытием — код парный, S не обнулять."""
+    mixed = "Function Ф()\n Если Истина Тогда\n  Возврат 1;\n EndIf;\nКонецФункции"
+    score, detail = syntax.score_s([], proto, module_text=mixed)
+    assert detail["balanced"] is True and score == 10

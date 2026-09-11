@@ -153,8 +153,12 @@ def _in_container(work_dir: Path, script: str, timeout: int) -> subprocess.Compl
         raise
 
 
+# Английские ключевые слова BSL принимает наравне с русскими, и модели их пишут: модуль с
+# `function ИмяФункции(...) Экспорт` компилируется без замечаний. Детектор, знавший только
+# русские слова, такую рабочую функцию не находил — прогон падал в no_entry, M и P в ноль.
 SUB_RE = re.compile(
-    r"^\s*(?:Функция|Процедура)\s+([\wа-яА-ЯёЁ]+)\s*\(", re.MULTILINE | re.IGNORECASE
+    r"^\s*(?:Функция|Процедура|Function|Procedure)\s+([\wа-яА-ЯёЁ]+)\s*\(",
+    re.MULTILINE | re.IGNORECASE,
 )
 
 
