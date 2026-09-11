@@ -29,7 +29,10 @@
       "tokens_cached": 64,
       "tokens_cache_write": 0,
       "cost_reported": 0.68,
-      "backfilled": true
+      "backfilled": true,
+      "max_tokens": 65536,
+      "generated_at": "2026-09-10T05:09:18",
+      "provenance": "восстановлено"
     }
   ],
   "determinism": {

@@ -1,7 +1,7 @@
 {
   "task_id": "B20",
   "task_name": "Оборот по счёту в разрезе субконто",
-  "model_id": "google/gemini-2.5-flash-lite",
+  "model_id": "gemini-2.5-flash-lite",
   "model_name": "Gemini 2.5 Flash Lite",
   "context_loaded": true,
   "context_objects": [
@@ -17,30 +17,41 @@
       "run_index": 0,
       "seed": null,
       "temperature": 0.1,
-      "response": "```bsl",
-      "response_hash": "1442ab9f0f65a3809767295729711d6ddcd80254c31d880a2f9b78a5d1eb750e",
-      "tokens_input": 0,
-      "tokens_output": 0,
-      "tokens_total": 0,
-      "elapsed_time": 3.3594579696655273,
-      "cost_input": 0.0,
-      "cost_output": 0.0,
-      "cost_total": 0.0,
+      "response": "```bsl\nФункция ПолучитьДебетовыйОборотПоКонтрагенту(Счет, Контрагент)\n\n\tСуммаОборота = 0;\n\n\tВыборка = РегистрыБухгалтерии.Хозрасчетный.ОборотыПоДебету(\n\t\t, // Период\n\t\tСчет,\n\t\t, // СубконтоДт\n\t\tКонтрагент // СубконтоКт\n\t);\n\n\tПока Выборка.Следующий() Цикл\n\t\tСуммаОборота = СуммаОборота + Выборка.Сумма;\n\tКонецЦикла;\n\n\tВозврат СуммаОборота;\n\nКонецФункции\n```",
+      "response_hash": "3a098a844ae30e99a53d499bb6c6842424052dc691b1558a04b82d373ff6ef5d",
+      "tokens_input": 646,
+      "tokens_output": 166,
+      "tokens_total": 812,
+      "tokens_reasoning": 0,
+      "tokens_cached": 0,
+      "tokens_cache_write": 0,
+      "reasoning": "",
+      "finish_reason": "stop",
+      "system_fingerprint": "",
+      "cost_reported": 0.03,
+      "elapsed_time": 1.2464516162872314,
+      "cost_input": 6.46e-05,
+      "cost_output": 6.64e-05,
+      "cost_total": 0.00013099999999999999,
       "success": true,
-      "error": null
+      "error": null,
+      "max_tokens": 65536,
+      "reasoning_effort": "",
+      "generated_at": "2026-09-11T06:45:42",
+      "provenance": ""
     }
   ],
   "determinism": {
     "total_runs": 1,
     "unique_responses": 1,
     "match_rate": 1.0,
-    "most_common_hash": "1442ab9f0f65a3809767295729711d6ddcd80254c31d880a2f9b78a5d1eb750e",
+    "most_common_hash": "3a098a844ae30e99a53d499bb6c6842424052dc691b1558a04b82d373ff6ef5d",
     "most_common_count": 1,
     "hashes": [
-      "1442ab9f0f65a3809767295729711d6ddcd80254c31d880a2f9b78a5d1eb750e"
+      "3a098a844ae30e99a53d499bb6c6842424052dc691b1558a04b82d373ff6ef5d"
     ]
   },
-  "total_tokens": 0,
-  "total_cost": 0.00016590000000000002,
-  "avg_time": 3.359
+  "total_tokens": 812,
+  "total_cost": 0.0002969,
+  "avg_time": 1.246
 }
