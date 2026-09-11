@@ -15,6 +15,9 @@ htmlcov/
 # Сами бинари не коммитятся — в git идут только bootstrap-скрипты установки.
 tools/*
 !tools/get-*.sh
+!tools/backfill_billing.py
+!tools/backfill_provenance.py
+!tools/export_dataset.py
 
 # Рабочие артефакты прогонов (промежуточные; канонические результаты — в results/)
 work/

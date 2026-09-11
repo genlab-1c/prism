@@ -23,7 +23,10 @@
       "cost_output": 1.1500000000000002e-05,
       "cost_total": 3.8769999999999996e-05,
       "success": true,
-      "error": null
+      "error": null,
+      "max_tokens": 16384,
+      "generated_at": "2026-07-07T21:31:15",
+      "provenance": "восстановлено"
     }
   ],
   "determinism": {

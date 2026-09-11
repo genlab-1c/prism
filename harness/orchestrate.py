@@ -177,6 +177,15 @@ def _score_syntax(
         run = _onec_run_for(task, code, work_dir, instr)
         if run.status in ("infra_error", "no_result"):
             return None, {"reason": f"исполнение не состоялось ({run.status})"}
+        if run.compiler_exit:  # компилятор упал на модуле → модуль не компилируется → S=0
+            # Аналог pre_check протокола (дисбаланс парности → 0): балл минуя таблицу,
+            # потому что корневые причины посчитать нечем — компилятор не дожил до отчёта.
+            return 0, {
+                "root_causes": None,
+                "instrument": "1С /CheckModules",
+                "errors": run.compile_errors,
+                "compiler_exit": run.compiler_exit,
+            }
         gap = protocol.axes["S"].cluster_gap or 3  # соседние ошибки = одна корневая причина
         clusters = _cluster_lines(sorted(run.compile_error_lines), gap)
         return protocol.scoring("S").score_for(clusters), {
@@ -325,7 +334,7 @@ def run(
     experiment_path: Path,
     edition_name: str,
     runner: Runner,
-    model_ids: set[str] | None = None,
+    model_names: set[str] | None = None,
     task_ids: set[str] | None = None,
 ) -> dict:
     constitution = load_constitution()
@@ -341,7 +350,10 @@ def run(
     # Кандидаты в порядке эксперимента; уникальное имя файла → ключ диагностик BSL LS
     records = []
     for tr in experiment["task_results"]:
-        if model_ids is not None and tr["model_id"] not in model_ids:
+        # Фильтр по ИМЕНИ, а не по id: id привязан к каналу доступа и у части моделей
+        # менялся (OpenRouter ↔ AITUNNEL), поэтому в корпусе одна модель встречается под
+        # двумя id. Имя стабильно — по нему же группируют воронка и статистика.
+        if model_names is not None and tr["model_name"] not in model_names:
             continue  # частичный скоринг: считаем только указанные модели
         if task_ids is not None and tr["task_id"] not in task_ids:
             continue  # частичный скоринг: считаем только указанные задачи
@@ -718,32 +730,39 @@ def score_report(
             "    ось M выйдет «не измерена» (score=None) для всех кандидатов.", style="dim"
         )
 
-    model_ids = None
-    if model_keys:  # ключи каталога → id моделей (run/auto_l1 оперируют id)
+    model_names = None
+    if model_keys:  # ключи каталога → ИМЕНА моделей (id привязан к каналу и не стабилен)
         catalog = load_generation().models
-        model_ids = {catalog[k].id for k in model_keys if k in catalog}
+        model_names = {catalog[k].name for k in model_keys if k in catalog}
         unknown = [k for k in model_keys if k not in catalog]
         if unknown:
             console.print(
                 f"  [yellow]●[/yellow] нет в каталоге, пропущены: {', '.join(unknown)}",
                 highlight=False,
             )
-        if not model_ids:
+        if not model_names:
             raise SystemExit("ни одной известной модели в --models")
 
     task_id_set = set(task_ids) if task_ids else None
-    result = run(experiment_path, edition_name, runner, model_ids=model_ids, task_ids=task_id_set)
+    result = run(
+        experiment_path, edition_name, runner, model_names=model_names, task_ids=task_id_set
+    )
+    if (model_names or task_id_set) and not result["tasks"]:
+        # Иначе дозапись ниже молча сохранит ВСЁ прежнее и отчитается об успехе.
+        raise SystemExit(
+            "фильтр не совпал ни с одной парой эксперимента — проверьте --models / --task"
+        )
 
     out_path = out_path or (PRISM / "results" / "auto" / f"{result['experiment_id']}_auto_l1.json")
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    if (model_ids is not None or task_id_set is not None) and out_path.exists():  # дозапись
+    if (model_names is not None or task_id_set is not None) and out_path.exists():  # дозапись
         # сохранить группы, НЕ попавшие под пересчёт (модель ИЛИ задача вне фильтра)
         prev = json.loads(out_path.read_text(encoding="utf-8"))
         kept = [
             g
             for g in prev.get("tasks", [])
-            if (model_ids is not None and g["model_id"] not in model_ids)
+            if (model_names is not None and g["model_name"] not in model_names)
             or (task_id_set is not None and g["task_id"] not in task_id_set)
         ]
         n_new = len(result["tasks"])
