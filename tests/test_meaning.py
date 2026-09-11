@@ -204,3 +204,13 @@ def test_canonical_passes_own_tests(proto, tmp_path, task):
     assert r.executed, r.errors
     assert r.passed == r.total, f"{task.id}: эталон прошёл {r.passed}/{r.total}: {r.errors}"
     assert r.score == 10
+
+
+def test_entry_point_detected_with_english_keyword():
+    """`function ИмяФункции(...)` — валидный BSL, и точку входа надо находить.
+
+    Наблюдалось у GigaChat: модуль компилировался без замечаний, а детектор функцию
+    не видел, и прогон уходил в «функция не найдена» с нулями по M и P.
+    """
+    code = "function ПолучитьОборот(Счёт) Экспорт\n Возврат 1;\nКонецФункции"
+    assert meaning.detect_entry_point(code, [r"\w*Оборот\w*"]) == "ПолучитьОборот"
