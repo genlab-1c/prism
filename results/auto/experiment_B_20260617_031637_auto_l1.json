@@ -1490,58 +1490,6 @@
       ]
     },
     {
-      "task_id": "B14",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
       "task_id": "B15",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -1788,58 +1736,6 @@
       ]
     },
     {
-      "task_id": "B15",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
       "task_id": "B1",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -2070,58 +1966,6 @@
             "P": {
               "reason": "модуль кандидата не компилируется",
               "log": "Процедура или функция с указанным именем не определена (ДатаЗначение); Процедура или функция с указанным именем не определена (ДатаЗначение)",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B1",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
               "band": 0
             }
           }
@@ -2697,45 +2541,6 @@
               "reason": "модуль кандидата не компилируется",
               "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
               "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B3",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "629fe091b170a22228fa149063bdb0c767f8c8da2c676170f5e21763ada38012",
-          "scores": {
-            "S": null,
-            "M": null,
-            "O": null,
-            "P": null,
-            "Q": null
-          },
-          "bands": {
-            "M": null,
-            "P": null
-          },
-          "detail": {
-            "S": {
-              "reason": "исполнение не состоялось (no_result)"
-            },
-            "M": {
-              "reason": "исполнение не состоялось (no_result)",
-              "infra_detail": "result.txt не создан; load.log: "
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "исполнение не состоялось (no_result): result.txt не создан; load.log: "
             }
           }
         }
@@ -3629,58 +3434,6 @@
       ]
     },
     {
-      "task_id": "B6",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
       "task_id": "B7",
       "model_id": "aliceai-llm/latest",
       "model_name": "Alice AI LLM",
@@ -4114,67 +3867,6 @@
     },
     {
       "task_id": "B8",
-      "model_id": "deepseek/deepseek-v4-flash",
-      "model_name": "DeepSeek V4-Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "19bf25585c324b0545de2530caebd09e8c264d428c451b0fb929536f80b2793b",
-          "scores": {
-            "S": 8,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 2.67
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 1,
-              "instrument": "1С /CheckModules",
-              "errors": [
-                "Пропущен символ '\"' (двойная кавычка)",
-                "Ожидается ключевое слово 'КонецФункции' ('EndFunction')"
-              ]
-            },
-            "M": {
-              "status": "candidate_error",
-              "passed": 0,
-              "total": 0,
-              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается ключевое слово 'КонецФункции' ('EndFunction')",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [
-                11,
-                11
-              ],
-              "compile_errors": [
-                "Пропущен символ '\"' (двойная кавычка)",
-                "Ожидается ключевое слово 'КонецФункции' ('EndFunction')"
-              ],
-              "entry_point": "ПолучитьОстаткиИОбороты",
-              "infra_detail": "модуль кандидата не компилируется",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "модуль кандидата не компилируется",
-              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается ключевое слово 'КонецФункции' ('EndFunction')",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B8",
       "model_id": "qwen/qwen3-235b-a22b-2507",
       "model_name": "Qwen3-235B-A22B",
       "runs": [
@@ -4258,58 +3950,6 @@
             "P": {
               "reason": "модуль кандидата не компилируется",
               "log": "Ожидается символ ';'; Неопознанный оператор; Пропущен символ '\"' (двойная кавычка)",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B8",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
               "band": 0
             }
           }
@@ -4936,131 +4576,6 @@
       ]
     },
     {
-      "task_id": "B15",
-      "model_id": "yandexgpt-5-lite/latest",
-      "model_name": "YandexGPT 5 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "f0ebae1854b03235866d8fa4b957350531d6cfb853e52398ba93b6a8101a4e25",
-          "scores": {
-            "S": 6,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 2.0
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 3,
-              "instrument": "1С /CheckModules",
-              "errors": [
-                "Переменная не определена (РегистрНакопления)",
-                "Переменная не определена (РегистрНакопления)",
-                "Переменная не определена (РегистрНакопления)",
-                "Переменная не определена (Порядок)"
-              ]
-            },
-            "M": {
-              "status": "candidate_error",
-              "passed": 0,
-              "total": 0,
-              "log": "Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления)",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [
-                3,
-                12,
-                25,
-                9
-              ],
-              "compile_errors": [
-                "Переменная не определена (РегистрНакопления)",
-                "Переменная не определена (РегистрНакопления)",
-                "Переменная не определена (РегистрНакопления)",
-                "Переменная не определена (Порядок)"
-              ],
-              "entry_point": "ABCКлассификация",
-              "infra_detail": "модуль кандидата не компилируется",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "модуль кандидата не компилируется",
-              "log": "Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления)",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B1",
-      "model_id": "yandexgpt-5-lite/latest",
-      "model_name": "YandexGPT 5 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "f8e0f6cfb02ef26c77577199019b833fcf8eead3cc409b1e8d52c16660ef9e2d",
-          "scores": {
-            "S": 8,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 2.67
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 1,
-              "instrument": "1С /CheckModules",
-              "errors": [
-                "Ожидается символ '='"
-              ]
-            },
-            "M": {
-              "status": "candidate_error",
-              "passed": 0,
-              "total": 0,
-              "log": "Ожидается символ '='",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [
-                25
-              ],
-              "compile_errors": [
-                "Ожидается символ '='"
-              ],
-              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
-              "infra_detail": "модуль кандидата не компилируется",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "модуль кандидата не компилируется",
-              "log": "Ожидается символ '='",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
       "task_id": "B2",
       "model_id": "yandexgpt-5-lite/latest",
       "model_name": "YandexGPT 5 Lite",
@@ -5113,45 +4628,6 @@
               "reason": "модуль кандидата не компилируется",
               "log": "Переменная не определена (РегистрСведений)",
               "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B3",
-      "model_id": "yandexgpt-5-lite/latest",
-      "model_name": "YandexGPT 5 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "3a391fe510ada56d66ee435780e02cca81dabd1d448dc5df622533e370fd893f",
-          "scores": {
-            "S": null,
-            "M": null,
-            "O": null,
-            "P": null,
-            "Q": null
-          },
-          "bands": {
-            "M": null,
-            "P": null
-          },
-          "detail": {
-            "S": {
-              "reason": "исполнение не состоялось (no_result)"
-            },
-            "M": {
-              "reason": "исполнение не состоялось (no_result)",
-              "infra_detail": "result.txt не создан; load.log: "
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "исполнение не состоялось (no_result): result.txt не создан; load.log: "
             }
           }
         }
@@ -9421,58 +8897,6 @@
       ]
     },
     {
-      "task_id": "B15",
-      "model_id": "GigaChat-2",
-      "model_name": "GigaChat 2 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "68670e5f713f771a09d57d331f7f5f8c959a557e69176fcfe708fae989539eee",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
       "task_id": "B1",
       "model_id": "GigaChat-2-Max",
       "model_name": "GigaChat 2 Max",
@@ -9608,58 +9032,6 @@
             "P": {
               "reason": "модуль кандидата не компилируется",
               "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B1",
-      "model_id": "GigaChat-2",
-      "model_name": "GigaChat 2 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "c7f582c12d0c09841ffa870e574b10bb640066a11a3f96a9518cb1c9723ff8b7",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
               "band": 0
             }
           }
@@ -10009,58 +9381,6 @@
             "P": {
               "reason": "модуль кандидата не компилируется",
               "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B3",
-      "model_id": "GigaChat-2",
-      "model_name": "GigaChat 2 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "3b2322f4001d8a38f3d23674324a1e88cf334100e66db20fe410d2b4349f2414",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
               "band": 0
             }
           }
@@ -22531,58 +21851,6 @@
     },
     {
       "task_id": "B9",
-      "model_id": "qwen3.7-plus",
-      "model_name": "Qwen3.7 Plus",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "5794bed74ea793e016803eb2f0c7ef8c54890d7346e024f2e8ad59d9a609d7b3",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.3
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": []
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B9",
       "model_id": "grok-build-0.1",
       "model_name": "Grok Build 0.1",
       "runs": [
@@ -24477,58 +23745,6 @@
             "P": {
               "reason": "модуль кандидата не компилируется",
               "log": "Неправильная константа типа Дата; Неправильная константа типа Дата; Неправильная константа типа Дата",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B16",
-      "model_id": "GigaChat-2",
-      "model_name": "GigaChat 2 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "3c87dd716005a1dfaa098ac0ec771123a7980bf09361d661cba280050803b9d6",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "note": "код не исполнился — O не меряем (гейт)",
-              "leg": "O-исп-B",
-              "gated": true
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
               "band": 0
             }
           }
@@ -26822,58 +26038,6 @@
     },
     {
       "task_id": "B19",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.3
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": []
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B19",
       "model_id": "claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
       "runs": [
@@ -28216,58 +27380,6 @@
     },
     {
       "task_id": "B20",
-      "model_id": "google/gemini-2.5-flash-lite",
-      "model_name": "Gemini 2.5 Flash Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "1442ab9f0f65a3809767295729711d6ddcd80254c31d880a2f9b78a5d1eb750e",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.3
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": []
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B20",
       "model_id": "deepseek/deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
       "runs": [
@@ -28390,72 +27502,6 @@
     },
     {
       "task_id": "B20",
-      "model_id": "z-ai/glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "8fba5c24ac3442b6c5c608736f20a1a2d0a0b8f4fd7a7e3592137779e0f1d397",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(2, 17)}: Поле не найдено \"Регистратор.Сумма\"\nРегистратор.<<?>>Сумма КАК Оборот; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(2, 17)}: Поле не найдено \"Регистратор.Сумма\"\nРегистратор.<<?>>Сумма КАК Оборот; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(2, 17)}: Поле не на",
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 3,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "weighted": 3.0,
-              "count": 2,
-              "codes": [
-                "LogicalOrInTheWhereSectionOfQuery",
-                "VirtualTableCallWithoutParameters"
-              ],
-              "gated_by_m": true,
-              "note": "оптимальность не оцениваем — задача не решена (M<5)"
-            },
-            "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 3,
-              "platform_error_tests": 3,
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B20",
       "model_id": "claude-sonnet-4.6",
       "model_name": "Claude Sonnet 4.6",
       "runs": [
@@ -28565,68 +27611,6 @@
               "platform_error_tests": 0,
               "platform_errors": [],
               "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B20",
-      "model_id": "yandexgpt-5-lite/latest",
-      "model_name": "YandexGPT 5 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "baf53f6ae4ab98d86956e4ebe4ca8265646b681043e7777dae27844f6a2d8df5",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(19)}: Ошибка при вызове метода контекста (Выполнить): {(1, 152)}: Синтаксическая ошибка \"Хозрасчетный.Счет\"\nВЫБРАТЬ    Хозрасчетный.Дебет,     Хозрасчетный.СубконтоДт1,     Хозрасчетный.СубконтоДт2 ИЗ    РегистрБухгалтерии.Хозрасчетный КАК ХозрасчетныйГДЕ    <<?>>Хозрасчетный.Счет = &Счет    И (Хозрасчетный.СубконтоДт1 = &Контрагент         ИЛИ Хозрасчетный.СубконтоДт2 = &Контрагент); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(19)}: Ошиб",
-              "platform_errors": [
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 3,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьДебетовыйОборотПоСчетуИКонтрагенту",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": [],
-              "leg": "O-авто",
-              "gated_by_m": true,
-              "note": "оптимальность не оцениваем — задача не решена (M<5)"
-            },
-            "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 3,
-              "platform_error_tests": 3,
-              "platform_errors": [
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "band": 0
             }
           }
         }
@@ -29022,58 +28006,6 @@
             "P": {
               "reason": "модуль кандидата не компилируется",
               "log": "Ожидается выражение; Ожидается символ '('; Неопознанный оператор",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B20",
-      "model_id": "GigaChat-2",
-      "model_name": "GigaChat 2 Lite",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "314dc1c3a5262158baa69d4494a85d3ebb2a3a4ed7c6c526cbe3349cb953c13e",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.3
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "no_entry",
-              "passed": 0,
-              "total": 0,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": null,
-              "infra_detail": "в коде кандидата не найдено ни одной функции",
-              "band": 0
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": []
-            },
-            "P": {
-              "reason": "в коде кандидата не найдено ни одной функции",
-              "log": "",
               "band": 0
             }
           }
@@ -48941,82 +47873,6 @@
     },
     {
       "task_id": "B1",
-      "model_id": "seed-2.0-code",
-      "model_name": "Seed 2.0 Code",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "87198d0a99c59b948976cd8539a3bbf7e45a5c504437ecb48dcf5e4ec9be229e",
-          "scores": {
-            "S": 6,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 2.0
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 2,
-              "instrument": "1С /CheckModules",
-              "errors": [
-                "Пропущен символ '\"' (двойная кавычка)",
-                "Ожидается символ ';'",
-                "Неопознанный оператор",
-                "Пропущен символ '\"' (двойная кавычка)",
-                "Ожидается символ ';'"
-              ]
-            },
-            "M": {
-              "status": "candidate_error",
-              "passed": 0,
-              "total": 0,
-              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [
-                55,
-                55,
-                56,
-                67,
-                67,
-                68
-              ],
-              "compile_errors": [
-                "Пропущен символ '\"' (двойная кавычка)",
-                "Ожидается символ ';'",
-                "Неопознанный оператор",
-                "Пропущен символ '\"' (двойная кавычка)",
-                "Ожидается символ ';'"
-              ],
-              "entry_point": "ПолучитьОстаткиТоваров",
-              "infra_detail": "модуль кандидата не компилируется",
-              "band": 0
-            },
-            "O": {
-              "growth": null,
-              "p_opt": 0.0,
-              "metric": "",
-              "counts": [],
-              "sizes": [],
-              "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: ",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "reason": "модуль кандидата не компилируется",
-              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B1",
       "model_id": "deepseek-v4-pro-0813",
       "model_name": "DeepSeek V4 Pro 0813",
       "runs": [
@@ -49076,67 +47932,6 @@
                 "Ошибка при вызове метода контекста (Выполнить)"
               ],
               "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B20",
-      "model_id": "seed-2.0-code",
-      "model_name": "Seed 2.0 Code",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "bd63d79a3b83af0aac88b002854751bcf720b6028c7396d33292a5333e53aa21",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 10.0,
-            "Q": 6.67
-          },
-          "bands": {
-            "M": 0,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 3,
-              "log": "тест1 FAIL (ожидалось 1500, получено ); тест2 FAIL (ожидалось 300, получено ); тест3 FAIL (ожидалось 700, получено );",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "weighted": 3.0,
-              "count": 2,
-              "codes": [
-                "LogicalOrInTheWhereSectionOfQuery",
-                "VirtualTableCallWithoutParameters"
-              ],
-              "leg": "O-авто",
-              "gated_by_m": true,
-              "note": "оптимальность не оцениваем — задача не решена (M<5)"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
             }
           }
         }
@@ -49326,70 +48121,6 @@
               "platform_error_tests": 0,
               "platform_errors": [],
               "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B3",
-      "model_id": "seed-2.0-code",
-      "model_name": "Seed 2.0 Code",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "310015df1daa88ae9cf85055d57bd10f996c462d8ab1bf5f5cebfe630478d730",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 3.3,
-            "Q": 4.43
-          },
-          "bands": {
-            "M": 0,
-            "P": 4
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить); тест3 FAIL (исключение без имени номенклатуры: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить));",
-              "platform_errors": [
-                "Метод объекта не обнаружен"
-              ],
-              "platform_error_tests": 2,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "СписатьТоварыПоФИФО",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "growth": null,
-              "p_opt": 0.0,
-              "metric": "",
-              "counts": [],
-              "sizes": [],
-              "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить)",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 0.333,
-              "clean": 1,
-              "total": 3,
-              "platform_error_tests": 2,
-              "platform_errors": [
-                "Метод объекта не обнаружен"
-              ],
-              "band": 4
             }
           }
         }
@@ -50212,50 +48943,6 @@
       ]
     },
     {
-      "task_id": "B15",
-      "model_id": "seed-2.0-code",
-      "model_name": "Seed 2.0 Code",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "04e16097de8b3d464fa6cfb873bd21f3b451f88fe8eb1cc9f770bce1ff902d63",
-          "scores": {
-            "S": null,
-            "M": null,
-            "O": null,
-            "P": null,
-            "Q": null
-          },
-          "bands": {
-            "M": null,
-            "P": null
-          },
-          "detail": {
-            "S": {
-              "reason": "исполнение не состоялось (no_result)"
-            },
-            "M": {
-              "reason": "исполнение не состоялось (no_result)",
-              "infra_detail": "result.txt не создан; load.log: "
-            },
-            "O": {
-              "growth": null,
-              "p_opt": 0.0,
-              "metric": "",
-              "counts": [],
-              "sizes": [],
-              "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: ",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "reason": "исполнение не состоялось (no_result): result.txt не создан; load.log: "
-            }
-          }
-        }
-      ]
-    },
-    {
       "task_id": "B10",
       "model_id": "qwen3.8-max",
       "model_name": "Qwen3.8 Max",
@@ -50869,70 +49556,6 @@
               "weighted": 0,
               "count": 0,
               "codes": [],
-              "leg": "O-авто",
-              "gated_by_m": true,
-              "note": "оптимальность не оцениваем — задача не решена (M<5)"
-            },
-            "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 3,
-              "platform_error_tests": 3,
-              "platform_errors": [
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B19",
-      "model_id": "glm-4.7-flash",
-      "model_name": "GLM-4.7 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "f609a22316e2c41d3130b270b86b5221c8773a6e50293d1bca34c5d91f2194ff",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(6, 26)}: Не задано значение параметра \"СсылкаНаСчет\"\nПланСчетов.Родитель = <<?>>&СсылкаНаСчет; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(6, 26)}: Не задано значение параметра \"СсылкаНаСчет\"\nПланСчетов.Родитель = <<?>>&СсылкаНаСчет; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Вып",
-              "platform_errors": [
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 3,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьСальдоПоСчету",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "weighted": 2.0,
-              "count": 2,
-              "codes": [
-                "LogicalOrInTheWhereSectionOfQuery"
-              ],
               "leg": "O-авто",
               "gated_by_m": true,
               "note": "оптимальность не оцениваем — задача не решена (M<5)"
@@ -64164,641 +62787,13 @@
       ]
     },
     {
-      "task_id": "B10",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
+      "task_id": "B8",
+      "model_id": "deepseek-v4-flash",
+      "model_name": "DeepSeek V4-Flash",
       "runs": [
         {
           "run_index": 0,
-          "response_hash": "2e813b23e0ade147baf13bc3b65ff7496251fae83b2942dacc02051ddadbaf2b",
-          "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьКонечныеЭлементыГруппы",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "growth": -0.111,
-              "p_opt": 0.0,
-              "metric": "sdbl",
-              "counts": [
-                7,
-                6
-              ],
-              "sizes": [
-                20,
-                80
-              ],
-              "entry_point": null,
-              "note": "",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B11",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "9124342fb553e71fbfc928fc79e45cd6d0d791611990e3a7c8d338c5d571c80f",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 4,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(21)}: Ошибка при вызове метода контекста (Выполнить): {(2, 24)}: Поле не найдено \"ОстаткиТоваровОстатки.Количество\"\nОстаткиТоваровОстатки.<<?>>Количество КАК Количество; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(21)}: Ошибка при вызове метода контекста (Выполнить): {(2, 24)}: Поле не найдено \"ОстаткиТоваровОстатки.Количество\"\nОстаткиТоваровОстатки.<<?>>Количество КАК Количество; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(21)}: О",
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 4,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ДостаточноТовараНаСкладе",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": [],
-              "leg": "O-авто",
-              "gated_by_m": true,
-              "note": "оптимальность не оцениваем — задача не решена (M<5)"
-            },
-            "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 4,
-              "platform_error_tests": 4,
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B12",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "5ebc80c9a482567cdbfa62aa10a73f1c4ba5f9ad9282065ae10afd1f17ea010a",
-          "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПроверитьУникальностьИНН",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "growth": 0.0,
-              "p_opt": 0.0,
-              "metric": "sdbl",
-              "counts": [
-                2,
-                2
-              ],
-              "sizes": [
-                20,
-                80
-              ],
-              "entry_point": null,
-              "note": "",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B13",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "007370ade1a6c267cdab3d141be8a76477bb556269e68b239c3de311a531f97c",
-          "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПеревестиВБазовуюЕдиницу",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": [],
-              "leg": "O-авто"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B14",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "533d22979cd62aff734fee10e6d28dfdc327650fd5fc0e814d077868f935f5e2",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(3, 9)}: Поле не найдено \"Товары.ВНаличии\"\nТовары.<<?>>ВНаличии КАК ВНаличии,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(3, 9)}: Поле не найдено \"Товары.ВНаличии\"\nТовары.<<?>>ВНаличии КАК ВНаличии,; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(3, 9)}: Поле не найдено",
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 3,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "СвободныйОстатокТоваров",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "growth": null,
-              "p_opt": 0.0,
-              "metric": "",
-              "counts": [],
-              "sizes": [],
-              "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(3, 9)}: Поле",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 3,
-              "platform_error_tests": 3,
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B15",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "af31f74dac8e535e9ecda6dd48825e33a3d9fde25dba4e3609105d8e16d9855d",
-          "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "АВСКлассификацияНоменклатуры",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "growth": 0.0,
-              "p_opt": 0.0,
-              "metric": "sdbl",
-              "counts": [
-                4,
-                4
-              ],
-              "sizes": [
-                20,
-                80
-              ],
-              "entry_point": null,
-              "note": "",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B16",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "4f79903f068e182bdd21b1a33d65b1e19f2c62dd5bbfb9e91f405e214279d13c",
-          "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьДействующийДоговор",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "growth": 0.0,
-              "p_opt": 0.0,
-              "metric": "sdbl",
-              "counts": [
-                2,
-                2
-              ],
-              "sizes": [
-                20,
-                80
-              ],
-              "entry_point": null,
-              "note": "",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B17",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "bb3a80bfd952c80f5ad7c381fdf6debcd4b08beab91cb3522a79912d81e5c1f4",
-          "scores": {
-            "S": 10,
-            "M": 0.0,
-            "O": null,
-            "P": 0.0,
-            "Q": 3.33
-          },
-          "bands": {
-            "M": 0,
-            "P": 0
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 0,
-              "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Ошибка при вызове метода контекста (Выполнить): {(7, 19)}: Поле не найдено \"СуммаОстаток\"\nИ <<?>>СуммаОстаток > 0) КАК ВзаиморасчетыОстатки; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Ошибка при вызове метода контекста (Выполнить): {(7, 19)}: Поле не найдено \"СуммаОстаток\"\nИ <<?>>СуммаОстаток > 0) КАК ВзаиморасчетыОстатки; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Ошибка при вызове метода контекста (Выполнить):",
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 3,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "СуммарныйДолгКонтрагента",
-              "infra_detail": "",
-              "band": 0
-            },
-            "O": {
-              "growth": null,
-              "p_opt": 0.0,
-              "metric": "",
-              "counts": [],
-              "sizes": [],
-              "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(14)}: Ошибка при вызове метода контекста (Выполнить): {(7, 19)}: Пол",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 3,
-              "platform_error_tests": 3,
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "band": 0
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B18",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "15a7bae5db02f31f10006e4ea9fb07bc74158379b19e26c8b6b910b88d26d433",
-          "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ВыделитьНДСИзСуммы",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": [],
-              "leg": "O-авто"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B19",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "264324590d27138c2ed3af45d25354f20ce120e63c4966fcccfaa7ce8935c5c8",
-          "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьСальдоПоСчету",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": [],
-              "leg": "O-авто"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B1",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "855880f8178e44c61225d4fcbd59abe5a84bbdd9abd1862d2d5de7b4a0127b71",
+          "response_hash": "c162f9386ac413bc5afb2dd1f0f8cf4e4291d965be083a6025f968ab429dfa09",
           "scores": {
             "S": 10,
             "M": 10.0,
@@ -64825,17 +62820,17 @@
               "platform_error_tests": 0,
               "compile_error_lines": [],
               "compile_errors": [],
-              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "entry_point": "ПолучитьОстаткиПоНоменклатуре",
               "infra_detail": "",
               "band": 10
             },
             "O": {
-              "growth": -0.096,
+              "growth": 0.0,
               "p_opt": 0.0,
               "metric": "sdbl",
               "counts": [
-                8,
-                7
+                3,
+                3
               ],
               "sizes": [
                 20,
@@ -64859,22 +62854,22 @@
     },
     {
       "task_id": "B20",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
+      "model_id": "gemini-2.5-flash-lite",
+      "model_name": "Gemini 2.5 Flash Lite",
       "runs": [
         {
           "run_index": 0,
-          "response_hash": "59846bfb064b23d0ef2def0f42dcbfb00e23f90786179ed5a01f3536c39b8572",
+          "response_hash": "3a098a844ae30e99a53d499bb6c6842424052dc691b1558a04b82d373ff6ef5d",
           "scores": {
             "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
           },
           "bands": {
-            "M": 10,
-            "P": 10
+            "M": 0,
+            "P": 0
           },
           "detail": {
             "S": {
@@ -64884,43 +62879,126 @@
             },
             "M": {
               "status": "ok",
-              "passed": 3,
+              "passed": 0,
               "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (ОборотыПоДебету); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (ОборотыПоДебету); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (ОборотыПоДебету);",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 3,
               "compile_error_lines": [],
               "compile_errors": [],
-              "entry_point": "ДебетовыйОборотПоКонтрагенту",
+              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
               "infra_detail": "",
-              "band": 10
+              "band": 0
             },
             "O": {
               "weighted": 0,
               "count": 0,
               "codes": [],
-              "leg": "O-авто"
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
             },
             "P": {
-              "clean_share": 1.0,
-              "clean": 3,
+              "clean_share": 0.0,
+              "clean": 0,
               "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 0
             }
           }
         }
       ]
     },
     {
-      "task_id": "B2",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
+      "task_id": "B16",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
       "runs": [
         {
           "run_index": 0,
-          "response_hash": "6c442f29816518eaef567842e4ed341c8f3921e72dfbac5b61c8174958357353",
+          "response_hash": "3c87dd716005a1dfaa098ac0ec771123a7980bf09361d661cba280050803b9d6",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Ожидается имя функции",
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Оператор Возврат (Return) не может употребляться вне процедуры или функции"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Ожидается имя функции; Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                1,
+                10,
+                10,
+                11,
+                28,
+                30,
+                30
+              ],
+              "compile_errors": [
+                "Ожидается имя функции",
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Оператор Возврат (Return) не может употребляться вне процедуры или функции"
+              ],
+              "entry_point": null,
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: в коде кандидата нет функции",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Ожидается имя функции; Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d602de8668a249d6bd3a75ce95a9f19f87fb633c542d4826fe66e2acdf7c6e43",
           "scores": {
             "S": 10,
             "M": 10.0,
@@ -64947,7 +63025,7 @@
               "platform_error_tests": 0,
               "compile_error_lines": [],
               "compile_errors": [],
-              "entry_point": "ЗаполнитьЦеныВТоварах",
+              "entry_point": "РассчитатьСвободныйОстаток",
               "infra_detail": "",
               "band": 10
             },
@@ -64956,8 +63034,8 @@
               "p_opt": 0.0,
               "metric": "sdbl",
               "counts": [
-                4,
-                4
+                2,
+                2
               ],
               "sizes": [
                 20,
@@ -64980,13 +63058,1096 @@
       ]
     },
     {
-      "task_id": "B3",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
+      "task_id": "B19",
+      "model_id": "glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
       "runs": [
         {
           "run_index": 0,
-          "response_hash": "425ccbcee7a48ce496be2ccab2be2802102519ad9dc9b3ea9b4704ef93651f61",
+          "response_hash": "f609a22316e2c41d3130b270b86b5221c8773a6e50293d1bca34c5d91f2194ff",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(6, 26)}: Не задано значение параметра \"СсылкаНаСчет\"\nПланСчетов.Родитель = <<?>>&СсылкаНаСчет; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Выполнить): {(6, 26)}: Не задано значение параметра \"СсылкаНаСчет\"\nПланСчетов.Родитель = <<?>>&СсылкаНаСчет; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(17)}: Ошибка при вызове метода контекста (Вып",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьСальдоПоСчету",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 2.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery"
+              ],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b691bc7aafdee1a19a7b2f01e295207f1365b4b96b1897e7b683c0a3b14a2304",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(4)}: Поле объекта не обнаружено (Обороты); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(4)}: Поле объекта не обнаружено (Обороты); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(4)}: Поле объекта не обнаружено (Обороты);",
+              "platform_errors": [
+                "не обнаружено"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(4)}: Поле объекта не обнаружено (Обороты)",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "не обнаружено"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "83e7b5d2d456c30bd73465fa0161379e5bc55ebdf36e967d2dcc6c36cc7918b7",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 2,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(75)}: Метод объекта не обнаружен (НайтиПоЗначению); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(75)}: Метод объекта не обнаружен (НайтиПоЗначению);",
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "platform_error_tests": 2,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДвиженияПоНоменклатуре",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                6,
+                6
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)",
+              "leg": "O-исп-B",
+              "gated_by_m": true
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 2,
+              "platform_error_tests": 2,
+              "platform_errors": [
+                "Метод объекта не обнаружен"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "qwen3.7-plus",
+      "model_name": "Qwen3.7 Plus",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5794bed74ea793e016803eb2f0c7ef8c54890d7346e024f2e8ad59d9a609d7b3",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Обнаружено логическое завершение исходного текста модуля"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Обнаружено логическое завершение исходного текста модуля",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                1
+              ],
+              "compile_errors": [
+                "Обнаружено логическое завершение исходного текста модуля"
+              ],
+              "entry_point": null,
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "reason": "O-авто(B): код не исполнился (статус candidate_error) → N/A",
+              "leg": "O-авто",
+              "run_status": "candidate_error"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Обнаружено логическое завершение исходного текста модуля",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f028d911f0a787347205be37d96c88a5d8aa5232abb17cec5f6b7df2e80bf003",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПровестиАВСКлассификацию",
+              "infra_detail": "",
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f0ebae1854b03235866d8fa4b957350531d6cfb853e52398ba93b6a8101a4e25",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Переменная не определена (РегистрНакопления)",
+                "Переменная не определена (РегистрНакопления)",
+                "Переменная не определена (РегистрНакопления)",
+                "Переменная не определена (Порядок)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                3,
+                12,
+                25,
+                9
+              ],
+              "compile_errors": [
+                "Переменная не определена (РегистрНакопления)",
+                "Переменная не определена (РегистрНакопления)",
+                "Переменная не определена (РегистрНакопления)",
+                "Переменная не определена (Порядок)"
+              ],
+              "entry_point": "ABCКлассификация",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления); Переменная не определена (РегистрНакопления)",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "68670e5f713f771a09d57d331f7f5f8c959a557e69176fcfe708fae989539eee",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Неопознанный оператор",
+                "Неопознанный оператор"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                11,
+                11,
+                12,
+                43,
+                53
+              ],
+              "compile_errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Неопознанный оператор",
+                "Неопознанный оператор"
+              ],
+              "entry_point": "ПолучитьABCКлассификация",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "305ede682c66d265a8dd273e49c3b7150722b99ca50d098a54d7b0b3c8dab108",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 3,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Неопознанный оператор",
+                "Неопознанный оператор"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                8,
+                8,
+                10,
+                53,
+                57
+              ],
+              "compile_errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Неопознанный оператор",
+                "Неопознанный оператор"
+              ],
+              "entry_point": "ПолучитьОстаткиНаСкладе",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f8e0f6cfb02ef26c77577199019b833fcf8eead3cc409b1e8d52c16660ef9e2d",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Ожидается символ '='"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Ожидается символ '='",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                25
+              ],
+              "compile_errors": [
+                "Ожидается символ '='"
+              ],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Ожидается символ '='",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c7f582c12d0c09841ffa870e574b10bb640066a11a3f96a9518cb1c9723ff8b7",
+          "scores": {
+            "S": 8,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                15,
+                15,
+                16
+              ],
+              "compile_errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор"
+              ],
+              "entry_point": "получитьОстаткиНоменклатуры",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "87198d0a99c59b948976cd8539a3bbf7e45a5c504437ecb48dcf5e4ec9be229e",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 2.0
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                55,
+                55,
+                56,
+                67,
+                67,
+                68
+              ],
+              "compile_errors": [
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'"
+              ],
+              "entry_point": "ПолучитьОстаткиТоваров",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'; Неопознанный оператор",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8fba5c24ac3442b6c5c608736f20a1a2d0a0b8f4fd7a7e3592137779e0f1d397",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(2, 17)}: Поле не найдено \"Регистратор.Сумма\"\nРегистратор.<<?>>Сумма КАК Оборот; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(2, 17)}: Поле не найдено \"Регистратор.Сумма\"\nРегистратор.<<?>>Сумма КАК Оборот; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(16)}: Ошибка при вызове метода контекста (Выполнить): {(2, 17)}: Поле не на",
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery",
+                "VirtualTableCallWithoutParameters"
+              ],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Поле не найдено",
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "baf53f6ae4ab98d86956e4ebe4ca8265646b681043e7777dae27844f6a2d8df5",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(19)}: Ошибка при вызове метода контекста (Выполнить): {(1, 152)}: Синтаксическая ошибка \"Хозрасчетный.Счет\"\nВЫБРАТЬ    Хозрасчетный.Дебет,     Хозрасчетный.СубконтоДт1,     Хозрасчетный.СубконтоДт2 ИЗ    РегистрБухгалтерии.Хозрасчетный КАК ХозрасчетныйГДЕ    <<?>>Хозрасчетный.Счет = &Счет    И (Хозрасчетный.СубконтоДт1 = &Контрагент         ИЛИ Хозрасчетный.СубконтоДт2 = &Контрагент); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(19)}: Ошиб",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДебетовыйОборотПоСчетуИКонтрагенту",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "314dc1c3a5262158baa69d4494a85d3ebb2a3a4ed7c6c526cbe3349cb953c13e",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(6)}: Ошибка при вызове метода контекста (Выполнить): {(1, 9)}: Синтаксическая ошибка \"|\"\nВЫБРАТЬ <<?>>|  СУММА(ДвиженияССубконто.ОборотноСальдоваяВеличинаПоДебету) КАК ДебетовыйОборот | ИЗ | РегистрБухгалтерии.Хозрасчетный КАК ДвиженияССубконто | ГДЕ |  &Счёт = ДвиженияССубконто.Счёт И &Контрагент = ДвиженияССубконто.СубконтоДт1 |; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(6)}: Ошибка при вызове метода контекста (Выполнить): {(1, 9)}: С",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "получитьДебетовыйОборотПоСчётуИКонтрагенту",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 0.0,
+              "clean": 0,
+              "total": 3,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bd63d79a3b83af0aac88b002854751bcf720b6028c7396d33292a5333e53aa21",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 10.0,
+            "Q": 6.67
+          },
+          "bands": {
+            "M": 0,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 FAIL (ожидалось 1500, получено ); тест2 FAIL (ожидалось 300, получено ); тест3 FAIL (ожидалось 700, получено );",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "band": 0
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery",
+                "VirtualTableCallWithoutParameters"
+              ],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "clean_share": 1.0,
+              "clean": 3,
+              "total": 3,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "GigaChat-2",
+      "model_name": "GigaChat 2 Lite",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3b2322f4001d8a38f3d23674324a1e88cf334100e66db20fe410d2b4349f2414",
+          "scores": {
+            "S": 4,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 1.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 4,
+              "instrument": "1С /CheckModules",
+              "errors": [
+                "Ожидается символ ')'",
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Неопознанный оператор"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Ожидается символ ')'; Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "compile_error_lines": [
+                1,
+                14,
+                14,
+                15,
+                51,
+                52,
+                67,
+                68
+              ],
+              "compile_errors": [
+                "Ожидается символ ')'",
+                "Пропущен символ '\"' (двойная кавычка)",
+                "Ожидается символ ';'",
+                "Неопознанный оператор",
+                "Неопознанный оператор"
+              ],
+              "entry_point": "списаниеТоваровFIFO",
+              "infra_detail": "модуль кандидата не компилируется",
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "модуль кандидата не компилируется",
+              "log": "Ожидается символ ')'; Пропущен символ '\"' (двойная кавычка); Ожидается символ ';'",
+              "band": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "310015df1daa88ae9cf85055d57bd10f996c462d8ab1bf5f5cebfe630478d730",
           "scores": {
             "S": 10,
             "M": 0.0,
@@ -65008,14 +64169,14 @@
               "status": "ok",
               "passed": 0,
               "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(43)}: Ошибка при вызове метода контекста (Выполнить): {(7, 5)}: Неверные параметры \"РегистрНакопления.ПартииТоваровНаСкладах.Остатки\"\n<<?>>РегистрНакопления.ПартииТоваровНаСкладах.Остатки(; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(43)}: Ошибка при вызове метода контекста (Выполнить): {(7, 5)}: Неверные параметры \"РегистрНакопления.ПартииТоваровНаСкладах.Остатки\"\n<<?>>РегистрНакопления.ПартииТоваровНаСкладах.Остатки(; тест3 FAIL (исключ",
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить); тест3 FAIL (исключение без имени номенклатуры: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить));",
               "platform_errors": [
-                "Ошибка при вызове метода контекста (Выполнить)"
+                "Метод объекта не обнаружен"
               ],
               "platform_error_tests": 2,
               "compile_error_lines": [],
               "compile_errors": [],
-              "entry_point": "СписаниеПоФИФО",
+              "entry_point": "СписатьТоварыПоФИФО",
               "infra_detail": "",
               "band": 0
             },
@@ -65026,7 +64187,7 @@
               "counts": [],
               "sizes": [],
               "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(43)}: Ошибка при вызове метода контекста (Выполнить): {(7, 5)}: Неве",
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(5)}: Метод объекта не обнаружен (Оставить)",
               "leg": "O-исп-B"
             },
             "P": {
@@ -65035,7 +64196,7 @@
               "total": 3,
               "platform_error_tests": 2,
               "platform_errors": [
-                "Ошибка при вызове метода контекста (Выполнить)"
+                "Метод объекта не обнаружен"
               ],
               "band": 4
             }
@@ -65044,152 +64205,19 @@
       ]
     },
     {
-      "task_id": "B4",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
+      "task_id": "B3",
+      "model_id": "z-ai/glm-4.7-flash",
+      "model_name": "GLM-4.7 Flash",
       "runs": [
         {
           "run_index": 0,
-          "response_hash": "dc7f85940e99966af41ca747505e8ddc64790a1f348d1d05100e176a39d9c322",
+          "response_hash": "629fe091b170a22228fa149063bdb0c767f8c8da2c676170f5e21763ada38012",
           "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "РассчитатьСреднююСебестоимость",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "growth": 0.0,
-              "p_opt": 0.0,
-              "metric": "sdbl",
-              "counts": [
-                3,
-                3
-              ],
-              "sizes": [
-                20,
-                80
-              ],
-              "entry_point": null,
-              "note": "",
-              "leg": "O-исп-B"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B5",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "3087938796b3f6cc5edec7295dd5911df066ab30b8f23061daf394a3cfb1af71",
-          "scores": {
-            "S": 10,
-            "M": 3.3,
-            "O": null,
-            "P": 10.0,
-            "Q": 7.77
-          },
-          "bands": {
-            "M": 2,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 1,
-              "total": 3,
-              "log": "тест1 FAIL (цена=100, сумма=200, ждали 81/162); тест2 FAIL (цена=0,6, ждали 13500);",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПересчитатьСуммыДокумента",
-              "infra_detail": "",
-              "band": 2
-            },
-            "O": {
-              "growth": 0.0,
-              "p_opt": 0.0,
-              "metric": "sdbl",
-              "counts": [
-                4,
-                4
-              ],
-              "sizes": [
-                20,
-                80
-              ],
-              "entry_point": null,
-              "note": "оптимальность не оцениваем — задача не решена (M<5)",
-              "leg": "O-исп-B",
-              "gated_by_m": true
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B6",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "15c687ef997aef9ffa0289a06b34c493ef59f7b64ac9a131c40ec6da9120f492",
-          "scores": {
-            "S": 10,
+            "S": 0,
             "M": 0.0,
             "O": null,
             "P": 0.0,
-            "Q": 3.33
+            "Q": 0.0
           },
           "bands": {
             "M": 0,
@@ -65197,24 +64225,27 @@
           },
           "detail": {
             "S": {
-              "root_causes": 0,
+              "root_causes": null,
               "instrument": "1С /CheckModules",
-              "errors": []
+              "errors": [
+                "компилятор платформы аварийно завершился (код 139) — модуль не принят"
+              ],
+              "compiler_exit": 139
             },
             "M": {
-              "status": "ok",
+              "status": "candidate_error",
               "passed": 0,
-              "total": 3,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(27)}: Ошибка при вызове метода контекста (Выполнить): {(3, 23)}: Поле не найдено \"ПродажиОбороты.Количество\"\nСУММА(ПродажиОбороты.<<?>>Количество) КАК Количество,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(27)}: Ошибка при вызове метода контекста (Выполнить): {(3, 23)}: Поле не найдено \"ПродажиОбороты.Количество\"\nСУММА(ПродажиОбороты.<<?>>Количество) КАК Количество,; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(27)}: Ошибка при вы",
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 3,
+              "total": 0,
+              "log": "компилятор платформы аварийно завершился (код 139) — модуль не принят",
+              "platform_errors": [],
+              "platform_error_tests": 0,
               "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьОборотыПродаж",
-              "infra_detail": "",
+              "compile_errors": [
+                "компилятор платформы аварийно завершился (код 139) — модуль не принят"
+              ],
+              "entry_point": "СписатьТоварыПоМетодуFIFO",
+              "infra_detail": "модуль кандидата роняет компилятор платформы",
+              "compiler_exit": 139,
               "band": 0
             },
             "O": {
@@ -65224,18 +64255,12 @@
               "counts": [],
               "sizes": [],
               "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(27)}: Ошибка при вызове метода контекста (Выполнить): {(3, 23)}: Пол",
+              "note": "замер не состоялся на размере базы 20: ",
               "leg": "O-исп-B"
             },
             "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 3,
-              "platform_error_tests": 3,
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
+              "reason": "модуль кандидата роняет компилятор платформы",
+              "log": "компилятор платформы аварийно завершился (код 139) — модуль не принят",
               "band": 0
             }
           }
@@ -65243,75 +64268,19 @@
       ]
     },
     {
-      "task_id": "B7",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
+      "task_id": "B3",
+      "model_id": "yandexgpt-5-lite/latest",
+      "model_name": "YandexGPT 5 Lite",
       "runs": [
         {
           "run_index": 0,
-          "response_hash": "3bba78ec46f2c06f9934179f64d6b3efa8d42070c58d54d14607ee153c226766",
+          "response_hash": "3a391fe510ada56d66ee435780e02cca81dabd1d448dc5df622533e370fd893f",
           "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
-          },
-          "bands": {
-            "M": 10,
-            "P": 10
-          },
-          "detail": {
-            "S": {
-              "root_causes": 0,
-              "instrument": "1С /CheckModules",
-              "errors": []
-            },
-            "M": {
-              "status": "ok",
-              "passed": 3,
-              "total": 3,
-              "log": "",
-              "platform_errors": [],
-              "platform_error_tests": 0,
-              "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьЦенуЗакупкиНаДату",
-              "infra_detail": "",
-              "band": 10
-            },
-            "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": [],
-              "leg": "O-авто"
-            },
-            "P": {
-              "clean_share": 1.0,
-              "clean": 3,
-              "total": 3,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
-            }
-          }
-        }
-      ]
-    },
-    {
-      "task_id": "B8",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
-      "runs": [
-        {
-          "run_index": 0,
-          "response_hash": "ed5fffce6304bb657a1afc269ba55e05a3b10c74674fa0e4b801eeb7d49ede44",
-          "scores": {
-            "S": 10,
+            "S": 0,
             "M": 0.0,
             "O": null,
             "P": 0.0,
-            "Q": 3.33
+            "Q": 0.0
           },
           "bands": {
             "M": 0,
@@ -65319,24 +64288,27 @@
           },
           "detail": {
             "S": {
-              "root_causes": 0,
+              "root_causes": null,
               "instrument": "1С /CheckModules",
-              "errors": []
+              "errors": [
+                "компилятор платформы аварийно завершился (код 139) — модуль не принят"
+              ],
+              "compiler_exit": 139
             },
             "M": {
-              "status": "ok",
+              "status": "candidate_error",
               "passed": 0,
-              "total": 2,
-              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 33)}: Поле не найдено \"ДвиженияТоваровОстаткиИОбороты.НачальныйОстаток\"\nДвиженияТоваровОстаткиИОбороты.<<?>>НачальныйОстаток КАК НачальныйОстаток,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 33)}: Поле не найдено \"ДвиженияТоваровОстаткиИОбороты.НачальныйОстаток\"\nДвиженияТоваровОстаткиИОбороты.<<?>>НачальныйОстаток КАК Нач",
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
-              "platform_error_tests": 2,
+              "total": 0,
+              "log": "компилятор платформы аварийно завершился (код 139) — модуль не принят",
+              "platform_errors": [],
+              "platform_error_tests": 0,
               "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "ПолучитьОборотыПоСкладу",
-              "infra_detail": "",
+              "compile_errors": [
+                "компилятор платформы аварийно завершился (код 139) — модуль не принят"
+              ],
+              "entry_point": "СписатьТовары",
+              "infra_detail": "модуль кандидата роняет компилятор платформы",
+              "compiler_exit": 139,
               "band": 0
             },
             "O": {
@@ -65346,18 +64318,12 @@
               "counts": [],
               "sizes": [],
               "entry_point": null,
-              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(22)}: Ошибка при вызове метода контекста (Выполнить): {(3, 33)}: Пол",
+              "note": "замер не состоялся на размере базы 20: ",
               "leg": "O-исп-B"
             },
             "P": {
-              "clean_share": 0.0,
-              "clean": 0,
-              "total": 2,
-              "platform_error_tests": 2,
-              "platform_errors": [
-                "Поле не найдено",
-                "Ошибка при вызове метода контекста (Выполнить)"
-              ],
+              "reason": "модуль кандидата роняет компилятор платформы",
+              "log": "компилятор платформы аварийно завершился (код 139) — модуль не принят",
               "band": 0
             }
           }
@@ -65365,56 +64331,63 @@
       ]
     },
     {
-      "task_id": "B9",
-      "model_id": "deepseek-v4.1-flash",
-      "model_name": "DeepSeek V4.1 Flash",
+      "task_id": "B15",
+      "model_id": "seed-2.0-code",
+      "model_name": "Seed 2.0 Code",
       "runs": [
         {
           "run_index": 0,
-          "response_hash": "61bfaf08d845b9954da1d7d73319e7e2459d01704167505ded679a17ed936741",
+          "response_hash": "04e16097de8b3d464fa6cfb873bd21f3b451f88fe8eb1cc9f770bce1ff902d63",
           "scores": {
-            "S": 10,
-            "M": 10.0,
-            "O": 10,
-            "P": 10.0,
-            "Q": 10.0
+            "S": 0,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 0.0
           },
           "bands": {
-            "M": 10,
-            "P": 10
+            "M": 0,
+            "P": 0
           },
           "detail": {
             "S": {
-              "root_causes": 0,
+              "root_causes": null,
               "instrument": "1С /CheckModules",
-              "errors": []
+              "errors": [
+                "компилятор платформы аварийно завершился (код 139) — модуль не принят"
+              ],
+              "compiler_exit": 139
             },
             "M": {
-              "status": "ok",
-              "passed": 2,
-              "total": 2,
-              "log": "",
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "компилятор платформы аварийно завершился (код 139) — модуль не принят",
               "platform_errors": [],
               "platform_error_tests": 0,
               "compile_error_lines": [],
-              "compile_errors": [],
-              "entry_point": "СводТоваровЗаказаПокупателя",
-              "infra_detail": "",
-              "band": 10
+              "compile_errors": [
+                "компилятор платформы аварийно завершился (код 139) — модуль не принят"
+              ],
+              "entry_point": "КлассификацияABC",
+              "infra_detail": "модуль кандидата роняет компилятор платформы",
+              "compiler_exit": 139,
+              "band": 0
             },
             "O": {
-              "weighted": 0,
-              "count": 0,
-              "codes": [],
-              "leg": "O-авто"
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
             },
             "P": {
-              "clean_share": 1.0,
-              "clean": 2,
-              "total": 2,
-              "platform_error_tests": 0,
-              "platform_errors": [],
-              "band": 10
+              "reason": "модуль кандидата роняет компилятор платформы",
+              "log": "компилятор платформы аварийно завершился (код 139) — модуль не принят",
+              "band": 0
             }
           }
         }
