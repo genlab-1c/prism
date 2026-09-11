@@ -11,6 +11,7 @@
    ============================================================ */
 import fs from 'node:fs';
 import path from 'node:path';
+import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import yaml from 'js-yaml';
 import { createHighlighter } from 'shiki';
@@ -749,6 +750,7 @@ const cases = badgeNum(/badge\/тест--кейсов-(\d+)/) ?? taskInfo.cases;
      - пункт
      - пункт
    Дату держим ISO (машиночитаемо), для показа переводим в «19 июля» здесь же. */
+const GH_REPO = 'genlab-1c/prism';
 const MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
   'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 const ruDate = (iso) => {
@@ -786,6 +788,53 @@ function loadChangelog() {
 }
 const changelog = loadChangelog();
 
+/* ---- 5e. Релизы бенчмарка (git-теги + заголовки с GitHub) ----
+   Второй поток журнала: версии. Даты и номера берём из тегов репозитория (значит CI обязан
+   их выкачивать: deploy.yml держит fetch-depth 0). Заголовок релиза живёт только на GitHub,
+   поэтому тянем его API на билде и кладём в src/data/releases.json — этот кэш и выручает,
+   когда сборка идёт офлайн или упёрлась в лимит API. Запасной вариант — тема тега. */
+const RELEASES_CACHE = path.join(WEB, 'src', 'data', 'releases.json');
+const cleanTitle = (t) => String(t || '')
+  .replace(/^PRISM\s+v?\d+(?:\.\d+)*\s*[—–-]\s*/i, '')   // «PRISM v1.9.1 — ...» → номер уже есть в чипе
+  .replace(/\.$/, '').trim();
+
+async function releaseTitles() {
+  try {
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 4000);
+    const r = await fetch(`https://api.github.com/repos/${GH_REPO}/releases?per_page=100`,
+      { headers: { 'User-Agent': 'prism-web' }, signal: ctrl.signal });
+    clearTimeout(t);
+    if (r.ok) {
+      const map = {};
+      for (const rel of await r.json()) map[rel.tag_name] = cleanTitle(rel.name);
+      fs.writeFileSync(RELEASES_CACHE, JSON.stringify(map, null, 2) + '\n');
+      return map;
+    }
+  } catch { /* сети нет или лимит API — ниже подхватим кэш */ }
+  try { return readJSON(RELEASES_CACHE); } catch { return {}; }
+}
+
+async function loadReleases() {
+  let raw = '';
+  try {
+    raw = execSync("git tag -l --sort=-creatordate --format='%(refname:short)|%(creatordate:short)|%(contents:subject)'",
+      { cwd: REPO, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+  } catch { return []; }                       // не git-чекаут (архив, песочница) — лента просто пустая
+  const titles = await releaseTitles();
+  const out = [];
+  for (const line of raw.split('\n')) {
+    const [tag, date, subject] = line.trim().replace(/^'|'$/g, '').split('|');
+    if (!/^v\d+\.\d+\.\d+$/.test(tag || '')) continue;   // только релизные теги (paper-baseline и прочие — мимо)
+    const { short, full } = ruDate(date);
+    out.push({ kind: 'release', date, dateShort: short, dateFull: full, version: tag,
+      title: titles[tag] || cleanTitle(subject),
+      url: `https://github.com/${GH_REPO}/releases/tag/${tag}` });
+  }
+  return out;
+}
+const releases = await loadReleases();
+
 /* ---- 6. Мета для шапки/чипов ---- */
 const pyproject = fs.readFileSync(path.join(REPO, 'pyproject.toml'), 'utf8');
 const version = (pyproject.match(/version\s*=\s*"([^"]+)"/) || [])[1] || '';
@@ -800,7 +849,6 @@ const tasksB = Math.max(0, ...Object.values(B.summary).map((m) => m.taskCount));
 
 /* ---- 6b. Репозиторий и звёзды (для ссылки/бейджа в шапке) ----
    Звёзды тянем с GitHub API на билде; офлайн/недоступно → null (бейдж без числа). */
-const GH_REPO = 'genlab-1c/prism';
 let repoStars = null;
 try {
   const ctrl = new AbortController();
@@ -813,11 +861,11 @@ try {
 const OUT = path.join(WEB, 'src', 'data', 'leaderboard.json');
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify({
-  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun, profileCols, tagLabels, changelog, repo: { url: `https://github.com/${GH_REPO}`, stars: repoStars } },
+  meta: { version, models: models.length, tasksA, tasksB, gens, cases, lastRun, profileCols, tagLabels, changelog, releases, repo: { url: `https://github.com/${GH_REPO}`, stars: repoStars } },
   models,
 }, null, 2) + '\n');
 
-console.log(`✓ leaderboard.json — ${models.length} моделей · A ${tasksA} / B ${tasksB} задач · v${version} · журнал ${changelog.length} записей`);
+console.log(`✓ leaderboard.json — ${models.length} моделей · A ${tasksA} / B ${tasksB} задач · v${version} · журнал ${changelog.length} записей + ${releases.length} релизов`);
 console.log(`✓ public/data/gen — ${models.length} файлов, ${genCount} генераций с подсветкой BSL`);
 {
   const s = matrix.tasks.map((t) => (t.n ? t.solved / t.n : 0));

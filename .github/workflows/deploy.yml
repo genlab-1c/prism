@@ -37,6 +37,8 @@ jobs:
         working-directory: web
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # нужны теги: из них собирается лента релизов в журнале изменений
       - uses: actions/setup-node@v4
         with:
           node-version: 20

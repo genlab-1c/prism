@@ -21,8 +21,31 @@ const stickyLeft = (bg) => ({ position: 'sticky', left: 0, zIndex: 1, background
 const inlineBold = (text) => String(text).split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
   p.startsWith('**') && p.endsWith('**') ? <b key={i}>{p.slice(2, -2)}</b> : p);
 
+// две ленты в одной: курируемые записи журнала и релизы. Релиз, выпущенный в день записи,
+// не дублирует её строкой, а прикрепляется к ней чипом версии — одна дата, одна карточка.
+const mergeTimeline = (entries, releases) => {
+  const out = [];
+  const byDate = new Map();
+  for (const e of entries || []) {
+    const item = { ...e, kind: 'entry', releases: [] };
+    out.push(item);
+    if (!byDate.has(e.date)) byDate.set(e.date, item);
+  }
+  for (const r of releases || []) {
+    const host = byDate.get(r.date);
+    if (host) host.releases.push(r); else out.push(r);
+  }
+  return out.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+};
+
+// чип версии со ссылкой на релиз в GitHub
+const ReleaseTag = ({ release }) => (
+  <a className="changelog-release-tag" href={release.url} target="_blank" rel="noopener noreferrer"
+     title={`релиз ${release.version} на GitHub`}>{release.version}</a>
+);
+
 // модалка журнала: весь список записей, закрывается по фону / Esc / крестику
-function ChangelogModal({ entries, onClose }) {
+function ChangelogModal({ entries, releases, onClose }) {
   React.useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     document.addEventListener('keydown', onKey);
@@ -43,9 +66,26 @@ function ChangelogModal({ entries, onClose }) {
             поэтому <b>лидерборд постоянно меняется</b>. Здесь видно, что и когда поменялось.
           </p>
           <div className="changelog-list">
-            {entries.map((e, i) => (
+            {mergeTimeline(entries, releases).map((e, i) => e.kind === 'release' ? (
+              <article key={e.version} className="changelog-entry is-release">
+                <div className="changelog-date">
+                  <span>{e.dateFull}</span>
+                  <ReleaseTag release={e} />
+                </div>
+                <a className="changelog-release-title" href={e.url} target="_blank" rel="noopener noreferrer">
+                  {e.title || 'релиз на GitHub'} <span aria-hidden="true">→</span>
+                </a>
+              </article>
+            ) : (
               <article key={e.date} className={i === 0 ? 'changelog-entry is-latest' : 'changelog-entry'}>
-                <div className="changelog-date">{e.dateFull}</div>
+                <div className="changelog-date">
+                  <span>{e.dateFull}</span>
+                  {e.releases.length > 0 && (
+                    <span className="changelog-versions">
+                      {e.releases.map((r) => <ReleaseTag key={r.version} release={r} />)}
+                    </span>
+                  )}
+                </div>
                 <h3 className="changelog-title">{inlineBold(e.title)}</h3>
                 {e.summary && <p className="changelog-summary">{inlineBold(e.summary)}</p>}
                 {e.items?.length > 0 && <ul className="changelog-items">{e.items.map((it, j) => <li key={j}>{inlineBold(it)}</li>)}</ul>}
@@ -62,7 +102,7 @@ function ChangelogModal({ entries, onClose }) {
 }
 
 // лента «что нового»: тонкая строка с верхней записью; по клику — модалка со всем журналом
-function WhatsNew({ entries }) {
+function WhatsNew({ entries, releases }) {
   const [open, setOpen] = React.useState(false);
   const entry = entries?.[0];
   if (!entry) return null;
@@ -74,7 +114,7 @@ function WhatsNew({ entries }) {
         <span className="whatsnew-title">{inlineBold(entry.title)}</span>
         <span className="whatsnew-more">все изменения <span className="whatsnew-arrow">→</span></span>
       </button>
-      {open && <ChangelogModal entries={entries} onClose={() => setOpen(false)} />}
+      {open && <ChangelogModal entries={entries} releases={releases} onClose={() => setOpen(false)} />}
     </>
   );
 }
@@ -843,7 +883,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="моделей" value={String(meta.models || models.length)} />
           <Shield label="обновлено" value={meta.lastRun || '—'} tone="ok" />
         </div>
-        <WhatsNew entries={meta.changelog || []} />
+        <WhatsNew entries={meta.changelog || []} releases={meta.releases || []} />
         {!isMobile && <div style={{ marginTop: 16, maxWidth: 520 }}><QuickStart repo={meta.repo} /></div>}
         <p style={{ margin: isMobile ? '12px 0 0' : '14px 0 0', fontSize: isMobile ? 12.5 : 13.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: 1.55 }}>
           Участвуйте: добавьте свою модель в лидерборд или пришлите готовый прогон.{' '}
