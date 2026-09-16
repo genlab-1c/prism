@@ -61,7 +61,7 @@ function StarButton({ repo }) {
     return () => { alive = false; };
   }, [slug]);
   return (
-    <a href={url} target="_blank" rel="noreferrer"
+    <a href={url} target="_blank" rel="noreferrer" className="gh-button"
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       style={{ display: 'inline-flex', alignItems: 'stretch', borderRadius: 'var(--radius-sm)', overflow: 'hidden', border: '1px solid var(--border-strong)', textDecoration: 'none' }}>
       <span style={{
@@ -69,7 +69,7 @@ function StarButton({ repo }) {
         background: hover ? 'var(--navy-600)' : 'var(--surface-raised)', color: 'var(--ink-100)',
         fontFamily: 'var(--font-mono)', fontSize: 12.5, fontWeight: 500, transition: 'background var(--dur-fast) var(--ease)',
       }}>
-        <span style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span><span className="hide-mobile">Star</span>
+        <span className="gh-star" style={{ color: 'var(--one-c)' }}><Icon name="star" size={14} /></span><span className="hide-mobile">GitHub</span>
       </span>
       {stars != null && (
         <span style={{
@@ -107,9 +107,9 @@ export default function SiteHeader({ active = 'leaderboard', version = '', repo 
             <img src={logo} alt="PRISM" style={{ height: 26, width: 'auto', display: 'block' }} />
           </a>
           <span className="hide-mobile" style={{ color: 'var(--line)', fontSize: 18 }}>/</span>
-          <span className="hide-mobile" style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>
+          <a href={BASE} className="hide-mobile crumb-link" style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>
             <span style={{ color: 'var(--ink-300)' }}>genlab-1c</span><span> / </span><span style={{ color: 'var(--ink-200)' }}>prism</span>
-          </span>
+          </a>
         </div>
         <nav className="nav-bar site-header-nav">
           {NAV.map((n) => <NavLink key={n.key} label={n.label} href={n.href} active={active === n.key} />)}

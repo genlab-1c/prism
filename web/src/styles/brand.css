@@ -1,0 +1,43 @@
+/* ============================================================
+   PRISM — фирменное слово «prism» в шапке лидерборда.
+   Тот же спектр S·M·O·P, что в CLI-интро (harness/ui.py, print_logo) и в токене --prism:
+   цвета берутся из осей, поэтому обе темы подхватываются сами. Градиент замкнут
+   (S…P…S) и шириной в два слова, а сдвиг ровно на ширину картинки — цикл без шва.
+   ============================================================ */
+.brand-wordmark {
+  background-image: linear-gradient(90deg, var(--axis-s), var(--axis-m), var(--axis-o), var(--axis-p), var(--axis-s));
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  animation: brand-flow 6s linear infinite;
+}
+@keyframes brand-flow {
+  from { background-position: 200% 50%; }
+  to   { background-position: 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-wordmark { animation: none; background-position: 0% 50%; }
+}
+
+/* ---- звезда на кнопке GitHub в шапке ----
+   Полный оборот вокруг вертикальной оси, как монета: раз в 8 секунд и сразу при
+   наведении. Остальное время звезда стоит. Перспектива даёт объём, без неё поворот
+   выглядел бы как сжатие в полоску. */
+.gh-star { display: inline-flex; animation: gh-star-turn 8s var(--ease) infinite; }
+.gh-button:hover .gh-star { animation: gh-star-turn-once 0.7s var(--ease-out) both; }
+@keyframes gh-star-turn {
+  0%, 89% { transform: perspective(60px) rotateY(0deg); }
+  100%    { transform: perspective(60px) rotateY(360deg); }
+}
+@keyframes gh-star-turn-once {
+  from { transform: perspective(60px) rotateY(0deg); }
+  to   { transform: perspective(60px) rotateY(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gh-star, .gh-button:hover .gh-star { animation: none; }
+}
+
+/* ---- путь «genlab-1c / prism» в шапке: ссылка на главную (лидерборд) ---- */
+.crumb-link { text-decoration: none; }
+.crumb-link span { transition: color var(--dur-fast) var(--ease); }
+.crumb-link:hover span { color: var(--brand) !important; }

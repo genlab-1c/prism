@@ -859,7 +859,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
       <section style={{ paddingTop: isMobile ? 22 : 40, paddingBottom: isMobile ? 14 : 24 }}>
         <h1 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: isMobile ? 18 : 22, fontWeight: 600, color: 'var(--ink-100)', letterSpacing: '-0.01em', lineHeight: 1.25 }}>
-          prism <span style={{ color: 'var(--ink-400)', fontWeight: 400 }}>— многомерная оценка генерации кода 1С</span>
+          <span className="brand-wordmark">prism</span> <span style={{ color: 'var(--ink-400)', fontWeight: 400 }}>— многомерная оценка генерации кода 1С</span>
         </h1>
         <p style={{ margin: isMobile ? '9px 0 0' : '12px 0 0', fontSize: isMobile ? 13.5 : 14.5, color: 'var(--ink-300)', maxWidth: 680, lineHeight: isMobile ? 1.5 : 1.6, textAlign: isMobile ? 'justify' : 'left' }}>
           Открытый бенчмарк качества генерации кода 1С. Код, который написала модель, мы <span style={{ color: 'var(--ink-100)' }}>по-настоящему исполняем</span> — компилятор, скрытые и нагрузочные тесты, живая база&nbsp;1С — и оцениваем по четырём осям&nbsp;<span style={{ whiteSpace: 'nowrap' }}><span style={{ color: 'var(--axis-s)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>S</span> <span style={{ color: 'var(--axis-m)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>M</span> <span style={{ color: 'var(--axis-o)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>O</span> <span style={{ color: 'var(--axis-p)', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>P</span></span> (синтаксис · семантика · оптимальность · платформа), а не по принципу «прошло&nbsp;/ не&nbsp;прошло».
