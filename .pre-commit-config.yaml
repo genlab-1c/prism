@@ -36,7 +36,14 @@ repos:
         exclude: ^results/
       - id: end-of-file-fixer        # перевод строки в конце файла
         exclude: ^results/
-      - id: check-yaml               # валидность YAML (editions/, metric/, tasks/)
+      # check-yaml дважды: с --unsafe хук только разбирает синтаксис и НЕ видит дублей ключей
+      # (PyYAML молча берёт последний, а js-yaml в сборке витрины на них падает). Поэтому строгий
+      # режим для всех YAML, и --unsafe только для mkdocs.yml с его тегами !!python/name.
+      - id: check-yaml               # валидность YAML + дубли ключей (editions/, metrics/, tasks/, generation/)
+        exclude: ^mkdocs\.yml$
+      - id: check-yaml
+        name: check yaml (mkdocs, custom tags)
         args: [--unsafe]             # допускаем кастомные теги mkdocs (!!python/name для mermaid)
+        files: ^mkdocs\.yml$
       - id: check-merge-conflict     # забытые маркеры конфликтов
       - id: check-added-large-files  # случайные большие файлы (>500 КБ)
