@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_B_20260617_031637",
   "category": "B",
-  "timestamp": "2026-09-09T04:52:12.021114",
+  "timestamp": "2026-09-16T18:02:14",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -53,7 +53,8 @@
     "Gemini 3.8 Flash",
     "Qwen3.8 Max 0902",
     "GPT-6 Astra",
-    "GPT-5.6 Luna Max"
+    "GPT-5.6 Luna Max",
+    "DeepSeek V4.1 Flash"
   ],
   "tasks_count": 20,
   "runs_per_task": 1,
@@ -2551,6 +2552,55 @@
       "total_tokens": 2140,
       "total_cost": 0.0028823999999999994,
       "avg_time": 22.114
+    },
+    {
+      "task_id": "B10",
+      "task_name": "Элементы группы по иерархии",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.0015798,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ПолучитьКонечныеЭлементыГруппы(СсылкаНаГруппу) Экспорт\n\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        |    Номенклатура.Ссылка КАК Ссылка\n        |ИЗ\n        |    Справочник.Номенклатура КАК Номенклатура\n        |ГДЕ\n        |    Номенклатура.Ссылка В ИЕРАРХИИ (&Группа)\n        |    И НЕ Номенклатура.ЭтоГруппа\n        |УПОРЯДОЧИТЬ ПО\n        |    Номенклатура.Наименование\";\n\n    Запрос.УстановитьПараметр(\"Группа\", СсылкаНаГруппу);\n\n    Результат = Новый Массив;\n    Выборка = Запрос.Выполнить().Выбрать();\n    Пока Выборка.Следующий() Цикл\n        Результат.Добавить(Выборка.Ссылка);\n    КонецЦикла;\n\n    Возврат Результат;\n\nКонецФункции\n```",
+          "response_hash": "2e813b23e0ade147baf13bc3b65ff7496251fae83b2942dacc02051ddadbaf2b",
+          "tokens_input": 293,
+          "tokens_output": 304,
+          "tokens_total": 597,
+          "tokens_reasoning": 16,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write function using query with В ИЕРАРХИИ.",
+          "finish_reason": "stop",
+          "system_fingerprint": "vllm-0.1.dev20904+g179dd0fa9-tp8-ep-26c3b29d",
+          "cost_reported": 0.09,
+          "elapsed_time": 4.635137319564819,
+          "cost_input": 8.790000000000001e-05,
+          "cost_output": 0.00036480000000000003,
+          "cost_total": 0.00045270000000000005,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2e813b23e0ade147baf13bc3b65ff7496251fae83b2942dacc02051ddadbaf2b",
+        "most_common_count": 1,
+        "hashes": [
+          "2e813b23e0ade147baf13bc3b65ff7496251fae83b2942dacc02051ddadbaf2b"
+        ]
+      },
+      "total_tokens": 597,
+      "total_cost": 0.0020325,
+      "avg_time": 4.635
     },
     {
       "task_id": "B11",
@@ -5072,6 +5122,57 @@
       "avg_time": 12.478
     },
     {
+      "task_id": "B11",
+      "task_name": "Контроль достаточности остатка",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ОстаткиТоваров",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.001575,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ДостаточноТовараНаСкладе(Номенклатура, Склад, ТребуемоеКоличество) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tОстаткиТоваровОстатки.Количество КАК Количество\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.ОстаткиТоваров.Остатки(\n\t\t|\t\t\t&Отбор,\n\t\t|\t\t\tНоменклатура = &Номенклатура\n\t\t|\t\t\t\tИ Склад = &Склад) КАК ОстаткиТоваровОстатки\";\n\t\n\tОтбор = Новый Структура;\n\tОтбор.Вставить(\"Номенклатура\", Номенклатура);\n\tОтбор.Вставить(\"Склад\", Склад);\n\t\n\tЗапрос.УстановитьПараметр(\"Отбор\", Отбор);\n\tЗапрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Количество >= ТребуемоеКоличество;\n\tКонецЕсли;\n\t\n\tВозврат Ложь;\n\t\nКонецФункции\n```",
+          "response_hash": "9124342fb553e71fbfc928fc79e45cd6d0d791611990e3a7c8d338c5d571c80f",
+          "tokens_input": 345,
+          "tokens_output": 368,
+          "tokens_total": 713,
+          "tokens_reasoning": 22,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need function using РегистрНакопления.ОстаткиТоваров.Остатки.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.11,
+          "elapsed_time": 14.33469271659851,
+          "cost_input": 0.0001035,
+          "cost_output": 0.0004416,
+          "cost_total": 0.0005451,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "9124342fb553e71fbfc928fc79e45cd6d0d791611990e3a7c8d338c5d571c80f",
+        "most_common_count": 1,
+        "hashes": [
+          "9124342fb553e71fbfc928fc79e45cd6d0d791611990e3a7c8d338c5d571c80f"
+        ]
+      },
+      "total_tokens": 713,
+      "total_cost": 0.0021200999999999998,
+      "avg_time": 14.335
+    },
+    {
       "task_id": "B12",
       "task_name": "Поиск дубля контрагента по ИНН",
       "model_id": "aliceai-llm/latest",
@@ -7561,6 +7662,55 @@
       "total_tokens": 978,
       "total_cost": 0.0015728,
       "avg_time": 6.322
+    },
+    {
+      "task_id": "B12",
+      "task_name": "Поиск дубля контрагента по ИНН",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.0012702,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1c\nФункция ПроверитьУникальностьИНН(ИНН, ИсключаемыйКонтрагент) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tКонтрагенты.Ссылка КАК Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Контрагенты КАК Контрагенты\n\t\t|ГДЕ\n\t\t|\tКонтрагенты.ИНН = &ИНН\n\t\t|\tИ Контрагенты.Ссылка <> &ИсключаемыйКонтрагент\";\n\t\n\tЗапрос.УстановитьПараметр(\"ИНН\", ИНН);\n\tЗапрос.УстановитьПараметр(\"ИсключаемыйКонтрагент\", ИсключаемыйКонтрагент);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tВозврат Выборка.Следующий();\n\t\nКонецФункции\n```",
+          "response_hash": "5ebc80c9a482567cdbfa62aa10a73f1c4ba5f9ad9282065ae10afd1f17ea010a",
+          "tokens_input": 291,
+          "tokens_output": 276,
+          "tokens_total": 567,
+          "tokens_reasoning": 16,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need function checking uniqueness of INN excluding given ref.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.09,
+          "elapsed_time": 1.70475172996521,
+          "cost_input": 8.730000000000001e-05,
+          "cost_output": 0.0003312,
+          "cost_total": 0.0004185,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5ebc80c9a482567cdbfa62aa10a73f1c4ba5f9ad9282065ae10afd1f17ea010a",
+        "most_common_count": 1,
+        "hashes": [
+          "5ebc80c9a482567cdbfa62aa10a73f1c4ba5f9ad9282065ae10afd1f17ea010a"
+        ]
+      },
+      "total_tokens": 567,
+      "total_cost": 0.0016887,
+      "avg_time": 1.705
     },
     {
       "task_id": "B13",
@@ -10054,6 +10204,55 @@
       "avg_time": 3.356
     },
     {
+      "task_id": "B13",
+      "task_name": "Перевод количества в базовую единицу",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Упаковки"
+      ],
+      "context_analysis_cost": 0.00105,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ПеревестиВБазовуюЕдиницу(Упаковка, Количество)\n\t\n\tЕсли Упаковка = Неопределено Или Упаковка.Пустая() Тогда\n\t\tВозврат Количество;\n\tКонецЕсли;\n\t\n\tКоэффициент = Упаковка.Коэффициент;\n\t\n\tЕсли Коэффициент = 0 Тогда\n\t\tВозврат Количество;\n\tКонецЕсли;\n\t\n\tВозврат Количество * Коэффициент;\n\t\nКонецФункции\n```",
+          "response_hash": "007370ade1a6c267cdab3d141be8a76477bb556269e68b239c3de311a531f97c",
+          "tokens_input": 294,
+          "tokens_output": 130,
+          "tokens_total": 424,
+          "tokens_reasoning": 5,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need return only code.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.05,
+          "elapsed_time": 3.6611433029174805,
+          "cost_input": 8.819999999999999e-05,
+          "cost_output": 0.00015599999999999997,
+          "cost_total": 0.00024419999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "007370ade1a6c267cdab3d141be8a76477bb556269e68b239c3de311a531f97c",
+        "most_common_count": 1,
+        "hashes": [
+          "007370ade1a6c267cdab3d141be8a76477bb556269e68b239c3de311a531f97c"
+        ]
+      },
+      "total_tokens": 424,
+      "total_cost": 0.0012942,
+      "avg_time": 3.661
+    },
+    {
       "task_id": "B14",
       "task_name": "Свободный остаток с учётом резервов",
       "model_id": "aliceai-llm/latest",
@@ -10310,43 +10509,52 @@
     {
       "task_id": "B14",
       "task_name": "Свободный остаток с учётом резервов",
-      "model_id": "z-ai/glm-4.7-flash",
+      "model_id": "glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
       "context_loaded": true,
       "context_objects": [
         "РегистрНакопления.ТоварыНаСкладах",
         "РегистрНакопления.Резервы"
       ],
-      "context_analysis_cost": 0.0,
+      "context_analysis_cost": 0.00039626000000000006,
       "runs": [
         {
           "run_index": 0,
           "seed": null,
           "temperature": 0.1,
-          "response": "",
-          "response_hash": "",
+          "response": "Функция РассчитатьСвободныйОстаток(МассивНоменклатуры, Склад)\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        | ТоварыНаСкладах.Номенклатура КАК Номенклатура,\n        | ТоварыНаСкладах.ВНаличии - ЕСТЬNULL(Резервы.Зарезервировано, 0) КАК Свободно\n        |ИЗ\n        | РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах\n        | ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.Резервы КАК Резервы\n        | ПО ТоварыНаСкладах.Номенклатура = Резервы.Номенклатура\n        | И ТоварыНаСкладах.Склад = Резервы.Склад\n        |ГДЕ\n        | ТоварыНаСкладах.Склад = &Склад\n        | И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры)\";\n\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n    Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n    РезультатЗапроса = Запрос.Выполнить();\n    Выборка = РезультатЗапроса.Выбрать();\n\n    ТаблицаРезультат = Новый ТаблицаЗначений;\n    ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n    ТаблицаРезультат.Колонки.Добавить(\"Свободно\", Новый ОписаниеТипов(\"Число\", , , Новый КвалификаторыЧисла(15, 3)));\n\n    Пока Выборка.Следующий() Цикл\n        НоваяСтрока = ТаблицаРезультат.Добавить();\n        НоваяСтрока.Номенклатура = Выборка.Номенклатура;\n        НоваяСтрока.Свободно = Выборка.Свободно;\n    КонецЦикла;\n\n    Возврат ТаблицаРезультат;\nКонецФункции",
+          "response_hash": "d602de8668a249d6bd3a75ce95a9f19f87fb633c542d4826fe66e2acdf7c6e43",
           "tokens_input": 379,
-          "tokens_output": 4096,
-          "tokens_total": 4475,
-          "tokens_reasoning": 0,
+          "tokens_output": 3188,
+          "tokens_total": 3567,
+          "tokens_reasoning": 2657,
           "tokens_cached": 0,
           "tokens_cache_write": 0,
-          "reasoning": "",
-          "finish_reason": "",
+          "reasoning": "1.  **Analyze the Request:**\n    *   **Platform:** 1C:Enterprise 8.3.\n    *   **Constraint:** Use *only* metadata provided in the context.\n    *   **Metadata:**\n        *   `ТоварыНаСкладах` (Accumulation Register, Balance type): Measures (Склад, Номенклатура), Resource (ВНаличии).\n        *   `Резервы` (Accumulation Register, Balance type): Measures (Склад, Номенклатура), Resource (Зарезервировано).\n    *   **Task:** Write a function to calculate the *free stock* (Свободный остаток).\n    *   **Formula:** Free Stock = Available (ВНаличии) - Reserved (Зарезервировано).\n    *   **Parameters:** Array of items (Номенклатура), Warehouse (Склад).\n    *   **Output:** A `ValueTable` (ТаблицаЗначений) with columns `Номенклатура` and `Свободно`.\n    *   **Logic:** Include items with zero stock and zero reservation. Items not in the input array should be excluded (implied by \"Parameters: array of items\").\n\n2.  **Determine the Approach:**\n    *   I need to query the two accumulation registers.\n    *   Since the result needs to be a table of values with specific columns, I can either:\n        *   Query the registers and then process the result in code.\n        *   Use a single Query (SELECT) joining the registers.\n    *   Given the requirement to return a `ValueTable` and the specific logic (Available - Reserved), a single Query is usually cleaner and faster, but handling the subtraction in SQL might be slightly more complex if the registers have different structures (though here they are identical in structure).\n    *   Let's look at the Query approach.\n        *   Select `ТоварыНаСкладах.Номенклатура`, `ТоварыНаСкладах.Склад`, `ТоварыНаСкладах.ВНаличии`, `Резервы.Зарезервировано`.\n        *   Join `ТоварыНаСкладах` with `Резервы` on `Номенклатура` and `Склад`.\n        *   Filter by `Склад` in the array and `Номенклатура` in the array.\n        *   Calculate `ВНаличии - Зарезервировано`.\n    *   *Alternative approach (Code-based):* Iterate through the array of items. For each item, get the balance from `ТоварыНаСкладах` and `Резервы`. This is safer if the registers are huge and we only need specific items, but the prompt implies a general function.\n    *   Let's stick to the Query approach as it's standard for 1C reporting.\n\n3.  **Drafting the Query:**\n    *   `ВЫБРАТЬ`\n    *   `ТоварыНаСкладах.Номенклатура КАК Номенклатура,`\n    *   `ТоварыНаСкладах.ВНаличии - Резервы.Зарезервировано КАК Свободно`\n    *   `ИЗ`\n    *   `РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах`\n    *   `ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.Резервы КАК Резервы`\n    *   `ПО ТоварыНаСкладах.Номенклатура = Резервы.Номенклатура`\n    *   `И ТоварыНаСкладах.Склад = Резервы.Склад`\n    *   `ГДЕ`\n    *   `ТоварыНаСкладах.Склад В (&МассивСкладов)`\n    *   `И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры)`\n\n4.  **Refining the Logic:**\n    *   The prompt asks for \"Array of items\" and \"Warehouse\".\n    *   The prompt says \"Return table of values\".\n    *   The prompt says \"Items without reservation should also appear (count as zero)\".\n    *   The `LEFT JOIN` handles the \"items without reservation\" part perfectly because `Резервы.Зарезервировано` will be NULL (or 0 depending on settings, but usually NULL in SQL logic, though 1C accumulates to 0 if empty). Actually, in 1C accumulation registers, if there are no records, the balance is 0. So `ТоварыНаСкладах.ВНаличии - Резервы.Зарезервировано` will work. If `Зарезервировано` is NULL, 1C handles the arithmetic correctly (NULL - X = NULL, but usually we want 0). Wait, if the register is empty, the balance is 0. If the join returns NULL for the resource, the result is NULL.\n    *   *Correction:* In 1C accumulation registers, if there are no records, the balance is 0. If I do a `LEFT JOIN` and the right side is empty, the resource on the right is NULL. `0 - NULL` is NULL.\n    *   *Fix:* I need to ensure the subtraction handles NULLs or use `COALESCE` / `IFNULL` equivalent in 1C Query syntax.\n    *   1C Query syntax for NULL handling: `ТоварыНаСкладах.ВНаличии - ЕСТЬNULL(Резервы.Зарезервировано, 0)`.\n    *   Or simply: `ТоварыНаСкладах.ВНаличии - Резервы.Зарезервировано`. If `Резервы.Зарезервировано` is NULL, 1C usually treats it as 0 in arithmetic contexts for balances, but strictly speaking, `0 - NULL` is NULL.\n    *   Let's use `ЕСТЬNULL` to be safe and explicit.\n\n5.  **Constructing the Function:**\n    *   Function signature: `Функция РассчитатьСвободныйОстаток(МассивНоменклатуры, Склад)`\n    *   Input types: `Массив` (СправочникСсылка.Номенклатура), `СправочникСсылка.Склады`.\n    *   Output type: `ТаблицаЗначений`.\n    *   Code structure:\n        ```bsl\n        Функция РассчитатьСвободныйОстаток(МассивНоменклатуры, Склад)\n            Запрос = Новый Запрос;\n            Запрос.Текст =\n                \"ВЫБРАТЬ\n                | ТоварыНаСкладах.Номенклатура КАК Номенклатура,\n                | ТоварыНаСкладах.ВНаличии - ЕСТЬNULL(Резервы.Зарезервировано, 0) КАК Свободно\n                |ИЗ\n                | РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах\n                | ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.Резервы КАК Резервы\n                | ПО ТоварыНаСкладах.Номенклатура = Резервы.Номенклатура\n                | И ТоварыНаСкладах.Склад = Резервы.Склад\n                |ГДЕ\n                | ТоварыНаСкладах.Склад = &Склад\n                | И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры)\";\n\n            Запрос.УстановитьПараметр(\"Склад\", Склад);\n            Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n            РезультатЗапроса = Запрос.Выполнить();\n            Выборка = РезультатЗапроса.Выбрать();\n\n            ТаблицаРезультат = Новый ТаблицаЗначений;\n            ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n            ТаблицаРезультат.Колонки.Добавить(\"Свободно\", Новый ОписаниеТипов(\"Число\", , , Новый КвалификаторыЧисла(15, 3)));\n\n            Пока Выборка.Следующий() Цикл\n                НоваяСтрока = ТаблицаРезультат.Добавить();\n                НоваяСтрока.Номенклатура = Выборка.Номенклатура;\n                НоваяСтрока.Свободно = Выборка.Свободно;\n            КонецЦикла;\n\n            Возврат ТаблицаРезультат;\n        КонецФункции\n        ```\n\n6.  **Review against constraints:**\n    *   *Only metadata objects:* Used `ТоварыНаСкладах`, `Резервы`, `Склады`, `Номенклатура`. Correct.\n    *   *Russian syntax:* Yes.\n    *   *Only code:* Yes.\n    *   *Ready to execute:* Yes.\n\n7.  **Refining the Query Logic:**\n    *   The prompt says \"Array of items\". The query uses `В (&МассивНоменклатуры)`. This is correct.\n    *   The prompt says \"Warehouse\". The query uses `Склад = &Склад`. Correct.\n    *   The prompt says \"Free = Available - Reserved\". The query does this.\n    *   The prompt says \"Items without reservation count as zero\". `ЕСТЬNULL(Резервы.Зарезервировано, 0)` ensures that if the reservation is NULL (no records), it subtracts 0, leaving the available amount.\n\n8.  **Final Polish:**\n    *   Ensure variable names are clear.\n    *   Ensure the function returns the correct type.\n\n    *Self-Correction on `ЕСТЬNULL`:* In 1C, if a register resource is empty, it is 0. If I do a `LEFT JOIN` and the right side is empty, the resource is NULL. `0 - NULL` is NULL. So `ЕСТЬNULL` is strictly necessary for the arithmetic to result in a number (0) rather than NULL.\n\n    *Alternative:* `ТоварыНаСкладах.ВНаличии - Резервы.Зарезервировано`. If `Резервы.Зарезервировано` is NULL, 1C usually treats it as 0 in arithmetic contexts for balances, but strictly speaking, `0 - NULL` is NULL.\n    *Fix:* I need to ensure the subtraction handles NULLs or use `COALESCE` / `IFNULL` equivalent in 1C Query syntax.\n    1C Query syntax for NULL handling: `ТоварыНаСкладах.ВНаличии - ЕСТЬNULL(Резервы.Зарезервировано, 0)`.\n    Or simply: `ТоварыНаСкладах.ВНаличии - Резервы.Зарезервировано`. If `Резервы.Зарезервировано` is NULL, 1C usually treats it as 0 in arithmetic contexts for balances, but strictly speaking, `0 - NULL` is NULL.\n    Let's use `ЕСТЬNULL` to be safe and explicit.\n\n9.  **Final Code Generation:**\n    (Proceeding to generate the code block).",
+          "finish_reason": "stop",
           "system_fingerprint": "",
-          "cost_reported": null,
-          "elapsed_time": 44.06573247909546,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
+          "cost_reported": 0.26,
+          "elapsed_time": 48.66460204124451,
+          "cost_input": 2.274e-05,
+          "cost_output": 0.0012752,
+          "cost_total": 0.00129794,
           "success": true,
           "error": null
         }
       ],
-      "determinism": null,
-      "total_tokens": 4475,
-      "total_cost": 0.0,
-      "avg_time": 44.066
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d602de8668a249d6bd3a75ce95a9f19f87fb633c542d4826fe66e2acdf7c6e43",
+        "most_common_count": 1,
+        "hashes": [
+          "d602de8668a249d6bd3a75ce95a9f19f87fb633c542d4826fe66e2acdf7c6e43"
+        ]
+      },
+      "total_tokens": 3567,
+      "total_cost": 0.0016942,
+      "avg_time": 48.665
     },
     {
       "task_id": "B14",
@@ -12611,6 +12819,57 @@
       "avg_time": 59.931
     },
     {
+      "task_id": "B14",
+      "task_name": "Свободный остаток с учётом резервов",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "РегистрНакопления.Резервы",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.0018585,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```\nФункция СвободныйОстатокТоваров(МассивНоменклатуры, Склад)\n\t\n\tТаблица = Новый ТаблицаЗначений;\n\tТаблица.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tТаблица.Колонки.Добавить(\"Свободно\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\"ВЫБРАТЬ\n\t|\tТовары.Номенклатура КАК Номенклатура,\n\t|\tТовары.ВНаличии КАК ВНаличии,\n\t|\tЕСТЬNULL(Резервы.Зарезервировано, 0) КАК Зарезервировано\n\t|ИЗ\n\t|\tРегистрНакопления.ТоварыНаСкладах.Остатки(\n\t|\t\t\t&Дата,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Товары\n\t|\t\tЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.Резервы.Остатки(\n\t|\t\t\t\t&Дата,\n\t|\t\t\t\tСклад = &Склад\n\t|\t\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Резервы\n\t|\t\tПО Товары.Номенклатура = Резервы.Номенклатура\";\n\t\n\tЗапрос.УстановитьПараметр(\"Дата\", ТекущаяДата());\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tСтрока = Таблица.Добавить();\n\t\tСтрока.Номенклатура = Выборка.Номенклатура;\n\t\tСтрока.Свободно = Выборка.ВНаличии - Выборка.Зарезервировано;\n\tКонецЦикла;\n\t\n\tВозврат Таблица;\n\t\nКонецФункции\n```",
+          "response_hash": "533d22979cd62aff734fee10e6d28dfdc327650fd5fc0e814d077868f935f5e2",
+          "tokens_input": 430,
+          "tokens_output": 1362,
+          "tokens_total": 1792,
+          "tokens_reasoning": 792,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write function. Use virtual tables. Get balances for both registers, combine. Use query with left join or two queries. Let me use one query with left join.\n\nActually simpler: query ТоварыНаСкладах.Остатки with left join Резервы.Остатки.\n\nLet me write:\n\nФункция СвободныйОстатокТоваров(МассивНоменклатуры, Склад)\n    Таблица = Новый ТаблицаЗначений;\n    Таблица.Колонки.Добавить(\"Номенклатура\");\n    Таблица.Колонки.Добавить(\"Свободно\");\n    \n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ\n    |   Товары.Номенклатура КАК Номенклатура,\n    |   Товары.ВНаличии КАК ВНаличии,\n    |   ЕСТЬNULL(Резервы.Зарезервировано, 0) КАК Зарезервировано\n    |ИЗ\n    |   РегистрНакопления.ТоварыНаСкладах.Остатки(&Дата, Склад = &Склад, Номенклатура В (&Номенклатура)) КАК Товары\n    |       ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.Резервы.Остатки(&Дата, Склад = &Склад, Номенклатура В (&Номенклатура)) КАК Резервы\n    |       ПО Товары.Номенклатура = Резервы.Номенклатура\";\n    \n    Запрос.УстановитьПараметр(\"Дата\", ТекущаяДата());\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n    Запрос.УстановитьПараметр(\"Номенклатура\", МассивНоменклатуры);\n    \n    Выборка = Запрос.Выполнить().Выбрать();\n    Пока Выборка.Следующий() Цикл\n        Строка = Таблица.Добавить();\n        Строка.Номенклатура = Выборка.Номенклатура;\n        Строка.Свободно = Выборка.ВНаличии - Выборка.Зарезервировано;\n    КонецЦикла;\n    \n    Возврат Таблица;\nКонецФункции\n\nBut requirement: товары без резерва тоже должны попасть. Left join handles that. But what about товары with reserve but no stock? Probably not needed. Also товары из массива без остатков вообще? \"Товары без резерва\" - means without reserve, not without stock. So left join is fine.\n\nActually to be safe, maybe use full outer join? No, 1С doesn't support full outer. Left join from ТоварыНаСкладах is fine.\n\nBut if a товар has reserve but no stock balance, it won't appear. Hmm. The requirement says \"Товары без резерва тоже должны попасть\" - товары without reserve should also appear. So base is stock. OK.\n\nActually, better to iterate over the array to ensure all items appear? The requirement says \"Товары без резерва тоже должны попасть в результат (их резерв считать нулевым)\". This means items that have stock but no reserve. Left join handles it.\n\nLet me finalize.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.27,
+          "elapsed_time": 59.678985357284546,
+          "cost_input": 0.000129,
+          "cost_output": 0.0016343999999999998,
+          "cost_total": 0.0017633999999999998,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "533d22979cd62aff734fee10e6d28dfdc327650fd5fc0e814d077868f935f5e2",
+        "most_common_count": 1,
+        "hashes": [
+          "533d22979cd62aff734fee10e6d28dfdc327650fd5fc0e814d077868f935f5e2"
+        ]
+      },
+      "total_tokens": 1792,
+      "total_cost": 0.0036219,
+      "avg_time": 59.679
+    },
+    {
       "task_id": "B15",
       "task_name": "ABC-классификация номенклатуры",
       "model_id": "aliceai-llm/latest",
@@ -12863,42 +13122,51 @@
     {
       "task_id": "B15",
       "task_name": "ABC-классификация номенклатуры",
-      "model_id": "z-ai/glm-4.7-flash",
+      "model_id": "glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
       "context_loaded": true,
       "context_objects": [
         "РегистрНакопления.Продажи"
       ],
-      "context_analysis_cost": 0.0,
+      "context_analysis_cost": 0.0005173,
       "runs": [
         {
           "run_index": 0,
           "seed": null,
           "temperature": 0.1,
-          "response": "",
-          "response_hash": "",
+          "response": "Функция ПровестиАВСКлассификацию(НачалоПериода, КонецПериода) Экспорт\n\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        | Продажи.Номенклатура КАК Номенклатура,\n        | СУММА(Продажи.Сумма) КАК СуммаОборота\n        |ИЗ\n        | РегистрНакопления.Продажи КАК Продажи\n        |ГДЕ\n        | Продажи.Период МЕЖДУ &НачалоПериода И &КонецПериода\n        |СГРУППИРОВАТЬ ПО\n        | Продажи.Номенклатура\n        |УПОРЯДОЧИТЬ ПО\n        | СуммаОборота УБЫВ\";\n\n    Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n    Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n    РезультатЗапроса = Запрос.Выполнить();\n\n    ТаблицаРезультат = Новый ТаблицаЗначений;\n    ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\");\n    ТаблицаРезультат.Колонки.Добавить(\"Класс\");\n\n    ВыборкаЗапроса = РезультатЗапроса.Выбрать();\n    ОбщийОборот = 0;\n\n    Пока ВыборкаЗапроса.Следующий() Цикл\n        ОбщийОборот = ОбщийОборот + ВыборкаЗапроса.СуммаОборота;\n    КонецЦикла;\n\n    Если ОбщийОборот = 0 Тогда\n        Возврат ТаблицаРезультат;\n    КонецЕсли;\n\n    ВыборкаЗапроса.Сбросить();\n    НакопленнаяДоля = 0;\n\n    Пока ВыборкаЗапроса.Следующий() Цикл\n        ТекущаяДоля = ВыборкаЗапроса.СуммаОборота / ОбщийОборот;\n        НакопленнаяДоля = НакопленнаяДоля + ТекущаяДоля;\n\n        Класс = \"C\";\n        Если НакопленнаяДоля <= 0.8 Тогда\n            Класс = \"A\";\n        ИначеЕсли НакопленнаяДоля <= 0.95 Тогда\n            Класс = \"B\";\n        КонецЕсли;\n\n        НоваяСтрока = ТаблицаРезультат.Добавить();\n        НоваяСтрока.Номенклатура = ВыборкаЗапроса.Номенклатура;\n        НоваяСтрока.Класс = Класс;\n    КонецЦикла;\n\n    Возврат ТаблицаРезультат;\n\nКонецФункции",
+          "response_hash": "f028d911f0a787347205be37d96c88a5d8aa5232abb17cec5f6b7df2e80bf003",
           "tokens_input": 312,
-          "tokens_output": 4096,
-          "tokens_total": 4408,
-          "tokens_reasoning": 0,
+          "tokens_output": 2893,
+          "tokens_total": 3205,
+          "tokens_reasoning": 2369,
           "tokens_cached": 0,
           "tokens_cache_write": 0,
-          "reasoning": "",
-          "finish_reason": "",
+          "reasoning": "1.  **Analyze the Request:**\n    *   **Platform:** 1C:Enterprise 8.3.\n    *   **Constraint:** Use ONLY metadata provided in the context.\n        *   `AccumulationRegister.Sales` (Turnover type).\n        *   Dimensions: `Product` (Reference to `Catalog.Product`).\n        *   Resources: `Amount` (Number 15.2).\n    *   **Task:** Write a function for ABC-classification of products based on turnover for a specific period.\n    *   **Parameters:** Start date, End date.\n    *   **Logic:**\n        1.  Calculate turnover for each product in the period.\n        2.  Sort by turnover descending.\n        3.  Calculate cumulative share of total turnover.\n        4.  Assign classes:\n            *   \"A\": Cumulative share <= 80%.\n            *   \"B\": Cumulative share <= 95% (and > 80%).\n            *   \"C\": Remaining (share > 95%).\n    *   **Output:** A `ValueTable` (or `Table` of values) with columns `Номенклатура` and `Класс`.\n    *   **Language:** Built-in 1C language (Russian syntax).\n    *   **Output Format:** ONLY code, no explanations.\n\n2.  **Determine the Implementation Details:**\n\n    *   *Data Retrieval:* I need to query the `AccumulationRegister.Sales`.\n        *   Since it's a turnover register, I need to select `Product` and `Amount`.\n        *   Filter by `Date` between `StartPeriod` and `EndPeriod`.\n        *   Group by `Product` and `Amount`.\n        *   Order by `Amount` descending.\n\n    *   *Data Structure:*\n        *   I'll use a `ValueTable` for the result.\n        *   I'll need a temporary `ValueTable` or a `Cursor` to hold the raw data for calculation.\n\n    *   *Calculation Logic:*\n        1.  Get total turnover (Sum of all amounts).\n        2.  Iterate through the sorted list.\n        3.  For each row:\n            *   Calculate `CurrentShare = CurrentAmount / TotalAmount`.\n            *   Calculate `CumulativeShare = PreviousCumulativeShare + CurrentShare`.\n            *   Determine class based on `CumulativeShare`.\n            *   Add row to result table.\n\n    *   *Handling Zero/Null Values:* If total turnover is 0, division by zero is a risk. I should handle that (return empty table or all C).\n\n3.  **Drafting the Code (Mental or Scratchpad):**\n\n    *   *Function Signature:* `Функция ПровестиАВСКлассификацию(НачалоПериода, КонецПериода) Экспорт`\n\n    *   *Query Construction:*\n        ```bsl\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | Продажи.Номенклатура КАК Номенклатура,\n            | СУММА(Продажи.Сумма) КАК СуммаОборота\n            |ИЗ\n            | РегистрНакопления.Продажи КАК Продажи\n            |ГДЕ\n            | Продажи.Период МЕЖДУ &НачалоПериода И &КонецПериода\n            |СГРУППИРОВАТЬ ПО\n            | Продажи.Номенклатура\n            |УПОРЯДОЧИТЬ ПО\n            | СуммаОборота УБЫВ\";\n        Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n        Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n        РезультатЗапроса = Запрос.Выполнить();\n        ```\n\n    *   *Processing:*\n        ```bsl\n        ТаблицаРезультат = Новый ТаблицаЗначений;\n        ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\");\n        ТаблицаРезультат.Колонки.Добавить(\"Класс\");\n\n        ВыборкаЗапроса = РезультатЗапроса.Выбрать();\n        ОбщийОборот = 0;\n        Пока ВыборкаЗапроса.Следующий() Цикл\n            ОбщийОборот = ОбщийОборот + ВыборкаЗапроса.СуммаОборота;\n        КонецЦикла;\n\n        Если ОбщийОборот = 0 Тогда\n            Возврат ТаблицаРезультат;\n        КонецЕсли;\n\n        ВыборкаЗапроса.Сбросить();\n        НакопленнаяДоля = 0;\n\n        Пока ВыборкаЗапроса.Следующий() Цикл\n            ТекущаяДоля = ВыборкаЗапроса.СуммаОборота / ОбщийОборот;\n            НакопленнаяДоля = НакопленнаяДоля + ТекущаяДоля;\n\n            Класс = \"C\";\n            Если НакопленнаяДоля <= 0.8 Тогда\n                Класс = \"A\";\n            ИначеЕсли НакопленнаяДоля <= 0.95 Тогда\n                Класс = \"B\";\n            КонецЕсли;\n\n            НоваяСтрока = ТаблицаРезультат.Добавить();\n            НоваяСтрока.Номенклатура = ВыборкаЗапроса.Номенклатура;\n            НоваяСтрока.Класс = Класс;\n        КонецЦикла;\n\n        Возврат ТаблицаРезультат;\n        ```\n\n4.  **Refining and Checking Constraints:**\n\n    *   *Metadata Check:*\n        *   `РегистрНакопления.Продажи` - Used.\n        *   `Номенклатура` (СправочникСсылка.Номенклатура) - Used.\n        *   `Сумма` (Число 15.2) - Used.\n    *   *Logic Check:*\n        *   Sort descending? Yes (`УПОРЯДОЧИТЬ ПО СуммаОборота УБЫВ`).\n        *   Class A (<= 80%)? Yes.\n        *   Class B (<= 95%)? Yes.\n        *   Class C (rest)? Yes.\n        *   Return Table of Values? Yes.\n    *   *Syntax Check:* Russian keywords (`ВЫБРАТЬ`, `ИЗ`, `ГДЕ`, `СГРУППИРОВАТЬ ПО`, `УПОРЯДОЧИТЬ ПО`, `УБЫВ`).\n\n5.  **Final Code Assembly:** Combine the logic into a clean function structure.\n\n    ```bsl\n    Функция ПровестиАВСКлассификацию(НачалоПериода, КонецПериода) Экспорт\n\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | Продажи.Номенклатура КАК Номенклатура,\n            | СУММА(Продажи.Сумма) КАК СуммаОборота\n            |ИЗ\n            | РегистрНакопления.Продажи КАК Продажи\n            |ГДЕ\n            | Продажи.Период МЕЖДУ &НачалоПериода И &КонецПериода\n            |СГРУППИРОВАТЬ ПО\n            | Продажи.Номенклатура\n            |УПОРЯДОЧИТЬ ПО\n            | СуммаОборота УБЫВ\";\n\n        Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n        Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n        РезультатЗапроса = Запрос.Выполнить();\n\n        ТаблицаРезультат = Новый ТаблицаЗначений;\n        ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\");\n        ТаблицаРезультат.Колонки.Добавить(\"Класс\");\n\n        ВыборкаЗапроса = РезультатЗапроса.Выбрать();\n        ОбщийОборот = 0;\n\n        Пока ВыборкаЗапроса.Следующий() Цикл\n            ОбщийОборот = ОбщийОборот + ВыборкаЗапроса.СуммаОборота;\n        КонецЦикла;\n\n        Если ОбщийОборот = 0 Тогда\n            Возврат ТаблицаРезультат;\n        КонецЕсли;\n\n        ВыборкаЗапроса.Сбросить();\n        НакопленнаяДоля = 0;\n\n        Пока ВыборкаЗапроса.Следующий() Цикл\n            ТекущаяДоля = ВыборкаЗапроса.СуммаОборота / ОбщийОборот;\n            НакопленнаяДоля = НакопленнаяДоля + ТекущаяДоля;\n\n            Класс = \"C\";\n            Если НакопленнаяДоля <= 0.8 Тогда\n                Класс = \"A\";\n            ИначеЕсли НакопленнаяДоля <= 0.95 Тогда\n                Класс = \"B\";\n            КонецЕсли;\n\n            НоваяСтрока = ТаблицаРезультат.Добавить();\n            НоваяСтрока.Номенклатура = ВыборкаЗапроса.Номенклатура;\n            НоваяСтрока.Класс = Класс;\n        КонецЦикла;\n\n        Возврат ТаблицаРезультат;\n\n    КонецФункции\n    ```\n\n6.  **Final Review:** The code looks correct, adheres to the metadata provided, and follows the logic requirements. It returns a Table of Values as requested. No extra text.",
+          "finish_reason": "stop",
           "system_fingerprint": "",
-          "cost_reported": null,
-          "elapsed_time": 46.60693168640137,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
+          "cost_reported": 0.24,
+          "elapsed_time": 27.08403754234314,
+          "cost_input": 1.872e-05,
+          "cost_output": 0.0011572000000000002,
+          "cost_total": 0.0011759200000000002,
           "success": true,
           "error": null
         }
       ],
-      "determinism": null,
-      "total_tokens": 4408,
-      "total_cost": 0.0,
-      "avg_time": 46.607
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f028d911f0a787347205be37d96c88a5d8aa5232abb17cec5f6b7df2e80bf003",
+        "most_common_count": 1,
+        "hashes": [
+          "f028d911f0a787347205be37d96c88a5d8aa5232abb17cec5f6b7df2e80bf003"
+        ]
+      },
+      "total_tokens": 3205,
+      "total_cost": 0.0016932200000000003,
+      "avg_time": 27.084
     },
     {
       "task_id": "B15",
@@ -15128,6 +15396,56 @@
       "total_tokens": 19209,
       "total_cost": 0.0236554,
       "avg_time": 134.502
+    },
+    {
+      "task_id": "B15",
+      "task_name": "ABC-классификация номенклатуры",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи",
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.0015783,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция АВСКлассификацияНоменклатуры(НачалоПериода, КонецПериода) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tПродажиОбороты.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ПродажиОбороты.СуммаОборот) КАК СуммаОборот\n\t|ИЗ\n\t|\tРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, , ) КАК ПродажиОбороты\n\t|СГРУППИРОВАТЬ ПО\n\t|\tПродажиОбороты.Номенклатура\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tСуммаОборот УБЫВ\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tТаблица = Новый ТаблицаЗначений;\n\tТаблица.Колонки.Добавить(\"Номенклатура\");\n\tТаблица.Колонки.Добавить(\"Класс\", Новый ОписаниеТипов(\"Строка\"));\n\n\tДанные = Новый Массив;\n\tОбщаяСумма = 0;\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tДанные.Добавить(Новый Структура(\"Номенклатура, Сумма\", Выборка.Номенклатура, Выборка.СуммаОборот));\n\t\tОбщаяСумма = ОбщаяСумма + Выборка.СуммаОборот;\n\tКонецЦикла;\n\n\tЕсли ОбщаяСумма = 0 Тогда\n\t\tВозврат Таблица;\n\tКонецЕсли;\n\n\tНакопленнаяСумма = 0;\n\tДля Каждого СтрокаДанных Из Данные Цикл\n\t\tНакопленнаяСумма = НакопленнаяСумма + СтрокаДанных.Сумма;\n\t\tНакопленнаяДоля = НакопленнаяСумма / ОбщаяСумма * 100;\n\n\t\tЕсли НакопленнаяДоля <= 80 Тогда\n\t\t\tКласс = \"A\";\n\t\tИначеЕсли НакопленнаяДоля <= 95 Тогда\n\t\t\tКласс = \"B\";\n\t\tИначе\n\t\t\tКласс = \"C\";\n\t\tКонецЕсли;\n\n\t\tНоваяСтрока = Таблица.Добавить();\n\t\tНоваяСтрока.Номенклатура = СтрокаДанных.Номенклатура;\n\t\tНоваяСтрока.Класс = Класс;\n\tКонецЦикла;\n\n\tВозврат Таблица;\n\nКонецФункции\n```",
+          "response_hash": "af31f74dac8e535e9ecda6dd48825e33a3d9fde25dba4e3609105d8e16d9855d",
+          "tokens_input": 373,
+          "tokens_output": 1663,
+          "tokens_total": 2036,
+          "tokens_reasoning": 928,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need write 1C function ABC classification. Register Продажи oborоты. измерение Номенклатура, ресурс Сумма.\n\nUse query with ОБОРОТЫ (or ИТОГИ). Simpler: use query with period.\n\nКод:\n\nФункция АВСКлассификацияНоменклатуры(НачалоПериода, КонецПериода) Экспорт\n\nЗапрос = Новый Запрос;\nЗапрос.Текст = \n\"ВЫБРАТЬ\n|\tПродажиОбороты.Номенклатура КАК Номенклатура,\n|\tСУММА(ПродажиОбороты.СуммаОборот) КАК СуммаОборот\n|ИЗ\n|\tРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, Регистратор) КАК ПродажиОбороты\n|СГРУППИРОВАТЬ ПО\n|\tПродажиОбороты.Номенклатура\n|УПОРЯДОЧИТЬ ПО\n|\tСуммаОборот УБЫВ\";\n\nActually for оборотный регистр resource named Сумма. In query it's СуммаОборот (resource + Оборот). Let me use РегистрНакопления.Продажи.Обороты with virtual table параметры: НачалоПериода, КонецПериода. Third condition optional - периодичность. Actually signature: Обороты(&НачалоПериода, &КонецПериода, Периодичность, Условие). Let's keep it simple:\n\nРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, , ) КАК ПродажиОбороты\n\nField: ПродажиОбороты.СуммаОборот.\n\nОК.\n\nThen compute total and accumulate.\n\nКод:\n\nВыборка = Запрос.Выполнить().Выбрать();\nМассив = новый массив... better to collect into table then process.\n\nWrite:\n\nТаблица = Новый ТаблицаЗначений;\nТаблица.Колонки.Добавить(\"Номенклатура\");\nТаблица.Колонки.Добавить(\"Класс\", Новый ОписаниеТипов(\"Строка\"));\n\nОбщаяСумма = 0;\nДанные = Новый Массив;\nВыборка = Результат.Выбрать();\nПока Выборка.Следующий() Цикл\n\tДанные.Добавить(Новый Структура(\"Номенклатура, Сумма\", Выборка.Номенклатура, Выборка.СуммаОборот));\n\tОбщаяСумма = ОбщаяСумма + Выборка.СуммаОборот;\nКонецЦикла;\n\nIf ОбщаяСумма = 0 Then Return Таблица; EndIf;\n\nНакопленнаяСумма = 0;\nДля Каждого СтрокаДанных Из Данные Цикл\n\tНакопленнаяСумма = НакопленнаяСумма + СтрокаДанных.Сумма;\n\tДоля = НакопленнаяСумма / ОбщаяСумма * 100;\n\tЕсли Доля <= 80 Тогда\n\t\tКласс = \"A\";\n\tИначеЕсли Доля <= 95 Тогда\n\t\tКласс = \"B\";\n\tИначе\n\t\tКласс = \"C\";\n\tКонецЕсли;\n\tНоваяСтрока = Таблица.Добавить();\n\tНоваяСтрока.Номенклатура = СтрокаДанных.Номенклатура;\n\tНоваяСтрока.Класс = Класс;\nКонецЦикла;\n\nВозврат Таблица;\n\nКонецФункции\n\nThis is good. Note: \"пока накопленная доля не превышает 80%\" - <= 80 gives A. Correct.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.21,
+          "elapsed_time": 7.092519044876099,
+          "cost_input": 0.0001119,
+          "cost_output": 0.0019955999999999997,
+          "cost_total": 0.0021074999999999996,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "af31f74dac8e535e9ecda6dd48825e33a3d9fde25dba4e3609105d8e16d9855d",
+        "most_common_count": 1,
+        "hashes": [
+          "af31f74dac8e535e9ecda6dd48825e33a3d9fde25dba4e3609105d8e16d9855d"
+        ]
+      },
+      "total_tokens": 2036,
+      "total_cost": 0.0036857999999999995,
+      "avg_time": 7.093
     },
     {
       "task_id": "B16",
@@ -17646,6 +17964,55 @@
       "total_tokens": 3824,
       "total_cost": 0.0049726,
       "avg_time": 27.243
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.0013691999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tДоговоры.Ссылка КАК Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Договоры КАК Договоры\n\t\t|ГДЕ\n\t\t|\tДоговоры.Владелец = &Контрагент\n\t\t|\tИ Договоры.ДатаНачала <= &ДатаСреза\n\t\t|\tИ (Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1)\n\t\t|\t\tИЛИ Договоры.ДатаОкончания >= &ДатаСреза)\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tДоговоры.ДатаНачала УБЫВ\";\n\t\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tЗапрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Ссылка;\n\tКонецЕсли;\n\t\n\tВозврат Неопределено;\n\t\nКонецФункции\n```",
+          "response_hash": "4f79903f068e182bdd21b1a33d65b1e19f2c62dd5bbfb9e91f405e214279d13c",
+          "tokens_input": 444,
+          "tokens_output": 903,
+          "tokens_total": 1347,
+          "tokens_reasoning": 544,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write function in 1C. Use query? Or object iteration. Let's write using query with parameters. Handle empty ДатаОкончания.\n\nSomething like:\n\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ ПЕРВЫЕ 1\n    |\tДоговоры.Ссылка КАК Ссылка\n    |ИЗ\n    |\tСправочник.Договоры КАК Договоры\n    |ГДЕ\n    |\tДоговоры.Владелец = &Контрагент\n    |\tИ Договоры.ДатаНачала <= &ДатаСреза\n    |\tИ (Договоры.ДатаОкончания = ДАТАВРЕМЯ(1,1,1) ИЛИ Договоры.ДатаОкончания >= &ДатаСреза)\n    |УПОРЯДОЧИТЬ ПО\n    |\tДоговоры.ДатаНачала УБЫВ\";\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    Запрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() Тогда\n        Возврат Выборка.Ссылка;\n    Иначе\n        Возврат Неопределено;\n    КонецЕсли;\nКонецФункции\n\nFor empty date check, better use Договоры.ДатаОкончания = ДАТАВРЕМЯ(1,1,1) - that's the empty date in 1C. Or use НЕ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1,1,1). Actually empty date in query is often referenced as ДАТАВРЕМЯ(1,1,1). That works.\n\nAlternative: use ЕСТЬNULL? No, empty date is not NULL.\n\nI'll use ДАТАВРЕМЯ(1,1,1). Actually the standard way is using \"НЕ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1,1,1)\".\n\nLet me write clean code.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.13,
+          "elapsed_time": 3.8437302112579346,
+          "cost_input": 0.00013319999999999999,
+          "cost_output": 0.0010836,
+          "cost_total": 0.0012168,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4f79903f068e182bdd21b1a33d65b1e19f2c62dd5bbfb9e91f405e214279d13c",
+        "most_common_count": 1,
+        "hashes": [
+          "4f79903f068e182bdd21b1a33d65b1e19f2c62dd5bbfb9e91f405e214279d13c"
+        ]
+      },
+      "total_tokens": 1347,
+      "total_cost": 0.0025859999999999998,
+      "avg_time": 3.844
     },
     {
       "task_id": "B17",
@@ -20205,6 +20572,57 @@
       "avg_time": 32.722
     },
     {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "РегистрНакопления.Взаиморасчеты",
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.0016022999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция СуммарныйДолгКонтрагента(Контрагент) Экспорт\n    \n    Запрос = Новый Запрос;\n    Запрос.Текст = \n        \"ВЫБРАТЬ\n        |    СУММА(ВзаиморасчетыОстатки.СуммаОстаток) КАК Долг\n        |ИЗ\n        |    РегистрНакопления.Взаиморасчеты.Остатки(\n        |            ,\n        |            Договор.Владелец = &Контрагент\n        |                И СуммаОстаток > 0) КАК ВзаиморасчетыОстатки\";\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    \n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() И ЗначениеЗаполнено(Выборка.Долг) Тогда\n        Возврат Выборка.Долг;\n    КонецЕсли;\n    \n    Возврат 0;\n    \nКонецФункции\n```",
+          "response_hash": "bb3a80bfd952c80f5ad7c381fdf6debcd4b08beab91cb3522a79912d81e5c1f4",
+          "tokens_input": 465,
+          "tokens_output": 326,
+          "tokens_total": 791,
+          "tokens_reasoning": 54,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need function: given contractor ref, sum positive balances across all its contracts. Use query on register Взаиморасчеты with condition Договор.Владелец = &Контрагент and СуммаОстаток > 0.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.08,
+          "elapsed_time": 20.482542514801025,
+          "cost_input": 0.0001395,
+          "cost_output": 0.0003912,
+          "cost_total": 0.0005307,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bb3a80bfd952c80f5ad7c381fdf6debcd4b08beab91cb3522a79912d81e5c1f4",
+        "most_common_count": 1,
+        "hashes": [
+          "bb3a80bfd952c80f5ad7c381fdf6debcd4b08beab91cb3522a79912d81e5c1f4"
+        ]
+      },
+      "total_tokens": 791,
+      "total_cost": 0.002133,
+      "avg_time": 20.483
+    },
+    {
       "task_id": "B18",
       "task_name": "Выделить НДС из суммы с налогом",
       "model_id": "aliceai-llm/latest",
@@ -22684,6 +23102,55 @@
       "total_tokens": 630,
       "total_cost": 0.0010659999999999999,
       "avg_time": 5.331
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.0011949,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ВыделитьНДСИзСуммы(СуммаСНДС) Экспорт\n\t\n\tСтавкаНДС = Константы.СтавкаНДС.Получить();\n\t\n\tЕсли СтавкаНДС = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tСуммаНДС = СуммаСНДС * СтавкаНДС / (100 + СтавкаНДС);\n\t\n\tВозврат Окр(СуммаНДС, 2);\n\t\nКонецФункции\n```",
+          "response_hash": "15a7bae5db02f31f10006e4ea9fb07bc74158379b19e26c8b6b910b88d26d433",
+          "tokens_input": 294,
+          "tokens_output": 161,
+          "tokens_total": 455,
+          "tokens_reasoning": 16,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need function that takes sum including VAT, returns VAT amount using rate from constant.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.04,
+          "elapsed_time": 2.0340614318847656,
+          "cost_input": 8.819999999999999e-05,
+          "cost_output": 0.0001932,
+          "cost_total": 0.0002814,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "15a7bae5db02f31f10006e4ea9fb07bc74158379b19e26c8b6b910b88d26d433",
+        "most_common_count": 1,
+        "hashes": [
+          "15a7bae5db02f31f10006e4ea9fb07bc74158379b19e26c8b6b910b88d26d433"
+        ]
+      },
+      "total_tokens": 455,
+      "total_cost": 0.0014763,
+      "avg_time": 2.034
     },
     {
       "task_id": "B19",
@@ -25202,6 +25669,57 @@
       "avg_time": 75.762
     },
     {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный",
+        "ПланСчетов.Основной"
+      ],
+      "context_analysis_cost": 0.0031287,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```\nФункция ПолучитьСальдоПоСчету(Счет) Экспорт\n\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n    \"ВЫБРАТЬ\n    |    СУММА(Обороты.СуммаОборотДт) КАК ОборотДт,\n    |    СУММА(Обороты.СуммаОборотКт) КАК ОборотКт\n    |ИЗ\n    |    РегистрБухгалтерии.Хозрасчетный.Обороты(\n    |        , , ,\n    |        Счет В ИЕРАРХИИ (&Счет)) КАК Обороты\";\n    Запрос.УстановитьПараметр(\"Счет\", Счет);\n\n    ОборотДт = 0;\n    ОборотКт = 0;\n\n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() Тогда\n        ОборотДт = Выборка.ОборотДт;\n        ОборотКт = Выборка.ОборотКт;\n    КонецЕсли;\n\n    Если Строка(Счет.Вид) = \"Пассивный\" Тогда\n        Возврат ОборотКт - ОборотДт;\n    Иначе\n        Возврат ОборотДт - ОборотКт;\n    КонецЕсли;\n\nКонецФункции\n```",
+          "response_hash": "264324590d27138c2ed3af45d25354f20ce120e63c4966fcccfaa7ce8935c5c8",
+          "tokens_input": 658,
+          "tokens_output": 1117,
+          "tokens_total": 1775,
+          "tokens_reasoning": 766,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write a function in 1C that takes a reference to a chart of accounts account and returns its balance.\n\nUse РегистрБухгалтерии.Хозрасчетный.Обороты with condition Счет В ИЕРАРХИИ (&Счет).\n\nFunction should query virtual table Обороты or ДвиженияССубконто. Actually, use .Обороты virtual table with condition.\n\nLet me write:\n\n```\nФункция ПолучитьСальдо(Счет) Экспорт\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ\n    |    СУММА(Обороты.СуммаОборотДт) КАК ОборотДт,\n    |    СУММА(Обороты.СуммаОборотКт) КАК ОборотКт\n    |ИЗ\n    |    РегистрБухгалтерии.Хозрасчетный.Обороты(, , , Счет В ИЕРАРХИИ (&Счет)) КАК Обороты\";\n    Запрос.УстановитьПараметр(\"Счет\", Счет);\n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() Тогда\n        ОборотДт = Выборка.ОборотДт;\n        ОборотКт = Выборка.ОборотКт;\n    Иначе\n        ОборотДт = 0;\n        ОборотКт = 0;\n    КонецЕсли;\n    \n    Вид = Счет.Вид;\n    Если Вид = ПредопределенноеЗначение(\"Перечисление.ВидыСчетов.Пассивный\") Тогда\n        Возврат ОборотКт - ОборотДт;\n    Иначе\n        Возврат ОборотДт - ОборотКт;\n    КонецЕсли;\nКонецФункции\n```\n\nBut ВидыСчетов enum not in metadata explicitly... The task says \"стандартный реквизит Вид (ВидСчета: Активный/Пассивный/АктивноПассивный)\". Hmm, I shouldn't invent enum. But standardized in 1C: Перечисление.ВидыСчетов. Actually in 1C standard, ВидСчета enumeration is ВидыСчетов. Hmm but metadata doesn't list it. Let me check via Счет.Вид and compare.\n\nActually the type ВидСчета typically is ПеречислениеСсылка.ВидыСчетов. Let me use string comparison or use the enum properly.\n\nSince metadata context only lists ПланСчетов and РегистрБухгалтерии, maybe I should compare with строкой. But safer to use the enum name. Hmm.\n\nActually \"ВидСчета\" is the type name. Let me just use Строка(Счет.Вид) = \"Пассивный\".\n\nLet me use that approach to avoid inventing enums.\n\nActually, I could write ПредопределенноеЗначение(\"Перечисление.ВидыСчетов.Пассивный\") but that might not exist. Let me use string comparison — safe.\n\nWait, but the enum values are usually \"Активный\", \"Пассивный\", \"АктивноПассивный\". Comparing string representation of enum.\n\nLet me finalize.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.16,
+          "elapsed_time": 5.2218475341796875,
+          "cost_input": 0.00019739999999999997,
+          "cost_output": 0.0013403999999999998,
+          "cost_total": 0.0015377999999999998,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "264324590d27138c2ed3af45d25354f20ce120e63c4966fcccfaa7ce8935c5c8",
+        "most_common_count": 1,
+        "hashes": [
+          "264324590d27138c2ed3af45d25354f20ce120e63c4966fcccfaa7ce8935c5c8"
+        ]
+      },
+      "total_tokens": 1775,
+      "total_cost": 0.0046665,
+      "avg_time": 5.222
+    },
+    {
       "task_id": "B1",
       "task_name": "Получение остатков товаров на складе",
       "model_id": "aliceai-llm/latest",
@@ -25458,44 +25976,53 @@
     {
       "task_id": "B1",
       "task_name": "Получение остатков товаров на складе",
-      "model_id": "z-ai/glm-4.7-flash",
+      "model_id": "glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
       "context_loaded": true,
       "context_objects": [
-        "РегистрНакопления.ТоварыНаСкладах",
         "Справочник.Номенклатура",
-        "Справочник.Склады"
+        "Справочник.Склады",
+        "РегистрНакопления.ТоварыНаСкладах"
       ],
-      "context_analysis_cost": 0.0,
+      "context_analysis_cost": 0.00043212000000000003,
       "runs": [
         {
           "run_index": 0,
           "seed": null,
           "temperature": 0.1,
-          "response": "",
-          "response_hash": "",
-          "tokens_input": 362,
-          "tokens_output": 4096,
-          "tokens_total": 4458,
-          "tokens_reasoning": 0,
+          "response": "Функция ПолучитьОстаткиНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено) Экспорт\n\n    Результат = Новый ТаблицаЗначений;\n    Результат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n    Результат.Колонки.Добавить(\"Остаток\", Новый ОписаниеТипов(\"Число\", , , Новый КвалификаторыЧисла(15, 3)));\n\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"\n        ВЫБРАТЬ\n            ТоварыНаСкладах.Номенклатура КАК Номенклатура,\n            СУММА(ТоварыНаСкладах.ВНаличии) КАК Остаток\n        ИЗ\n            РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах\n        ГДЕ\n            ТоварыНаСкладах.Склад = &Склад\n            И (\n                (&МассивНоменклатуры.Количество() > 0 И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры))\n                ИЛИ\n                (&ГруппаНоменклатуры <> Неопределено И ТоварыНаСкладах.Номенклатура В\n                    (\n                        ВЫБРАТЬ\n                            Номенклатура.Ссылка КАК Номенклатура\n                        ИЗ\n                            Справочник.Номенклатура КАК Номенклатура\n                        ГДЕ\n                            Номенклатура.Родитель = &ГруппаНоменклатуры\n                            ИЛИ\n                            Номенклатура.Ссылка В\n                                (\n                                    ВЫБРАТЬ\n                                        Подгруппы.Ссылка КАК Ссылка\n                                    ИЗ\n                                        Справочник.Номенклатура КАК Подгруппы\n                                    ГДЕ\n                                        Подгруппы.Родитель = &ГруппаНоменклатуры\n                                )\n                    )\n                )\n            )\n        СГРУППИРОВАТЬ ПО\n            ТоварыНаСкладах.Номенклатура\";\n\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n    Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n    Запрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);\n\n    Выборка = Запрос.Выполнить().Выбрать();\n\n    ПОКА Выборка.Следующий() ЦИКЛ\n        НоваяСтрока = Результат.Добавить();\n        НоваяСтрока.Номенклатура = Выборка.Номенклатура;\n        НоваяСтрока.Остаток = Выборка.Остаток;\n    КОНЕЦ ПО;\n\n    ВОЗВРАТ Результат;\n\nКОНЕЦ ФУНКЦИИ",
+          "response_hash": "305ede682c66d265a8dd273e49c3b7150722b99ca50d098a54d7b0b3c8dab108",
+          "tokens_input": 363,
+          "tokens_output": 4265,
+          "tokens_total": 4628,
+          "tokens_reasoning": 3708,
           "tokens_cached": 0,
           "tokens_cache_write": 0,
-          "reasoning": "",
-          "finish_reason": "",
+          "reasoning": "1.  **Analyze the Request:**\n    *   **Platform:** 1C:Enterprise 8.3.\n    *   **Metadata Context:**\n        *   `Справочник.Номенклатура` (Hierarchical: Groups and Items).\n        *   `Справочник.Склады` (Non-hierarchical).\n        *   `РегистрНакопления.ТоварыНаСкладах` (Accumulation register, Balance type, Dimensions: Склад, Номенклатура, Resource: ВНаличии).\n    *   **Task:** Write a function to get stock balances with filtering by a product group.\n    *   **Parameters:**\n        *   `МассивНоменклатуры` (Array of Catalog Items).\n        *   `Склад` (Warehouse).\n        *   `ГруппаНоменклатуры` (Product Group, optional).\n    *   **Return:** `ТаблицаЗначений` with columns: `Номенклатура`, `Остаток`.\n    *   **Logic:**\n        *   If `МассивНоменклатуры` is empty and `ГруппаНоменклатуры` is specified -> Return balances for all items in that group and subgroups.\n        *   If `МассивНоменклатуры` is specified -> Return balances for those specific items.\n        *   Filter by the passed `Склад`.\n    *   **Constraints:** Use only provided metadata, Russian syntax, return *only* code.\n\n2.  **Determine the Logic Flow:**\n\n    *   *Step 1: Define the function signature.*\n        `Функция ПолучитьОстаткиНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено)`\n\n    *   *Step 2: Create the result table.*\n        `Результат = Новый ТаблицаЗначений;`\n        `Результат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));`\n        `Результат.Колонки.Добавить(\"Остаток\", Новый ОписаниеТипов(\"Число\", , , Новый КвалификаторыЧисла(15, 3)));`\n\n    *   *Step 3: Build the selection query (RecordSet or Accumulation Register query).*\n        Since we need to filter by a specific group and potentially subgroups, a direct query to the Accumulation Register is usually the most efficient way in 1C.\n\n        *   *Condition A: Array of items is provided.*\n            `ВЫБРАТЬ`\n            `ТоварыНаСкладах.Номенклатура КАК Номенклатура,`\n            `СУММА(ТоварыНаСкладах.ВНаличии) КАК Остаток`\n            `ИЗ`\n            `РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах`\n            `ГДЕ`\n            `ТоварыНаСкладах.Склад = &Склад`\n            `И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры)`\n\n        *   *Condition B: Array is empty, Group is provided.*\n            Need to get all items in the group and subgroups.\n            `ВЫБРАТЬ`\n            `ТоварыНаСкладах.Номенклатура КАК Номенклатура,`\n            `СУММА(ТоварыНаСкладах.ВНаличии) КАК Остаток`\n            `ИЗ`\n            `РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах`\n            `ГДЕ`\n            `ТоварыНаСкладах.Склад = &Склад`\n            `И ТоварыНаСкладах.Номенклатура В`\n            `(`\n            `ВЫБРАТЬ`\n            `Номенклатура.Ссылка КАК Номенклатура`\n            `ИЗ`\n            `Справочник.Номенклатура КАК Номенклатура`\n            `ГДЕ`\n            `Номенклатура.Родитель = &ГруппаНоменклатуры`\n            `ИЛИ`\n            `Номенклатура.Ссылка В`\n            `(`\n            `ВЫБРАТЬ`\n            `Подгруппы.Ссылка КАК Ссылка`\n            `ИЗ`\n            `Справочник.Номенклатура КАК Подгруппы`\n            `ГДЕ`\n            `Подгруппы.Родитель = &ГруппаНоменклатуры`\n            `)`\n\n    *   *Step 4: Combine logic.*\n        Use `ЕСТЬ NULL` or `НЕ Определено` checks.\n\n    *   *Step 5: Execute query.*\n        `Запрос = Новый Запрос;`\n        `Запрос.Текст = ...;`\n        `Запрос.УстановитьПараметр(\"Склад\", Склад);`\n        `Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);`\n        `Запрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);`\n        `РезультатЗапроса = Запрос.Выполнить();`\n        `Выборка = РезультатЗапроса.Выбрать();`\n        `ПОКА Выборка.Следующий() ЦИКЛ`\n        `НоваяСтрока = Результат.Добавить();`\n        `НоваяСтрока.Номенклатура = Выборка.Номенклатура;`\n        `НоваяСтрока.Остаток = Выборка.Остаток;`\n        `КОНЕЦ ПОКА;`\n\n    *   *Step 6: Refine the query text construction.*\n        It's cleaner to construct the `WHERE` clause dynamically or use a single query with a complex condition. However, 1C queries are easier to read if structured clearly.\n\n        Let's try a single query approach for simplicity and robustness.\n\n        `ВЫБРАТЬ`\n        `ТоварыНаСкладах.Номенклатура КАК Номенклатура,`\n        `СУММА(ТоварыНаСкладах.ВНаличии) КАК Остаток`\n        `ИЗ`\n        `РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах`\n        `ГДЕ`\n        `ТоварыНаСкладах.Склад = &Склад`\n        `И (`\n        `(&МассивНоменклатуры.Количество() > 0 И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры))`\n        `ИЛИ`\n        `(&ГруппаНоменклатуры <> Неопределено И ТоварыНаСкладах.Номенклатура В`\n        `(`\n        `ВЫБРАТЬ`\n        `Номенклатура.Ссылка КАК Номенклатура`\n        `ИЗ`\n        `Справочник.Номенклатура КАК Номенклатура`\n        `ГДЕ`\n        `Номенклатура.Родитель = &ГруппаНоменклатуры`\n        `ИЛИ`\n        `Номенклатура.Ссылка В`\n        `(`\n        `ВЫБРАТЬ`\n        `Подгруппы.Ссылка КАК Ссылка`\n        `ИЗ`\n        `Справочник.Номенклатура КАК Подгруппы`\n        `ГДЕ`\n        `Подгруппы.Родитель = &ГруппаНоменклатуры`\n        `)`\n        `)`\n        `)`\n\n        Wait, the logic \"If array is empty AND group is set\" implies that if array is NOT empty, we ignore the group. The prompt says: \"If array is empty, and group is set...\". It implies the priority is the array. If array is not empty, we use the array. If array is empty, we use the group.\n\n        Let's refine the query text string.\n\n        `ТекстЗапроса = \"`\n        `ВЫБРАТЬ\n        | ТоварыНаСкладах.Номенклатура КАК Номенклатура,\n        | СУММА(ТоварыНаСкладах.ВНаличии) КАК Остаток\n        |ИЗ\n        | РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах\n        |ГДЕ\n        | ТоварыНаСкладах.Склад = &Склад\n        | И (`\n        `| (&МассивНоменклатуры.Количество() > 0 И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры))`\n        `| ИЛИ`\n        `| (&ГруппаНоменклатуры <> Неопределено И ТоварыНаСкладах.Номенклатура В`\n        `| (`\n        `| ВЫБРАТЬ\n        | Номенклатура.Ссылка КАК Номенклатура\n        | ИЗ\n        | Справочник.Номенклатура КАК Номенклатура\n        | ГДЕ\n        | Номенклатура.Родитель = &ГруппаНоменклатуры\n        | ИЛИ\n        | Номенклатура.Ссылка В\n        `| (`\n        `| ВЫБРАТЬ\n        | Подгруппы.Ссылка КАК Ссылка\n        | ИЗ\n        | Справочник.Номенклатура КАК Подгруппы\n        | ГДЕ\n        | Подгруппы.Родитель = &ГруппаНоменклатуры\n        `| )\n        `| )\n        `| )`\n        `| )\";`\n\n        This looks correct and covers all cases.\n\n3.  **Code Structure:**\n\n    ```bsl\n    Функция ПолучитьОстаткиНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено) Экспорт\n\n        Результат = Новый ТаблицаЗначений;\n        Результат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n        Результат.Колонки.Добавить(\"Остаток\", Новый ОписаниеТипов(\"Число\", , , Новый КвалификаторыЧисла(15, 3)));\n\n        Запрос = Новый Запрос;\n        Запрос.Текст = \"\n            ВЫБРАТЬ\n                ТоварыНаСкладах.Номенклатура КАК Номенклатура,\n                СУММА(ТоварыНаСкладах.ВНаличии) КАК Остаток\n            ИЗ\n                РегистрНакопления.ТоварыНаСкладах КАК ТоварыНаСкладах\n            ГДЕ\n                ТоварыНаСкладах.Склад = &Склад\n                И (\n                    (&МассивНоменклатуры.Количество() > 0 И ТоварыНаСкладах.Номенклатура В (&МассивНоменклатуры))\n                    ИЛИ\n                    (&ГруппаНоменклатуры <> Неопределено И ТоварыНаСкладах.Номенклатура В\n                        (\n                            ВЫБРАТЬ\n                                Номенклатура.Ссылка КАК Номенклатура\n                            ИЗ\n                                Справочник.Номенклатура КАК Номенклатура\n                            ГДЕ\n                                Номенклатура.Родитель = &ГруппаНоменклатуры\n                                ИЛИ\n                                Номенклатура.Ссылка В\n                                    (\n                                        ВЫБРАТЬ\n                                            Подгруппы.Ссылка КАК Ссылка\n                                        ИЗ\n                                            Справочник.Номенклатура КАК Подгруппы\n                                        ГДЕ\n                                            Подгруппы.Родитель = &ГруппаНоменклатуры\n                                    )\n                        )\n                    )\n                )\n            СГРУППИРОВАТЬ ПО\n                ТоварыНаСкладах.Номенклатура\";\n\n        Запрос.УстановитьПараметр(\"Склад\", Склад);\n        Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n        Запрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);\n\n        Выборка = Запрос.Выполнить().Выбрать();\n\n        ПОКА Выборка.Следующий() ЦИКЛ\n            НоваяСтрока = Результат.Добавить();\n            НоваяСтрока.Номенклатура = Выборка.Номенклатура;\n            НоваяСтрока.Остаток = Выборка.Остаток;\n        КОНЕЦ ПО;\n\n        ВОЗВРАТ Результат;\n    КОНЕЦ ФУНКЦИИ\n    ```\n\n4.  **Review against constraints:**\n    *   Platform 1C 8.3? Yes.\n    *   Only metadata objects? Yes (`Справочник.Номенклатура`, `Справочник.Склады`, `РегистрНакопления.ТоварыНаСкладах`).\n    *   Russian syntax? Yes.\n    *   Only code? Yes.\n    *   Ready to execute? Yes.\n\n    *Self-Correction on Query Logic:*\n    The subquery for subgroups is slightly redundant if we use `ВЫБРАТЬ РЕКУРСИВНО` or `ВЫБРАТЬ ПОДЧИНЕННЫЕ ЭЛЕМЕНТЫ`, but standard 1C queries without recursion support require the nested subquery approach shown above. Since the metadata doesn't specify `ВЫБРАТЬ ПОДЧИНЕННЫЕ ЭЛЕМЕНТЫ`, I must stick to the standard subquery method to ensure compatibility with the implied environment.\n\n    *Check column types:*\n    `Номенклатура` -> `СправочникСсылка.Номенклатура`.\n    `Остаток` -> `Число` with precision 15.3 (matches `ВНаличии` resource).\n\n    *Check logic:*\n    If `МассивНоменклатуры` is empty, `Количество() > 0` is false. The second part of the OR condition handles the group case.\n    If `МассивНоменклатуры` is not empty, the first part of the OR condition is true, and the second part is ignored (short-circuit evaluation in SQL/1C query logic usually works this way or explicitly via `ИЛИ`).\n\n    The code looks solid.",
+          "finish_reason": "stop",
           "system_fingerprint": "",
-          "cost_reported": null,
-          "elapsed_time": 48.735896587371826,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
+          "cost_reported": 0.35,
+          "elapsed_time": 54.06250810623169,
+          "cost_input": 2.1779999999999998e-05,
+          "cost_output": 0.001706,
+          "cost_total": 0.00172778,
           "success": true,
           "error": null
         }
       ],
-      "determinism": null,
-      "total_tokens": 4458,
-      "total_cost": 0.0,
-      "avg_time": 48.736
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "305ede682c66d265a8dd273e49c3b7150722b99ca50d098a54d7b0b3c8dab108",
+        "most_common_count": 1,
+        "hashes": [
+          "305ede682c66d265a8dd273e49c3b7150722b99ca50d098a54d7b0b3c8dab108"
+        ]
+      },
+      "total_tokens": 4628,
+      "total_cost": 0.0021599,
+      "avg_time": 54.063
     },
     {
       "task_id": "B1",
@@ -27757,6 +28284,57 @@
       "total_tokens": 35301,
       "total_cost": 0.043049199999999996,
       "avg_time": 281.56
+    },
+    {
+      "task_id": "B1",
+      "task_name": "Получение остатков товаров на складе",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.0019137,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```\nФункция ПолучитьОстаткиТоваровНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено)\n\t\n\tЗапрос = Новый Запрос;\n\tТекстЗапроса = \n\t\t\"ВЫБРАТЬ\n\t\t|\tТоварыНаСкладахОстатки.Номенклатура КАК Номенклатура,\n\t\t|\tТоварыНаСкладахОстатки.ВНаличииОстаток КАК Остаток\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.ТоварыНаСкладах.Остатки(\n\t\t|\t\t\t,\n\t\t|\t\t\tСклад = &Склад) КАК ТоварыНаСкладахОстатки\";\n\t\n\tУсловие = \"\";\n\t\n\tЕсли МассивНоменклатуры <> Неопределено И МассивНоменклатуры.Количество() > 0 Тогда\n\t\tУсловие = \" ТоварыНаСкладахОстатки.Номенклатура В (&МассивНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\tИначеЕсли ГруппаНоменклатуры <> Неопределено Тогда\n\t\tУсловие = \" ТоварыНаСкладахОстатки.Номенклатура В ИЕРАРХИИ (&ГруппаНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);\n\tКонецЕсли;\n\t\n\tЕсли Условие <> \"\" Тогда\n\t\tТекстЗапроса = ТекстЗапроса + \" ГДЕ \" + Условие;\n\tКонецЕсли;\n\t\n\tЗапрос.Текст = ТекстЗапроса;\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\t\n\tВозврат Запрос.Выполнить().Выгрузить();\n\t\nКонецФункции\n```",
+          "response_hash": "855880f8178e44c61225d4fcbd59abe5a84bbdd9abd1862d2d5de7b4a0127b71",
+          "tokens_input": 400,
+          "tokens_output": 1055,
+          "tokens_total": 1455,
+          "tokens_reasoning": 574,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write function. Use query with parameters. Handle array empty + group given -> all items of group and subgroups. Use В ИЕРАРХИИ for group.\n\nLet me write:\n\nФункция ПолучитьОстаткиТоваровНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено)\n\nЗапрос = Новый Запрос;\nТекстЗапроса = \"ВЫБРАТЬ ТоварыНаСкладахОстатки.Номенклатура КАК Номенклатура, ТоварыНаСкладахОстатки.ВНаличииОстаток КАК Остаток ИЗ РегистрНакопления.ТоварыНаСкладах.Остатки(, Склад = &Склад) КАК ТоварыНаСкладахОстатки\";\n\nУсловия = \"\";\nЕсли МассивНоменклатуры <> Неопределено И МассивНоменклатуры.Количество() > 0 Тогда\n  Условия = \" ТоварыНаСкладахОстатки.Номенклатура В (&МассивНоменклатуры)\";\n  Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\nИначеЕсли ГруппаНоменклатуры <> Неопределено Тогда\n  Условия = \" ТоварыНаСкладахОстатки.Номенклатура В ИЕРАРХИИ (&ГруппаНоменклатуры)\";\n  Запрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);\nКонецЕсли;\n\nЕсли Условия <> \"\" Тогда\n  ТекстЗапроса = ТекстЗапроса + \" ГДЕ \" + Условия;\nКонецЕсли;\n\nЗапрос.Текст = ТекстЗапроса;\nЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\nТаблица = Запрос.Выполнить().Выгрузить();\nВозврат Таблица;\n\nКонецФункции\n\nWait - \"В ИЕРАРХИИ\" works with hierarchical. Номенклатура is hierarchical. Good.\n\nBut if both array and group given? Requirement says array empty and group given -> all of group. So if array has items, use array. That's what I did.\n\nActually maybe should combine? Requirement: \"Если массив номенклатуры пуст, а группа задана — вернуть остатки всех товаров этой группы и её подгрупп.\" So my logic is fine.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.35,
+          "elapsed_time": 3.0991036891937256,
+          "cost_input": 0.00012,
+          "cost_output": 0.001266,
+          "cost_total": 0.001386,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "855880f8178e44c61225d4fcbd59abe5a84bbdd9abd1862d2d5de7b4a0127b71",
+        "most_common_count": 1,
+        "hashes": [
+          "855880f8178e44c61225d4fcbd59abe5a84bbdd9abd1862d2d5de7b4a0127b71"
+        ]
+      },
+      "total_tokens": 1455,
+      "total_cost": 0.0032997,
+      "avg_time": 3.099
     },
     {
       "task_id": "B20",
@@ -30336,6 +30914,58 @@
       "avg_time": 142.251
     },
     {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "ПланВидовХарактеристик.ВидыСубконто",
+        "РегистрБухгалтерии.Хозрасчетный",
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.0030743999999999997,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1С\nФункция ДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n    \n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        |    СУММА(Движения.Сумма) КАК Сумма\n        |ИЗ\n        |    РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(\n        |        , ,\n        |        Счет = &Счет\n        |        И (СубконтоДт1 = &Контрагент ИЛИ СубконтоДт2 = &Контрагент)) КАК Движения\";\n    \n    Запрос.УстановитьПараметр(\"Счет\", Счет);\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    \n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() И ЗначениеЗаполнено(Выборка.Сумма) Тогда\n        Возврат Выборка.Сумма;\n    КонецЕсли;\n    \n    Возврат 0;\n    \nКонецФункции\n```",
+          "response_hash": "59846bfb064b23d0ef2def0f42dcbfb00e23f90786179ed5a01f3536c39b8572",
+          "tokens_input": 712,
+          "tokens_output": 2078,
+          "tokens_total": 2790,
+          "tokens_reasoning": 1778,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "1. Функция принимает Счет (Ссылка на план счетов), Контрагент (Ссылка).\n2. Нужно найти в Дебетовых проводках субконто, которое равно контрагенту, независимо от позиции (СубконтоДт1 или СубконтоДт2).\n3. Использовать виртуальную таблицу РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто.\n\nПараметры виртуальной таблицы: НачалоПериода, КонецПериода, Условие, КорСчет, Счет, ... УсловиеОтбор?\n\nФункция:\n\n```1С\nФункция ДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n    \n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ\n    |    СУММА(Движения.Сумма) КАК Сумма\n    |ИЗ\n    |    РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(\n    |        , , ,\n    |        Счет = &Счет\n    |        И (СубконтоДт1 = &Контрагент ИЛИ СубконтоДт2 = &Контрагент)) КАК Движения\";\n    \n    Запрос.УстановитьПараметр(\"Счет\", Счет);\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    \n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() Тогда\n        Возврат Выборка.Сумма;\n    Иначе\n        Возврат 0;\n    КонецЕсли;\n    \nКонецФункции\n```\n\nWait — виртуальная таблица ДвиженияССубконто параметры: (НачалоПериода, КонецПериода, Условие, Счет, КорСчет, ...). Actually let me recall the parameters order.\n\nДля регистра бухгалтерии виртуальная таблица ДвиженияССубконто имеет параметры:\n- НачалоПериода\n- КонецПериода\n- Условие\n- СчетДт? Нет...\n\nActually параметры: НачалоПериода, КонецПериода, Условие, Отбор по счету... Let me think.\n\nВиртуальная таблица \"ДвиженияССубконто\": параметры - НачалоПериода, КонецПериода, Условие, СчетДт, СчетКт? Hmm.\n\nActually for ДвиженияССубконто, there is an additional parameter for the account to determine subconto order. If you pass a specific account, the subconto fields are interpreted according to that account's subconto.\n\nParameters: (НачалоПериода, КонецПериода, Условие, Счет). The Счет parameter specifies the account to determine subconto positions.\n\nHmm, but we can also just use Условие for filtering.\n\nLet me be careful. The .ДвиженияССубконто virtual table parameters are:\n- НачалоПериода\n- КонецПериода  \n- Условие\n- СчетДт\n- СчетКт\n\nHmm actually I'm not sure there's a Счет parameter. Let me just pass empty and use Условие.\n\nSince we filter by Счет = &Счет in condition, and the subconto order is determined by the account specified. But actually the subconto fields (СубконтоДт1, СубконтоДт2) will hold whatever is stored based on the account's subconto order at posting time.\n\nWait, actually the СубконтоДт1/2 are stored per the account's subconto order. So checking both 1 and 2 covers all cases.\n\nLet me write:\n\n```\nРегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(\n    НачалоПериода,\n    КонецПериода,\n    Условие,\n    СчетДт,\n    СчетКт)\n```\n\nHmm, I think for ДвиженияССубконто the parameters don't include account selection fields like that.\n\nActually let me reference: The virtual table \"ДвиженияССубконто\" of accounting register has parameters: НачалоПериода, КонецПериода, Условие. Plus for the subconto order to be determined, you typically use it with a specific account in the query.\n\nActually there's another approach — virtual table \"Хозрасчетный.Движения\". But to get subconto we need ДвиженияССубконто.\n\nLet me just write it with condition covering all:\n\n```\n\"ВЫБРАТЬ\n|    СУММА(Движения.Сумма) КАК Сумма\n|ИЗ\n|    РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(, , \n|        Счет = &Счет\n|        И (СубконтоДт1 = &Контрагент ИЛИ СубконтоДт2 = &Контрагент)) КАК Движения\"\n```\n\nThis should work.\n\nActually the virtual table ДвиженияССубконто has a special behavior: it returns rows where the account has subconto. The СубконтоДтN fields are filled based on the subconto order of the corresponding account (from the Дт side). So if a row's Дт account is 62 with subconto (Контрагент, Договор), then СубконтоДт1 = Контрагент, СубконтоДт2 = Договор. If Дт account is 76, then СубконтоДт1 = Договор, СубконтоДт2 = Контрагент. So we check both.\n\nThe return should be ДтСумма only. Since the row is in the \"subconto\" table, each row represents the posted entry, Сумма is the Дт sum.\n\nGood, the query returns sum of Дт amounts filtered.\n\nAnswer code:\n\n```1С\nФункция ДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n    \n    Запрос = Новый Запрос;\n    Запрос.Текст = \n        \"ВЫБРАТЬ\n        |    СУММА(Движения.Сумма) КАК Сумма\n        |ИЗ\n        |    РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(, ,\n        |        Счет = &Счет\n        |        И (СубконтоДт1 = &Контрагент ИЛИ СубконтоДт2 = &Контрагент)) КАК Движения\";\n    \n    Запрос.УстановитьПараметр(\"Счет\", Счет);\n    Запрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n    \n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() И ЗначениеЗаполнено(Выборка.Сумма) Тогда\n        Возврат Выборка.Сумма;\n    КонецЕсли;\n    \n    Возврат 0;\n    \nКонецФункции\n```\n\nThe user wants only code, ready to execute. I'll output just the function.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.54,
+          "elapsed_time": 19.559497117996216,
+          "cost_input": 0.0002136,
+          "cost_output": 0.0024936,
+          "cost_total": 0.0027072,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "59846bfb064b23d0ef2def0f42dcbfb00e23f90786179ed5a01f3536c39b8572",
+        "most_common_count": 1,
+        "hashes": [
+          "59846bfb064b23d0ef2def0f42dcbfb00e23f90786179ed5a01f3536c39b8572"
+        ]
+      },
+      "total_tokens": 2790,
+      "total_cost": 0.0057816,
+      "avg_time": 19.559
+    },
+    {
       "task_id": "B2",
       "task_name": "Заполнение цен в табличной части",
       "model_id": "aliceai-llm/latest",
@@ -32887,6 +33517,56 @@
       "total_tokens": 3391,
       "total_cost": 0.004614,
       "avg_time": 23.712
+    },
+    {
+      "task_id": "B2",
+      "task_name": "Заполнение цен в табличной части",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныНоменклатуры",
+        "Документ.РеализацияТоваров"
+      ],
+      "context_analysis_cost": 0.0018414,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "Процедура ЗаполнитьЦеныВТоварах(Товары, ВидЦен, ДатаДокумента)\n\t\n\tНоменклатураДляЗапроса = Новый Массив;\n\tДля Каждого СтрокаТовары Из Товары Цикл\n\t\tЕсли НоменклатураДляЗапроса.Найти(СтрокаТовары.Номенклатура) = Неопределено Тогда\n\t\t\tНоменклатураДляЗапроса.Добавить(СтрокаТовары.Номенклатура);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tЦены = Новый Соответствие;\n\tЕсли НоменклатураДляЗапроса.Количество() > 0 Тогда\n\t\tЗапрос = Новый Запрос;\n\t\tЗапрос.УстановитьПараметр(\"Дата\", ДатаДокумента);\n\t\tЗапрос.УстановитьПараметр(\"ВидЦен\", ВидЦен);\n\t\tЗапрос.УстановитьПараметр(\"Номенклатура\", НоменклатураДляЗапроса);\n\t\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tЦеныНоменклатурыСрезПоследних.Номенклатура КАК Номенклатура,\n\t\t|\tЦеныНоменклатурыСрезПоследних.Цена КАК Цена\n\t\t|ИЗ\n\t\t|\tРегистрСведений.ЦеныНоменклатуры.СрезПоследних(\n\t\t|\t\t\t&Дата,\n\t\t|\t\t\tНоменклатура В (&Номенклатура)\n\t\t|\t\t\t\tИ ВидЦен = &ВидЦен) КАК ЦеныНоменклатурыСрезПоследних\";\n\t\t\n\t\tВыборка = Запрос.Выполнить().Выбрать();\n\t\tПока Выборка.Следующий() Цикл\n\t\t\tЦены.Вставить(Выборка.Номенклатура, Выборка.Цена);\n\t\tКонецЦикла;\n\tКонецЕсли;\n\t\n\tДля Каждого СтрокаТовары Из Товары Цикл\n\t\tНайденнаяЦена = Цены[СтрокаТовары.Номенклатура];\n\t\tЕсли НайденнаяЦена = Неопределено Тогда\n\t\t\tСтрокаТовары.Цена = 0;\n\t\tИначе\n\t\t\tСтрокаТовары.Цена = НайденнаяЦена;\n\t\tКонецЕсли;\n\t\tСтрокаТовары.Сумма = СтрокаТовары.Количество * СтрокаТовары.Цена;\n\tКонецЦикла;\n\t\nКонецПроцедуры",
+          "response_hash": "6c442f29816518eaef567842e4ed341c8f3921e72dfbac5b61c8174958357353",
+          "tokens_input": 413,
+          "tokens_output": 1459,
+          "tokens_total": 1872,
+          "tokens_reasoning": 817,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "We need to write a procedure on the 1C language that fills prices in the tabular part \"Товары\" of the document. Parameters: tabular part, type of prices, date.\n\nUse РегистрСведений.ЦеныНоменклатуры.СрезПоследних.\n\nLet's write:\n\n```1c\nПроцедура ЗаполнитьЦеныВТоварах(Товары, ВидЦен, ДатаДокумента)\n\n\tНоменклатураДляЗапроса = Новый СписокЗначений;\n\tДля Каждого СтрокаТовары Из Товары Цикл\n\t\tЕсли Не НоменклатураДляЗапроса.НайтиПоЗначению(СтрокаТовары.Номенклатура) Тогда\n\t\t\tНоменклатураДляЗапроса.Добавить(СтрокаТовары.Номенклатура);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tЦены = Новый Соответствие;\n\tЕсли НоменклатураДляЗапроса.Количество() > 0 Тогда\n\t\tЗапрос = Новый Запрос;\n\t\tЗапрос.УстановитьПараметр(\"Дата\", ДатаДокумента);\n\t\tЗапрос.УстановитьПараметр(\"ВидЦен\", ВидЦен);\n\t\tЗапрос.УстановитьПараметр(\"Номенклатура\", НоменклатураДляЗапроса);\n\t\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tЦеныНоменклатурыСрезПоследних.Номенклатура КАК Номенклатура,\n\t\t|\tЦеныНоменклатурыСрезПоследних.Цена КАК Цена\n\t\t|ИЗ\n\t\t|\tРегистрСведений.ЦеныНоменклатуры.СрезПоследних(\n\t\t|\t\t\t&Дата,\n\t\t|\t\t\tНоменклатура В (&Номенклатура)\n\t\t|\t\t\t\tИ ВидЦен = &ВидЦен) КАК ЦеныНоменклатурыСрезПоследних\";\n\t\t\n\t\tВыборка = Запрос.Выполнить().Выбрать();\n\t\tПока Выборка.Следующий() Цикл\n\t\t\tЦены.Вставить(Выборка.Номенклатура, Выборка.Цена);\n\t\tКонецЦикла;\n\tКонецЕсли;\n\t\n\tДля Каждого СтрокаТовары Из Товары Цикл\n\t\tНайденнаяЦена = Цены[СтрокаТовары.Номенклатура];\n\t\tЕсли НайденнаяЦена = Неопределено Тогда\n\t\t\tСтрокаТовары.Цена = 0;\n\t\tИначе\n\t\t\tСтрокаТовары.Цена = НайденнаяЦена;\n\t\tКонецЕсли;\n\t\tСтрокаТовары.Сумма = СтрокаТовары.Количество * СтрокаТовары.Цена;\n\tКонецЦикла;\n\t\nКонецПроцедуры\n```\n\nThis should be fine. Use СписокЗначений for the query parameter (it works with В (&Номенклатура)). Actually for query parameter, a СписокЗначений works when the parameter is used as a list. Yes, 1C supports transferring a list of values to a query parameter with В (&Номенклатура).\n\nAlternatively use массив. Let's use Массив for clarity - actually Массив is better for queries.\n\nLet me use Массив.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.38,
+          "elapsed_time": 6.963312149047852,
+          "cost_input": 0.0001239,
+          "cost_output": 0.0017508,
+          "cost_total": 0.0018747,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "6c442f29816518eaef567842e4ed341c8f3921e72dfbac5b61c8174958357353",
+        "most_common_count": 1,
+        "hashes": [
+          "6c442f29816518eaef567842e4ed341c8f3921e72dfbac5b61c8174958357353"
+        ]
+      },
+      "total_tokens": 1872,
+      "total_cost": 0.0037161,
+      "avg_time": 6.963
     },
     {
       "task_id": "B3",
@@ -35456,6 +36136,58 @@
       "avg_time": 223.392
     },
     {
+      "task_id": "B3",
+      "task_name": "Списание товаров по FIFO",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ПартииТоваровНаСкладах",
+        "Документ.ПоступлениеТоваров",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.0020583,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1c\nФункция СписаниеПоФИФО(ТоварыКСписанию, Склад)\n\n    ТаблицаРезультат = Новый ТаблицаЗначений;\n    ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n    ТаблицаРезультат.Колонки.Добавить(\"Партия\", Новый ОписаниеТипов(\"ДокументСсылка.ПоступлениеТоваров\"));\n    ТаблицаРезультат.Колонки.Добавить(\"Количество\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n    ТаблицаРезультат.Колонки.Добавить(\"Стоимость\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n\n    // Собираем уникальные номенклатуры для запроса\n    МассивНоменклатуры = Новый Массив;\n    Для Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n        Если МассивНоменклатуры.Найти(СтрокаТовара.Номенклатура) = Неопределено Тогда\n            МассивНоменклатуры.Добавить(СтрокаТовара.Номенклатура);\n        КонецЕсли;\n    КонецЦикла;\n\n    // Получаем остатки по партиям, отсортированные по дате поступления (FIFO)\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n    \"ВЫБРАТЬ\n    |    Остатки.Номенклатура КАК Номенклатура,\n    |    Остатки.Партия КАК Партия,\n    |    Остатки.КоличествоОстаток КАК Количество,\n    |    Остатки.СтоимостьОстаток КАК Стоимость\n    |ИЗ\n    |    РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n    |            ,\n    |            Склад = &Склад\n    |                И Номенклатура В (&МассивНоменклатуры),\n    |            Номенклатура, Партия) КАК Остатки\n    |ГДЕ\n    |    Остатки.КоличествоОстаток > 0\n    |УПОРЯДОЧИТЬ ПО\n    |    Остатки.Номенклатура,\n    |    Остатки.Партия.Дата,\n    |    Остатки.Партия\";\n\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n    Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n    // Формируем соответствие: Номенклатура -> массив партий (в порядке FIFO)\n    СоответствиеПартий = Новый Соответствие;\n    Выборка = Запрос.Выполнить().Выбрать();\n    Пока Выборка.Следующий() Цикл\n        СписокПартий = СоответствиеПартий.Получить(Выборка.Номенклатура);\n        Если СписокПартий = Неопределено Тогда\n            СписокПартий = Новый Массив;\n            СоответствиеПартий.Вставить(Выборка.Номенклатура, СписокПартий);\n        КонецЕсли;\n        СписокПартий.Добавить(Новый Структура(\"Партия, Количество, Стоимость\",\n            Выборка.Партия, Выборка.Количество, Выборка.Стоимость));\n    КонецЦикла;\n\n    // Распределяем списание по партиям\n    Для Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n\n        Номенклатура = СтрокаТовара.Номенклатура;\n        КоличествоКСписанию = СтрокаТовара.Количество;\n\n        Если КоличествоКСписанию <= 0 Тогда\n            Продолжить;\n        КонецЕсли;\n\n        СписокПартий = СоответствиеПартий.Получить(Номенклатура);\n        Если СписокПартий = Неопределено Тогда\n            СписокПартий = Новый Массив;\n        КонецЕсли;\n\n        Для Каждого ПартияОстаток Из СписокПартий Цикл\n\n            Если КоличествоКСписанию <= 0 Тогда\n                Прервать;\n            КонецЕсли;\n\n            ДоступноеКоличество = ПартияОстаток.Количество;\n            Если ДоступноеКоличество <= 0 Тогда\n                Продолжить;\n            КонецЕсли;\n\n            КоличествоИзПартии = Мин(КоличествоКСписанию, ДоступноеКоличество);\n\n            Если ДоступноеКоличество <> 0 Тогда\n                ЦенаПартии = ПартияОстаток.Стоимость / ДоступноеКоличество;\n            Иначе\n                ЦенаПартии = 0;\n            КонецЕсли;\n\n            СтоимостьСписания = Окр(КоличествоИзПартии * ЦенаПартии, 2);\n\n            СтрокаРезультата = ТаблицаРезультат.Добавить();\n            СтрокаРезультата.Номенклатура = Номенклатура;\n            СтрокаРезультата.Партия       = ПартияОстаток.Партия;\n            СтрокаРезультата.Количество   = КоличествоИзПартии;\n            СтрокаРезультата.Стоимость    = СтоимостьСписания;\n\n            ПартияОстаток.Количество = ДоступноеКоличество - КоличествоИзПартии;\n            ПартияОстаток.Стоимость  = ПартияОстаток.Стоимость - СтоимостьСписания;\n\n            КоличествоКСписанию = КоличествоКСписанию - КоличествоИзПартии;\n\n        КонецЦикла;\n\n        Если КоличествоКСписанию > 0 Тогда\n            ВызватьИсключение \"Недостаточно остатков на складе для номенклатуры: \" + Строка(Номенклатура);\n        КонецЕсли;\n\n    КонецЦикла;\n\n    Возврат ТаблицаРезультат;\n\nКонецФункции\n```",
+          "response_hash": "425ccbcee7a48ce496be2ccab2be2802102519ad9dc9b3ea9b4704ef93651f61",
+          "tokens_input": 507,
+          "tokens_output": 8311,
+          "tokens_total": 8818,
+          "tokens_reasoning": 6749,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write a function on 1C language that does FIFO write-off.\n\nParameters: table of goods (columns Номенклатура, Количество), склад.\nReturn result table with columns: Номенклатура, Партия, Количество, Стоимость.\n\nNeed to get remaining stock from register ПартииТоваровНаСкладах grouped by Номенклатура, Партия ordered by date of batch (document ПоступлениеТоваров).\n\nSince партия is ДокументСсылка.ПоступлениеТоваров, we can order by Партия.Дата.\n\nLet me write:\n\n```1c\nФункция СписаниеПоФИФО(ТоварыКСписанию, Склад)\n    \n    ТаблицаРезультат = Новый ТаблицаЗначений;\n    ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n    ТаблицаРезультат.Колонки.Добавить(\"Партия\", Новый ОписаниеТипов(\"ДокументСсылка.ПоступлениеТоваров\"));\n    ТаблицаРезультат.Колонки.Добавить(\"Количество\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15,3)));\n    ТаблицаРезультат.Колонки.Добавить(\"Стоимость\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15,2)));\n    \n    // Получаем остатки по партиям\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ\n    |    ПартииТоваровНаСкладахОстатки.Номенклатура КАК Номенклатура,\n    |    ПартииТоваровНаСкладахОстатки.Партия КАК Партия,\n    |    ПартииТоваровНаСкладахОстатки.КоличествоОстаток КАК Количество,\n    |    ПартииТоваровНаСкладахОстатки.СтоимостьОстаток КАК Стоимость,\n    |    ПартииТоваровНаСкладахОстатки.Партия.Дата КАК ДатаПартии\n    |ИЗ\n    |    РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n    |        &Склад,\n    |        Номенклатура В (&МассивНоменклатуры)\n    |    ) КАК ПартииТоваровНаСкладахОстатки\n    |ГДЕ\n    |    ПартииТоваровНаСкладахОстатки.КоличествоОстаток > 0\n    |УПОРЯДОЧИТЬ ПО\n    |    ПартииТоваровНаСкладахОстатки.Номенклатура,\n    |    ПартииТоваровНаСкладахОстатки.Партия.Дата,\n    |    ПартииТоваровНаСкладахОстатки.Партия\";\n    \n    // Собираем массив номенклатуры\n    МассивНоменклатуры = Новый Массив;\n    Для Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n        Если МассивНоменклатуры.Найти(СтрокаТовара.Номенклатура) = Неопределено Тогда\n            МассивНоменклатуры.Добавить(СтрокаТовара.Номенклатура);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n    Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n    \n    РезультатЗапроса = Запрос.Выполнить().Выбрать();\n    \n    // Строим соответствие по номенклатуре\n    СоответствиеОстатков = Новый Соответствие;\n    Пока РезультатЗапроса.Следующий() Цикл\n        СписокПартий = СоответствиеОстатков.Получить(РезультатЗапроса.Номенклатура);\n        Если СписокПартий = Неопределено Тогда\n            СписокПартий = Новый Массив;\n            СоответствиеОстатков.Вставить(РезультатЗапроса.Номенклатура, СписокПартий);\n        КонецЕсли;\n        СтрокаОстатка = Новый Структура(\"Партия, Количество, Стоимость\");\n        СтрокаОстатка.Партия = РезультатЗапроса.Партия;\n        СтрокаОстатка.Количество = РезультатЗапроса.Количество;\n        СтрокаОстатка.Стоимость = РезультатЗапроса.Стоимость;\n        СписокПартий.Добавить(СтрокаОстатка);\n    КонецЦикла;\n    \n    // Распределяем\n    Для Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n        Номенклатура = СтрокаТовара.Номенклатура;\n        КоличествоКСписанию = СтрокаТовара.Количество;\n        \n        СписокПартий = СоответствиеОстатков.Получить(Номенклатура);\n        Если СписокПартий = Неопределено Тогда\n            СписокПартий = Новый Массив;\n        КонецЕсли;\n        \n        Для Каждого СтрокаПартии Из СписокПартий Цикл\n            Если КоличествоКСписанию <= 0 Тогда\n                Прервать;\n            КонецЕсли;\n            Если СтрокаПартии.Количество <= 0 Тогда\n                Продолжить;\n            КонецЕсли;\n            \n            КоличествоСписания = Мин(КоличествоКСписанию, СтрокаПартии.Количество);\n            \n            // Цена партии\n            Если СтрокаПартии.Количество <> 0 Тогда\n                Цена = СтрокаПартии.Стоимость / СтрокаПартии.Количество;\n            Иначе\n                Цена = 0;\n            КонецЕсли;\n            \n            НоваяСтрока = ТаблицаРезультат.Добавить();\n            НоваяСтрока.Номенклатура = Номенклатура;\n            НоваяСтрока.Партия = СтрокаПартии.Партия;\n            НоваяСтрока.Количество = КоличествоСписания;\n            НоваяСтрока.Стоимость = Окр(КоличествоСписания * Цена, 2);\n            \n            КоличествоКСписанию = КоличествоКСписанию - КоличествоСписания;\n        КонецЦикла;\n        \n        Если КоличествоКСписанию > 0 Тогда\n            ВызватьИсключение \"Недостаточно остатков на складе для номенклатуры: \" + Строка(Номенклатура);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат ТаблицаРезультат;\n    \nКонецФункции\n```\n\nLet me review. Структура usage - actually I created Структура then set .Партия etc. Better to create with constructor or just use structure properly. Actually my code:\n\n```\nСтрокаОстатка = Новый Структура(\"Партия, Количество, Стоимость\");\nСтрокаОстатка.Партия = ...\n```\n\nThat works but the string keys need to be like \"Партия,Количество,Стоимость\" - no spaces? Actually spaces are OK in 1C structure constructor? Let me be careful. The format is \"Ключ1, Ключ2, Ключ3\" - spaces allowed. Yes it works.\n\nActually I'd rather use Структура with the constructor passing values. But it's fine.\n\nWait, I should double-check: Структура.Вставить? No, direct assignment works for predefined keys.\n\nLet me reconsider the query syntax. Using virtual table .Остатки with parameters. The condition `Номенклатура В (&МассивНоменклатуры)` should be in virtual table parameters.\n\n```\nРегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n    &Склад,\n    Номенклатура В (&МассивНоменклатуры)\n)\n```\n\nThis gives параметры: Склад (first param is by measurements order... actually the syntax is .Остатки(Условие, Измерения)).\n\nActually for .Остатки() the syntax is:\n```\nРегистрНакопления.Регистр.Остатки(Период, Условие, Измерения)\n```\n\nHmm, actually the virtual table .Остатки() has parameters:\n- Первый параметр - отбор (условие)\n- Второй - измерения\n\nSo `.Остатки(&Склад, Номенклатура В (&МассивНоменклатуры))` - the first is condition where Склад = &Склад, second is measurements.\n\nWait, actually the syntax is:\n`РегистрНакопления.Регистр.Остатки(<Период>, <Условие>, <Измерения>)`\n\nПериод is optional. For остатки without period:\n`РегистрНакопления.Регистр.Остатки(<Условие>, <Измерения>)`\n\nWhere Условие is a filter expression, and Измерения is which measurements to include.\n\nSo `Остатки(&Склад, Номенклатура В (&МассивНоменклатуры))` - wait, that puts Склад in Условие? Actually Условие should be something like `Склад = &Склад`.\n\nLet me re-check the syntax:\n`.Остатки(Условие, Измерения)`\n\nWhere Условие is like `Склад = &Склад`, and Измерения is like `Номенклатура, Партия`.\n\nHmm, actually I recall that condition syntax uses just параметр:\n`.Остатки(&Склад, Номенклатура, Партия)` - where first param is condition? No.\n\nLet me think again. The correct syntax:\n\n```\nРегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n    , // Период\n    Склад = &Склад И Номенклатура В (&МассивНоменклатуры), // Условие\n    Номенклатура, Партия // Измерения\n)\n```\n\nActually, the parameters of the virtual table for остатки:\n\nThe first parameter is either Период (if register has periodicity) or Условие. Actually no, the параметризация is:\n1. Период\n2. Условие отбора (обязательно с явным «=»)\n\nHmm, I need to be precise. Let me recall properly:\n\n`РегистрНакопления.Регистр.Остатки(Период, Условие, Измерения)`\n\nWhere:\n- Период - date, if the register has periodicity\n- Условие - a boolean expression, or just parameter indicating measurement filter\n\nActually the second parameter \"Условие\" must be a boolean expression like `Склад = &Склад`.\n\nHmm, actually I've seen both:\n```\nЖурналОстатки.Остатки(, Период, , , , , )\n```\nNo, let me just be careful.\n\nActually I've written this many times. The syntax is:\n\n```\nРегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n    &Дата,\n    Склад = &Склад И Номенклатура В (&МассивНоменклатуры),\n    Номенклатура,\n    Партия\n)\n```\n\nHmm, but many examples just write:\n```\nОстатки(&Склад, , Номенклатура, Партия)\n```\n\nActually if it's a condition, the first position can be an expression. Let me look... \n\nThe parameter order for .Остатки():\n1. Период\n2. Условие\n3. Измерения...\n4. Ресурсы...\n\nBut actually I remember reading that the condition can contain either a parameter or a condition. Like this:\n\n```\n| ИЗ РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|     &Склад,\n|     Номенклатура = &Номенклатура,\n|     ,\n|     Партия, Количество, Стоимость\n| )\n```\n\nHmm. Actually the syntax from 1С documentation:\n\n`РегистрНакопления.<Имя>.Остатки(<Условие>, <Измерения>, <Ресурсы>)`\n\nWhere Условие is a string like \"Склад = &Склад\" (or a parameter passed). If period is available, first is Период.\n\nLet me be safe and use a condition:\n\n```\n\".Остатки(\n|   Склад = &Склад\n|       И Номенклатура В (&МассивНоменклатуры),\n|   ,\n|   Номенклатура, Партия,\n|   , , , \n|   )\"\n```\n\nHmm, actually if we don't need to specify measurements... Actually the параметр order is:\n1. Период\n2. Условие\n3. Измерение1, Измерение2, ...\n\nWait no. Let me just use the condition form. Actually, I'll write it as:\n\n```\n| РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|     , \n|     Склад = &Склад И Номенклатура В (&МассивНоменклатуры)\n|     ) КАК Остатки\n```\n\nHmm, but the first parameter would be Период (empty) then Условие.\n\nActually, I need to double-check whether the condition is first or period is first.\n\nFrom 1С documentation: virtual table parameters:\n- Период (optional, if register has periodicity)\n- Условие (string)\n\nIf condition is a string like \"Склад = &Склад\", you can pass a parameter directly as the conditio parameter. Yes:\n\n```\nОстатки(\n    &Период,\n    УсловиеСОтбором,\n    Измерение1,\n    Измерение2,\n    Ресурс1,\n    ...\n)\n```\n\nHmm. Actually let me just write condition as string. But 1C syntax doesn't allow string in query text? It does via parameters? No, the condition must be inline text.\n\nOK. Let me write:\n\n```\n| ИЗ\n|     РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|         Склад = &Склад\n|             И Номенклатура В (&МассивНоменклатуры),\n|         Номенклатура, Партия) КАК Остатки\n```\n\nWait, but the syntax requires Период first if register has periodicity. Накопительный регистр with вид \"Остатки\" doesn't have periodicity if it's not set. Let me assume no periodicity. Actually the register has \"вид: остатки\" - typically может иметь периодичность. But not specified. Let me just pass empty period:\n\n```\n| РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|     ,\n|     Склад = &Склад И Номенклатура В (&МассивНоменклатуры),\n|     Номенклатура, Партия) КАК Остатки\n```\n\nHmm, actually looking at typical 1C examples, the typical way is:\n\n```\n\"ВЫБРАТЬ\n|  Остатки.Номенклатура,\n|  Остатки.Партия,\n|  Остатки.КоличествоОстаток,\n|  Остатки.СтоимостьОстаток\n|ИЗ\n|  РегистрНакопления.ПартииТоваровНаСкладах.Остатки(&Склад, , Номенклатура, Партия) КАК Остатки\"\n```\n\nHmm no. Let me actually recall properly.\n\nActually the correct syntax for .Остатки virtual table:\n\n`.Остатки(<Период>, <Условие>, <Измерения>)`\n\nWhere:\n- Первый параметр — период. Если у регистра нет периодичности, оставляем пустым.\n- Второй параметр — условие. Может быть либо строкой с условием, либо просто конкретным значением измерения? Actually the condition is written as an expression like `Склад = &Склад`.\n\nWait, I recall clearly now that the second parameter is Условие, and you write it as a boolean expression.\n\nHmm, but wait. Looking at the syntax help: \n\n\"Параметры виртуальной таблицы остатков: <Период>, <Условие>, <Измерение1>, <Измерение2>, ...\"\n\nActually looking at 1C ITS examples:\n\n```\nРегистрНакопления.ТоварыНаСкладах.Остатки(&Период, Склад = &Склад, , , )\n```\n\nYes! That's the right syntax. Condition starts with \"ИмяИзмерения = Значение\" or \"ИмяИзмерения = &Параметр\".\n\nSo my query:\n```\n| ИЗ\n|     РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|         ,\n|         Склад = &Склад И Номенклатура В (&МассивНоменклатуры),\n|         Номенклатура, Партия) КАК Остатки\n```\n\nHmm but I need СтоимостьОстаток and КоличествоОстаток resources. If I don't specify resources, all are included. So:\n\n```\n|     РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|         ,\n|         Склад = &Склад И Номенклатура В (&МассивНоменклатуры),\n|         Номенклатура, Партия) КАК Остатки\n```\n\nThis should give us КоличествоОстаток and СтоимостьОстаток.\n\nActually wait, I want to include all measurements that matter. Since Склад is filtered, but we might want it in the selection. Actually the filter is fixed Склад = &Склад, so we don't need Склад in output.\n\nНоменклатура and Партия are the dimensions we want in output. Also might need Склад dimension but it's filtered to one value.\n\nLet me simplify. I'll pass condition without period (empty period). Actually, might not need the first comma if register has no periodicity. Hmm. Let me just include the comma to be safe - actually no, if the register has no periodicity then .Остатки() takes only (Условие, Измерения). Ugh.\n\nLet me think again. The virtual table .Остатки for накопительного регистра без периодичности:\n`РегистрНакопления.Регистр.Остатки(Условие, Измерения, Ресурсы)`\n\nFor регистр с периодичностью:\n`РегистрНакопления.Регистр.Остатки(Период, Условие, Измерения, Ресурсы)`\n\nSince I don't know if ПартииТоваровНаСкладах has periodicity, best approach: just write the condition without period? If it has periodicity, that will be wrong.\n\nHmm. Looking at typical конфигурация - регистр ПартииТоваровНаСкладах обычно не имеет периодичности. Let me assume no periodicity.\n\nSo:\n```\n| ИЗ\n|     РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|         Склад = &Склад И Номенклатура В (&МассивНоменклатуры),\n|         Номенклатура, Партия) КАК Остатки\n```\n\nHmm, actually I've seen with a leading comma when Период параметр is present. Let me just include empty period - if register doesn't have periodicity, this won't work.\n\nOK, I'll go without period since typically this register doesn't have periodicity. Actually let me be safe and pass period as first parameter being empty:\n\nActually, I recall the standard syntax:\n\n```\nРегистрНакопления.ТоварыНаСкладах.Остатки(, , Склад, Номенклатура)\n```\n\nNo, that doesn't have condition.\n\nLet me just check one more time. Standard template from 1С:\n\n```\nВЫБРАТЬ\n\tТоварыНаСкладахОстатки.Номенклатура КАК Номенклатура,\n\tТоварыНаСкладахОстатки.Склад КАК Склад,\n\tТоварыНаСкладахОстатки.КоличествоОстаток КАК КоличествоОстаток\nИЗ\n\tРегистрНакопления.ТоварыНаСкладах.Остатки(, Склад = &Склад, Номенклатура, Склад) КАК ТоварыНаСкладахОстатки\n```\n\nYes! This is correct. First empty is Period, second is Condition. So I should use empty period.\n\nOK so:\n```\n| ИЗ\n|     РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n|         ,\n|         Склад = &Склад И Номенклатура В (&МассивНоменклатуры),\n|         Номенклатура, Партия) КАК Остатки\n```\n\nGood.\n\nNow organization of the code. Let me rewrite cleanly.\n\n```1c\nФункция СписаниеПоФИФО(ТоварыКСписанию, Склад)\n    \n    ТаблицаРезультат = Новый ТаблицаЗначений;\n    ТаблицаРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n    ТаблицаРезультат.Колонки.Добавить(\"Партия\", Новый ОписаниеТипов(\"ДокументСсылка.ПоступлениеТоваров\"));\n    ТаблицаРезультат.Колонки.Добавить(\"Количество\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n    ТаблицаРезультат.Колонки.Добавить(\"Стоимость\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n    \n    МассивНоменклатуры = Новый Массив;\n    Для Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n        Если МассивНоменклатуры.Найти(СтрокаТовара.Номенклатура) = Неопределено Тогда\n            МассивНоменклатуры.Добавить(СтрокаТовара.Номенклатура);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ\n    |    Остатки.Номенклатура КАК Номенклатура,\n    |    Остатки.Партия КАК Партия,\n    |    Остатки.КоличествоОстаток КАК Количество,\n    |    Остатки.СтоимостьОстаток КАК Стоимость,\n    |    Остатки.Партия.Дата КАК ДатаПартии\n    |ИЗ\n    |    РегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n    |            ,\n    |            Склад = &Склад\n    |                И Номенклатура В (&МассивНоменклатуры),\n    |            Номенклатура, Партия) КАК Остатки\n    |ГДЕ\n    |    Остатки.КоличествоОстаток > 0\n    |УПОРЯДОЧИТЬ ПО\n    |    Остатки.Номенклатура,\n    |    Остатки.Партия.Дата,\n    |    Остатки.Партия\";\n    \n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n    Запрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n    \n    Выборка = Запрос.Выполнить().Выбрать();\n    \n    СоответствиеПартий = Новый Соответствие;\n    Пока Выборка.Следующий() Цикл\n        СписокПартий = СоответствиеПартий.Получить(Выборка.Номенклатура);\n        Если СписокПартий = Неопределено Тогда\n            СписокПартий = Новый Массив;\n            СоответствиеПартий.Вставить(Выборка.Номенклатура, СписокПартий);\n        КонецЕсли;\n        СписокПартий.Добавить(Новый Структура(\"Партия, Количество, Стоимость\",\n            Выборка.Партия, Выборка.Количество, Выборка.Стоимость));\n    КонецЦикла;\n    \n    Для Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n        \n        Номенклатура = СтрокаТовара.Номенклатура;\n        КоличествоКСписанию = СтрокаТовара.Количество;\n        \n        СписокПартий = СоответствиеПартий.Получить(Номенклатура);\n        Если СписокПартий = Неопределено Тогда\n            СписокПартий = Новый Массив;\n        КонецЕсли;\n        \n        Для Каждого ПартияОстаток Из СписокПартий Цикл\n            \n            Если КоличествоКСписанию <= 0 Тогда\n                Прервать;\n            КонецЕсли;\n            \n            ДоступноеКоличество = ПартияОстаток.Количество;\n            Если ДоступноеКоличество <= 0 Тогда\n                Продолжить;\n            КонецЕсли;\n            \n            КоличествоИзПартии = Мин(КоличествоКСписанию, ДоступноеКоличество);\n            \n            Если ДоступноеКоличество <> 0 Тогда\n                ЦенаПартии = ПартияОстаток.Стоимость / ДоступноеКоличество;\n            Иначе\n                ЦенаПартии = 0;\n            КонецЕсли;\n            \n            СтрокаРезультата = ТаблицаРезультат.Добавить();\n            СтрокаРезультата.Номенклатура = Номенклатура;\n            СтрокаРезультата.Партия = ПартияОстаток.Партия;\n            СтрокаРезультата.Количество = КоличествоИзПартии;\n            СтрокаРезультата.Стоимость = Окр(КоличествоИзПартии * ЦенаПартии, 2);\n            \n            ПартияОстаток.Количество = ДоступноеКоличество - КоличествоИзПартии;\n            ПартияОстаток.Стоимость = ПартияОстаток.Стоимость - СтрокаРезультата.Стоимость;\n            \n            КоличествоКСписанию = КоличествоКСписанию - КоличествоИзПартии;\n            \n        КонецЦикла;\n        \n        Если КоличествоКСписанию > 0 Тогда\n            ВызватьИсключение \"Недостаточно остатков на складе для номенклатуры: \" + Строка(Номенклатура);\n        КонецЕсли;\n        \n    КонецЦикла;\n    \n    Возврат ТаблицаРезультат;\n    \nКонецФункции\n```\n\nNote: I decrement ПартияОстаток.Количество because if the same Номенклатура appears in multiple rows of ТоварыКСписанию, we need to track remaining. Actually two approaches: modify the structure list or use local tracking. My approach modifies the structure directly - the СоответствиеПартий holds the array of structures. When we decrement, it affects the entry for that номенклатура, which is what we want.\n\nBut wait - the source data table might have positions in different order... actually order within same номенклатура is preserved because we iterate through in original order building СписокПартий, then process in ТоварыКСписанию order, decrementing.\n\nHmm but if ТоварыКСписанию has rows in mixed order (N1, N2, N1), the second N1 row will use the updated СписокПартий which has been decremented. Good.\n\nLooks correct. Let me finalize.\n\nActually, minor issue with Структура constructor - when written as string with two rows, does it work? Yes:\n```\nНовый Структура(\"Ключ1, Ключ2\", Знач1, Знач2)\n```\n\nLet me double check the query syntax with the leading comma for empty period. Yes should be valid.\n\nFinal answer.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.01,
+          "elapsed_time": 30.447375297546387,
+          "cost_input": 0.00015209999999999998,
+          "cost_output": 0.0099732,
+          "cost_total": 0.0101253,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "425ccbcee7a48ce496be2ccab2be2802102519ad9dc9b3ea9b4704ef93651f61",
+        "most_common_count": 1,
+        "hashes": [
+          "425ccbcee7a48ce496be2ccab2be2802102519ad9dc9b3ea9b4704ef93651f61"
+        ]
+      },
+      "total_tokens": 8818,
+      "total_cost": 0.0121836,
+      "avg_time": 30.447
+    },
+    {
       "task_id": "B4",
       "task_name": "Расчёт себестоимости продажи",
       "model_id": "aliceai-llm/latest",
@@ -37981,6 +38713,55 @@
       "total_tokens": 13441,
       "total_cost": 0.0169884,
       "avg_time": 97.724
+    },
+    {
+      "task_id": "B4",
+      "task_name": "Расчёт себестоимости продажи",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.СтоимостьТоваров"
+      ],
+      "context_analysis_cost": 0.0016245,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция РассчитатьСреднююСебестоимость(МассивНоменклатуры, Склад, ДатаРасчёта)\n\t\n\tТаблицаРезультата = Новый ТаблицаЗначений;\n\tТаблицаРезультата.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tТаблицаРезультата.Колонки.Добавить(\"СредняяЦена\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n\t\n\tЕсли МассивНоменклатуры = Неопределено Или МассивНоменклатуры.Количество() = 0 Тогда\n\t\tВозврат ТаблицаРезультата;\n\tКонецЕсли;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ\n\t\t|\tСтоимостьТоваровОстатки.Номенклатура КАК Номенклатура,\n\t\t|\tСУММА(СтоимостьТоваровОстатки.КоличествоОстаток) КАК КоличествоОстаток,\n\t\t|\tСУММА(СтоимостьТоваровОстатки.СтоимостьОстаток) КАК СтоимостьОстаток\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.СтоимостьТоваров.Остатки(\n\t\t|\t\t\t&ДатаРасчёта,\n\t\t|\t\t\tСклад = &Склад\n\t\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК СтоимостьТоваровОстатки\n\t\t|СГРУППИРОВАТЬ ПО\n\t\t|\tСтоимостьТоваровОстатки.Номенклатура\";\n\t\n\tЗапрос.УстановитьПараметр(\"ДатаРасчёта\", ДатаРасчёта);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\t\n\tРезультатЗапроса = Запрос.Выполнить();\n\tВыборка = РезультатЗапроса.Выбрать();\n\t\n\tСоответствиеОстатков = Новый Соответствие;\n\tПока Выборка.Следующий() Цикл\n\t\tСоответствиеОстатков.Вставить(Выборка.Номенклатура, Выборка);\n\tКонецЦикла;\n\t\n\tДля Каждого Номенклатура Из МассивНоменклатуры Цикл\n\t\tСтрокаРезультата = ТаблицаРезультата.Добавить();\n\t\tСтрокаРезультата.Номенклатура = Номенклатура;\n\t\t\n\t\tДанныеОстатка = СоответствиеОстатков.Получить(Номенклатура);\n\t\tЕсли ДанныеОстатка <> Неопределено И ДанныеОстатка.КоличествоОстаток <> 0 Тогда\n\t\t\tСтрокаРезультата.СредняяЦена = ДанныеОстатка.СтоимостьОстаток / ДанныеОстатка.КоличествоОстаток;\n\t\tИначе\n\t\t\tСтрокаРезультата.СредняяЦена = 0;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат ТаблицаРезультата;\n\t\nКонецФункции\n```",
+          "response_hash": "dc7f85940e99966af41ca747505e8ddc64790a1f348d1d05100e176a39d9c322",
+          "tokens_input": 360,
+          "tokens_output": 904,
+          "tokens_total": 1264,
+          "tokens_reasoning": 70,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write a function on 1C language that calculates average cost using the accumulation register СтоимостьТоваров.\n\nParameters: array of nomenclature, warehouse, date.\nReturn value table with columns: Номенклатура, СредняяЦена.\n\nUse register СтоимостьТоваров. Остатки on date for warehouse.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.13,
+          "elapsed_time": 26.512665033340454,
+          "cost_input": 0.00010800000000000001,
+          "cost_output": 0.0010848,
+          "cost_total": 0.0011928,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "dc7f85940e99966af41ca747505e8ddc64790a1f348d1d05100e176a39d9c322",
+        "most_common_count": 1,
+        "hashes": [
+          "dc7f85940e99966af41ca747505e8ddc64790a1f348d1d05100e176a39d9c322"
+        ]
+      },
+      "total_tokens": 1264,
+      "total_cost": 0.0028173,
+      "avg_time": 26.513
     },
     {
       "task_id": "B5",
@@ -40554,6 +41335,56 @@
       "avg_time": 104.45
     },
     {
+      "task_id": "B5",
+      "task_name": "Пересчёт валютных сумм",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.КурсыВалют",
+        "Справочник.Валюты"
+      ],
+      "context_analysis_cost": 0.0028580999999999997,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1C\nПроцедура ПересчитатьСуммыДокумента(Товары, ИсходнаяВалюта, НоваяВалюта, ДатаКурса)\n\t\n\tЕсли ИсходнаяВалюта = НоваяВалюта Тогда\n\t\tВозврат;\n\tКонецЕсли;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tКурсыВалют.Курс КАК Курс,\n\t\t|\tКурсыВалют.Кратность КАК Кратность\n\t\t|ИЗ\n\t\t|\tРегистрСведений.КурсыВалют КАК КурсыВалют\n\t\t|ГДЕ\n\t\t|\tКурсыВалют.Валюта = &Валюта\n\t\t|\tИ КурсыВалют.Период <= &ДатаКурса\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tКурсыВалют.Период УБЫВ\";\n\t\n\tЗапрос.УстановитьПараметр(\"ДатаКурса\", ДатаКурса);\n\t\n\t// Курс исходной валюты, приведённый к базовой (с учётом кратности)\n\tЗапрос.УстановитьПараметр(\"Валюта\", ИсходнаяВалюта);\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Не Выборка.Следующий() Тогда\n\t\tВызватьИсключение \"Не найден курс валюты \"\"\" + ИсходнаяВалюта.Наименование \n\t\t\t+ \"\"\" на \" + Формат(ДатаКурса, \"ДФ=dd.MM.yyyy\") + \".\";\n\tКонецЕсли;\n\tКурсИсходной = Выборка.Курс / Выборка.Кратность;\n\t\n\t// Курс новой валюты, приведённый к базовой (с учётом кратности)\n\tЗапрос.УстановитьПараметр(\"Валюта\", НоваяВалюта);\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Не Выборка.Следующий() Тогда\n\t\tВызватьИсключение \"Не найден курс валюты \"\"\" + НоваяВалюта.Наименование \n\t\t\t+ \"\"\" на \" + Формат(ДатаКурса, \"ДФ=dd.MM.yyyy\") + \".\";\n\tКонецЕсли;\n\tКурсНовой = Выборка.Курс / Выборка.Кратность;\n\t\n\tКоэффициентПересчёта = КурсНовой / КурсИсходной;\n\t\n\tДля Каждого СтрокаТовары Из Товары Цикл\n\t\tСтрокаТовары.Цена  = Окр(СтрокаТовары.Цена * КоэффициентПересчёта, 2);\n\t\tСтрокаТовары.Сумма = Окр(СтрокаТовары.Цена * СтрокаТовары.Количество, 2);\n\tКонецЦикла;\n\t\nКонецПроцедуры\n```",
+          "response_hash": "3087938796b3f6cc5edec7295dd5911df066ab30b8f23061daf394a3cfb1af71",
+          "tokens_input": 383,
+          "tokens_output": 3134,
+          "tokens_total": 3517,
+          "tokens_reasoning": 2363,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write a procedure in 1C. Parameters: TabularSection \"Товары\" (probably ТабличнаяЧастьДокумента or ТаблицаЗначений), source currency, new currency, date of rate. Recalculate prices and sums through cross-rate.\n\nLet me think about the structure. The tabular section \"Товары\" - typically has реквизиты like Цена, Сумма, Количество. Common names in 1C trade: Цена, Сумма, Количество.\n\nCross-rate: rate to base currency with multiplicity. So rate of currency = Курс / Кратность.\n\nCross rate new/source = (КурсНовой / КратностьНовой) / (КурсИсходной / КратностьИсходной)\n\nThen new price = old price * crossRate, new sum = new price * quantity.\n\nFor getting rate on date from РегистрСведений.КурсыВалют - periodic by Day, need to use .Получить() method or slice last. Since it's independent periodic register with periodicity Day:\n\n```1C\nЗапрос = Новый Запрос;\nЗапрос.Текст = \"ВЫБРАТЬ КурсыВалют.Курс, КурсыВалют.Кратность ИЗ РегистрСведений.КурсыВалют КАК КурсыВалют ГДЕ КурсыВалют.Валюта = &Валюта И КурсыВалют.Период <= &Период УПОРЯДОЧИТЬ ПО КурсыВалют.Период УБЫВ\";\n```\n\nOr use ПолучитьПоследнее. Actually for периодический независимый регистр: РегистрСведений.КурсыВалют.ПолучитьПоследнее(Дата) - but that requires a specific dimension filter... Actually it takes struct with dimensions.\n\nLet me use a query approach for clarity.\n\n```1C\nФункция ПолучитьКурс(Валюта, ДатаКурса)\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ ПЕРВЫЕ 1\n    |    КурсыВалют.Курс КАК Курс,\n    |    КурсыВалют.Кратность КАК Кратность\n    |ИЗ\n    |    РегистрСведений.КурсыВалют КАК КурсыВалют\n    |ГДЕ\n    |    КурсыВалют.Валюта = &Валюта\n    |    И КурсыВалют.Период <= &ДатаКурса\n    |УПОРЯДОЧИТЬ ПО\n    |    КурсыВалют.Период УБЫВ\";\n    Запрос.УстановитьПараметр(\"Валюта\", Валюта);\n    Запрос.УстановитьПараметр(\"ДатаКурса\", ДатаКурса);\n    \n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() Тогда\n        Возврат Новый Структура(\"Курс, Кратность\", Выборка.Курс, Выборка.Кратность);\n    КонецЕсли;\n    Возврат Неопределено;\nКонецФункции\n```\n\nMain procedure:\n\n```1C\nПроцедура ПересчитатьСуммыДокумента(Товары, ИсходнаяВалюта, НоваяВалюта, ДатаКурса)\n    Если ИсходнаяВалюта = НоваяВалюта Тогда\n        Возврат;\n    КонецЕсли;\n    \n    КурсИсходной = ПолучитьКурсВалюты(ИсходнаяВалюта, ДатаКурса);\n    Если КурсИсходной = Неопределено Тогда\n        ВызватьИсключение \"Не найден курс валюты \"\"\" + ИсходнаяВалюта.Наименование + \"\"\" на \" + Формат(ДатаКурса, \"ДЛФ=DD\");\n    КонецЕсли;\n    \n    КурсНовой = ПолучитьКурсВалюты(НоваяВалюта, ДатаКурса);\n    Если КурсНовой = Неопределено Тогда\n        ВызватьИсключение \"Не найден курс валюты \"\"\" + НоваяВалюта.Наименование + \"\"\" на \" + Формат(ДатаКурса, \"ДЛФ=DD\");\n    КонецЕсли;\n    \n    // Приводим к базовой валюте\n    СтоимостьИсходной = КурсИсходной.Курс / КурсИсходной.Кратность;\n    СтоимостьНовой = КурсНовой.Курс / КурсНовой.Кратность;\n    \n    КоэффициентПересчёта = СтоимостьНовой / СтоимостьИсходной;\n    \n    Для Каждого СтрокаТовары Из Товары Цикл\n        СтрокаТовары.Цена = СтрокаТовары.Цена * КоэффициентПересчёта;\n        СтрокаТовары.Сумма = СтрокаТовары.Цена * СтрокаТовары.Количество;\n    КонецЦикла;\nКонецПроцедуры\n```\n\nWait, \"Товары\" is a tabular section (ТабличнаяЧасть). Actually the parameter is described as \"табличная часть «Товары»\". So it's passed as a collection. Iterating works.\n\nBut Цена might not exist as a requisites... We assume the standard ones: Цена, Сумма, Количество.\n\nActually, let me reconsider - maybe use округление. Prices usually rounded to 2 decimals. Let me add rounding.\n\nActually, let's keep it simple but use Окр for prices. Actually 15.4 precision for rate. Цена likely 15.2. Sum 15.2. Let me round Цена to 2.\n\nHmm, but that could be wrong if price accuracy is different. Let me just not assume. Actually, better to use Окр(..., 2) for standard.\n\nI'll write it more generically without rounding assumption. Let me use Окр.\n\nActually let me think again - the task says \"пересчитать цены и суммы строк через кросс-курс\". So Цена and Сумма.\n\nLet me finalize. I'll write the code.\n\nActually to have clean code, I might include a function to get course and a procedure. Let me combine.\n\nThe user asked \"Написать процедуру\". So maybe just one procedure. But it needs rate lookup, so I can nest a function.\n\nLet me write it as one procedure with embedded logic. Or use a local function.\n\nLet me write:\n\n```1C\nПроцедура ПересчитатьСуммыДокумента(Товары, ИсходнаяВалюта, НоваяВалюта, ДатаКурса)\n\t\n\tЕсли ИсходнаяВалюта = НоваяВалюта Тогда\n\t\tВозврат;\n\tКонецЕсли;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tКурсыВалют.Курс КАК Курс,\n\t\t|\tКурсыВалют.Кратность КАК Кратность\n\t\t|ИЗ\n\t\t|\tРегистрСведений.КурсыВалют КАК КурсыВалют\n\t\t|ГДЕ\n\t\t|\tКурсыВалют.Валюта = &Валюта\n\t\t|\tИ КурсыВалют.Период <= &ДатаКурса\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tКурсыВалют.Период УБЫВ\";\n\t\n\tЗапрос.УстановитьПараметр(\"Валюта\", ИсходнаяВалюта);\n\tЗапрос.УстановитьПараметр(\"ДатаКурса\", ДатаКурса);\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Не Выборка.Следующий() Тогда\n\t\tВызватьИсключение \"Не найден курс валюты \"\"\" + ИсходнаяВалюта.Наименование + \"\"\" на \" + Формат(ДатаКурса, \"ДЛФ=DD\") + \".\";\n\tКонецЕсли;\n\tКурсИсходной = Выборка.Курс / Выборка.Кратность;\n\t\n\tЗапрос.УстановитьПараметр(\"Валюта\", НоваяВалюта);\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Не Выборка.Следующий() Тогда\n\t\tВызватьИсключение \"Не найден курс валюты \"\"\" + НоваяВалюта.Наименование + \"\"\" на \" + Формат(ДатаКурса, \"ДЛФ=DD\") + \".\";\n\tКонецЕсли;\n\tКурсНовой = Выборка.Курс / Выборка.Кратность;\n\t\n\tКоэффициент = КурсНовой / КурсИсходной;\n\t\n\tДля Каждого СтрокаТовары Из Товары Цикл\n\t\tЦенаНовая = Окр(СтрокаТовары.Цена * Коэффициент, 2);\n\t\tСтрокаТовары.Цена = ЦенаНовая;\n\t\tСтрокаТовары.Сумма = Окр(ЦенаНовая * СтрокаТовары.Количество, 2);\n\tКонецЦикла;\n\t\nКонецПроцедуры\n```\n\nThis looks good. Кратность = 0? Might need check. Typically кратность > 0 guaranteed.\n\nMake sure formatting of date is fine. Формат(ДатаКурса, \"ДЛФ=DD\") - actually locale format. Might be simpler to just use ДатаКурса directly in string. But that would use default toString which might not be user friendly. Let's keep it.\n\nActually, let me use Формат(ДатаКурса, \"ДФ=dd.MM.yyyy\").\n\nFinal code:",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.77,
+          "elapsed_time": 41.94717288017273,
+          "cost_input": 0.00011489999999999999,
+          "cost_output": 0.0037608,
+          "cost_total": 0.0038756999999999997,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3087938796b3f6cc5edec7295dd5911df066ab30b8f23061daf394a3cfb1af71",
+        "most_common_count": 1,
+        "hashes": [
+          "3087938796b3f6cc5edec7295dd5911df066ab30b8f23061daf394a3cfb1af71"
+        ]
+      },
+      "total_tokens": 3517,
+      "total_cost": 0.0067338,
+      "avg_time": 41.947
+    },
+    {
       "task_id": "B6",
       "task_name": "Обороты продаж за период",
       "model_id": "aliceai-llm/latest",
@@ -40803,42 +41634,51 @@
     {
       "task_id": "B6",
       "task_name": "Обороты продаж за период",
-      "model_id": "z-ai/glm-4.7-flash",
+      "model_id": "glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
       "context_loaded": true,
       "context_objects": [
         "РегистрНакопления.Продажи"
       ],
-      "context_analysis_cost": 0.0,
+      "context_analysis_cost": 0.00034436000000000004,
       "runs": [
         {
           "run_index": 0,
           "seed": null,
           "temperature": 0.1,
-          "response": "",
-          "response_hash": "",
+          "response": "Функция ПолучитьОборотыПродаж(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n    // Создаем выборку оборотов\n    Выборка = РегистрыНакопления.Продажи.Обороты.СоздатьВыборку();\n\n    // Устанавливаем период\n    Выборка.Период = Новый Диапазон(НачалоПериода, КонецПериода);\n\n    // Если склад задан, фильтруем по нему\n    Если ЗначениеЗаполнено(Склад) Тогда\n        Выборка.Склад = Склад;\n    КонецЕсли;\n\n    // Группируем по номенклатуре\n    Выборка.Группировка(\"Номенклатура\");\n\n    // Выбираем ресурсы с суммированием\n    Выборка.Ресурсы.Количество.Сумма();\n    Выборка.Ресурсы.Сумма.Сумма();\n\n    // Формируем таблицу значений для возврата\n    Результат = Новый ТаблицаЗначений;\n    Результат.Колонки.Добавить(\"Номенклатура\");\n    Результат.Колонки.Добавить(\"Количество\");\n    Результат.Колонки.Добавить(\"Сумма\");\n\n    // Заполняем таблицу данными из выборки\n    Для Каждого Стр Из Выборка Цикл\n        НоваяСтрока = Результат.Добавить();\n        НоваяСтрока.Номенклатура = Стр.Номенклатура;\n        НоваяСтрока.Количество = Стр.Количество;\n        НоваяСтрока.Сумма = Стр.Сумма;\n    КонецЦикла;\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "b691bc7aafdee1a19a7b2f01e295207f1365b4b96b1897e7b683c0a3b14a2304",
           "tokens_input": 294,
-          "tokens_output": 4096,
-          "tokens_total": 4390,
-          "tokens_reasoning": 0,
+          "tokens_output": 2030,
+          "tokens_total": 2324,
+          "tokens_reasoning": 1775,
           "tokens_cached": 0,
           "tokens_cache_write": 0,
-          "reasoning": "",
-          "finish_reason": "",
+          "reasoning": "1.  **Analyze the Request:**\n    *   **Platform:** 1C:Enterprise 8.3.\n    *   **Constraint:** Use *only* metadata provided in the context.\n    *   **Metadata:**\n        *   Accumulation Register `Продажи` (Sales).\n        *   Type: `Обороты` (Turnovers).\n        *   Dimensions: `Склад` (Reference to `Склады`), `Номенклатура` (Reference to `Номенклатура`).\n        *   Resources: `Количество` (Number 15.3), `Сумма` (Number 15.2).\n    *   **Task:** Write a function to get sales turnovers for a period.\n    *   **Parameters:** `НачалоПериода`, `КонецПериода`, `Склад` (optional).\n    *   **Return:** `ТаблицаЗначений` with columns: `Номенклатура`, `Количество`, `Сумма`.\n    *   **Logic:** Summarize turnovers. Filter by `Склад` if provided.\n    *   **Output Format:** Only code, no explanations, ready to execute.\n\n2.  **Determine the Implementation Strategy:**\n    *   I need to create a function (subroutine) that accepts the parameters.\n    *   I need to use the `Продажи` register's `Обороты` (Turnovers) selection.\n    *   I need to set the period (`НачалоПериода`, `КонецПериода`).\n    *   I need to set the dimension `Склад` if it's not empty.\n    *   I need to select the resources `Количество` and `Сумма`.\n    *   I need to group by `Номенклатура`.\n    *   I need to return the result as a `ТаблицаЗначений`.\n\n3.  **Drafting the Code (Mental or Scratchpad):**\n\n    *   *Function Signature:*\n        ```bsl\n        Функция ПолучитьОборотыПродаж(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n        ```\n\n    *   *Selection Setup:*\n        ```bsl\n        Выборка = РегистрыНакопления.Продажи.Обороты.СоздатьВыборку();\n        Выборка.Период = Новый Диапазон(НачалоПериода, КонецПериода);\n        Если ЗначениеЗаполнено(Склад) Тогда\n            Выборка.Склад = Склад;\n        КонецЕсли;\n        Выборка.Номенклатура.ИспользоватьДополнительно = Истина;\n        Выборка.Склад.ИспользоватьДополнительно = Истина; // Good practice, though not strictly required if filtering.\n        ```\n\n    *   *Grouping and Resources:*\n        ```bsl\n        Выборка.Группировка(\"Номенклатура\");\n        Выборка.Ресурсы.Сумма.Сумма();\n        Выборка.Ресурсы.Количество.Сумма();\n        ```\n\n    *   *Result Construction:*\n        ```bsl\n        Результат = Новый ТаблицаЗначений;\n        Результат.Колонки.Добавить(\"Номенклатура\");\n        Результат.Колонки.Добавить(\"Количество\");\n        Результат.Колонки.Добавить(\"Сумма\");\n\n        Для Каждого Стр Из Выборка Цикл\n            НоваяСтрока = Результат.Добавить();\n            НоваяСтрока.Номенклатура = Стр.Номенклатура;\n            НоваяСтрока.Количество = Стр.Количество;\n            НоваяСтрока.Сумма = Стр.Сумма;\n        КонецЦикла;\n\n        Возврат Результат;\n        КонецФункции\n        ```\n\n4.  **Refining the Code based on Constraints:**\n    *   The prompt asks for \"ONLY code\".\n    *   The prompt asks to use *only* provided metadata. The code uses `РегистрыНакопления.Продажи`, `Обороты`, `Склад`, `Номенклатура`, `Количество`, `Сумма`. This matches perfectly.\n    *   The prompt asks for a function returning a table.\n\n5.  **Final Code Polish:**\n    *   Ensure variable names are clear.\n    *   Ensure the optional parameter is handled correctly (using `Неопределено` as default).\n    *   Ensure the return type is correct.\n\n    *Self-Correction during drafting:* Should I use `ЗначениеЗаполнено`? Yes, standard practice. Should I use `СоздатьОбъект` or `СоздатьВыборку`? `СоздатьВыборку` is standard for registers.\n\n6.  **Final Output Generation:** (Translating the thought process into the final Russian code block).\n\n    ```bsl\n    Функция ПолучитьОборотыПродаж(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n        // Создаем выборку оборотов\n        Выборка = РегистрыНакопления.Продажи.Обороты.СоздатьВыборку();\n\n        // Устанавливаем период\n        Выборка.Период = Новый Диапазон(НачалоПериода, КонецПериода);\n\n        // Если склад задан, фильтруем по нему\n        Если ЗначениеЗаполнено(Склад) Тогда\n            Выборка.Склад = Склад;\n        КонецЕсли;\n\n        // Группируем по номенклатуре\n        Выборка.Группировка(\"Номенклатура\");\n\n        // Выбираем ресурсы с суммированием\n        Выборка.Ресурсы.Количество.Сумма();\n        Выборка.Ресурсы.Сумма.Сумма();\n\n        // Формируем таблицу значений для возврата\n        Результат = Новый ТаблицаЗначений;\n        Результат.Колонки.Добавить(\"Номенклатура\");\n        Результат.Колонки.Добавить(\"Количество\");\n        Результат.Колонки.Добавить(\"Сумма\");\n\n        // Заполняем таблицу данными из выборки\n        Для Каждого Стр Из Выборка Цикл\n            НоваяСтрока = Результат.Добавить();\n            НоваяСтрока.Номенклатура = Стр.Номенклатура;\n            НоваяСтрока.Количество = Стр.Количество;\n            НоваяСтрока.Сумма = Стр.Сумма;\n        КонецЦикла;\n\n        Возврат Результат;\n\n    КонецФункции\n    ```\n\n7.  **Final Check:** Does it meet all requirements?\n    *   1C 8.3 syntax? Yes.\n    *   Only metadata used? Yes.\n    *   Only code? Yes.\n    *   Ready to execute? Yes.\n\n    Looks good.",
+          "finish_reason": "stop",
           "system_fingerprint": "",
-          "cost_reported": null,
-          "elapsed_time": 56.086071252822876,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
+          "cost_reported": 0.17,
+          "elapsed_time": 25.84753131866455,
+          "cost_input": 1.7639999999999997e-05,
+          "cost_output": 0.0008120000000000001,
+          "cost_total": 0.0008296400000000001,
           "success": true,
           "error": null
         }
       ],
-      "determinism": null,
-      "total_tokens": 4390,
-      "total_cost": 0.0,
-      "avg_time": 56.086
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b691bc7aafdee1a19a7b2f01e295207f1365b4b96b1897e7b683c0a3b14a2304",
+        "most_common_count": 1,
+        "hashes": [
+          "b691bc7aafdee1a19a7b2f01e295207f1365b4b96b1897e7b683c0a3b14a2304"
+        ]
+      },
+      "total_tokens": 2324,
+      "total_cost": 0.0011740000000000001,
+      "avg_time": 25.848
     },
     {
       "task_id": "B6",
@@ -43055,6 +43895,55 @@
       "total_tokens": 3336,
       "total_cost": 0.004872,
       "avg_time": 22.291
+    },
+    {
+      "task_id": "B6",
+      "task_name": "Обороты продаж за период",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи"
+      ],
+      "context_analysis_cost": 0.0013682999999999998,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ПолучитьОборотыПродаж(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tПродажиОбороты.Номенклатура КАК Номенклатура,\n\t\t|\tСУММА(ПродажиОбороты.Количество) КАК Количество,\n\t\t|\tСУММА(ПродажиОбороты.Сумма) КАК Сумма\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.Продажи.Обороты(\n\t\t|\t\t\t&НачалоПериода,\n\t\t|\t\t\t&КонецПериода,\n\t\t|\t\t\t,\n\t\t|\t\t\tСклад = &Склад) КАК ПродажиОбороты\n\t\t|СГРУППИРОВАТЬ ПО\n\t\t|\tПродажиОбороты.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tЕсли Склад = Неопределено Тогда\n\t\tЗапрос.Текст = СтрЗаменить(Запрос.Текст, \"Склад = &Склад\", \"ИСТИНА\");\n\tИначе\n\t\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tКонецЕсли;\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции\n```",
+          "response_hash": "15c687ef997aef9ffa0289a06b34c493ef59f7b64ac9a131c40ec6da9120f492",
+          "tokens_input": 334,
+          "tokens_output": 437,
+          "tokens_total": 771,
+          "tokens_reasoning": 28,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write function using virtual table Обороты регистра накопления Продажи.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.13,
+          "elapsed_time": 4.50001335144043,
+          "cost_input": 0.0001002,
+          "cost_output": 0.0005244,
+          "cost_total": 0.0006245999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "15c687ef997aef9ffa0289a06b34c493ef59f7b64ac9a131c40ec6da9120f492",
+        "most_common_count": 1,
+        "hashes": [
+          "15c687ef997aef9ffa0289a06b34c493ef59f7b64ac9a131c40ec6da9120f492"
+        ]
+      },
+      "total_tokens": 771,
+      "total_cost": 0.0019928999999999997,
+      "avg_time": 4.5
     },
     {
       "task_id": "B7",
@@ -45560,6 +46449,55 @@
       "avg_time": 11.688
     },
     {
+      "task_id": "B7",
+      "task_name": "Цена закупки на дату (срез последних)",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныЗакупки"
+      ],
+      "context_analysis_cost": 0.0012722999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1c\nФункция ПолучитьЦенуЗакупкиНаДату(Номенклатура, Дата) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст = \n\t\t\"ВЫБРАТЬ\n\t\t|\tЦеныЗакупкиСрезПоследних.Цена КАК Цена\n\t\t|ИЗ\n\t\t|\tРегистрСведений.ЦеныЗакупки.СрезПоследних(&Дата, Номенклатура = &Номенклатура) КАК ЦеныЗакупкиСрезПоследних\";\n\t\n\tЗапрос.УстановитьПараметр(\"Дата\", Дата);\n\tЗапрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n\t\n\tРезультат = Запрос.Выполнить();\n\t\n\tЕсли Результат.Пустой() Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tВыборка = Результат.Выбрать();\n\tВыборка.Следующий();\n\t\n\tВозврат Выборка.Цена;\n\t\nКонецФункции\n```",
+          "response_hash": "3bba78ec46f2c06f9934179f64d6b3efa8d42070c58d54d14607ee153c226766",
+          "tokens_input": 323,
+          "tokens_output": 528,
+          "tokens_total": 851,
+          "tokens_reasoning": 261,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need function using РегистрСведений.ЦеныЗакупки.СрезПоследних.\n\n```1c\nФункция ПолучитьЦенуЗакупки(Номенклатура, Дата) Экспорт\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n        \"ВЫБРАТЬ\n        |    ЦеныЗакупкиСрезПоследних.Цена КАК Цена\n        |ИЗ\n        |    РегистрСведений.ЦеныЗакупки.СрезПоследних(&Дата, Номенклатура = &Номенклатура) КАК ЦеныЗакупкиСрезПоследних\";\n    Запрос.УстановитьПараметр(\"Дата\", Дата);\n    Запрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n    Выборка = Запрос.Выполнить().Выбрать();\n    Если Выборка.Следующий() Тогда\n        Возврат Выборка.Цена;\n    Иначе\n        Возврат 0;\n    КонецЕсли;\nКонецФункции\n```",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.15,
+          "elapsed_time": 4.2963457107543945,
+          "cost_input": 9.69e-05,
+          "cost_output": 0.0006336,
+          "cost_total": 0.0007305,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3bba78ec46f2c06f9934179f64d6b3efa8d42070c58d54d14607ee153c226766",
+        "most_common_count": 1,
+        "hashes": [
+          "3bba78ec46f2c06f9934179f64d6b3efa8d42070c58d54d14607ee153c226766"
+        ]
+      },
+      "total_tokens": 851,
+      "total_cost": 0.0020028,
+      "avg_time": 4.296
+    },
+    {
       "task_id": "B8",
       "task_name": "Остатки и обороты за период",
       "model_id": "aliceai-llm/latest",
@@ -45658,7 +46596,7 @@
     {
       "task_id": "B8",
       "task_name": "Остатки и обороты за период",
-      "model_id": "deepseek/deepseek-v4-flash",
+      "model_id": "deepseek-v4-flash",
       "model_name": "DeepSeek V4-Flash",
       "context_loaded": true,
       "context_objects": [
@@ -45666,28 +46604,28 @@
         "Справочник.Номенклатура",
         "Справочник.Склады"
       ],
-      "context_analysis_cost": 0.0,
+      "context_analysis_cost": 0.00055512,
       "runs": [
         {
           "run_index": 0,
           "seed": null,
           "temperature": 0.1,
-          "response": "Функция ПолучитьОстаткиИОбороты(НачПериода, КонПериода, Склад = Неопределено) Экспорт\n\n    Результат = Новый ТаблицаЗначений;\n    Результат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n    Результат.Колонки.Добавить(\"НачальныйОстаток\", Новый ОписаниеТипов(\"Число\"));\n    Результат.Колонки.Добавить(\"Приход\", Новый ОписаниеТипов(\"Число\"));\n    Результат.Колонки.Добавить(\"Расход\", Новый ОписаниеТипов(\"Число\"));\n    Результат.Колонки.Добавить(\"КонечныйОстаток\", Новый ОписаниеТипов(\"Число\"));\n\n    Запрос = Новый Запрос;\n    Запрос.Текст = \"ВЫБРА",
-          "response_hash": "19bf25585c324b0545de2530caebd09e8c264d428c451b0fb929536f80b2793b",
+          "response": "Функция ПолучитьОстаткиПоНоменклатуре(НачПериод, КонПериод, Склад = Неопределено) Экспорт\n\n    Запрос = Новый Запрос;\n    Запрос.Текст = \n    \"ВЫБРАТЬ\n    |    ДвиженияТоваровОстаткиИОбороты.Номенклатура КАК Номенклатура,\n    |    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоНачальныйОстаток) КАК НачальныйОстаток,\n    |    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоПриход) КАК Приход,\n    |    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоРасход) КАК Расход,\n    |    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоКонечныйОстаток) КАК КонечныйОстаток\n    |ИЗ\n    |    РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты(&НачПериод, &КонПериод, , ) КАК ДвиженияТоваровОстаткиИОбороты\n    |ГДЕ\n    |    (&СкладНеопр ИЛИ ДвиженияТоваровОстаткиИОбороты.Склад = &Склад)\n    |СГРУППИРОВАТЬ ПО\n    |    ДвиженияТоваровОстаткиИОбороты.Номенклатура\";\n\n    Запрос.УстановитьПараметр(\"НачПериод\", НачПериод);\n    Запрос.УстановитьПараметр(\"КонПериод\", КонПериод);\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n    Запрос.УстановитьПараметр(\"СкладНеопр\", Склад = Неопределено);\n\n    Результат = Запрос.Выполнить();\n    Таблица = Результат.Выгрузить();\n\n    Возврат Таблица;\n\nКонецФункции",
+          "response_hash": "c162f9386ac413bc5afb2dd1f0f8cf4e4291d965be083a6025f968ab429dfa09",
           "tokens_input": 343,
-          "tokens_output": 4096,
-          "tokens_total": 4439,
-          "tokens_reasoning": 0,
+          "tokens_output": 2292,
+          "tokens_total": 2635,
+          "tokens_reasoning": 1768,
           "tokens_cached": 0,
           "tokens_cache_write": 0,
-          "reasoning": "",
-          "finish_reason": "",
+          "reasoning": "Мы должны написать функцию на 1С, которая возвращает таблицу значений с колонками: Номенклатура, НачальныйОстаток, Приход, Расход, КонечныйОстаток. Параметры: НачалоПериода, КонецПериода, Склад (необязательный). Используем регистр накопления ДвиженияТоваров (вид остатки). Измерения: Склад, Номенклатура. Ресурс: Количество.\n\nФункция должна получать начальные остатки на начало периода, затем обороты за период (приход и расход) и конечные остатки на конец периода. Можно использовать виртуальные таблицы регистра: Остатки, Обороты, ОстаткиИОбороты.\n\nУдобно использовать запрос к регистру накопления ДвиженияТоваров.ОстаткиИОбороты, который сразу дает начальный остаток, приход, расход и конечный остаток. Для каждого периода и по каждому складу.\n\nПараметр Склад необязательный, значит если он не передан, то нужно по всем складам (или по конкретному). В задаче сказано \"за период по складу\", но склад необязательный. Вероятно, если склад не указан, то по всем складам. Но в результате нужна только номенклатура. Тогда нужно суммировать по складам? Или оставить детализацию? В задании: \"по каждой номенклатуре начальный остаток, приход, расход и конечный остаток за период по складу\". Если склад не указан, то, вероятно, нужно по всем складам. Но может быть и группировка по номенклатуре без склада. Лучше уточнить: в колонках нет склада, значит агрегируем по всем складам, если склад не указан. Если склад указан, то только по этому складу. Так и сделаем.\n\nФункция должна быть с параметрами: НачалоПериода (дата), КонецПериода (дата), Склад (СправочникСсылка.Склады, необязательный, по умолчанию Неопределено). Если Склад = Неопределено, то условие по складу не добавляем.\n\nИспользуем запрос к виртуальной таблице РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты с параметрами периода и условиями.\n\nДля получения начального остатка, прихода, расхода и конечного остатка используем соответствующие поля виртуальной таблицы: НачальныйОстаток, Приход, Расход, КонечныйОстаток. Но название колонок ресурса \"КоличествоНачальныйОстаток\", \"КоличествоПриход\", \"КоличествоРасход\", \"КоличествоКонечныйОстаток\". Так как ресурс называется Количество, то префикс \"Количество\".\n\nВ запросе нужно сгруппировать по Номенклатуре. Если склад не указан, то группировка только по номенклатуре. Если склад указан, то можно тоже группировать по номенклатуре, но так как склад один, то остатки будут уже по этому складу. Все равно группировка по номенклатуре нужна, так как в таблице результатов колонка Номенклатура, а не склад.\n\nТаким образом, в запросе:\nВЫБРАТЬ\n    ДвиженияТоваровОстаткиИОбороты.Номенклатура КАК Номенклатура,\n    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоНачальныйОстаток) КАК НачальныйОстаток,\n    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоПриход) КАК Приход,\n    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоРасход) КАК Расход,\n    СУММА(ДвиженияТоваровОстаткиИОбороты.КоличествоКонечныйОстаток) КАК КонечныйОстаток\nИЗ\n    РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты(НачПериод, КонПериод, ПериодДень, ) КАК ДвиженияТоваровОстаткиИОбороты\nГДЕ\n    (ДвиженияТоваровОстаткиИОбороты.Склад = &Склад ИЛИ &СкладНеопределен)\nСГРУППИРОВАТЬ ПО\n    ДвиженияТоваровОстаткиИОбороты.Номенклатура\n\nПериодичность: период день или период? В параметры виртуальной таблицы ОстаткиИОбороты нужно указать НачалоПериода, КонецПериода, Периодичность (например, День, Месяц и т.д.), УсловиеСчета. Если мы хотим получить начальный остаток на начало периода и обороты за период с детализацией до дня, можно указать ПериодичностьДень. Но тогда начальный остаток будет на начало каждого дня. Нам нужен один начальный остаток на начало периода, поэтому лучше указать Периодичность = День (или можно без периодичности, тогда начальный остаток будет на начало периода). В справке: если не указана периодичность, то начальный остаток – на начало периода, конечный – на конец периода. Это то, что нужно. Поэтому можно не указывать периодичность. Параметры: НачалоПериода, КонецПериода, Условие. \n\nТакже можно использовать таблицу ОстаткиИОбороты с условием. В условие можно передать отбор по складу, если склад определен. Или использовать ГДЕ. \n\nДля упрощения используем параметры &НачПериод, &КонПериод, &Склад (тип СправочникСсылка.Склады) и &СкладНеопределен (тип Булево). Если &СкладНеопределен = Истина, то условие на склад не накладываем. В запросе: \n\nГДЕ (&СкладНеопределен ИЛИ ДвиженияТоваровОстаткиИОбороты.Склад = &Склад)\n\nИ учтем, что если склад неопределен, то &Склад может быть Неопределено, но в условии \"=\" некорректно. Поэтому либо используем второй параметр, либо передаем NULL. Лучше использовать параметр &СкладНеопределен.\n\nТакже нужно не забыть про начальный остаток: если период начинается с нуля, то начальный остаток будет равен остатку на начало периода. Все корректно.\n\nПосле запроса формируем таблицу значений и заполняем её. Возвращаем таблицу.\n\nНапишем функцию. Назовем её ПолучитьОстаткиПоНоменклатуре.\n\nУчитываем, что в коде нужно использовать только объекты метаданных из контекста: РегистрНакопления.ДвиженияТоваров, Справочник.Номенклатура, Справочник.Склады. Больше ничего не используем.\n\nТакже напишем функцию в глобальном контексте, или просто функцию. Обычно такие функции размещают в модуле менеджера или в общем модуле. В задании не указано, просто написать функцию. Пусть будет функция без контекста.\n\nПроверим синтаксис.\n\nИтоговый код.",
+          "finish_reason": "stop",
           "system_fingerprint": "",
-          "cost_reported": null,
-          "elapsed_time": 39.61062479019165,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
+          "cost_reported": 0.09,
+          "elapsed_time": 25.023608922958374,
+          "cost_input": 3.087e-05,
+          "cost_output": 0.00041256,
+          "cost_total": 0.00044343000000000003,
           "success": true,
           "error": null
         }
@@ -45696,15 +46634,15 @@
         "total_runs": 1,
         "unique_responses": 1,
         "match_rate": 1.0,
-        "most_common_hash": "19bf25585c324b0545de2530caebd09e8c264d428c451b0fb929536f80b2793b",
+        "most_common_hash": "c162f9386ac413bc5afb2dd1f0f8cf4e4291d965be083a6025f968ab429dfa09",
         "most_common_count": 1,
         "hashes": [
-          "19bf25585c324b0545de2530caebd09e8c264d428c451b0fb929536f80b2793b"
+          "c162f9386ac413bc5afb2dd1f0f8cf4e4291d965be083a6025f968ab429dfa09"
         ]
       },
-      "total_tokens": 4439,
-      "total_cost": 0.0,
-      "avg_time": 39.611
+      "total_tokens": 2635,
+      "total_cost": 0.00099855,
+      "avg_time": 25.024
     },
     {
       "task_id": "B8",
@@ -45812,42 +46750,51 @@
     {
       "task_id": "B8",
       "task_name": "Остатки и обороты за период",
-      "model_id": "z-ai/glm-4.7-flash",
+      "model_id": "glm-4.7-flash",
       "model_name": "GLM-4.7 Flash",
       "context_loaded": true,
       "context_objects": [
         "РегистрНакопления.ДвиженияТоваров"
       ],
-      "context_analysis_cost": 0.0,
+      "context_analysis_cost": 0.00047468,
       "runs": [
         {
           "run_index": 0,
           "seed": null,
           "temperature": 0.1,
-          "response": "",
-          "response_hash": "",
+          "response": "Функция ПолучитьДвиженияПоНоменклатуре(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n    Результат = Новый ТаблицаЗначений;\n    Результат.Колонки.Добавить(\"Номенклатура\");\n    Результат.Колонки.Добавить(\"НачальныйОстаток\");\n    Результат.Колонки.Добавить(\"Приход\");\n    Результат.Колонки.Добавить(\"Расход\");\n    Результат.Колонки.Добавить(\"КонечныйОстаток\");\n\n    // Запрос для начального остатка (до начала периода)\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n        | СУММА(ДвиженияТоваров.Количество) КАК НачальныйОстаток\n        |ИЗ\n        | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n        |ГДЕ\n        | ДвиженияТоваров.Период < &НачалоПериода\n        | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n        |СГРУППИРОВАТЬ ПО\n        | ДвиженияТоваров.Номенклатура\";\n\n    Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n    РезультатНач = Запрос.Выполнить().Выгрузить();\n\n    // Запрос для прихода и расхода (внутри периода)\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n        | СУММА(ВЫБОР КОГДА ДвиженияТоваров.Количество > 0 ТОГДА ДвиженияТоваров.Количество ИНАЧЕ 0 КОНЕЦ) КАК Приход,\n        | СУММА(ВЫБОР КОГДА ДвиженияТоваров.Количество < 0 ТОГДА -ДвиженияТоваров.Количество ИНАЧЕ 0 КОНЕЦ) КАК Расход\n        |ИЗ\n        | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n        |ГДЕ\n        | ДвиженияТоваров.Период МЕЖДУ &НачалоПериода И &КонецПериода\n        | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n        |СГРУППИРОВАТЬ ПО\n        | ДвиженияТоваров.Номенклатура\";\n\n    Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n    Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n    РезультатДвиж = Запрос.Выполнить().Выгрузить();\n\n    // Запрос для конечного остатка (после конца периода)\n    Запрос = Новый Запрос;\n    Запрос.Текст =\n        \"ВЫБРАТЬ\n        | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n        | СУММА(ДвиженияТоваров.Количество) КАК КонечныйОстаток\n        |ИЗ\n        | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n        |ГДЕ\n        | ДвиженияТоваров.Период > &КонецПериода\n        | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n        |СГРУППИРОВАТЬ ПО\n        | ДвиженияТоваров.Номенклатура\";\n\n    Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n    Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n    РезультатКон = Запрос.Выполнить().Выгрузить();\n\n    // Объединение данных\n    Для Каждого Стр Из РезультатНач Цикл\n        НоваяСтр = Результат.Добавить();\n        НоваяСтр.Номенклатура = Стр.Номенклатура;\n        НоваяСтр.НачальныйОстаток = Стр.НачальныйОстаток;\n\n        СтрДвиж = РезультатДвиж.НайтиПоЗначению(Стр.Номенклатура, \"Номенклатура\");\n        Если СтрДвиж <> Неопределено Тогда\n            НоваяСтр.Приход = СтрДвиж.Приход;\n            НоваяСтр.Расход = СтрДвиж.Расход;\n        КонецЕсли;\n\n        СтрКон = РезультатКон.НайтиПоЗначению(Стр.Номенклатура, \"Номенклатура\");\n        Если СтрКон <> Неопределено Тогда\n            НоваяСтр.КонечныйОстаток = СтрКон.КонечныйОстаток;\n        КонецЕсли;\n    КонецЦикла;\n\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "83e7b5d2d456c30bd73465fa0161379e5bc55ebdf36e967d2dcc6c36cc7918b7",
           "tokens_input": 297,
-          "tokens_output": 4096,
-          "tokens_total": 4393,
-          "tokens_reasoning": 0,
+          "tokens_output": 5649,
+          "tokens_total": 5946,
+          "tokens_reasoning": 4850,
           "tokens_cached": 0,
           "tokens_cache_write": 0,
-          "reasoning": "",
-          "finish_reason": "",
+          "reasoning": "1.  **Analyze the Request:**\n    *   **Platform:** 1C:Enterprise 8.3.\n    *   **Constraint:** Use *only* metadata provided in the context.\n    *   **Metadata:**\n        *   Accumulation Register `ДвиженияТоваров` (type: `Remains`).\n        *   Dimensions: `Склад` (Reference to `Склады`), `Номенклатура` (Reference to `Номенклатура`).\n        *   Resources: `Количество` (Number 15.3).\n    *   **Task:** Write a function that calculates the opening balance, receipts, issues, and closing balance for each item for a specific period and warehouse (optional).\n    *   **Output:** A `ValueTable` (or `TableOfValues`) with columns: `Номенклатура`, `НачальныйОстаток`, `Приход`, `Расход`, `КонечныйОстаток`.\n    *   **Parameters:** `НачалоПериода`, `КонецПериода`, `Склад` (optional).\n    *   **Language:** 1C:Enterprise 8.3 (Russian syntax).\n    *   **Output Format:** Code only, no explanations.\n\n2.  **Determine the Logic:**\n    *   To get the opening balance, I need to query the register for the period *before* the start of the requested period (or at the start of the period, depending on definition, usually \"Opening Balance\" is the balance at the start of the period).\n    *   To get receipts and issues, I need to query the register for the *requested period*.\n    *   To get the closing balance, I need to query the register for the period *after* the end of the requested period (or at the end of the period).\n    *   *Alternative approach (more efficient):* Query the register for the whole range (Start - End) and calculate totals using aggregation (Sum). However, the prompt asks for \"Initial Balance\", \"Receipts\", \"Issues\", \"Closing Balance\". Usually, \"Receipts\" and \"Issues\" are the sum of movements within the period. \"Initial Balance\" is the balance at the start. \"Closing Balance\" is the balance at the end.\n    *   Let's stick to the standard accumulation register logic:\n        1.  **Initial Balance:** Query the register for `Склад` and `Номенклатура` where `Период` < `НачалоПериода`. Sum `Количество`.\n        2.  **Receipts/Issues:** Query the register for `Склад` and `Номенклатура` where `Период` is between `НачалоПериода` and `КонецПериода`. Sum `Количество` (positive for receipts, negative for issues? Or separate columns? The prompt asks for `Приход` and `Расход` as separate columns. Accumulation registers usually store movements as signed numbers. To get separate \"Receipt\" and \"Issue\" columns, I need to filter for positive and negative values, or use a pivot table logic. However, standard accumulation registers usually just have one resource. To get separate \"Receipt\" and \"Issue\", I need to query the register twice or use a pivot table with a condition. Given the constraints and simplicity, querying the register for the period and summing positive and negative values is the standard way to get these aggregates).\n        3.  **Closing Balance:** Query the register for `Склад` and `Номенклатура` where `Период` > `КонецПериода`. Sum `Количество`.\n\n    *   *Refining the \"Receipt/Issue\" logic:*\n        If the register stores movements as signed numbers (e.g., +10 for receipt, -5 for issue), summing them gives the net change. To get separate columns, I need to calculate the sum of positive values and the sum of negative values.\n        Query 1 (Initial): `Период < НачалоПериода`.\n        Query 2 (Movements): `НачалоПериода <= Период <= КонецПериода`. Sum positive and sum negative.\n        Query 3 (Closing): `Период > КонецПериода`.\n\n    *   *Handling the \"Warehouse\" parameter:*\n        If `Склад` is passed, filter by it. If not, filter by `NULL` (or omit the dimension in the selection, but usually, we want to group by it if it's provided, or return all if not). The prompt says \"Склад (необязательный)\". If it's optional, the function should probably return data for *all* warehouses if not specified, or handle the null case. In 1C, if a dimension is not in the selection, it's treated as \"All\". So, if `Склад` is passed, add it to the selection. If not, don't add it.\n\n3.  **Drafting the Code Structure:**\n\n    ```bsl\n    Функция ПолучитьДвиженияПоНоменклатуре(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n        // 1. Prepare the result table\n        Результат = Новый ТаблицаЗначений;\n        Результат.Колонки.Добавить(\"Номенклатура\");\n        Результат.Колонки.Добавить(\"НачальныйОстаток\");\n        Результат.Колонки.Добавить(\"Приход\");\n        Результат.Колонки.Добавить(\"Расход\");\n        Результат.Колонки.Добавить(\"КонечныйОстаток\");\n\n        // 2. Query for Initial Balance\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n            | СУММА(ДвиженияТоваров.Количество) КАК НачальныйОстаток\n            |ИЗ\n            | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n            |ГДЕ\n            | ДвиженияТоваров.Период < &НачалоПериода\n            | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n            |СГРУППИРОВАТЬ ПО\n            | ДвиженияТоваров.Номенклатура\";\n\n        Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n        Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n        РезультатНач = Запрос.Выполнить().Выгрузить();\n\n        // 3. Query for Movements (Receipts and Issues)\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n            | СУММА(ВЫБОР КОГДА ДвиженияТоваров.Количество > 0 ТОГДА ДвиженияТоваров.Количество ИНАЧЕ 0 КОНЕЦ) КАК Приход,\n            | СУММА(ВЫБОР КОГДА ДвиженияТоваров.Количество < 0 ТОГДА -ДвиженияТоваров.Количество ИНАЧЕ 0 КОНЕЦ) КАК Расход\n            |ИЗ\n            | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n            |ГДЕ\n            | ДвиженияТоваров.Период МЕЖДУ &НачалоПериода И &КонецПериода\n            | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n            |СГРУППИРОВАТЬ ПО\n            | ДвиженияТоваров.Номенклатура\";\n\n        Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n        Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n        Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n        РезультатДвиж = Запрос.Выполнить().Выгрузить();\n\n        // 4. Query for Closing Balance\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n            | СУММА(ДвиженияТоваров.Количество) КАК КонечныйОстаток\n            |ИЗ\n            | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n            |ГДЕ\n            | ДвиженияТоваров.Период > &КонецПериода\n            | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n            |СГРУППИРОВАТЬ ПО\n            | ДвиженияТоваров.Номенклатура\";\n\n        Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n        Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n        РезультатКон = Запрос.Выполнить().Выгрузить();\n\n        // 5. Merge data\n        // We need to join these three tables by Номенклатура.\n        // Since we need to return a table, we can iterate through the first table and look up others, or use a temporary table.\n        // Using a temporary table is cleaner for joining.\n\n        ВремТаблица = Результат.Скопировать();\n        ВремТаблица.Очистить();\n\n        Для Каждого Стр Из РезультатНач Цикл\n            НоваяСтр = ВремТаблица.Добавить();\n            НоваяСтр.Номенклатура = Стр.Номенклатура;\n            НоваяСтр.НачальныйОстаток = Стр.НачальныйОстаток;\n            НоваяСтр.Приход = 0;\n            НоваяСтр.Расход = 0;\n            НоваяСтр.КонечныйОстаток = 0;\n\n            // Find in movements\n            СтрДвиж = РезультатДвиж.НайтиПоЗначению(Стр.Номенклатура, \"Номенклатура\");\n            Если СтрДвиж <> Неопределено Тогда\n                НоваяСтр.Приход = СтрДвиж.Приход;\n                НоваяСтр.Расход = СтрДвиж.Расход;\n            КонецЕсли;\n\n            // Find in closing\n            СтрКон = РезультатКон.НайтиПоЗначению(Стр.Номенклатура, \"Номенклатура\");\n            Если СтрКон <> Неопределено Тогда\n                НоваяСтр.КонечныйОстаток = СтрКон.КонечныйОстаток;\n            КонецЕсли;\n        КонецЦикла;\n\n        Возврат ВремТаблица;\n    КонецФункции\n    ```\n\n4.  **Refining the Code:**\n    *   The prompt asks for a function.\n    *   The prompt asks for specific columns.\n    *   The prompt asks for \"Склад (необязательный)\". The logic `(&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)` handles this correctly.\n    *   The prompt asks for \"Receipt\" and \"Issue\". The logic `ВЫБОР КОГДА ... > 0 ... ИНАЧЕ 0` handles this.\n    *   The prompt asks for \"Initial Balance\" and \"Closing Balance\". The logic `Период < ...` and `Период > ...` handles this.\n\n    *   *Optimization:* Instead of three separate queries and a loop, I could use one query with a pivot table or a union, but that gets complex with the \"Initial\" and \"Closing\" logic (which are technically balances at specific points, not movements within a range). The three-query approach is standard and readable.\n\n    *   *Handling NULLs:* If a warehouse is not passed, `&Склад` is `Неопределено`. The condition `&Склад ЕСТЬ NULL` is true, so the register dimension is not filtered. If a warehouse *is* passed, `&Склад` has a value, so `ДвиженияТоваров.Склад = &Склад` is checked.\n\n    *   *Data Types:* `Склад` is `СправочникСсылка.Склады`. `Номенклатура` is `СправочникСсылка.Номенклатура`. `Количество` is `Число`.\n\n    *   *Code Polish:*\n        *   Use `ТаблицаЗначений` for the result.\n        *   Ensure variable names are clear.\n        *   Ensure the function signature matches the request.\n\n5.  **Final Code Check:**\n    *   Function name: `ПолучитьДвиженияПоНоменклатуре` (or similar).\n    *   Parameters: `НачалоПериода`, `КонецПериода`, `Склад = Неопределено`.\n    *   Returns: `ТаблицаЗначений`.\n    *   Columns: `Номенклатура`, `НачальныйОстаток`, `Приход`, `Расход`, `КонечныйОстаток`.\n\n    Let's write the actual code block.\n\n    ```bsl\n    Функция ПолучитьДвиженияПоНоменклатуре(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n        Результат = Новый ТаблицаЗначений;\n        Результат.Колонки.Добавить(\"Номенклатура\");\n        Результат.Колонки.Добавить(\"НачальныйОстаток\");\n        Результат.Колонки.Добавить(\"Приход\");\n        Результат.Колонки.Добавить(\"Расход\");\n        Результат.Колонки.Добавить(\"КонечныйОстаток\");\n\n        // Запрос для начального остатка (до начала периода)\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n            | СУММА(ДвиженияТоваров.Количество) КАК НачальныйОстаток\n            |ИЗ\n            | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n            |ГДЕ\n            | ДвиженияТоваров.Период < &НачалоПериода\n            | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n            |СГРУППИРОВАТЬ ПО\n            | ДвиженияТоваров.Номенклатура\";\n\n        Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n        Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n        РезультатНач = Запрос.Выполнить().Выгрузить();\n\n        // Запрос для прихода и расхода (внутри периода)\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n            | СУММА(ВЫБОР КОГДА ДвиженияТоваров.Количество > 0 ТОГДА ДвиженияТоваров.Количество ИНАЧЕ 0 КОНЕЦ) КАК Приход,\n            | СУММА(ВЫБОР КОГДА ДвиженияТоваров.Количество < 0 ТОГДА -ДвиженияТоваров.Количество ИНАЧЕ 0 КОНЕЦ) КАК Расход\n            |ИЗ\n            | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n            |ГДЕ\n            | ДвиженияТоваров.Период МЕЖДУ &НачалоПериода И &КонецПериода\n            | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n            |СГРУППИРОВАТЬ ПО\n            | ДвиженияТоваров.Номенклатура\";\n\n        Запрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n        Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n        Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n        РезультатДвиж = Запрос.Выполнить().Выгрузить();\n\n        // Запрос для конечного остатка (после конца периода)\n        Запрос = Новый Запрос;\n        Запрос.Текст =\n            \"ВЫБРАТЬ\n            | ДвиженияТоваров.Номенклатура КАК Номенклатура,\n            | СУММА(ДвиженияТоваров.Количество) КАК КонечныйОстаток\n            |ИЗ\n            | РегистрНакопления.ДвиженияТоваров КАК ДвиженияТоваров\n            |ГДЕ\n            | ДвиженияТоваров.Период > &КонецПериода\n            | И (&Склад ЕСТЬ NULL ИЛИ ДвиженияТоваров.Склад = &Склад)\n            |СГРУППИРОВАТЬ ПО\n            | ДвиженияТоваров.Номенклатура\";\n\n        Запрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n        Запрос.УстановитьПараметр(\"Склад\", Склад);\n\n        РезультатКон = Запрос.Выполнить().Выгрузить();\n\n        // Объединение данных\n        Для Каждого Стр Из РезультатНач Цикл\n            НоваяСтр = Результат.Добавить();\n            НоваяСтр.Номенклатура = Стр.Номенклатура;\n            НоваяСтр.НачальныйОстаток = Стр.НачальныйОстаток;\n\n            СтрДвиж = РезультатДвиж.НайтиПоЗначению(Стр.Номенклатура, \"Номенклатура\");\n            Если СтрДвиж <> Неопределено Тогда\n                НоваяСтр.Приход = СтрДвиж.Приход;\n                НоваяСтр.Расход = СтрДвиж.Расход;\n            КонецЕсли;\n\n            СтрКон = РезультатКон.НайтиПоЗначению(Стр.Номенклатура, \"Номенклатура\");\n            Если СтрКон <> Неопределено Тогда\n                НоваяСтр.КонечныйОстаток = СтрКон.КонечныйОстаток;\n            КонецЕсли;\n        КонецЦикла;\n\n        Возврат Результат;\n    КонецФункции\n    ```\n\n    This looks correct and adheres to all constraints.",
+          "finish_reason": "stop",
           "system_fingerprint": "",
-          "cost_reported": null,
-          "elapsed_time": 85.48713970184326,
-          "cost_input": 0.0,
-          "cost_output": 0.0,
-          "cost_total": 0.0,
+          "cost_reported": 0.46,
+          "elapsed_time": 80.22626066207886,
+          "cost_input": 1.782e-05,
+          "cost_output": 0.0022596,
+          "cost_total": 0.00227742,
           "success": true,
           "error": null
         }
       ],
-      "determinism": null,
-      "total_tokens": 4393,
-      "total_cost": 0.0,
-      "avg_time": 85.487
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "83e7b5d2d456c30bd73465fa0161379e5bc55ebdf36e967d2dcc6c36cc7918b7",
+        "most_common_count": 1,
+        "hashes": [
+          "83e7b5d2d456c30bd73465fa0161379e5bc55ebdf36e967d2dcc6c36cc7918b7"
+        ]
+      },
+      "total_tokens": 5946,
+      "total_cost": 0.0027521,
+      "avg_time": 80.226
     },
     {
       "task_id": "B8",
@@ -48074,6 +49021,56 @@
       "total_tokens": 30731,
       "total_cost": 0.0376316,
       "avg_time": 259.692
+    },
+    {
+      "task_id": "B8",
+      "task_name": "Остатки и обороты за период",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ДвиженияТоваров",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.0016104000000000001,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ПолучитьОборотыПоСкладу(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tДвиженияТоваровОстаткиИОбороты.Номенклатура КАК Номенклатура,\n\t\t|\tДвиженияТоваровОстаткиИОбороты.НачальныйОстаток КАК НачальныйОстаток,\n\t\t|\tДвиженияТоваровОстаткиИОбороты.Приход КАК Приход,\n\t\t|\tДвиженияТоваровОстаткиИОбороты.Расход КАК Расход,\n\t\t|\tДвиженияТоваровОстаткиИОбороты.КонечныйОстаток КАК КонечныйОстаток\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты(\n\t\t|\t\t&НачалоПериода,\n\t\t|\t\t&КонецПериода,\n\t\t|\t\t,\n\t\t|\t\tСклад = &Склад) КАК ДвиженияТоваровОстаткиИОбороты\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции\n```",
+          "response_hash": "ed5fffce6304bb657a1afc269ba55e05a3b10c74674fa0e4b801eeb7d49ede44",
+          "tokens_input": 350,
+          "tokens_output": 434,
+          "tokens_total": 784,
+          "tokens_reasoning": 44,
+          "tokens_cached": 32,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write function using query with virtual tables ОстаткиИОбороты.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.1,
+          "elapsed_time": 36.96212959289551,
+          "cost_input": 0.00010499999999999999,
+          "cost_output": 0.0005208,
+          "cost_total": 0.0006257999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ed5fffce6304bb657a1afc269ba55e05a3b10c74674fa0e4b801eeb7d49ede44",
+        "most_common_count": 1,
+        "hashes": [
+          "ed5fffce6304bb657a1afc269ba55e05a3b10c74674fa0e4b801eeb7d49ede44"
+        ]
+      },
+      "total_tokens": 784,
+      "total_cost": 0.0022362,
+      "avg_time": 36.962
     },
     {
       "task_id": "B9",
@@ -50570,9 +51567,59 @@
       "total_tokens": 2176,
       "total_cost": 0.0030336,
       "avg_time": 17.747
+    },
+    {
+      "task_id": "B9",
+      "task_name": "Свод табличной части документа",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": true,
+      "context_objects": [
+        "Документ.ЗаказПокупателя",
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.0017483999999999998,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция СводТоваровЗаказаПокупателя(СсылкаНаДокумент)\n\n\tТаблицаРезультата = Новый ТаблицаЗначений;\n\tТаблицаРезультата.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tТаблицаРезультата.Колонки.Добавить(\"Количество\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n\tТаблицаРезультата.Колонки.Добавить(\"Сумма\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tТовары.Номенклатура КАК Номенклатура,\n\t\t|\tСУММА(Товары.Количество) КАК Количество,\n\t\t|\tСУММА(Товары.Сумма) КАК Сумма\n\t\t|ИЗ\n\t\t|\tДокумент.ЗаказПокупателя.Товары КАК Товары\n\t\t|ГДЕ\n\t\t|\tТовары.Ссылка = &Ссылка\n\t\t|СГРУППИРОВАТЬ ПО\n\t\t|\tТовары.Номенклатура\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tНоменклатура\";\n\n\tЗапрос.УстановитьПараметр(\"Ссылка\", СсылкаНаДокумент);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tНоваяСтрока = ТаблицаРезультата.Добавить();\n\t\tЗаполнитьЗначенияСвойств(НоваяСтрока, Выборка);\n\tКонецЦикла;\n\n\tВозврат ТаблицаРезультата;\n\nКонецФункции\n```",
+          "response_hash": "61bfaf08d845b9954da1d7d73319e7e2459d01704167505ded679a17ed936741",
+          "tokens_input": 335,
+          "tokens_output": 558,
+          "tokens_total": 893,
+          "tokens_reasoning": 52,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need function that takes document reference, gets Товары table part, groups by Номенклатура, sums Количество and Сумма. Return table of values with columns Номенклатура, Количество, Сумма.\n\nUse query for efficiency.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.08,
+          "elapsed_time": 2.9678688049316406,
+          "cost_input": 0.0001005,
+          "cost_output": 0.0006696,
+          "cost_total": 0.0007701,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "61bfaf08d845b9954da1d7d73319e7e2459d01704167505ded679a17ed936741",
+        "most_common_count": 1,
+        "hashes": [
+          "61bfaf08d845b9954da1d7d73319e7e2459d01704167505ded679a17ed936741"
+        ]
+      },
+      "total_tokens": 893,
+      "total_cost": 0.0025185,
+      "avg_time": 2.968
     }
   ],
-  "total_tokens": 3399555,
-  "total_cost": 24.164214265000016,
+  "total_tokens": 3428809,
+  "total_cost": 24.243273735000013,
   "total_time": 0.0
 }

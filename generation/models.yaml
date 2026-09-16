@@ -731,6 +731,20 @@ models:
       supports_seed: false
       supports_tools: true               # рассуждения идут в выходной бюджет: для кат. B держать max_tokens высоким
 
+  deepseek_flash_41:
+    id: "deepseek-v4.1-flash"            # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "DeepSeek V4.1 Flash"
+    vendor: deepseek
+    weights: open
+    released: "2026-09-10"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:

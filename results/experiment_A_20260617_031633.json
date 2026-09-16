@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_A_20260617_031633",
   "category": "A",
-  "timestamp": "2026-09-09T04:49:01.219671",
+  "timestamp": "2026-09-16T18:02:14",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -53,7 +53,8 @@
     "Gemini 3.8 Flash",
     "Qwen3.8 Max 0902",
     "GPT-6 Astra",
-    "GPT-5.6 Luna Max"
+    "GPT-5.6 Luna Max",
+    "DeepSeek V4.1 Flash"
   ],
   "tasks_count": 15,
   "runs_per_task": 1,
@@ -2456,6 +2457,53 @@
       "avg_time": 25.677
     },
     {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "Функция ОбъединитьИОтсортировать(ИсходныйМассив, НовыеЗначения)\n    Результат = Новый Массив;\n    Если ИсходныйМассив <> Неопределено Тогда\n        Для Каждого Элемент Из ИсходныйМассив Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    Если НовыеЗначения <> Неопределено Тогда\n        Для Каждого Элемент Из НовыеЗначения Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    Результат.Сортировать(Истина);\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "5eb3a77e9a500535516615f4202e6582d551f76d0c0cb0b435d23aad5757f0ad",
+          "tokens_input": 228,
+          "tokens_output": 2604,
+          "tokens_total": 2832,
+          "tokens_reasoning": 2423,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "We need answer only code in 1C. Need parse task. Need write 1C function? \"Дан массив чисел, отсортированный по возрастанию, и массив новых значений в произвольном порядке. Вернуть НОВЫЙ массив...\" Need provide code only.\n\nNeed Russian syntax 1C. Need likely function merging two arrays. Inputs arrays sorted? first sorted ascending, second arbitrary. Return new array containing all elements sorted ascending. Duplicates preserved. Do not modify originals. Both empty -> empty array.\n\nNeed write 1C code. Could be function MergeSorted(ИсходныйМассив, НовыеЗначения) Экспорт. Need handle arrays of numbers. Use Сортировать? 1C array has Сортировать(СортироватьПоВозрастанию?) Actually Array.Сортировать(НаправлениеСортировки?) In 1C: Массив.Сортировать(СортироватьПоВозрастанию); default ascending? Method \"Сортировать\" has parameter \"НаправлениеСортировки\" with values Возрастание/Убывание? Specifically \"Сортировать(СортироватьПоВозрастанию)\" maybe parameter is \"СортироватьПоВозрастанию\" (Boolean). In 1C 8.3, Array.Сортировать(СортироватьПоВозрастанию = Истина). If Истина ascending. But can also use Сортировать(Возрастание). Hmm.\n\nNeed return new array. Can copy first, then add second, then sort. Since copy first no modify original. Add all elements from second. Sort ascending. That is simplest. Need ensure new array. If both empty return empty array. Code:\n\nФункция ОбъединитьИОтсортировать(ИсходныйМассив, НовыеЗначения) Экспорт\n    Результат = Новый Массив;\n    Если ИсходныйМассив = Неопределено И НовыеЗначения = Неопределено Тогда\n        Возврат Результат;\n    КонецЕсли;\n    Если ИсходныйМассив <> Неопределено Тогда\n        Для Каждого Элемент Из ИсходныйМассив Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    Если НовыеЗначения <> Неопределено Тогда\n        Для Каждого Элемент Из НовыеЗначения Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    Результат.Сортировать(Истина);\n    Возврат Результат;\nКонецФункции\n\nNeed maybe no export? The task asks \"Разработка...\" likely answer code. Return only code. Could also do merging O(n+m) preserving sorted using second sort. But requirement just return sorted. Using sort is okay. But maybe they expect algorithm? It says first sorted, second arbitrary. We can sort second then merge. But simpler accepted. Need consider duplicates preserved. Array sort preserves duplicates. Original not modified. Good.\n\nNeed maybe arrays are \"массив чисел\". We can use Сортировать. Need check syntax for 1C: Результат.Сортировать(Истина); Yes Array.Сортировать(СортироватьПоВозрастанию). In 1C 8.3, method \"Сортировать\" has parameter \"СортироватьПоВозрастанию\" type Boolean. Default True. So fine. However if no parameter? Could call Результат.Сортировать(); since ascending default. But explicit true.\n\nNeed maybe if both arrays empty but not undefined, still works. We check both empty? Not necessary. But if arrays passed empty, result empty. Could just not check undefined since specified arrays. Avoid extra. The requirement \"Если оба массива пусты — вернуть пустой массив.\" The function returns empty naturally. But if we add undefined checks, okay.\n\nNeed answer only code. Since user asks \"Возвращайте ТОЛЬКО код без пояснений\". Final should be code. Ensure no Markdown? Usually only code. Could include code block? They said only code, maybe no code fences? I can output code block? They asked only code. In final, just code. Might be safest no markdown? But code fences are not code. We can output raw code. Need Russian syntax.\n\nPotential issue: 1C function names? \"Функция ОбъединитьМассивы(ИсходныйМассив, НовыеЗначения)\" etc. Since no specified name, choose.\n\nNeed maybe implement without sorting second? Let's think if there are constraints maybe they don't want using built-in sort? No. But if they do, it's okay. Yet maybe because first sorted ascending and second arbitrary, we can sort second and merge, O(n log m + n + m). Built-in sort simpler.\n\nPotential nuance: \"Исходные массивы не изменять.\" We copy to new. Good.\n\nPotential issue: if arrays contain numbers, Array.Сортировать works. If array empty, Сортировать no error. If array has undefined? no.\n\nLet's maybe include function with export? \"Экспорт\" could be okay. If not in module, export not needed. But code ready to execute in module? If placed in common module, export. If in external processing, export okay? If no export, okay. The requirement just code. Use \"Функция\" without Экспорт? In 1C, functions can be without export. That is ready to call within module. I'd include Экспорт? It doesn't hurt if in module with export allowed. But if pasted into form module, Экспорт not allowed? Actually export allowed only in modules? In form module, procedures/functions cannot be export? I think export not allowed in form module? Let's recall: In 1C, keyword \"Экспорт\" is used in common modules, and also in external processing object modules? In form module, procedures/functions cannot have Экспорт? I think export is allowed in module of form? Hmm, 1C syntax: \"Экспорт\" can be specified for procedures and functions of modules except form modules? Not sure. To be safe for \"ready to execute\", omit Экспорт. But if they expect a function in common module, export needed. The instruction \"ТРЕБОВАНИЯ К КОДУ: ... Код должен быть готов к выполнению\" doesn't mention export. Usually for coding tasks in 1C, provide function without Экспорт? Could include \"Функция ... Экспорт\" if in common module. But if not, less portable. I'd omit Экспорт to be safe; the function can be called in same module. But if they test by pasting? Hmm.\n\nMaybe they expect a procedure/function solution. In many tasks, answer code can be a function. No export necessary.\n\nLet's produce:\n\nФункция ОбъединитьИОтсортировать(ИсходныйМассив, НовыеЗначения)\n    Результат = Новый Массив;\n    Если ИсходныйМассив <> Неопределено Тогда\n        Для Каждого Элемент Из ИсходныйМассив Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    Если НовыеЗначения <> Неопределено Тогда\n        Для Каждого Элемент Из НовыеЗначения Цикл\n            Результат.Добавить(Элемент);\n        КонецЦикла;\n    КонецЕсли;\n    Результат.Сортировать(Истина);\n    Возврат Результат;\nКонецФункции\n\nWould this satisfy \"both empty\" returns empty. Yes.\n\nBut maybe if arrays are undefined? The task says arrays. The checks for Неопределено extra. If both empty but defined, okay. If both undefined, returns empty. Fine.\n\nNeed ensure no semicolon after function? okay.\n\nMaybe 1C has \"Сортировать(Возрастание)\"? Let's verify syntax. In 1C 8.3, Array methods:\nСортировать(<НаправлениеСортировки>)\nПараметры:\n<НаправлениеСортировки> (необязательный)\nТип: НаправлениеСортировки. Направление сортировки. Возможные значения: Возрастание, Убывание. Значение по умолчанию: Возрастание.\nWait! Is it Boolean or enum? Hmm. Need check. I recall in 1C, \"Сортировать\" method has parameter \"СортироватьПоВозрастанию\" type Boolean? Let's recall from 1C syntax helper:\nМассив.Сортировать(<СортироватьПоВозрастанию>)\nПараметры:\nСортироватьПоВозрастанию (необязательный)\nТип: Булево. Истина - сортировать по возрастанию, Ложь - по убыванию. Значение по умолчанию: Истина.\nActually I think that's correct. Let me check memory: In 1C, \"Сортировать\" method for Array: \"Сортировать(СортироватьПоВозрастанию)\" with boolean. Example: \"Массив.Сортировать(Ложь);\" For \"ТаблицаЗначений.Сортировать\" uses column names. For \"СписокЗначений.СортироватьПоЗначению(НаправлениеСортировки)\" uses enum. For Array, I used \"Массив.Сортировать(Истина);\" many times. Yes.\n\nBut let's be certain. In 1C 8.3, \"Сортировать\" method of Array: Синтаксис: Сортировать(<СортироватьПоВозрастанию>) Параметры: <СортироватьПоВозрастанию> (необязательный) Тип: Булево. If Истина - ascending. Default True. Yes.\n\nPotential issue: If array contains numbers, sort works. Good.\n\nCould also implement custom merge to avoid relying on sort? But built-in is okay. However if the first array is sorted and second arbitrary, we could just concatenate and sort. That's O((n+m) log(n+m)) vs O(n log n + n + m). No constraints. Fine.\n\nNeed answer only code. No explanation. Final.\n\nBut let's consider if the expected answer might require \"Функция СлитьМассивы(Массив1, Массив2)\" and no undefined checks. Maybe use \"Возврат Новый Массив\" if both empty. But our code returns empty. Good.\n\nOne nuance: In 1C, \"Для Каждого Элемент Из ИсходныйМассив Цикл\" works for array. Yes.\n\nCould there be an issue with variable names: \"Результат\" maybe reserved? Not reserved. \"Элемент\" fine.\n\nLet's final with raw code.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.32,
+          "elapsed_time": 12.08457326889038,
+          "cost_input": 6.84e-05,
+          "cost_output": 0.0031248,
+          "cost_total": 0.0031932,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5eb3a77e9a500535516615f4202e6582d551f76d0c0cb0b435d23aad5757f0ad",
+        "most_common_count": 1,
+        "hashes": [
+          "5eb3a77e9a500535516615f4202e6582d551f76d0c0cb0b435d23aad5757f0ad"
+        ]
+      },
+      "total_tokens": 2832,
+      "total_cost": 0.0031932,
+      "avg_time": 12.085
+    },
+    {
       "task_id": "A11",
       "task_name": "Рабочие дни между датами",
       "model_id": "aliceai-llm/latest",
@@ -4851,6 +4899,53 @@
       "total_tokens": 4721,
       "total_cost": 0.0054812,
       "avg_time": 38.029
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция РабочихДнейВПериоде(ДатаНачала, ДатаКонца, Праздники)\n\t\n\tЕсли ДатаКонца < ДатаНачала Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\t// Нормализуем даты до начала дня\n\tНачало = НачалоДня(ДатаНачала);\n\tКонец  = НачалоДня(ДатаКонца);\n\t\n\t// Множество праздников, попавших в период и на будние дни\n\tПраздникиВПериоде = Новый Соответствие;\n\tЕсли Праздники <> Неопределено Тогда\n\t\tДля Каждого Праздник Из Праздники Цикл\n\t\t\tЕсли Праздник = Неопределено Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\t\tД = НачалоДня(Праздник);\n\t\t\tЕсли Д < Начало Или Д > Конец Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\t\tДеньНедели = ДеньНедели(Д);\n\t\t\tЕсли ДеньНедели = 6 Или ДеньНедели = 7 Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\t\tПраздникиВПериоде.Вставить(Д, Истина);\n\t\tКонецЦикла;\n\tКонецЕсли;\n\t\n\tКоличество = 0;\n\tТекущая = Начало;\n\tПока Текущая <= Конец Цикл\n\t\tДеньНедели = ДеньНедели(Текущая);\n\t\tЕсли ДеньНедели <> 6 И ДеньНедели <> 7 Тогда\n\t\t\tЕсли ПраздникиВПериоде.Получить(Текущая) = Неопределено Тогда\n\t\t\t\tКоличество = Количество + 1;\n\t\t\tКонецЕсли;\n\t\tКонецЕсли;\n\t\tТекущая = ДобавитьДень(Текущая, 1);\n\tКонецЦикла;\n\t\n\tВозврат Количество;\n\t\nКонецФункции\n```",
+          "response_hash": "fb61a57ce6fd5fbc79872e6af1f98ef96e02abfc48d9c7ba20304e29317a19b1",
+          "tokens_input": 223,
+          "tokens_output": 520,
+          "tokens_total": 743,
+          "tokens_reasoning": 17,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C code. Function taking two dates and array of holidays.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.18,
+          "elapsed_time": 2.357297420501709,
+          "cost_input": 6.69e-05,
+          "cost_output": 0.0006239999999999999,
+          "cost_total": 0.0006908999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "fb61a57ce6fd5fbc79872e6af1f98ef96e02abfc48d9c7ba20304e29317a19b1",
+        "most_common_count": 1,
+        "hashes": [
+          "fb61a57ce6fd5fbc79872e6af1f98ef96e02abfc48d9c7ba20304e29317a19b1"
+        ]
+      },
+      "total_tokens": 743,
+      "total_cost": 0.0006908999999999999,
+      "avg_time": 2.357
     },
     {
       "task_id": "A12",
@@ -7250,6 +7345,53 @@
       "avg_time": 7.0
     },
     {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "Функция УбратьЗначениеИзМассива(ИсходныйМассив, Значение)\n    Результат = Новый Массив;\n    Для Каждого Элемент Из ИсходныйМассив Цикл\n        Если Элемент <> Значение Тогда\n            Результат.Добавить(Элемент);\n        КонецЕсли;\n    КонецЦикла;\n    Возврат Результат;\nКонецФункции",
+          "response_hash": "624afecd31d3acb408f2ffde9739904621556674608ef27d081859f5037a2310",
+          "tokens_input": 189,
+          "tokens_output": 749,
+          "tokens_total": 938,
+          "tokens_reasoning": 644,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "We need answer in Russian 1C code only. Need solve. Need maybe provide function. Need understand 1C arrays. Given array and value. Return new array excluding all equal. Preserve order, don't modify source. If none, return array same composition. If all removed, empty array.\n\nNeed output only code. Need use built-in language Russian syntax. Need likely function. Need consider value comparison. Array elements can be any? Need compare with =? In 1C can compare. Basic.\n\nWe can write:\n\nФункция УбратьЗначениеИзМассива(ИсходныйМассив, Значение)\n    Результат = Новый Массив;\n    Для Каждого Элемент Из ИсходныйМассив Цикл\n        Если Элемент <> Значение Тогда\n            Результат.Добавить(Элемент);\n        КонецЕсли;\n    КонецЦикла;\n    Возврат Результат;\nКонецФункции\n\nBut concerns: comparing <> for arbitrary types may error? In 1C, equality comparison works for many types. For object? Maybe okay. Need \"равные этому значению\". Use =? If element = value then skip. The condition `Если Элемент <> Значение` can compare. If value undefined? Hmm.\n\nNeed maybe handle arrays of values. Good.\n\nNeed if no value occurs, return new array with same composition. We do.\n\nIf all removed, empty new array. Good.\n\nNeed \"Возвращайте ТОЛЬКО код без пояснений\". So final should only code. Could include function declaration. Should we include procedure? A function is code. Need no markdown? Usually they say code only. Return code block? Better plain code. Final only code.\n\nNeed maybe variable names. Use `Массив` and `Значение` maybe. But `Значение` is a reserved? Not reserved? In 1C `Значение` not keyword. `Новый Массив`. Use `Для Каждого`.\n\nPotential issue: If source is ValueList? They said массив. Use Array.\n\nNeed maybe include `Возврат Результат`.\n\nLet's consider 1C syntax for foreach: `Для Каждого Элемент Из ИсходныйМассив Цикл` correct.\n\nEquality: If element is of different type e.g. string \"1\" vs number 1, `<>` may return true? It can compare different types? In 1C, comparison of different types may be allowed? Actually in 1C, equality can compare different types: returns false. But relational operators? `<>` is inequality, likely allowed. Could use `Если Элемент = Значение Тогда Продолжить; КонецЕсли;`? `Продолжить` exists. But `<>` is fine. For values like `Неопределено`, comparing with number? `Неопределено <> 5` returns true? Probably.\n\nCould use `Сравнить`? Not needed.\n\nNeed final no explanation.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.19,
+          "elapsed_time": 5.957000970840454,
+          "cost_input": 5.67e-05,
+          "cost_output": 0.0008988,
+          "cost_total": 0.0009555,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "624afecd31d3acb408f2ffde9739904621556674608ef27d081859f5037a2310",
+        "most_common_count": 1,
+        "hashes": [
+          "624afecd31d3acb408f2ffde9739904621556674608ef27d081859f5037a2310"
+        ]
+      },
+      "total_tokens": 938,
+      "total_cost": 0.0009555,
+      "avg_time": 5.957
+    },
+    {
       "task_id": "A13",
       "task_name": "Максимальная сумма подмассива",
       "model_id": "aliceai-llm/latest",
@@ -9645,6 +9787,53 @@
       "total_tokens": 968,
       "total_cost": 0.0009716,
       "avg_time": 8.701
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1С\nФункция МаксимальнаяСуммаПодмассива(Знач Массив)\n\t\n\tЕсли Массив = Неопределено Или Массив.Количество() = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tТекущийМаксимум = Массив[0];\n\tОбщийМаксимум   = Массив[0];\n\t\n\tДля Индекс = 1 По Массив.Количество() - 1 Цикл\n\t\tЗначение = Массив[Индекс];\n\t\t\n\t\tЕсли ТекущийМаксимум + Значение > Значение Тогда\n\t\t\tТекущийМаксимум = ТекущийМаксимум + Значение;\n\t\tИначе\n\t\t\tТекущийМаксимум = Значение;\n\t\tКонецЕсли;\n\t\t\n\t\tЕсли ТекущийМаксимум > ОбщийМаксимум Тогда\n\t\t\tОбщийМаксимум = ТекущийМаксимум;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат ОбщийМаксимум;\n\t\nКонецФункции\n```",
+          "response_hash": "07d13fb39ffa2a6194f4aabac9b556299aed9d007329f794faaa7843d4b21c61",
+          "tokens_input": 220,
+          "tokens_output": 433,
+          "tokens_total": 653,
+          "tokens_reasoning": 171,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need write 1C code. Function taking array of numbers, returns max subarray sum (Kadane). Return only code.\n\nLet me write in Russian syntax.\n\nФункция МаксимальнаяСуммаПодмассива(Массив)\n    Если Массив = Неопределено Или Массив.Количество() = 0 Тогда\n        Возврат 0;\n    КонецЕсли;\n    ТекущаяСумма = 0;\n    Максимум = -Правда? No.\n\nStandard Kadane:\nmaxEnding = arr[0], maxSoFar = arr[0]\nfor i=1..n-1: maxEnding = max(arr[i], maxEnding+arr[i]); maxSoFar = max(maxSoFar, maxEnding)\n\nReturn maxSoFar.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.06,
+          "elapsed_time": 3.2907824516296387,
+          "cost_input": 6.6e-05,
+          "cost_output": 0.0005195999999999999,
+          "cost_total": 0.0005855999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "07d13fb39ffa2a6194f4aabac9b556299aed9d007329f794faaa7843d4b21c61",
+        "most_common_count": 1,
+        "hashes": [
+          "07d13fb39ffa2a6194f4aabac9b556299aed9d007329f794faaa7843d4b21c61"
+        ]
+      },
+      "total_tokens": 653,
+      "total_cost": 0.0005855999999999999,
+      "avg_time": 3.291
     },
     {
       "task_id": "A14",
@@ -12044,6 +12233,53 @@
       "avg_time": 21.532
     },
     {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```\nФункция РазвернутьСлова(ВходнаяСтрока)\n\t\n\tСлова = СтрРазделить(ВходнаяСтрока, \" \");\n\tОбратныйПорядок = Новый Массив;\n\t\n\tДля Инд = Слова.Количество() - 1 По 0 Цикл\n\t\tОбратныйПорядок.Добавить(Слова[Инд]);\n\tКонецЦикла;\n\t\n\tВозврат СтрСоединить(ОбратныйПорядок, \" \");\n\t\nКонецФункции\n```",
+          "response_hash": "89be8e320d1a30d6bebbdec342c12c204dbbdfe871f78e92c69a056ce4305f66",
+          "tokens_input": 231,
+          "tokens_output": 546,
+          "tokens_total": 777,
+          "tokens_reasoning": 412,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C code. Return only code.\n\nFunction that takes string, splits by spaces, reverses, joins with one space.\n\nUse СтрРазделить with filter for empty strings, or use СтрРазделить which... In 1C, СтрРазделить(Строка, \" \", Истина) - third param includes empty strings by default False? Actually СтрРазделить(Строка, Разделитель, ВключатьПустые) - default Ложь. So empty strings excluded.\n\nThen reverse array, join with \" \".\n\nCode:\n\nФункция РазвернутьСлова(ВходнаяСтрока)\n    Слова = СтрРазделить(ВходнаяСтрока, \" \");\n    Результат = \"\";\n    Для Инд = Слова.Количество() - 1 По 0 Цикл\n        Если Результат <> \"\" Тогда\n            Результат = Результат + \" \";\n        КонецЕсли;\n        Результат = Результат + Слова[Инд];\n    КонецЦикла;\n    Возврат Результат;\nКонецФункции\n\nActually simpler: build array reversed then СтрСоединить.\n\nСтрСоединить(Массив, \" \") exists in 1C 8.3.\n\nФункция РазвернутьСлова(ВходнаяСтрока)\n    Слова = СтрРазделить(ВходнаяСтрока, \" \");\n    Обратные = Новый Массив;\n    Для Инд = Слова.Количество() - 1 По 0 Цикл\n        Обратные.Добавить(Слова[Инд]);\n    КонецЦикла;\n    Возврат СтрСоединить(Обратные, \" \");\nКонецФункции\n\nThis handles all cases. Empty array -> \"\".",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.08,
+          "elapsed_time": 3.185732126235962,
+          "cost_input": 6.93e-05,
+          "cost_output": 0.0006552,
+          "cost_total": 0.0007245,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "89be8e320d1a30d6bebbdec342c12c204dbbdfe871f78e92c69a056ce4305f66",
+        "most_common_count": 1,
+        "hashes": [
+          "89be8e320d1a30d6bebbdec342c12c204dbbdfe871f78e92c69a056ce4305f66"
+        ]
+      },
+      "total_tokens": 777,
+      "total_cost": 0.0007245,
+      "avg_time": 3.186
+    },
+    {
       "task_id": "A15",
       "task_name": "Возведение в степень по модулю",
       "model_id": "aliceai-llm/latest",
@@ -14439,6 +14675,53 @@
       "total_tokens": 1946,
       "total_cost": 0.0021111999999999997,
       "avg_time": 16.342
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция СтепеньПоМодулю(Основание, Показатель, Модуль)\n\t\n\tЕсли Модуль = 1 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tРезультат = 1;\n\tБаза = Основание % Модуль;\n\tСт = Показатель;\n\t\n\tПока Ст > 0 Цикл\n\t\tЕсли Ст % 2 = 1 Тогда\n\t\t\tРезультат = (Результат * База) % Модуль;\n\t\tКонецЕсли;\n\t\tБаза = (База * База) % Модуль;\n\t\tСт = Цел(Ст / 2);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "5eadf79923dde558afafa9d4fa6986563e9554b2876f02d9c3a3f2a834150596",
+          "tokens_input": 253,
+          "tokens_output": 203,
+          "tokens_total": 456,
+          "tokens_reasoning": 12,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to implement modular exponentiation in 1C.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.05,
+          "elapsed_time": 20.403255701065063,
+          "cost_input": 7.59e-05,
+          "cost_output": 0.00024359999999999999,
+          "cost_total": 0.0003195,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5eadf79923dde558afafa9d4fa6986563e9554b2876f02d9c3a3f2a834150596",
+        "most_common_count": 1,
+        "hashes": [
+          "5eadf79923dde558afafa9d4fa6986563e9554b2876f02d9c3a3f2a834150596"
+        ]
+      },
+      "total_tokens": 456,
+      "total_cost": 0.0003195,
+      "avg_time": 20.403
     },
     {
       "task_id": "A1",
@@ -16838,6 +17121,53 @@
       "avg_time": 58.71
     },
     {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция СгруппироватьТаблицуЗначений(ТаблицаЗначений, ИмяКолонкиГруппировки, ИмяЧисловойКолонки)\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(ИмяКолонкиГруппировки);\n\tРезультат.Колонки.Добавить(ИмяЧисловойКолонки);\n\t\n\tСоответствие = Новый Соответствие;\n\t\n\tДля Каждого СтрокаТаблицы Из ТаблицаЗначений Цикл\n\t\tКлючГруппировки = СтрокаТаблицы[ИмяКолонкиГруппировки];\n\t\tТекущаяСумма = Соответствие.Получить(КлючГруппировки);\n\t\tЕсли ТекущаяСумма = Неопределено Тогда\n\t\t\tТекущаяСумма = 0;\n\t\tКонецЕсли;\n\t\tСоответствие.Вставить(КлючГруппировки, ТекущаяСумма + СтрокаТаблицы[ИмяЧисловойКолонки]);\n\tКонецЦикла;\n\t\n\tДля Каждого ЭлементСоответствия Из Соответствие Цикл\n\t\tНоваяСтрока = Результат.Добавить();\n\t\tНоваяСтрока[ИмяКолонкиГруппировки] = ЭлементСоответствия.Ключ;\n\t\tНоваяСтрока[ИмяЧисловойКолонки] = ЭлементСоответствия.Значение;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "8fc27cd728d0ec521f67ca8ba60c144c46a8b0ee125273fd9f3b7077b9974962",
+          "tokens_input": 183,
+          "tokens_output": 414,
+          "tokens_total": 597,
+          "tokens_reasoning": 9,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write function in 1C.",
+          "finish_reason": "stop",
+          "system_fingerprint": "default",
+          "cost_reported": 0.11,
+          "elapsed_time": 28.386553049087524,
+          "cost_input": 5.49e-05,
+          "cost_output": 0.0004967999999999999,
+          "cost_total": 0.0005516999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "8fc27cd728d0ec521f67ca8ba60c144c46a8b0ee125273fd9f3b7077b9974962",
+        "most_common_count": 1,
+        "hashes": [
+          "8fc27cd728d0ec521f67ca8ba60c144c46a8b0ee125273fd9f3b7077b9974962"
+        ]
+      },
+      "total_tokens": 597,
+      "total_cost": 0.0005516999999999999,
+      "avg_time": 28.387
+    },
+    {
       "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "aliceai-llm/latest",
@@ -19235,6 +19565,53 @@
       "avg_time": 6.903
     },
     {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\n// Выделяет уникальные элементы массива, сохраняя порядок первого появления.\n// Параметры:\n//   Массив - Массив - исходный массив (не изменяется).\n// Возвращаемое значение:\n//   Массив - новый массив без дубликатов.\nФункция УникальныеЭлементыМассива(Массив) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли Массив = Неопределено Или Массив.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Используем Соответствие для отслеживания уже добавленных элементов.\n\t// В качестве ключа берём строковое представление значения с учётом типа,\n\t// чтобы корректно различать значения разных типов и одинаковые значения.\n\tОтслеженные = Новый Соответствие;\n\t\n\tДля Каждого Элемент Из Массив Цикл\n\t\t\n\t\tКлюч = КлючЭлемента(Элемент);\n\t\t\n\t\tЕсли Отслеженные.Получить(Ключ) = Неопределено Тогда\n\t\t\tОтслеженные.Вставить(Ключ, Истина);\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n\n// Формирует строковый ключ для элемента с учётом его типа.\nФункция КлючЭлемента(Значение)\n\t\n\tЕсли Значение = Неопределено Тогда\n\t\tВозврат \"U:Неопределено\";\n\tКонецЕсли;\n\t\n\tЕсли Значение = NULL Тогда\n\t\tВозврат \"U:NULL\";\n\tКонецЕсли;\n\t\n\tТипЗначения = ТипЗнч(Значение);\n\t\n\tЕсли ТипЗначения = Тип(\"Строка\") Тогда\n\t\tВозврат \"S:\" + Значение;\n\tИначеЕсли ТипЗначения = Тип(\"Число\") Тогда\n\t\tВозврат \"N:\" + Строка(Значение);\n\tИначеЕсли ТипЗначения = Тип(\"Дата\") Тогда\n\t\tВозврат \"D:\" + Формат(Значение, \"ДФ=yyyyMMddHHmmss\");\n\tИначеЕсли ТипЗначения = Тип(\"Булево\") Тогда\n\t\tВозврат \"B:\" + ?(Значение, \"1\", \"0\");\n\tИначе\n\t\t// Для ссылочных и прочих типов используем строковое представление и тип.\n\t\tВозврат \"R:\" + Строка(ТипЗначения) + \":\" + Строка(Значение);\n\tКонецЕсли;\n\t\nКонецФункции\n```",
+          "response_hash": "5f56fb0d98f88565f2289b5133e2b0fa1df226373c83ae6f3b3b9355fe7553a1",
+          "tokens_input": 169,
+          "tokens_output": 660,
+          "tokens_total": 829,
+          "tokens_reasoning": 12,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C function. Return only code.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.09,
+          "elapsed_time": 32.782599449157715,
+          "cost_input": 5.069999999999999e-05,
+          "cost_output": 0.000792,
+          "cost_total": 0.0008426999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5f56fb0d98f88565f2289b5133e2b0fa1df226373c83ae6f3b3b9355fe7553a1",
+        "most_common_count": 1,
+        "hashes": [
+          "5f56fb0d98f88565f2289b5133e2b0fa1df226373c83ae6f3b3b9355fe7553a1"
+        ]
+      },
+      "total_tokens": 829,
+      "total_cost": 0.0008426999999999999,
+      "avg_time": 32.783
+    },
+    {
       "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "aliceai-llm/latest",
@@ -21621,6 +21998,53 @@
       "total_tokens": 4663,
       "total_cost": 0.0054016,
       "avg_time": 39.597
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1c\nФункция ОбъединитьИнтервалы(Интервалы)\n\t\n\tОтсортированные = Новый Массив;\n\tДля Каждого Интервал Из Интервалы Цикл\n\t\tЭлемент = Новый Массив;\n\t\tЭлемент.Добавить(Интервал[0]);\n\t\tЭлемент.Добавить(Интервал[1]);\n\t\tОтсортированные.Добавить(Элемент);\n\tКонецЦикла;\n\t\n\tКоличество = Отсортированные.Количество();\n\tДля Сч1 = 0 По Количество - 2 Цикл\n\t\tДля Сч2 = 0 По Количество - 2 - Сч1 Цикл\n\t\t\tЕсли Отсортированные[Сч2][0] > Отсортированные[Сч2 + 1][0] Тогда\n\t\t\t\tВременный = Отсортированные[Сч2];\n\t\t\t\tОтсортированные[Сч2] = Отсортированные[Сч2 + 1];\n\t\t\t\tОтсортированные[Сч2 + 1] = Временный;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЦикла;\n\t\n\tРезультат = Новый Массив;\n\tНачалоТекущий = Неопределено;\n\tКонецТекущий = Неопределено;\n\t\n\tДля Каждого Интервал Из Отсортированные Цикл\n\t\tЕсли НачалоТекущий = Неопределено Тогда\n\t\t\tНачалоТекущий = Интервал[0];\n\t\t\tКонецТекущий = Интервал[1];\n\t\tИначеЕсли Интервал[0] <= КонецТекущий Тогда\n\t\t\tЕсли Интервал[1] > КонецТекущий Тогда\n\t\t\t\tКонецТекущий = Интервал[1];\n\t\t\tКонецЕсли;\n\t\tИначе\n\t\t\tОбъединенный = Новый Массив;\n\t\t\tОбъединенный.Добавить(НачалоТекущий);\n\t\t\tОбъединенный.Добавить(КонецТекущий);\n\t\t\tРезультат.Добавить(Объединенный);\n\t\t\tНачалоТекущий = Интервал[0];\n\t\t\tКонецТекущий = Интервал[1];\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tЕсли НачалоТекущий <> Неопределено Тогда\n\t\tОбъединенный = Новый Массив;\n\t\tОбъединенный.Добавить(НачалоТекущий);\n\t\tОбъединенный.Добавить(КонецТекущий);\n\t\tРезультат.Добавить(Объединенный);\n\tКонецЕсли;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "f8687b0b14a15a491f9b5521b17aaab7e8d3b481b88413ceed4ee10f1d1f0c56",
+          "tokens_input": 236,
+          "tokens_output": 2099,
+          "tokens_total": 2335,
+          "tokens_reasoning": 1441,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C code that merges intervals. Return only code.\n\nLet me think about the algorithm:\n1. Sort intervals by start\n2. Merge overlapping/touching intervals\n\nIn 1C, arrays. Let me write it.\n\n```1c\nФункция ОбъединитьИнтервалы(Интервалы)\n    Результат = Новый Массив;\n    \n    // Копируем для сортировки\n    Отсортированные = Новый Массив;\n    Для Каждого Интервал Из Интервалы Цикл\n        Отсортированные.Добавить(Новый Массив);\n        Отсортированные[Отсортированные.Количество()-1].Добавить(Интервал[0]);\n        Отсортированные[Отсортированные.Количество()-1].Добавить(Интервал[1]);\n    КонецЦикла;\n    \n    // Сортировка пузырьком\n    н = Отсортированные.Количество();\n    Для і = 0 По н - 2 Цикл\n        Для ј = 0 По н - 2 - і Цикл\n            Если Отсортированные[ј][0] > Отсортированные[ј+1][0] Тогда\n                Временный = Отсортированные[ј];\n                Отсортированные[ј] = Отсортированные[ј+1];\n                Отсортированные[ј+1] = Временный;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n    \n    // Объединение\n    ТекущийНачало = Неопределено;\n    ТекущийКонец = Неопределено;\n    \n    Для Каждого Интервал Из Отсортированные Цикл\n        Если ТекущийНачало = Неопределено Тогда\n            ТекущийНачало = Интервал[0];\n            ТекущийКонец = Интервал[1];\n        ИначеЕсли Интервал[0] <= ТекущийКонец Тогда\n            Если Интервал[1] > ТекущийКонец Тогда\n                ТекущийКонец = Интервал[1];\n            КонецЕсли;\n        Иначе\n            НовыйИнтервал = Новый Массив;\n            НовыйИнтервал.Добавить(ТекущийНачало);\n            НовыйИнтервал.Добавить(ТекущийКонец);\n            Результат.Добавить(НовыйИнтервал);\n            ТекущийНачало = Интервал[0];\n            ТекущийКонец = Интервал[1];\n        КонецЕсли;\n    КонецЦикла;\n    \n    Если ТекущийНачало <> Неопределено Тогда\n        НовыйИнтервал = Новый Массив;\n        НовыйИнтервал.Добавить(ТекущийНачало);\n        НовыйИнтервал.Добавить(ТекущийКонец);\n        Результат.Добавить(НовыйИнтервал);\n    КонецЕсли;\n    \n    Возврат Результат;\nКонецФункции\n```\n\nWait, using Cyrillic variable names is more 1С-style. Let me use 'і' and 'ј'... actually those are Ukrainian-specific. Better to use standard Russian letters like \"и\" and \"й\" but those are confusingly similar. Let me use \"Сч1\", \"Сч2\".\n\nAlso `<>` for Неопределено comparison — should use `<>` or `Есть`. Let me use a flag.\n\nActually in 1C, comparing with Неопределено uses `=`. `ТекущийНачало = Неопределено` is valid.\n\nLet me clean up:\n\n```1c\nФункция ОбъединитьИнтервалы(Интервалы)\n    Отсортированные = Новый Массив;\n    Для Каждого Интервал Из Интервалы Цикл\n        Новый = Новый Массив;\n        Новый.Добавить(Интервал[0]);\n        Новый.Добавить(Интервал[1]);\n        Отсортированные.Добавить(Новый);\n    КонецЦикла;\n    \n    н = Отсортированные.Количество();\n    Для Сч1 = 0 По н - 2 Цикл\n        Для Сч2 = 0 По н - 2 - Сч1 Цикл\n            Если Отсортированные[Сч2][0] > Отсортированные[Сч2+1][0] Тогда\n                Вр = Отсортированные[Сч2];\n                Отсортированные[Сч2] = Отсортированные[Сч2+1];\n                Отсортированные[Сч2+1] = Вр;\n            КонецЕсли;\n        КонецЦикла;\n    КонецЦикла;\n    \n    Результат = Новый Массив;\n    Начало = Неопределено;\n    Конец = Неопределено;\n    \n    Для Каждого Интервал Из Отсортированные Цикл\n        Если Начало = Неопределено Тогда\n            Начало = Интервал[0];\n            Конец = Интервал[1];\n        ИначеЕсли Интервал[0] <= Конец Тогда\n            Если Интервал[1] > Конец Тогда\n                Конец = Интервал[1];\n            КонецЕсли;\n        Иначе\n            НовыйРезультат = Новый Массив;\n            НовыйРезультат.Добавить(Начало);\n            НовыйРезультат.Добавить(Конец);\n            Результат.Добавить(НовыйРезультат);\n            Начало = Интервал[0];\n            Конец = Интервал[1];\n        КонецЕсли;\n    КонецЦикла;\n    \n    Если Начало <> Неопределено Тогда\n        НовыйРезультат = Новый Массив;\n        НовыйРезультат.Добавить(Начало);\n        НовыйРезультат.Добавить(Конец);\n        Результат.Добавить(НовыйРезультат);\n    КонецЕсли;\n    \n    Возврат Результат;\nКонецФункции\n```\n\nThe requirement is \"На входе массив интервалов\" — likely a function. Let me output just the function.\n\nNote: the user didn't specify function name. I'll use something reasonable like ОбъединитьИнтервалы.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.52,
+          "elapsed_time": 7.2670135498046875,
+          "cost_input": 7.08e-05,
+          "cost_output": 0.0025188000000000003,
+          "cost_total": 0.0025896000000000005,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f8687b0b14a15a491f9b5521b17aaab7e8d3b481b88413ceed4ee10f1d1f0c56",
+        "most_common_count": 1,
+        "hashes": [
+          "f8687b0b14a15a491f9b5521b17aaab7e8d3b481b88413ceed4ee10f1d1f0c56"
+        ]
+      },
+      "total_tokens": 2335,
+      "total_cost": 0.0025896000000000005,
+      "avg_time": 7.267
     },
     {
       "task_id": "A4",
@@ -24020,6 +24444,53 @@
       "avg_time": 13.267
     },
     {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1С\nФункция СкользящиеСредние(Числа, Окно)\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли Окно < 1 Или Числа = Неопределено Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tДлина = Числа.Количество();\n\t\n\tЕсли Окно > Длина Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tСумма = 0;\n\t\n\tДля Индекс = 0 По Окно - 1 Цикл\n\t\tСумма = Сумма + Числа[Индекс];\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(Сумма / Окно);\n\t\n\tДля Индекс = Окно По Длина - 1 Цикл\n\t\tСумма = Сумма + Числа[Индекс] - Числа[Индекс - Окно];\n\t\tРезультат.Добавить(Сумма / Окно);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "03d6fb5b350a8cb399bf709d5bf7f996320d5d03f6b4d3fe1534c418153be23f",
+          "tokens_input": 195,
+          "tokens_output": 301,
+          "tokens_total": 496,
+          "tokens_reasoning": 32,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C code. Function taking array of numbers and window size, return array of moving averages.\n\nLet me write in 1C syntax.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.05,
+          "elapsed_time": 12.5891432762146,
+          "cost_input": 5.85e-05,
+          "cost_output": 0.0003612,
+          "cost_total": 0.0004197,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "03d6fb5b350a8cb399bf709d5bf7f996320d5d03f6b4d3fe1534c418153be23f",
+        "most_common_count": 1,
+        "hashes": [
+          "03d6fb5b350a8cb399bf709d5bf7f996320d5d03f6b4d3fe1534c418153be23f"
+        ]
+      },
+      "total_tokens": 496,
+      "total_cost": 0.0004197,
+      "avg_time": 12.589
+    },
+    {
       "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "aliceai-llm/latest",
@@ -26406,6 +26877,53 @@
       "total_tokens": 13203,
       "total_cost": 0.0156926,
       "avg_time": 115.765
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1С\nФункция ПодсчитатьСлова(Текст) Экспорт\n    \n    Результат = Новый Структура;\n    \n    // Заменяем знаки препинания на пробелы\n    ЗнакиПрепинания = \".,;:!?()[]{}\"\"'<>/\\\\|@#$%^&*+=~`-_\";\n    ОчищенныйТекст = \"\";\n    Для Инд = 1 По СтрДлина(Текст) Цикл\n        Символ = Сред(Текст, Инд, 1);\n        Если СтрНайти(ЗнакиПрепинания, Символ) > 0 Тогда\n            ОчищенныйТекст = ОчищенныйТекст + \" \";\n        Иначе\n            ОчищенныйТекст = ОчищенныйТекст + Символ;\n        КонецЕсли;\n    КонецЦикла;\n    \n    // Разбиваем на слова\n    Слова = СтрРазделить(ОчищенныйТекст, \" \", Ложь);\n    \n    Для Каждого Слово Из Слова Цикл\n        Если ПустаяСтрока(Слово) Тогда\n            Продолжить;\n        КонецЕсли;\n        Ключ = НРег(Слово);\n        Если Результат.Свойство(Ключ) Тогда\n            Результат[Ключ] = Результат[Ключ] + 1;\n        Иначе\n            Результат.Вставить(Ключ, 1);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\n    \nКонецФункции\n```",
+          "response_hash": "08180d65afb49e0d5a0f6c51cf6f773f89795ee45a3bbe4c44af03e69455d976",
+          "tokens_input": 184,
+          "tokens_output": 406,
+          "tokens_total": 590,
+          "tokens_reasoning": 22,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C code. Split text into words, ignoring punctuation, lowercase, count.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.11,
+          "elapsed_time": 5.5934529304504395,
+          "cost_input": 5.52e-05,
+          "cost_output": 0.00048719999999999997,
+          "cost_total": 0.0005424,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "08180d65afb49e0d5a0f6c51cf6f773f89795ee45a3bbe4c44af03e69455d976",
+        "most_common_count": 1,
+        "hashes": [
+          "08180d65afb49e0d5a0f6c51cf6f773f89795ee45a3bbe4c44af03e69455d976"
+        ]
+      },
+      "total_tokens": 590,
+      "total_cost": 0.0005424,
+      "avg_time": 5.593
     },
     {
       "task_id": "A6",
@@ -28796,6 +29314,53 @@
       "avg_time": 17.792
     },
     {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция РасстояниеЛевенштейна(Строка1, Строка2) Экспорт\n\n    Длина1 = СтрДлина(Строка1);\n    Длина2 = СтрДлина(Строка2);\n\n    Если Длина1 = 0 Тогда\n        Возврат Длина2;\n    КонецЕсли;\n    Если Длина2 = 0 Тогда\n        Возврат Длина1;\n    КонецЕсли;\n\n    Предыдущая = Новый Массив;\n    Текущая = Новый Массив;\n\n    Для Индекс2 = 0 По Длина2 Цикл\n        Предыдущая.Добавить(Индекс2);\n        Текущая.Добавить(0);\n    КонецЦикла;\n\n    Для Индекс1 = 1 По Длина1 Цикл\n\n        Текущая[0] = Индекс1;\n        Символ1 = Сред(Строка1, Индекс1, 1);\n\n        Для Индекс2 = 1 По Длина2 Цикл\n\n            Символ2 = Сред(Строка2, Индекс2, 1);\n\n            Если Символ1 = Символ2 Тогда\n                Стоимость = 0;\n            Иначе\n                Стоимость = 1;\n            КонецЕсли;\n\n            Удаление = Предыдущая[Индекс2] + 1;\n            Вставка  = Текущая[Индекс2 - 1] + 1;\n            Замена   = Предыдущая[Индекс2 - 1] + Стоимость;\n\n            Минимум = Удаление;\n            Если Вставка < Минимум Тогда\n                Минимум = Вставка;\n            КонецЕсли;\n            Если Замена < Минимум Тогда\n                Минимум = Замена;\n            КонецЕсли;\n\n            Текущая[Индекс2] = Минимум;\n\n        КонецЦикла;\n\n        Для Индекс2 = 0 По Длина2 Цикл\n            Предыдущая[Индекс2] = Текущая[Индекс2];\n        КонецЦикла;\n\n    КонецЦикла;\n\n    Возврат Предыдущая[Длина2];\n\nКонецФункции\n```",
+          "response_hash": "b12f33044866c498d4d16c813406e0a4f5490b2edc0e208b035688d45dfbb545",
+          "tokens_input": 162,
+          "tokens_output": 533,
+          "tokens_total": 695,
+          "tokens_reasoning": 15,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need write 1C code returning Levenshtein distance. Function.",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.14,
+          "elapsed_time": 2.8504581451416016,
+          "cost_input": 4.86e-05,
+          "cost_output": 0.0006396,
+          "cost_total": 0.0006882,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b12f33044866c498d4d16c813406e0a4f5490b2edc0e208b035688d45dfbb545",
+        "most_common_count": 1,
+        "hashes": [
+          "b12f33044866c498d4d16c813406e0a4f5490b2edc0e208b035688d45dfbb545"
+        ]
+      },
+      "total_tokens": 695,
+      "total_cost": 0.0006882,
+      "avg_time": 2.85
+    },
+    {
       "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "aliceai-llm/latest",
@@ -31184,6 +31749,53 @@
       "avg_time": 11.356
     },
     {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1c\nФункция СжатьRLE(Строка)\n\t\n\tРезультат = \"\";\n\t\n\tЕсли ПустаяСтрока(Строка) Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tТекущийСимвол = Лев(Строка, 1);\n\tСчетчик = 1;\n\t\n\tДля Сч = 2 По СтрДлина(Строка) Цикл\n\t\tСимвол = Сред(Строка, Сч, 1);\n\t\tЕсли Символ = ТекущийСимвол Тогда\n\t\t\tСчетчик = Счетчик + 1;\n\t\tИначе\n\t\t\tРезультат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n\t\t\tТекущийСимвол = Символ;\n\t\t\tСчетчик = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "720c6155bd8b2f009e3168d1d9e84c186dd14f8811a85d214bbfe119822b03f4",
+          "tokens_input": 210,
+          "tokens_output": 658,
+          "tokens_total": 868,
+          "tokens_reasoning": 388,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write RLE compression in 1C. Return only code.\n\nFunction:\n```1c\nФункция СжатьRLE(Строка)\n    Результат = \"\";\n    Если ПустаяСтрока(Строка) Тогда\n        Возврат Результат;\n    КонецЕсли;\n    ТекущийСимвол = Лев(Строка, 1);\n    Счетчик = 1;\n    Для Сч = 2 По СтрДлина(Строка) Цикл\n        Символ = Сред(Строка, Сч, 1);\n        Если Символ = ТекущийСимвол Тогда\n            Счетчик = Счетчик + 1;\n        Иначе\n            Результат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n            ТекущийСимвол = Символ;\n            Счетчик = 1;\n        КонецЕсли;\n    КонецЦикла;\n    Результат = Результат + ТекущийСимвол + Формат(Счетчик, \"ЧГ=0\");\n    Возврат Результат;\nКонецФункции\n```\n\nNote: Формат(Счетчик, \"ЧГ=0\") gives no thousand separator. Or use Строка(Счетчик) but that may use locale separator. Better to use Формат(Счетчик, \"ЧН=0; ЧГ=0\")... Actually simplest: Формат(Счетчик, \"ЧГ=0\").\n\nAlso Сред uses characters. Лев(Строка, 1) gets first char. Fine.\n\nBut careful: if string contains multi-byte? В 1С Сред по символам, fine.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.17,
+          "elapsed_time": 4.410604476928711,
+          "cost_input": 6.3e-05,
+          "cost_output": 0.0007895999999999999,
+          "cost_total": 0.0008525999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "720c6155bd8b2f009e3168d1d9e84c186dd14f8811a85d214bbfe119822b03f4",
+        "most_common_count": 1,
+        "hashes": [
+          "720c6155bd8b2f009e3168d1d9e84c186dd14f8811a85d214bbfe119822b03f4"
+        ]
+      },
+      "total_tokens": 868,
+      "total_cost": 0.0008525999999999999,
+      "avg_time": 4.411
+    },
+    {
       "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "aliceai-llm/latest",
@@ -33570,6 +34182,53 @@
       "total_tokens": 1957,
       "total_cost": 0.0022134,
       "avg_time": 17.466
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```bsl\nФункция ЭтоАнаграмма(Строка1, Строка2) Экспорт\n\t\n\t// Приводим к нижнему регистру и убираем пробелы\n\tС1 = СокрЛП(НРег(Строка1));\n\tС2 = СокрЛП(НРег(Строка2));\n\t\n\t// Удаляем все пробелы\n\tС1 = СтрЗаменить(С1, \" \", \"\");\n\tС2 = СтрЗаменить(С2, \" \", \"\");\n\t\n\t// Если длины разные — не анаграммы\n\tЕсли СтрДлина(С1) <> СтрДлина(С2) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\t\n\t// Сортируем символы обеих строк и сравниваем\n\tМассив1 = Новый Массив;\n\tМассив2 = Новый Массив;\n\t\n\tДля Инд = 1 По СтрДлина(С1) Цикл\n\t\tМассив1.Добавить(Сред(С1, Инд, 1));\n\t\tМассив2.Добавить(Сред(С2, Инд, 1));\n\tКонецЦикла;\n\t\n\tМассив1.Сортировать();\n\tМассив2.Сортировать();\n\t\n\tДля Инд = 0 По Массив1.ВГраница() Цикл\n\t\tЕсли Массив1[Инд] <> Массив2[Инд] Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Истина;\n\t\nКонецФункции\n```",
+          "response_hash": "e7c83b5f4701b9bb1efa35a4634778cd9522c08e4408677772524068b6960aee",
+          "tokens_input": 172,
+          "tokens_output": 412,
+          "tokens_total": 584,
+          "tokens_reasoning": 15,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C code. Function that checks anagram.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.09,
+          "elapsed_time": 25.40343427658081,
+          "cost_input": 5.16e-05,
+          "cost_output": 0.0004944,
+          "cost_total": 0.0005459999999999999,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e7c83b5f4701b9bb1efa35a4634778cd9522c08e4408677772524068b6960aee",
+        "most_common_count": 1,
+        "hashes": [
+          "e7c83b5f4701b9bb1efa35a4634778cd9522c08e4408677772524068b6960aee"
+        ]
+      },
+      "total_tokens": 584,
+      "total_cost": 0.0005459999999999999,
+      "avg_time": 25.403
     },
     {
       "task_id": "A9",
@@ -35967,9 +36626,56 @@
       "total_tokens": 1460,
       "total_cost": 0.001607,
       "avg_time": 12.397
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "deepseek-v4.1-flash",
+      "model_name": "DeepSeek V4.1 Flash",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.0,
+          "response": "```1c\nФункция ПростыеЧисла(Граница) Экспорт\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Новый Массив;\n\tКонецЕсли;\n\t\n\tРешето = Новый Массив(Граница + 1);\n\tДля Индекс = 0 По Граница Цикл\n\t\tРешето[Индекс] = Истина;\n\tКонецЦикла;\n\tРешето[0] = Ложь;\n\tРешето[1] = Ложь;\n\t\n\tПредел = Цел(Sqrt(Граница));\n\tДля Индекс = 2 По Предел Цикл\n\t\tЕсли Решето[Индекс] Тогда\n\t\t\tКратный = Индекс * Индекс;\n\t\t\tПока Кратный <= Граница Цикл\n\t\t\t\tРешето[Кратный] = Ложь;\n\t\t\t\tКратный = Кратный + Индекс;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tРезультат = Новый Массив;\n\tДля Индекс = 2 По Граница Цикл\n\t\tЕсли Решето[Индекс] Тогда\n\t\t\tРезультат.Добавить(Индекс);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\nКонецФункции\n```",
+          "response_hash": "3f7af6f8761c01c198abaaae1b16e0df85c1b19b1c24b4bbe55b2b84199e16b7",
+          "tokens_input": 177,
+          "tokens_output": 1280,
+          "tokens_total": 1457,
+          "tokens_reasoning": 950,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Need to write 1C code. Function returns array of primes up to boundary using Sieve of Eratosthenes.\n\nIn 1C, arrays are 0-indexed by default but can be set. Let me write:\n\n```1c\nФункция ПростыеЧисла(Граница) Экспорт\n    Результат = Новый Массив;\n    Если Граница < 2 Тогда\n        Возврат Результат;\n    КонецЕсли;\n    \n    // Решето: массив флагов индексы 0..Граница\n    Решето = Новый Массив(Граница + 1);\n    Для Индекс = 0 По Граница Цикл\n        Решето[Индекс] = Истина;\n    КонецЦикла;\n    Решето[0] = Ложь;\n    Решето[1] = Ложь;\n    \n    Для Индекс = 2 По Цел(Корень(Граница)) Цикл\n        Если Решето[Индекс] Тогда\n            Для Кратное = Индекс * Индекс По Граница Цикл\n                Решето[Кратное] = Ложь;\n            КонецЦикла;\n        КонецЕсли;\n    КонецЦикла;\n    // Hmm, for loop with step needed\n```\n\nActually 1C loop: `Для Кратное = Индекс * Индекс По Граница Цикл` doesn't have step. Need `Для Кратное = Индекс * Индекс По Граница Цикл` — actually 1C does support step: `Для X = A По B Цикл` default step 1. There's no step syntax in classic For... Actually 1C \"Для ... По ... Цикл\" only step 1. Hmm wait, can we do step? No, in 1C the For loop is `Для <var> = <start> По <end> Цикл`. No step.\n\nSo use while loop:\n\n```1c\nКратный = Индекс * Индекс;\nПока Кратный <= Граница Цикл\n    Решето[Кратный] = Ложь;\n    Кратный = Кратный + Индекс;\nКонецЦикла;\n```\n\nNote: Array index in 1C - Массив can have arbitrary indices set via `Новый Массив(Граница+1)` which sets size 0..Граница? Actually `Новый Массив(Размер)` creates array with indices 0..Размер-1. Let me verify: `Новый Массив(5)` creates array of size 5, indices 0..4. So to have index up to Граница, use `Новый Массив(Граница+1)`.\n\n`Цел()` and `Корень()` are available.\n\nLet me finalize:\n\n```1c\nФункция ПростыеЧисла(Граница) Экспорт\n    Если Граница < 2 Тогда\n        Возврат Новый Массив;\n    КонецЕсли;\n    \n    Решето = Новый Массив(Граница + 1);\n    Для Индекс = 0 По Граница Цикл\n        Решето[Индекс] = Истина;\n    КонецЦикла;\n    Решето[0] = Ложь;\n    Решето[1] = Ложь;\n    \n    Предел = Цел(Sqrt(Граница));\n    Для Индекс = 2 По Предел Цикл\n        Если Решето[Индекс] Тогда\n            Кратный = Индекс * Индекс;\n            Пока Кратный <= Граница Цикл\n                Решето[Кратный] = Ложь;\n                Кратный = Кратный + Индекс;\n            КонецЦикла;\n        КонецЕсли;\n    КонецЦикла;\n    \n    Результат = Новый Массив;\n    Для Индекс = 2 По Граница Цикл\n        Если Решето[Индекс] Тогда\n            Результат.Добавить(Индекс);\n        КонецЕсли;\n    КонецЦикла;\n    \n    Возврат Результат;\nКонецФункции\n```",
+          "finish_reason": "stop",
+          "system_fingerprint": "aeb56401ca74e127821c4f9126dcb669",
+          "cost_reported": 0.32,
+          "elapsed_time": 5.612360954284668,
+          "cost_input": 5.3099999999999996e-05,
+          "cost_output": 0.001536,
+          "cost_total": 0.0015891,
+          "success": true,
+          "error": null
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3f7af6f8761c01c198abaaae1b16e0df85c1b19b1c24b4bbe55b2b84199e16b7",
+        "most_common_count": 1,
+        "hashes": [
+          "3f7af6f8761c01c198abaaae1b16e0df85c1b19b1c24b4bbe55b2b84199e16b7"
+        ]
+      },
+      "total_tokens": 1457,
+      "total_cost": 0.0015891,
+      "avg_time": 5.612
     }
   ],
-  "total_tokens": 1442353,
-  "total_cost": 6.657375710000001,
+  "total_tokens": 1457203,
+  "total_cost": 6.672466910000001,
   "total_time": 0.0
 }
