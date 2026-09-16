@@ -1,0 +1,26 @@
+/* ============================================================
+   PRISM — строки лидерборда, которые открывают карточку модели.
+   Имя модели ведёт себя как ссылка: при наведении на строку (или фокусе с клавиатуры)
+   оно становится бирюзовым с подчёркиванием, рядом проявляется стрелка. Стрелка занимает
+   место всегда, меняется только прозрачность, поэтому строка не прыгает.
+   ============================================================ */
+.lb-name {
+  color: var(--ink-100);
+  text-decoration: underline; text-decoration-color: transparent;
+  text-underline-offset: 3px; text-decoration-thickness: 1px;
+  transition: color var(--dur) var(--ease), text-decoration-color var(--dur) var(--ease);
+}
+.lb-row:hover .lb-name,
+.lb-row:focus-visible .lb-name { color: var(--brand); text-decoration-color: currentColor; }
+
+.lb-arrow {
+  flex: none; font-size: 13px; color: var(--brand);
+  opacity: 0; transform: translateX(-3px);
+  transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.lb-row:hover .lb-arrow,
+.lb-row:focus-visible .lb-arrow { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-name, .lb-arrow { transition: none; }
+}

@@ -201,7 +201,7 @@ function Segmented({ items, value, onChange }) {
   );
 }
 
-function Identity({ m, size = 38, gap = 13, wrap = false, nameSize = 15 }) {
+function Identity({ m, size = 38, gap = 13, wrap = false, nameSize = 15, openHint = false }) {
   // wrap — имя переносится в 2 строки вместо обрезки многоточием (мобила: узкая колонка, длинные имена)
   const nameStyle = wrap
     ? { display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.2 }
@@ -210,7 +210,15 @@ function Identity({ m, size = 38, gap = 13, wrap = false, nameSize = 15 }) {
     <div style={{ display: 'flex', alignItems: 'center', gap, minWidth: 0 }}>
       <VendorLogo vendor={m.vendor} name={m.name} size={size} />
       <div style={{ minWidth: 0 }}>
-        <div style={{ fontFamily: 'var(--font-sans)', fontSize: nameSize, fontWeight: 600, color: 'var(--ink-100)', ...nameStyle }}>{m.name}</div>
+        {openHint ? (
+          // имя ведёт себя как ссылка: при наведении на строку подсвечивается, рядом стрелка
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, minWidth: 0 }}>
+            <div className="lb-name" style={{ fontFamily: 'var(--font-sans)', fontSize: nameSize, fontWeight: 600, minWidth: 0, ...nameStyle }}>{m.name}</div>
+            <span className="lb-arrow" aria-hidden="true">→</span>
+          </div>
+        ) : (
+          <div style={{ fontFamily: 'var(--font-sans)', fontSize: nameSize, fontWeight: 600, color: 'var(--ink-100)', ...nameStyle }}>{m.name}</div>
+        )}
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)', marginTop: 1 }}>{m.family}</div>
       </div>
     </div>
@@ -238,11 +246,11 @@ function Tooltip({ x, y, text }) {
       whiteSpace: 'nowrap', boxShadow: '0 6px 18px rgba(0,0,0,0.22)' }}>{text}</span>
   );
 }
-function ListRow({ grid, i, top, onClick, tip, gap = 18, pad = '14px 20px', children }) {
+function ListRow({ grid, i, top, onClick, tip, label, gap = 18, pad = '14px 20px', children }) {
   const [h, setH] = React.useState(false);
   const [pos, setPos] = React.useState(null);
   return (
-    <div role="button" tabIndex={0} onClick={onClick}
+    <div role="button" tabIndex={0} onClick={onClick} className="lb-row" aria-label={label}
       onMouseEnter={() => setH(true)}
       onMouseLeave={() => { setH(false); setPos(null); }}
       onMouseMove={tip ? (e) => setPos({ x: e.clientX, y: e.clientY }) : undefined}
@@ -621,9 +629,9 @@ function SummaryView({ models, navigate, ranks }) {
         <span style={colHead({ textAlign: 'right' })}>балл Q</span>
       </div>
       {rows.map((m, i) => (
-        <ListRow key={m.id} grid={grid} i={i} top={rankOf(m, i) === 1} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
+        <ListRow key={m.id} grid={grid} i={i} top={rankOf(m, i) === 1} label={`Открыть карточку модели ${m.name}`} onClick={() => navigate('model', m.id)}>
           <RankBadge rank={rankOf(m, i)} />
-          <Identity m={m} />
+          <Identity m={m} openHint />
           <SolvedStat solved={m.A?.solved} />
           <SolvedStat solved={m.B?.solved} />
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}><QStat q={m.qOverall} /></div>
@@ -728,9 +736,9 @@ function FunnelView({ cat, models, navigate, rankSource }) {
           const pct = Math.round((m[cat].solved || 0) * 100);
           const rk = rankMap[m.id] ?? i + 1;
           return (
-            <ListRow key={m.id} grid={grid} i={i} top={rk === 1} tip="открыть код модели по задачам" onClick={() => navigate('model', m.id)}>
+            <ListRow key={m.id} grid={grid} i={i} top={rk === 1} label={`Открыть карточку модели ${m.name}`} onClick={() => navigate('model', m.id)}>
               <RankBadge rank={rk} />
-              <Identity m={m} />
+              <Identity m={m} openHint />
               <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 19, fontWeight: 700, letterSpacing: '-0.01em', color: pct === 0 ? 'var(--ink-400)' : 'var(--ink-100)' }}>{pct}%</span>
               <OutcomeBar f={f} />
               <div>{f.cause ? <Badge tone={pct === 0 ? 'unproven' : 'neutral'} dot={false} size="sm" style={{ maxWidth: '100%' }}><span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{f.cause[0]} ×{f.cause[1]}</span></Badge> : <span style={{ color: 'var(--ink-400)', fontFamily: 'var(--font-mono)', fontSize: 12 }}>—</span>}</div>
