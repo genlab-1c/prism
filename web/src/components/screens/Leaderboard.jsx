@@ -102,6 +102,9 @@ function ChangelogModal({ entries, releases, onClose }) {
         </div>
         <div className="cl-modal-foot">
           <a href="https://github.com/genlab-1c/prism/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">полный список изменений на GitHub →</a>
+          <a className="cl-modal-rss" href={`${BASE}feed.xml`} target="_blank" rel="noopener noreferrer">
+            <Icon name="rss" size={13} stroke={2} /> подписаться через RSS
+          </a>
         </div>
       </div>
     </div>
@@ -115,12 +118,18 @@ function WhatsNew({ entries, releases }) {
   if (!entry) return null;
   return (
     <>
+      <div className="whatsnew-row">
       <button className="whatsnew" onClick={() => setOpen(true)} aria-label="Что нового — открыть журнал изменений">
         <span className="whatsnew-eyebrow"><span className="whatsnew-dot" />что нового</span>
         <span className="whatsnew-date">{entry.dateShort}</span>
         <span className="whatsnew-title">{inlineBold(entry.title)}</span>
         <span className="whatsnew-more">все изменения <span className="whatsnew-arrow">→</span></span>
       </button>
+      <a className="whatsnew-rss" href={`${BASE}feed.xml`} target="_blank" rel="noopener noreferrer"
+         title="RSS-лента изменений" aria-label="RSS-лента изменений">
+        <Icon name="rss" size={14} stroke={2} />
+      </a>
+      </div>
       {open && <ChangelogModal entries={entries} releases={releases} onClose={() => setOpen(false)} />}
     </>
   );

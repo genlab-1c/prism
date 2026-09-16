@@ -804,6 +804,13 @@ for (const e of changelog) {
    поэтому тянем его API на билде и кладём в src/data/releases.json — этот кэш и выручает,
    когда сборка идёт офлайн или упёрлась в лимит API. Запасной вариант — тема тега. */
 const RELEASES_CACHE = path.join(WEB, 'src', 'data', 'releases.json');
+// Первый абзац текста релиза, без markdown: строка «## [1.9.1] — дата» и списки пропускаются.
+const firstParagraph = (body) => {
+  const para = String(body || '').replace(/\r/g, '').split(/\n\s*\n/)
+    .find((x) => x.trim() && !/^\s*#/.test(x) && !/^\s*[-*]\s/.test(x));
+  return para ? para.replace(/\s*\n\s*/g, ' ').replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/`([^`]+)`/g, '$1').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1').trim() : '';
+};
 const cleanTitle = (t) => String(t || '')
   .replace(/^PRISM\s+v?\d+(?:\.\d+)*\s*[—–-]\s*/i, '')   // «PRISM v1.9.1 — ...» → номер уже есть в чипе
   .replace(/\.$/, '').trim();
@@ -817,7 +824,7 @@ async function releaseTitles() {
     clearTimeout(t);
     if (r.ok) {
       const map = {};
-      for (const rel of await r.json()) map[rel.tag_name] = cleanTitle(rel.name);
+      for (const rel of await r.json()) map[rel.tag_name] = { title: cleanTitle(rel.name), summary: firstParagraph(rel.body) };
       fs.writeFileSync(RELEASES_CACHE, JSON.stringify(map, null, 2) + '\n');
       return map;
     }
@@ -838,12 +845,80 @@ async function loadReleases() {
     if (!/^v\d+\.\d+\.\d+$/.test(tag || '')) continue;   // только релизные теги (paper-baseline и прочие — мимо)
     const { short, full } = ruDate(date);
     out.push({ kind: 'release', date, dateShort: short, dateFull: full, version: tag,
-      title: titles[tag] || cleanTitle(subject),
+      // кэш старого формата хранил только строку-заголовок
+      title: (typeof titles[tag] === 'string' ? titles[tag] : titles[tag]?.title) || cleanTitle(subject),
+      summary: typeof titles[tag] === 'object' ? titles[tag].summary || '' : '',
       url: `https://github.com/${GH_REPO}/releases/tag/${tag}` });
   }
   return out;
 }
 const releases = await loadReleases();
+
+/* ---- 5f. RSS-лента журнала (public/feed.xml) ----
+   Те же два потока, что в модалке журнала: записи docs/changelog.md и релизы. У записей
+   журнала нет своей страницы на сайте — ссылка ведёт на лидерборд, где изменение видно;
+   guid делаем по дате, он стабилен между сборками. Релиз ведёт на свою страницу GitHub.
+   SITE обязан совпадать с `site` в astro.config.mjs. */
+const SITE = 'https://prism.genlab-1c.ru';
+const xmlEscape = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const cdata = (html) => `<![CDATA[${String(html).replace(/]]>/g, ']]]]><![CDATA[>')}]]>`;
+const modelUrl = (id) => `${SITE}/m/${id}/`;
+// **жирное** → <b>, а если это модель из записи — ссылка на её карточку
+const richText = (t, links = {}) => xmlEscape(t).replace(/\*\*([^*]+)\*\*/g, (_, name) =>
+  links[name] ? `<a href="${links[name]}"><b>${name}</b></a>` : `<b>${name}</b>`);
+const rfc822 = (iso) => new Date(`${iso}T12:00:00+03:00`).toUTCString();
+function writeFeed() {
+  const items = [
+    ...changelog.map((e) => {
+      const links = Object.fromEntries(e.models.map((m) => [m.name, modelUrl(m.id)]));
+      const html = [
+        e.summary && `<p>${richText(e.summary, links)}</p>`,
+        e.items.length === 1 && !e.summary
+          ? `<p>${richText(e.items[0], links)}</p>`
+          : e.items.length && `<ul>${e.items.map((it) => `<li>${richText(it, links)}</li>`).join('')}</ul>`,
+      ].filter(Boolean).join('');
+      return {
+        date: e.date, title: e.title.replace(/\*\*([^*]+)\*\*/g, '$1'),
+        // одна модель в записи — ведём прямо на её карточку, иначе на лидерборд
+        link: e.models.length === 1 ? modelUrl(e.models[0].id) : `${SITE}/`,
+        guid: `prism-changelog-${e.date}`, permalink: false, html,
+      };
+    }),
+    ...releases.map((r) => ({
+      date: r.date, title: `PRISM ${r.version}${r.title ? ` — ${r.title}` : ''}`, link: r.url, guid: r.url, permalink: true,
+      html: `${r.summary ? `<p>${xmlEscape(r.summary)}</p>` : ''}<p><a href="${r.url}">Релиз ${r.version} на GitHub</a></p>`,
+    })),
+  ].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const body = items.map((it) => `    <item>
+      <title>${xmlEscape(it.title)}</title>
+      <link>${xmlEscape(it.link)}</link>
+      <guid isPermaLink="${it.permalink}">${xmlEscape(it.guid)}</guid>
+      <pubDate>${rfc822(it.date)}</pubDate>
+      <description>${cdata(it.html)}</description>
+    </item>`).join('\n');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>PRISM: бенчмарк генерации кода 1С</title>
+    <link>${SITE}/</link>
+    <atom:link href="${SITE}/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Журнал изменений PRISM, открытого исполняемого бенчмарка генерации кода 1С:Предприятия. Новые модели в лидерборде, рост банка задач, пересчёты баллов и релизы.</description>
+    <language>ru</language>
+    <image>
+      <url>${SITE}/assets/icon-144.png</url>
+      <title>PRISM: бенчмарк генерации кода 1С</title>
+      <link>${SITE}/</link>
+      <width>144</width>
+      <height>144</height>
+    </image>
+${items.length ? `    <lastBuildDate>${rfc822(items[0].date)}</lastBuildDate>\n` : ''}${body}
+  </channel>
+</rss>
+`;
+  fs.writeFileSync(path.join(WEB, 'public', 'feed.xml'), xml);
+  return items.length;
+}
+const feedItems = writeFeed();
 
 /* ---- 6. Мета для шапки/чипов ---- */
 const pyproject = fs.readFileSync(path.join(REPO, 'pyproject.toml'), 'utf8');
@@ -875,7 +950,7 @@ fs.writeFileSync(OUT, JSON.stringify({
   models,
 }, null, 2) + '\n');
 
-console.log(`✓ leaderboard.json — ${models.length} моделей · A ${tasksA} / B ${tasksB} задач · v${version} · журнал ${changelog.length} записей + ${releases.length} релизов`);
+console.log(`✓ leaderboard.json — ${models.length} моделей · A ${tasksA} / B ${tasksB} задач · v${version} · журнал ${changelog.length} записей + ${releases.length} релизов · feed.xml ${feedItems}`);
 console.log(`✓ public/data/gen — ${models.length} файлов, ${genCount} генераций с подсветкой BSL`);
 {
   const s = matrix.tasks.map((t) => (t.n ? t.solved / t.n : 0));

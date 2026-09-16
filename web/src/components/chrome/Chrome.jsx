@@ -3,6 +3,7 @@
 import React from 'react';
 
 const PRISM_ICONS = {
+  rss: 'M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16M5 19h.01',
   search: 'M21 21l-4.3-4.3M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
   arrowLeft: 'M19 12H5M12 19l-7-7 7-7',
   check: 'M20 6 9 17l-5-5',

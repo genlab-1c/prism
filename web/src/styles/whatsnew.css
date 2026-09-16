@@ -19,6 +19,17 @@
 .whatsnew:hover .whatsnew-more { color: var(--brand-strong); }
 .whatsnew:hover .whatsnew-arrow { transform: translateX(3px); }
 
+/* лента + сегмент RSS: два соседних элемента в одной рамке (ссылку внутрь <button> класть нельзя) */
+.whatsnew-row { display: flex; align-items: stretch; width: fit-content; max-width: 100%; margin-top: 12px; }
+.whatsnew-row .whatsnew { margin-top: 0; min-width: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; }
+.whatsnew-rss {
+  flex: none; display: flex; align-items: center; justify-content: center; padding: 0 10px;
+  background: var(--surface); border: 1px solid var(--line); border-left: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; color: var(--ink-400);
+  transition: color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.whatsnew-rss:hover { color: var(--brand-strong); background: var(--surface-raised); }
+
 .whatsnew-eyebrow {
   flex: none; display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.07em;
@@ -56,6 +67,8 @@
   .whatsnew-title { flex: 1; max-width: none; }  /* заполняет ширину, обрезается многоточием */
   .whatsnew-more { font-size: 0; }               /* прячем слова «все изменения», оставляем стрелку */
   .whatsnew-arrow { font-size: 14px; color: var(--brand); }
+  .whatsnew-row { width: 100%; }
+  .whatsnew-row .whatsnew { width: auto; flex: 1; }
 }
 
 /* ---- модалка журнала изменений ---- */
@@ -95,6 +108,9 @@
   font-family: var(--font-mono); font-size: 12.5px;
 }
 .cl-modal-foot a { color: var(--brand); }
+.cl-modal-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.cl-modal-foot .cl-modal-rss { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-400); }
+.cl-modal-foot .cl-modal-rss:hover { color: var(--brand); }
 @keyframes cl-fade { from { opacity: 0; } to { opacity: 1; } }
 @keyframes cl-rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
