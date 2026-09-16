@@ -17,9 +17,16 @@ const BASE = import.meta.env.BASE_URL;
 // закреплённая слева колонка (имя модели остаётся видимым при горизонтальной прокрутке)
 const stickyLeft = (bg) => ({ position: 'sticky', left: 0, zIndex: 1, background: bg });
 
-// **жирный** внутри строки журнала → <b> (единственная разметка, которую поддерживаем)
-const inlineBold = (text) => String(text).split(/(\*\*[^*]+\*\*)/g).map((p, i) =>
-  p.startsWith('**') && p.endsWith('**') ? <b key={i}>{p.slice(2, -2)}</b> : p);
+// **жирный** внутри строки журнала → <b> (единственная разметка, которую поддерживаем).
+// links — {имя модели: адрес карточки}: такое жирное имя становится ссылкой на карточку.
+const inlineBold = (text, links) => String(text).split(/(\*\*[^*]+\*\*)/g).map((p, i) => {
+  if (!(p.startsWith('**') && p.endsWith('**'))) return p;
+  const name = p.slice(2, -2);
+  return links?.[name]
+    ? <a key={i} className="changelog-model-link" href={links[name]}><b>{name}</b></a>
+    : <b key={i}>{name}</b>;
+});
+const modelLinks = (e) => Object.fromEntries((e.models || []).map((m) => [m.name, `${BASE}m/${m.id}/`]));
 
 // две ленты в одной: курируемые записи журнала и релизы. Релиз, выпущенный в день записи,
 // не дублирует её строкой, а прикрепляется к ней чипом версии — одна дата, одна карточка.
@@ -87,8 +94,8 @@ function ChangelogModal({ entries, releases, onClose }) {
                   )}
                 </div>
                 <h3 className="changelog-title">{inlineBold(e.title)}</h3>
-                {e.summary && <p className="changelog-summary">{inlineBold(e.summary)}</p>}
-                {e.items?.length > 0 && <ul className="changelog-items">{e.items.map((it, j) => <li key={j}>{inlineBold(it)}</li>)}</ul>}
+                {e.summary && <p className="changelog-summary">{inlineBold(e.summary, modelLinks(e))}</p>}
+                {e.items?.length > 0 && <ul className="changelog-items">{e.items.map((it, j) => <li key={j}>{inlineBold(it, modelLinks(e))}</li>)}</ul>}
               </article>
             ))}
           </div>

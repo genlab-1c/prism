@@ -787,6 +787,16 @@ function loadChangelog() {
   return entries;
 }
 const changelog = loadChangelog();
+// Модели в записях выделены **жирным**. Имя, совпавшее с моделью лидерборда, превращается
+// в ссылку на её карточку: в модалке журнала и в RSS-ленте.
+const modelIdByName = new Map(models.map((m) => [m.name, m.id]));
+for (const e of changelog) {
+  const found = new Map();
+  for (const hit of [e.title, e.summary, ...e.items].join('\n').matchAll(/\*\*([^*]+)\*\*/g)) {
+    if (modelIdByName.has(hit[1])) found.set(hit[1], modelIdByName.get(hit[1]));
+  }
+  e.models = [...found].map(([name, id]) => ({ name, id }));
+}
 
 /* ---- 5e. Релизы бенчмарка (git-теги + заголовки с GitHub) ----
    Второй поток журнала: версии. Даты и номера берём из тегов репозитория (значит CI обязан
