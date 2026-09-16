@@ -1,0 +1,25 @@
+<!-- Знак PRISM без плитки: из prism-concept/assets/brand/prism-icon-dark.svg, viewBox обрезан по контуру. -->
+<svg width="642" height="354" viewBox="24 60 214 118" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PRISM dark">
+  <defs>
+    <clipPath id="tileD"><rect width="642" height="354" rx="52"/></clipPath>
+    <pattern id="gridD" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0 H0 V32" fill="none" stroke="#1B2B45" stroke-width="1"/>
+    </pattern>
+    <linearGradient id="bgD" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#11203A"/><stop offset="1" stop-color="#0A1320"/>
+    </linearGradient>
+  </defs>
+
+
+  <circle cx="34" cy="106" r="4.5" fill="#E8EDF4"/>
+  <path d="M34,106 L106,118" stroke="#E8EDF4" stroke-width="4" stroke-linecap="round"/>
+  <path d="M128,70 L84,168 L172,168 Z" fill="#FFFFFF" fill-opacity="0.04"
+        stroke="#E8EDF4" stroke-width="6" stroke-linejoin="round"/>
+  <path d="M106,118 L150,120" stroke="#E8EDF4" stroke-width="3.5" stroke-linecap="round"/>
+  <g stroke-width="7" stroke-linecap="round">
+    <path d="M150,120 L224,90"  stroke="#7C7EF8"/>
+    <path d="M150,120 L228,106" stroke="#22D3EE"/>
+    <path d="M150,120 L228,126" stroke="#34D399"/>
+    <path d="M150,120 L222,148" stroke="#FBBF24"/>
+  </g>
+</svg>
