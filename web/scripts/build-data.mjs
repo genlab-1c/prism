@@ -322,12 +322,94 @@ function errLines(cat, detail) {
   return [...set].filter((n) => n > 0).sort((a, b) => a - b);
 }
 
+/* Ошибки выполнения запроса. У Запрос.Выполнить() аргументов нет: сообщение
+   «Ошибка при вызове метода контекста (Выполнить): <причина>» значит, что платформа не смогла
+   выполнить ТЕКСТ запроса, а причина стоит после двоеточия. Витрина раньше писала «неверные
+   аргументы» и отбрасывала её, хотя в категории B это самый массовый провал. */
+const VT_RESOURCE_SUFFIX = {
+  Остатки: (f) => `«${f}Остаток»`,
+  Обороты: (f) => `«${f}Оборот»`,
+  ОстаткиИОбороты: (f) => `«${f}НачальныйОстаток», «${f}Оборот» или «${f}КонечныйОстаток»`,
+};
+// однозначные опечатки ключевых слов запроса, которые встречаются у моделей
+const QUERY_KEYWORD_FIX = { УБЫВАНИЕ: 'УБЫВ', ВОЗРАСТАНИЕ: 'ВОЗР', ГРУППИРОВАТЬ: 'СГРУППИРОВАТЬ' };
+const lowerFirst = (t) => t.charAt(0).toLowerCase() + t.slice(1);
+
+// Регистры накопления задачи и их ресурсы — из tasks/category_b/<id>_*/config_spec.yaml.
+// Подсказка про суффикс даётся только если поле и правда ресурс: иначе модель выдумала поле,
+// и совет «допиши Остаток» был бы враньём. У бухгалтерских регистров ресурсы в схеме не
+// перечислены — для них подсказки нет.
+const schemaCache = new Map();
+function registerResources(taskId) {
+  if (!taskId) return new Map();
+  if (schemaCache.has(taskId)) return schemaCache.get(taskId);
+  const regs = new Map();
+  const base = path.join(REPO, 'tasks', 'category_b');
+  const dir = fs.existsSync(base) && fs.readdirSync(base).find((d) => d.startsWith(`${taskId}_`));
+  const cfg = dir && path.join(base, dir, 'config_spec.yaml');
+  if (cfg && fs.existsSync(cfg)) {
+    for (const [name, body] of Object.entries(readYAML(cfg)?.accumulation_registers || {}))
+      regs.set(name, new Set(Object.keys(body?.resources || {})));
+  }
+  schemaCache.set(taskId, regs);
+  return regs;
+}
+
+function queryErrorFrom(msg, taskId) {
+  const m = String(msg).match(/вызове метода контекста\s*\((Выполнить|ВыполнитьПакет)\)\s*:?\s*([\s\S]*)$/i);
+  if (!m) return null;
+  const tail = m[2].replace(/\{\(\d+,\s*\d+\)\}:\s*/g, '');
+  const reason = tail.split('<<?>>')[0].split('\n')[0].trim(); // текст после «<<?>>» — кусок запроса, не причина
+  let r;
+  if (!reason) return 'запрос не выполнился: ошибка в тексте запроса';
+  if ((r = reason.match(/^Поле не найдено\s*"([^"]+)"/i))) {
+    const dot = r[1].lastIndexOf('.');
+    const table = dot > 0 ? r[1].slice(0, dot) : '';
+    const field = r[1].slice(dot + 1);
+    const vt = table.match(/(ОстаткиИОбороты|Остатки|Обороты)$/);
+    if (vt && !/(Остаток|Оборот|Приход|Расход)$/.test(field)) {
+      const regs = registerResources(taskId);
+      // «ТоварыНаСкладахОстатки» → регистр «ТоварыНаСкладах»; у псевдонима вроде «Остатки» регистра нет
+      const reg = table.slice(0, vt.index).split('.').pop();
+      const suffixHint = `в запросе нет поля «${r[1]}»: у виртуальной таблицы .${vt[1]} ресурсы пишутся с суффиксом, ${VT_RESOURCE_SUFFIX[vt[1]](field)}`;
+      if (regs.has(reg)) {
+        if (regs.get(reg).has(field)) return suffixHint;
+        return `в регистре «${reg}» нет поля «${field}»: имя выдуманное`;
+      }
+      // регистр скрыт за псевдонимом — подсказка верна, только если поле ресурс какого-то регистра задачи
+      if ([...regs.values()].some((res) => res.has(field))) return suffixHint;
+    }
+    return `в запросе нет поля «${r[1]}»: имя поля неверное или выдуманное`;
+  }
+  if ((r = reason.match(/^Таблица не найдена\s*"([^"]+)"/i)))
+    return `в запросе таблица «${r[1]}», которой нет в конфигурации`;
+  if ((r = reason.match(/^Неоднозначное поле\s*"([^"]+)"/i)))
+    return `поле «${r[1]}» есть в нескольких таблицах запроса: не указано, из какой его брать`;
+  if ((r = reason.match(/^Неверные параметры\s*"([^"]+)"/i))) {
+    if (/^(И|ИЛИ)$/i.test(r[1]))
+      return 'неверные параметры виртуальной таблицы: они перечисляются через запятую, а не через «И»';
+    if (r[1].includes('.')) return `неверные параметры виртуальной таблицы «${r[1]}»`;
+    return `параметр «&${r[1]}» использован в запросе недопустимо`;
+  }
+  if (/^Содержимое объекта данных может быть/i.test(reason))
+    return 'таблица значений из параметра выбрана напрямую: её можно только поместить во временную таблицу';
+  if ((r = reason.match(/^Синтаксическая ошибка(?:\s*"([^"]*)")?/i))) {
+    const word = (r[1] || '').replace(/^\|/, '').trim();
+    const fix = QUERY_KEYWORD_FIX[word.toUpperCase()];
+    if (fix) return `синтаксическая ошибка в запросе: «${word}» вместо «${fix}»`;
+    return `синтаксическая ошибка в тексте запроса${word ? ` у «${word}»` : ''}`;
+  }
+  return `запрос не выполнился: ${lowerFirst(reason)}`;
+}
+
 /* Человеческий перевод рантайм-ошибок 1С — чтобы было ясно, это код модели или тест.
    «Метод объекта не обнаружен (X)»: тест зовёт КодКандидата.X (X — обнаруженная точка входа),
    а 1С её не видит как метод модуля → функция НЕ экспортирована (забыт «Экспорт») или названа иначе.
    Это всегда ошибка кода модели, не теста. */
-function humanizeBError(msg, mod) {
+function humanizeBError(msg, mod, taskId) {
   const s = String(msg).trim();
+  const query = queryErrorFrom(s, taskId); // раньше остальных: «Неверные параметры» ниже иначе перехватит хвост
+  if (query) return query;
   let m;
   if ((m = s.match(/Метод объекта не обнаружен\s*\(([^)]+)\)/i))) {
     // Тесты.Модуль → тест не смог позвать точку входа (не экспортирована); КодКандидата.Модуль →
@@ -357,7 +439,7 @@ function humanizeBError(msg, mod) {
 /* Разобрать M.log категории B по тестам: «тест1 ИСКЛЮЧЕНИЕ: {…Тесты.Модуль(68)}: сообщение; тест2 …».
    Схлопываем одинаковые сообщения (три теста упали одинаково → одна строка), переводим на человеческий,
    отмечаем, упало ли ВНУТРИ кода модели (КодКандидата → есть строка кода) или на вызове из теста. */
-function parseBLog(log) {
+function parseBLog(log, taskId) {
   if (!log) return { items: [], cause: null };
   const parts = String(log).split(/;+/).map((x) => x.trim()).filter(Boolean);
   const groups = new Map();
@@ -366,7 +448,7 @@ function parseBLog(log) {
     const m = p.match(/тест\s*(\d+)[^{]*\{[^}]*\.(КодКандидата|Тесты)\.Модул[ья]?\((\d+)\)\}\s*:?\s*(.+)$/i);
     let test = null, mod = null, line = null, raw = p;
     if (m) { test = +m[1]; mod = m[2]; line = +m[3]; raw = m[4].trim(); }
-    const human = humanizeBError(raw, mod);
+    const human = humanizeBError(raw, mod, taskId);
     if (/не вызывается извне/.test(human)) cause = 'entry';
     if (!groups.has(human)) groups.set(human, { human, tests: new Set(), inCand: mod === 'КодКандидата', line });
     if (test != null) groups.get(human).tests.add(test);
@@ -420,7 +502,7 @@ function parseALog(errors) {
 
 /* Диагностика задачи: что и где упало (исход + трейсбеки из auto_l1 detail).
    Исход — упрощённо для показа (агрегатная воронка считается харнессом). */
-function diagnose(cat, detail) {
+function diagnose(cat, detail, taskId) {
   const s = detail.S || {};
   const m = detail.M || {};
   const errors = [];
@@ -440,12 +522,12 @@ function diagnose(cat, detail) {
       errors.push('точка входа не найдена — модель не создала ожидаемую функцию или не экспортировала её');
     }
     else if ((m.total || 0) === 0 || (m.passed || 0) < (m.total || 0)) {
-      const parsed = parseBLog(m.log);
+      const parsed = parseBLog(m.log, taskId);
       cause = parsed.cause;
       parsed.items.forEach((e) => errors.push(e));
       // платформенные маркеры / компиляцию добавляем ТОЛЬКО если разбор лога пуст — иначе дублируют
       if (!parsed.items.length) {
-        (m.platform_errors || []).forEach((e) => errors.push(humanizeBError(e)));
+        (m.platform_errors || []).forEach((e) => errors.push(humanizeBError(e, undefined, taskId)));
         if (!(m.platform_errors || []).length) push(m.compile_errors);
       }
       outcome = (parsed.items.length || m.platform_errors?.length || m.platform_error_tests?.length) ? 'runtime' : 'wrong';
@@ -545,8 +627,10 @@ function breakdown(cat, taskId, scores, detail) {
       add('P', scores.P, 'Все обращения к метаданным отработали', '0 платформенных ошибок', 'full');
     else {
       const pe = M.platform_error_tests || 0, mk = (M.platform_errors || [])[0];
-      add('P', scores.P, 'Падает на обращении к платформе',
-        `${pe} ${plural(pe, 'тест', 'теста', 'тестов')} с ошибкой поля/объекта${mk ? ` · «${mk}»` : ''}`, 'minus');
+      const query = String(M.log || '').split(/;+/).map((p) => queryErrorFrom(p, taskId)).find(Boolean);
+      add('P', scores.P, 'Падает на обращении к платформе', query
+        ? `${pe} ${plural(pe, 'тест', 'теста', 'тестов')} ${plural(pe, 'падает', 'падают', 'падают')} на запросе · ${query}`
+        : `${pe} ${plural(pe, 'тест', 'теста', 'тестов')} с ошибкой поля/объекта${mk ? ` · «${mk}»` : ''}`, 'minus');
     }
   }
   return out;
@@ -586,7 +670,7 @@ function genTasks(name) {
         taskName: t.taskName,
         category: cat,
         scores: { S: pick(sc.S), M: pick(sc.M), O: pick(sc.O), P: pick(sc.P), Q: r2(sc.Q) },
-        diag: diagnose(cat, s.detail || {}),
+        diag: diagnose(cat, s.detail || {}, t.taskId),
         breakdown: breakdown(cat, t.taskId, sc, s.detail || {}),
         errorLines: errLines(cat, s.detail || {}),
         perf: perfData(cat, s.detail || {}),
