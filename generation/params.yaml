@@ -64,4 +64,3 @@ defaults:
     qwen38_max:          { temperature: 0.1, runs: 1 } # Qwen3.8 Max через AITUNNEL (флагман тира Max)
     seed2_code:          { temperature: 0.1, runs: 1 } # Seed 2.0 Code (ByteDance) через AITUNNEL
     deepseek_flash_41:   { temperature: 0.1, runs: 1 } # DeepSeek V4.1 Flash через AITUNNEL
-    deepseek_flash_41:   { temperature: 0.1, runs: 1 } # DeepSeek V4.1 Flash через AITUNNEL
