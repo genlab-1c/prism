@@ -22,6 +22,7 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from harness.execute import measure_cache
 from harness.loaders import PRISM
 
 OSCRIPT = PRISM / "tools" / "onescript" / "bin" / "oscript"
@@ -41,10 +42,31 @@ class ExecResult(BaseModel):
     timed_out: bool = False
 
 
+def _cache_key(kind: str, script: Path, tag: str) -> str | None:
+    """Ключ замера: ТЕКСТ скрипта плюс метка инструмента.
+
+    Скрипт собран харнессом из кода кандидата, скрытых тестов и логики сборки, поэтому
+    изменение любой из частей меняет текст, а с ним и ключ — кэш инвалидируется сам.
+    Не смогли прочитать файл — считаем без кэша (None).
+    """
+    try:
+        return measure_cache.key(kind, script.read_text(encoding="utf-8", errors="replace"), tag)
+    except OSError:
+        return None
+
+
 class LocalRunner(BaseModel):
     """oscript на хосте (tools/get-onescript.sh)."""
 
     name: str = "local"
+
+    @property
+    def tag(self) -> str:
+        """Метка версии инструмента для ключа кэша: путь и размер бинаря oscript."""
+        try:
+            return f"local:{OSCRIPT}:{OSCRIPT.stat().st_size}"
+        except OSError:
+            return "local:?"
 
     def available(self) -> bool:
         return OSCRIPT.exists()
@@ -53,16 +75,29 @@ class LocalRunner(BaseModel):
         return "oscript не установлен — ./tools/get-onescript.sh"
 
     def run_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
+        k = _cache_key("run_os", script, self.tag)
+        hit = measure_cache.get(k) if k else None
+        if hit is not None:
+            return ExecResult(**hit)
         try:
             proc = subprocess.run(
                 [str(OSCRIPT), str(script)], capture_output=True, text=True, timeout=timeout
             )
         except subprocess.TimeoutExpired:
-            return ExecResult(timed_out=True)
-        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+            return ExecResult(
+                timed_out=True
+            )  # таймаут зависит от машины, не от входа — не кэшируем
+        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        if k:
+            measure_cache.put(k, res.model_dump())
+        return res
 
     def check_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         """Только разбор и компиляция, без исполнения (`oscript -check`) — вердикт оси S."""
+        k = _cache_key("check_os", script, self.tag)
+        hit = measure_cache.get(k) if k else None
+        if hit is not None:
+            return ExecResult(**hit)
         try:
             proc = subprocess.run(
                 [str(OSCRIPT), "-check", str(script)],
@@ -72,12 +107,21 @@ class LocalRunner(BaseModel):
             )
         except subprocess.TimeoutExpired:
             return ExecResult(timed_out=True)
-        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        if k:
+            measure_cache.put(k, res.model_dump())
+        return res
 
     def run_os_codestat(
         self, script: Path, stat_path: Path, timeout: int = TIMEOUT_S
     ) -> ExecResult:
         """Как run_os, но с -codestat: oscript пишет в stat_path счётчик строк (ось O-исп.)."""
+        k = _cache_key("codestat", script, self.tag)
+        hit = measure_cache.get(k) if k else None
+        if hit is not None:  # вместе с выводом восстанавливаем и файл счётчиков
+            stat_path.parent.mkdir(parents=True, exist_ok=True)
+            stat_path.write_text(hit.pop("_stat", ""), encoding="utf-8")
+            return ExecResult(**hit)
         try:
             proc = subprocess.run(
                 [str(OSCRIPT), f"-codestat={stat_path}", str(script)],
@@ -87,7 +131,10 @@ class LocalRunner(BaseModel):
             )
         except subprocess.TimeoutExpired:
             return ExecResult(timed_out=True)
-        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        if k:
+            measure_cache.put(k, {**res.model_dump(), "_stat": _read_text(stat_path)})
+        return res
 
 
 class DockerRunner(BaseModel):
@@ -95,6 +142,11 @@ class DockerRunner(BaseModel):
 
     name: str = "docker"
     image: str = DOCKER_IMAGE
+
+    @property
+    def tag(self) -> str:
+        """Метка версии инструмента для ключа кэша: тег образа."""
+        return self.image
 
     def available(self) -> bool:
         try:
@@ -115,6 +167,10 @@ class DockerRunner(BaseModel):
 
     def run_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         script = script.resolve()
+        k = _cache_key("run_os", script, self.tag)
+        hit = measure_cache.get(k) if k else None
+        if hit is not None:
+            return ExecResult(**hit)
         container = f"prism-os-{uuid.uuid4().hex[:12]}"
         # --user uid хоста: иначе контейнерный пользователь не прочитает каталоги 0700
         # (например, pytest tmp_path); непривилегированность сохраняется
@@ -139,12 +195,19 @@ class DockerRunner(BaseModel):
             )  # запас на старт контейнера
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
-            return ExecResult(timed_out=True)
-        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+            return ExecResult(timed_out=True)  # таймаут — свойство машины, не входа
+        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        if k:
+            measure_cache.put(k, res.model_dump())
+        return res
 
     def check_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         """Только разбор и компиляция, без исполнения (`oscript -check`) — вердикт оси S."""
         script = script.resolve()
+        k = _cache_key("check_os", script, self.tag)
+        hit = measure_cache.get(k) if k else None
+        if hit is not None:
+            return ExecResult(**hit)
         container = f"prism-os-{uuid.uuid4().hex[:12]}"
         cmd = [
             "docker",
@@ -167,13 +230,22 @@ class DockerRunner(BaseModel):
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
             return ExecResult(timed_out=True)
-        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        if k:
+            measure_cache.put(k, res.model_dump())
+        return res
 
     def run_os_codestat(
         self, script: Path, stat_path: Path, timeout: int = TIMEOUT_S
     ) -> ExecResult:
         """Как run_os, но с -codestat. Код смонтирован ro (/sandbox), отчёт пишется в
         rw-каталог /out — чтобы недоверенный кандидат не писал в каталог с кодом."""
+        k = _cache_key("codestat", script, self.tag)
+        hit = measure_cache.get(k) if k else None
+        if hit is not None:  # вместе с выводом восстанавливаем и файл счётчиков
+            stat_path.parent.mkdir(parents=True, exist_ok=True)
+            stat_path.write_text(hit.pop("_stat", ""), encoding="utf-8")
+            return ExecResult(**hit)
         script, stat_path = script.resolve(), stat_path.resolve()
         stat_path.parent.mkdir(parents=True, exist_ok=True)
         container = f"prism-os-{uuid.uuid4().hex[:12]}"
@@ -200,7 +272,17 @@ class DockerRunner(BaseModel):
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
             return ExecResult(timed_out=True)
-        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        if k:
+            measure_cache.put(k, {**res.model_dump(), "_stat": _read_text(stat_path)})
+        return res
+
+
+def _read_text(path: Path) -> str:
+    try:
+        return path.read_text(encoding="utf-8")
+    except OSError:
+        return ""
 
 
 Runner = LocalRunner | DockerRunner
