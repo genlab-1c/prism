@@ -6,7 +6,11 @@
     парсер молча проглатывает).
  2. Иначе число КОРНЕВЫХ причин n = кластеры ParseError (каскад ≤cluster_gap строк =
     одна причина) + compile-блокеры (compile_blocker_codes из протокола).
- 3. Балл — по thresholds оси S из протокола L1 (порогов в коде нет).
+ 3. Вердикт «собирается ли» даёт движок, который код ИСПОЛНЯЕТ (compile_check протокола):
+    BSL LS — парсер, а не компилятор, и снисходителен. Если движок модуль не разобрал,
+    причин не может быть ноль: n = max(n, 1). Ошибки разрешения имён (not_syntax) в счёт
+    не идут — по конституции несуществующие имена вне оси S.
+ 4. Балл — по thresholds оси S из протокола L1 (порогов в коде нет).
 
 Стиль/стандарты (OneStatementPerLine, DeprecatedCurrentDate, …) в S НЕ входят —
 они уходят в O (см. excludes протокола). Диагностики даёт harness/execute/bsl_ls.py;
@@ -32,10 +36,29 @@ _PAIRS = (
 )
 
 
+def compile_verdict(output: str, protocol: ProtocolL1) -> tuple[bool, str]:
+    """Разобрал ли движок модуль. Возвращает (разобран, текст первой значимой ошибки).
+
+    Ошибки разрешения имён (`Symbol not found` и т.п.) считаем «разобран»: по конституции
+    несуществующие имена — не синтаксис, они проявятся на осях M/P. Так вердикт не зависит
+    от того, насколько словарь движка совпадает с платформой (пробелы OneScript — отдельная тема).
+    """
+    check = protocol.axes["S"].compile_check or {}
+    text = (output or "").strip()
+    if not text or (check.get("clean_marker") or "No errors.") in text:
+        return True, ""
+    if any(marker in text for marker in check.get("not_syntax") or []):
+        return True, ""
+    return False, text.splitlines()[0][:200] if text else ""
+
+
 def score_s(
-    diagnostics: list[dict], protocol: ProtocolL1, module_text: str | None = None
+    diagnostics: list[dict],
+    protocol: ProtocolL1,
+    module_text: str | None = None,
+    compile_output: str | None = None,
 ) -> tuple[int, dict]:
-    """S = компилируемость: парность + кластеры ParseError + compile-блокеры → балл."""
+    """S = компилируемость: парность + причины парсера + вердикт движка → балл."""
     s_axis = protocol.axes["S"]
     gap = s_axis.cluster_gap or 3
     blocker_codes = set(s_axis.compile_blocker_codes or [])
@@ -46,6 +69,12 @@ def score_s(
     blockers = [d for d in diagnostics if d["code"] in blocker_codes]
     n = clusters + len(blockers)
 
+    parsed, compile_error = (True, "")
+    if compile_output is not None:
+        parsed, compile_error = compile_verdict(compile_output, protocol)
+        if not parsed:
+            n = max(n, 1)  # движок не собрал — значит причина есть, сколько именно, он не скажет
+
     score = 0 if not balanced else protocol.scoring("S").score_for(n)  # pre_check → 0 минуя таблицу
     detail = {
         "root_causes": n,
@@ -55,6 +84,10 @@ def score_s(
         "balance_detail": balance_detail,
         "error_codes": sorted({d["code"] for d in parse_errors + blockers}),
     }
+    if compile_output is not None:
+        detail["engine_parsed"] = parsed
+        if compile_error:
+            detail["engine_error"] = compile_error
     return score, detail
 
 

@@ -560,3 +560,24 @@ def test_compiler_crash_is_reported_as_candidate_fault(tmp_path):
     sec = audit._section_infra([c])
     assert "роняет компилятор платформы — 1" in texts(sec)
     assert "по инфраструктуре — 0" in texts(sec)
+
+
+def test_syntax_score_contradicting_engine_is_flagged(tmp_path):
+    """S=10 при том, что движок модуль не разобрал, — ось утверждает неправду о факте."""
+    rec = (
+        "A1",
+        "id",
+        "М",
+        {
+            "response": "Функция Ф() КонецФункции",
+            "scores": {"S": 10, "M": 0.0, "O": None, "P": None, "Q": 5.0},
+            "detail": {
+                "S": {"engine_parsed": False, "engine_error": "Expecting symbol: Do"},
+                "M": {"entry_point": "Ф"},
+                "O": {"leg": "O-исп"},
+            },
+        },
+    )
+    c = corpus(tmp_path, [rec], category="A")
+    sec = audit._section_no_code([c])
+    assert "движок исполнения модуль не разобрал — 1" in texts(sec)

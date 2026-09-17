@@ -165,3 +165,56 @@ def test_parity_accepts_mixed_language_blocks(proto):
     mixed = "Function Ф()\n Если Истина Тогда\n  Возврат 1;\n EndIf;\nКонецФункции"
     score, detail = syntax.score_s([], proto, module_text=mixed)
     assert detail["balanced"] is True and score == 10
+
+
+# ── вердикт движка исполнения (compile_check протокола) ─────────────────────
+
+
+def test_engine_failure_forces_at_least_one_cause(proto):
+    """Движок не собрал модуль — значит причина есть, даже если парсер её не увидел.
+
+    Ровно эта дыра и была: BSL LS ставил «компилируется без ошибок» коду, который
+    OneScript не разбирает. Точного числа причин движок не даёт, поэтому минимум один.
+    """
+    out = "{Модуль /sandbox/cand.check.os / Error in line 4,1 / Expecting symbol: Do}"
+    score, detail = syntax.score_s(
+        [], proto, module_text="Функция Ф() КонецФункции", compile_output=out
+    )
+    assert score == 8 and detail["root_causes"] == 1
+    assert detail["engine_parsed"] is False and "Expecting symbol" in detail["engine_error"]
+
+
+def test_engine_clean_keeps_parser_verdict(proto):
+    """Движок собрал — балл остаётся тем, что насчитал парсер."""
+    score, detail = syntax.score_s(
+        [], proto, module_text="Функция Ф() КонецФункции", compile_output="No errors."
+    )
+    assert score == 10 and detail["root_causes"] == 0 and detail["engine_parsed"] is True
+
+
+def test_unresolved_name_is_not_a_syntax_error(proto):
+    """`Symbol not found` — не синтаксис: по конституции несуществующие имена вне оси S.
+
+    Иначе балл зависел бы от того, насколько словарь OneScript совпадает с платформой 1С.
+    """
+    out = "{Модуль / Error in line 2,9 / Symbol not found ДобавитьКДате}"
+    score, detail = syntax.score_s(
+        [], proto, module_text="Функция Ф() КонецФункции", compile_output=out
+    )
+    assert score == 10 and detail["engine_parsed"] is True
+
+
+def test_parity_still_wins_over_engine(proto):
+    """Разрушенная структура — по-прежнему ноль, даже если движок промолчал.
+
+    Без этого обрезанная генерация поднялась бы с 0 до 8 (проверено на корпусе: 18 записей).
+    """
+    truncated = "Функция Ф()\n Если Истина Тогда\n  Возврат 1;\n"
+    score, detail = syntax.score_s([], proto, module_text=truncated, compile_output="No errors.")
+    assert score == 0 and detail["balanced"] is False
+
+
+def test_no_engine_verdict_changes_nothing(proto):
+    """Раннер недоступен — вердикта нет, считает только парсер (как было раньше)."""
+    score, detail = syntax.score_s([], proto, module_text="Функция Ф() КонецФункции")
+    assert score == 10 and "engine_parsed" not in detail
