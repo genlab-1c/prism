@@ -156,14 +156,15 @@ models:
       supports_tools: true               # function calling работает (проверено)
 
   qwen36:
-    id: "qwen3.6-35b-a3b/latest"         # Yandex Cloud Responses API
+    id: "qwen3.6-35b-a3b"                # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Qwen3.6-35B-A3B"
     vendor: alibaba
     weights: open
     released: "2026-04"
-    access:
-      adapter: yandex_responses
-      reasoning_effort: "none"           # гасим reasoning: быстрее и дешевле, на качество кода влияет слабо
+    access:                              # переезд с Yandex Responses (там кончилась квота), модель та же
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+      reasoning_effort: "none"           # гасим reasoning: канал ручку слушает (0 токенов рассуждения, проверено)
     capabilities:
       context_window: 262144
       supports_seed: false

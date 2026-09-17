@@ -8,8 +8,8 @@
 #
 # Обновление: правьте as_of + source при сверке с тарифами. Это снимок, не истина.
 
-as_of: "2026-09-07"
-source: "Снимок 2026-09-07 — сверены только новые строки (gemini-3.8-flash, qwen3.8-max-0902, gpt-6-astra).
+as_of: "2026-09-18"
+source: "Снимок 2026-09-18 — сверена строка qwen3.6-35b-a3b: модель переехала с Yandex AI Studio\n  на AITUNNEL (квота Яндекса исчерпана), тариф взят из розницы канала за неимением прайса вендора.\n  Ранее, 2026-09-07 — сверены только новые строки (gemini-3.8-flash, qwen3.8-max-0902, gpt-6-astra).
   Ранее, 2026-08-13, сверены deepseek-v4-pro-0813 и qwen3.8-max.
   Ранее, 2026-08-01, пересверен тир OpenAI GPT-5.6 после снижения прайса 30.07.2026 (Luna −80%
   1.0/6.0→0.2/1.2, Terra −20% 2.5/15→2/12, Sol без изменений). Прочие строки — снимок 2026-07-08,
@@ -26,7 +26,7 @@ prices:
   "yandexgpt-5-lite/latest":       { input: 2.35,  output: 2.35 }  # Yandex AI Studio, счёт 200/200 ₽/1M ÷85 (sync)
   "yandexgpt-5.1/latest":          { input: 9.41,  output: 9.41 }  # Yandex AI Studio, счёт 800/800 ₽/1M ÷85 (sync)
   "yandexgpt-5-pro/latest":        { input: 14.12, output: 14.12 } # Yandex AI Studio, счёт 1200/1200 ₽/1M ÷85 (sync)
-  "qwen3.6-35b-a3b/latest":        { input: 2.35,  output: 3.53 }  # Yandex AI Studio, счёт 200/300 ₽/1M ÷85 (sync)
+  "qwen3.6-35b-a3b":       { input: 0.10, output: 0.90 }  # AITUNNEL розница 20/180 ₽ ÷199.75 (нет прямого прайса провайдера)
   "aliceai-llm-flash/latest":      { input: 1.18,  output: 2.35 }  # Yandex AI Studio, счёт 100/200 ₽/1M ÷85 (sync)
   "GigaChat-2-Max":                { input: 7.65, output: 7.65 }   # Сбер, прайс-лист 650 ₽/1M ÷85 (плоско, без деления вход/выход)
   "GigaChat-2-Pro":                { input: 5.88, output: 5.88 }   # Сбер, прайс-лист 500 ₽/1M ÷85
