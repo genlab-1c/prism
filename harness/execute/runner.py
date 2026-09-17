@@ -61,6 +61,19 @@ class LocalRunner(BaseModel):
             return ExecResult(timed_out=True)
         return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
 
+    def check_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
+        """Только разбор и компиляция, без исполнения (`oscript -check`) — вердикт оси S."""
+        try:
+            proc = subprocess.run(
+                [str(OSCRIPT), "-check", str(script)],
+                capture_output=True,
+                text=True,
+                timeout=timeout,
+            )
+        except subprocess.TimeoutExpired:
+            return ExecResult(timed_out=True)
+        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+
     def run_os_codestat(
         self, script: Path, stat_path: Path, timeout: int = TIMEOUT_S
     ) -> ExecResult:
@@ -124,6 +137,33 @@ class DockerRunner(BaseModel):
             proc = subprocess.run(
                 cmd, capture_output=True, text=True, timeout=timeout + 10
             )  # запас на старт контейнера
+        except subprocess.TimeoutExpired:
+            subprocess.run(["docker", "rm", "-f", container], capture_output=True)
+            return ExecResult(timed_out=True)
+        return ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+
+    def check_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
+        """Только разбор и компиляция, без исполнения (`oscript -check`) — вердикт оси S."""
+        script = script.resolve()
+        container = f"prism-os-{uuid.uuid4().hex[:12]}"
+        cmd = [
+            "docker",
+            "run",
+            "--rm",
+            "--name",
+            container,
+            *SANDBOX_OPTS,
+            "--user",
+            f"{os.getuid()}:{os.getgid()}",
+            "-v",
+            f"{script.parent}:/sandbox:ro",
+            self.image,
+            "oscript",
+            "-check",
+            f"/sandbox/{script.name}",
+        ]
+        try:
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 10)
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
             return ExecResult(timed_out=True)

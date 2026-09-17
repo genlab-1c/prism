@@ -112,6 +112,7 @@ class L1Axis(BaseModel):
         None  # O: та же нога, но счётчик СТРОК — своя, более мягкая шкала (см. протокол)
     )
     pre_check: dict | None = None  # сразу 0 в обход таблицы баллов (оси S, P)
+    compile_check: dict | None = None  # S кат. A: вердикт «собирается» от движка исполнения
     cluster_gap: int | None = None  # S: соседние ParseError ≤N строк = одна причина
     compile_blocker_codes: list[str] | None = (
         None  # S: не-ParseError диагностики «не скомпилируется»

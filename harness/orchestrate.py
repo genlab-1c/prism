@@ -195,7 +195,24 @@ def _score_syntax(
         }
     if instr.diagnostics is None:
         return None, {"reason": f"BSL LS недоступен — {bsl_ls.unavailable_reason()}"}
-    return score_s(instr.diagnostics, protocol, code)
+    # Вердикт «собирается ли» — у движка, который этот же код ИСПОЛНЯЕТ на оси M. BSL LS
+    # остаётся мерой тяжести: он парсер, а не компилятор (см. compile_check в протоколе).
+    return score_s(
+        instr.diagnostics, protocol, code, compile_output=_engine_check(code, work_dir, instr)
+    )
+
+
+def _engine_check(code: str, work_dir: Path, instr: Instruments) -> str | None:
+    """Вывод `oscript -check` по модулю кандидата. None — раннер недоступен, вердикта нет."""
+    if instr.runner is None or not instr.runner.available():
+        return None
+    work_dir.mkdir(parents=True, exist_ok=True)
+    script = work_dir / "cand.check.os"
+    script.write_text(code, encoding="utf-8")
+    res = instr.runner.check_os(script)
+    if res.timed_out:  # таймаут разбора — вердикта нет, тяжесть считает парсер
+        return None
+    return f"{res.stdout}\n{res.stderr}".strip()
 
 
 def _score_optimization(
