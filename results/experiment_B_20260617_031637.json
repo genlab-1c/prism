@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_B_20260617_031637",
   "category": "B",
-  "timestamp": "2026-09-11T06:43:36.546779",
+  "timestamp": "2026-09-18T01:25:28.488008",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -50879,43 +50879,43 @@
           "run_index": 0,
           "seed": null,
           "temperature": 0.1,
-          "response": "Функция ПолучитьДвижениеНоменклатуры(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tТекстЗапроса =\n\t\"ВЫБРАТЬ\n\t|\tРегистрНакопления.ОстаткиИОбороты.Номенклатура КАК Номенклатура,\n\t|\tСУММА(РегистрНакопления.ОстаткиИОбороты.ВходящийОстаток) КАК НачальныйОстаток,\n\t|\tСУММА(РегистрНакопления.ОстаткиИОбороты.Приход) КАК Приход,\n\t|\tСУММА(РегистрНакопления.ОстаткиИОбороты.Расход) КАК Расход,\n\t|\tСУММА(РегистрНакопления.ОстаткиИОбороты.ИтоговыйОстаток) КАК КонечныйОстаток\n\t|ИЗ\n\t|\tРегистрНакопления.СкладскойУчёт.ОстаткиИОбороты(\n\t|\t\t&НачалоПериода,\n\t|\t\t&КонецПериода,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|",
-          "response_hash": "8a96343d465392c2713e71bf4c676b4580ba24bc9fe3694f00c24ee5a95f8c75",
+          "response": "Функция ПолучитьДвижениеНоменклатуры(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tТекстЗапроса =\n\t\"ВЫБРАТЬ\n\t|\tДокументСклада.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ВЫБОР\n\t|\t\t\tКОГДА ДокументСклада.Дата < &НачалоПериода ТОГДА ДокументСклада.КоличествоОборот\n\t|\t\t\tИНАЧЕ 0\n\t|\tКОНЕЦ) КАК НачальныйОстаток,\n\t|\tСУММА(ВЫБОР\n\t|\t\t\tКОГДА ДокументСклада.Дата >= &НачалоПериода И ДокументСклада.Дата <= &КонецПериода \n\t|\t\t\t\tИ ДокументСклада.ВидДвижения = ВидДвиженияНакопления.Приход ТОГДА ДокументСклада.КоличествоОборот\n\t|\t\t\tИНАЧЕ 0\n\t|\tКОНЕЦ) КАК Приход,\n\t|\tСУММА(ВЫБОР\n\t|\t\t\tКОГДА ДокументСклада.Дата >= &НачалоПериода И ДокументСклада.Дата <= &КонецПериода \n\t|\t\t\t\tИ ДокументСклада.ВидДвижения = ВидДвиженияНакопления.Расход ТОГДА ДокументСклада.КоличествоОборот\n\t|\t\t\tИНАЧЕ 0\n\t|\tКОНЕЦ) КАК Расход,\n\t|\tСУММА(ВЫБОР\n\t|\t\t\tКОГДА ДокументСклада.Дата <= &КонецПериода ТОГДА ДокументСклада.КоличествоОборот\n\t|\t\t\tИНАЧЕ 0\n\t|\tКОНЕЦ) КАК КонечныйОстаток\n\t|ИЗ\n\t|\tРегистрНакопления.ДокументСклада КАК ДокументСклада\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tДокументСклада.Номенклатура\";\n\t\n\tЕсли Склад <> Неопределено Тогда\n\t\tТекстЗапроса = ТекстЗапроса + \"\n\t|ГДЕ\n\t|\tДокументСклада.Склад = &Склад\";\n\tEndIf;  \n\n\tЗапрос.Текст = ТекстЗапроса;\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\tЕсли Склад <> Неопределено Тогда\n\t\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tEndIf;\n\n\tРезультат = Запрос.Выполнить().Выгрузить();\n\tReturn Результат;\n\nКонецФункции",
+          "response_hash": "35bc891ecfecef490ed43086ab925eb13cd4e7b92fe085e47e32f97b6c16322a",
           "tokens_input": 188,
-          "tokens_output": 4096,
-          "tokens_total": 4284,
+          "tokens_output": 613,
+          "tokens_total": 801,
           "tokens_reasoning": 0,
           "tokens_cached": 0,
           "tokens_cache_write": 0,
           "reasoning": "",
-          "finish_reason": "",
+          "finish_reason": "stop",
           "system_fingerprint": "",
           "cost_reported": null,
-          "elapsed_time": 108.30858540534973,
-          "cost_input": 0.00036659999999999997,
-          "cost_output": 0.0079872,
-          "cost_total": 0.0083538,
+          "elapsed_time": 11.990236759185791,
+          "cost_input": 0.0014382,
+          "cost_output": 0.00468945,
+          "cost_total": 0.00612765,
           "success": true,
           "error": null,
-          "max_tokens": 4096,
+          "max_tokens": 65536,
           "reasoning_effort": "",
-          "generated_at": "2026-06-26T16:05:59",
-          "provenance": "восстановлено"
+          "generated_at": "2026-09-18T01:27:45",
+          "provenance": ""
         }
       ],
       "determinism": {
         "total_runs": 1,
         "unique_responses": 1,
         "match_rate": 1.0,
-        "most_common_hash": "8a96343d465392c2713e71bf4c676b4580ba24bc9fe3694f00c24ee5a95f8c75",
+        "most_common_hash": "35bc891ecfecef490ed43086ab925eb13cd4e7b92fe085e47e32f97b6c16322a",
         "most_common_count": 1,
         "hashes": [
-          "8a96343d465392c2713e71bf4c676b4580ba24bc9fe3694f00c24ee5a95f8c75"
+          "35bc891ecfecef490ed43086ab925eb13cd4e7b92fe085e47e32f97b6c16322a"
         ]
       },
-      "total_tokens": 4284,
-      "total_cost": 0.0083538,
-      "avg_time": 108.309
+      "total_tokens": 801,
+      "total_cost": 0.00612765,
+      "avg_time": 11.99
     },
     {
       "task_id": "B8",
@@ -55699,7 +55699,7 @@
       "avg_time": 2.968
     }
   ],
-  "total_tokens": 3396109,
-  "total_cost": 24.174817235000013,
+  "total_tokens": 3392626,
+  "total_cost": 24.172591085000015,
   "total_time": 0.0
 }
