@@ -24,6 +24,8 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from harness.execute import measure_cache
+
 DOCKER_IMAGE = "prism-onec:latest"
 # Путь к бинарю учебного клиента — версия НЕ зашита: находим его глобом в рантайме внутри
 # контейнера (подставляется в bash -c). Работает с образом любой версии 1С и не зависит от
@@ -201,6 +203,22 @@ def run_candidate(
     # модуль Тесты не создаст result.txt и вина кандидата станет «инфраструктурой».
     work_dir.mkdir(parents=True, exist_ok=True)
 
+    # Прогон 1С — самая дорогая операция бенчмарка (поднимается информационная база).
+    # Его ВХОД — код кандидата плюс файлы задачи; правка протокола или скорера вход не меняет,
+    # поэтому сырьё прогона (логи и result.txt) берём из кэша, а балл выводим заново.
+    ckey = _run_key(candidate_code, task_dir, entry)
+    cached = measure_cache.get(ckey) if ckey else None
+    if cached is not None:
+        for name, text in (
+            ("check.log", cached.get("check", "")),
+            ("result.txt", cached.get("result", "")),
+            ("load.log", cached.get("load", "")),
+            ("check.rc", cached.get("check_rc", "")),
+            ("enterprise.rc", cached.get("ent_rc", "")),
+        ):
+            (work_dir / name).write_text(text, encoding="utf-8")
+        return _verdict(work_dir, entry, timed_out=False)
+
     # 1) пустая конфа-базис: выгружается платформой ОДИН раз на машину
     #    (общий кэш в work/), в work_dir кандидата попадает копией — иначе
     #    каждый кандидат платит ~50с за идентичную выгрузку.
@@ -251,6 +269,39 @@ def run_candidate(
     except subprocess.TimeoutExpired:
         timed_out = True
 
+    res = _verdict(work_dir, entry, timed_out)
+    if ckey and not timed_out:  # таймаут — свойство машины, его не кэшируем
+        measure_cache.put(
+            ckey,
+            {
+                "check": _read(work_dir / "check.log"),
+                "result": _read(work_dir / "result.txt"),
+                "load": _read(work_dir / "load.log")[:2000],
+                "check_rc": _read(work_dir / "check.rc"),
+                "ent_rc": _read(work_dir / "enterprise.rc"),
+            },
+        )
+    return res
+
+
+def _run_key(candidate_code: str, task_dir: Path, entry: str | None) -> str | None:
+    """Ключ прогона: код кандидата + файлы задачи + точка входа + версия платформы и сборки.
+
+    Логика сборки конфигурации входит в ключ своим исходником: поменяли assemble.py — ключ
+    другой, кэш инвалидируется сам, без ручного версионирования.
+    """
+    try:
+        parts = [candidate_code, entry or "", DOCKER_IMAGE]
+        for name in ("config_spec.yaml", "fixtures.yaml", "tests.bsl"):
+            parts.append(_read(task_dir / name))
+        parts.append((Path(__file__).parent / "assemble.py").read_text(encoding="utf-8"))
+        return measure_cache.key("onec_run", *parts)
+    except OSError:
+        return None
+
+
+def _verdict(work_dir: Path, entry: str | None, timed_out: bool) -> OneCRunResult:
+    """Разобрать артефакты прогона в вердикт. Один путь и для живого прогона, и для кэша."""
     # ось S — ошибки компиляции модуля кандидата (компилятор 1С, не статика)
     lines, errors = _parse_compile_log(_read(work_dir / "check.log"))
     check_rc = _read_rc(work_dir / "check.rc")

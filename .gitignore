@@ -50,3 +50,4 @@ site/
 # AI-ассистент (локальные инструкции/настройки — не часть бенчмарка)
 CLAUDE.md
 .claude/
+results/.measure_cache/
