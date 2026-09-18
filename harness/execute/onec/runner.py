@@ -20,6 +20,7 @@ import shutil
 import subprocess
 import threading
 import uuid
+from functools import lru_cache
 from pathlib import Path
 
 from pydantic import BaseModel
@@ -34,16 +35,71 @@ ONEC_BIN = '"$(ls /opt/1cv8t/x86_64/*/1cv8t 2>/dev/null | head -1)"'
 STEP_TIMEOUT_S = 180  # на каждый шаг конфигуратора (DESIGNER) или клиента 1С
 RESULT_RE = re.compile(r"PASSED=(\d+);TOTAL=(\d+);?(.*)", re.DOTALL)
 
-# Маркеры платформенной ошибки в логе теста — сигнал оси P (ошибка обращения
-# к метаданным/запросу), в отличие от просто неверного ответа (FAIL).
-PLATFORM_ERROR_MARKERS = [
-    "Поле не найдено",
-    "Таблица не найдена",
-    "Объект не найден",
-    "не обнаружено",  # «Поле объекта не обнаружено»
-    "Метод объекта не обнаружен",
-    "Ошибка при вызове метода контекста (Выполнить)",  # ошибки исполнения запроса
-]
+# Сколько символов лога теста кладём в запись прогона. Классификация идёт по ПОЛНОМУ
+# логу (обрезка ниже по течению), но аудит читает сохранённое, и на 500 символах
+# сообщения рвались на полуслове («Синтаксическа», «Поле не») — балл P по данным
+# перепроверить было нельзя.
+LOG_LIMIT = 4000
+
+
+@lru_cache(maxsize=1)
+def platform_subclasses() -> tuple[dict, ...]:
+    """Подклассы платформенной ошибки: к какой оси она на самом деле относится.
+
+    Маркер говорит «сломалось при обращении к платформе», но не говорит ЧТО. Под общим
+    «Ошибка при вызове метода контекста (Выполнить)» лежат две разные вещи: обращение к
+    несуществующему полю или таблице (это знание метаданных, ось P) и кривой текст запроса
+    (это авторство кода, по конституции ось M). Считать второе провалом P значит наказывать
+    дважды: запрос не выполнился → тест провалился → M уже упала.
+    Порядок правил важен: частное выше общего.
+    """
+    from harness.loaders import load_error_taxonomy
+
+    return tuple(load_error_taxonomy().get("platform_subclasses") or [])
+
+
+def platform_verdict(segment: str) -> str:
+    """Что этот тест сказал про знание метаданных: "fault" | "clean" | "unverified".
+
+    fault      — упал на обращении к метаданным (ось P наказывается);
+    unverified — упал ДО того, как платформа дошла до имён (запрос не разобрался
+                 грамматически): свидетельства нет ни за, ни против;
+    clean      — всё остальное, включая неверный ответ и общие ошибки BSL: обращения
+                 к метаданным состоялись, значит ось P их подтверждает.
+
+    Различие fault/unverified существует, чтобы не заменить одну неправду другой.
+    Просто перестать считать кривой запрос провалом P мало: тест тогда попадёт в
+    ЧИСЛИТЕЛЬ чистых, и запись получит P=10 «все обращения к метаданным отработали»,
+    хотя ни одного обращения не проверялось. На корпусе это ровно 6 записей, прыгающих
+    с 0 на 10. Честно — выбросить такой тест из знаменателя.
+    """
+    low = segment.lower()
+    if not any(p.lower() in low for p in platform_error_markers()):
+        return "clean"
+    for rule in platform_subclasses():
+        if any(m in segment for m in rule.get("match") or []):
+            if rule.get("axis") == "P":
+                return "fault"
+            return "clean" if rule.get("metadata_reached", True) else "unverified"
+    return "fault"  # маркер сработал, класс неизвестен — см. «не опознано» в prism audit
+
+
+@lru_cache(maxsize=1)
+def platform_error_markers() -> tuple[str, ...]:
+    """Маркеры платформенной ошибки в логе теста — сигнал оси P (обращение к метаданным),
+    в отличие от просто неверного ответа (это ось M).
+
+    Список живёт в metrics/error_taxonomy.yaml: пороги и словари — данные, не код.
+    """
+    from harness.loaders import load_error_taxonomy
+
+    markers = load_error_taxonomy().get("platform_error_markers") or []
+    if not markers:
+        raise ValueError(
+            "metrics/error_taxonomy.yaml: пустой platform_error_markers — "
+            "без маркеров ось P объявит чистыми все тесты подряд"
+        )
+    return tuple(markers)
 
 
 class OneCRunResult(BaseModel):
@@ -65,6 +121,10 @@ class OneCRunResult(BaseModel):
     log: str = ""  # хвост result.txt: FAIL'ы и исключения тестов
     platform_errors: list[str] = []  # сработавшие маркеры платформенных ошибок
     platform_error_tests: int = 0  # сколько тестов упало именно платформенной ошибкой
+    # Тесты, не давшие свидетельства об именах метаданных: запрос не разобрался
+    # грамматически, до проверки имён платформа не дошла. Не «чисто» и не «провал» —
+    # выбрасываются из знаменателя доли оси P (см. platform_verdict).
+    unverified_tests: int = 0
     compile_error_lines: list[int] = []  # строки ошибок компиляции модуля кандидата (ось S)
     compile_errors: list[str] = []  # тексты ошибок компилятора (диагностика)
     entry_point: str | None = None
@@ -383,24 +443,26 @@ def parse_result(text: str, entry: str | None = None) -> OneCRunResult:
     m = RESULT_RE.search(text)
     if not m:
         # обработчик упал до тестов (КЛИЕНТ_ИСКЛЮЧЕНИЕ и т.п.)
-        markers = [p for p in PLATFORM_ERROR_MARKERS if p.lower() in text.lower()]
+        markers = [p for p in platform_error_markers() if p.lower() in text.lower()]
         return OneCRunResult(
             status="ok",
             passed=0,
             total=0,
-            log=text[:500],
+            log=text[:LOG_LIMIT],
             platform_errors=markers,
             entry_point=entry,
         )
     log = m.group(3).strip()
-    markers = [p for p in PLATFORM_ERROR_MARKERS if p.lower() in log.lower()]
+    markers = [p for p in platform_error_markers() if p.lower() in log.lower()]
+    faults, unverified = _count_verdicts(log)
     return OneCRunResult(
         status="ok",
         passed=int(m.group(1)),
         total=int(m.group(2)),
-        log=log[:500],
+        log=log[:LOG_LIMIT],
         platform_errors=markers,
-        platform_error_tests=_count_platform_error_tests(log),
+        platform_error_tests=faults,
+        unverified_tests=unverified,
         entry_point=entry,
     )
 
@@ -409,14 +471,26 @@ def _count_platform_error_tests(log: str) -> int:
     """Сколько тестов упало платформенной ошибкой (сигнал P — clean/total).
 
     Лог формата «тестN ИСКЛЮЧЕНИЕ: …; тестM FAIL …»: режем по началам записей
-    «тестN » и ищем маркеры внутри каждого сегмента. FAIL по значению (неверный
-    ответ) платформенной ошибкой не считается — это территория оси M.
+    «тестN » и решаем по каждому сегменту (см. platform_fault). FAIL по значению (неверный
+    ответ) платформенной ошибкой не считается — это территория оси M. Туда же уходит
+    кривой текст запроса: он про авторство кода, а не про знание метаданных.
+
+    Слово ИСКЛЮЧЕНИЕ при этом не требуется, и вот почему. Часть tasks/*/tests.bsl
+    ловит исключение сама и пишет его текстом внутрь «тестN FAIL (…)». Балл P тогда
+    зависел от того, как оформлен тест, а не от того, что сделала модель: на B5
+    три теста упали на одной платформенной ошибке, а P выходил 3.3 вместо 0.
+    Решает не слово ИСКЛЮЧЕНИЕ, а наличие маркера — простой FAIL его не содержит.
     """
-    segments = re.split(r"(?=тест\d+\s)", log)
-    count = 0
-    for seg in segments:
-        if not re.match(r"тест\d+\s+ИСКЛЮЧЕНИЕ", seg):
+    return _count_verdicts(log)[0]
+
+
+def _count_verdicts(log: str) -> tuple[int, int]:
+    """(тестов с провалом по метаданным, тестов без свидетельства) по логу прогона."""
+    fault = unverified = 0
+    for seg in re.split(r"(?=тест\d+\s)", log):
+        if not re.match(r"тест\d+\s", seg):
             continue
-        if any(p.lower() in seg.lower() for p in PLATFORM_ERROR_MARKERS):
-            count += 1
-    return count
+        verdict = platform_verdict(seg)
+        fault += verdict == "fault"
+        unverified += verdict == "unverified"
+    return fault, unverified

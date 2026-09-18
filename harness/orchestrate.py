@@ -49,13 +49,20 @@ from harness.score.optimization import score_o
 from harness.score.optimization_b_exec import score_o_b_exec
 from harness.score.optimization_exec import score_o_exec
 from harness.score.platform import score_p
-from harness.score.quality import SCORER_TO_AXIS, compute_q
-from harness.score.syntax import _cluster_lines, score_s
+from harness.score.quality import SCORER_TO_AXIS, compute_q, coverage
+from harness.score.syntax import _cluster_lines, score_s, syntax_ceiling
 from harness.ui import brand_title, console, progress_bar
 
-# Порог корректности для оси O: ниже него задача считается нерешённой и O = N/A (оптимальность
-# неверного кода бессмысленна). TODO: вынести в metrics/smop_l1_auto.yaml (ось O), пока константа.
-O_CORRECTNESS_GATE = 5.0
+
+def o_correctness_gate(protocol: ProtocolL1) -> float:
+    """Ниже какого M оптимальность не меряем (ось O, correctness_gate.m_below протокола).
+
+    Оптимальность нерешённой задачи бессмысленна: быстрее всего работает код, который
+    задачу не решает. Значение живёт в YAML — порогов в коде репозиторий не держит;
+    ключа нет → гейта нет, а не «подставим пять от себя».
+    """
+    gate = (protocol.axes["O"].correctness_gate or {}).get("m_below")
+    return float("-inf") if gate is None else float(gate)
 
 
 def _concurrency() -> int:
@@ -83,11 +90,9 @@ def _failed_generation_run(r: dict, axes) -> dict | None:
         reason = (r.get("error") or "генерация не удалась")[:200]
         scores: dict = {a: None for a in axes}
         scores["Q"] = None
-        return {
-            "scores": scores,
-            "bands": {"M": None, "P": None},
-            "detail": {a: {"reason": f"генерация не удалась: {reason}"} for a in axes},
-        }
+        detail: dict = {a: {"reason": f"генерация не удалась: {reason}"} for a in axes}
+        detail["coverage"] = {"measured": 0, "applicable": len(axes)}
+        return {"scores": scores, "bands": {"M": None, "P": None}, "detail": detail}
     return None
 
 
@@ -183,14 +188,21 @@ def _score_syntax(
             return 0, {
                 "root_causes": None,
                 "instrument": "1С /CheckModules",
+                "engine_parsed": False,  # вердикт нужен и здесь: аудит читает его, а не балл
                 "errors": run.compile_errors,
                 "compiler_exit": run.compiler_exit,
             }
         gap = protocol.axes["S"].cluster_gap or 3  # соседние ошибки = одна корневая причина
         clusters = _cluster_lines(sorted(run.compile_error_lines), gap)
-        return protocol.scoring("S").score_for(clusters), {
+        score = protocol.scoring("S").score_for(clusters)
+        if clusters:
+            # Тут вердикт точный: ошибки от самого компилятора платформы, значит модуль
+            # не собирается. Потолок общий с кат. A — баллы выше него утверждают обратное.
+            score = min(score, syntax_ceiling(protocol))
+        return score, {
             "root_causes": clusters,
             "instrument": "1С /CheckModules",
+            "engine_parsed": not clusters,
             "errors": run.compile_errors,
         }
     if instr.diagnostics is None:
@@ -331,16 +343,17 @@ def score_candidate(
             scores[axis], detail[axis] = SCORERS[axis](task, code, protocol, work_dir, instr)
     # Гейт корректности O: оптимальность НЕрешённой задачи бессмысленна — «эффективно, но неверно»
     # не должно давать высокий O. Меряем O только если решение по сути верное (M ≥ порога), иначе N/A.
-    if (
-        scores.get("M") is not None
-        and scores["M"] < O_CORRECTNESS_GATE
-        and scores.get("O") is not None
-    ):
+    gate = o_correctness_gate(protocol)
+    if scores.get("M") is not None and scores["M"] < gate and scores.get("O") is not None:
         scores["O"] = None
         og = detail.setdefault("O", {})
         og["gated_by_m"] = True
-        og["note"] = f"оптимальность не оцениваем — задача не решена (M<{O_CORRECTNESS_GATE:g})"
+        og["note"] = f"оптимальность не оцениваем — задача не решена (M<{gate:g})"
     scores["Q"] = compute_q(scores, task.category, constitution)
+    # Охват идёт рядом с Q всегда: Q считается по измеренным осям, поэтому без охвата
+    # неполная запись выглядит наравне с полной, хотя за её баллом стоит меньше проверок.
+    measured, applicable = coverage(scores, task.category, constitution)
+    detail["coverage"] = {"measured": measured, "applicable": applicable}
     return scores, detail
 
 
@@ -556,10 +569,13 @@ def print_leaderboard(result: dict) -> None:
             s = r["scores"]
             if s.get("Q") is None:
                 continue
-            bucket = by_model.setdefault(t["model_name"], {a: [] for a in axes})
+            bucket = by_model.setdefault(t["model_name"], {a: [] for a in axes} | {"cov": []})
             for a in axes:
                 if s.get(a) is not None:
                     bucket[a].append(s[a])
+            cov = (r.get("detail") or {}).get("coverage") or {}
+            if cov.get("applicable"):
+                bucket["cov"].append(cov["measured"] / cov["applicable"])
     if not by_model:
         return
 
@@ -576,6 +592,9 @@ def print_leaderboard(result: dict) -> None:
     for col in ("S̄", "M̄", "Ō", "P̄"):
         table.add_column(col, justify="right")
     table.add_column("Q̄", justify="right", style="bold")  # ключ ранжирования
+    # Q усредняет ТОЛЬКО измеренные оси, поэтому у записи с выпавшими осями он завышен.
+    # Охват держит это на виду: Q̄=6 при полноте 100% и при 60% — разные утверждения.
+    table.add_column("полнота", justify="right")
     table.add_column("n", justify="right")
     ranked = sorted(
         by_model.items(),
@@ -583,6 +602,7 @@ def print_leaderboard(result: dict) -> None:
         reverse=True,
     )
     for i, (name, b) in enumerate(ranked, 1):
+        share = sum(b["cov"]) / len(b["cov"]) if b["cov"] else None
         table.add_row(
             str(i),
             name,
@@ -591,6 +611,7 @@ def print_leaderboard(result: dict) -> None:
             avg(b["O"]),
             avg(b["P"]),
             avg(b["Q"], 2),
+            f"{share:.0%}" if share is not None else "—",
             str(len(b["Q"])),
         )
     console.print(table)
@@ -821,6 +842,9 @@ _FUNNEL_STYLE = {
     "неверный ответ": ("yellow", "▓"),
     "ошибка выполнения": ("dark_orange3", "▒"),
     "не компилируется": ("red", "░"),
+    # Сбой окружения — не место модели в ряду «хорошо → плохо», это отсутствие замера.
+    # Поэтому нейтральный серый и отдельный символ, а не край градиента.
+    "не измерено": ("grey50", "·"),
 }
 _FUNNEL_BAR_WIDTH = 20
 

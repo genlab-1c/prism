@@ -51,3 +51,6 @@ site/
 CLAUDE.md
 .claude/
 results/.measure_cache/
+
+# журналы режима grasp (локальные)
+.grasp/

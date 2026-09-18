@@ -8,7 +8,7 @@
 from __future__ import annotations
 
 from harness.loaders import load_error_taxonomy
-from harness.stats.funnel import funnel, run_outcome
+from harness.stats.funnel import bucket_of, funnel, run_outcome
 
 TAX = load_error_taxonomy()
 
@@ -147,11 +147,45 @@ def test_no_double_count_of_cascade():
         "неверный ответ": 0,
         "ошибка выполнения": 0,
         "не компилируется": 1,
+        "не измерено": 0,
     }
     assert f["solved"] == 0.5
     assert f["cause"] == ("ошибка синтаксиса", 1)  # единственная смерть, причина названа
 
 
-def test_unmeasured_run_excluded():
-    """Инфра-сбой (нет S и пустой detail) в воронку не идёт."""
-    assert run_outcome(_run("B1", {}, scores={"S": None}), TAX) is None
+def test_infra_failure_is_visible_and_not_blamed_on_the_model():
+    """Сбой окружения получает свою корзину и вину infra, а не выпадает из воронки.
+
+    Раньше такой прогон возвращал None и просто исчезал: доли считались от меньшего
+    знаменателя, и инфраструктурный сбой становился невидимым (F17 плана гигиены).
+    """
+    out = run_outcome(_run("B1", {}, scores={"S": None}), TAX)
+    assert out is not None
+    assert out["blame"] == "infra" and bucket_of(out) == "не измерено"
+    assert out["code"].startswith("INFRA.")
+
+
+def test_wall_clock_timeout_is_infra_but_burnt_cpu_budget_is_not():
+    """Два исхода, которые раньше сливались в один «таймаут», и вина у них разная.
+
+    Сторож по НАСТЕННЫМ часам срабатывает, когда окружение зависло, — это «не измерено».
+    Бюджет ПРОЦЕССОРНОГО времени жжёт сам кандидат — это его вина (протокол 1.4.0).
+    """
+    stalled = _run("A1", {"M": {"timed_out": True}}, scores={"S": None})
+    assert run_outcome(stalled, TAX)["blame"] == "infra"
+
+    burnt = _run(
+        "A1",
+        {
+            "S": {"root_causes": 0},
+            "M": {"timed_out": True, "cpu_exhausted": True, "executed": False},
+        },
+        scores={"S": 10},
+    )
+    assert run_outcome(burnt, TAX)["blame"] == "model"
+
+
+def test_model_failures_keep_their_blame():
+    """Обычный провал кода остаётся на модели — метка вины не размывает ответственность."""
+    broken = _run("A1", {"S": {"root_causes": 2, "errors": ["Пропущен символ"]}}, scores={"S": 6})
+    assert run_outcome(broken, TAX)["blame"] == "model"

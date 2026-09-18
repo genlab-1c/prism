@@ -180,8 +180,32 @@ def test_engine_failure_forces_at_least_one_cause(proto):
     score, detail = syntax.score_s(
         [], proto, module_text="Функция Ф() КонецФункции", compile_output=out
     )
-    assert score == 8 and detail["root_causes"] == 1
+    assert detail["root_causes"] == 1
     assert detail["engine_parsed"] is False and "Expecting symbol" in detail["engine_error"]
+    # Одна причина по таблице стоит 8, но модуль НЕ собрался, а баллы выше потолка
+    # утверждают обратное — отсюда срезка до compile_check.ceiling (см. следующий тест).
+    assert score == syntax.syntax_ceiling(proto) == 6
+
+
+def test_broken_module_cannot_score_above_the_ceiling(proto):
+    """Восьмёрка и десятка означают «собирается». Не собрался — выше потолка не поднимаемся.
+
+    Без потолка несобравшийся модуль с одной причиной давал S=8, и эта восьмёрка тянула
+    вверх Q: запись (S=8, M=0, остальное не измерено) получала Q=4.0 против 3.33 у модуля,
+    который собрался, дошёл до базы и наврал в метаданных. Перекос был не виден, пока ось P
+    ставила ноль всему, что до базы не дошло; снятие того нуля его обнажило.
+    """
+    broken = "{Модуль / Error in line 4,1 / Expecting symbol: Do}"
+    for causes in (0, 1):
+        diags = [{"code": "ParseError", "line": 10}] * causes
+        score, _ = syntax.score_s(
+            diags, proto, module_text="Функция Ф() КонецФункции", compile_output=broken
+        )
+        assert score <= syntax.syntax_ceiling(proto)
+    # Потолок живёт в протоколе, а не в коде: нет ключа — нет и срезки.
+    bare = proto.model_copy(deep=True)
+    bare.axes["S"].compile_check = {}
+    assert syntax.syntax_ceiling(bare) == 10
 
 
 def test_engine_clean_keeps_parser_verdict(proto):

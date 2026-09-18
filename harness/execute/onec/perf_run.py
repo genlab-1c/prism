@@ -34,6 +34,7 @@ from pathlib import Path
 import yaml
 from pydantic import BaseModel
 
+from harness.execute import measure_cache
 from harness.execute.onec.assemble import assemble_run_config
 from harness.execute.onec.runner import DOCKER_IMAGE, _empty_cfg_cache, detect_entry_point
 
@@ -237,6 +238,27 @@ def _parse_db_ops(work_dir: Path, size: int) -> DbOpsResult:
     return res
 
 
+def _perf_key(candidate_code: str, task_dir: Path, perf: dict, n: int, entry: str) -> str | None:
+    """Ключ нагрузочного замера: код + файлы задачи + профиль + размер базы + версия сборки.
+
+    В ключ входят исходники сборки конфигурации И разбора техжурнала: поменяли любой —
+    ключ другой, кэш инвалидируется сам, без ручного версионирования. Разбор тут кэшируется
+    вместе с результатом (техжурнал на больших размерах весит десятки мегабайт, хранить его
+    целиком в кэше дороже, чем пересчитать при смене парсера).
+    """
+    try:
+        parts = [candidate_code, entry, DOCKER_IMAGE, str(n), repr(sorted(perf.items()))]
+        for name in ("config_spec.yaml", "fixtures.yaml", "tests.bsl"):
+            path = task_dir / name
+            parts.append(path.read_text(encoding="utf-8") if path.exists() else "")
+        here = Path(__file__).parent
+        parts.append((here / "assemble.py").read_text(encoding="utf-8"))
+        parts.append(Path(__file__).read_text(encoding="utf-8"))
+        return measure_cache.key("onec_perf", *parts)
+    except OSError:
+        return None
+
+
 def measure_db_ops(
     candidate_code: str,
     task_dir: Path,
@@ -249,6 +271,15 @@ def measure_db_ops(
     entry = detect_entry_point(candidate_code, entry_patterns)
     if entry is None:
         return DbOpsResult(size=n, note="в коде кандидата нет функции")
+
+    # Замер детерминирован по входу, а стоит он дороже всех прочих: поднимается база
+    # растущего размера и пишется техжурнал. Без кэша каждый пересчёт правил (оси S, P, Q)
+    # заново гонял 1С по всем 676 записям задач с perf.yaml — часы вместо минут.
+    ckey = _perf_key(candidate_code, task_dir, perf, n, entry) if measure_cache.enabled() else None
+    cached = measure_cache.get(ckey) if ckey else None
+    if cached is not None:
+        return DbOpsResult(**cached)
+
     work_dir.mkdir(parents=True, exist_ok=True)
     empty = work_dir / "empty-cfg"
     cache = _empty_cfg_cache()
@@ -261,4 +292,9 @@ def measure_db_ops(
     )
     (work_dir / "logcfg.xml").write_text(LOGCFG, encoding="utf-8")
     _run_container(work_dir)
-    return _parse_db_ops(work_dir, n)
+    res = _parse_db_ops(work_dir, n)
+    # Пустой техжурнал — признак сорванного замера (контейнер не дожил, права на лог),
+    # а не свойство кода. Такой исход не кэшируем, иначе закрепим случайный сбой навсегда.
+    if ckey and res.ok:
+        measure_cache.put(ckey, res.model_dump())
+    return res

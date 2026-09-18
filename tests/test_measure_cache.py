@@ -157,6 +157,37 @@ def test_result_is_identical_to_a_live_run(tmp_path, monkeypatch):
     assert live == from_cache
 
 
+# ── нагрузочный замер кат. B (самый дорогой прогон) ──────────────────────────
+
+
+def test_perf_key_covers_everything_that_changes_the_measurement(tmp_path):
+    """Размер базы, код кандидата и профиль нагрузки обязаны входить в ключ.
+
+    Замер поднимает базу растущего размера и пишет техжурнал — дороже всех прочих.
+    Путаница ключей тут означала бы, что счётчики одной задачи приписаны другой.
+    """
+    from harness.execute.onec.perf_run import _perf_key
+
+    d = tmp_path / "task"
+    d.mkdir()
+    (d / "config_spec.yaml").write_text("catalogs: {}", encoding="utf-8")
+    base = _perf_key("Функция Ф() КонецФункции", d, {"sizes": [20, 80]}, 20, "Ф")
+    assert base
+    assert base != _perf_key("Функция Ф() КонецФункции", d, {"sizes": [20, 80]}, 80, "Ф")
+    assert base != _perf_key("Функция Ф() Возврат 1; КонецФункции", d, {"sizes": [20, 80]}, 20, "Ф")
+    assert base != _perf_key("Функция Ф() КонецФункции", d, {"sizes": [20, 99]}, 20, "Ф")
+    (d / "config_spec.yaml").write_text("catalogs: {Номенклатура: {}}", encoding="utf-8")
+    assert base != _perf_key("Функция Ф() КонецФункции", d, {"sizes": [20, 80]}, 20, "Ф")
+
+
+def test_perf_result_survives_the_round_trip():
+    """Из кэша обязан вернуться тот же результат, а не обеднённый."""
+    from harness.execute.onec.perf_run import DbOpsResult
+
+    r = DbOpsResult(size=80, ok=True, cand_sdbl=62, cand_reg_reads=62, cand_rows=140)
+    assert DbOpsResult(**r.model_dump()) == r
+
+
 def test_cpu_budget_is_part_of_the_key(tmp_path, monkeypatch):
     """Тот же скрипт при другом бюджете — другой исход, значит и ключ другой.
 

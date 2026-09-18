@@ -29,7 +29,20 @@ STAGES = ("разбор", "запуск", "верно")
 # исключение, обращение к несуществующим объектам базы), «неверный ответ» — когда код
 # отработал, но результат не тот. Сумма по группам = все измеренные прогоны (100%).
 # Порядок — от лучшего к худшему.
-BUCKETS = ("решено", "неверный ответ", "ошибка выполнения", "не компилируется")
+BUCKETS = (
+    "решено",
+    "неверный ответ",
+    "ошибка выполнения",
+    "не компилируется",
+    "не измерено",  # сбой окружения: вина НЕ модели, но и молчать о нём нельзя
+)
+
+# Этап-псевдоним для прогонов, которые не дожили до первых ворот по вине окружения.
+# Раньше такие записи просто выпадали из воронки (возврат None), и доли считались от
+# меньшего знаменателя: инфраструктурный сбой становился невидимым. Хуже того, таймаут
+# кат. A классифицировался как M.RUNTIME «сбой при выполнении», то есть выглядел дефектом
+# модели. Теперь это отдельная корзина с вину-меткой infra.
+INFRA_STAGE = "окружение"
 
 
 def bucket_of(outcome: dict) -> str:
@@ -37,6 +50,8 @@ def bucket_of(outcome: dict) -> str:
     died = outcome["died"]
     if died is None:
         return "решено"
+    if died == INFRA_STAGE:
+        return "не измерено"
     if died == "разбор":
         return "не компилируется"
     if died == "запуск":
@@ -50,27 +65,60 @@ def _category(task_id: str) -> str:
     return (task_id or "?")[:1].upper()
 
 
-def _classify(text: str, taxonomy: dict) -> tuple[str, str] | None:
-    """Первое правило словаря, чей фрагмент встретился в тексте → (код, человеч. имя)."""
+def _classify(text: str, taxonomy: dict) -> tuple[str, str, str] | None:
+    """Первое правило словаря, чей фрагмент встретился в тексте → (код, имя, вина)."""
     if not text:
         return None
     for rule in taxonomy.get("rules", []):
         if any(frag in text for frag in rule.get("match", [])):
-            return rule["code"], rule["label"]
+            return rule["code"], rule["label"], rule.get("blame", "model")
     return None
 
 
-def _default(taxonomy: dict, key: str) -> tuple[str, str]:
+def _default(taxonomy: dict, key: str) -> tuple[str, str, str]:
     d = taxonomy["defaults"][key]
-    return d["code"], d["label"]
+    return d["code"], d["label"], d.get("blame", "model")
+
+
+def _infra_outcome(run: dict, taxonomy: dict) -> dict | None:
+    """Прогон сорвался по вине окружения, а не кода → отдельный исход, а не молчание.
+
+    Три источника: генерация не состоялась (сеть/доступ), кат. B отдала infra_error или
+    no_result, кат. A упёрлась в СТОРОЖА ПО ЧАСАМ. Последнее важно не спутать с исчерпанием
+    бюджета процессорного времени: бюджет жжёт сам кандидат, это его вина (см. протокол 1.4.0).
+    """
+    det = run.get("detail") or {}
+    m, s = det.get("M") or {}, det.get("S") or {}
+    reasons = " ".join(
+        str(x.get("reason") or "") for x in (m, s, det.get("P") or {}, det.get("O") or {})
+    )
+    if "генерация не удалась" in reasons:
+        key = "generation"
+    elif m.get("status") in ("infra_error", "no_result") or "исполнение не состоялось" in reasons:
+        key = "no_result"
+    elif m.get("timed_out") and not m.get("cpu_exhausted"):
+        key = "timeout"
+    else:
+        return None
+    code, label, blame = _default(taxonomy, key)
+    detail_text = (m.get("infra_detail") or "")[:200]
+    return {
+        "reached": 0,
+        "died": INFRA_STAGE,
+        "code": code,
+        "label": label,
+        "blame": blame,
+        "infra_detail": detail_text,
+    }
 
 
 def run_outcome(run: dict, taxonomy: dict) -> dict | None:
     """Судьба одного прогона: до какого этапа дожил и (если умер) почему.
 
     Возврат: {"reached": int 0..3 — пройдено ворот, "died": stage|None,
-              "code": str|None, "label": str|None}. None — прогон не измерен
-      (инфра-сбой/нет оси), как и в остальной агрегации он в воронку не идёт.
+              "code": str|None, "label": str|None, "blame": model|task|harness|infra}.
+    Сбой окружения больше НЕ выпадает молча: он получает этап INFRA_STAGE и вину infra
+    (раньше возвращался None, и доли считались от меньшего знаменателя).
     """
     cat = _category(run.get("task_id", ""))
     det = run.get("detail") or {}
@@ -78,9 +126,13 @@ def run_outcome(run: dict, taxonomy: dict) -> dict | None:
     m = det.get("M") or {}
     scores = run.get("scores") or {}
 
-    # не измерено: нет синтаксиса (инфра упала до анализа) — исключаем из воронки
+    infra = _infra_outcome(run, taxonomy)
+    if infra is not None:
+        return infra
     if scores.get("S") is None and not s:
-        return None
+        # оси S нет и причина неизвестна — всё равно не прячем, иначе знаменатель врёт
+        code, label, blame = _default(taxonomy, "no_result")
+        return {"reached": 0, "died": INFRA_STAGE, "code": code, "label": label, "blame": blame}
 
     # ── ворота 1: разбор / компиляция ────────────────────────────────────────
     if cat == "B":
@@ -92,8 +144,8 @@ def run_outcome(run: dict, taxonomy: dict) -> dict | None:
         compiled = s.get("root_causes", 0) == 0
         compile_text = "; ".join(s.get("errors") or [])
     if not compiled:
-        code, label = _classify(compile_text, taxonomy) or _default(taxonomy, "parse")
-        return {"reached": 0, "died": "разбор", "code": code, "label": label}
+        code, label, blame = _classify(compile_text, taxonomy) or _default(taxonomy, "parse")
+        return {"reached": 0, "died": "разбор", "code": code, "label": label, "blame": blame}
 
     # ── ворота 2: запуск (точка входа найдена, исполнение без падения) ────────
     if cat == "B":
@@ -107,26 +159,30 @@ def run_outcome(run: dict, taxonomy: dict) -> dict | None:
             cat == "A" and m.get("entry_point") is None
         )
         if no_entry:
-            code, label = _default(taxonomy, "noentry")
+            code, label, blame = _default(taxonomy, "noentry")
         else:
-            code, label = _classify(run_text, taxonomy) or _default(taxonomy, "run")
-        return {"reached": 1, "died": "запуск", "code": code, "label": label}
+            code, label, blame = _classify(run_text, taxonomy) or _default(taxonomy, "run")
+        return {"reached": 1, "died": "запуск", "code": code, "label": label, "blame": blame}
 
     # ── ворота 3: верно (все тесты пройдены) ─────────────────────────────────
     total = m.get("total") or 0
     passed = m.get("passed") or 0
     if total == 0 or passed < total:
-        # платформенная причина (кат. B) ловится структурой, а не текстом
-        if m.get("platform_errors") or m.get("platform_error_tests"):
-            code, label = _default(taxonomy, "meta")
+        # Платформенная причина (кат. B) — только если тест упал ИМЕННО на метаданных.
+        # Сырого `platform_errors` мало: список маркеров включает общий «(Выполнить)», под
+        # которым лежит и кривой текст запроса. Без этой проверки воронка вешала бы вину на
+        # ось P там, где скорер P считает тест чистым или непроверенным — два разных ответа
+        # про одну запись. Граница осей должна быть одна на весь харнесс.
+        if m.get("platform_error_tests"):
+            code, label, blame = _default(taxonomy, "meta")
         else:
             text = m.get("log") or "; ".join(m.get("errors") or [])
             hit = _classify(text, taxonomy)
             # нет исключения в тексте → код отработал и тихо дал неверный ответ
-            code, label = hit or _default(taxonomy, "wrong")
-        return {"reached": 2, "died": "верно", "code": code, "label": label}
+            code, label, blame = hit or _default(taxonomy, "wrong")
+        return {"reached": 2, "died": "верно", "code": code, "label": label, "blame": blame}
 
-    return {"reached": 3, "died": None, "code": None, "label": None}
+    return {"reached": 3, "died": None, "code": None, "label": None, "blame": None}
 
 
 def model_funnel(runs: list[dict], taxonomy: dict) -> dict | None:
