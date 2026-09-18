@@ -303,6 +303,70 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0 if ok else 1
 
 
+def cmd_artifacts(args: argparse.Namespace) -> int:
+    """Развернуть запись оценок обратно в сырьё прогона (логи 1С как они были).
+
+    Зачем команда. Раньше в записи лежали только хвосты логов, и любой ручной разбор
+    («почему тут ноль?») требовал нового прогона 1С: минуты на запись, часы на выборку.
+    Сырьё и так сохраняется хранилищем замеров, не хватало ссылки — теперь она в
+    detail.M.run_key, а команда по ней достаёт артефакты.
+    """
+    import json
+
+    from harness.execute import measure_cache
+    from harness.orchestrate import newest_auto
+
+    path = Path(args.auto) if args.auto else newest_auto(args.task[:1].upper())
+    if path is None or not Path(path).exists():
+        console.print("[red]нет файла оценок[/]")
+        return 2
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    found = [
+        (g, r)
+        for g in data.get("tasks", [])
+        if g["task_id"].upper() == args.task.upper()
+        for r in g["runs"]
+        if args.model.lower() in g["model_name"].lower()
+    ]
+    if not found:
+        console.print(f"[red]запись {args.task} · {args.model} не найдена в {path}[/]")
+        return 2
+    group, run = found[0]
+    key = ((run.get("detail") or {}).get("M") or {}).get("run_key") or ""
+    console.print(f"[bold]{group['task_id']} · {group['model_name']}[/]  оси {run.get('scores')}")
+    if not key:
+        console.print(
+            "[yellow]у записи нет ссылки на сырьё (посчитана до того, как её стали "
+            "сохранять) — пересчитайте запись, чтобы ссылка появилась[/]"
+        )
+        return 1
+    raw = measure_cache.get(key)
+    if raw is None:
+        console.print(f"[yellow]сырьё по ключу {key[:12]}… не найдено в хранилище замеров[/]")
+        return 1
+    if args.out:
+        out = Path(args.out)
+        out.mkdir(parents=True, exist_ok=True)
+        for name, field in (
+            ("check.log", "check"),
+            ("result.txt", "result"),
+            ("load.log", "load"),
+        ):
+            (out / name).write_text(raw.get(field) or "", encoding="utf-8")
+        console.print(f"→ {out}/ (check.log, result.txt, load.log)")
+        return 0
+    for title, field in (("компиляция (check.log)", "check"), ("тесты (result.txt)", "result")):
+        body = (raw.get(field) or "").strip()
+        console.print(f"\n[bold]{title}[/]")
+        console.print(body[:4000] or "[dim](пусто)[/]")
+    console.print(
+        f"\n[dim]обращение к данным: {raw.get('db')}; "
+        f"коды завершения: check={raw.get('check_rc', '').strip()} "
+        f"enterprise={raw.get('ent_rc', '').strip()}[/]"
+    )
+    return 0
+
+
 def cmd_audit(args: argparse.Namespace) -> int:
     from harness import audit
 
@@ -686,6 +750,22 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_runtime_flags(ch)
     ch.set_defaults(func=cmd_check)
+
+    ar = sub.add_parser(
+        "artifacts",
+        help="сырьё прогона по записи оценок: логи 1С как они были",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Примеры:\n"
+            '  prism artifacts B12 "Qwen3.8 27b"          вывести логи в терминал\n'
+            '  prism artifacts B19 "Claude Opus 5" --out /tmp/raw   сохранить файлами'
+        ),
+    )
+    ar.add_argument("task", help="id задачи, напр. B12")
+    ar.add_argument("model", help="имя модели (подстрока, регистр не важен)")
+    ar.add_argument("--auto", default=None, metavar="PATH", help="файл оценок (по умолч. свежий)")
+    ar.add_argument("--out", default=None, metavar="DIR", help="сохранить файлами в каталог")
+    ar.set_defaults(func=cmd_artifacts)
 
     ad = sub.add_parser(
         "audit",

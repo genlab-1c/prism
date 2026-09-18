@@ -59,6 +59,35 @@ def test_unparsed_query_is_dropped_from_the_denominator(proto):
     assert band == 10  # единственный проверенный тест обращения подтвердил
 
 
+def test_code_that_never_touched_the_base_is_not_measured(proto):
+    """Тесты провалились на общем BSL, до данных код не дошёл — свидетельства нет.
+
+    Лог тестов этого не показывает: «Слишком много фактических параметров» выглядит как
+    обычный провал, и тест считался чистым, давая P=10 при полностью упавших тестах
+    (36 записей корпуса). Техжурнал отвечает прямо: было ли обращение к данным.
+    """
+    run = OneCRunResult(status="ok", passed=0, total=3, platform_error_tests=0, db_touched=False)
+    band, detail = score_p(run, proto)
+    assert band is None and detail["unmeasured"] == "no_db_access"
+
+
+def test_missing_techlog_does_not_count_as_no_access(proto):
+    """Техжурнала нет (старая запись кэша) — это «не знаем», а не «обращений не было».
+
+    Спутать их значило бы объявить непроверенным всё, что просто не записалось.
+    """
+    run = OneCRunResult(status="ok", passed=3, total=3, db_touched=None)
+    band, _ = score_p(run, proto)
+    assert band == 10
+
+
+def test_platform_fault_wins_over_a_missing_db_mark(proto):
+    """Есть провал по метаданным — значит обращение было, что бы ни говорил техжурнал."""
+    run = OneCRunResult(status="ok", passed=0, total=2, platform_error_tests=2, db_touched=False)
+    band, _ = score_p(run, proto)
+    assert band == 0
+
+
 def test_nothing_verified_means_the_axis_is_not_measured(proto):
     """Все тесты умерли на грамматике запроса → свидетельств нет вовсе, балла тоже."""
     run = OneCRunResult(status="ok", passed=0, total=3, platform_error_tests=0, unverified_tests=3)
