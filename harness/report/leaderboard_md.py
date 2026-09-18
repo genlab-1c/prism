@@ -342,6 +342,11 @@ def site_data() -> dict:
             out[name] = {
                 **{a: m.get(a) for a in axes},
                 "oN": o_n,
+                # Доля измеренных осей из применимых. Конституция (quality_score.
+                # coverage_required) требует показывать её рядом с Q везде, где Q публикуется:
+                # Q усредняет только измеренное, поэтому два одинаковых балла при разной
+                # полноте — разные утверждения.
+                "coverage": m.get("cov"),
                 "margin": margins.get(name),
                 "solved": f.get("solved"),
                 "funnel": {

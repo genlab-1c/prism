@@ -294,6 +294,20 @@ function SortHead({ label, axis, sortKey, dir, onSort }) {
 // Мало ли покрытие у оси O: она считается только на дошедших до замера задачах, и среднее
 // по паре задач рядом со средним по восемнадцати выглядит сравнимым, не будучи им.
 // Порог — половина задач категории; ниже — значение приглушаем и подписываем покрытием.
+// Полнота рядом с общим баллом: Q усредняет ТОЛЬКО измеренные оси, поэтому одинаковое
+// число при 100% и при 50% — разные утверждения (конституция, quality_score.coverage_required).
+// Показываем, лишь когда что-то не измерено: у полных записей подпись была бы шумом.
+function QCell({ q, coverage }) {
+  const partial = coverage != null && coverage < 0.995;
+  return (
+    <span style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.1 }}
+      title={partial ? `измерено ${Math.round(coverage * 100)}% осей — по остальным проверка не состоялась, и в среднее они не входят` : undefined}>
+      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 17, fontWeight: 700, color: 'var(--ink-100)' }}>{q.toFixed(2)}</span>
+      {partial && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, color: 'var(--ink-400)' }}>{Math.round(coverage * 100)}% осей</span>}
+    </span>
+  );
+}
+
 export const oLowCover = (c) => c && c.oN != null && c.n && c.oN < c.n / 2;
 
 function ScoreCell({ v, axis, cover }) {
@@ -384,7 +398,7 @@ function OverallTable({ cat, models, navigate, rankSource }) {
             <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 13, fontWeight: 700, color: r === 1 ? 'var(--brand)' : 'var(--ink-400)' }}>{r}</span>
             <Identity m={m} size={30} />
             {axes.map((a) => <ScoreCell key={a} v={m[cat][a]} axis={a} cover={a === 'O' ? { oN: m[cat].oN, n: m[cat].funnel?.n } : null} />)}
-            <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 17, fontWeight: 700, color: 'var(--ink-100)' }}>{m[qKey].toFixed(2)}</span>
+            <QCell q={m[qKey]} coverage={m[cat].coverage} />
             <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>{m[cat].margin != null ? `±${m[cat].margin.toFixed(1)}` : '—'}</span>
             <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>{m.cost}</span>
           </div>
