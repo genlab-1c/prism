@@ -258,6 +258,10 @@ if (fs.existsSync(sdPath)) {
         m[cat].margin = s[cat].margin == null ? null : r1(s[cat].margin);
         m[cat].solved = s[cat].solved;
         m[cat].oN = s[cat].oN ?? null; // на скольких задачах измерена ось O (покрытие)
+        // Полнота: доля измеренных осей из применимых. Q усредняет только измеренное,
+        // поэтому одинаковый балл при 100% и при 50% — разные утверждения (конституция,
+        // quality_score.coverage_required).
+        m[cat].coverage = s[cat].coverage ?? null;
         m[cat].funnel = s[cat].funnel;
         m[cat].profile = s[cat].profile;
       }

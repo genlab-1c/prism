@@ -54,8 +54,8 @@ description: "Что в бенчмарке PRISM уже работает: авт
 | **Gemini 3.8 Flash** | **9.87** | **9.36** |
 | GLM 5.3 | 9.87 | 8.98 |
 | Kimi K3 | 9.73 | 9.28 |
-| Gemini 3.7 Flash | 9.73 | 9.04 |
 | Claude Opus 5 | 9.73 | 9.43 |
+| Gemini 3.7 Flash | 9.73 | 9.04 |
 | Gemini 3.5 Flash | 9.68 | 9.31 |
 | GPT-6 Astra | 9.53 | 9.91 |
 | Gemini 3.1 Pro | 9.40 | 9.33 |
@@ -63,12 +63,12 @@ description: "Что в бенчмарке PRISM уже работает: авт
 | GPT-5.6 Sol | 9.33 | 9.68 |
 | MiMo-V2.5 Pro | 9.22 | 7.90 |
 | GPT-5.5 | 9.09 | 8.94 |
-| Grok 4.6 | 9.07 | 8.89 |
 | Gemini 3.6 Flash | 9.07 | 8.46 |
+| Grok 4.6 | 9.07 | 8.89 |
 | GLM 5.3 Flash | 8.98 | 8.80 |
 | Qwen3.8 Max | 8.93 | 8.53 |
-| GPT-5.6 Terra | 8.67 | 8.32 |
 | GPT-5.6 Luna Max | 8.67 | 8.82 |
+| GPT-5.6 Terra | 8.67 | 8.32 |
 | DeepSeek V4 Pro 0813 | 8.50 | 8.15 |
 | Grok Build 0.1 | 8.47 | 8.02 |
 | DeepSeek V4.1 Flash | 8.42 | 7.89 |
