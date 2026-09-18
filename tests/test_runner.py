@@ -58,11 +58,16 @@ def test_local_runs(tmp_path):
 
 @requires_local
 @pytest.mark.slow
-def test_local_timeout(tmp_path):
+def test_local_endless_loop_burns_the_cpu_budget(tmp_path):
+    """Вечный цикл жжёт процессор — это исчерпание бюджета, то есть вина кода.
+
+    Сторож по настенным часам тут не при чём: он срабатывает, когда процесс НЕ считает
+    (зависшее окружение), и означает «не измерено».
+    """
     script = tmp_path / "loop.os"
     script.write_text("Пока Истина Цикл КонецЦикла;", encoding="utf-8")
     res = local.run_os(script, timeout=2)
-    assert res.timed_out
+    assert res.cpu_exhausted and not res.timed_out
 
 
 # ── docker (песочница) ───────────────────────────────────────────────────────
@@ -95,3 +100,52 @@ def test_docker_no_network(tmp_path):
     res = in_docker.run_os(script, timeout=30)
     assert "NET_BLOCKED" in res.stdout
     assert "NET_OPEN" not in res.stdout
+
+
+# ── бюджет процессорного времени против сторожа по часам ─────────────────────
+
+
+def test_cpu_exhausted_is_told_apart_from_a_stalled_machine(tmp_path, monkeypatch):
+    """Два разных исхода: кандидат сжёг бюджет (вина кода) и окружение зависло (не измерено).
+
+    Раньше оба выглядели как «таймаут», и балл зависел от того, чем ещё занята машина:
+    запись A14 · GPT-5.6 Luna Max дважды теряла балл O под нагрузкой (F18 плана гигиены).
+    """
+    import subprocess as sp
+
+    from harness.execute.runner import LocalRunner
+
+    script = tmp_path / "cand.os"
+    script.write_text("Функция Ф() КонецФункции", encoding="utf-8")
+
+    monkeypatch.setattr(
+        sp, "run", lambda cmd, **kw: sp.CompletedProcess(cmd, 152, stdout="", stderr="")
+    )
+    burned = LocalRunner().run_os(script, timeout=3)
+    assert burned.cpu_exhausted is True and burned.timed_out is False
+
+    def stall(cmd, **kw):
+        raise sp.TimeoutExpired(cmd, 1)
+
+    monkeypatch.setattr(sp, "run", stall)
+    stalled = LocalRunner().run_os(script, timeout=7)  # другой бюджет → мимо кэша
+    assert stalled.timed_out is True and stalled.cpu_exhausted is False
+
+
+def test_wall_guard_is_far_above_the_cpu_budget(tmp_path, monkeypatch):
+    """Сторож по часам не должен срабатывать раньше бюджета: он против зависаний, не про скорость."""
+    import subprocess as sp
+
+    from harness.execute.runner import WALL_FACTOR, LocalRunner
+
+    seen: dict = {}
+
+    def capture(cmd, **kw):
+        seen.update(kw)
+        return sp.CompletedProcess(cmd, 0, stdout="", stderr="")
+
+    monkeypatch.setattr(sp, "run", capture)
+    script = tmp_path / "cand.os"
+    script.write_text("Функция Ф() КонецФункции", encoding="utf-8")
+    LocalRunner().run_os(script, timeout=11)
+    assert seen["timeout"] == 11 * WALL_FACTOR and WALL_FACTOR >= 3

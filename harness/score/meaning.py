@@ -119,13 +119,20 @@ def score_m(
     harness_path = work_dir / f"{name}.test.os"
     harness_path.parent.mkdir(parents=True, exist_ok=True)
     harness_path.write_text(build_harness(candidate_code, entry, tests.tests), encoding="utf-8")
-    res = runner.run_os(harness_path)
-    if res.timed_out:
+    res = runner.run_os(harness_path, timeout=protocol.axes["M"].cpu_limit_s or 15)
+    if res.cpu_exhausted:  # кандидат исчерпал бюджет — это свойство КОДА, вина кандидата
         return MeaningResult(
             score=band(0, total, False, protocol),
             total=total,
             entry_point=entry,
-            errors=["таймаут исполнения"],
+            errors=["исчерпан бюджет процессорного времени — код слишком медленный"],
+        )
+    if res.timed_out:  # сработал сторож по НАСТЕННЫМ часам — это окружение, а не код
+        return MeaningResult(
+            score=None,
+            total=total,
+            entry_point=entry,
+            errors=["прогон не уложился в сторожевой лимит окружения — ось не измерена"],
         )
 
     if "PRISM_BEGIN" not in res.stdout:  # модуль не скомпилировался OneScript'ом

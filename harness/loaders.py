@@ -79,7 +79,10 @@ class Scoring(BaseModel):
 
     direction: str  # lower_is_better | higher_is_better
     table: list[ScoringRule]
-    anchor_max: int | None = None  # предел балла для «пойманного» якоря (гейт двух якорей)
+    anchor_max: int | None = None
+    cpu_limit_s: int | None = (
+        None  # O-исп: бюджет процессорного времени на один размер входа  # предел балла для «пойманного» якоря (гейт двух якорей)
+    )
 
     def score_for(self, signal: float) -> int:
         """Балл по сигналу: строки сверху вниз, первый подходящий порог."""
@@ -113,6 +116,7 @@ class L1Axis(BaseModel):
     )
     pre_check: dict | None = None  # сразу 0 в обход таблицы баллов (оси S, P)
     compile_check: dict | None = None  # S кат. A: вердикт «собирается» от движка исполнения
+    cpu_limit_s: int | None = None  # M: бюджет процессорного времени прогона тестов
     cluster_gap: int | None = None  # S: соседние ParseError ≤N строк = одна причина
     compile_blocker_codes: list[str] | None = (
         None  # S: не-ParseError диагностики «не скомпилируется»

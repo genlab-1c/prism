@@ -27,7 +27,17 @@ from harness.loaders import PRISM
 
 OSCRIPT = PRISM / "tools" / "onescript" / "bin" / "oscript"
 DOCKER_IMAGE = "prism-onescript:2.0.1"
-TIMEOUT_S = 15
+TIMEOUT_S = 15  # бюджет ПРОЦЕССОРНОГО времени (см. cpu_limit_s протокола)
+# Сторож по настенным часам: во столько раз больше процессорного бюджета. Нужен только против
+# зависаний (процесс, который ничего не считает, процессорное время не тратит). Его срабатывание
+# означает «не измерено», а не «медленно»: под нагрузкой настенное время растягивается, и делать из
+# него вердикт значит ставить балл в зависимость от того, чем ещё занята машина.
+WALL_FACTOR = 5
+# Среда .NET игнорирует мягкий сигнал об исчерпании процессорного времени и умирает лишь на
+# жёстком лимите. Поэтому оболочку в контейнере НЕ заменяем через exec: она переживает дочерний
+# процесс и сообщает отличимый код 152 вместо общего «убит» (137), который не отличить от
+# нехватки памяти. Проверено: три прогона подряд дают 152, обычный скрипт по-прежнему даёт 0.
+SIGXCPU_RC = 152  # 128 + 24: дочерний процесс исчерпал процессорный бюджет
 
 # Лимиты docker-песочницы
 SANDBOX_OPTS = ["--network=none", "--memory=256m", "--cpus=1", "--pids-limit=128"]
@@ -39,20 +49,51 @@ class ExecResult(BaseModel):
     stdout: str = ""
     stderr: str = ""
     rc: int | None = None  # None = таймаут
-    timed_out: bool = False
+    timed_out: bool = False  # сторож по НАСТЕННЫМ часам: сбой окружения, «не измерено»
+    cpu_exhausted: bool = False  # исчерпан бюджет ПРОЦЕССОРНОГО времени: свойство кода, не машины
 
 
-def _cache_key(kind: str, script: Path, tag: str) -> str | None:
-    """Ключ замера: ТЕКСТ скрипта плюс метка инструмента.
+def _cpu_limiter(cpu_seconds: int):
+    """Ограничить ПРОЦЕССОРНОЕ время дочернего процесса.
+
+    Мягкий лимит ниже жёсткого даёт отличимый код возврата 152 вместо общего «убит»: так
+    «кандидат исчерпал бюджет» не путается с нехваткой памяти или падением окружения.
+    """
+
+    def apply() -> None:  # pragma: no cover — исполняется в дочернем процессе
+        import resource
+
+        resource.setrlimit(resource.RLIMIT_CPU, (cpu_seconds, cpu_seconds + 10))
+
+    return apply
+
+
+def _with_cpu_flag(proc) -> ExecResult:
+    """Результат процесса с признаком «исчерпан процессорный бюджет»."""
+    return ExecResult(
+        stdout=proc.stdout,
+        stderr=proc.stderr,
+        rc=proc.returncode,
+        # docker отдаёт 152 (оболочка сообщила о сигнале), локальный запуск — отрицательный
+        # код сигнала: -24 если сигнал дошёл, -9 если среда его пережила до жёсткого лимита
+        cpu_exhausted=proc.returncode in (SIGXCPU_RC, -24, -9),
+    )
+
+
+def _cache_key(kind: str, script: Path, tag: str, limit: int) -> str | None:
+    """Ключ замера: ТЕКСТ скрипта, метка инструмента и БЮДЖЕТ процессорного времени.
 
     Скрипт собран харнессом из кода кандидата, скрытых тестов и логики сборки, поэтому
     изменение любой из частей меняет текст, а с ним и ключ — кэш инвалидируется сам.
+    Бюджет в ключе обязателен: при другом лимите тот же скрипт даёт другой исход
+    (уложился или исчерпал), и без него кэш вернул бы ответ от прежнего лимита.
     Не смогли прочитать файл — считаем без кэша (None).
     """
     try:
-        return measure_cache.key(kind, script.read_text(encoding="utf-8", errors="replace"), tag)
+        text = script.read_text(encoding="utf-8", errors="replace")
     except OSError:
         return None
+    return measure_cache.key(kind, text, tag, str(limit))
 
 
 class LocalRunner(BaseModel):
@@ -75,26 +116,28 @@ class LocalRunner(BaseModel):
         return "oscript не установлен — ./tools/get-onescript.sh"
 
     def run_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
-        k = _cache_key("run_os", script, self.tag)
+        k = _cache_key("run_os", script, self.tag, timeout)
         hit = measure_cache.get(k) if k else None
         if hit is not None:
             return ExecResult(**hit)
         try:
             proc = subprocess.run(
-                [str(OSCRIPT), str(script)], capture_output=True, text=True, timeout=timeout
+                [str(OSCRIPT), str(script)],
+                capture_output=True,
+                text=True,
+                timeout=timeout * WALL_FACTOR,
+                preexec_fn=_cpu_limiter(timeout),
             )
         except subprocess.TimeoutExpired:
-            return ExecResult(
-                timed_out=True
-            )  # таймаут зависит от машины, не от входа — не кэшируем
-        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+            return ExecResult(timed_out=True)  # сторож по часам: свойство машины, не кэшируем
+        res = _with_cpu_flag(proc)
         if k:
             measure_cache.put(k, res.model_dump())
         return res
 
     def check_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         """Только разбор и компиляция, без исполнения (`oscript -check`) — вердикт оси S."""
-        k = _cache_key("check_os", script, self.tag)
+        k = _cache_key("check_os", script, self.tag, timeout)
         hit = measure_cache.get(k) if k else None
         if hit is not None:
             return ExecResult(**hit)
@@ -103,11 +146,12 @@ class LocalRunner(BaseModel):
                 [str(OSCRIPT), "-check", str(script)],
                 capture_output=True,
                 text=True,
-                timeout=timeout,
+                timeout=timeout * WALL_FACTOR,
+                preexec_fn=_cpu_limiter(timeout),
             )
         except subprocess.TimeoutExpired:
             return ExecResult(timed_out=True)
-        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = _with_cpu_flag(proc)
         if k:
             measure_cache.put(k, res.model_dump())
         return res
@@ -116,7 +160,7 @@ class LocalRunner(BaseModel):
         self, script: Path, stat_path: Path, timeout: int = TIMEOUT_S
     ) -> ExecResult:
         """Как run_os, но с -codestat: oscript пишет в stat_path счётчик строк (ось O-исп.)."""
-        k = _cache_key("codestat", script, self.tag)
+        k = _cache_key("codestat", script, self.tag, timeout)
         hit = measure_cache.get(k) if k else None
         if hit is not None:  # вместе с выводом восстанавливаем и файл счётчиков
             stat_path.parent.mkdir(parents=True, exist_ok=True)
@@ -127,11 +171,12 @@ class LocalRunner(BaseModel):
                 [str(OSCRIPT), f"-codestat={stat_path}", str(script)],
                 capture_output=True,
                 text=True,
-                timeout=timeout,
+                timeout=timeout * WALL_FACTOR,
+                preexec_fn=_cpu_limiter(timeout),
             )
         except subprocess.TimeoutExpired:
             return ExecResult(timed_out=True)
-        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = _with_cpu_flag(proc)
         if k:
             measure_cache.put(k, {**res.model_dump(), "_stat": _read_text(stat_path)})
         return res
@@ -167,7 +212,7 @@ class DockerRunner(BaseModel):
 
     def run_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         script = script.resolve()
-        k = _cache_key("run_os", script, self.tag)
+        k = _cache_key("run_os", script, self.tag, timeout)
         hit = measure_cache.get(k) if k else None
         if hit is not None:
             return ExecResult(**hit)
@@ -186,17 +231,18 @@ class DockerRunner(BaseModel):
             "-v",
             f"{script.parent}:/sandbox:ro",
             self.image,
-            "oscript",
-            f"/sandbox/{script.name}",
+            "sh",
+            "-c",
+            f"ulimit -S -t {timeout}; ulimit -H -t {timeout + 10}; oscript /sandbox/{script.name}",
         ]
         try:
             proc = subprocess.run(
-                cmd, capture_output=True, text=True, timeout=timeout + 10
-            )  # запас на старт контейнера
+                cmd, capture_output=True, text=True, timeout=timeout * WALL_FACTOR + 10
+            )  # сторож по часам с запасом на старт контейнера
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
-            return ExecResult(timed_out=True)  # таймаут — свойство машины, не входа
-        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+            return ExecResult(timed_out=True)  # сторож по часам — свойство машины, не входа
+        res = _with_cpu_flag(proc)
         if k:
             measure_cache.put(k, res.model_dump())
         return res
@@ -204,7 +250,7 @@ class DockerRunner(BaseModel):
     def check_os(self, script: Path, timeout: int = TIMEOUT_S) -> ExecResult:
         """Только разбор и компиляция, без исполнения (`oscript -check`) — вердикт оси S."""
         script = script.resolve()
-        k = _cache_key("check_os", script, self.tag)
+        k = _cache_key("check_os", script, self.tag, timeout)
         hit = measure_cache.get(k) if k else None
         if hit is not None:
             return ExecResult(**hit)
@@ -221,16 +267,19 @@ class DockerRunner(BaseModel):
             "-v",
             f"{script.parent}:/sandbox:ro",
             self.image,
-            "oscript",
-            "-check",
-            f"/sandbox/{script.name}",
+            "sh",
+            "-c",
+            f"ulimit -S -t {timeout}; ulimit -H -t {timeout + 10}; "
+            f"oscript -check /sandbox/{script.name}",
         ]
         try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 10)
+            proc = subprocess.run(
+                cmd, capture_output=True, text=True, timeout=timeout * WALL_FACTOR + 10
+            )
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
             return ExecResult(timed_out=True)
-        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = _with_cpu_flag(proc)
         if k:
             measure_cache.put(k, res.model_dump())
         return res
@@ -240,7 +289,7 @@ class DockerRunner(BaseModel):
     ) -> ExecResult:
         """Как run_os, но с -codestat. Код смонтирован ro (/sandbox), отчёт пишется в
         rw-каталог /out — чтобы недоверенный кандидат не писал в каталог с кодом."""
-        k = _cache_key("codestat", script, self.tag)
+        k = _cache_key("codestat", script, self.tag, timeout)
         hit = measure_cache.get(k) if k else None
         if hit is not None:  # вместе с выводом восстанавливаем и файл счётчиков
             stat_path.parent.mkdir(parents=True, exist_ok=True)
@@ -263,16 +312,19 @@ class DockerRunner(BaseModel):
             "-v",
             f"{stat_path.parent}:/out",
             self.image,
-            "oscript",
-            f"-codestat=/out/{stat_path.name}",
-            f"/sandbox/{script.name}",
+            "sh",
+            "-c",
+            f"ulimit -S -t {timeout}; ulimit -H -t {timeout + 10}; "
+            f"oscript -codestat=/out/{stat_path.name} /sandbox/{script.name}",
         ]
         try:
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout + 10)
+            proc = subprocess.run(
+                cmd, capture_output=True, text=True, timeout=timeout * WALL_FACTOR + 10
+            )
         except subprocess.TimeoutExpired:
             subprocess.run(["docker", "rm", "-f", container], capture_output=True)
             return ExecResult(timed_out=True)
-        res = ExecResult(stdout=proc.stdout, stderr=proc.stderr, rc=proc.returncode)
+        res = _with_cpu_flag(proc)
         if k:
             measure_cache.put(k, {**res.model_dump(), "_stat": _read_text(stat_path)})
         return res

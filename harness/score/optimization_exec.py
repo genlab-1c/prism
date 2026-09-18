@@ -28,9 +28,10 @@ from harness.score.meaning import detect_entry_point
 OK_MARKER = "PRISM_O_OK"
 
 # Прогон под -codestat кратно медленнее обычного исполнения (инструментирование счётчика
-# + подменённые аналоги встроенных). Лимит выше, чем у оси M (15с), иначе корректные
-# O(n²)-решения упираются в таймаут под нагрузкой. Таймаут остаётся сигналом «слишком
-# медленно» только для действительно патологических решений (экспонента и т.п.).
+# + подменённые аналоги встроенных). Бюджет выше, чем у оси M, иначе корректные O(n²)-решения
+# в него не укладываются. Считается ПРОЦЕССОРНОЕ время, а не настенное: настенное зависит от
+# того, чем ещё занята машина, и балл начинал зависеть от очереди. Значение живёт в протоколе
+# (exec_scoring.cpu_limit_s); константа ниже — запасное, если протокол его не задаёт.
 O_EXEC_TIMEOUT_S = 60
 
 
@@ -116,6 +117,7 @@ def score_o_exec(
     candidate_lines = code.count("\n") + 1  # строки тела (генерация входа — ниже)
     work_dir.mkdir(parents=True, exist_ok=True)
 
+    timeout = protocol.o_exec_scoring().cpu_limit_s or timeout
     ops, sizes = [], []
     for n in perf.sizes:
         body = (
@@ -129,8 +131,17 @@ def score_o_exec(
         stat.unlink(missing_ok=True)
         script.write_text(code + "\n" + body, encoding="utf-8")
         res = runner.run_os_codestat(script, stat, timeout=timeout)
-        if res.timed_out:
-            if ops:  # на меньших размерах считалось, а тут завис → слишком медленно
+        if res.timed_out:  # сторож по НАСТЕННЫМ часам: окружение, а не код → ось не измерена
+            return OptExecResult(
+                score=None,
+                p_opt=perf.p_opt,
+                ops=ops,
+                sizes=sizes,
+                entry_point=entry,
+                note=f"сторожевой лимит окружения на размере {n} — замер не состоялся",
+            )
+        if res.cpu_exhausted:
+            if ops:  # на меньших размерах считалось, а тут исчерпал бюджет → слишком медленно
                 return OptExecResult(
                     score=protocol.o_exec_scoring().score_for(99.0),
                     growth=None,
@@ -138,13 +149,13 @@ def score_o_exec(
                     ops=ops,
                     sizes=sizes,
                     entry_point=entry,
-                    note=f"таймаут на размере {n} — слишком медленно",
+                    note=f"исчерпан бюджет процессорного времени на размере {n} — слишком медленно",
                 )
             return OptExecResult(
                 score=None,
                 p_opt=perf.p_opt,
                 entry_point=entry,
-                note=f"таймаут уже на минимальном размере {n}",
+                note=f"бюджет процессорного времени исчерпан уже на размере {n}",
             )
         if OK_MARKER not in res.stdout or not stat.exists():
             raw = (res.stderr or res.stdout)[-400:].strip()

@@ -16,8 +16,8 @@ from harness.execute.runner import ExecResult, LocalRunner
 
 
 @pytest.fixture(autouse=True)
-def cache_dir(tmp_path, monkeypatch):
-    monkeypatch.setattr(mc, "CACHE_DIR", tmp_path / "cache")
+def clean_env(monkeypatch):
+    """Каталог кэша изолирован общим conftest; здесь только гасим внешнее выключение."""
     monkeypatch.delenv("PRISM_NO_CACHE", raising=False)
 
 
@@ -155,3 +155,19 @@ def test_result_is_identical_to_a_live_run(tmp_path, monkeypatch):
     from_cache = r.run_os(script)
     assert from_cache == ExecResult(stdout="ответ движка", stderr="", rc=3, timed_out=False)
     assert live == from_cache
+
+
+def test_cpu_budget_is_part_of_the_key(tmp_path, monkeypatch):
+    """Тот же скрипт при другом бюджете — другой исход, значит и ключ другой.
+
+    Пойман на живом прогоне: кэш вернул результат вчерашнего лимита, и «исчерпал бюджет»
+    выглядело как «уложился». Бюджет обязан входить в ключ.
+    """
+    script = tmp_path / "cand.os"
+    script.write_text("Функция Ф() КонецФункции", encoding="utf-8")
+    calls: list = []
+    monkeypatch.setattr(subprocess, "run", _fake_run(calls))
+    r = LocalRunner()
+    r.run_os(script, timeout=3)
+    r.run_os(script, timeout=60)
+    assert len(calls) == 2
