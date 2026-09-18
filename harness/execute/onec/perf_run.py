@@ -213,7 +213,7 @@ def _parse_db_ops(work_dir: Path, size: int) -> DbOpsResult:
     res.ok = "PASSED=" in res.result
     logs = list((work_dir / "techlog").rglob("*.log"))
     if not logs:
-        res.note = "техжурнал пуст"
+        res.note = TECHLOG_EMPTY
         return res
     reg_re = re.compile(r"FROM\s+(_AccumRg\w*|_InfoRg\w*|_AccRg\w*|_AccntRg\w*)")
     for lf in logs:
@@ -238,22 +238,41 @@ def _parse_db_ops(work_dir: Path, size: int) -> DbOpsResult:
     return res
 
 
+# Версия СМЫСЛА замера: поднимать руками, когда меняется то, что кладётся в базу
+# (scale_fixtures, _synth_perf_task, LOGCFG) или как читается техжурнал (_parse_db_ops).
+# Правки комментариев и соседних функций версию НЕ трогают.
+#
+# Почему руками, а не хешем исходника модуля. Первая версия ключа включала
+# `Path(__file__).read_text()`, и кэш обнулялся от любой правки в файле, включая
+# запятую в комментарии: 948 сохранённых замеров пропадали ни за что. Хеш чужого
+# файла (assemble.py) оставлен — он собирает базу целиком, и его правка действительно
+# меняет замер.
+# Единственный исход, который НЕ кэшируется: техжурнала нет вовсе — это отказ окружения.
+TECHLOG_EMPTY = "техжурнал пуст"
+
+PERF_CACHE_VERSION = "2"  # 2: кэшируем и сорванный замер, если техжурнал прочитан
+
+
 def _perf_key(candidate_code: str, task_dir: Path, perf: dict, n: int, entry: str) -> str | None:
     """Ключ нагрузочного замера: код + файлы задачи + профиль + размер базы + версия сборки.
 
-    В ключ входят исходники сборки конфигурации И разбора техжурнала: поменяли любой —
-    ключ другой, кэш инвалидируется сам, без ручного версионирования. Разбор тут кэшируется
-    вместе с результатом (техжурнал на больших размерах весит десятки мегабайт, хранить его
-    целиком в кэше дороже, чем пересчитать при смене парсера).
+    Разбор кэшируется вместе с результатом, поэтому в ключ входит и версия смысла замера:
+    техжурнал на больших размерах весит десятки мегабайт, хранить его целиком дороже,
+    чем пересчитать при смене парсера.
     """
     try:
-        parts = [candidate_code, entry, DOCKER_IMAGE, str(n), repr(sorted(perf.items()))]
+        parts = [
+            PERF_CACHE_VERSION,
+            candidate_code,
+            entry,
+            DOCKER_IMAGE,
+            str(n),
+            repr(sorted(perf.items())),
+        ]
         for name in ("config_spec.yaml", "fixtures.yaml", "tests.bsl"):
             path = task_dir / name
             parts.append(path.read_text(encoding="utf-8") if path.exists() else "")
-        here = Path(__file__).parent
-        parts.append((here / "assemble.py").read_text(encoding="utf-8"))
-        parts.append(Path(__file__).read_text(encoding="utf-8"))
+        parts.append((Path(__file__).parent / "assemble.py").read_text(encoding="utf-8"))
         return measure_cache.key("onec_perf", *parts)
     except OSError:
         return None
@@ -293,8 +312,12 @@ def measure_db_ops(
     (work_dir / "logcfg.xml").write_text(LOGCFG, encoding="utf-8")
     _run_container(work_dir)
     res = _parse_db_ops(work_dir, n)
-    # Пустой техжурнал — признак сорванного замера (контейнер не дожил, права на лог),
-    # а не свойство кода. Такой исход не кэшируем, иначе закрепим случайный сбой навсегда.
-    if ckey and res.ok:
+    # Кэшируем всё, что дало ПРОЧИТАННЫЙ техжурнал, включая сорванный замер: если падает
+    # сам код кандидата, это свойство кода и повторяется один в один. Раньше условие было
+    # `res.ok` («в result.txt есть PASSED=»), и 358 записей корпуса поднимали 1С заново при
+    # каждом пересчёте — около часа впустую на прогон.
+    # Не кэшируем только пустой техжурнал: вот это действительно окружение (контейнер не
+    # дожил, права на лог root:640), и закреплять случайный сбой навсегда нельзя.
+    if ckey and res.note != TECHLOG_EMPTY:
         measure_cache.put(ckey, res.model_dump())
     return res
