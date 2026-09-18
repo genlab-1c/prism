@@ -51,58 +51,58 @@ description: "Что в бенчмарке PRISM уже работает: авт
 <!-- prism:status:lb -->
 | Модель | Q · категория A | Q · категория B |
 |---|:---:|:---:|
-| **GLM 5.3** | **9.87** | **8.90** |
-| Gemini 3.8 Flash | 9.87 | 9.25 |
-| Claude Opus 5 | 9.73 | 9.60 |
-| Gemini 3.7 Flash | 9.73 | 9.18 |
-| Kimi K3 | 9.73 | 9.26 |
-| Gemini 3.5 Flash | 9.68 | 9.18 |
+| **Gemini 3.8 Flash** | **9.87** | **9.36** |
+| GLM 5.3 | 9.87 | 8.98 |
+| Kimi K3 | 9.73 | 9.28 |
+| Gemini 3.7 Flash | 9.73 | 9.04 |
+| Claude Opus 5 | 9.73 | 9.43 |
+| Gemini 3.5 Flash | 9.68 | 9.31 |
 | GPT-6 Astra | 9.53 | 9.91 |
-| Gemini 3.1 Pro | 9.47 | 9.30 |
-| Kimi K2.7 Code | 9.47 | 8.48 |
-| GPT-5.6 Sol | 9.33 | 9.59 |
-| MiMo-V2.5 Pro | 9.22 | 8.02 |
-| GPT-5.5 | 9.09 | 8.63 |
-| Grok 4.6 | 9.07 | 8.84 |
-| Qwen3.8 Max | 9.07 | 8.28 |
-| Gemini 3.6 Flash | 9.07 | 8.35 |
-| GLM 5.3 Flash | 8.98 | 8.72 |
-| GPT-5.6 Terra | 8.80 | 7.97 |
-| GPT-5.6 Luna Max | 8.80 | 8.57 |
-| Grok Build 0.1 | 8.53 | 7.91 |
-| DeepSeek V4 Pro 0813 | 8.50 | 8.13 |
-| Qwen3.8 Max 0902 | 8.44 | 8.13 |
-| DeepSeek V4.1 Flash | 8.42 | 7.94 |
-| MiniMax M3 | 8.27 | 9.24 |
-| GLM-5.2 | 8.21 | 7.47 |
-| MiMo-V2.5 | 8.13 | 8.55 |
-| GPT-5.6 Luna Pro | 8.02 | 7.84 |
-| DeepSeek V4 Pro | 7.99 | 7.76 |
-| DeepSeek V4 Flash 0731 | 7.96 | 7.08 |
-| Claude Opus 4.8 | 7.89 | 8.88 |
-| Claude Sonnet 5 | 7.88 | 8.63 |
-| DeepSeek V4-Flash | 7.72 | 7.39 |
-| Grok 4.3 | 7.70 | 9.36 |
-| Gemini 3.5 Flash Lite | 7.61 | 5.83 |
-| Alice AI LLM Flash | 7.25 | 6.15 |
-| Qwen3.8 Flash | 7.07 | 6.33 |
-| GLM-4.7 Flash | 6.51 | 5.37 |
-| Claude Sonnet 4.6 | 6.33 | 9.08 |
-| Gemini 2.5 Flash Lite | 6.29 | 4.89 |
-| Alice AI LLM | 6.20 | 3.58 |
-| Qwen3.8 27b | 5.96 | 3.00 |
-| Qwen3.7 Plus | 5.89 | 6.65 |
-| GPT-5 Mini | 5.76 | 3.10 |
-| Qwen3-235B-A22B | 5.57 | 3.68 |
-| Qwen3.6-35B-A3B | 5.53 | 3.86 |
-| Seed 2.0 Code | 5.49 | 5.15 |
-| YandexGPT 5 Pro | 5.43 | 4.30 |
-| GPT-OSS 120B | 5.40 | 3.89 |
-| GigaChat 2 Max | 5.13 | 3.17 |
-| YandexGPT 5 Lite | 4.90 | 3.86 |
-| YandexGPT 5.1 Pro | 4.77 | 3.66 |
-| GigaChat 2 Pro | 3.52 | 2.17 |
-| GigaChat 2 Lite | 2.93 | 2.60 |
+| Gemini 3.1 Pro | 9.40 | 9.33 |
+| Kimi K2.7 Code | 9.40 | 8.50 |
+| GPT-5.6 Sol | 9.33 | 9.68 |
+| MiMo-V2.5 Pro | 9.22 | 7.90 |
+| GPT-5.5 | 9.09 | 8.94 |
+| Grok 4.6 | 9.07 | 8.89 |
+| Gemini 3.6 Flash | 9.07 | 8.46 |
+| GLM 5.3 Flash | 8.98 | 8.80 |
+| Qwen3.8 Max | 8.93 | 8.53 |
+| GPT-5.6 Terra | 8.67 | 8.32 |
+| GPT-5.6 Luna Max | 8.67 | 8.82 |
+| DeepSeek V4 Pro 0813 | 8.50 | 8.15 |
+| Grok Build 0.1 | 8.47 | 8.02 |
+| DeepSeek V4.1 Flash | 8.42 | 7.89 |
+| Qwen3.8 Max 0902 | 8.38 | 8.16 |
+| GLM-5.2 | 8.21 | 7.31 |
+| MiniMax M3 | 8.20 | 9.24 |
+| MiMo-V2.5 | 8.06 | 8.49 |
+| DeepSeek V4 Pro | 7.99 | 7.70 |
+| DeepSeek V4 Flash 0731 | 7.96 | 7.29 |
+| Claude Opus 4.8 | 7.89 | 8.92 |
+| Claude Sonnet 5 | 7.88 | 8.52 |
+| GPT-5.6 Luna Pro | 7.82 | 8.26 |
+| Gemini 3.5 Flash Lite | 7.61 | 6.20 |
+| DeepSeek V4-Flash | 7.59 | 7.58 |
+| Grok 4.3 | 7.57 | 9.42 |
+| Alice AI LLM Flash | 7.11 | 6.42 |
+| Qwen3.8 Flash | 7.00 | 6.32 |
+| GLM-4.7 Flash | 6.31 | 6.12 |
+| Gemini 2.5 Flash Lite | 6.23 | 5.09 |
+| Claude Sonnet 4.6 | 6.13 | 8.91 |
+| Alice AI LLM | 5.93 | 3.72 |
+| Qwen3.8 27b | 5.89 | 3.62 |
+| Qwen3.6-35B-A3B | 5.78 | 4.32 |
+| Qwen3.7 Plus | 5.76 | 6.94 |
+| GPT-5 Mini | 5.43 | 3.50 |
+| Seed 2.0 Code | 5.22 | 4.93 |
+| GPT-OSS 120B | 5.20 | 4.49 |
+| Qwen3-235B-A22B | 5.10 | 3.97 |
+| YandexGPT 5 Pro | 5.09 | 4.73 |
+| GigaChat 2 Max | 4.80 | 3.78 |
+| YandexGPT 5 Lite | 4.77 | 4.00 |
+| YandexGPT 5.1 Pro | 4.50 | 4.10 |
+| GigaChat 2 Pro | 3.39 | 2.90 |
+| GigaChat 2 Lite | 2.33 | 3.02 |
 <!-- /prism:status:lb -->
 
 Таблица выше пересобирается автоматически (`prism docs`), а состав моделей и банк задач растут
