@@ -35,6 +35,34 @@ from __future__ import annotations
 
 import datetime
 
+# Метка «дата не важна» для синтетики нагрузочного замера (см. _period).
+NOW_MARKER = "$now"
+
+
+def _period(rec: dict, reg_name: str, var_names: dict[str, str]) -> str:
+    """Дата движения — обязательна и явная.
+
+    Раньше при отсутствии поля молча подставлялась ТекущаяДата(), то есть момент самого
+    прогона. Виртуальные таблицы остатков границу НЕ включают, поэтому решение, честно
+    передавшее текущую дату параметром момента, видело ПУСТОЙ регистр и теряло все тесты:
+    падал стенд, а не код. Вдобавок исход зависел от того, разошлись ли запись фикстуры и
+    запрос кандидата на секунду. Поймано на B14, латентно жило в B1; остальные 14 задач
+    дату и так задавали. Молчаливый дефолт тут недопустим: дата движения — часть условия.
+    """
+    if rec.get("Период") == NOW_MARKER:
+        # Единственное законное исключение — синтетические движения НАГРУЗОЧНОГО замера
+        # (scale_fixtures). Там корректность не проверяется, считается число обращений к
+        # СУБД, и дата движения на смысл замера не влияет. Метка явная, чтобы намерение
+        # было видно в данных, а не пряталось в отсутствии поля.
+        return "ТекущаяДата()"
+    if "Период" not in rec:
+        raise ValueError(
+            f"fixtures: у движения регистра «{reg_name}» не задан Период. Дата обязана быть "
+            f"явной и в ПРОШЛОМ: иначе движение попадает на момент прогона, а срез остатков "
+            f"на ту же дату его не видит"
+        )
+    return _bsl_value(rec["Период"], var_names)
+
 
 def _bsl_str(s: str) -> str:
     return '"' + str(s).replace('"', '""') + '"'
@@ -174,7 +202,7 @@ def generate_fixtures_module(fixtures: dict) -> str:
                 f"движения без документа-регистратора не записываются"
             )
         for rec in block.get("records", []):
-            period = _bsl_value(rec["Период"], var_names) if "Период" in rec else "ТекущаяДата()"
+            period = _period(rec, reg_name, var_names)
             body.append(f"\tДок = Документы.{registrar}.СоздатьДокумент();")
             body.append(f"\tДок.Дата = {period}; Док.Записать();")
             body.append(f"\tНабор = РегистрыНакопления.{reg_name}.СоздатьНаборЗаписей();")
@@ -210,7 +238,7 @@ def generate_fixtures_module(fixtures: dict) -> str:
         if not registrar:
             raise ValueError(f"fixtures: у подчинённого РС «{reg_name}» не задан registrar")
         for rec in block.get("records", []):
-            period = _bsl_value(rec["Период"], var_names) if "Период" in rec else "ТекущаяДата()"
+            period = _period(rec, reg_name, var_names)
             body.append(f"\tДок = Документы.{registrar}.СоздатьДокумент();")
             body.append(f"\tДок.Дата = {period}; Док.Записать();")
             body.append(f"\tНабор = РегистрыСведений.{reg_name}.СоздатьНаборЗаписей();")
@@ -231,7 +259,7 @@ def generate_fixtures_module(fixtures: dict) -> str:
         if not registrar:
             raise ValueError(f"fixtures: у регистра бухгалтерии «{reg_name}» не задан registrar")
         for rec in block.get("records", []):
-            period = _bsl_value(rec["Период"], var_names) if "Период" in rec else "ТекущаяДата()"
+            period = _period(rec, reg_name, var_names)
             body.append(f"\tДок = Документы.{registrar}.СоздатьДокумент();")
             body.append(f"\tДок.Дата = {period}; Док.Записать();")
             body.append(f"\tНабор = РегистрыБухгалтерии.{reg_name}.СоздатьНаборЗаписей();")

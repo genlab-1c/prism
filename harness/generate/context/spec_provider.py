@@ -200,10 +200,17 @@ class SpecMetadataProvider(MetadataProvider):
             out.append(f"  план счетов: {s['chart_of_accounts']}; {corr}")
             out += _fields("измерения", s.get("dimensions") or {})
             out += _fields("ресурсы", s.get("resources") or {"Сумма": {"type": "Число"}})
-            out.append(
-                "  субконто проводок — в виртуальной таблице .ДвиженияССубконто "
-                "(СубконтоДт1, СубконтоКт1, …)"
-            )
+            # Подсказка про субконто — ТОЛЬКО если план счетов их вообще имеет.
+            # Раньше она выдавалась безусловно, и на B19 (план счетов без субконто)
+            # контекст одной строкой выше писал «без субконто», а этой звал в
+            # .ДвиженияССубконто. Двое кандидатов туда и полезли. Модель не виновата,
+            # когда наш же контекст противоречит сам себе.
+            coa = (self.spec.get("charts_of_accounts") or {}).get(s["chart_of_accounts"]) or {}
+            if coa.get("ext_dimension_types"):
+                out.append(
+                    "  субконто проводок — в виртуальной таблице .ДвиженияССубконто "
+                    "(СубконтоДт1, СубконтоКт1, …)"
+                )
         elif section == "chart_of_characteristic_types":
             out.append("  тип значения характеристики: " + ", ".join(s.get("value_types") or []))
         elif section == "constants":

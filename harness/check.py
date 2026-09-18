@@ -18,6 +18,7 @@ run_checks() возвращает (секции, ok). ok=False, если ест�
 from __future__ import annotations
 
 import os
+import re
 import tempfile
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
@@ -251,7 +252,34 @@ def _check_task_b(t) -> list[Item]:
         items.append(("warn", f"{t.id}: нет {', '.join(missing)} — исполнение B не собрано"))
     else:
         items.append(("ok", f"{t.id}: комплект B (спека базы, фикстуры, проверки) на месте"))
+        items += _check_error_text_intact(t)
     return items
+
+
+# Обрезка текста исключения в tests.bsl. Служебный префикс 1С
+# «{ОбщийМодуль.КодКандидата.Модуль(NN)}: Ошибка при вызове метода контекста (…): »
+# занимает около 85 символов, поэтому Лев(ОписаниеОшибки(), 100) режет ровно там, где
+# начинается сам текст ошибки, и платформенный маркер теряется — балл P завышается.
+# Наблюдалось на B3 и B5: 15 сегментов корпуса, минимум у двух маркер срезан посередине
+# («Ошибка при вызове ме», «{Общи»). Харнесс лог и так хранит целиком (LOG_LIMIT).
+_TRUNCATED_ERROR_RE = re.compile(
+    r"\b(?:Лев|Left|Сред|Mid)\s*\(\s*ОписаниеОшибки\s*\(\s*\)", re.IGNORECASE
+)
+
+
+def _check_error_text_intact(t) -> list[Item]:
+    """tests.bsl не должен обрезать ОписаниеОшибки(): вместе с хвостом теряется маркер оси P."""
+    text = (t.dir / "tests.bsl").read_text(encoding="utf-8-sig")
+    hits = [m.group(0) for m in _TRUNCATED_ERROR_RE.finditer(text)]
+    if hits:
+        return [
+            (
+                "fail",
+                f"{t.id}: tests.bsl обрезает текст исключения ({hits[0]}…) — "
+                f"платформенный маркер теряется, балл P завышается",
+            )
+        ]
+    return []
 
 
 # ── 3. когерентность эталонов (эталон проходит свои тесты) ────────────────────

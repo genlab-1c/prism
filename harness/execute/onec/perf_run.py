@@ -36,6 +36,7 @@ from pydantic import BaseModel
 
 from harness.execute import measure_cache
 from harness.execute.onec.assemble import assemble_run_config
+from harness.execute.onec.fixtures_gen import NOW_MARKER
 from harness.execute.onec.runner import DOCKER_IMAGE, _empty_cfg_cache, detect_entry_point
 
 # logcfg: все события → /work/techlog. Включаем ТОЛЬКО перед сессией замера.
@@ -116,19 +117,19 @@ def scale_fixtures(fixtures: dict, n: int, grow: dict) -> dict:
             block = fx.setdefault("register_records", {}).setdefault(acc["register"], {})
             block["registrar"] = acc["registrar"]
             block.setdefault("records", []).append(
-                {k: _subst_unit(v, ref) for k, v in acc["record"].items()}
+                {"Период": NOW_MARKER, **{k: _subst_unit(v, ref) for k, v in acc["record"].items()}}
             )
         inf = grow.get("information")
         if inf:
             fx.setdefault("info_records", {}).setdefault(inf["register"], []).append(
-                {k: _subst_unit(v, ref) for k, v in inf["record"].items()}
+                {"Период": NOW_MARKER, **{k: _subst_unit(v, ref) for k, v in inf["record"].items()}}
             )
         acn = grow.get("accounting")
         if acn:
             block = fx.setdefault("accounting_records", {}).setdefault(acn["register"], {})
             block["registrar"] = acn["registrar"]
             block.setdefault("records", []).append(
-                {k: _subst_unit(v, ref) for k, v in acn["record"].items()}
+                {"Период": NOW_MARKER, **{k: _subst_unit(v, ref) for k, v in acn["record"].items()}}
             )
     return fx
 
@@ -250,7 +251,11 @@ def _parse_db_ops(work_dir: Path, size: int) -> DbOpsResult:
 # Единственный исход, который НЕ кэшируется: техжурнала нет вовсе — это отказ окружения.
 TECHLOG_EMPTY = "техжурнал пуст"
 
-PERF_CACHE_VERSION = "2"  # 2: кэшируем и сорванный замер, если техжурнал прочитан
+# ВЕРСИЮ ПОДНИМАТЬ, ТОЛЬКО ЕСЛИ СТАРЫЕ ЗАПИСИ СТАЛИ НЕВЕРНЫ. Расширение условия «что
+# кладём в кэш» к ним не относится: формат тот же, а всё, что уже лежит, — успешные замеры,
+# и они остаются правильными. Подняв версию на такой правке, я выбросил 948 посчитанных
+# замеров и продлил пересчёт на часы. Ошибка стоила дороже самой правки.
+PERF_CACHE_VERSION = "1"
 
 
 def _perf_key(candidate_code: str, task_dir: Path, perf: dict, n: int, entry: str) -> str | None:
