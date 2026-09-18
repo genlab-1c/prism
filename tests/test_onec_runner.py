@@ -61,6 +61,131 @@ def test_counts_multiple_platform_errors():
     assert _count_platform_error_tests(log) == 2
 
 
+def test_platform_error_counted_even_when_test_wrote_it_as_fail():
+    """Тест сам поймал исключение и записал его как FAIL — балл P не должен от этого зависеть.
+
+    Раньше засчитывалось только слово ИСКЛЮЧЕНИЕ, и оформление tests.bsl сдвигало балл:
+    на B5 три теста упали на одной платформенной ошибке, а P выходил 3.3 вместо 0.
+    """
+    log = "тест1 FAIL (Поле не найдено: Номенклатура.Артикул); тест2 FAIL ожидали 10, получили 8"
+    assert _count_platform_error_tests(log) == 1  # только первый, второй — неверный ответ
+
+
+def test_virtual_table_call_is_a_platform_error():
+    """Виртуальная таблица регистра вызвана неверно — это знание платформы, ось P.
+
+    Список маркеров знал ровно «(Выполнить)», поэтому обращения к менеджерам регистров
+    проходили мимо и запись получала P=10 при полностью упавших тестах.
+    """
+    log = (
+        "тест1 ИСКЛЮЧЕНИЕ: Ошибка при вызове метода контекста (Остатки): "
+        "Недопустимое значение параметра (параметр номер '3')"
+    )
+    assert _count_platform_error_tests(log) == 1
+
+
+def test_write_to_readonly_metadata_field_is_a_platform_error():
+    log = "тест1 ИСКЛЮЧЕНИЕ: Поле объекта недоступно для записи (ВидСчета)"
+    assert _count_platform_error_tests(log) == 1
+
+
+def test_collection_methods_stay_on_axis_m():
+    """Имена, которые есть и у обычных коллекций, в маркеры не берём.
+
+    Разбор кода кандидатов (bsl-expert, 2026-09-18) показал: под «(Добавить)» и
+    «(Сортировать)» лежит работа с ТаблицаЗначений, а не с метаданными, и отличить
+    платформенный случай от общего по тексту исключения нельзя — нужен исходник.
+    Пока классификатор видит только лог, такие ошибки остаются на оси M.
+    """
+    from harness.execute.onec.runner import platform_error_markers
+
+    ambiguous = (
+        "Выбрать",
+        "Получить",
+        "Добавить",
+        "Найти",
+        "Записать",
+        "Прочитать",
+        "Установить",
+        "Выгрузить",
+        "Загрузить",
+        "Сортировать",
+        "Свернуть",
+    )
+    for name in ambiguous:
+        assert f"Ошибка при вызове метода контекста ({name})" not in platform_error_markers()
+    log = (
+        "тест1 ИСКЛЮЧЕНИЕ: Ошибка при вызове метода контекста (Добавить): "
+        "Несоответствие типов (параметр номер '2')"
+    )
+    assert _count_platform_error_tests(log) == 0
+
+
+def test_manager_only_methods_are_platform_errors():
+    """Методы, которых у коллекций BSL нет, однозначно указывают на объект метаданных."""
+    for name in ("ВыбратьИерархически", "НайтиПоКоду", "СоздатьНаборЗаписей", "СрезПоследних"):
+        log = f"тест1 ИСКЛЮЧЕНИЕ: Ошибка при вызове метода контекста ({name}): Несоответствие типов"
+        assert _count_platform_error_tests(log) == 1, name
+
+
+def test_query_language_error_belongs_to_axis_m_not_p():
+    """Кривой текст запроса — авторство кода, а не знание метаданных.
+
+    По конституции ошибки текста запроса идут в M. И они УЖЕ наказаны: запрос не
+    выполнился → тест провалился → M упала. Считать их ещё и провалом P значит
+    наказывать дважды за одно.
+    """
+    for text in (
+        "Синтаксическая ошибка",
+        "Не допускается использование вложенных запросов",
+        "Неоднозначное поле",
+        "Не задано значение параметра",
+    ):
+        log = f"тест1 ИСКЛЮЧЕНИЕ: Ошибка при вызове метода контекста (Выполнить): {text} «Товар»"
+        assert _count_platform_error_tests(log) == 0, text
+
+
+def test_metadata_error_under_the_same_marker_stays_on_axis_p():
+    """Под тем же маркером «(Выполнить)» лежит и обращение к несуществующим метаданным."""
+    for text in (
+        "Поле не найдено",
+        "Таблица не найдена",
+        'Неверные параметры "РегистрНакопления.Х"',
+    ):
+        log = f"тест1 ИСКЛЮЧЕНИЕ: Ошибка при вызове метода контекста (Выполнить): {text}"
+        assert _count_platform_error_tests(log) == 1, text
+
+
+def test_unknown_text_under_a_marker_is_still_counted_as_platform():
+    """Маркер сработал, подкласс неизвестен — считаем P и показываем текст в аудите.
+
+    Обратное (молча не считать) тихо завышало бы P на каждом новом тексте ошибки 1С.
+    """
+    log = "тест1 ИСКЛЮЧЕНИЕ: Ошибка при вызове метода контекста (Выполнить): Неведомая беда"
+    assert _count_platform_error_tests(log) == 1
+
+
+def test_markers_come_from_the_taxonomy_not_from_code():
+    """Словарь — данные: раннер читает metrics/error_taxonomy.yaml, а не держит список у себя."""
+    from harness.execute.onec.runner import platform_error_markers
+    from harness.loaders import load_error_taxonomy
+
+    assert set(platform_error_markers()) == set(load_error_taxonomy()["platform_error_markers"])
+
+
+def test_log_is_kept_long_enough_to_classify():
+    """Лог режется не на 500 символах: на них сообщения рвались на полуслове и аудит
+    не мог перепроверить балл P по сохранённым данным."""
+    from harness.execute.onec.runner import LOG_LIMIT
+
+    tail = "; ".join(
+        f"тест{i} ИСКЛЮЧЕНИЕ: Поле не найдено (Номенклатура.Реквизит{i})" for i in range(12)
+    )
+    r = parse_result(f"PASSED=0;TOTAL=12;{tail}")
+    assert len(tail) > 500 and r.log == tail  # целиком, потому что короче лимита
+    assert LOG_LIMIT >= 4000
+
+
 # ── _parse_compile_log: строки и тексты ошибок компиляции (ось S кат. B) ──────
 
 

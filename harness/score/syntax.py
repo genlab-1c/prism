@@ -11,6 +11,9 @@
     причин не может быть ноль: n = max(n, 1). Ошибки разрешения имён (not_syntax) в счёт
     не идут — по конституции несуществующие имена вне оси S.
  4. Балл — по thresholds оси S из протокола L1 (порогов в коде нет).
+ 5. Модуль не собрался → балл не выше compile_check.ceiling: оценки выше потолка
+    УТВЕРЖДАЮТ, что модуль компилируется, а он нет. Раньше одна корневая причина
+    давала 8 из 10 несобравшемуся модулю, и эта восьмёрка тянула вверх итог Q.
 
 Стиль/стандарты (OneStatementPerLine, DeprecatedCurrentDate, …) в S НЕ входят —
 они уходят в O (см. excludes протокола). Диагностики даёт harness/execute/bsl_ls.py;
@@ -76,6 +79,10 @@ def score_s(
             n = max(n, 1)  # движок не собрал — значит причина есть, сколько именно, он не скажет
 
     score = 0 if not balanced else protocol.scoring("S").score_for(n)  # pre_check → 0 минуя таблицу
+    if not parsed:
+        # Баллы выше потолка утверждают, что модуль собирается. Без потолка одна корневая
+        # причина давала 8 из 10 несобравшемуся модулю, и эта восьмёрка тянула вверх Q.
+        score = min(score, syntax_ceiling(protocol))
     detail = {
         "root_causes": n,
         "parse_error_clusters": clusters,
@@ -92,6 +99,16 @@ def score_s(
 
 
 # ── внутреннее ───────────────────────────────────────────────────────────────
+
+
+def syntax_ceiling(protocol: ProtocolL1) -> int:
+    """Потолок балла для модуля, который не собрался (compile_check.ceiling протокола).
+
+    Нет в протоколе — потолка нет: правило объявляется в данных, код его не выдумывает.
+    """
+    check = protocol.axes["S"].compile_check or {}
+    value = check.get("ceiling")
+    return 10 if value is None else int(value)
 
 
 def _cluster_lines(lines: list[int], gap: int) -> int:

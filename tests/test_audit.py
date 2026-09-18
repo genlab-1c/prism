@@ -412,7 +412,7 @@ def test_marker_without_platform_test(tmp_path):
     )
     c = corpus(tmp_path, [rec], category="B")
     sec = audit._section_platform([c])
-    assert "платформенных тестов ноль — 1" in texts(sec)
+    assert "не отнесён ни к P, ни к непроверенным — 1" in texts(sec)
 
 
 # ── инфраструктура ───────────────────────────────────────────────────────────

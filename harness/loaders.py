@@ -116,6 +116,7 @@ class L1Axis(BaseModel):
     )
     pre_check: dict | None = None  # сразу 0 в обход таблицы баллов (оси S, P)
     compile_check: dict | None = None  # S кат. A: вердикт «собирается» от движка исполнения
+    correctness_gate: dict | None = None  # O: ниже какого M оптимальность не меряем
     cpu_limit_s: int | None = None  # M: бюджет процессорного времени прогона тестов
     cluster_gap: int | None = None  # S: соседние ParseError ≤N строк = одна причина
     compile_blocker_codes: list[str] | None = (

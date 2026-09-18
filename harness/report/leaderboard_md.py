@@ -56,7 +56,12 @@ def _load(category: str) -> dict | None:
 
 
 def _ranked(result: dict) -> list[tuple[str, dict, int]]:
-    """[(model_name, {axis: среднее|None}, n)] — ранжир по Q̄ убыв. (как print_leaderboard)."""
+    """[(model_name, {axis: среднее|None, "cov": доля}, n)] — ранжир по Q̄ убыв.
+
+    Охват ("cov") идёт вместе с Q по требованию конституции (quality_score.coverage_required):
+    Q усредняет только ИЗМЕРЕННЫЕ оси, поэтому у записей разный знаменатель и без охвата
+    сравнивать их нельзя.
+    """
     axes = ("S", "M", "O", "P", "Q")
     by: dict[str, dict[str, list[float]]] = {}
     for t in result["tasks"]:
@@ -64,10 +69,13 @@ def _ranked(result: dict) -> list[tuple[str, dict, int]]:
             s = r["scores"]
             if s.get("Q") is None:
                 continue
-            bucket = by.setdefault(t["model_name"], {a: [] for a in axes})
+            bucket = by.setdefault(t["model_name"], {a: [] for a in axes} | {"cov": []})
             for a in axes:
                 if s.get(a) is not None:
                     bucket[a].append(s[a])
+            cov = (r.get("detail") or {}).get("coverage") or {}
+            if cov.get("applicable"):
+                bucket["cov"].append(cov["measured"] / cov["applicable"])
     rows = [
         (name, {a: (mean(v) if v else None) for a, v in b.items()}, len(b["Q"]))
         for name, b in by.items()
@@ -117,8 +125,8 @@ def render_overall(result: dict, category: str) -> str:
         {"M", "O", "P", "Q"} if category == "A" else {"M", "P", "Q"}
     )  # в A ось O теперь различает — выделяем
     maxes = {a: max((m[a] for _, m, _ in rows if m[a] is not None), default=None) for a in axes}
-    head = "| № | Модель | " + " | ".join(titles[a] for a in axes) + " | ± погрешность |"
-    sep = "|:---:|--------|" + ":---:|" * len(axes) + ":---:|"
+    head = "| № | Модель | " + " | ".join(titles[a] for a in axes) + " | полнота | ± погрешность |"
+    sep = "|:---:|--------|" + ":---:|" * (len(axes) + 1) + ":---:|"
     out = [head, sep]
     for i, (name, m, _n) in enumerate(rows):
         cells = []
@@ -129,7 +137,9 @@ def render_overall(result: dict, category: str) -> str:
         nm = f"**{name}**" if i == 0 else name
         margin = margins.get(name)
         margin_txt = f"±{margin:.1f}" if margin is not None else "—"
-        out.append(f"| {i + 1} | {nm} | " + " | ".join(cells) + f" | {margin_txt} |")
+        cov = m.get("cov")
+        cov_txt = f"{cov:.0%}" if cov is not None else "—"
+        out.append(f"| {i + 1} | {nm} | " + " | ".join(cells) + f" | {cov_txt} | {margin_txt} |")
     return _wrap("\n".join(out))
 
 
@@ -186,6 +196,7 @@ _FUNNEL_EMOJI = {
     "неверный ответ": "🟨",
     "ошибка выполнения": "🟧",
     "не компилируется": "🟥",
+    "не измерено": "⬜",  # сбой окружения: вина не модели, из ряда «хорошо → плохо» выпадает
 }
 _FUNNEL_BAR_CELLS = 10  # ширина полосы в квадратах (каждый ≈ 10% попыток)
 

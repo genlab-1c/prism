@@ -20,6 +20,7 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from harness.execute.onec.runner import platform_verdict
 from harness.loaders import load_error_taxonomy, load_protocol_l1
 from harness.orchestrate import extract_code, newest_auto, newest_experiments
 
@@ -580,23 +581,20 @@ def _section_platform(corpora: list[dict]) -> Section:
             f"B {_key(r)}: P={r['scores'].get('P')} M={r['scores'].get('M')}" for r in mixed
         ]
 
-    # Классификатор P считает только сегменты «тестN ИСКЛЮЧЕНИЕ». Если тест сам поймал
-    # исключение и записал его как FAIL, платформенная ошибка не учтена.
+    # Историческая проверка (F5): классификатор считал только сегменты «тестN ИСКЛЮЧЕНИЕ»,
+    # и тест, поймавший исключение сам и записавший его как FAIL, платформенную ошибку прятал.
+    # С версии протокола 1.5.0 слово ИСКЛЮЧЕНИЕ не требуется, поэтому список должен быть пуст;
+    # ненулевое число здесь означает, что регрессия вернулась.
+    # Спрашиваем тот же вердикт, что и скорер: сырое наличие маркера здесь уже не улика —
+    # под «(Выполнить)» лежит и кривой текст запроса, который по конституции идёт в ось M.
     swallowed = []
     for r in recs:
         m = r["detail"].get("M") or {}
         log = m.get("log") or ""
         for piece in re.split(r"(?=тест\d+\s)", log):
-            if re.match(r"тест\d+\s+FAIL", piece) and any(
-                mk in piece
-                for mk in (
-                    "Поле не найдено",
-                    "Метод объекта не обнаружен",
-                    "Таблица не найдена",
-                    EXEC_MARKER,
-                )
-            ):
-                swallowed.append(r)
+            if re.match(r"тест\d+\s+FAIL", piece) and platform_verdict(piece) == "fault":
+                if not ((r["detail"].get("P") or {}).get("platform_error_tests") or 0):
+                    swallowed.append(r)
                 break
     items.append(
         (
@@ -612,16 +610,22 @@ def _section_platform(corpora: list[dict]) -> Section:
             for r in swallowed
         ]
 
+    # Маркер сработал, а платформенных тестов ноль. С версии протокола 1.5.0 это штатно:
+    # маркер «(Выполнить)» стоит и над кривым текстом запроса, который по конституции идёт
+    # в ось M. Аномалия остаётся только там, где не сработало НИ одно объяснение: ни провал
+    # по метаданным, ни выброс теста как непроверенного.
     nomatch = [
         r
         for r in recs
         if (r["detail"].get("M") or {}).get("platform_errors")
         and not (r["detail"].get("M") or {}).get("platform_error_tests")
+        and not ((r["detail"].get("P") or {}).get("unverified_tests") or 0)
+        and r["scores"].get("P") is not None
     ]
     items.append(
         (
             _status(len(nomatch), warn_above=0),
-            f"маркер в логе есть, а платформенных тестов ноль — {len(nomatch)}",
+            f"маркер в логе есть, а тест не отнесён ни к P, ни к непроверенным — {len(nomatch)}",
         )
     )
     if nomatch:
@@ -630,7 +634,54 @@ def _section_platform(corpora: list[dict]) -> Section:
             f"{(r['detail'].get('M') or {}).get('platform_errors')}"
             for r in nomatch
         ]
+
+    # Тесты, где запрос не разобрался грамматически: платформа до имён метаданных не дошла,
+    # свидетельства нет. Держим на виду — это прямой вычет из знаменателя оси P, и если их
+    # станет много, значит задача провоцирует ошибки языка запросов, а не проверяет платформу.
+    unverified = [r for r in recs if ((r["detail"].get("P") or {}).get("unverified_tests") or 0)]
+    lost = [r for r in unverified if r["scores"].get("P") is None]
+    items.append(
+        (
+            "ok",
+            f"тестов без свидетельства о метаданных (запрос не разобрался) — "
+            f"в {len(unverified)} записях; из них ось P не измерена вовсе — {len(lost)}",
+        )
+    )
+    if lost:
+        details["P не измерена: запрос ни разу не разобрался"] = [
+            f"B {_key(r)}: тестов {(r['detail'].get('P') or {}).get('total')}" for r in lost
+        ]
+
+    # ИЗВЕСТНЫЙ ПРЕДЕЛ, а не дефект классификатора. Ни один тест не прошёл, а P=10: тесты
+    # упали на ОБЩЕМ BSL (лишние фактические параметры, несуществующий тип, конструктор
+    # ОписаниеТипов). По логу не видно, добрался ли такой тест до базы, поэтому он считается
+    # чистым, хотя свидетельства о метаданных не дал. Это тот же подвох, что с неразобравшимся
+    # запросом, ещё на шаг дальше, и по одному логу он не решается: нужен либо исходник
+    # кандидата, либо отметка «запрос выполнялся» из техжурнала. Держим на виду числом.
+    flawless = []
+    for r in recs:
+        P, M = r["detail"].get("P") or {}, r["detail"].get("M") or {}
+        total = P.get("total") or 0
+        if total and P.get("clean", 0) == total and not (M.get("passed") or 0):
+            flawless.append(r)
+    items.append(
+        (
+            "warn" if flawless else "ok",
+            f"P=10 при полностью упавших тестах (предел разбора по логу) — {len(flawless)}",
+        )
+    )
+    if flawless:
+        details["P=10 при полностью упавших тестах"] = [
+            f"B {_key(r)}: {_first_error(r)}" for r in flawless
+        ]
     return {"title": "оси M и P (платформа)", "items": items, "details": details}
+
+
+def _first_error(record: dict) -> str:
+    """Текст первого упавшего теста без служебной обёртки «{ОбщийМодуль…}:»."""
+    log = ((record["detail"].get("M") or {}).get("log") or "").split(";")[0].strip()
+    log = re.sub(r"^тест\d+\s*(ИСКЛЮЧЕНИЕ|FAIL)\s*:?\s*", "", log)
+    return re.sub(r"^\{[^}]*\}:\s*", "", log)[:120]
 
 
 # ── секция 6: инфраструктура ─────────────────────────────────────────────────
@@ -647,7 +698,7 @@ def _section_infra(corpora: list[dict]) -> Section:
         (
             "warn" if infra else "ok",
             f"кат. B: прогон не состоялся по инфраструктуре — {len(infra)} "
-            f"(в воронку отказов такие записи не попадают вовсе)",
+            f"(в воронке отказов это корзина «не измерено», вина infra)",
         )
     )
     if infra:
