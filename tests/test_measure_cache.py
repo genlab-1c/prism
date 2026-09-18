@@ -188,6 +188,30 @@ def test_perf_result_survives_the_round_trip():
     assert DbOpsResult(**r.model_dump()) == r
 
 
+def test_perf_key_does_not_depend_on_the_module_source():
+    """Ключ не хешит исходник своего модуля: иначе кэш обнулялся от правки комментария.
+
+    Смысл замера версионируется явно (PERF_CACHE_VERSION), и поднимать версию надо руками,
+    когда меняется сборка базы или разбор техжурнала. Первая редакция брала весь файл, и
+    948 сохранённых замеров пропадали ни за что.
+    """
+    from pathlib import Path
+
+    from harness.execute.onec import perf_run
+
+    src = Path(perf_run.__file__).read_text(encoding="utf-8")
+    d = Path(perf_run.__file__).parent  # каталог с assemble.py — он в ключе остаётся
+    k = perf_run._perf_key("код", d, {"sizes": [20]}, 20, "Ф")
+    assert k and src not in (k or "")
+    # версия смысла — часть ключа: подняли её, старые замеры больше не подходят
+    old = perf_run.PERF_CACHE_VERSION
+    try:
+        perf_run.PERF_CACHE_VERSION = "999"
+        assert perf_run._perf_key("код", d, {"sizes": [20]}, 20, "Ф") != k
+    finally:
+        perf_run.PERF_CACHE_VERSION = old
+
+
 def test_cpu_budget_is_part_of_the_key(tmp_path, monkeypatch):
     """Тот же скрипт при другом бюджете — другой исход, значит и ключ другой.
 
