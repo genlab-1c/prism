@@ -20,6 +20,7 @@
 
 from __future__ import annotations
 
+import re
 from collections import Counter
 
 STAGES = ("разбор", "запуск", "верно")
@@ -78,6 +79,31 @@ def _classify(text: str, taxonomy: dict) -> tuple[str, str, str] | None:
 def _default(taxonomy: dict, key: str) -> tuple[str, str, str]:
     d = taxonomy["defaults"][key]
     return d["code"], d["label"], d.get("blame", "model")
+
+
+_METHOD_RE = re.compile(r"(?:Method not found|Метод объекта не обнаружен)\s*\(([^)]+)\)")
+
+
+def _refine_nomethod(text: str, taxonomy: dict, hit: tuple[str, str, str]) -> tuple[str, str, str]:
+    """Уточнить «вызов несуществующего метода»: метода нет или он не у того типа?
+
+    В трёх четвертях случаев корпуса (414 из 522) метод в платформе ЕСТЬ, просто у другого
+    объекта: `Массив.Сортировать` при том, что `Сортировать` живёт у `ТаблицаЗначений`.
+    Подпись «метода не существует» там неверна и сбивает читателя. Имя вне словаря
+    (metrics/error_taxonomy.yaml) классифицируется как раньше — молчаливой подмены нет.
+    """
+    if hit[0] != "M.NOMETHOD":
+        return hit
+    m = _METHOD_RE.search(text)
+    if not m:
+        return hit
+    name = m.group(1).strip()
+    owner = (taxonomy.get("method_owners") or {}).get(name)
+    if owner:
+        return "M.WRONG_TYPE", f"метод «{name}» вызван не у того типа (он у {owner})", "model"
+    if name in set(taxonomy.get("platform_unknown_methods") or []):
+        return "M.NOMETHOD", f"метода «{name}» в платформе нет", "model"
+    return hit
 
 
 def _infra_outcome(run: dict, taxonomy: dict) -> dict | None:
@@ -161,7 +187,9 @@ def run_outcome(run: dict, taxonomy: dict) -> dict | None:
         if no_entry:
             code, label, blame = _default(taxonomy, "noentry")
         else:
-            code, label, blame = _classify(run_text, taxonomy) or _default(taxonomy, "run")
+            code, label, blame = _refine_nomethod(
+                run_text, taxonomy, _classify(run_text, taxonomy) or _default(taxonomy, "run")
+            )
         return {"reached": 1, "died": "запуск", "code": code, "label": label, "blame": blame}
 
     # ── ворота 3: верно (все тесты пройдены) ─────────────────────────────────
@@ -179,7 +207,9 @@ def run_outcome(run: dict, taxonomy: dict) -> dict | None:
             text = m.get("log") or "; ".join(m.get("errors") or [])
             hit = _classify(text, taxonomy)
             # нет исключения в тексте → код отработал и тихо дал неверный ответ
-            code, label, blame = hit or _default(taxonomy, "wrong")
+            code, label, blame = _refine_nomethod(
+                text, taxonomy, hit or _default(taxonomy, "wrong")
+            )
         return {"reached": 2, "died": "верно", "code": code, "label": label, "blame": blame}
 
     return {"reached": 3, "died": None, "code": None, "label": None, "blame": None}

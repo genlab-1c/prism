@@ -76,9 +76,21 @@ def score_p(run: OneCRunResult, protocol: ProtocolL1) -> tuple[int | None, dict]
             "unverified_tests": run.unverified_tests,
             "log": run.log[:LOG_DETAIL],
         }
+    # Техжурнал знает то, чего не знает лог тестов: доходил ли код кандидата до данных.
+    # Без этого «чистым» считался и тест, упавший на общем BSL раньше первого запроса, —
+    # 36 записей корпуса получали P=10 при полностью провалившихся тестах. Ноль здесь тоже
+    # не годится: обращений не было, значит и неверными они быть не могли.
+    if run.db_touched is False and not run.platform_error_tests:
+        return None, {
+            "reason": "не измерено: код кандидата ни разу не обратился к данным (техжурнал)",
+            "unmeasured": "no_db_access",
+            "total": run.total,
+            "log": run.log[:LOG_DETAIL],
+        }
     clean = judged - run.platform_error_tests
     share = clean / judged
     return protocol.scoring("P").score_for(share), {
+        "db_touched": run.db_touched,
         "clean_share": round(share, 3),
         "clean": clean,
         "judged": judged,

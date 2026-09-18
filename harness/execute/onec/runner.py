@@ -41,6 +41,30 @@ RESULT_RE = re.compile(r"PASSED=(\d+);TOTAL=(\d+);?(.*)", re.DOTALL)
 # перепроверить было нельзя.
 LOG_LIMIT = 4000
 
+# Версия СМЫСЛА корректностного прогона: поднимать, когда меняется состав сохраняемых
+# артефактов или скрипт контейнера. Сам скрипт в ключ не хешится — он длинный и правится
+# по мелочам, а вот его СУТЬ (что мы измеряем) версионируется здесь.
+RUN_CACHE_VERSION = "2"  # 2: к прогону добавлен техжурнал — отметка «кандидат ходил в базу»
+
+# Техжурнал корректностного прогона. Узкий, в отличие от замерочного (там property All):
+# нужен ровно один факт — обращался ли КОД КАНДИДАТА к данным. Событий два, свойство одно,
+# поэтому лог остаётся крошечным и прогон почти не замедляется.
+#
+# Зачем. Ось P судит о знании метаданных по тому, как упали тесты. Но тест, упавший на общем
+# BSL («Слишком много фактических параметров», «Тип не определен»), до базы, скорее всего,
+# вовсе не дошёл — и свидетельства о метаданных не дал, хотя считался «чистым». На корпусе
+# это 36 записей с P=10 при полностью провалившихся тестах. Техжурнал отвечает на вопрос
+# прямо: было ли хоть одно обращение к данным из кода кандидата.
+RUN_LOGCFG = """<?xml version="1.0"?>
+<config xmlns="http://v8.1c.ru/v8/tech-log">
+  <log location="/work/techlog" history="1">
+    <event><eq property="Name" value="SDBL"/></event>
+    <property name="Context"/>
+  </log>
+</config>
+"""
+CAND_CONTEXT = "КодКандидата.Модуль"  # кадр стека = код кандидата
+
 
 @lru_cache(maxsize=1)
 def platform_subclasses() -> tuple[dict, ...]:
@@ -121,6 +145,15 @@ class OneCRunResult(BaseModel):
     log: str = ""  # хвост result.txt: FAIL'ы и исключения тестов
     platform_errors: list[str] = []  # сработавшие маркеры платформенных ошибок
     platform_error_tests: int = 0  # сколько тестов упало именно платформенной ошибкой
+    # Ключ сырья в хранилище замеров (results/.measure_cache). По нему любая запись
+    # оценок разворачивается обратно в артефакты прогона: check.log, result.txt, коды
+    # завершения. Без него сырьё приходилось воспроизводить новым прогоном 1С.
+    run_key: str = ""
+    # Обращался ли КОД КАНДИДАТА к данным хоть раз за сеанс (по техжурналу, события SDBL
+    # с «КодКандидата.Модуль» в Context). None = техжурнала нет (старая запись кэша или
+    # сеанс не стартовал). Ось P без этого не отличает «метаданные в порядке» от «до базы
+    # не дошли»: см. RUN_LOGCFG.
+    db_touched: bool | None = None
     # Тесты, не давшие свидетельства об именах метаданных: запрос не разобрался
     # грамматически, до проверки имён платформа не дошла. Не «чисто» и не «провал» —
     # выбрасываются из знаменателя доли оси P (см. platform_verdict).
@@ -277,7 +310,9 @@ def run_candidate(
             ("enterprise.rc", cached.get("ent_rc", "")),
         ):
             (work_dir / name).write_text(text, encoding="utf-8")
-        return _verdict(work_dir, entry, timed_out=False)
+        out = _verdict(work_dir, entry, timed_out=False, db_touched=cached.get("db"))
+        out.run_key = ckey or ""
+        return out
 
     # 1) пустая конфа-базис: выгружается платформой ОДИН раз на машину
     #    (общий кэш в work/), в work_dir кандидата попадает копией — иначе
@@ -305,8 +340,10 @@ def run_candidate(
     # CheckModules проверяет конфигурацию БД → строго ПОСЛЕ UpdateDBCfg; оба
     # безусловно после успешного load (через ;), чтобы ошибки кандидата всплыли,
     # даже если UpdateDBCfg споткнулся. ENTERPRISE — только при чистой компиляции.
+    (work_dir / "logcfg.xml").write_text(RUN_LOGCFG, encoding="utf-8")
     script = (
-        f"rm -rf /work/ib /work/result.txt /work/check.log /work/check.rc /work/enterprise.rc; "
+        f"rm -rf /work/ib /work/result.txt /work/check.log /work/check.rc /work/enterprise.rc "
+        f"/work/techlog; mkdir -p /work/techlog; "
         f"xvfb-run-1c {ONEC_BIN} CREATEINFOBASE 'File=/work/ib;Locale=ru_RU;' >/dev/null 2>&1 && "
         f"xvfb-run-1c {ONEC_BIN} DESIGNER /IBConnectionString 'File=/work/ib;' "
         f"/LoadConfigFromFiles /work/run-cfg /Out /work/load.log >/dev/null 2>&1 && {{ "
@@ -316,8 +353,12 @@ def run_candidate(
         f"/CheckModules -Server /Out /work/check.log >/dev/null 2>&1; echo $? > /work/check.rc; "
         + (
             f"if grep -q 'КодКандидата' /work/check.log 2>/dev/null; then true; else "
+            # Техжурнал включаем ТОЛЬКО на сеанс тестов: конфигуратор нам не интересен,
+            # а logcfg действует на весь процесс платформы.
+            f"cp /work/logcfg.xml /opt/1cv8t/conf/logcfg.xml 2>/dev/null; "
             f"timeout 90 xvfb-run-1c {ONEC_BIN} ENTERPRISE /IBConnectionString 'File=/work/ib;' "
-            f"/C ПрогонТеста >/dev/null 2>&1; echo $? > /work/enterprise.rc; fi; "
+            f"/C ПрогонТеста >/dev/null 2>&1; echo $? > /work/enterprise.rc; "
+            f"sleep 2; rm -f /opt/1cv8t/conf/logcfg.xml 2>/dev/null; fi; "
             if entry is not None
             else ""
         )
@@ -330,6 +371,7 @@ def run_candidate(
         timed_out = True
 
     res = _verdict(work_dir, entry, timed_out)
+    res.run_key = ckey or ""
     if ckey and not timed_out:  # таймаут — свойство машины, его не кэшируем
         measure_cache.put(
             ckey,
@@ -339,6 +381,8 @@ def run_candidate(
                 "load": _read(work_dir / "load.log")[:2000],
                 "check_rc": _read(work_dir / "check.rc"),
                 "ent_rc": _read(work_dir / "enterprise.rc"),
+                # Не сам техжурнал (он большой и нужен ровно одним фактом), а вывод из него.
+                "db": _db_touched(work_dir),
             },
         )
     return res
@@ -351,7 +395,7 @@ def _run_key(candidate_code: str, task_dir: Path, entry: str | None) -> str | No
     другой, кэш инвалидируется сам, без ручного версионирования.
     """
     try:
-        parts = [candidate_code, entry or "", DOCKER_IMAGE]
+        parts = [RUN_CACHE_VERSION, candidate_code, entry or "", DOCKER_IMAGE]
         for name in ("config_spec.yaml", "fixtures.yaml", "tests.bsl"):
             parts.append(_read(task_dir / name))
         parts.append((Path(__file__).parent / "assemble.py").read_text(encoding="utf-8"))
@@ -360,8 +404,15 @@ def _run_key(candidate_code: str, task_dir: Path, entry: str | None) -> str | No
         return None
 
 
-def _verdict(work_dir: Path, entry: str | None, timed_out: bool) -> OneCRunResult:
-    """Разобрать артефакты прогона в вердикт. Один путь и для живого прогона, и для кэша."""
+def _verdict(
+    work_dir: Path, entry: str | None, timed_out: bool, db_touched: bool | None = None
+) -> OneCRunResult:
+    """Разобрать артефакты прогона в вердикт. Один путь и для живого прогона, и для кэша.
+
+    db_touched передаётся из кэша; при живом прогоне выводится из техжурнала здесь же.
+    """
+    if db_touched is None:
+        db_touched = _db_touched(work_dir)
     # ось S — ошибки компиляции модуля кандидата (компилятор 1С, не статика)
     lines, errors = _parse_compile_log(_read(work_dir / "check.log"))
     check_rc = _read_rc(work_dir / "check.rc")
@@ -380,7 +431,7 @@ def _verdict(work_dir: Path, entry: str | None, timed_out: bool) -> OneCRunResul
             status="candidate_error",
             entry_point=entry,
             compile_error_lines=lines,
-            compile_errors=errors[:5],
+            compile_errors=errors,
             log="; ".join(errors[:3])[:500],
             infra_detail="модуль кандидата не компилируется",
         )
@@ -393,7 +444,9 @@ def _verdict(work_dir: Path, entry: str | None, timed_out: bool) -> OneCRunResul
     # компилируется → M/P из result.txt
     result_file = work_dir / "result.txt"
     if result_file.exists():
-        return parse_result(result_file.read_text(encoding="utf-8-sig", errors="replace"), entry)
+        res = parse_result(result_file.read_text(encoding="utf-8-sig", errors="replace"), entry)
+        res.db_touched = db_touched  # факт из техжурнала: добрался ли код до данных
+        return res
 
     detail = "таймаут прогона" if timed_out else "result.txt не создан"
     ent_rc = _read_rc(work_dir / "enterprise.rc")
@@ -428,12 +481,38 @@ def _read(path: Path) -> str:
         return ""
 
 
+def _db_touched(work_dir: Path) -> bool | None:
+    """Ходил ли КОД КАНДИДАТА в базу за сеанс тестов (по техжурналу).
+
+    True  — есть событие SDBL, в Context которого кадр «КодКандидата.Модуль»;
+    False — техжурнал есть, таких событий нет: код до данных не добрался;
+    None  — техжурнала нет вовсе (сеанс не стартовал либо запись из старого кэша),
+            отличать «нет обращений» от «не знаем» обязательно, иначе ось P
+            объявит непроверенным то, что просто не записалось.
+
+    Читаем построчно и выходим на первом совпадении: лог узкий, но на больших базах
+    всё равно бывает в мегабайтах, а нужен один факт.
+    """
+    logs = list((work_dir / "techlog").rglob("*.log")) if (work_dir / "techlog").exists() else []
+    if not logs:
+        return None
+    for path in logs:
+        try:
+            with path.open(encoding="utf-8-sig", errors="replace") as fh:
+                for line in fh:
+                    if CAND_CONTEXT in line:
+                        return True
+        except OSError:
+            return None
+    return False
+
+
 def _parse_compile_log(text: str) -> tuple[list[int], list[str]]:
     """Из лога /CheckModules → (строки ошибок модуля кандидата, тексты ошибок)."""
     lines, errors = [], []
     for m in _COMPILE_RE.finditer(text or ""):
         lines.append(int(m.group(1)))
-        errors.append(m.group(2).strip()[:200])
+        errors.append(m.group(2).strip())
     return lines, errors
 
 

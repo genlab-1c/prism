@@ -185,6 +185,49 @@ def test_wall_clock_timeout_is_infra_but_burnt_cpu_budget_is_not():
     assert run_outcome(burnt, TAX)["blame"] == "model"
 
 
+def test_method_on_the_wrong_type_is_named_as_such():
+    """«Метода не существует» неверно в трёх четвертях случаев: он есть, но у другого типа.
+
+    `Массив.Сортировать` — самая частая причина провала в кат. A (292 случая), и метод в
+    платформе ЕСТЬ, просто у `ТаблицаЗначений`. Подпись должна называть владельца, иначе
+    читатель витрины делает неверный вывод о модели.
+    """
+    o = run_outcome(
+        _run(
+            "A1",
+            {
+                "S": {"root_causes": 0},
+                "M": {
+                    "executed": False,
+                    "entry_point": "Ф",
+                    "errors": ["Method not found (Сортировать)"],
+                },
+            },
+        ),
+        TAX,
+    )
+    assert o["code"] == "M.WRONG_TYPE" and "ТаблицаЗначений" in o["label"]
+
+
+def test_unknown_method_name_keeps_the_generic_label():
+    """Имени нет в словаре — классифицируем как раньше. Молчаливой подмены быть не должно."""
+    o = run_outcome(
+        _run(
+            "A1",
+            {
+                "S": {"root_causes": 0},
+                "M": {
+                    "executed": False,
+                    "entry_point": "Ф",
+                    "errors": ["Method not found (ЧтоТоНовое)"],
+                },
+            },
+        ),
+        TAX,
+    )
+    assert o["code"] == "M.NOMETHOD" and "«" not in o["label"]
+
+
 def test_model_failures_keep_their_blame():
     """Обычный провал кода остаётся на модели — метка вины не размывает ответственность."""
     broken = _run("A1", {"S": {"root_causes": 2, "errors": ["Пропущен символ"]}}, scores={"S": 6})
