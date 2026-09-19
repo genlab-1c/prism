@@ -32,3 +32,43 @@ const docs = Object.values(mods)
     <article class="prose"><Content /></article>
   </div>
 </Base>
+
+{/* Диаграммы: sync-docs отдаёт исходник в <pre class="mermaid">, рисуем его на клиенте.
+    Импорт динамический и под условием — mermaid весит прилично, а диаграмма есть не на
+    каждой странице. Тему берём ту же, что у сайта (data-theme на <html>). */}
+<script>
+  const blocks = document.querySelectorAll('pre.mermaid');
+  if (blocks.length) {
+    const dark = document.documentElement.getAttribute('data-theme') !== 'light';
+    const { default: mermaid } = await import('mermaid');
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: dark ? 'dark' : 'default',
+      // fontFamily здесь НЕ трогаем: mermaid замеряет ширину подписей тем же шрифтом,
+      // который потом пишет в SVG. Подставить 'inherit' значит замерить одним шрифтом, а
+      // отрисовать моноширинным (блок-то <pre>), и подписи обрежутся рамкой узла.
+      themeVariables: { fontSize: '15px' },
+      // Прямые линии вместо кривых: на схеме со слоями «basis» превращает связи в дуги,
+      // которые пересекают группы и читаются хуже прямых.
+      flowchart: { curve: 'linear', useMaxWidth: true, nodeSpacing: 34, rankSpacing: 46 },
+    });
+    await mermaid.run({ nodes: blocks });
+  }
+</script>
+
+<style is:global>
+  /* До отрисовки это обычный <pre> с исходником: прячем, чтобы не мигал текстом схемы. */
+  .prose pre.mermaid { visibility: hidden; background: none; border: 0; padding: 0; }
+  /* Шрифт внутри SVG задаёт сам mermaid — тот же, которым он замерял ширину подписей.
+     Переопределять его здесь нельзя, иначе подписи снова не влезут в рамки узлов. */
+  .prose pre.mermaid[data-processed] { visibility: visible; text-align: center; }
+  /* До отрисовки внутри лежит исходник схемы длинными строками: без этого он растягивает
+     страницу по ширине ещё до того, как mermaid его заменит. */
+  .prose pre.mermaid { overflow-x: auto; max-width: 100%; }
+  .prose pre.mermaid svg { max-width: 100%; height: auto; }
+  /* На узком экране схема, вписанная в ширину колонки, становится нечитаемой. Пусть лучше
+     прокручивается вбок, сохранив разборчивый размер подписей. */
+  @media (max-width: 720px) {
+    .prose pre.mermaid svg { min-width: 520px; max-width: none; }
+  }
+</style>

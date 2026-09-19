@@ -64,3 +64,9 @@ body {
 
 a { color: var(--brand); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Подвал прижат к низу окна: на короткой странице (документация, 404) он иначе всплывает
+   на середину экрана, и под ним остаётся пустая полоса фона. Колонка во всю высоту плюс
+   растущая середина решают это без JS и без трюка с отрицательным отступом. */
+body { min-height: 100dvh; display: flex; flex-direction: column; }
+.site-body { flex: 1 0 auto; }

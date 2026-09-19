@@ -88,7 +88,7 @@ const schemas = [
   </head>
   <body>
     <SiteHeader client:load active={active} version={version} repo={data.meta?.repo} />
-    <slot />
+    <div class="site-body"><slot /></div>
     <Footer />
   </body>
 </html>
