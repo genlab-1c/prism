@@ -77,11 +77,13 @@ const qualityWord = (q) => (q == null ? '—' : q >= 8.5 ? 'отлично' : q 
 
 // человеческие названия осей + что балл значит на трёх уровнях
 const AXIS_NAME = { S: 'Синтаксис', M: 'Логика', O: 'Оптимальность', P: 'Платформа 1С' };
+// top — только для честной десятки по обеим категориям, near — «почти всегда». Без этого
+// деления карточка обещала «проходит все тесты» рядом с подписью «решает 93% задач».
 const AXIS_SAY = {
-  S: { top: 'код всегда компилируется', hi: 'почти всегда пишет компилируемый код', mid: 'иногда синтаксические ошибки в коде', lo: 'часто не компилируется' },
-  M: { top: 'логика всегда верна — все тесты пройдены', hi: 'решения логически верны, проходят скрытые тесты', mid: 'логика местами хромает — часть тестов не проходит', lo: 'часто выдаёт неверный результат' },
-  O: { top: 'оптимальный код без лишней работы', hi: 'эффективный код — без лишних переборов и запросов в цикле', mid: 'местами лишние обращения к данным', lo: 'неоптимально — запросы в цикле, лишние переборы' },
-  P: { top: 'безупречно работает с метаданными 1С', hi: 'уверенно работает с объектами и метаданными 1С', mid: 'иногда ошибается в объектах и полях 1С', lo: 'путается в метаданных — обращается к несуществующим полям и объектам' },
+  S: { top: 'код всегда компилируется', near: 'код компилируется почти всегда', hi: 'почти всегда пишет компилируемый код', mid: 'иногда синтаксические ошибки в коде', lo: 'часто не компилируется' },
+  M: { top: 'все скрытые тесты пройдены', near: 'скрытые тесты проходят почти везде', hi: 'логика в основном верна, большинство скрытых тестов проходит', mid: 'логика местами хромает — часть тестов не проходит', lo: 'часто выдаёт неверный результат' },
+  O: { top: 'оптимальный код без лишней работы', near: 'код почти всегда оптимален, без лишней работы', hi: 'эффективный код — без лишних переборов и запросов в цикле', mid: 'местами лишние обращения к данным', lo: 'неоптимально — запросы в цикле, лишние переборы' },
+  P: { top: 'безупречно работает с метаданными 1С', near: 'почти не ошибается в метаданных 1С', hi: 'уверенно работает с объектами и метаданными 1С', mid: 'иногда ошибается в объектах и полях 1С', lo: 'путается в метаданных — обращается к несуществующим полям и объектам' },
 };
 
 // вердикт по одной оси: топ (≈10) / плюс / минус, с учётом СИЛЬНОГО расхождения между A и B
@@ -95,7 +97,9 @@ function axisLine(ax, a, b, ins) {
     const aBetter = a >= b;
     return { side: 'minus', text: `отлично ${aBetter ? 'в алгоритмике' : 'в платформенных задачах'}, но слабо ${aBetter ? 'в платформенных задачах' : 'в алгоритмике'}` };
   }
-  if (avg >= 9.7) return { side: 'plus', text: say.top || say.hi };
+  // «Всегда» говорим только про настоящую десятку по всем измеренным категориям.
+  if (vals.every((v) => v >= 9.95)) return { side: 'plus', text: say.top || say.hi };
+  if (avg >= 9.7) return { side: 'plus', text: say.near || say.hi };
   if (avg >= 8) return { side: 'plus', text: say.hi };
   let t = avg >= 6 ? say.mid : say.lo;
   if (ax === ins.weakSpot?.axis && ins.weakTag) t += ` (слабее на «${ins.weakTag.label}»)`;
@@ -109,7 +113,18 @@ export function verdictDetail(model, ins) {
   for (const ax of ['M', 'O', 'P', 'S']) {
     const line = axisLine(ax, model.A?.[ax], model.B?.[ax], ins);
     if (!line) continue;
-    (line.side === 'plus' ? pluses : minuses).push({ ax, name: AXIS_NAME[ax], text: line.text });
+    // Словесная оценка без числа проверяется только на веру. Кладём в строку и средний
+    // балл оси, и разбивку по категориям: у одной модели 9.3 в алгоритмике и 9.8 в платформе
+    // это разный разговор, хотя фраза выйдет одна и та же.
+    const a = model.A?.[ax], b = model.B?.[ax];
+    const vals = [a, b].filter((v) => v != null);
+    const avg = vals.length ? vals.reduce((x, y) => x + y, 0) / vals.length : null;
+    (line.side === 'plus' ? pluses : minuses).push({
+      ax, name: AXIS_NAME[ax], text: line.text,
+      score: avg == null ? null : Math.round(avg * 10) / 10,
+      a: a == null ? null : Math.round(a * 10) / 10,
+      b: b == null ? null : Math.round(b * 10) / 10,
+    });
   }
   // сильная категория — по доле решённых (то, что показано ниже в карточке), а не по Q — иначе рассинхрон
   const aS = model.A?.solved, bS = model.B?.solved;
@@ -134,7 +149,18 @@ function VGroup({ title, tone, mark, items }) {
         {items.map((it) => (
           <div key={it.ax} style={{ display: 'flex', gap: 8, fontSize: 12.5, lineHeight: 1.4 }}>
             <span style={{ flex: 'none', fontFamily: 'var(--font-mono)', fontWeight: 700, color: tone }}>{mark}</span>
-            <span style={{ color: 'var(--ink-300)' }}><b style={{ color: 'var(--ink-100)' }}>{it.name}</b> — {it.text}</span>
+            <span style={{ color: 'var(--ink-300)' }}>
+              <b style={{ color: 'var(--ink-100)' }}>{it.name}</b>
+              {it.score != null && (
+                <span style={{ fontFamily: 'var(--font-mono)', fontWeight: 700, color: tone, marginLeft: 6 }}>{it.score.toFixed(1)}</span>
+              )}
+              {' — '}{it.text}
+              {(it.a != null || it.b != null) && (
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>
+                  {' ('}{it.a != null ? `A ${it.a.toFixed(1)}` : 'A —'}{' · '}{it.b != null ? `B ${it.b.toFixed(1)}` : 'B —'}{')'}
+                </span>
+              )}
+            </span>
           </div>
         ))}
       </div>
@@ -203,7 +229,14 @@ export function NarrativeCard({ model, models = [], tagLabels = {} }) {
           <EconStat label="цена ответа" value={ins.genCostFmt} meaning={costTier?.text} tone={costTier?.tone} icon="zap" />
           <EconStat label="скорость" value={ins.avgTime != null ? `${ins.avgTime} с` : '—'} meaning={timeTier?.text} tone={timeTier?.tone} icon="clock" />
           <EconStat label="токенов на ответ" value={fmtTok(model.econ?.tokPerGen)} meaning={tokTier?.text} tone={tokTier?.tone} />
-          <EconStat label="общая оценка" value={ins.qOverall != null ? `${ins.qOverall.toFixed(1)} / 10` : '—'} meaning={qualityWord(ins.qOverall)} tone={(ins.qOverall ?? 0) >= 7 ? 'var(--axis-o)' : 'var(--ink-400)'} />
+          {/* Словесная оценка плюс охват: Q считается по измеренным осям, и знаменатель
+              у моделей разный. Без этого «отлично» у полного и у половинного замера
+              выглядят одинаково. */}
+          <EconStat label="общая оценка" value={ins.qOverall != null ? `${ins.qOverall.toFixed(1)} / 10` : '—'}
+            meaning={model.axesDone != null && model.axesTotal && model.axesDone < model.axesTotal
+              ? `${qualityWord(ins.qOverall)} · ${model.axesDone} из ${model.axesTotal} осей`
+              : qualityWord(ins.qOverall)}
+            tone={(ins.qOverall ?? 0) >= 7 ? 'var(--axis-o)' : 'var(--ink-400)'} />
         </div>
 
         {/* дешевле конкретных конкурентов — понятный козырь */}

@@ -147,7 +147,12 @@ function RadarSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobi
         })}
         {shown.map((m, idx) => {
           const col = PALETTE[idx % PALETTE.length];
-          const pts = axes.map((a, i) => pt(i, (m[cat] && m[cat][a]) || 0).join(',')).join(' ');
+          // Неизмеренная ось вершины не даёт: ноль в этом месте читался бы как балл «0»,
+          // хотя проверки не было вовсе. Вершина просто выпадает, контур становится короче,
+          // а в легенде у такой модели стоит пометка о неполном профиле.
+          const pts = axes.map((a, i) => (m[cat]?.[a] == null ? null : pt(i, m[cat][a]).join(',')))
+            .filter(Boolean).join(' ');
+          if (!pts) return null;
           return <polygon key={m.id} points={pts} fill={col} fillOpacity={0.05} stroke={col} strokeWidth={1.4}
             style={{ cursor: 'pointer' }} onClick={() => navigate && navigate('model', m.id)} />;
         })}
@@ -156,7 +161,9 @@ function RadarSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobi
           return (
             <g key={m.id} style={{ cursor: 'pointer' }} onClick={() => navigate && navigate('model', m.id)}>
               <circle cx={22} cy={y - 3} r={4.5} fill={col} />
-              <text x={34} y={y} fontSize="11" fill={C.ink}>{m.name}</text>
+              <text x={34} y={y} fontSize="11" fill={C.ink}>{m.name}
+                {axes.some((a) => m[cat]?.[a] == null) && <tspan fontSize="9.5" fill={C.muted}> · профиль неполный</tspan>}
+              </text>
               <text x={W - 18} y={y} textAnchor="end" fontSize="10.5" fontWeight="600" fill={C.sub}>{m[qKey].toFixed(2)}</text>
             </g>
           );
@@ -180,7 +187,10 @@ function RadarSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobi
       })}
       {shown.map((m, idx) => {
         const col = PALETTE[idx % PALETTE.length]; const on = hover === m.id; const dim = hover && !on;
-        const pts = axes.map((a, i) => pt(i, (m[cat] && m[cat][a]) || 0).join(',')).join(' ');
+        // Как и на соседнем радаре: неизмеренная ось вершины не даёт, ноль там означал бы балл.
+        const pts = axes.map((a, i) => (m[cat]?.[a] == null ? null : pt(i, m[cat][a]).join(',')))
+          .filter(Boolean).join(' ');
+        if (!pts) return null;
         return <polygon key={m.id} points={pts} fill={col} fillOpacity={on ? 0.18 : 0.05} stroke={col} strokeWidth={on ? 2.6 : 1.5} opacity={dim ? 0.2 : 1}
           style={{ cursor: 'pointer' }} onMouseEnter={() => setHover(m.id)} onMouseLeave={() => setHover(null)} onClick={() => navigate && navigate('model', m.id)} />;
       })}
@@ -233,7 +243,9 @@ function BarsSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobil
             <g key={m.id} style={{ cursor: 'pointer' }} onClick={() => navigate && navigate('model', m.id)}>
               <text x={L} y={y0 + 12} fontSize="11.5" fill={C.ink} fontWeight={ri === 0 ? 700 : 400}>{`${ri + 1}. ${m.name}`}</text>
               {axes.map((a, ai) => {
-                const v = (m[cat] && m[cat][a]) || 0; const by = y0 + 18 + ai * (bh + 1);
+                const v = m[cat]?.[a]; const by = y0 + 18 + ai * (bh + 1);
+                // Нет замера — нет столбца: нулевой столбик неотличим от честного нуля.
+                if (v == null) return <text key={a} x={L + 3} y={by + bh - 2} fontSize="8.5" fill={C.muted}>—</text>;
                 return (<g key={a}><rect x={L} y={by} width={Math.max(1, x(v) - L)} height={bh} fill={AXIS[a]} opacity={0.9} /><text x={x(v) + 4} y={by + bh - 2} fontSize="8.5" fill={C.sub}>{v.toFixed(1)}</text></g>);
               })}
             </g>
@@ -258,7 +270,8 @@ function BarsSvg({ svgRef, cat, shown, meta, C, hover, setHover, navigate, mobil
             <rect x={0} y={y0} width={W} height={rowH} fill={on ? C.rowHover : 'transparent'} />
             <text x={L - 10} y={y0 + rowH / 2 + 4} textAnchor="end" fontSize="12" fill={C.ink} fontWeight={ri === 0 ? 700 : 400}>{`${ri + 1}. ${m.name}`}</text>
             {axes.map((a, ai) => {
-              const v = (m[cat] && m[cat][a]) || 0; const by = y0 + 8 + ai * bh;
+              const v = m[cat]?.[a]; const by = y0 + 8 + ai * bh;
+              if (v == null) return <text key={a} x={L + 4} y={by + bh / 2 + 2} fontSize="9" fill={C.muted}>—</text>;
               return (<g key={a}><rect x={L} y={by} width={Math.max(1, x(v) - L)} height={bh - 2} fill={AXIS[a]} opacity={on ? 1 : 0.9} /><text x={x(v) + 5} y={by + bh / 2 + 2} fontSize="9" fill={C.sub}>{v.toFixed(1)}</text></g>);
             })}
           </g>
@@ -314,10 +327,19 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
       </g>
     );
   };
-  // балл Q — главная (сортирующая) цифра
-  const qCell = (x, q, cy) => {
+  // Балл Q и охват под ним. Картинку уносят из контекста витрины, поэтому охват обязан
+  // ехать вместе с баллом: Q усредняет только измеренные оси (metrics/smop.yaml,
+  // quality_score.coverage_required), и без знаменателя два числа несопоставимы.
+  const qCell = (x, m, cy) => {
+    const q = m.qOverall;
     if (q == null) return <text x={x} y={cy + 5} fontSize="12" fill={C.muted}>—</text>;
-    return <text x={x} y={cy + 7}><tspan fontSize="23" fontWeight="700" fill={C.ink}>{q.toFixed(2)}</tspan><tspan fontSize="11" fill={C.muted} dx="3">/10</tspan></text>;
+    const partial = m.axesDone != null && m.axesTotal && m.axesDone < m.axesTotal;
+    return (
+      <g>
+        <text x={x} y={partial ? cy + 2 : cy + 7}><tspan fontSize="23" fontWeight="700" fill={C.ink}>{q.toFixed(2)}</tspan><tspan fontSize="11" fill={C.muted} dx="3">/10</tspan></text>
+        {partial && <text x={x} y={cy + 17} fontSize="9.5" fill={C.muted}>{m.axesDone}/{m.axesTotal} осей измерено</text>}
+      </g>
+    );
   };
   return (
     <svg ref={svgRef} viewBox={`0 0 ${W} ${H}`} style={{ ...svgStyle, background: C.bg }} fontFamily={FONT}>
@@ -330,7 +352,7 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
         <tspan fontWeight="700" fill={C.ink}>Категория B — платформенные:</tspan>
         <tspan dx="6"> запросы, регистры, метаданные. Движок — реальная 1С в Docker.</tspan>
       </text>
-      <text x={24} y={91} fontSize="11" fill={C.muted}>Q — итоговый балл SMOP по 4 осям (0–10) · «решено» — доля задач со всеми пройденными тестами · {rows.length} моделей</text>
+      <text x={24} y={91} fontSize="11" fill={C.muted}>Q — среднее по ИЗМЕРЕННЫМ осям SMOP (0–10), рядом — сколько осей измерено · «решено» — доля задач со всеми пройденными тестами · {rows.length} моделей</text>
       <rect x={0} y={headTop} width={W} height={headH} fill={C.head} />
       <text x={rankX} y={headTop + 18} textAnchor="middle" fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>#</text>
       <text x={logoX} y={headTop + 18} fontSize="10" fontWeight="700" letterSpacing="0.06em" fill={C.muted}>МОДЕЛЬ</text>
@@ -349,7 +371,7 @@ export function SummaryTableSvg({ svgRef, rows, meta, C }) {
             <text x={nameX} y={cy + 13} fontSize="10.5" fill={C.muted}>{m.family || m.vendor || ''}</text>
             {cell(aX, m.A?.solved, cy)}
             {cell(bX, m.B?.solved, cy)}
-            {qCell(qX, m.qOverall, cy)}
+            {qCell(qX, m, cy)}
           </g>
         );
       })}
@@ -401,7 +423,11 @@ export function ScoresTableSvg({ svgRef, cat, rows, meta, C }) {
                 </g>
               );
             })}
-            <text x={qX} y={cy + 5} textAnchor="middle" fontSize="18" fontWeight="700" fill={C.ink}>{q.toFixed(2)}</text>
+            <text x={qX} y={m[cat]?.axesDone != null && m[cat]?.axesTotal && m[cat].axesDone < m[cat].axesTotal ? cy : cy + 5}
+              textAnchor="middle" fontSize="18" fontWeight="700" fill={C.ink}>{q.toFixed(2)}</text>
+            {m[cat]?.axesDone != null && m[cat]?.axesTotal && m[cat].axesDone < m[cat].axesTotal && (
+              <text x={qX} y={cy + 14} textAnchor="middle" fontSize="9" fill={C.muted}>{m[cat].axesDone}/{m[cat].axesTotal} осей</text>
+            )}
           </g>
         );
       })}
@@ -681,6 +707,10 @@ function ModelCardSvg({ svgRef, model, ins, meta, C }) {
       <text x={bx + 16} y={boxTop + 42} fontSize="11" fill={C.muted}>{sub}</text>
       <text x={bx + bw - 16} y={boxTop + 30} textAnchor="end"><tspan fontSize="26" fontWeight="700" fill={C.ink}>{q != null ? q.toFixed(2) : '—'}</tspan><tspan fontSize="11" fill={C.muted} dx="2">/10</tspan></text>
       <text x={bx + bw - 16} y={boxTop + 47} textAnchor="end" fontSize="11" fontWeight="600" fill={solvedHex(C, solved)}>решено {solved != null ? Math.round(solved * 100) : '—'}%</text>
+      {/* охват рядом с баллом — картинка уходит без подписей витрины */}
+      {scores?.axesDone != null && scores?.axesTotal && scores.axesDone < scores.axesTotal && (
+        <text x={bx + bw - 16} y={boxTop + 62} textAnchor="end" fontSize="9.5" fill={C.muted}>измерено {scores.axesDone} из {scores.axesTotal} осей</text>
+      )}
       {axes.map((a, i) => axisRow(bx + 16, boxTop + boxHeadH + 12 + i * rowH, bw - 32, a, scores?.[a]))}
     </g>
   );
@@ -742,6 +772,9 @@ function ModelCardSvg({ svgRef, model, ins, meta, C }) {
       {metaLine && <text x={pad + 58} y={101} fontSize="11" fill={C.sub}>{metaLine}</text>}
       <text x={W - pad} y={66} textAnchor="end"><tspan fontSize="32" fontWeight="700" fill={C.ink}>{ins.qOverall != null ? ins.qOverall.toFixed(2) : '—'}</tspan><tspan fontSize="12" fill={C.muted} dx="2">/10</tspan></text>
       <text x={W - pad} y={86} textAnchor="end" fontSize="11" fontWeight="600" fill={C.brand}>{rankTxt} из {ins.total} · по Q</text>
+      {model.axesDone != null && model.axesTotal && model.axesDone < model.axesTotal && (
+        <text x={W - pad} y={101} textAnchor="end" fontSize="10" fill={C.muted}>измерено {model.axesDone} из {model.axesTotal} осей</text>
+      )}
 
       <text x={pad} y={leadY} fontSize="14" fill={C.sub}>{vd.lead}</text>
 

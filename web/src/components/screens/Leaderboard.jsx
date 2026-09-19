@@ -19,12 +19,22 @@ const stickyLeft = (bg) => ({ position: 'sticky', left: 0, zIndex: 1, background
 
 // **жирный** внутри строки журнала → <b> (единственная разметка, которую поддерживаем).
 // links — {имя модели: адрес карточки}: такое жирное имя становится ссылкой на карточку.
-const inlineBold = (text, links) => String(text).split(/(\*\*[^*]+\*\*)/g).map((p, i) => {
-  if (!(p.startsWith('**') && p.endsWith('**'))) return p;
-  const name = p.slice(2, -2);
-  return links?.[name]
-    ? <a key={i} className="changelog-model-link" href={links[name]}><b>{name}</b></a>
-    : <b key={i}>{name}</b>;
+// Разметка записей журнала: **жирный** (имя модели превращается в ссылку на её карточку)
+// и markdown-ссылка [текст](url) — ею записи ссылаются на отчёты и внешние материалы.
+const inlineBold = (text, links) => String(text).split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g).map((p, i) => {
+  if (p.startsWith('**') && p.endsWith('**')) {
+    const name = p.slice(2, -2);
+    return links?.[name]
+      ? <a key={i} className="changelog-model-link" href={links[name]}><b>{name}</b></a>
+      : <b key={i}>{name}</b>;
+  }
+  const md = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(p);
+  if (md) {
+    const ext = /^https?:/.test(md[2]);
+    return <a key={i} className="changelog-model-link" href={md[2]}
+      target={ext ? '_blank' : undefined} rel={ext ? 'noopener noreferrer' : undefined}>{md[1]}</a>;
+  }
+  return p;
 });
 const modelLinks = (e) => Object.fromEntries((e.models || []).map((m) => [m.name, `${BASE}m/${m.id}/`]));
 
@@ -87,15 +97,23 @@ function ChangelogModal({ entries, releases, onClose }) {
               <article key={e.date} className={i === 0 ? 'changelog-entry is-latest' : 'changelog-entry'}>
                 <div className="changelog-date">
                   <span>{e.dateFull}</span>
-                  {e.releases.length > 0 && (
+                  {(e.releases.length > 0 || e.version) && (
                     <span className="changelog-versions">
                       {e.releases.map((r) => <ReleaseTag key={r.version} release={r} />)}
+                      {/* Версия объявлена в записи, а тега ещё нет: показываем чип без ссылки,
+                          иначе она вела бы на несуществующую страницу релиза. */}
+                      {e.version && !e.releases.some((r) => r.version === e.version) && (
+                        <span className="changelog-release-tag" title={`версия ${e.version}`}>{e.version}</span>
+                      )}
                     </span>
                   )}
                 </div>
                 <h3 className="changelog-title">{inlineBold(e.title)}</h3>
                 {e.summary && <p className="changelog-summary">{inlineBold(e.summary, modelLinks(e))}</p>}
                 {e.items?.length > 0 && <ul className="changelog-items">{e.items.map((it, j) => <li key={j}>{inlineBold(it, modelLinks(e))}</li>)}</ul>}
+                {/* Абзацы после списка: итоги записи. Раньше парсер приклеивал их к
+                    последнему пункту, и вывод читался как один разбухший пункт. */}
+                {e.outro?.map((t, j) => <p key={j} className="changelog-summary">{inlineBold(t, modelLinks(e))}</p>)}
               </article>
             ))}
           </div>
@@ -255,11 +273,30 @@ function TableScroll({ minWidth = 640, children }) {
 // кастомный тултип в родной палитре (приподнятая поверхность, обычный текст, тонкая рамка),
 // следует за курсором — не дефолтный белый и без инверсии цветов.
 function Tooltip({ x, y, text }) {
+  // Длинную подсказку переносим по словам и не даём уехать за правый край окна: в одну
+  // строку она обрезалась ровно на середине фразы.
+  const wide = String(text).length > 46;
+  const w = wide ? 300 : 0;
+  const vw = typeof window === 'undefined' ? 1200 : window.innerWidth;
+  const left = wide ? Math.max(8, Math.min(x + 14, vw - w - 12)) : x + 14;
   return (
-    <span style={{ position: 'fixed', left: x + 14, top: y + 16, zIndex: 60, pointerEvents: 'none',
+    <span style={{ position: 'fixed', left, top: y + 16, zIndex: 60, pointerEvents: 'none',
       background: 'var(--surface-raised)', color: 'var(--ink-200)', border: '1px solid var(--line)',
-      borderRadius: 'var(--radius-sm)', padding: '5px 9px', fontFamily: 'var(--font-mono)', fontSize: 11.5,
-      whiteSpace: 'nowrap', boxShadow: '0 6px 18px rgba(0,0,0,0.22)' }}>{text}</span>
+      borderRadius: 'var(--radius-sm)', padding: '6px 10px', fontFamily: 'var(--font-mono)', fontSize: 11.5,
+      lineHeight: 1.45, maxWidth: wide ? w : undefined, whiteSpace: wide ? 'normal' : 'nowrap',
+      boxShadow: '0 6px 18px rgba(0,0,0,0.22)' }}>{text}</span>
+  );
+}
+// тот же тултип, но на произвольном элементе: наведение на само число, а не на всю строку
+function Hint({ text, children, style }) {
+  const [pos, setPos] = React.useState(null);
+  return (
+    <span style={{ ...style, cursor: 'help' }}
+      onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
+      onMouseLeave={() => setPos(null)}>
+      {children}
+      {pos && <Tooltip x={pos.x} y={pos.y} text={text} />}
+    </span>
   );
 }
 function ListRow({ grid, i, top, onClick, tip, label, gap = 18, pad = '14px 20px', children }) {
@@ -297,14 +334,16 @@ function SortHead({ label, axis, sortKey, dir, onSort }) {
 // Полнота рядом с общим баллом: Q усредняет ТОЛЬКО измеренные оси, поэтому одинаковое
 // число при 100% и при 50% — разные утверждения (конституция, quality_score.coverage_required).
 // Показываем, лишь когда что-то не измерено: у полных записей подпись была бы шумом.
-function QCell({ q, coverage }) {
-  const partial = coverage != null && coverage < 0.995;
+function QCell({ q, done, total }) {
+  const partial = done != null && total ? done < total : false;
+  const num = <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 17, fontWeight: 700, color: 'var(--ink-100)' }}>{q.toFixed(2)}</span>;
+  if (!partial) return <span style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.1 }}>{num}</span>;
   return (
-    <span style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.1 }}
-      title={partial ? `измерено ${Math.round(coverage * 100)}% осей — по остальным проверка не состоялась, и в среднее они не входят` : undefined}>
-      <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 17, fontWeight: 700, color: 'var(--ink-100)' }}>{q.toFixed(2)}</span>
-      {partial && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, color: 'var(--ink-400)' }}>{Math.round(coverage * 100)}% осей</span>}
-    </span>
+    <Hint text={`Q посчитан по ${done} осям из ${total}: остальные проверки не состоялись и в среднее не вошли`}
+      style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', alignItems: 'flex-end', lineHeight: 1.1 }}>
+      {num}
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>{done}/{total} осей</span>
+    </Hint>
   );
 }
 
@@ -370,6 +409,9 @@ function OverallTable({ cat, models, navigate, rankSource }) {
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.04em', color: 'var(--ink-400)' }}>Q</span>
                   <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15, fontWeight: 700, lineHeight: 1.1, color: 'var(--ink-100)' }}>{m[qKey].toFixed(2)}</span>
+                  {m[cat].axesDone != null && m[cat].axesTotal && m[cat].axesDone < m[cat].axesTotal && (
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, lineHeight: 1.2, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>{m[cat].axesDone}/{m[cat].axesTotal} осей</span>
+                  )}
                 </div>
                 <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>
               </div>
@@ -398,7 +440,7 @@ function OverallTable({ cat, models, navigate, rankSource }) {
             <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 13, fontWeight: 700, color: r === 1 ? 'var(--brand)' : 'var(--ink-400)' }}>{r}</span>
             <Identity m={m} size={30} />
             {axes.map((a) => <ScoreCell key={a} v={m[cat][a]} axis={a} cover={a === 'O' ? { oN: m[cat].oN, n: m[cat].funnel?.n } : null} />)}
-            <QCell q={m[qKey]} coverage={m[cat].coverage} />
+            <QCell q={m[qKey]} done={m[cat].axesDone} total={m[cat].axesTotal} />
             <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>{m[cat].margin != null ? `±${m[cat].margin.toFixed(1)}` : '—'}</span>
             <span style={{ textAlign: 'right', fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>{m.cost}</span>
           </div>
@@ -604,20 +646,36 @@ function MobPct({ label, solved }) {
 }
 // крупный балл Q — главная (сортирующая) цифра сводки; цвет по уровню, как у «решено»
 const qColorSum = (q) => (q == null ? 'var(--ink-400)' : q >= 8 ? 'var(--axis-o)' : q >= 6 ? 'var(--brand)' : q >= 4 ? 'var(--warn)' : 'var(--danger)');
-function QStat({ q }) {
-  return (
+function QStat({ q, done, total }) {
+  // Охват идёт рядом с Q везде, где Q публикуется (metrics/smop.yaml, coverage_required):
+  // балл усредняет ТОЛЬКО измеренные оси, поэтому без охвата два числа несопоставимы.
+  // В штуках, а не в долях: «71 из 125» сразу видно, «57%» надо ещё переводить в смысл.
+  const partial = done != null && total ? done < total : false;
+  const num = (
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
       <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 22, fontWeight: 700, letterSpacing: '-0.01em', lineHeight: 1, color: qColorSum(q) }}>{q != null ? q.toFixed(2) : '—'}</span>
       <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--ink-400)' }}>/ 10</span>
     </div>
   );
+  if (!partial) return <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>{num}</div>;
+  return (
+    <Hint text={`Q посчитан по ${done} осям из ${total}: остальные проверки не состоялись и в среднее не вошли`}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 2 }}>
+      {num}
+      <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>{done}/{total} осей</span>
+    </Hint>
+  );
 }
 // компактный Q для мобильной строки: лейбл сверху, балл снизу
-function MobQ({ q }) {
+// На узком экране подписи не развернуть, поэтому охват идёт третьей строкой под баллом:
+// тултипа на касании нет, а Q без охвата публиковать нельзя (metrics/smop.yaml).
+function MobQ({ q, done, total }) {
+  const partial = done != null && total ? done < total : false;
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, minWidth: 42 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, minWidth: 46 }}>
       <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9.5, letterSpacing: '0.04em', color: 'var(--ink-400)' }}>Q</span>
       <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 16, fontWeight: 700, lineHeight: 1, color: qColorSum(q) }}>{q != null ? q.toFixed(2) : '—'}</span>
+      {partial && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 8.5, lineHeight: 1.2, color: 'var(--ink-400)', whiteSpace: 'nowrap' }}>{done}/{total} осей</span>}
     </div>
   );
 }
@@ -641,7 +699,7 @@ function SummaryView({ models, navigate, ranks }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
               <MobPct label="A" solved={m.A?.solved} />
               <MobPct label="B" solved={m.B?.solved} />
-              <MobQ q={m.qOverall} />
+              <MobQ q={m.qOverall} done={m.axesDone} total={m.axesTotal} />
               <span style={{ color: 'var(--ink-400)', fontSize: 19, lineHeight: 1 }}>›</span>
             </div>
           </ListRow>
@@ -664,7 +722,7 @@ function SummaryView({ models, navigate, ranks }) {
           <Identity m={m} openHint />
           <SolvedStat solved={m.A?.solved} />
           <SolvedStat solved={m.B?.solved} />
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}><QStat q={m.qOverall} /></div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}><QStat q={m.qOverall} done={m.axesDone} total={m.axesTotal} /></div>
         </ListRow>
       ))}
     </TableScroll>
