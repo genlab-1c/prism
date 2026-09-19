@@ -17,6 +17,7 @@ tools/*
 !tools/get-*.sh
 !tools/backfill_billing.py
 !tools/backfill_provenance.py
+!tools/backfill_generated_at.py
 !tools/export_dataset.py
 
 # Рабочие артефакты прогонов (промежуточные; канонические результаты — в results/).
@@ -55,6 +56,10 @@ site/
 CLAUDE.md
 .claude/
 results/.measure_cache/
+# ...но доказательная часть кэша едет в репозиторий: без неё клонировавший видит балл и не
+# может проверить, откуда он взялся. Собирается `prism artifacts --export`, читается той же
+# командой при разборе записи. Это сотые доли кэша: только прогоны, названные в оценках.
+!results/artifacts.jsonl
 
 # журналы режима grasp (локальные)
 .grasp/
