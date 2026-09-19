@@ -19,8 +19,8 @@ const PAGES = [
   { src: path.join(REPO, 'docs', 'how-it-works.md'), slug: 'how-it-works', title: 'Как это работает', section: 'docs' },
   { src: path.join(REPO, 'docs', 'architecture.md'), slug: 'architecture', title: 'Архитектура', section: 'docs' },
   { src: path.join(REPO, 'docs', 'cli.md'), slug: 'cli', title: 'Как запустить', section: 'docs' },
-  { src: path.join(REPO, 'docs', 'status.md'), slug: 'status', title: 'Что умеет сейчас', section: 'docs' },
   { src: path.join(REPO, 'docs', 'validity.md'), slug: 'validity', title: 'Честные границы', section: 'docs' },
+  { src: path.join(REPO, 'docs', 'glossary.md'), slug: 'glossary', title: 'Глоссарий', section: 'docs' },
   { src: path.join(REPO, 'tasks', 'README.md'), slug: 'tasks', title: 'Банк задач', section: 'tasks' },
 ];
 
@@ -35,6 +35,21 @@ function transform(src) {
   const out = [];
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
+
+    // диаграмма Mermaid. MkDocs рисует её сам (pymdownx.superfences), Astro о mermaid не
+    // знает и отдаёт блок как обычный код. Отдаём готовую разметку <pre class="mermaid">, а
+    // рисует её скрипт на странице документации. Исходник экранируем: браузер вернёт его
+    // обратно текстом, и <br/> внутри подписей узлов доживёт до mermaid, а не станет тегом.
+    if (/^\s*```mermaid\s*$/.test(line)) {
+      const body = [];
+      let j = i + 1;
+      for (; j < lines.length && !/^\s*```\s*$/.test(lines[j]); j++) body.push(lines[j]);
+      const esc = body.join('\n')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      out.push('', `<pre class="mermaid">${esc}</pre>`, '');
+      i = j;
+      continue;
+    }
 
     // снять <div ...>/</div> обёртки (MkDocs-центрирование таблиц)
     if (/^\s*<\/?div\b[^>]*>\s*$/.test(line)) continue;
