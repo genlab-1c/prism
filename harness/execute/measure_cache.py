@@ -19,6 +19,7 @@
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import json
 import os
@@ -27,6 +28,11 @@ from typing import Any
 from harness.loaders import PRISM
 
 CACHE_DIR = PRISM / "results" / ".measure_cache"
+# Сырьё, на которое ссылаются опубликованные оценки. Кэш в репозиторий не идёт (десятки
+# мегабайт промежуточных замеров), поэтому клонировавший видел балл, но не мог проверить,
+# откуда он взялся. Здесь лежит только доказательная часть: прогоны, названные в записях
+# (detail.M.run_key). Собирается командой `prism artifacts --export`.
+BUNDLE = PRISM / "results" / "artifacts.jsonl.gz"
 VERSION = "1"  # поднять, если поменялся ФОРМАТ записи кэша (не путать с содержимым входа)
 
 
@@ -52,6 +58,45 @@ def get(k: str) -> dict[str, Any] | None:
         return json.loads(path.read_text(encoding="utf-8"))
     except (OSError, ValueError):
         return None
+
+
+def bundle_get(k: str) -> dict[str, Any] | None:
+    """Достать сырьё из выгрузки в репозитории. Для свежего клона это единственный источник.
+
+    Читается построчно и без кэша в памяти: обращение сюда редкое (ручной разбор одной
+    записи), а файл лучше не держать целиком ради одного ключа. Сжатие обязательно: логи
+    русскоязычные, и в UTF-8 они весят вдвое против числа символов.
+    """
+    try:
+        with gzip.open(BUNDLE, "rt", encoding="utf-8") as fh:
+            for line in fh:
+                if k not in line:
+                    continue  # дешёвый отсев: ключ есть в строке только у своей записи
+                row = json.loads(line)
+                if row.get("key") == k:
+                    return row.get("raw")
+    except (OSError, ValueError):
+        return None
+    return None
+
+
+def bundle_write(items: dict[str, dict[str, Any]]) -> int:
+    """Переписать выгрузку целиком. Ключи сортируются, чтобы дифф был осмысленным."""
+    BUNDLE.parent.mkdir(parents=True, exist_ok=True)
+    tmp = BUNDLE.with_suffix(".tmp")
+    # mtime=0 и фиксированное сжатие: у одинакового содержимого выходит байт в байт тот же
+    # файл, поэтому пересборка выгрузки не даёт пустого диффа в git.
+    body = "".join(
+        json.dumps({"key": k, "raw": items[k]}, ensure_ascii=False, sort_keys=True) + "\n"
+        for k in sorted(items)
+    )
+    with (
+        open(tmp, "wb") as raw_fh,
+        gzip.GzipFile(fileobj=raw_fh, mode="wb", compresslevel=9, mtime=0) as fh,
+    ):
+        fh.write(body.encode("utf-8"))
+    tmp.replace(BUNDLE)
+    return len(items)
 
 
 def put(k: str, value: dict[str, Any]) -> None:
