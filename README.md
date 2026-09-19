@@ -53,7 +53,11 @@ GigaChat), занимаетесь **вайбкодингом 1С** или исс
 
 <p align="center">
   <a href="https://prism.genlab-1c.ru">
-    <img src="docs/assets/showcase.png" alt="PRISM: лидерборд нейросетей по коду 1С, разбор оси O под нагрузкой и CLI бенчмарка" width="820">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="docs/assets/showcase-dark.png">
+      <source media="(prefers-color-scheme: light)" srcset="docs/assets/showcase-light.png">
+      <img src="docs/assets/showcase-dark.png" alt="PRISM: лидерборд нейросетей по коду 1С по осям SMOP, матрица «задача × модель» и рост работы на данных по оси O" width="880">
+    </picture>
   </a>
 </p>
 <p align="center"><sub>Лидерборд · разбор оси O «под нагрузкой» · CLI. Живьём и интерактивно — <a href="https://prism.genlab-1c.ru">prism.genlab-1c.ru</a></sub></p>
