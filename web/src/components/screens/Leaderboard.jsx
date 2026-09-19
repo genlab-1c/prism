@@ -11,6 +11,7 @@ import { VendorLogo } from '../prism/VendorLogo.jsx';
 import { EconomyView } from './Economy.jsx';
 import { LeaderChart, TableExport, SummaryTableSvg, ScoresTableSvg } from '../prism/LeaderChart.jsx';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
+import { DONATE_URL } from '../../lib/links.js';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -287,6 +288,22 @@ function Tooltip({ x, y, text }) {
       boxShadow: '0 6px 18px rgba(0,0,0,0.22)' }}>{text}</span>
   );
 }
+// Кнопка поддержки. Адрес общий с подвалом, поэтому живёт в src/lib/links.js.
+function DonateButton({ compact }) {
+  return (
+    <Hint text="Поддержать развитие проекта">
+    <a href={DONATE_URL} target="_blank" rel="noopener noreferrer"
+      className={`donate-button${compact ? ' donate-button--compact' : ''}`}>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 20.5 4.2 12.9a4.7 4.7 0 0 1 0-6.7 4.7 4.7 0 0 1 6.7 0l1.1 1.1 1.1-1.1a4.7 4.7 0 0 1 6.7 0 4.7 4.7 0 0 1 0 6.7L12 20.5Z"
+          stroke="var(--brand)" strokeWidth="1.8" strokeLinejoin="round" />
+      </svg>
+      <span className="donate-label">Поддержать</span>
+    </a>
+    </Hint>
+  );
+}
+
 // тот же тултип, но на произвольном элементе: наведение на само число, а не на всю строку
 function Hint({ text, children, style }) {
   const [pos, setPos] = React.useState(null);
@@ -954,6 +971,8 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
   return (
     <main style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: '0 24px' }}>
       <section style={{ paddingTop: isMobile ? 22 : 40, paddingBottom: isMobile ? 14 : 24 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 24 }}>
+        <div style={{ minWidth: 0 }}>
         <h1 style={{ margin: 0, fontFamily: 'var(--font-mono)', fontSize: isMobile ? 18 : 22, fontWeight: 600, color: 'var(--ink-100)', letterSpacing: '-0.01em', lineHeight: 1.25 }}>
           <span className="brand-wordmark">prism</span> <span style={{ color: 'var(--ink-400)', fontWeight: 400 }}>— многомерная оценка генерации кода 1С</span>
         </h1>
@@ -963,6 +982,12 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
         <p style={{ margin: isMobile ? '7px 0 0' : '9px 0 0', fontSize: isMobile ? 13.5 : 14.5, color: 'var(--ink-300)', maxWidth: 720, lineHeight: isMobile ? 1.5 : 1.6, textAlign: isMobile ? 'justify' : 'left', hyphens: isMobile ? 'auto' : 'manual' }}>
           Каждое решение проходит скрытые функциональные и нагрузочные тесты и получает <span style={{ color: 'var(--ink-100)' }}>оценку по четырём осям SMOP</span>: синтаксис, семантика, оптимальность, платформа. Баллы по осям сводятся в итоговый рейтинг моделей.
         </p>
+        </div>
+        {/* Справа от текста пусто по всей высоте блока — место для кнопки. Выбор места
+            через CSS, а не через isMobile: хук до монтирования отдаёт false, поэтому первый
+            рендер приходит десктопным и вёрстка прыгает после гидратации. */}
+        <span className="hide-mobile"><DonateButton /></span>
+        </div>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: isMobile ? 14 : 20, alignItems: 'center' }}>
           <Shield label="версия" value={`v${meta.version || '—'}`} tone="brand" />
@@ -981,6 +1006,12 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <a href={`${meta.repo?.url || 'https://github.com/genlab-1c/prism'}/blob/main/CONTRIBUTING.md`} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Как поучаствовать</a>
           <span style={{ color: 'var(--ink-400)' }}> · </span>
           <a href="https://huggingface.co/datasets/genlab-1c/prism-smop" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Датасет на Hugging Face</a>
+          {/* На узком экране кнопки в шапке нет: она отбирала ширину у заголовка. Отдельной
+              пилюлей внизу она смотрелась случайной и упиралась в таб-бар, поэтому здесь
+              это третья ссылка той же строки, рядом с остальными способами помочь. */}
+          <span className="show-mobile-inline" style={{ color: 'var(--ink-400)' }}> · </span>
+          <a className="show-mobile-inline" href={DONATE_URL} target="_blank" rel="noopener noreferrer"
+            style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Поддержать проект</a>
         </p>
       </section>
 

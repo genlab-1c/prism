@@ -1,5 +1,6 @@
 ---
 // Подвал — статический, без интерактива (потому Astro-компонент, не остров).
+import { DONATE_URL } from '../lib/links.js';
 ---
 <footer style="border-top:1px solid var(--line); margin-top:72px;">
   <div style="max-width:var(--container); margin:0 auto; padding:24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px; font-family:var(--font-mono); font-size:12px;">
@@ -12,6 +13,9 @@
       <a href="https://huggingface.co/datasets/genlab-1c/prism-smop" target="_blank" rel="noopener noreferrer" style="color:var(--ink-300);">датасет</a>
       <a href="https://github.com/genlab-1c/prism#readme" style="color:var(--ink-300);">README</a>
       <a href="https://github.com/genlab-1c/prism/blob/main/CHANGELOG.md" style="color:var(--ink-300);">CHANGELOG</a>
+      <!-- На главной донат есть в герое, но подвал единственное место, которое видно и на
+           страницах документации, задач и карточках моделей. -->
+      <a href={DONATE_URL} target="_blank" rel="noopener noreferrer" style="color:var(--brand);">поддержать</a>
     </div>
   </div>
 </footer>

@@ -19,6 +19,46 @@
   .brand-wordmark { animation: none; background-position: 0% 50%; }
 }
 
+/* ---- кнопка поддержки ----
+   В покое обычная пилюля. При наведении по рамке и подписи течёт тот же градиент по
+   цветам осей, что и у логотипа: рамка рисуется двумя фонами (внутренний под padding-box,
+   градиентный под border-box), иначе границе градиент не задать. */
+.donate-button {
+  display: inline-flex; align-items: center; gap: 7px; flex: none;
+  text-decoration: none; white-space: nowrap;
+  padding: 6px 13px; border-radius: var(--radius-pill);
+  border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink-100); font-size: 13px; font-weight: 600;
+  transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.donate-button:hover, .donate-button:focus-visible { text-decoration: none; }
+.donate-button:hover {
+  border-color: transparent;
+  background-image:
+    linear-gradient(var(--surface), var(--surface)),
+    linear-gradient(90deg, var(--axis-s), var(--axis-m), var(--axis-o), var(--axis-p), var(--axis-s));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-size: 100% 100%, 200% 100%;
+  animation: donate-flow 6s linear infinite;
+}
+.donate-button:hover .donate-label {
+  background-image: linear-gradient(90deg, var(--axis-s), var(--axis-m), var(--axis-o), var(--axis-p), var(--axis-s));
+  background-size: 200% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  animation: brand-flow 6s linear infinite;
+}
+@keyframes donate-flow {
+  from { background-position: 0 0, 200% 50%; }
+  to   { background-position: 0 0, 0% 50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .donate-button:hover { animation: none; }
+  .donate-button:hover .donate-label { animation: none; background-position: 0% 50%; }
+}
+.donate-button--compact { padding: 5px 11px; font-size: 12.5px; }
+
 /* ---- звезда на кнопке GitHub в шапке ----
    Полный оборот вокруг вертикальной оси, как монета: раз в 8 секунд и сразу при
    наведении. Остальное время звезда стоит. Перспектива даёт объём, без неё поворот
