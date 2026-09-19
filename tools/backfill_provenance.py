@@ -8,7 +8,8 @@
 
 Источник даты — время записи чекпойнта пары (results/experiment_*.parts/<TASK>__<model>.json),
 зафиксированное в снимке results/auto/snapshots/*/parts_dates.json. Снимок нужен потому, что
-сама запись в чекпойнт затирает mtime; после записи время файла восстанавливается.
+сама запись в чекпойнт затирает mtime; после записи время файла восстанавливается. Пары,
+появившиеся ПОСЛЕ снимка, берут дату прямо из времени файла — источник тот же.
 
 Что заполняется:
   max_tokens    — потолок эпохи по дате, либо переопределение модели из params.yaml
@@ -33,6 +34,7 @@ import json
 import os
 import sys
 from collections import Counter
+from datetime import datetime
 from pathlib import Path
 
 import yaml
@@ -76,7 +78,7 @@ def main() -> int:
     dates, over = load_dates(), overrides()
     planned: list[tuple[Path, dict, float]] = []
     per_cap: Counter = Counter()
-    skipped = violations = 0
+    skipped = violations = recovered_by_mtime = 0
 
     for partdir in sorted((PRISM / "results").glob("experiment_*.parts")):
         category = partdir.name.split("_")[1]
@@ -84,10 +86,12 @@ def main() -> int:
             task, _, key = chunk.stem.partition("__")
             stamp = dates.get(f"{category}|{task}|{key}")
             if stamp is None:
-                print(f"  нет даты для {category} {task} {key} — пропуск")
-                skipped += 1
-                continue
-            when = stamp["date"]
+                # Снимок дат покрывает корпус на момент своего создания. Пары, добавленные
+                # позже, берут дату из времени файла — тот же источник, каким собран снимок.
+                when = datetime.fromtimestamp(os.stat(chunk).st_mtime).isoformat(timespec="seconds")
+                recovered_by_mtime += 1
+            else:
+                when = stamp["date"]
             cap = over.get(key) or cap_for(when[:10])
             data = json.loads(chunk.read_text(encoding="utf-8"))
             touched = False
@@ -108,6 +112,8 @@ def main() -> int:
     print(
         f"\nфайлов к правке: {len(planned)}, прогонов: {sum(per_cap.values())}, пропущено: {skipped}"
     )
+    if recovered_by_mtime:
+        print(f"  из них дата взята из времени файла (нет в снимке): {recovered_by_mtime}")
     for cap, n in sorted(per_cap.items()):
         print(f"  потолок {cap}: {n} прогонов")
     if violations:
