@@ -114,6 +114,38 @@ function DeltaPill({ tag, score }) {
   else if (tag === 'minus') { label = `−${Math.round((10 - (score ?? 0)) * 10) / 10}`; color = 'var(--danger)'; bg = 'var(--danger-soft)'; }
   return <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, fontWeight: 600, padding: '3px 9px', borderRadius: 999, color, background: bg, border: bd, whiteSpace: 'nowrap' }}>{label}</span>;
 }
+const fmtDateTime = (s) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/.exec(String(s || ''));
+  if (!m) return null;
+  const MONTHS = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+  return `${Number(m[3])} ${MONTHS[Number(m[2]) - 1]} ${m[1]}, ${m[4]}:${m[5]}`;
+};
+function GenParams({ meta = {} }) {
+  const bits = [];
+  // Дата и время генерации. У свежих прогонов их пишет сам харнесс, у старых записей они
+  // восстановлены по истории репозитория: время коммита, который первым принёс этот ответ
+  // (ключ — модель, задача и хеш ответа). Проверено по журналу: расхождений нет.
+  const when = fmtDateTime(meta.generatedAt);
+  if (when) bits.push(['сгенерировано', when]);
+  if (meta.maxTokens != null) bits.push(['потолок вывода', `${meta.maxTokens} токенов`]);
+  if (meta.temperature != null) bits.push(['температура', String(meta.temperature)]);
+  if (meta.tokensReasoning) bits.push(['рассуждение', `${meta.tokensReasoning} токенов${meta.reasoningEffort ? ` · ${meta.reasoningEffort}` : ''}`]);
+  else if (meta.reasoningEffort) bits.push(['рассуждение', meta.reasoningEffort]);
+  if (meta.tokensCached) bits.push(['из кэша', `${meta.tokensCached} токенов входа`]);
+  if (meta.tokensCacheWrite) bits.push(['записано в кэш', `${meta.tokensCacheWrite} токенов`]);
+  if (meta.finishReason) bits.push(['финиш', meta.finishReason]);
+  if (meta.seed != null) bits.push(['seed', String(meta.seed)]);
+  if (meta.responseHash) bits.push(['хеш ответа', meta.responseHash]);
+  if (!bits.length) return null;
+  return (
+    <div style={{ padding: '9px 16px', borderBottom: '1px solid var(--line)', background: 'var(--surface-sunken)',
+      display: 'flex', flexWrap: 'wrap', gap: '5px 18px', fontFamily: 'var(--font-mono)', fontSize: 11.5 }}>
+      {bits.map(([k, v]) => (
+        <span key={k} style={{ color: 'var(--ink-400)' }}>{k} <b style={{ color: 'var(--ink-200)', fontWeight: 600 }}>{v}</b></span>
+      ))}
+    </div>
+  );
+}
 function ScoreBreakdown({ items = [] }) {
   const isMobile = useIsMobile();
   if (!items.length) return null;
@@ -127,7 +159,7 @@ function ScoreBreakdown({ items = [] }) {
           <div key={it.ax} style={{ display: 'grid', gridTemplateColumns: isMobile ? 'auto 1fr' : '54px 1fr auto', gap: isMobile ? 11 : 14, alignItems: 'center', padding: isMobile ? '9px 0' : '11px 0', borderTop: '1px solid var(--line-soft)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
               <span style={{ width: 22, height: 22, borderRadius: 6, background: AXC[it.ax]?.[1], color: c, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 11.5 }}>{it.ax}</span>
-              <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15.5, fontWeight: 600, color: scColor }}>{na ? 'N/A' : it.score}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums', fontSize: 15.5, fontWeight: 600, color: scColor }}>{na ? '—' : it.score}</span>
             </div>
             <div style={{ minWidth: 0 }}>
               <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink-100)', lineHeight: 1.3 }}>{it.head}</div>
@@ -157,6 +189,14 @@ function CategoryPanel({ title, sub, q, scores, axisOrder, compact }) {
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--ink-400)' }}>/ 10</span>
           </div>
           <div style={{ fontSize: 10.5, letterSpacing: '0.05em', textTransform: 'uppercase', color: 'var(--ink-400)', fontWeight: 600, marginTop: 3 }}>итоговый балл Q</div>
+          {/* Охват рядом с Q: балл усредняет только измеренные оси, поэтому без охвата два
+              таких числа несопоставимы (metrics/smop.yaml, quality_score.coverage_required). */}
+          {scores.axesDone != null && scores.axesTotal && scores.axesDone < scores.axesTotal && (
+            <div title="остальные проверки не состоялись и в среднее не вошли"
+              style={{ fontFamily: 'var(--font-mono)', fontSize: 10.5, color: 'var(--ink-400)', marginTop: 4, whiteSpace: 'nowrap' }}>
+              измерено {scores.axesDone} из {scores.axesTotal} осей
+            </div>
+          )}
         </div>
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: compact ? 11 : 13 }}>
@@ -396,12 +436,17 @@ function PerfChart({ perf }) {
   const sizeMult = sizes.length >= 2 && sizes[0] ? Math.round(sizes[sizes.length - 1] / sizes[0]) : null;
   const good = pOpt == null ? growth <= 0.2 : growth - pOpt <= 0.2; // близко к оптимуму (у A он может быть не плоским)
   const color = good ? 'var(--axis-o)' : 'var(--danger)';
-  const W = 560, H = 200, M = { l: 54, r: 20, t: 20, b: 42 };
+  const W = 560, H = 168, M = { l: 46, r: 22, t: 26, b: 36 };
   const pw = W - M.l - M.r, ph = H - M.t - M.b;
   const xmin = Math.min(...sizes), xmax = Math.max(...sizes);
-  const ymax = Math.max(...series, 1);
+  // Шкала с запасом сверху. Без него верхняя точка ложится ровно на край рамки, её подпись
+  // уходит за пределы картинки, а у плоского ряда (числа не растут — это лучший исход)
+  // вся линия прилипает к верху, и под ней остаётся пустое поле во весь график.
+  const fmtCompact = (v) => (v >= 10000 ? `${Math.round(v / 1000)}к` : v >= 1000 ? `${(v / 1000).toFixed(1)}к` : String(Math.round(v)));
+  const yhi = Math.max(...series, 1), ylo = Math.min(...series);
+  const ytop = yhi === ylo ? yhi * 2 : yhi * 1.18;
   const sx = (v) => M.l + (xmax === xmin ? 0.5 : (v - xmin) / (xmax - xmin)) * pw;
-  const sy = (v) => M.t + (1 - v / ymax) * ph;
+  const sy = (v) => M.t + (1 - v / ytop) * ph;
   const line = sizes.map((s, i) => `${sx(s)},${sy(series[i])}`).join(' ');
   return (
     <div style={{ padding: 16 }}>
@@ -410,7 +455,7 @@ function PerfChart({ perf }) {
           ? (isB ? 'Оптимально: берёт данные набором' : 'Оптимальный класс роста')
           : (isB ? 'Запрос в цикле — тормозит на объёме' : 'Неоптимально — число операций растёт слишком быстро')}
       </div>
-      <p style={{ margin: '0 0 14px', fontSize: 12.5, color: 'var(--ink-300)', lineHeight: 1.5, maxWidth: '60ch' }}>
+      <p style={{ margin: '0 0 14px', fontSize: 12.5, color: 'var(--ink-300)', lineHeight: 1.5 }}>
         {good
           ? (isB
             ? `Сколько бы данных ни было, число ${unit} почти не меняется — решение обрабатывает всё разом. На большой базе останется быстрым.`
@@ -421,6 +466,17 @@ function PerfChart({ perf }) {
       </p>
       <div>
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: 'auto', display: 'block' }}>
+          {/* Горизонтальные деления: без них пустота под линией читается как дыра, а не как
+              шкала, и «во сколько раз выросло» приходится считать на глаз. */}
+          {[0, 0.5, 1].map((k) => {
+            const v = ytop * k, y = sy(v);
+            return (
+              <g key={k}>
+                <line x1={M.l} y1={y} x2={M.l + pw} y2={y} stroke="var(--line-soft)" strokeWidth="1" strokeDasharray={k ? '3 4' : undefined} />
+                <text x={M.l - 7} y={y + 3.5} textAnchor="end" fontFamily="var(--font-mono)" fontSize="9.5" fill="var(--ink-400)">{fmtCompact(v)}</text>
+              </g>
+            );
+          })}
           <line x1={M.l} y1={M.t} x2={M.l} y2={M.t + ph} stroke="var(--line)" strokeWidth="1" />
           <line x1={M.l} y1={M.t + ph} x2={M.l + pw} y2={M.t + ph} stroke="var(--line)" strokeWidth="1" />
           <polyline points={line} fill="none" stroke={color} strokeWidth="2.5" strokeLinejoin="round" />
@@ -431,14 +487,14 @@ function PerfChart({ perf }) {
               <text x={sx(s)} y={M.t + ph + 18} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" fill="var(--ink-400)">{s}</text>
             </g>
           ))}
-          <text x={M.l + pw / 2} y={H - 5} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" fill="var(--ink-400)">{xlabel} →</text>
-          <text x={14} y={M.t + ph / 2} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10.5" fill="var(--ink-400)" transform={`rotate(-90 14 ${M.t + ph / 2})`}>{unit} →</text>
+          <text x={M.l + pw / 2} y={H - 4} textAnchor="middle" fontFamily="var(--font-mono)" fontSize="10" fill="var(--ink-400)">{xlabel} →</text>
+          <text x={0} y={M.t - 11} textAnchor="start" fontFamily="var(--font-mono)" fontSize="9.5" fill="var(--ink-400)">{unit}</text>
         </svg>
       </div>
       <div style={{ marginTop: 12, fontFamily: 'var(--font-mono)', fontSize: 11.5, color: 'var(--ink-400)' }}>
         класс роста: <span style={{ color, fontWeight: 700 }}>{growthF}</span>{pOptF != null ? <> · оптимум <span style={{ fontWeight: 700 }}>{pOptF}</span></> : ''} · чем ближе к горизонтали — тем лучше
       </div>
-      <p style={{ margin: '10px 0 0', fontSize: 12, color: 'var(--ink-400)', lineHeight: 1.6, maxWidth: '64ch' }}>
+      <p style={{ margin: '10px 0 0', fontSize: 12, color: 'var(--ink-400)', lineHeight: 1.6 }}>
         <b style={{ color: 'var(--ink-300)' }}>Откуда числа.</b>{' '}
         {isB
           ? <><b style={{ color: 'var(--ink-300)' }}>По горизонтали</b> — размеры синтетической базы ({sizes.join(' → ')} записей), мы её постепенно наращиваем. <b style={{ color: 'var(--ink-300)' }}>Числа над точками</b> — сколько раз код сходил в СУБД на каждом размере. {sizeMult != null && grow != null ? <>База выросла в {sizeMult}× — {good ? <>обращения почти не изменились (<b style={{ color: 'var(--ink-300)' }}>{series[0]} → {series[series.length - 1]}</b>): данные берутся одним запросом.</> : <>обращения выросли примерно так же (<b style={{ color: 'var(--ink-300)' }}>{series[0]} → {series[series.length - 1]}</b>): запрос выполняется внутри цикла по записям.</>}</> : null}</>
@@ -507,6 +563,11 @@ function CodePane({ task, info = {} }) {
           )}
         </div>
       )}
+
+      {/* Условия генерации. Без них числа выше нечем поверить: ответ под потолком 4096 и
+          ответ под 65536 получены в разных условиях, кэш и рассуждение объясняют цену и
+          время, а дата отвечает на вопрос «когда это вообще мерили». */}
+      <GenParams meta={gm} />
 
       {/* разбор оценки — по каждой оси, за что балл */}
       <ScoreBreakdown items={task.breakdown} />
@@ -833,11 +894,8 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
       <section style={{ marginBottom: isMobile ? 24 : 36 }}>
         <h2 style={{ fontSize: 'var(--text-h3)', fontWeight: 600, color: 'var(--ink-100)', margin: '0 0 4px' }}>Оценка по категориям</h2>
         <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: '0 0 14px', lineHeight: 1.5 }}>
-          Балл <b style={{ color: 'var(--ink-200)' }}>Q</b> — среднее по осям метрики SMOP (шкала 0–10). Разбор по осям:{' '}
-          <span style={{ color: 'var(--axis-s)', fontWeight: 700 }}>S</span> синтаксис ·{' '}
-          <span style={{ color: 'var(--axis-m)', fontWeight: 700 }}>M</span> логика ·{' '}
-          <span style={{ color: 'var(--axis-o)', fontWeight: 700 }}>O</span> оптимальность ·{' '}
-          <span style={{ color: 'var(--axis-p)', fontWeight: 700 }}>P</span> платформа 1С.
+          Балл <b style={{ color: 'var(--ink-200)' }}>Q</b> — среднее по осям метрики SMOP
+          (шкала 0–10). Разбор по осям: S синтаксис · M логика · O оптимальность · P платформа 1С.
         </p>
         <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 18, flexWrap: 'wrap' }}>
           <CategoryPanel title="Категория A · алгоритмика" sub="чистый код: расчёты, строки, коллекции" q={m.qA} scores={m.A} axisOrder={['S', 'M', 'O']} compact={isMobile} />
@@ -861,7 +919,7 @@ export function ModelDetailScreen({ modelId, models = [], meta = {}, navigate = 
       {(m.A?.profile || m.B?.profile) && (
         <section style={{ marginBottom: isMobile ? 24 : 36 }}>
           <h2 style={{ fontSize: 'var(--text-h3)', fontWeight: 600, color: 'var(--ink-100)', margin: '0 0 4px' }}>Профиль навыков</h2>
-          <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: '0 0 14px', lineHeight: 1.5 }}>Средний балл по типам задач — видно, где модель сильна, а где проседает. В алгоритмике — по оси <b style={{ color: 'var(--axis-m)' }}>M</b> (логика), в платформенных — по оси <b style={{ color: 'var(--axis-p)' }}>P</b> (работа с 1С).</p>
+          <p style={{ fontSize: isMobile ? 12 : 13, color: 'var(--ink-400)', margin: '0 0 14px', lineHeight: 1.5 }}>Средний балл по типам задач — видно, где модель сильна, а где проседает. В алгоритмике — по оси M (логика), в платформенных — по оси P (работа с 1С).</p>
           <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 12 : 18, flexWrap: 'wrap' }}>
             <SkillPanel title="Категория A · алгоритмика" sub="по типам алгоритмов" profile={m.A?.profile} cols={(meta.profileCols || {}).A} labels={tagLabels} axis="A" />
             <SkillPanel title="Категория B · платформа" sub="по видам конструкций 1С" profile={m.B?.profile} cols={(meta.profileCols || {}).B} labels={tagLabels} axis="B" />
