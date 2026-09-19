@@ -316,6 +316,12 @@ def cmd_artifacts(args: argparse.Namespace) -> int:
     from harness.execute import measure_cache
     from harness.orchestrate import newest_auto
 
+    if getattr(args, "export", False):
+        return _export_artifacts()
+    if not args.task or not args.model:
+        console.print("[red]укажите задачу и модель (или --export для выгрузки всего сырья)[/]")
+        return 2
+
     path = Path(args.auto) if args.auto else newest_auto(args.task[:1].upper())
     if path is None or not Path(path).exists():
         console.print("[red]нет файла оценок[/]")
@@ -340,9 +346,12 @@ def cmd_artifacts(args: argparse.Namespace) -> int:
             "сохранять) — пересчитайте запись, чтобы ссылка появилась[/]"
         )
         return 1
-    raw = measure_cache.get(key)
+    raw = measure_cache.get(key) or measure_cache.bundle_get(key)
     if raw is None:
-        console.print(f"[yellow]сырьё по ключу {key[:12]}… не найдено в хранилище замеров[/]")
+        console.print(
+            f"[yellow]сырьё по ключу {key[:12]}… не найдено ни в хранилище замеров, "
+            f"ни в выгрузке {measure_cache.BUNDLE.name} — пересчитайте запись[/]"
+        )
         return 1
     if args.out:
         out = Path(args.out)
@@ -365,6 +374,47 @@ def cmd_artifacts(args: argparse.Namespace) -> int:
         f"enterprise={raw.get('ent_rc', '').strip()}[/]"
     )
     return 0
+
+
+def _export_artifacts() -> int:
+    """Собрать в репозиторий сырьё всех опубликованных оценок.
+
+    Кэш замеров вне git, поэтому клонировавший репозиторий видел балл, но не мог проверить,
+    откуда он взялся: логи 1С остались на машине, где шёл прогон. Выгрузка берёт только те
+    прогоны, на которые ссылаются сами записи, и это доли процента кэша.
+    """
+    import json
+
+    from harness.execute import measure_cache
+    from harness.loaders import PRISM
+
+    keys: set[str] = set()
+    autos = sorted((PRISM / "results" / "auto").glob("experiment_*_auto_l1.json"))
+    for path in autos:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for group in data.get("tasks", []):
+            for run in group.get("runs", []):
+                k = ((run.get("detail") or {}).get("M") or {}).get("run_key")
+                if k:
+                    keys.add(k)
+
+    items: dict[str, dict] = {}
+    missing = 0
+    for k in sorted(keys):
+        raw = measure_cache.get(k) or measure_cache.bundle_get(k)
+        if raw is None:
+            missing += 1
+            continue
+        items[k] = raw
+    written = measure_cache.bundle_write(items)
+    size = measure_cache.BUNDLE.stat().st_size / 1e6
+    console.print(f"→ {measure_cache.BUNDLE.relative_to(PRISM)}: {written} прогонов, {size:.1f} МБ")
+    if missing:
+        console.print(
+            f"[yellow]{missing} записей ссылаются на сырьё, которого нет ни в кэше, "
+            f"ни в прежней выгрузке — их разбор потребует пересчёта[/]"
+        )
+    return 1 if missing else 0
 
 
 def cmd_audit(args: argparse.Namespace) -> int:
@@ -761,8 +811,13 @@ def build_parser() -> argparse.ArgumentParser:
             '  prism artifacts B19 "Claude Opus 5" --out /tmp/raw   сохранить файлами'
         ),
     )
-    ar.add_argument("task", help="id задачи, напр. B12")
-    ar.add_argument("model", help="имя модели (подстрока, регистр не важен)")
+    ar.add_argument("task", nargs="?", help="id задачи, напр. B12")
+    ar.add_argument("model", nargs="?", help="имя модели (подстрока, регистр не важен)")
+    ar.add_argument(
+        "--export",
+        action="store_true",
+        help="собрать сырьё всех опубликованных оценок в results/artifacts.jsonl.gz (для репозитория)",
+    )
     ar.add_argument("--auto", default=None, metavar="PATH", help="файл оценок (по умолч. свежий)")
     ar.add_argument("--out", default=None, metavar="DIR", help="сохранить файлами в каталог")
     ar.set_defaults(func=cmd_artifacts)
@@ -811,8 +866,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="регенерировать таблицы лидерборда и бейджи в README/leaderboard/status из оценок L1",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=(
-            "Подменяет регионы между <!-- prism:KEY --> в README.md, docs/leaderboard.md\n"
-            "и docs/status.md данными из results/auto/*_auto_l1.json. Запускать после prism score."
+            "Подменяет регионы между <!-- prism:KEY --> в README.md и docs/leaderboard.md\n"
+            "данными из results/auto/*_auto_l1.json. Запускать после prism score."
         ),
     )
     dc.set_defaults(func=cmd_docs)
