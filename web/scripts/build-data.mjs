@@ -129,14 +129,32 @@ function loadExperiment(cat) {
       taskId: t.task_id,
       taskName: t.task_name,
       code,
-      meta: {
-        tokens: t.total_tokens || 0,
-        tokensOut: t.runs?.[0]?.tokens_output || 0, // нужно для честной (по выходу) стоимости прогона
-        cost: t.total_cost || 0,
-        time: t.avg_time || 0,
-        contextLoaded: !!t.context_loaded,
-        contextObjects: (t.context_objects || []).map(String),
-      },
+      meta: (() => {
+        // Условия генерации хранятся в самой записи прогона (провенанс, добавленный в
+        // волне 0 аудита). Без них по числам нельзя судить: ответ под потолком 4096 и ответ
+        // под 65536 получены в разных условиях, а кэш и рассуждение объясняют цену и время.
+        const r = t.runs?.[0] || {};
+        return {
+          tokens: t.total_tokens || 0,
+          tokensOut: r.tokens_output || 0, // нужно для честной (по выходу) стоимости прогона
+          tokensIn: r.tokens_input || 0,
+          tokensCached: r.tokens_cached || 0,
+          tokensCacheWrite: r.tokens_cache_write || 0,
+          tokensReasoning: r.tokens_reasoning || 0,
+          reasoningEffort: r.reasoning_effort || '',
+          maxTokens: r.max_tokens ?? null,
+          temperature: r.temperature ?? null,
+          seed: r.seed ?? null,
+          finishReason: r.finish_reason || '',
+          generatedAt: r.generated_at || '',
+          provenance: r.provenance || '',
+          responseHash: (r.response_hash || '').slice(0, 12),
+          cost: t.total_cost || 0,
+          time: t.avg_time || 0,
+          contextLoaded: !!t.context_loaded,
+          contextObjects: (t.context_objects || []).map(String),
+        };
+      })(),
     });
   }
   return byModel;
@@ -264,6 +282,22 @@ if (fs.existsSync(sdPath)) {
         m[cat].coverage = s[cat].coverage ?? null;
         m[cat].funnel = s[cat].funnel;
         m[cat].profile = s[cat].profile;
+      }
+      // Охват в штуках, а не в процентах. Доля читается плохо: 99% и 97% на глаз одинаковы,
+      // а разница между «почти всё измерено» и «половины нет» как раз и есть смысл величины.
+      // Применимых осей на запись: в категории A три (S, M, O), в B четыре (плюс P).
+      {
+        const parts = ['A', 'B']
+          .map((c) => ({ cov: m[c]?.coverage, n: m[c]?.funnel?.n, ax: c === 'A' ? 3 : 4 }))
+          .filter((x) => x.cov != null && x.n);
+        for (const x of parts) {
+          m[x.ax === 3 ? 'A' : 'B'].axesTotal = x.n * x.ax;
+          m[x.ax === 3 ? 'A' : 'B'].axesDone = Math.round(x.cov * x.n * x.ax);
+        }
+        const total = parts.reduce((s2, x) => s2 + x.n * x.ax, 0);
+        const done = parts.reduce((s2, x) => s2 + Math.round(x.cov * x.n * x.ax), 0);
+        m.axesTotal = total || null;
+        m.axesDone = total ? done : null;
       }
     }
   }
@@ -581,15 +615,32 @@ function breakdown(cat, taskId, scores, detail) {
   // M — верный ли ответ (исполнение скрытых тестов)
   const st = M.status, pd = M.passed, tt = M.total;
   if (cat === 'B' && st === 'candidate_error')
-    add('M', scores.M, 'Код не исполнился', 'модуль не скомпилировался — тесты не запускались', 'minus');
+    // Почему здесь ноль, а у соседних осей «не измерено». Ось M и есть то место, где
+    // фиксируется «код не работает»: тесты не прошли, и причина в самом коде. Оси O и P
+    // мерили бы другое (цену и обращения к метаданным), и про них свидетельства нет.
+    add('M', scores.M, 'Код не исполнился',
+      'модуль не скомпилировался, ни один тест не прошёл · ноль здесь про неработающий код, а не про пропущенную проверку', 'minus');
   else if (tt > 0 && pd === tt)
     add('M', scores.M, 'Все скрытые тесты пройдены', `${pd}/${tt} проверок дали верный ответ`, 'full');
   else if (tt > 0 && pd > 0)
     add('M', scores.M, 'Часть тестов не пройдена', `${pd}/${tt} верны · балл = доля × 10`, 'warn');
   else {
+    // Ноль пройденных тестов бывает по трём разным причинам, и смешивать их нельзя:
+    // тесты отработали и вернули не то; код упал на обращении к базе; код упал сам по себе
+    // (например, текст запроса не разобрался). Заголовок «Ответы неверны» годится только
+    // для первого случая, иначе он спорит с исходом записи наверху карточки.
     const plat = (M.platform_error_tests || 0) > 0;
-    add('M', scores.M, plat ? 'Падает при обращении к базе' : 'Ответы неверны',
-      tt > 0 ? `0/${tt} тестов пройдено` : 'тесты не пройдены', 'minus');
+    const thrown = !plat && (cat === 'B'
+      ? parseBLog(M.log, taskId).items.length > 0 || (M.platform_errors || []).length > 0
+      : parseALog(M.errors).items.length > 0);
+    const head = plat ? 'Падает при обращении к базе'
+      : thrown ? 'Код падает при выполнении' : 'Ответы неверны';
+    const metric = tt > 0
+      ? (thrown || plat
+        ? `0/${tt} тестов пройдено — до сравнения результата дело не дошло`
+        : `0/${tt} тестов пройдено — код отработал, но вернул не то`)
+      : 'тесты не пройдены';
+    add('M', scores.M, head, metric, 'minus');
   }
 
   // O — оптимальность. Приоритет источника: замер ИСПОЛНЕНИЕМ (есть detail.O.growth —
@@ -625,8 +676,19 @@ function breakdown(cat, taskId, scores, detail) {
 
   // P — платформа (только B)
   if (cat === 'B') {
-    if (st === 'candidate_error')
-      add('P', scores.P, 'Обращения к метаданным не подтверждены', 'код не запустился — проверить нечего', 'minus');
+    // Сначала «не измерено»: у такой записи балла нет вовсе, и ярлык потери («−10») ей не
+    // положен — терять нечего там, где проверки не было. Причину берём из detail.P.unmeasured,
+    // её ставит скорер (metrics/smop_l1_auto.yaml, P.pre_check и P.signal.db_access).
+    if (scores.P == null) {
+      const why = {
+        candidate_error: 'код не запустился — проверять нечего',
+        no_entry: 'нужной функции в ответе нет — проверять нечего',
+        query_never_parsed: 'текст запроса не разобрался — до имён метаданных дело не дошло',
+        no_db_access: 'код ни разу не обратился к данным — по техжурналу обращений нет',
+        query_never_parsed_all: 'ни один тест не дошёл до метаданных',
+      }[P.unmeasured] || 'проверка обращений к метаданным не состоялась';
+      add('P', null, 'Обращения к метаданным не проверялись', why, 'na');
+    }
     else if ((scores.P ?? 0) >= 10)
       add('P', scores.P, 'Все обращения к метаданным отработали', '0 платформенных ошибок', 'full');
     else {
@@ -833,10 +895,12 @@ const cases = badgeNum(/badge\/тест--кейсов-(\d+)/) ?? taskInfo.cases;
 /* ---- 5d. Журнал изменений витрины (курируемый, человеческий) ----
    Единственный источник — docs/changelog.md. Питает и ленту «что нового» на лидерборде
    (верхняя запись), и страницу /changelog. Формат записи:
-     ## ГГГГ-ММ-ДД · заголовок
+     ## ГГГГ-ММ-ДД · заголовок          (можно «## ГГГГ-ММ-ДД · v1.10.0 · заголовок»)
      <необязательное пояснение в пару строк>
      - пункт
+       продолжение пункта — с отступом
      - пункт
+     <необязательные абзацы после списка>
    Дату держим ISO (машиночитаемо), для показа переводим в «19 июля» здесь же. */
 const GH_REPO = 'genlab-1c/prism';
 const MONTHS_RU = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
@@ -858,7 +922,13 @@ function loadChangelog() {
     if (h) {
       if (cur) entries.push(cur);
       const { short, full } = ruDate(h[1]);
-      cur = { date: h[1], dateShort: short, dateFull: full, title: h[2].trim(), summary: '', items: [] };
+      // Версия в заголовке записи. Чип версии обычно приходит из git-тега, но пока релиз не
+      // оттегирован, тега нет, а сказать «это версия такая-то» уже нужно. Тогда номер пишется
+      // прямо в заголовке, а когда тег появится, запись и релиз сойдутся по дате как обычно.
+      let title = h[2].trim(), version = null;
+      const v = title.match(/^(v\d+\.\d+\.\d+)\s*·\s*(.+)$/);
+      if (v) { version = v[1]; title = v[2].trim(); }
+      cur = { date: h[1], dateShort: short, dateFull: full, title, version, summary: '', items: [], outro: [] };
       continue;
     }
     if (!cur) continue;            // всё до первой записи (заголовок H1, интро) — пропускаем
@@ -866,10 +936,20 @@ function loadChangelog() {
     const b = raw.match(/^\s*[-*]\s+(.+?)\s*$/);
     if (b) { cur.items.push(b[1].trim()); continue; }
     const t = raw.trim();
-    if (!t) continue;
-    // не пункт и не заголовок: продолжение (перенос строки) последнего пункта, иначе — пояснение записи
-    if (cur.items.length) cur.items[cur.items.length - 1] += ' ' + t;
-    else cur.summary = (cur.summary ? cur.summary + ' ' : '') + t;
+    if (!t) { cur.gap = true; continue; }   // пустая строка разрывает абзац
+    // Не пункт и не заголовок. Различаем по отступу: строка с отступом — перенос последнего
+    // пункта, строка с нулевой позиции — самостоятельный абзац. Без этого текст после списка
+    // приклеивался к последнему пункту и читался как его продолжение.
+    const indented = /^\s/.test(raw);
+    if (cur.items.length && indented) { cur.items[cur.items.length - 1] += ' ' + t; cur.gap = false; continue; }
+    if (cur.items.length) {
+      if (cur.gap || !cur.outro.length) cur.outro.push(t);
+      else cur.outro[cur.outro.length - 1] += ' ' + t;
+      cur.gap = false;
+      continue;
+    }
+    cur.summary = (cur.summary ? cur.summary + ' ' : '') + t;
+    cur.gap = false;
   }
   if (cur) entries.push(cur);
   return entries;
@@ -880,7 +960,7 @@ const changelog = loadChangelog();
 const modelIdByName = new Map(models.map((m) => [m.name, m.id]));
 for (const e of changelog) {
   const found = new Map();
-  for (const hit of [e.title, e.summary, ...e.items].join('\n').matchAll(/\*\*([^*]+)\*\*/g)) {
+  for (const hit of [e.title, e.summary, ...e.items, ...(e.outro || [])].join('\n').matchAll(/\*\*([^*]+)\*\*/g)) {
     if (modelIdByName.has(hit[1])) found.set(hit[1], modelIdByName.get(hit[1]));
   }
   e.models = [...found].map(([name, id]) => ({ name, id }));
@@ -952,8 +1032,12 @@ const xmlEscape = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').
 const cdata = (html) => `<![CDATA[${String(html).replace(/]]>/g, ']]]]><![CDATA[>')}]]>`;
 const modelUrl = (id) => `${SITE}/m/${id}/`;
 // **жирное** → <b>, а если это модель из записи — ссылка на её карточку
-const richText = (t, links = {}) => xmlEscape(t).replace(/\*\*([^*]+)\*\*/g, (_, name) =>
-  links[name] ? `<a href="${links[name]}"><b>${name}</b></a>` : `<b>${name}</b>`);
+const richText = (t, links = {}) => xmlEscape(t)
+  .replace(/\*\*([^*]+)\*\*/g, (_, name) =>
+    links[name] ? `<a href="${links[name]}"><b>${name}</b></a>` : `<b>${name}</b>`)
+  // markdown-ссылка [текст](url): в ленте это обычная ссылка. Абсолютный адрес обязателен —
+  // читалка открывает запись вне сайта, относительный путь ей не на что разрешить.
+  .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, label, href) => `<a href="${href}">${label}</a>`);
 const rfc822 = (iso) => new Date(`${iso}T12:00:00+03:00`).toUTCString();
 function writeFeed() {
   const items = [
@@ -964,6 +1048,7 @@ function writeFeed() {
         e.items.length === 1 && !e.summary
           ? `<p>${richText(e.items[0], links)}</p>`
           : e.items.length && `<ul>${e.items.map((it) => `<li>${richText(it, links)}</li>`).join('')}</ul>`,
+        ...(e.outro || []).map((t) => `<p>${richText(t, links)}</p>`),
       ].filter(Boolean).join('');
       return {
         date: e.date, title: e.title.replace(/\*\*([^*]+)\*\*/g, '$1'),
