@@ -43,6 +43,11 @@ function rehypeTableScroll() {
 // на него ссылается public/robots.txt (карта для Google/Yandex).
 export default defineConfig({
   site: 'https://prism.genlab-1c.ru',
+  // Страница «Что умеет сейчас» слита с «Честными границами»: половина её разделов
+  // дублировала архитектуру и лидерборд, а уникальное (таблица способностей и роадмап)
+  // отвечает на тот же вопрос, что и границы. Старый адрес проиндексирован, поэтому
+  // остаётся редиректом, а не 404.
+  redirects: { '/docs/status': '/docs/validity', '/docs/status/': '/docs/validity' },
   integrations: [react(), sitemap()],
   markdown: { rehypePlugins: [rehypeTableScroll] },
 });
