@@ -60,6 +60,20 @@ def check_matplotlib_available() -> bool:
         return False
 
 
+def _axes_seen(cat: str, m: dict, n: int) -> tuple[int, int] | None:
+    """Охват в штуках осей: (измерено, применимо). None — если охват не посчитан.
+
+    Конституция (quality_score.coverage_required) требует показывать охват везде, где
+    публикуется Q, включая выгрузку картинок: Q усредняет только измеренные оси, и два
+    одинаковых балла с разным знаменателем — разные утверждения.
+    """
+    cov = m.get("cov")
+    if cov is None or not n:
+        return None
+    total = n * len(CAT_AXES[cat])
+    return round(cov * total), total
+
+
 def _q_color(q: float | None) -> str:
     if q is None:
         return "#c2c9d6"
@@ -82,23 +96,27 @@ def _plot_q_ranking(cat: str, rank: list, out_dir: Path) -> list[Path]:
     """Горизонтальные бары Q̄ по моделям (сверху — лучший)."""
     import matplotlib.pyplot as plt
 
-    rows = [(n, m["Q"]) for n, m, _ in rank if m.get("Q") is not None]
+    rows = [(n, m["Q"], _axes_seen(cat, m, cnt)) for n, m, cnt in rank if m.get("Q") is not None]
     rows.reverse()  # matplotlib рисует barh снизу вверх
-    names = [n for n, _ in rows]
-    vals = [v for _, v in rows]
+    names = [n for n, _, _ in rows]
+    vals = [v for _, v, _ in rows]
+    seen = [s for _, _, s in rows]
     fig, ax = plt.subplots(figsize=(9, max(3.5, len(names) * 0.42)))
     bars = ax.barh(names, vals, color=[_q_color(v) for v in vals])
-    for b, v in zip(bars, vals, strict=True):
+    for b, v, s in zip(bars, vals, seen, strict=True):
+        label = f"{v:.2f}"
+        if s and s[0] < s[1]:
+            label += f"  {s[0]}/{s[1]} осей"
         ax.text(
             v + 0.12,
             b.get_y() + b.get_height() / 2,
-            f"{v:.2f}",
+            label,
             va="center",
             fontsize=9,
             color="#1a2230",
         )
-    ax.set_xlim(0, 10.6)
-    ax.set_xlabel("Q̄ · общий балл (0–10)")
+    ax.set_xlim(0, 12.2)  # место под подпись охвата справа от бара
+    ax.set_xlabel("Q̄ · общий балл (0–10) · рядом — сколько осей измерено, если не все")
     ax.set_title(f"Лидерборд PRISM — {CAT_TITLE[cat]}", fontweight="bold")
     ax.grid(axis="x", linestyle="--", alpha=0.4)
     ax.spines[["top", "right"]].set_visible(False)
@@ -118,9 +136,14 @@ def _plot_smop_bars(cat: str, rank: list, out_dir: Path, top: int) -> list[Path]
     h = 0.8 / len(axes)
     fig, ax = plt.subplots(figsize=(9, max(3.5, len(names) * 0.9)))
     for i, a in enumerate(axes):
-        vals = [(m.get(a) or 0) for _, m in sel]
+        # Неизмеренная ось — не ноль: столбца нет вовсе, на его месте прочерк. Нулевой
+        # столбик читался бы как «проверили и провалил», хотя проверки не было.
+        raw = [m.get(a) for _, m in sel]
         off = (i - (len(axes) - 1) / 2) * h
-        ax.barh(y + off, vals, h, label=a, color=AXIS_COLORS[a])
+        ax.barh(y + off, [v if v is not None else 0 for v in raw], h, label=a, color=AXIS_COLORS[a])
+        for yi, v in zip(y, raw, strict=True):
+            if v is None:
+                ax.text(0.12, yi + off, "— не измерено", va="center", fontsize=7, color="#6b7687")
     ax.set_yticks(y)
     ax.set_yticklabels(names)
     ax.invert_yaxis()
@@ -144,10 +167,14 @@ def _plot_radar(cat: str, rank: list, out_dir: Path, top: int) -> list[Path]:
     ang += ang[:1]
     fig, ax = plt.subplots(figsize=(7, 7), subplot_kw=dict(polar=True))
     for idx, (n, m, _) in enumerate(rank[:top]):
-        vals = [(m.get(a) or 0) for a in axes]
+        # np.nan вместо ноля: matplotlib разрывает линию, и неизмеренная ось видна как
+        # пропуск, а не как провал по этой оси.
+        raw = [m.get(a) for a in axes]
+        vals = [(v if v is not None else np.nan) for v in raw]
         vals += vals[:1]
         c = MODEL_PALETTE[idx % len(MODEL_PALETTE)]
-        ax.plot(ang, vals, "o-", linewidth=1.8, label=n, color=c)
+        label = n + (" · профиль неполный" if any(v is None for v in raw) else "")
+        ax.plot(ang, vals, "o-", linewidth=1.8, label=label, color=c)
         ax.fill(ang, vals, alpha=0.08, color=c)
     ax.set_xticks(ang[:-1])
     ax.set_xticklabels(axes, size=12, fontweight="bold")
