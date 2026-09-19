@@ -5,6 +5,12 @@ repo_url: https://github.com/genlab-1c/prism
 docs_dir: docs
 use_directory_urls: true
 
+# Рабочие документы: лежат рядом с доками, но сайтом не публикуются. Без этого MkDocs
+# соберёт их как обычные страницы (они просто не попадут в меню) и отдаст в индексацию.
+exclude_docs: |
+  audit-2026-09.md
+  yaxunit-migration.md
+
 plugins:
   - search                # встроенный поиск (по умолчанию активен; при явном plugins его надо указать)
   - social                # авто-генерация og:image-карточек для соцсетей и SEO (требует mkdocs-material[imaging])
@@ -47,8 +53,8 @@ nav:
   - Обзор: index.md
   - Лидерборд: leaderboard.md
   - Как это работает: how-it-works.md
-  - Что умеет сейчас: status.md
   - Честные границы: validity.md
   - Как запустить: cli.md
+  - Глоссарий: glossary.md
   - Как участвовать: https://github.com/genlab-1c/prism/blob/main/CONTRIBUTING.md
   - Архитектура: architecture.md

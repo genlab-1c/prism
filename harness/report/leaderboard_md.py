@@ -4,7 +4,7 @@
 results/auto/*_auto_l1.json (оценки L1) + банк задач. Держать их руками = рассинхрон,
 поэтому регенерируем командой `prism docs` (см. cli). Команда подменяет помеченные
 регионы между `<!-- prism:KEY -->` и `<!-- /prism:KEY -->` в README.md, docs/leaderboard.md
-и docs/status.md (lb:*-регионы общие у README и страницы лидерборда сайта).
+(lb:*-регионы общие у README и страницы лидерборда сайта).
 
 Регионы:
   badges        — счётные бейджи (задач / тест-кейсов / генераций / моделей);
@@ -12,7 +12,6 @@ results/auto/*_auto_l1.json (оценки L1) + банк задач. Держа�
   lb:b-overall  — таблица кат. B (S·M·O·P·Q);
   lb:a-skill    — срез M̄ по навыкам (dimension skill);
   lb:b-platform — срез P̄ по конструкциям 1С (dimension platform);
-  status:lb     — компактная сводка Q̄ A/B для docs/status.md.
 """
 
 from __future__ import annotations
@@ -281,20 +280,6 @@ def render_summary() -> str:
     return _wrap("\n".join(out))
 
 
-def render_status_summary(a: dict | None, b: dict | None) -> str:
-    """Компактная сводка Q̄ A/B по моделям для docs/status.md (ранжир по Q̄ A)."""
-    qa = {name: m["Q"] for name, m, _ in _ranked(a)} if a else {}
-    qb = {name: m["Q"] for name, m, _ in _ranked(b)} if b else {}
-    names = sorted(set(qa) | set(qb), key=lambda n: qa.get(n, -1.0), reverse=True)
-    out = ["| Модель | Q · категория A | Q · категория B |", "|---|:---:|:---:|"]
-    for i, name in enumerate(names):
-        nm = f"**{name}**" if i == 0 else name
-        a_txt = f"**{_fmt(qa.get(name), 2)}**" if i == 0 else _fmt(qa.get(name), 2)
-        b_txt = f"**{_fmt(qb.get(name), 2)}**" if i == 0 else _fmt(qb.get(name), 2)
-        out.append(f"| {nm} | {a_txt} | {b_txt} |")
-    return "\n".join(out)
-
-
 # ── JSON для сайта (web/) ──────────────────────────────────────────────────────
 
 
@@ -450,7 +435,7 @@ def _replace_region(text: str, key: str, content: str) -> str:
 
 
 def write() -> list[Path]:
-    """Регенерировать таблицы и бейджи в README.md и docs/status.md. Вернуть изменённые."""
+    """Регенерировать таблицы и бейджи в README.md и docs/leaderboard.md. Вернуть изменённые."""
     a, b = _load("A"), _load("B")
     if a is None and b is None:
         raise SystemExit("нет оценок в results/auto/ — сначала `prism score`")
@@ -481,13 +466,6 @@ def write() -> list[Path]:
             p = _replace_region(p, "lb:b-funnel", render_funnel(b))
         lb_page.write_text(p, encoding="utf-8")
         changed.append(lb_page)
-
-    status = PRISM / "docs" / "status.md"
-    if status.exists():
-        s = status.read_text(encoding="utf-8")
-        s = _replace_region(s, "status:lb", render_status_summary(a, b))
-        status.write_text(s, encoding="utf-8")
-        changed.append(status)
 
     # JSON для витрины web/ — все виды лидерборда одним файлом (web читает его).
     site = AUTO / "site_data.json"
