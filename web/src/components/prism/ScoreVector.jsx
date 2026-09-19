@@ -16,7 +16,10 @@ export function ScoreVector({ scores = {}, layout = 'compact', axes = AXES, styl
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12, ...style }} {...rest}>
         {axes.map(a => (
-          <ScoreBar key={a} axis={a} value={scores[a] ?? 0} />
+          // Неизмеренная ось столбца не получает: нулевой столбик читался бы как балл «0».
+          scores[a] == null
+            ? <div key={a} style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-400)' }}><span style={{ fontWeight: 700 }}>{a}</span><span>не измерено</span></div>
+            : <ScoreBar key={a} axis={a} value={scores[a]} />
         ))}
       </div>
     );
@@ -31,7 +34,7 @@ export function ScoreVector({ scores = {}, layout = 'compact', axes = AXES, styl
         const color = AXIS_COLOR[a];
         return (
           <div key={a} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, minWidth: 30 }}>
-            <span style={{
+            <span title={has ? undefined : 'ось не измерена: проверка не состоялась'} style={{
               fontFamily: 'var(--font-mono)', fontVariantNumeric: 'tabular-nums',
               fontSize: 13, fontWeight: 600, color: has ? 'var(--ink-100)' : 'var(--ink-400)',
             }}>{has ? v.toFixed(1) : '—'}</span>
