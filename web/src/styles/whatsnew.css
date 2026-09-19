@@ -62,11 +62,17 @@
 .whatsnew-arrow { transition: transform var(--dur) var(--ease); }
 
 @media (max-width: 640px) {
-  /* на мобиле лента — во всю ширину: «что нового · дата · заголовок (обрезается) · →» */
-  .whatsnew { width: 100%; gap: 9px; padding: 8px 12px 8px 13px; }
-  .whatsnew-title { flex: 1; max-width: none; }  /* заполняет ширину, обрезается многоточием */
-  .whatsnew-more { font-size: 0; }               /* прячем слова «все изменения», оставляем стрелку */
+  /* На мобиле лента в две строки. В одну строку заголовок не помещался и обрезался
+     многоточием на третьем слове («Валидация кор…»), то есть лента сообщала, что
+     что-то вышло, но не что именно. Сверху служебное (дата и стрелка), снизу заголовок. */
+  .whatsnew { width: 100%; gap: 9px; row-gap: 3px; padding: 8px 12px 9px 13px; flex-wrap: wrap; }
+  .whatsnew-more { font-size: 0; order: 1; margin-left: auto; }  /* слова прячем, стрелку жмём вправо */
   .whatsnew-arrow { font-size: 14px; color: var(--brand); }
+  .whatsnew-title {
+    order: 2; flex: 1 0 100%; max-width: none;   /* своя строка во всю ширину ленты */
+    white-space: normal; text-overflow: clip; line-height: 1.35;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
   .whatsnew-row { width: 100%; }
   .whatsnew-row .whatsnew { width: auto; flex: 1; }
 }
