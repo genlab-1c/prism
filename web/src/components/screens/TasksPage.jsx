@@ -8,6 +8,7 @@ import { Icon } from '../chrome/Chrome.jsx';
 import { Badge } from '../core/Badge.jsx';
 import { Tag } from '../core/Tag.jsx';
 import TaskHeatmap from '../prism/TaskHeatmap.jsx';
+import BankStats from '../prism/BankStats.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -205,6 +206,7 @@ export default function TasksPage() {
   return (
     <main style={{ ...wrap, paddingTop: 24, paddingBottom: 60 }}>
       {matrix && <TaskHeatmap data={matrix} onOpenTask={openTask} />}
+      {matrix && <BankStats data={matrix} />}
 
       {groups.map(([cat, label]) => {
         const list = meta.order.filter((t) => t.category === cat);

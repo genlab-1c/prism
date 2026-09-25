@@ -136,3 +136,108 @@
   .params-prompts { grid-template-columns: 1fr; padding: 14px 16px; }
   .params-prompts pre { font-size: 11.5px; }
 }
+
+/* ---- статистика по банку задач: полосы распределения, между картой и списком ----
+   Строка = подпись с медианой · полоса (точка на модель, заливка Q1–Q3, черта медианы) ·
+   сухие цифры справа. Цифры дублируют полосу текстом: смысл не держится на одном цвете. */
+.bank-stats {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px 10px;
+  margin-bottom: 26px;
+}
+.bank-stats-head { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+.bank-stats-head h2 { margin: 0; font-size: 16px; font-weight: 600; color: var(--ink-100); }
+.bank-stats-head p { margin: 0; font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-400); }
+
+.bs-row {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr) 300px;
+  gap: 20px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+.bs-row-axis { border-bottom: none; padding: 0 0 6px; }
+.bs-tasks { margin-top: 10px; padding-top: 6px; border-top: 1px dashed var(--line); }
+
+.bs-name { display: flex; flex-direction: column; gap: 1px; }
+.bs-label { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-400); }
+.bs-big { font-family: var(--font-mono); font-size: 24px; font-weight: 700; color: var(--ink-100); line-height: 1.15; }
+.bs-cap { font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-400); }
+
+.bs-strip { padding: 0 6px; }
+.bs-track { position: relative; height: 54px; }
+.bs-grid { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.bs-whisker {
+  position: absolute; top: 50%; height: 2px; transform: translateY(-50%);
+  background: color-mix(in srgb, var(--ink-400) 55%, transparent); border-radius: 2px;
+}
+.bs-box {
+  position: absolute; top: 6px; bottom: 6px;
+  background: color-mix(in srgb, var(--brand) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand) 40%, transparent);
+  border-radius: 4px;
+}
+.bs-median {
+  position: absolute; top: 2px; bottom: 2px; width: 3px; transform: translateX(-50%);
+  background: var(--ink-100); border-radius: 2px; pointer-events: none;
+}
+.bs-dot {
+  position: absolute; width: 8px; height: 8px; padding: 0; transform: translate(-50%, -50%);
+  border-radius: 50%; border: none; cursor: default;
+  background: var(--brand); box-shadow: 0 0 0 2px var(--surface);
+  transition: opacity 0.12s, transform 0.12s;
+}
+/* зона наведения больше самой точки: в 8 px сложно попасть */
+.bs-dot::after { content: ''; position: absolute; inset: -5px; border-radius: 50%; }
+.bs-dot.is-dim { opacity: 0.28; }
+.bs-dot.is-on { transform: translate(-50%, -50%) scale(1.5); z-index: 2; background: var(--ink-100); }
+.bs-tip {
+  position: absolute; bottom: calc(100% + 4px); transform: translateX(-8px); z-index: 3;
+  white-space: nowrap; pointer-events: none;
+  font-family: var(--font-mono); font-size: 11.5px; color: var(--ink-200);
+  background: var(--surface-raised); border: 1px solid var(--border-strong); border-radius: var(--radius-sm);
+  padding: 4px 8px;
+}
+.bs-tip.is-left { transform: translateX(calc(-100% + 8px)); }
+.bs-tip b { color: var(--ink-100); }
+
+.bs-axis { position: relative; height: 16px; margin: 0 6px; }
+.bs-axis span {
+  position: absolute; transform: translateX(-50%);
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--ink-400);
+}
+
+.bs-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 16px; margin: 0; }
+.bs-facts div { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.bs-facts dt { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--ink-400); }
+.bs-facts dd { margin: 0; font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink-200); white-space: nowrap; }
+
+.bs-sym { text-transform: none; }
+.bs-mob { display: none; }
+
+@media (max-width: 900px) {
+  .bs-row { grid-template-columns: 110px minmax(0, 1fr); }
+  .bs-facts { grid-column: 1 / -1; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .bs-row-axis > span:last-child { display: none; }
+}
+@media (max-width: 560px) {
+  .bank-stats { padding: 14px 16px 8px; }
+  .bs-row { grid-template-columns: 1fr; gap: 6px; padding: 12px 0; }
+  .bs-name { flex-direction: row; align-items: baseline; gap: 10px; }
+  .bs-big { font-size: 22px; }
+  /* упрощение: без точек и без столбика цифр — полоса квартилей, медиана и строка словами */
+  .bs-dot, .bs-tip, .bs-grid { display: none; }
+  .bs-track { height: 22px; }
+  .bs-box { top: 3px; bottom: 3px; background: color-mix(in srgb, var(--brand) 45%, transparent); border-color: var(--brand); }
+  .bs-median { top: -1px; bottom: -1px; }
+  .bs-facts { display: none; }
+  .bs-facts.is-tasks { display: grid; }
+  .bs-legend { display: none; }
+  .bs-mob { display: block; margin: 0; font-family: var(--font-mono); font-size: 12px; line-height: 1.5; color: var(--ink-300); }
+  .bs-mob b { color: var(--ink-100); }
+  .bs-row-axis { padding: 0 0 6px; }
+  .bs-row-axis > span:first-child { display: none; }
+}

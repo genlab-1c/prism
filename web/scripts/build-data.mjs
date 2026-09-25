@@ -848,7 +848,7 @@ fs.writeFileSync(path.join(WEB, 'public', 'data', 'tasks_meta.json'), JSON.strin
 const ranked = [...models].sort((a, b) => (b.qOverall ?? -1) - (a.qOverall ?? -1));
 const matrix = {
   tagLabels, // человеческие подписи тегов задач (те же, что в лидерборде)
-  models: ranked.map((m) => ({ id: m.id, name: m.name, family: m.family, vendor: m.vendor, q: m.qOverall })),
+  models: ranked.map((m) => ({ id: m.id, name: m.name, family: m.family, vendor: m.vendor, q: m.qOverall, qA: m.qA, qB: m.qB })),
   tasks: tasksMeta.order.map((t) => {
     const info = taskInfo.info[t.id] || {};
     const byModel = Object.fromEntries((byTask.get(t.id) || []).map((r) => [r.m, r]));
