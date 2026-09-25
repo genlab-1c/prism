@@ -746,6 +746,76 @@ models:
       supports_seed: false
       supports_tools: true
 
+  grok47:
+    id: "grok-4.7"                       # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Grok 4.7"
+    vendor: xai
+    weights: proprietary
+    released: "2026-09-21"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 500000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: для кат. B поднимать max_tokens
+
+  mimo26_pro:
+    id: "mimo-v2.6-pro"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "MiMo-V2.6 Pro"
+    vendor: xiaomi
+    weights: open                        # веса на HF: XiaomiMiMo/MiMo-V2.6-Pro-RL
+    released: "2026-09-21"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576
+      supports_seed: false
+      supports_tools: true               # reasoning-модель: function calling заявлен; риск на агентной B (как Qwen3.6/MiniMax)
+
+  opus55:
+    id: "claude-opus-5.5"                # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Claude Opus 5.5"
+    vendor: anthropic
+    weights: proprietary
+    released: "2026-09-22"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель, флагман Anthropic
+
+  gpt6_sol:
+    id: "gpt-6-sol"                      # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-6 Sol"
+    vendor: openai
+    weights: proprietary
+    released: "2026-09-22"               # GA тира GPT-6 Sol/Luna — одна дата на семейство
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1050000
+      supports_seed: false
+      supports_tools: true               # reasoning-модель (флагман тира): рассуждения идут в выходной бюджет
+
+  gpt6_luna:
+    id: "gpt-6-luna"                     # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-6 Luna"
+    vendor: openai
+    weights: proprietary
+    released: "2026-09-22"               # GA тира GPT-6 Sol/Luna — одна дата на семейство
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1050000
+      supports_seed: false
+      supports_tools: true
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:

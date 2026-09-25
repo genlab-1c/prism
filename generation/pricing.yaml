@@ -75,3 +75,8 @@ prices:
   "deepseek-v4.1-flash":           { input: 0.3,  output: 1.2 }   # DeepSeek, прайс-лист api-docs (вход без кеша, базовый тариф).
                                                                   # В непиковые часы вдвое дешевле (0.15/0.60) — скидку по времени суток не берём,
                                                                   # как и кеш-хит: прогон идёт в произвольное время.
+  "grok-4.7":                      { input: 2.0,  output: 6.0 }   # xAI (docs.x.ai/developers/pricing), <200K ctx; ×2 при ≥200K; кеш входа 0.5
+  "mimo-v2.6-pro":                 { input: 0.435, output: 0.87 } # Xiaomi = OpenRouter xiaomi/mimo-v2.6-pro, прайс-лист (тот же тариф, что V2.5 Pro)
+  "claude-opus-5.5":               { input: 4.0,  output: 20.0 }  # Anthropic, прайс-лист (platform.claude.com/docs pricing) — на 20% ниже Opus 5; кеш-хит 0.2
+  "gpt-6-sol":                     { input: 2.0,  output: 10.0 }  # OpenAI, прайс-лист (developers.openai.com/api/docs/pricing)
+  "gpt-6-luna":                    { input: 0.1,  output: 0.5 }   # OpenAI, прайс-лист (developers.openai.com/api/docs/pricing)

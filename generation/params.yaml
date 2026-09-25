@@ -64,3 +64,11 @@ defaults:
     qwen38_max:          { temperature: 0.1, runs: 1 } # Qwen3.8 Max через AITUNNEL (флагман тира Max)
     seed2_code:          { temperature: 0.1, runs: 1 } # Seed 2.0 Code (ByteDance) через AITUNNEL
     deepseek_flash_41:   { temperature: 0.1, runs: 1 } # DeepSeek V4.1 Flash через AITUNNEL
+    grok47:              { temperature: 0.1, runs: 1 } # Grok 4.7 через AITUNNEL (reasoning)
+    mimo26_pro:          { temperature: 0.1, runs: 1 } # MiMo-V2.6 Pro через AITUNNEL (reasoning)
+    opus55:   { temperature: 0.1, runs: 1, max_tokens: 16384 }  # Claude Opus 5.5 через AITUNNEL.
+      # max_tokens урезан с общих 65536 по той же причине, что у GPT-6 Astra: предоплата по потолку
+      # при 4000 ₽/1M вывода = ~260 ₽ заморозки на запрос. Факт Opus 5 ~1–1.5 тыс. ток/задачу
+    gpt6_sol: { temperature: 0.1, runs: 1, max_tokens: 16384 }  # GPT-6 Sol через AITUNNEL (reasoning).
+      # max_tokens урезан: предоплата по потолку при 2000 ₽/1M = ~130 ₽ на запрос; факт 5.6 Sol ~0.7–0.8 тыс. ток/задачу
+    gpt6_luna: { temperature: 0.1, runs: 1 }                   # GPT-6 Luna через AITUNNEL
