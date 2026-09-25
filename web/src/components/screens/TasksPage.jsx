@@ -37,9 +37,8 @@ function ParamsPanel({ params = {}, prompts = {} }) {
   const fmt = (v) => (Array.isArray(v) ? v.join(' / ') : v ?? '—');
   const stats = [
     ['температура', fmt(params.temperature)],
-    ['прогонов', fmt(params.runs)],
-    ['max_tokens', fmt(params.max_tokens)],
-    ['параллельно', fmt(params.concurrency)],
+    ['итераций (k)', fmt(params.runs)],
+    ['потолок ответа, токенов', fmt(params.max_tokens)],
   ];
   return (
     <div className="params">
