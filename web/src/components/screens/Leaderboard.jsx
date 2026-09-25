@@ -996,7 +996,7 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
           <Shield label="тест-кейсов" value={String(meta.cases || '—')} />
           <Shield label="генераций" value={String(meta.gens || '—')} />
           {/* сожжено на генерациях за всё время; пока захардкожено — см. выгрузку биллинга канала */}
-          <Shield label="токенов" value="8.1M" />
+          <Shield label="токенов" value="9.1M" />
           <Shield label="моделей" value={String(meta.models || models.length)} />
         </div>
         <WhatsNew entries={meta.changelog || []} releases={meta.releases || []} />

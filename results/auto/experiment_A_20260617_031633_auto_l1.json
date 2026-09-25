@@ -6,7 +6,7 @@
   "runner": "docker",
   "syntax_analyzer": "bsl-ls 0.29.0",
   "protocol_version": "1.4.0",
-  "constitution_version": "1.2.0",
+  "constitution_version": "1.3.0",
   "tasks": [
     {
       "task_id": "A10",
@@ -51061,6 +51061,4977 @@
                 16000
               ],
               "entry_point": "ПростыеЧисла",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "04f8ec4009af21422a84aef90aa711cdd5ed43d32c443e67512981f29711fe2a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортировать",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                4808,
+                9608,
+                19208,
+                38408
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьИОтсортировать",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "aa7378b0ae4a85d7627b39ae63c2ce418064177ac0d299944dd91e704896f3bf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                163247,
+                668339,
+                2593483,
+                10331803
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c83ea0a223af053d5c5a144011ed8561f9e8754e33accbb33253ed2287660e9b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6846,
+                13631,
+                27201,
+                54346
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1b92e3c8a51262e842c3ca50fffc9a323f65c29ec3700d8f6895f8fe36226e9a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                5540,
+                11039,
+                22037,
+                44040
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "565499cb233e40cdd4f537ee4ddf17f8664bdb38593c7eedb113d2ac07c6423f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначение",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначение",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d72542dbbe1d470d6658531cb22dd3096d44dd79cdeb9cd9733d193489ca8c87",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "МассивБезЗначения",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "МассивБезЗначения",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "59f5def9613469b35e09115e2abfd00fed7a198554a82076658ffff45b678959",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                803,
+                1603,
+                3203,
+                6403
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "47b30dc1bb861c259e21f5407459935653a61fe4a2cfa722bc3336c445f13cb6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2419,
+                4815,
+                9626,
+                19244
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "39df5d4d8c401aa400891decd6fdfc8c0265965baadacb8828ae1a22d8c9a8bd",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ОбратныйПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                608,
+                1208,
+                2408,
+                4808
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбратныйПорядокСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0eb427b7fd8a8eec3087b57ca0c46d1f70af728bb78a05a7a989438608628147",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "СловаВОбратномПорядке",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1606,
+                3206,
+                6406,
+                12806
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СловаВОбратномПорядке",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "767a2e6a8f23df0e817f00f653350621bafc9d50cac2c4429a61e5373d53ec62",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                73,
+                79,
+                85,
+                91
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1832d3d6e5fa6b861778c727d712b16605df687ebac3f7adc6b46c5dc7385bdc",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                92,
+                100,
+                108,
+                116
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ed3526bb6e374dd9658b6eaa6687a0cae8d661299adfff0a38d88f33756238ba",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3438,
+                6888,
+                13728,
+                27373
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "54c6fcfe7cc8a770008dca25c9c5287c48aaf4fa8b43ee794643e43399f5460c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                4561,
+                9121,
+                18097,
+                35965
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b8bcdd592861c3100251f3f0042a93b310867202c0c73cb3d0201e0be7a40859",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2605,
+                5205,
+                10405,
+                20796
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "30f14940d52c2fa54304ea70b4c049e2a369ae35220ae61a5b6559dfe93c6b25",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ПолучитьУникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3006,
+                6006,
+                12006,
+                23997
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПолучитьУникальныеЭлементыМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c17939b66ff6ca193e98f6e51a445c3b0f115d6c6c94907b14338f0b9405cc0d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3196,
+                6369,
+                12701,
+                25185
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ae73865736dd7ab03ecca4e8663b288732cff3221c976b1e581169007075659b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.1,
+              "ops": [
+                4402,
+                8793,
+                17567,
+                35047
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "36c01cba0b4729e6af89fae500506ab19b5a84c7943769d5999d927da46d7ae1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                960,
+                1910,
+                3810,
+                7610
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "249d4a9be4d9777581842742ea8f6198b37b785bbe44d2c6be11b5b704a4b4e0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                966,
+                1916,
+                3816,
+                7616
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9800a36441fa8f0fa1a545b5740d5b29486344a332bb51de16d8fbd0a7bbddb0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ЧастотаСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                8481,
+                16680,
+                33431,
+                67741
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ЧастотаСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "160adc96de994f992ba6a99f5f282af940912b7fe01c9a1c959aa915dfb03316",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПолучитьКоличествоСлов",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 12 / Object property is not found (ПТаб)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 12 / Object property is not found (ПТаб)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 12 / Object property is not found (ПТаб)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 12 / Object property is not found (ПТаб)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьКоличествоСлов",
+              "note": "не исполнился на размере 300: строка 12 кода модели · Object property is not found (ПТаб)",
+              "fail_size": 300,
+              "fail_line": 12,
+              "fail_message": "Object property is not found (ПТаб)",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "88f8d91f232c1d08504e3480b0b701eb0f8a5ccde143c47d06d3f978a1a05d25",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.79,
+              "p_opt": 2.0,
+              "ops": [
+                270,
+                484,
+                762,
+                1104
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "957ee2beb90bffc9eb74d99d5d9e6d93bce165ae789b41a9bf8e65df1c8f5ece",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.87,
+              "p_opt": 2.0,
+              "ops": [
+                552,
+                1024,
+                1646,
+                2414
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РедакционноеРасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "82bc07f58a0c08212f306915114024087ebb64710d1fccdb9f756797d1d99d81",
+          "scores": {
+            "S": 10,
+            "M": 8.3,
+            "O": 4,
+            "P": null,
+            "Q": 7.43
+          },
+          "bands": {
+            "M": 6,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [
+                "PRISM_FAIL 4"
+              ],
+              "band": 6
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158043,
+                606323,
+                2336962,
+                9362618
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b3f6d9c9d9b4ffe1f203fbbb7bb4ab6c905c4ec7fea717464acd64da823a3cbe",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжатие",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158043,
+                606323,
+                2336962,
+                9362618
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжатие",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d437e06dd6cf17bd94257aee80b0da8751b1618f23e2ca75607a227db884f858",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "СтрокиЯвляютсяАнаграммами",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                14509,
+                29009,
+                58009,
+                116009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "СтрокиЯвляютсяАнаграммами",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "891b415b70f5d9d49c0947cbd37cb09b8aa804f1efa35497016d4c0a38b56ef8",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                776022,
+                3052022,
+                12104022,
+                48208022
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "grok-4.7",
+      "model_name": "Grok 4.7",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "19fe6530927887caa580b34cd0b314b68534f2cb461fef21d8610d3dc9780efd",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧисла",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧисла",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "mimo-v2.6-pro",
+      "model_name": "MiMo-V2.6 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b202de727baeabcadf278856212e620e42cdec51e0aa40acbaef2fc686c2adb1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "891960c5384da8f1a280bc572db8306ffd8bce648bbc7a582b8d835bc9bf46fb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                8418,
+                16818,
+                33618,
+                67218
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "07df8ca9727341f5c7b4ad0da53bfedb0b87f62852cecf7eaaf314e9a5775eee",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивыПоВозрастанию",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                9211,
+                18411,
+                36811,
+                73611
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьМассивыПоВозрастанию",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "93500a99d7e005af6cb344ea4c11d43d54195b6c374dccc7c9eaa250af90d3fd",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортировать",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 13 / Method not found (Сортировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьИОтсортировать",
+              "note": "не исполнился на размере 400: строка 13 кода модели · Method not found (Сортировать)",
+              "fail_size": 400,
+              "fail_line": 13,
+              "fail_message": "Method not found (Сортировать)",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9ac5ba032c507e4d6d9e6c048d629dadc84943885fdeb8fbcffba9a57f9e06c6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "ops": [
+                128,
+                77,
+                151,
+                128
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "84ef77fbe373d3c862e33535ed184483c1c7c4312b9bc26a32304f2ee32ab684",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6334,
+                12619,
+                25189,
+                50334
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fcd374706562aafed27c13fbab77ace94b688e57b3b28e90f5afcfe925d07a17",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 34,44 / Symbol not found День}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "не исполнился на размере 500: строка 34 кода модели · Symbol not found День",
+              "fail_size": 500,
+              "fail_line": 34,
+              "fail_message": "Symbol not found День",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8dc87938282d2028955fdc623735b94eba817a414c43763b93129366439af88c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2006,
+                4006,
+                8006,
+                16006
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "647c904f33d6208302be70ad14ae7ea3253f3a9caecab0735ed5f35762348eaf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьВсеВхождения",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьВсеВхождения",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a4de1b75efb012040b73f312bc9b778cc1b97f95e9687c288a30424204f0a113",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": false,
+              "engine_error": "{Модуль /sandbox/cand.check.os / Error in line 13,14 / Неизвестный символ �}"
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "НовыйМассивБезЗначения",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 13,14 / Неизвестный символ �}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "НовыйМассивБезЗначения",
+              "note": "не исполнился на размере 500: строка 13 кода модели · Неизвестный символ �",
+              "fail_size": 500,
+              "fail_line": 13,
+              "fail_message": "Неизвестный символ �",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b48df809a24ddf6be1f614b6ea5b8dc4cb19a845ac0a9065884a7cf9210418b2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2418,
+                4814,
+                9625,
+                19243
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d95b5bfc7b1fd43de4c0ba1ebbe9705c988a7dc2b58584867890276d58ba285a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2219,
+                4415,
+                8826,
+                17644
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "47069afb7c8a4ccbfa637b3f5df61b6911f786c13aaea5b3c2e066e11283294a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                804,
+                1604,
+                3204,
+                6404
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "66d8b4057865e60ebce0dd9723959ad93b0f11ce02d4b8abb139bfc06c294c45",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ОбратныйПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                609,
+                1209,
+                2409,
+                4809
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбратныйПорядокСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7deb555f5c5eb13008c1de3b14b4a8e8ab8e38cc02d3c6ececc2b7095a838c55",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 2,
+            "P": null,
+            "Q": 7.33
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ОбратитьПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [
+                1048879,
+                4287079,
+                17243479
+              ],
+              "sizes": [
+                200,
+                400,
+                800
+              ],
+              "entry_point": "ОбратитьПорядокСлов",
+              "note": "исчерпан бюджет процессорного времени на размере 1600 — слишком медленно",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "57750e2fc4856d3d6a9f2a31797f058924fe0de2d401a5ad24f3793afb997d76",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ],
+              "engine_parsed": false,
+              "engine_error": "{Модуль /sandbox/cand.check.os / Error in line 24,43 / Expecting symbol: Do}"
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 9,
+              "entry_point": "СловаВОбратномПорядке",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 24,43 / Expecting symbol: Do}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СловаВОбратномПорядке",
+              "note": "не исполнился на размере 200: строка 24 кода модели · Expecting symbol: Do",
+              "fail_size": 200,
+              "fail_line": 24,
+              "fail_message": "Expecting symbol: Do",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "dc5bcd33f9ef165159a3efb4c813940cec1f0f8d48e09545c6395afa7cb39ea2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.1,
+              "p_opt": 0.0,
+              "ops": [
+                74,
+                80,
+                86,
+                92
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f39fc8f3c653b42bd34a7dedbff222019a4c7ab4509969b2bffc66f7d9f99670",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                92,
+                100,
+                108,
+                116
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "082a60963fe59bb126e3f3b385d116c08c177fb7401be1b8b0e6a24833b8e8d0",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 4,14 / Symbol not found Остаток}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "не исполнился на размере 1000: строка 4 кода модели · Symbol not found Остаток",
+              "fail_size": 1000,
+              "fail_line": 4,
+              "fail_message": "Symbol not found Остаток",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "43e4f0fb908d6ddc49a88c66898f42fcce254198b46588b4caa6b101af283335",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                3435,
+                6865,
+                13593,
+                26972
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7d697142a8a10a6a12b5b5efeece7f6976976d872b8d4d056cce38020584a431",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                638,
+                1288,
+                2528,
+                4973
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "56e6a9536b893ab53e9ab78344b2fdf96859e563ec2e5c58c73e4f60bbc3d79a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                48618,
+                190770,
+                736706,
+                2891678
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f8500f7eb09672d7d1a2bf47a31b7be2409a1e9b56c96da284103b0be36721d9",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2610,
+                5210,
+                10410,
+                20801
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8eb58e3d274f76e9b436533166d94991355622c468c11dfd0899f3400d8fa06a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.98,
+              "p_opt": 1.0,
+              "ops": [
+                62504,
+                245004,
+                970004,
+                3859673
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7e715651d0ebe0469a5c0d682ea6d1b363854cb213bf5f4041e062ea791d2b92",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.98,
+              "p_opt": 1.0,
+              "ops": [
+                62504,
+                245004,
+                970004,
+                3859673
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "43de85fcd671c4ef68315490e1d0b544cbf75305244ff5df326f66b50dfe09ab",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3197,
+                6370,
+                12702,
+                25186
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "dcd5d2b83cf9d3a0e14acdaf2ac4da64e12c189cc6f3d052cc8e4ee7d3f8f5e3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.97,
+              "p_opt": 1.1,
+              "ops": [
+                128384,
+                500333,
+                1927869,
+                7730431
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "01411952e2ca5d02afbbd436c201053e80f04fa3d66a850fa0355b377ea7348e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.01,
+              "p_opt": 1.1,
+              "ops": [
+                88725,
+                352129,
+                1473456,
+                5774702
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1e4c13bf7402fb12353a50e8d36169ea95cc845872d9a69eec334625d27dd57c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1562,
+                3112,
+                6212,
+                12412
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0523531987a02df1e6414cb4237d8af3506b8d377b63a07aba78792e070f147c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2311,
+                4611,
+                9211,
+                18411
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "dd5e15ff646fb49d0c823914c45f2178b34a1a08dde204c3c478dbe510815d50",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                961,
+                1911,
+                3811,
+                7611
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "72f62e617f436275ba31e16b12b68dd00a58728d491afdcbe6a0847c0461a86b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчетСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                9158,
+                18036,
+                36145,
+                73158
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчетСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d9d466a37c4ea07f2feaa61193c713f6bfec7b1937471eef017cfab3c3dfce02",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 16 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 16 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 16 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 16 / OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "не исполнился на размере 300: строка 16 кода модели · OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported",
+              "fail_size": 300,
+              "fail_line": 16,
+              "fail_message": "OneScript.Values.BslUndefinedValue:  Conversion to type 'Number' is not supported",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c25069b4201cd93bcea9bb7f44dfd0187cb9871e6494f4441a9af87f23e16a76",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 4,
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 21,43 / Symbol not found Количество}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "note": "не исполнился на размере 300: строка 21 кода модели · Symbol not found Количество",
+              "fail_size": 300,
+              "fail_line": 21,
+              "fail_message": "Symbol not found Количество",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "38b1f652f5300d5503ee347f1f4a78791bfd654420a836cd0676c2ca11a6b88f",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 2,
+              "parse_error_clusters": 2,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ],
+              "engine_parsed": false,
+              "engine_error": "{Модуль /sandbox/cand.check.os / Error in line 35,6 / Identifier expecting}"
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 35,6 / Identifier expecting}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 2.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "не исполнился на размере 5: строка 35 кода модели · Identifier expecting",
+              "fail_size": 5,
+              "fail_line": 35,
+              "fail_message": "Identifier expecting",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "796134beaf39092fb9d61faf9ccd0f2d9318b270f560fb3fd83deb3dd1f2abf3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.87,
+              "p_opt": 2.0,
+              "ops": [
+                345,
+                638,
+                1025,
+                1502
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "acaef05700f624e5f13f5d9897362333af0da514377e2ee9f951067defdc6cbd",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.87,
+              "p_opt": 2.0,
+              "ops": [
+                431,
+                800,
+                1287,
+                1888
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c663e89b6fb7efc5107636ba0c4fc16c94cdc8a11f205b3f12d447e59790107c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2778,
+                5558,
+                11125,
+                22241
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "824678763a3072d9fec5ed8d2f83bf722f5e43bad6b8cec95fd3e6acb55575ea",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.97,
+              "p_opt": 1.0,
+              "ops": [
+                156678,
+                603638,
+                2331679,
+                9352031
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b5ed72d38596dcf6e05a8a4b2736a0b1e781d0faf3f8adbf404c3d2d613b527d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8078ec8ce1ad0e1c0d297fff0534623f4dc0b38b77b9fd86fb885da355e8af70",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                14526,
+                29026,
+                58026,
+                116026
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ad414c87c9db65fb7f6d52ffe140d2295ec55c74734eca330e736c6dd255b80e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЯвляютсяАнаграммами",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                14509,
+                29009,
+                58009,
+                116009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЯвляютсяАнаграммами",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "238ff66c176ca9c28c3b63896f732046dcca8ce88b7dfc6d7bf387edc6a8f0e6",
+          "scores": {
+            "S": 10,
+            "M": 2.9,
+            "O": null,
+            "P": null,
+            "Q": 6.45
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 2,
+              "total": 7,
+              "entry_point": "ЯвляютсяАнаграммами",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (СодержитКлюч)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 15 / Method not found (СодержитКлюч)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляютсяАнаграммами",
+              "note": "не исполнился на размере 500: строка 15 кода модели · Method not found (СодержитКлюч)",
+              "fail_size": 500,
+              "fail_line": 15,
+              "fail_message": "Method not found (СодержитКлюч)",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "claude-opus-5.5",
+      "model_name": "Claude Opus 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e88f755b2001042319c41d605424567098bf73d3fad3d6728fbd03e78f830383",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38778,
+                80076,
+                164987,
+                339219
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "gpt-6-sol",
+      "model_name": "GPT-6 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c429df1e276dec5198f39150b1649af72dd34f89d578233e9ce0a95d4b333682",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДо",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38777,
+                80075,
+                164986,
+                339218
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДо",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "gpt-6-luna",
+      "model_name": "GPT-6 Luna",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c0364c6181985e8a2d82628c62fbe4c1b7df7ff4b525832b37ce3b0de886512d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДо",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38641,
+                79882,
+                164715,
+                338836
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДо",
               "note": "",
               "fail_size": null,
               "fail_line": null,
