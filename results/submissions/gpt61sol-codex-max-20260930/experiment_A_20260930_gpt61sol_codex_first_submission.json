@@ -1,0 +1,1088 @@
+{
+  "schema_version": 1,
+  "prism_version": "1.10.0",
+  "created": "2026-09-30T17:13:40.947460+00:00",
+  "experiment_id": "experiment_A_20260930_gpt61sol_codex_first",
+  "compat_hash": "81a97669b66f7318e1fe0ea7a5f2423cc38a704401b1b7573868b1a9157e98e2",
+  "versions": {
+    "constitution": "1.3.0",
+    "protocol": "1.4.0",
+    "runner": "windows-local-onescript-2.0.1",
+    "syntax_analyzer": "bsl-ls 0.29.0"
+  },
+  "models": [
+    "GPT-6.1 Sol (Codex, max)"
+  ],
+  "result": {
+    "experiment_id": "experiment_A_20260930_gpt61sol_codex_first",
+    "evaluator_id": "auto_l1",
+    "edition": "core",
+    "leaderboard_view": "quality",
+    "runner": "windows-local-onescript-2.0.1",
+    "syntax_analyzer": "bsl-ls 0.29.0",
+    "protocol_version": "1.4.0",
+    "constitution_version": "1.3.0",
+    "tasks": [
+      {
+        "task_id": "A1",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "c0fb74b9d81d33f1d2f695e357135492efe6146457020ae6119b1a8b4b748dff",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 3,
+                "total": 3,
+                "entry_point": "СгруппироватьТаблицу",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  2793,
+                  5623,
+                  11151,
+                  22130
+                ],
+                "sizes": [
+                  200,
+                  400,
+                  800,
+                  1600
+                ],
+                "entry_point": "СгруппироватьТаблицу",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A2",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "bd8fc71f744b4463bfb971790b90079fa4f6bf24079ad314161fd1e4d2f5a932",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 5,
+                "total": 5,
+                "entry_point": "УникальныеЭлементы",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  2605,
+                  5205,
+                  10405,
+                  20796
+                ],
+                "sizes": [
+                  200,
+                  400,
+                  800,
+                  1600
+                ],
+                "entry_point": "УникальныеЭлементы",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A3",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "02ffe9443b4481223cb2b34c23a68cf7d80537d30bde7d19f179db9371bb1df6",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 6,
+                "total": 6,
+                "entry_point": "ОбъединитьИнтервалы",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 0.99,
+                "p_opt": 1.1,
+                "ops": [
+                  2800,
+                  5573,
+                  11110,
+                  22016
+                ],
+                "sizes": [
+                  200,
+                  400,
+                  800,
+                  1600
+                ],
+                "entry_point": "ОбъединитьИнтервалы",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A4",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "f13ddf20cc1b286fb32969cba1b4ad74806b7c0e6f3876e7f8ccec80bd383de5",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 6,
+                "total": 6,
+                "entry_point": "СкользящееСреднее",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  1560,
+                  3110,
+                  6210,
+                  12410
+                ],
+                "sizes": [
+                  200,
+                  400,
+                  800,
+                  1600
+                ],
+                "entry_point": "СкользящееСреднее",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A5",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "fd04e1b69045a0641e89265ad7408f7da679086b39fb82a7a116ae2455ef84c5",
+            "scores": {
+              "S": 10,
+              "M": 0.0,
+              "O": null,
+              "P": null,
+              "Q": 5.0
+            },
+            "bands": {
+              "M": 0,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 0,
+                "total": 4,
+                "entry_point": "ЧастотаСлов",
+                "errors": [
+                  "PRISM_ERR 0 {Модуль D:\\1С\\Prism\\work\\experiment_A_20260930_gpt61sol_codex_first\\A5\\gpt-6.1-sol-codex-max\\run1\\cand.test.os / Ошибка в строке: 17 / OneScript.Values.BslUndefinedValue:  Преобразование к",
+                  "PRISM_ERR 1 {Модуль D:\\1С\\Prism\\work\\experiment_A_20260930_gpt61sol_codex_first\\A5\\gpt-6.1-sol-codex-max\\run1\\cand.test.os / Ошибка в строке: 17 / OneScript.Values.BslUndefinedValue:  Преобразование к",
+                  "PRISM_ERR 2 {Модуль D:\\1С\\Prism\\work\\experiment_A_20260930_gpt61sol_codex_first\\A5\\gpt-6.1-sol-codex-max\\run1\\cand.test.os / Ошибка в строке: 17 / OneScript.Values.BslUndefinedValue:  Преобразование к",
+                  "PRISM_ERR 3 {Модуль D:\\1С\\Prism\\work\\experiment_A_20260930_gpt61sol_codex_first\\A5\\gpt-6.1-sol-codex-max\\run1\\cand.test.os / Ошибка в строке: 17 / OneScript.Values.BslUndefinedValue:  Преобразование к"
+                ],
+                "band": 0
+              },
+              "O": {
+                "growth": null,
+                "p_opt": 1.0,
+                "ops": [],
+                "sizes": [],
+                "entry_point": "ЧастотаСлов",
+                "note": "не исполнился на размере 300: место не определилось · OneScript.Values.BslUndefinedValue:  Преобразование к типу 'Число' не поддерживается",
+                "fail_size": 300,
+                "fail_line": null,
+                "fail_message": "OneScript.Values.BslUndefinedValue:  Преобразование к типу 'Число' не поддерживается",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 2,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A6",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "88483d8083b0cd24e6feb05346bd7fc644cde0e07cf45321cbd918c7bd0c36aa",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 7,
+                "total": 7,
+                "entry_point": "РасстояниеЛевенштейна",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.67,
+                "p_opt": 2.0,
+                "ops": [
+                  162,
+                  278,
+                  426,
+                  606
+                ],
+                "sizes": [
+                  5,
+                  7,
+                  9,
+                  11
+                ],
+                "entry_point": "РасстояниеЛевенштейна",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A7",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "afa963d62cb7a7266eeeb2c797beecd55d4b281993e79eb19be32185c5894579",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 6,
+                "total": 6,
+                "entry_point": "СжатьRLE",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  2547,
+                  5107,
+                  10241,
+                  20473
+                ],
+                "sizes": [
+                  300,
+                  600,
+                  1200,
+                  2400
+                ],
+                "entry_point": "СжатьRLE",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A8",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "dd8a64bf85592404e03d1c61ab2e9deb2bbcc386080b17b3ae5d3b102dbe3d52",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 7,
+                "total": 7,
+                "entry_point": "ЯвляютсяАнаграммами",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  14509,
+                  29009,
+                  58009,
+                  116009
+                ],
+                "sizes": [
+                  500,
+                  1000,
+                  2000,
+                  4000
+                ],
+                "entry_point": "ЯвляютсяАнаграммами",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A9",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "29ec63afa81dced576ea8b06c606d828c35c73455c9297b9c67f89ae37db68cc",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 6,
+                "total": 6,
+                "entry_point": "ПростыеЧисла",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.04,
+                "p_opt": 1.0,
+                "ops": [
+                  38769,
+                  80067,
+                  164978,
+                  339210
+                ],
+                "sizes": [
+                  2000,
+                  4000,
+                  8000,
+                  16000
+                ],
+                "entry_point": "ПростыеЧисла",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A10",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "e1be72f7b61fa032f19629cea55d47ac9e7b9a8147901811e7138f4caea708b9",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 10,
+                "total": 10,
+                "entry_point": "ВставитьВОтсортированный",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  2407,
+                  4807,
+                  9607,
+                  19207
+                ],
+                "sizes": [
+                  400,
+                  800,
+                  1600,
+                  3200
+                ],
+                "entry_point": "ВставитьВОтсортированный",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A11",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "7735b40a94fda236fb3a31fac86b3b5c17ea1a654d4ec131dd4804752e4c898d",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 12,
+                "total": 12,
+                "entry_point": "РабочиеДни",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 0.0,
+                "p_opt": 0.0,
+                "ops": [
+                  91,
+                  60,
+                  104,
+                  91
+                ],
+                "sizes": [
+                  500,
+                  1000,
+                  2000,
+                  4000
+                ],
+                "entry_point": "РабочиеДни",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A12",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "c513d7ce3a25049c3737ef6caf207d2ba8cbde5e2579699dd83cdc441a592fc2",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 10,
+                "total": 10,
+                "entry_point": "УбратьЗначение",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  2004,
+                  4004,
+                  8004,
+                  16004
+                ],
+                "sizes": [
+                  500,
+                  1000,
+                  2000,
+                  4000
+                ],
+                "entry_point": "УбратьЗначение",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A13",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "dcf41c015221d138d73c4c96b53e14b012f10a4e81884a2047a846e332e6906a",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 11,
+                "total": 11,
+                "entry_point": "МаксСуммаПодмассива",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  803,
+                  1603,
+                  3203,
+                  6403
+                ],
+                "sizes": [
+                  200,
+                  400,
+                  800,
+                  1600
+                ],
+                "entry_point": "МаксСуммаПодмассива",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A14",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "7303b83cb5e755ddcbaa4e942d277441831fed5089a9c3d709f35bf3be7b6a5d",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 9,
+                "total": 9,
+                "entry_point": "РазвернутьСлова",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 1.0,
+                "p_opt": 1.0,
+                "ops": [
+                  806,
+                  1606,
+                  3206,
+                  6406
+                ],
+                "sizes": [
+                  200,
+                  400,
+                  800,
+                  1600
+                ],
+                "entry_point": "РазвернутьСлова",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "task_id": "A15",
+        "model_id": "gpt-6.1-sol-codex-max",
+        "model_name": "GPT-6.1 Sol (Codex, max)",
+        "runs": [
+          {
+            "run_index": 1,
+            "response_hash": "aaa441acd0c465a2042a4540a0b003def7abf75ee7a1c429d0d9596f4ecf71e0",
+            "scores": {
+              "S": 10,
+              "M": 10.0,
+              "O": 10,
+              "P": null,
+              "Q": 10.0
+            },
+            "bands": {
+              "M": 10,
+              "P": null
+            },
+            "detail": {
+              "S": {
+                "root_causes": 0,
+                "parse_error_clusters": 0,
+                "blockers": 0,
+                "balanced": true,
+                "balance_detail": {},
+                "error_codes": [],
+                "engine_parsed": true
+              },
+              "M": {
+                "executed": true,
+                "passed": 11,
+                "total": 11,
+                "entry_point": "СтепеньПоМодулю",
+                "errors": [],
+                "band": 10
+              },
+              "O": {
+                "growth": 0.11,
+                "p_opt": 0.0,
+                "ops": [
+                  91,
+                  99,
+                  107,
+                  115
+                ],
+                "sizes": [
+                  1000,
+                  2000,
+                  4000,
+                  8000
+                ],
+                "entry_point": "СтепеньПоМодулю",
+                "note": "",
+                "fail_size": null,
+                "fail_line": null,
+                "fail_message": "",
+                "leg": "O-исп"
+              },
+              "coverage": {
+                "measured": 3,
+                "applicable": 3
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "agent_provenance": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "max",
+      "identity_evidence": "current Codex desktop turn_context",
+      "evaluation_mode": "Codex agent, one session, tools available, all first solutions frozen before hidden test results",
+      "benchmark_commit": "aef115465d42d9863bcae675e612218fc66e6a8d",
+      "benchmark_version": "1.10.0",
+      "created_at": "2026-09-30T19:24:10.590365+03:00",
+      "first_attempt_sha256": {
+        "A1": "45a79d30014f5aaccd7519f41bb3f00fbd6cbdfc2ac4c00921d10b44816d6faf",
+        "A10": "6896fcdb778ddb6178a9da900e58c4bbc321effe24ef38f9b6bfab113299de2c",
+        "A11": "f72d002bb90a2c21f521464736f377366fdf4efcfc4efcc23d6138793cd7b5eb",
+        "A12": "9728f95e542d0d5a1f5668c8d62748a4a8d2271710dc34696859c180b614751f",
+        "A13": "cce1f462ddd110e56139144d78ca3744e77b007b92fcad435c4003c631ea4664",
+        "A14": "6747db0739373388a4a4be681370fc08cc6d9d1eadfa358eedadb2c65f1fd0b3",
+        "A15": "038690a77690c8c9b1e6b27712913a3586bf3eda6040c25ab40772dfef71f41d",
+        "A2": "c2186d8d982d1d1bf8d3e95cb802d00d1065cc80d5198f7f5a69ea14692d7761",
+        "A3": "cbac653dd040dad96dc7c76c2ce2c3e774627dc634d92645d249cc8aa85722dc",
+        "A4": "f3c0545d946080a4056247d1a196727b39d7a7811ea8cdaaef7715d2b228f559",
+        "A5": "52c7c84bf8920db9ac671baa64ec3613ad5d808f98ca815a1ef6e49662e91be0",
+        "A6": "37fcc811900dbda944c236296a40d7714edd751e9e3a7c7303d164e594a1d762",
+        "A7": "69a67b17411015b2fd198c73586b304310100d8c2815fce4bda69ca071cee716",
+        "A8": "69444978f0cedda482a7f3c8747e3f8cb9da59f020196179ab38638d5a385be4",
+        "A9": "e3240ec21d87b13d610115b85301ce670c51badd1eb860e0789f2e4c8da51da7",
+        "B1": "8ed7b0402a5f843460d1ac0bcb5f83a5478f8e221a75f816692cb43b62591017",
+        "B10": "708a79be206734bce6a20baea2290521eae535cf9d8d4909ea15b5bbee8b6ad8",
+        "B11": "e18d881861f9dc9ee72c4e07765a7f8ee3cc0fb3483c42e99ec6d169a7d7b2dc",
+        "B12": "6b187666edf367a430b7cc85b5bec90853d11c39bd875b580673625c95ea17c6",
+        "B13": "15f4e4fbf54d3c223c53a2451ff7339bf0b66774f4ccdf75c2fef249e4a332a9",
+        "B14": "28f20f2a517afabcaf547bb61bf2f3f78914ab70f6cec17403e7f2436784c3cf",
+        "B15": "e256a075c06ea8e0e44636c6d805b498eb2aefae0e331918a472d3ed73a4a313",
+        "B16": "deeb88fcdee706dfd4dfc17b311591f4acf0f650a3d426a8be7ee0c22f9f3ecf",
+        "B17": "28ec4d678b3035ec7014c2beef34eb061f020b290fc65eaa11696462f76d785e",
+        "B18": "c3be7762acb763ad7473545ca17e3c7b635f831571f33e2d53ee6159fac86b84",
+        "B19": "d88b9bb85a72eddcac120044e90501d48dc7a30bef0d9d713022f84a723eae79",
+        "B2": "c16038d6e3d368f2c8f2730711711b45eac3c25f6c4273cdc71ee5a8e0d88625",
+        "B20": "8225d11a4e0f947dae17736f21780cdf5e3c905f39693fc2216d54b38d09c52b",
+        "B3": "acd910ffdc919fdc85e6dbde357e39c571cbe4778e0622e2fac61816d02d6064",
+        "B4": "4906c43239084cb18e45d62ea6d78bcc45b9a660b8b5cc5e8a9b8fd5fbcfc481",
+        "B5": "2a798ab8abf8c45f272c57b404ea0501c3f5f2d0e7e79dc87b09d9dc91b0775e",
+        "B6": "9766405cbc0f6939c317dedb46d18c086ca7275da4cc1dc7982b3c0920cf2c75",
+        "B7": "776b48ddf15bea504883b35c54572a74df3b6a4c922ca2a775a09add91998368",
+        "B8": "159a903432784e025cb205653a0899903ffb329f57bb3704ff68a7b2c5829eb3",
+        "B9": "f04c68fe6ebb06fd53252d5511915a0df72ead83ed0e71a86fcb1ee5214333d8"
+      },
+      "canonical_solutions_read": false,
+      "hidden_tests_read_before_generation": false,
+      "sampling_temperature": null,
+      "sampling_seed": null,
+      "max_output_tokens": null,
+      "provider_usage": null,
+      "provider_cost": null,
+      "schema_placeholders": "Numeric zero defaults in PRISM generation schema denote unavailable sampling and billing metadata; not measured zero costs",
+      "limitations": [
+        "single shared agent context; not standard API generation protocol",
+        "OneScript Windows wall watchdog, no CPU quota",
+        "native Windows 1C 8.3.27.2214 replaces Docker training platform",
+        "B optimization and platform journal evidence not measured"
+      ]
+    }
+  }
+}
