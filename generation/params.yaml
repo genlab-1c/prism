@@ -75,3 +75,6 @@ defaults:
     gpt6_sol: { temperature: 0.1, runs: 1, max_tokens: 16384 }  # GPT-6 Sol через AITUNNEL (reasoning).
       # max_tokens урезан: предоплата по потолку при 2000 ₽/1M = ~130 ₽ на запрос; факт 5.6 Sol ~0.7–0.8 тыс. ток/задачу
     gpt6_luna: { temperature: 0.1, runs: 1 }                   # GPT-6 Luna через AITUNNEL
+    gpt61_sol: { temperature: 0.1, runs: 1, max_tokens: 16384 }      # GPT-6.1 Sol через AITUNNEL (reasoning).
+    gpt61_sol_pro: { temperature: 0.1, runs: 1, max_tokens: 16384 }  # GPT-6.1 Sol Pro через AITUNNEL (reasoning).
+      # Обеим потолок как у GPT-6 Sol: предоплата по потолку при 2000 ₽/1M вывода = ~33 ₽ на запрос

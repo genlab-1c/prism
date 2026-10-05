@@ -830,6 +830,34 @@ models:
       supports_seed: false
       supports_tools: true
 
+  gpt61_sol:
+    id: "gpt-6.1-sol"                    # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-6.1 Sol"
+    vendor: openai
+    weights: proprietary
+    released: "2026-09-29"               # дата релиза со страницы модели в AITUNNEL
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1100000
+      supports_seed: false
+      supports_tools: true
+
+  gpt61_sol_pro:
+    id: "gpt-6.1-sol-pro"                # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "GPT-6.1 Sol Pro"
+    vendor: openai
+    weights: proprietary
+    released: "2026-09-29"
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1100000
+      supports_seed: false
+      supports_tools: true
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:

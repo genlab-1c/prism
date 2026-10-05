@@ -81,3 +81,5 @@ prices:
   "claude-opus-5.5":               { input: 4.0,  output: 20.0 }  # Anthropic, прайс-лист (platform.claude.com/docs pricing) — на 20% ниже Opus 5; кеш-хит 0.2
   "gpt-6-sol":                     { input: 2.0,  output: 10.0 }  # OpenAI, прайс-лист (developers.openai.com/api/docs/pricing)
   "gpt-6-luna":                    { input: 0.1,  output: 0.5 }   # OpenAI, прайс-лист (developers.openai.com/api/docs/pricing)
+  "gpt-6.1-sol":                   { input: 2.0,  output: 10.0 }  # OpenAI, прайс-лист (developers.openai.com/api/docs/pricing), сверено 2026-10-05; кеш входа 0.1
+  "gpt-6.1-sol-pro":               { input: 2.0,  output: 10.0 }  # в прайсе OpenAI строки нет: та же gpt-6.1-sol с reasoning.mode=pro, тариф тот же (каталог OpenRouter, 2026-10-05); токенов жжёт в разы больше
