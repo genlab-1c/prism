@@ -85405,6 +85405,4486 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1c8b0949a2a85c0216141fdba96446fe956a7174e5777c85de18cde76f6fb118",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "b2299ba1c04a6cfacba643740c9a9c05101fc57fe8b3926d74f1131474ef1735",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЭлементыГруппыНоменклатуры",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": -0.111,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                7,
+                6
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c69ea328ea06c50d7934446e1f553abb5b8d4df4151db2077af037359e031bee",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 4,
+              "total": 4,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "03dbd484ef7e1afd5dac54e30c1fdaab2cf1263ee4f8ebc7d5249283ae2f9716",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДостаточноТовараНаСкладе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 4,
+              "judged": 4,
+              "total": 4,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fd346d53153b1f69d71210f88de842f9ce3bf5af7c9a5d1ee33aa18f126f3200",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "a93df306704e68077888902aefc43024e3ebd889f6c767b42be8c9d4329df273",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЕстьДругойКонтрагентСТакимИНН",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9b5d56246d07d635c924445342123d60e07b6a28e2a13c60ab0d9a7b089b2b4d",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": false,
+              "errors": [
+                "Переменная не определена (ОбщегоНазначения)"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Переменная не определена (ОбщегоНазначения)",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "9b719a6f690caed34e01c57b7e35623e01481d485376e914ab71db812c6f4aac",
+              "db_touched": null,
+              "unverified_tests": 0,
+              "compile_error_lines": [
+                7
+              ],
+              "compile_errors": [
+                "Переменная не определена (ОбщегоНазначения)"
+              ],
+              "entry_point": "ПересчитатьКоличествоВБазовуюЕдиницу",
+              "infra_detail": "модуль кандидата не компилируется",
+              "compiler_exit": null,
+              "band": 0
+            },
+            "O": {
+              "reason": "O-авто(B): код не исполнился (статус candidate_error) → N/A",
+              "leg": "O-авто",
+              "run_status": "candidate_error"
+            },
+            "P": {
+              "reason": "не измерено: модуль не дошёл до базы, модуль кандидата не компилируется",
+              "unmeasured": "candidate_error",
+              "log": "Переменная не определена (ОбщегоНазначения)"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3c67100c6a5fd97c0c19dcb2481eb189bdf579361e76a4961afd15d374333aa7",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": false,
+              "errors": [
+                "Ожидается символ ')'"
+              ]
+            },
+            "M": {
+              "status": "candidate_error",
+              "passed": 0,
+              "total": 0,
+              "log": "Ожидается символ ')'",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "deb79fa958b234a0d9521bfb40417553eb4524cbab8701be5df5289a8c7533f3",
+              "db_touched": null,
+              "unverified_tests": 0,
+              "compile_error_lines": [
+                61
+              ],
+              "compile_errors": [
+                "Ожидается символ ')'"
+              ],
+              "entry_point": "РассчитатьСвободныйОстатокТоваров",
+              "infra_detail": "модуль кандидата не компилируется",
+              "compiler_exit": null,
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: ",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "reason": "не измерено: модуль не дошёл до базы, модуль кандидата не компилируется",
+              "unmeasured": "candidate_error",
+              "log": "Ожидается символ ')'"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bc53e1b141f89a63613813d26bd7a56ce99c4167cfd149bfc82ead4435c05d00",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "3060b1cfc1b9a9ed67809433ea7c3b9b7789ac17bc28013d67fc75c4230208d7",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификацияНоменклатуры",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B16",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "46ade18cd2c10babe173a1b05c2dd7210fc49ba1a927e76419b858f7149da58c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "4a34631cb83aecfc860a4cab459b065d3fccf69f07a9867d8b6fec35ee34ad70",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДействующийДоговор",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B17",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "008d55b5c861fb75dea9af5e5d9f9c4d4d17357bf9c52bd23266c6ad475435b1",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 10.0,
+            "Q": 9.18
+          },
+          "bands": {
+            "M": 6,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест1 FAIL (ожидалось 700, получено 400);",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "0ab74d522fd539987df7ae14b55935a3a98ec1ac2907582f20e6d9d54e2814e8",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДолгКонтрагента",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 6
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "rows",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B18",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "05a039fcda3d9468c71499f2e1c49e59350b12aaf238f43c5e37658a17780977",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "b00f79d74c896224779f08d485bd98779fbd1c9d526821b65a0f6e40a0591451",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ВыделитьНДСИзСуммы",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "551d626841af00f1a1903742a9d157de59f1aa423e3a33eabdfe162482617e0b",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(31)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Хозрасчетный.СчетДт <<?>>В ИЕРАРХИИ (&Счет); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(31)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Хозрасчетный.СчетДт <<?>>В ИЕРАРХИИ (&Счет); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(31)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Хозрасчетный.СчетДт <<?>>В ИЕРАРХИИ (&Счет);",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 0,
+              "run_key": "9b52dfcdb14e66700153ef5840b8b660dc70907601183cdcd0ed51b9bb72927d",
+              "db_touched": false,
+              "unverified_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьСальдоСчета",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 0
+            },
+            "O": {
+              "weighted": 1.0,
+              "count": 1,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery"
+              ],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "reason": "не измерено: ни один тест не дошёл до обращения к метаданным",
+              "unmeasured": "query_never_parsed",
+              "total": 3,
+              "unverified_tests": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(31)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Хозрасчетный.СчетДт <<?>>В ИЕРАРХИИ (&Счет); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(31)}: Ошибка при вызове метода контекста (Выполнить): {(3, 31)}: Не допускается исполь"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "80a5679029168b18285bb2271cc0288c9a17a0085da293d0af44e2d313562c9e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "a9b421e7d7157689942833d00aca1fd2a1a198ed3d366e1057e32819f3a1843a",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": -0.096,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                8,
+                7
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 2,
+              "judged": 2,
+              "total": 2,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "02d4fded5ecd30d51bda8f066c4aa50cb9f700a62beb8482faa2d84b0e5ae615",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(18)}: Ошибка при вызове метода контекста (Выполнить): {(4, 2)}: Неверные параметры \"РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто\"\n<<?>>РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(,,,,,,,) КАК Проводки; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(18)}: Ошибка при вызове метода контекста (Выполнить): {(4, 2)}: Неверные параметры \"РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто\"\n<<?>>РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(,,,,,,,) КАК Проводки; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(18)}: Ошибка при вызове метода контекста (Выполнить): {(4, 2)}: Неверные параметры \"РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто\"\n<<?>>РегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(,,,,,,,) КАК Проводки;",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 3,
+              "run_key": "fadeeaf20f5ab8d8a562b5242a7ad05cde1e99f050d06bad9854f4725eff6c68",
+              "db_touched": false,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 0
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery",
+                "VirtualTableCallWithoutParameters"
+              ],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "db_touched": false,
+              "clean_share": 0.0,
+              "clean": 0,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 3,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cb080069b0ffdf3b37f87f14d37cdb3a415aa2ae51e3abd41659b1c3e3093170",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "b95f5e89fd4b91edf04b5e8075b6b556b181a1935a5abd211e3235a01e0edfb8",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦеныВТабличнойЧасти",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3edf6d63ebe8ecf44c09d95efef71865f85915f385f8337f2014779417b9aaa7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "871125f4de0b6c60e59b2e7b25c6e52f888822126f8d8fb74830c106babdd74e",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыFIFO",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4d021e72c218db42e0c0aa3f08293f09232f303add8ff9ad680c57279e3fa50e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "06632acc244a6d8caff4da7a721641174b4952cf1aa12aa6e7f49c0df8f046fd",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСредневзвешеннуюСебестоимость",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e06cf86ca6f631c69229456b801c3db277fc74fc0308318eff7ca5abb762f961",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "7d24dd423b3904274bc2d6eba1f4719c3e6555491f1987ed69644d4e89558a90",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "76a128110392a5d0b7ae91d231c66c8497d8c05c760e00b2620b6aa7ebe16f52",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "552a0e83e2f306570f2cfd096b027a6126ae447d54eaed90f85c1df33be48b62",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "328ac7aad36cf24768cc55a875c4431e706895dbf8c96c8d098a948228a03868",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "e690d2317581d3c395916ed30004a79b452b0c1138c44ca72eab62e81d03a226",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8d165eaa98457e14fed197c02f5bf2a0990a700bf0f4d055c6b62362e2d6270d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 5,
+              "total": 5,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "b62d80cd759495bae50c05551dd9f3b44190fb21c20c9ba928c89a7cf5e25485",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПоНоменклатуре",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 5,
+              "judged": 5,
+              "total": 5,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ef68050f825874901b7d3e19589bcecd335f57e874133ceed034ca78224a48ba",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "7c7b72ccf1a808a77c9e1affaee27158becc285e640cde89d5aaa4f1afac56fe",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СвестиТоварыДокумента",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 2,
+              "judged": 2,
+              "total": 2,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5ed4edf4d980e1ae11803aad9cb58e0410d742746bbc36847d459f8a1ec14928",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "7ed513ab9ff7d62bc8008ccaef970ecdf7bd5fded73c31408693f02f34cbae7d",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЭлементыНоменклатурыВГруппе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": -0.111,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                7,
+                6
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "34538828a40b83ac3faa04956dbace047200a7e9d0b902b72a35369528ba95cb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 4,
+              "total": 4,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "0206921e416aa2d592886c061af977a61ba81368c74a208115d0027be7da5b9d",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДостаточноТовараНаСкладе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 4,
+              "judged": 4,
+              "total": 4,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bf7233615f8293f9eca37196cb0495503bdecfbb1da1385b61dbee0d8ff0ccc7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "1f2e7c95764a39079129fc28dab4793114b968c9d41661697c405c4bcb49e515",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЕстьДругойКонтрагентСИНН",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "4ba359e219d796247533324dc4a0ebae93d8e8c85511c12a512e5d20fb208a4f",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "КоличествоВБазовойЕдинице",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1d8f7703d31d2a72029ee0656226d51762b3b4f4b264444979a7626642c63850",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "e7b0f049244b1b0d3da207e688146a39d1f632c18ce5e7b7daf36445838a4a6b",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e0610b90925aa371530f5a0b591aee9e42d93d248dfd81b36f9222e32ff61cde",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "6b190b06b8def9b01dce3e24df4728e6e184037f5bf72b0cab697d456062ba9a",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификацияНоменклатуры",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B16",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "28cd9fceb2e14f51d979bd8eccc8f7d77a3d2aff06bb34c53951d1e2fec83b88",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "d8806f37a44e9c7d9814b62f9c178db3bcd01efa3e0c46778d28b8ac488e91d0",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДействующийДоговор",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B17",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 10.0,
+            "Q": 9.18
+          },
+          "bands": {
+            "M": 6,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест1 FAIL (ожидалось 700, получено 400);",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "2c2f9137b622ab6cfeb611d5d907c2b4c3ed0c5881b2ad4cad5e045b5f29ef9f",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДолгКонтрагента",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 6
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "rows",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B18",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "6e445d0e9a16b8b8e7f519b55b514d5beb6c715a1e138440f0c65bf1f6f2259d",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ВыделитьНДС",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3f6b7126b817dad4b10164c8aea1c1bf4e26f865f22936a5351fc118698f18ff",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "40f28f245e9c17918567b9ba6555bd77c5f048f8658875dcb29cf585a74b4faa",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьСальдоСчета",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "205eb2246b03b2eb2992566d70316c0d4d4a427a81a3a8043e0e163059bc6a15",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "c2f73778ea70486be17fd74fc26a715e22358e78c47866d5d4e1a5f644dcdb89",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": -0.096,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                8,
+                7
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 2,
+              "judged": 2,
+              "total": 2,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b29c241efd77f07b68cf191d36da71df5352189d8a5742a86026712c240fdbaf",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 6,
+            "P": 10.0,
+            "Q": 9.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "d426b8915566247c2564732bd15baa056d1210aaa3d3ac4bd63cb455aaee567a",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery",
+                "VirtualTableCallWithoutParameters"
+              ],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4b408effaba14314963935f9fedea5411aa5550f34fa8a1d63eec98edc820348",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "3770d17b8376273dbd3e1c3fdf6bc06db71cdad35719926f049c51030e152f4c",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦеныТоваров",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "84cd68fe0086dd617f459eabdbc78267835f03261a87028774d62d49a9a58778",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "6dab95d496c51c18ce41f2aff564e545e8bf91290953d206ef761ce633816f3b",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СписатьТоварыFIFO",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8e7ceadf69c05e4ba06fa6da97b2b9bd35d842730c42e688007825eeed1c9cd5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "7fd57ff409a9686b4d06875892020f69e2730f1c1bbd527c361c1c91bc21e96d",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСреднююСебестоимость",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f2d38c7f8350f9ebe9c65df67618a0d02c5ad70fc016767748265a6ab1089d04",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "bf4c441409e12e55410c8c05648651db9b4ca0cdee67378405ddb8d752440acf",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ddfc264429c88e6f22d16ee8fb31c3ca5366d6f25c31bad650a68003b5ecf99c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "dcd606e2bb25299831ba5395a2d2409836a0e18100ad4644ddda3149adc128f4",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e6596193543355c266deceaeae31961cbeffc564ed95cbfaf1711b69365e00df",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "5f73e4c4ef0db3c94f592c96d206adba76c9a5454c19370b1d6046e5df779442",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ac0dc493b80b46578a0dc3386d2e0e46bebeee480e8d6edbcd4942aa107e6041",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": 0.0,
+            "Q": 3.33
+          },
+          "bands": {
+            "M": 0,
+            "P": 0
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 5,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(35)}: Ошибка при вызове метода контекста (Выполнить): {(12, 3)}: Неверные параметры \"РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты, 3\"\n<<?>>ДвиженияИГраницы,; тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(35)}: Ошибка при вызове метода контекста (Выполнить): {(12, 3)}: Неверные параметры \"РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты, 3\"\n<<?>>ДвиженияИГраницы,; тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(35)}: Ошибка при вызове метода контекста (Выполнить): {(12, 3)}: Неверные параметры \"РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты, 3\"\n<<?>>ДвиженияИГраницы,; тест4 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(35)}: Ошибка при вызове метода контекста (Выполнить): {(12, 3)}: Неверные параметры \"РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты, 3\"\n<<?>>ДвиженияИГраницы,; тест5 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(35)}: Ошибка при вызове метода контекста (Выполнить): {(12, 3)}: Неверные параметры \"РегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты, 3\"\n<<?>>ДвиженияИГраницы,;",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 5,
+              "run_key": "dccac6b09cc32df0e28183a7d5676b68a4523f112f93f39956aab6b44438a2ec",
+              "db_touched": false,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ОстаткиИОборотыТоваров",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "metric": "",
+              "counts": [],
+              "sizes": [],
+              "entry_point": null,
+              "note": "замер не состоялся на размере базы 20: КЛИЕНТ_ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(35)}: Ошибка при вызове метода контекста (Выполнить): {(12, 3)}: Нев",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": false,
+              "clean_share": 0.0,
+              "clean": 0,
+              "judged": 5,
+              "total": 5,
+              "unverified_tests": 0,
+              "platform_error_tests": 5,
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "band": 0
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "fce2db31bfb59ad5e89b925da61301f2293d4d00bc6c8e3327d085fd872b3ebe",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СводТоваров",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 2,
+              "judged": 2,
+              "total": 2,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B10",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "68d052e7932513c5eff92603d15b30332f8bc95bc1c089f1f6f84836e0d8a946",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "4d5c98413d3820117f6a8218aa25c8c5e8af132b6472dbd9c8f16519cdfdaba6",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЭлементыНоменклатурыВГруппе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": -0.111,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                7,
+                6
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B11",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "df3c05d4f523871a903581c0de80fba4f0c89e56ebd5dd25730336364747ef7a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 4,
+              "total": 4,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "19756337b535e39598a9b8def3052de21bbbf6de223d638740a6887099fafe19",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДостаточноТовараНаСкладе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 4,
+              "judged": 4,
+              "total": 4,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B12",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f3eda4ee7f2c23f5037d07cf96b2c8c1f296ffa101c08c6ce7524057e0bf0320",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "758d992327a5cc548612bbabda5b6fd9978c2d03dba368bae3990ad009889d56",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЕстьДругойКонтрагентСТакимИНН",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B13",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "4ba359e219d796247533324dc4a0ebae93d8e8c85511c12a512e5d20fb208a4f",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "КоличествоВБазовойЕдинице",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B14",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ae8440b92cfd3c5281741a2fd8b1562620ee65d2b6c4368a66907c7bca6fdcf1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "3031055ce84967f090935f7b9b083f22f4ca55f1a62903f164766a94aed733ae",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСвободныйОстаток",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B15",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4efe46cc2c400155ee6495d08f7926b0b98dddbdd748f215aec7fed9b31652c3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "5483e1fe2037086ae5569a02d7656962d31fc420cd8cd5dd6f8883814f44035a",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ABCКлассификацияНоменклатуры",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B16",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0277c2ab2ef1773d01cbef2483cdfe83295220578900432bf236e75dabf8eab2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "0ac2cc7d94166393c5c82eedac2f617f81748bbef4d8047ef499da76129d4b10",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "НайтиДействующийДоговор",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B17",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38",
+          "scores": {
+            "S": 10,
+            "M": 6.7,
+            "O": 10,
+            "P": 10.0,
+            "Q": 9.18
+          },
+          "bands": {
+            "M": 6,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 3,
+              "log": "тест1 FAIL (ожидалось 700, получено 400);",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "2c2f9137b622ab6cfeb611d5d907c2b4c3ed0c5881b2ad4cad5e045b5f29ef9f",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДолгКонтрагента",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 6
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "rows",
+              "counts": [
+                2,
+                2
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B18",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "6e445d0e9a16b8b8e7f519b55b514d5beb6c715a1e138440f0c65bf1f6f2259d",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ВыделитьНДС",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B19",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ec107cd46da1b9532697020fded2784942d3321869e416b90acc5b0028a29cce",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 0,
+              "total": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(4, 26)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Проводки.СчетДт <<?>>В ИЕРАРХИИ (&Счет); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(4, 26)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Проводки.СчетДт <<?>>В ИЕРАРХИИ (&Счет); тест3 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(4, 26)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Проводки.СчетДт <<?>>В ИЕРАРХИИ (&Счет);",
+              "platform_errors": [
+                "Ошибка при вызове метода контекста (Выполнить)"
+              ],
+              "platform_error_tests": 0,
+              "run_key": "1a48866eabba9659c946edf1272ccc3c1ff79e1e84ad4a35656d8e166881b739",
+              "db_touched": false,
+              "unverified_tests": 3,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СальдоСчета",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 0
+            },
+            "O": {
+              "weighted": 1.0,
+              "count": 1,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery"
+              ],
+              "leg": "O-авто",
+              "gated_by_m": true,
+              "note": "оптимальность не оцениваем — задача не решена (M<5)"
+            },
+            "P": {
+              "reason": "не измерено: ни один тест не дошёл до обращения к метаданным",
+              "unmeasured": "query_never_parsed",
+              "total": 3,
+              "unverified_tests": 3,
+              "log": "тест1 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(4, 26)}: Не допускается использование вложенных запросов и операции В ИЕРАРХИИ внутри агрегатных функций\nКОГДА Проводки.СчетДт <<?>>В ИЕРАРХИИ (&Счет); тест2 ИСКЛЮЧЕНИЕ: {ОбщийМодуль.КодКандидата.Модуль(28)}: Ошибка при вызове метода контекста (Выполнить): {(4, 26)}: Не допускается использова"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B1",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0fdede2665fbcf0ccfbb8c2743da7ca5c16bdd02817f3151de3232f04fbfc8a5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "ff3b7f8f1fc0875822b24dfd650c9899f47ebffd098076d7de05e36a818e0e2c",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОстаткиТоваровНаСкладе",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": -0.096,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                8,
+                7
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 2,
+              "judged": 2,
+              "total": 2,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B20",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c1e12572b5aeb973bbbcbcd54ce5d490ece8356442181599be73ef59eb54a832",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 6,
+            "P": 10.0,
+            "Q": 9.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "8e1973e9b1bfcbeeaec7ad81743ac61499edf2bff8eb785bed9e3d1e0773c935",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ДебетовыйОборотПоКонтрагенту",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 3.0,
+              "count": 2,
+              "codes": [
+                "LogicalOrInTheWhereSectionOfQuery",
+                "VirtualTableCallWithoutParameters"
+              ],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B2",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c4a37025c91bc155b741cde40919cc47f634a916fa77f59d2387aa6183f48286",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "d00c9876c7680aafb66bc24a6cab3bfcec0e6a7f7506dabd1b83bb5477075663",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ЗаполнитьЦеныТоваров",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B3",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6df07f5c0622739bd3731936b0f44fa42cdce40ca3cd37eedbbd405b0d9e50c3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "3d03f7f301b411f58c953380c1b0ebf76558754ff7c57979af652f4a5c39c8d0",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РаспределитьТоварыПоФИФО",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B4",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ce35f70ccb5db41379e79d9e03f6a5d17d6abb8d74b1d79648a6d3574191db5b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "b238b1d59c3f776097ea030cf2cd5d58220b0297875ab62c3c59946fac167a2d",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "РассчитатьСредневзвешеннуюСтоимость",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B5",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b1940fafe66bacabb4278f49204ef9451723802082de5c5b32c8d1d9d86f7e43",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "76305eb4f9f19acb8c9a94cf723fe089490113405daa2eeaf790e158d93a4ad1",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПересчитатьСуммыПриСменеВалюты",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B6",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "98efa341e18d2f7641656df620ab9b13c5766d40f1dc0cc6281c27b72dd528ca",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "13309db80f702b6ffd859b5249d7a54090a0d85cb4fe75084d8a936866d72cef",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьОборотыПродаж",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                4,
+                4
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B7",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d7442f3f8f0bedc4849e23a41469add67c3e3cad8ae774ce549a7d7c63cbc364",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 3,
+              "total": 3,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "a695757fad8a2e93d137d6335ed8d1bf68a4542a97e4af0ac0ad1faa11862312",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьЦенуЗакупки",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 3,
+              "judged": 3,
+              "total": 3,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B8",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2f4b7a54e17f0d9d8d59a05782a42edf011915477ba59e76d72f3389a31d0bf6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 5,
+              "total": 5,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "b4dc4a5ffbb9200761dccd4f29099ec13963dfe0a967c2b34429ff42221d4d52",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "ПолучитьДвиженияТоваровЗаПериод",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 0.0,
+              "metric": "sdbl",
+              "counts": [
+                3,
+                3
+              ],
+              "sizes": [
+                20,
+                80
+              ],
+              "entry_point": null,
+              "note": "",
+              "leg": "O-исп-B"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 5,
+              "judged": 5,
+              "total": 5,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "B9",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": 10.0,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": 10
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "instrument": "1С /CheckModules",
+              "engine_parsed": true,
+              "errors": []
+            },
+            "M": {
+              "status": "ok",
+              "passed": 2,
+              "total": 2,
+              "log": "",
+              "platform_errors": [],
+              "platform_error_tests": 0,
+              "run_key": "fce2db31bfb59ad5e89b925da61301f2293d4d00bc6c8e3327d085fd872b3ebe",
+              "db_touched": true,
+              "unverified_tests": 0,
+              "compile_error_lines": [],
+              "compile_errors": [],
+              "entry_point": "СводТоваров",
+              "infra_detail": "",
+              "compiler_exit": null,
+              "band": 10
+            },
+            "O": {
+              "weighted": 0,
+              "count": 0,
+              "codes": [],
+              "leg": "O-авто"
+            },
+            "P": {
+              "db_touched": true,
+              "clean_share": 1.0,
+              "clean": 2,
+              "judged": 2,
+              "total": 2,
+              "unverified_tests": 0,
+              "platform_error_tests": 0,
+              "platform_errors": [],
+              "band": 10
+            },
+            "coverage": {
+              "measured": 4,
+              "applicable": 4
+            }
+          }
+        }
+      ]
     }
   ]
 }

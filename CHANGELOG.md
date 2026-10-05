@@ -8,7 +8,6 @@
 ### Добавлено
 - Ключ модели `sonnet55` (Claude Sonnet 5.5, `claude-sonnet-5.5`, $2/$10) рядом с `sonnet5`: старые
   результаты `sonnet5` остаются сравнимыми. Id сверен по каталогу AITUNNEL (`GET /v1/models`).
-  Прогона пока нет.
 - Ключи моделей `gpt61_sol` и `gpt61_sol_pro` (GPT-6.1 Sol и GPT-6.1 Sol Pro). Sol Pro это та же
   модель в режиме рассуждения pro. Id сверены по каталогу AITUNNEL, цена Sol по прайс-листу OpenAI,
   у Sol Pro отдельной строки в прайсе нет, тариф тот же.

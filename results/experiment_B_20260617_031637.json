@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_B_20260617_031637",
   "category": "B",
-  "timestamp": "2026-09-25T02:38:43.031646",
+  "timestamp": "2026-10-05T16:36:06.450388",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -30,6 +30,7 @@
     "Grok Build 0.1",
     "Grok 4.3",
     "Claude Sonnet 5",
+    "Claude Sonnet 5.5",
     "GPT-5.6 Terra",
     "GPT-5.6 Sol",
     "Seed 2.0 Code",
@@ -59,7 +60,9 @@
     "MiMo-V2.6 Pro",
     "Claude Opus 5.5",
     "GPT-6 Sol",
-    "GPT-6 Luna"
+    "GPT-6 Luna",
+    "GPT-6.1 Sol",
+    "GPT-6.1 Sol Pro"
   ],
   "tasks_count": 20,
   "runs_per_task": 1,
@@ -1490,6 +1493,59 @@
       "total_tokens": 908,
       "total_cost": 0.018456,
       "avg_time": 8.877
+    },
+    {
+      "task_id": "B10",
+      "task_name": "Элементы группы по иерархии",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.010778,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьЭлементыГруппыНоменклатуры(Группа) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли Не ЗначениеЗаполнено(Группа) Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tНоменклатура.Ссылка КАК Ссылка\n\t|ИЗ\n\t|\tСправочник.Номенклатура КАК Номенклатура\n\t|ГДЕ\n\t|\tНоменклатура.Ссылка В ИЕРАРХИИ(&Группа)\n\t|\tИ НЕ Номенклатура.ЭтоГруппа\n\t|\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tНоменклатура.Наименование ВОЗР\";\n\tЗапрос.УстановитьПараметр(\"Группа\", Группа);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tРезультат.Добавить(Выборка.Ссылка);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "1c8b0949a2a85c0216141fdba96446fe956a7174e5777c85de18cde76f6fb118",
+          "tokens_input": 358,
+          "tokens_output": 694,
+          "tokens_total": 1052,
+          "tokens_reasoning": 251,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm writing a query using the hierarchy operator to select all non-group elements within a given group and its subgroups, ordered by name. I need to account for the case where the group reference is empty, which likely means returning all elements in the catalog.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.54,
+          "elapsed_time": 6.102798938751221,
+          "cost_input": 0.000716,
+          "cost_output": 0.00694,
+          "cost_total": 0.007656,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:40",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1c8b0949a2a85c0216141fdba96446fe956a7174e5777c85de18cde76f6fb118",
+        "most_common_count": 1,
+        "hashes": [
+          "1c8b0949a2a85c0216141fdba96446fe956a7174e5777c85de18cde76f6fb118"
+        ]
+      },
+      "total_tokens": 1052,
+      "total_cost": 0.018434,
+      "avg_time": 6.103
     },
     {
       "task_id": "B10",
@@ -3081,6 +3137,112 @@
       "avg_time": 7.46
     },
     {
+      "task_id": "B10",
+      "task_name": "Элементы группы по иерархии",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.004791999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьЭлементыНоменклатурыВГруппе(Группа) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tНоменклатура.Ссылка КАК Ссылка\n\t|ИЗ\n\t|\tСправочник.Номенклатура КАК Номенклатура\n\t|ГДЕ\n\t|\tНоменклатура.Ссылка В ИЕРАРХИИ (&Группа)\n\t|\tИ НЕ Номенклатура.ЭтоГруппа\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tНоменклатура.Наименование ВОЗР\";\n\n\tЗапрос.УстановитьПараметр(\"Группа\", Группа);\n\n\tРезультат = Новый Массив;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\t\tРезультат.Добавить(Выборка.Ссылка);\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "5ed4edf4d980e1ae11803aad9cb58e0410d742746bbc36847d459f8a1ec14928",
+          "tokens_input": 251,
+          "tokens_output": 338,
+          "tokens_total": 589,
+          "tokens_reasoning": 83,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.78,
+          "elapsed_time": 4.580813646316528,
+          "cost_input": 0.000502,
+          "cost_output": 0.0033799999999999998,
+          "cost_total": 0.0038819999999999996,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:53",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5ed4edf4d980e1ae11803aad9cb58e0410d742746bbc36847d459f8a1ec14928",
+        "most_common_count": 1,
+        "hashes": [
+          "5ed4edf4d980e1ae11803aad9cb58e0410d742746bbc36847d459f8a1ec14928"
+        ]
+      },
+      "total_tokens": 589,
+      "total_cost": 0.008674,
+      "avg_time": 4.581
+    },
+    {
+      "task_id": "B10",
+      "task_name": "Элементы группы по иерархии",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.020874,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьЭлементыНоменклатурыВГруппе(СсылкаНаГруппу) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tНоменклатура.Ссылка КАК Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Номенклатура КАК Номенклатура\n\t\t|ГДЕ\n\t\t|\tНоменклатура.Ссылка В ИЕРАРХИИ (&Группа)\n\t\t|\tИ НЕ Номенклатура.ЭтоГруппа\n\t\t|УПОРЯДОЧИТЬ ПО\n\t\t|\tНоменклатура.Наименование ВОЗР\";\n\n\tЗапрос.УстановитьПараметр(\"Группа\", СсылкаНаГруппу);\n\n\tРезультат = Новый Массив;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\t\tРезультат.Добавить(Выборка.Ссылка);\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "68d052e7932513c5eff92603d15b30332f8bc95bc1c089f1f6f84836e0d8a946",
+          "tokens_input": 2867,
+          "tokens_output": 745,
+          "tokens_total": 3612,
+          "tokens_reasoning": 179,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.64,
+          "elapsed_time": 10.76806354522705,
+          "cost_input": 0.005734,
+          "cost_output": 0.00745,
+          "cost_total": 0.013184000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:05:08",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "68d052e7932513c5eff92603d15b30332f8bc95bc1c089f1f6f84836e0d8a946",
+        "most_common_count": 1,
+        "hashes": [
+          "68d052e7932513c5eff92603d15b30332f8bc95bc1c089f1f6f84836e0d8a946"
+        ]
+      },
+      "total_tokens": 3612,
+      "total_cost": 0.034058000000000005,
+      "avg_time": 10.768
+    },
+    {
       "task_id": "B11",
       "task_name": "Контроль достаточности остатка",
       "model_id": "aliceai-llm/latest",
@@ -4514,6 +4676,60 @@
       "total_tokens": 929,
       "total_cost": 0.022868,
       "avg_time": 8.134
+    },
+    {
+      "task_id": "B11",
+      "task_name": "Контроль достаточности остатка",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ОстаткиТоваров",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.012954,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ДостаточноТовараНаСкладе(Номенклатура, Склад, ТребуемоеКоличество) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(ОстаткиТоваровОстатки.КоличествоОстаток), 0) КАК Количество\n\t|ИЗ\n\t|\tРегистрНакопления.ОстаткиТоваров.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура = &Номенклатура) КАК ОстаткиТоваровОстатки\";\n\t\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tТекущийОстаток = 0;\n\tЕсли Выборка.Следующий() Тогда\n\t\tТекущийОстаток = Выборка.Количество;\n\tКонецЕсли;\n\t\n\tВозврат ТекущийОстаток >= ТребуемоеКоличество;\n\t\nКонецФункции\n```",
+          "response_hash": "c69ea328ea06c50d7934446e1f553abb5b8d4df4151db2077af037359e031bee",
+          "tokens_input": 404,
+          "tokens_output": 434,
+          "tokens_total": 838,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.03,
+          "elapsed_time": 4.544607639312744,
+          "cost_input": 0.000808,
+          "cost_output": 0.00434,
+          "cost_total": 0.005148,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:38",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c69ea328ea06c50d7934446e1f553abb5b8d4df4151db2077af037359e031bee",
+        "most_common_count": 1,
+        "hashes": [
+          "c69ea328ea06c50d7934446e1f553abb5b8d4df4151db2077af037359e031bee"
+        ]
+      },
+      "total_tokens": 838,
+      "total_cost": 0.018102,
+      "avg_time": 4.545
     },
     {
       "task_id": "B11",
@@ -6130,6 +6346,112 @@
       "avg_time": 10.557
     },
     {
+      "task_id": "B11",
+      "task_name": "Контроль достаточности остатка",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ОстаткиТоваров"
+      ],
+      "context_analysis_cost": 0.00506,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ДостаточноТовараНаСкладе(Номенклатура, Склад, ТребуемоеКоличество) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tЕСТЬNULL(СУММА(Остатки.КоличествоОстаток), 0) КАК Количество\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.ОстаткиТоваров.Остатки(\n\t\t|\t\t,\n\t\t|\t\tСклад = &Склад\n\t\t|\t\t\tИ Номенклатура = &Номенклатура) КАК Остатки\";\n\n\tЗапрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tВыборка.Следующий();\n\n\tВозврат Выборка.Количество >= ТребуемоеКоличество;\n\nКонецФункции",
+          "response_hash": "34538828a40b83ac3faa04956dbace047200a7e9d0b902b72a35369528ba95cb",
+          "tokens_input": 269,
+          "tokens_output": 383,
+          "tokens_total": 652,
+          "tokens_reasoning": 132,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.88,
+          "elapsed_time": 5.201379060745239,
+          "cost_input": 0.000538,
+          "cost_output": 0.00383,
+          "cost_total": 0.004368,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:53",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "34538828a40b83ac3faa04956dbace047200a7e9d0b902b72a35369528ba95cb",
+        "most_common_count": 1,
+        "hashes": [
+          "34538828a40b83ac3faa04956dbace047200a7e9d0b902b72a35369528ba95cb"
+        ]
+      },
+      "total_tokens": 652,
+      "total_cost": 0.009428,
+      "avg_time": 5.201
+    },
+    {
+      "task_id": "B11",
+      "task_name": "Контроль достаточности остатка",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ОстаткиТоваров"
+      ],
+      "context_analysis_cost": 0.023204,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ДостаточноТовараНаСкладе(Номенклатура, Склад, ТребуемоеКоличество) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tЕСТЬNULL(СУММА(Остатки.КоличествоОстаток), 0) КАК Количество\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.ОстаткиТоваров.Остатки(\n\t\t|\t\t,\n\t\t|\t\tСклад = &Склад И Номенклатура = &Номенклатура) КАК Остатки\";\n\n\tЗапрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tТекущийОстаток = 0;\n\tЕсли Выборка.Следующий() Тогда\n\t\tТекущийОстаток = Выборка.Количество;\n\tКонецЕсли;\n\n\tВозврат ТекущийОстаток >= ТребуемоеКоличество;\n\nКонецФункции",
+          "response_hash": "df3c05d4f523871a903581c0de80fba4f0c89e56ebd5dd25730336364747ef7a",
+          "tokens_input": 2832,
+          "tokens_output": 718,
+          "tokens_total": 3550,
+          "tokens_reasoning": 169,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.57,
+          "elapsed_time": 10.826006889343262,
+          "cost_input": 0.005664,
+          "cost_output": 0.00718,
+          "cost_total": 0.012844,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:05:43",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "df3c05d4f523871a903581c0de80fba4f0c89e56ebd5dd25730336364747ef7a",
+        "most_common_count": 1,
+        "hashes": [
+          "df3c05d4f523871a903581c0de80fba4f0c89e56ebd5dd25730336364747ef7a"
+        ]
+      },
+      "total_tokens": 3550,
+      "total_cost": 0.036048,
+      "avg_time": 10.826
+    },
+    {
       "task_id": "B12",
       "task_name": "Поиск дубля контрагента по ИНН",
       "model_id": "aliceai-llm/latest",
@@ -7553,6 +7875,59 @@
       "total_tokens": 695,
       "total_cost": 0.018706,
       "avg_time": 6.014
+    },
+    {
+      "task_id": "B12",
+      "task_name": "Поиск дубля контрагента по ИНН",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.00937,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ЕстьДругойКонтрагентСТакимИНН(ИНН, ИсключаемыйКонтрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t|\tКонтрагенты.Ссылка КАК Ссылка\n\t|ИЗ\n\t|\tСправочник.Контрагенты КАК Контрагенты\n\t|ГДЕ\n\t|\tКонтрагенты.ИНН = &ИНН\n\t|\tИ Контрагенты.Ссылка <> &ИсключаемыйКонтрагент\";\n\n\tЗапрос.УстановитьПараметр(\"ИНН\", ИНН);\n\tЗапрос.УстановитьПараметр(\"ИсключаемыйКонтрагент\", ИсключаемыйКонтрагент);\n\n\tВозврат НЕ Запрос.Выполнить().Пустой();\n\nКонецФункции\n```",
+          "response_hash": "fd346d53153b1f69d71210f88de842f9ce3bf5af7c9a5d1ee33aa18f126f3200",
+          "tokens_input": 352,
+          "tokens_output": 340,
+          "tokens_total": 692,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.83,
+          "elapsed_time": 8.042967796325684,
+          "cost_input": 0.000704,
+          "cost_output": 0.0034000000000000002,
+          "cost_total": 0.004104,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:53",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "fd346d53153b1f69d71210f88de842f9ce3bf5af7c9a5d1ee33aa18f126f3200",
+        "most_common_count": 1,
+        "hashes": [
+          "fd346d53153b1f69d71210f88de842f9ce3bf5af7c9a5d1ee33aa18f126f3200"
+        ]
+      },
+      "total_tokens": 692,
+      "total_cost": 0.013474,
+      "avg_time": 8.043
     },
     {
       "task_id": "B12",
@@ -9143,6 +9518,112 @@
       "avg_time": 5.989
     },
     {
+      "task_id": "B12",
+      "task_name": "Поиск дубля контрагента по ИНН",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.004326,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЕстьДругойКонтрагентСИНН(ИНН, ИсключаемыйКонтрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tКонтрагенты.Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Контрагенты КАК Контрагенты\n\t\t|ГДЕ\n\t\t|\tКонтрагенты.ИНН = &ИНН\n\t\t|\tИ Контрагенты.Ссылка <> &ИсключаемыйКонтрагент\";\n\n\tЗапрос.УстановитьПараметр(\"ИНН\", ИНН);\n\tЗапрос.УстановитьПараметр(\"ИсключаемыйКонтрагент\", ИсключаемыйКонтрагент);\n\n\tВозврат Не Запрос.Выполнить().Пустой();\n\nКонецФункции",
+          "response_hash": "bf7233615f8293f9eca37196cb0495503bdecfbb1da1385b61dbee0d8ff0ccc7",
+          "tokens_input": 243,
+          "tokens_output": 212,
+          "tokens_total": 455,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.53,
+          "elapsed_time": 4.1412787437438965,
+          "cost_input": 0.000486,
+          "cost_output": 0.00212,
+          "cost_total": 0.002606,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:47:04",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bf7233615f8293f9eca37196cb0495503bdecfbb1da1385b61dbee0d8ff0ccc7",
+        "most_common_count": 1,
+        "hashes": [
+          "bf7233615f8293f9eca37196cb0495503bdecfbb1da1385b61dbee0d8ff0ccc7"
+        ]
+      },
+      "total_tokens": 455,
+      "total_cost": 0.006932,
+      "avg_time": 4.141
+    },
+    {
+      "task_id": "B12",
+      "task_name": "Поиск дубля контрагента по ИНН",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.019674,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЕстьДругойКонтрагентСТакимИНН(ИНН, ИсключаемыйКонтрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t\t|\tКонтрагенты.Ссылка\n\t\t|ИЗ\n\t\t|\tСправочник.Контрагенты КАК Контрагенты\n\t\t|ГДЕ\n\t\t|\tКонтрагенты.ИНН = &ИНН\n\t\t|\tИ Контрагенты.Ссылка <> &ИсключаемыйКонтрагент\";\n\n\tЗапрос.УстановитьПараметр(\"ИНН\", ИНН);\n\tЗапрос.УстановитьПараметр(\"ИсключаемыйКонтрагент\", ИсключаемыйКонтрагент);\n\n\tВозврат НЕ Запрос.Выполнить().Пустой();\n\nКонецФункции",
+          "response_hash": "f3eda4ee7f2c23f5037d07cf96b2c8c1f296ffa101c08c6ce7524057e0bf0320",
+          "tokens_input": 2584,
+          "tokens_output": 462,
+          "tokens_total": 3046,
+          "tokens_reasoning": 20,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.96,
+          "elapsed_time": 10.515690803527832,
+          "cost_input": 0.005168,
+          "cost_output": 0.00462,
+          "cost_total": 0.009788,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:06:11",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f3eda4ee7f2c23f5037d07cf96b2c8c1f296ffa101c08c6ce7524057e0bf0320",
+        "most_common_count": 1,
+        "hashes": [
+          "f3eda4ee7f2c23f5037d07cf96b2c8c1f296ffa101c08c6ce7524057e0bf0320"
+        ]
+      },
+      "total_tokens": 3046,
+      "total_cost": 0.029462000000000002,
+      "avg_time": 10.516
+    },
+    {
       "task_id": "B13",
       "task_name": "Перевод количества в базовую единицу",
       "model_id": "aliceai-llm/latest",
@@ -10566,6 +11047,59 @@
       "total_tokens": 504,
       "total_cost": 0.014074,
       "avg_time": 4.845
+    },
+    {
+      "task_id": "B13",
+      "task_name": "Перевод количества в базовую единицу",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Упаковки"
+      ],
+      "context_analysis_cost": 0.00924,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПересчитатьКоличествоВБазовуюЕдиницу(Упаковка, Количество) Экспорт\n\t\n\tЕсли Не ЗначениеЗаполнено(Упаковка) Тогда\n\t\tВозврат Количество;\n\tКонецЕсли;\n\t\n\tКоэффициент = ОбщегоНазначения.ЗначениеРеквизитаОбъекта(Упаковка, \"Коэффициент\");\n\t\n\tЕсли Не ЗначениеЗаполнено(Коэффициент) Тогда\n\t\tКоэффициент = 1;\n\tКонецЕсли;\n\t\n\tВозврат Количество * Коэффициент;\n\t\nКонецФункции\n```\n\nПримечание: чтобы код не зависел от БСП, лучше использовать следующий вариант:\n\n```bsl\nФункция ПересчитатьКоличествоВБазовуюЕдиницу(Упаковка, Количество) Экспорт\n\t\n\tЕсли Не ЗначениеЗаполнено(Упаковка) Тогда\n\t\tВозврат Количество;\n\tКонецЕсли;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tУпаковки.Коэффициент КАК Коэффициент\n\t\t|ИЗ\n\t\t|\tСправочник.Упаковки КАК Упаковки\n\t\t|ГДЕ\n\t\t|\tУпаковки.Ссылка = &Упаковка\";\n\tЗапрос.УстановитьПараметр(\"Упаковка\", Упаковка);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\t\n\tКоэффициент = 1;\n\tЕсли Выборка.Следующий() Тогда\n\t\tЕсли ЗначениеЗаполнено(Выборка.Коэффициент) Тогда\n\t\t\tКоэффициент = Выборка.Коэффициент;\n\t\tКонецЕсли;\n\tКонецЕсли;\n\t\n\tВозврат Количество * Коэффициент;\n\t\nКонецФункции\n```",
+          "response_hash": "9b5d56246d07d635c924445342123d60e07b6a28e2a13c60ab0d9a7b089b2b4d",
+          "tokens_input": 351,
+          "tokens_output": 692,
+          "tokens_total": 1043,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.53,
+          "elapsed_time": 5.829758644104004,
+          "cost_input": 0.000702,
+          "cost_output": 0.00692,
+          "cost_total": 0.007622,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:52",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "9b5d56246d07d635c924445342123d60e07b6a28e2a13c60ab0d9a7b089b2b4d",
+        "most_common_count": 1,
+        "hashes": [
+          "9b5d56246d07d635c924445342123d60e07b6a28e2a13c60ab0d9a7b089b2b4d"
+        ]
+      },
+      "total_tokens": 1043,
+      "total_cost": 0.016862000000000002,
+      "avg_time": 5.83
     },
     {
       "task_id": "B13",
@@ -12156,6 +12690,112 @@
       "avg_time": 3.98
     },
     {
+      "task_id": "B13",
+      "task_name": "Перевод количества в базовую единицу",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Упаковки"
+      ],
+      "context_analysis_cost": 0.004192,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция КоличествоВБазовойЕдинице(Упаковка, Количество) Экспорт\n\tВозврат Количество * Упаковка.Коэффициент;\nКонецФункции",
+          "response_hash": "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace",
+          "tokens_input": 248,
+          "tokens_output": 49,
+          "tokens_total": 297,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.2,
+          "elapsed_time": 7.861293077468872,
+          "cost_input": 0.000496,
+          "cost_output": 0.00049,
+          "cost_total": 0.000986,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:47:08",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace",
+        "most_common_count": 1,
+        "hashes": [
+          "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace"
+        ]
+      },
+      "total_tokens": 297,
+      "total_cost": 0.005178,
+      "avg_time": 7.861
+    },
+    {
+      "task_id": "B13",
+      "task_name": "Перевод количества в базовую единицу",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Упаковки"
+      ],
+      "context_analysis_cost": 0.019428,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция КоличествоВБазовойЕдинице(Упаковка, Количество) Экспорт\n\tВозврат Количество * Упаковка.Коэффициент;\nКонецФункции",
+          "response_hash": "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace",
+          "tokens_input": 2270,
+          "tokens_output": 134,
+          "tokens_total": 2404,
+          "tokens_reasoning": 18,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.18,
+          "elapsed_time": 12.8551766872406,
+          "cost_input": 0.00454,
+          "cost_output": 0.00134,
+          "cost_total": 0.00588,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:06:42",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace",
+        "most_common_count": 1,
+        "hashes": [
+          "20c9bd8c2b866bf48afb00661f2389fc4e9a9e78fb9a7839b18a58d8dcf7aace"
+        ]
+      },
+      "total_tokens": 2404,
+      "total_cost": 0.025308,
+      "avg_time": 12.855
+    },
+    {
       "task_id": "B14",
       "task_name": "Свободный остаток с учётом резервов",
       "model_id": "aliceai-llm/latest",
@@ -13616,6 +14256,60 @@
       "total_tokens": 1592,
       "total_cost": 0.043556,
       "avg_time": 13.436
+    },
+    {
+      "task_id": "B14",
+      "task_name": "Свободный остаток с учётом резервов",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "РегистрНакопления.Резервы"
+      ],
+      "context_analysis_cost": 0.014496,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция РассчитатьСвободныйОстатокТоваров(МассивНоменклатуры, Склад) Экспорт\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"Свободно\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n\t\n\tЕсли МассивНоменклатуры = Неопределено ИЛИ МассивНоменклатуры.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Все товары из массива попадают в результат с нулевым значением по умолчанию\n\tСтрокиПоНоменклатуре = Новый Соответствие;\n\tДля Каждого ЭлементНоменклатуры Из МассивНоменклатуры Цикл\n\t\tЕсли ЗначениеЗаполнено(ЭлементНоменклатуры) И СтрокиПоНоменклатуре.Получить(ЭлементНоменклатуры) = Неопределено Тогда\n\t\t\tНоваяСтрока = Результат.Добавить();\n\t\t\tНоваяСтрока.Номенклатура = ЭлементНоменклатуры;\n\t\t\tНоваяСтрока.Свободно = 0;\n\t\t\tСтрокиПоНоменклатуре.Вставить(ЭлементНоменклатуры, НоваяСтрока);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстаткиИРезервы.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ОстаткиИРезервы.ВНаличии) КАК ВНаличии,\n\t|\tСУММА(ОстаткиИРезервы.Зарезервировано) КАК Зарезервировано\n\t|ИЗ\n\t|\t(ВЫБРАТЬ\n\t|\t\tТоварыНаСкладахОстатки.Номенклатура КАК Номенклатура,\n\t|\t\tТоварыНаСкладахОстатки.ВНаличииОстаток КАК ВНаличии,\n\t|\t\t0 КАК Зарезервировано\n\t|\tИЗ\n\t|\t\tРегистрНакопления.ТоварыНаСкладах.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК ТоварыНаСкладахОстатки\n\t|\t\n\t|\tОБЪЕДИНИТЬ ВСЕ\n\t|\t\n\t|\tВЫБРАТЬ\n\t|\t\tРезервыОстатки.Номенклатура,\n\t|\t\t0,\n\t|\t\tРезервыОстатки.ЗарезервированоОстаток\n\t|\tИЗ\n\t|\t\tРегистрНакопления.Резервы.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК РезервыОстатки) КАК ОстаткиИРезервы\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tОстаткиИРезервы.Номенклатура\";\n\t\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tСтрокаРезультата = СтрокиПоНоменклатуре.Получить(Выборка.Номенклатура);\n\t\tЕсли СтрокаРезультата <> Неопределено Тогда\n\t\t\tСтрокаРезультата.Свободно = (Выборка.ВНаличии ?? 0) - (Выборка.Зарезервировано ?? 0);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```\n\nПримечание: оператор `??` в 1С отсутствует — замените строку присвоения на корректный вариант:\n\n```bsl\n\t\t\tСтрокаРезультата.Свободно = Выборка.ВНаличии - Выборка.Зарезервировано;\n```\n\nНиже полная исправленная версия функции:\n\n```bsl\nФункция РассчитатьСвободныйОстатокТоваров(МассивНоменклатуры, Склад) Экспорт\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"Свободно\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n\t\n\tЕсли МассивНоменклатуры = Неопределено ИЛИ МассивНоменклатуры.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tСтрокиПоНоменклатуре = Новый Соответствие;\n\tДля Каждого ЭлементНоменклатуры Из МассивНоменклатуры Цикл\n\t\tЕсли ЗначениеЗаполнено(ЭлементНоменклатуры) И СтрокиПоНоменклатуре.Получить(ЭлементНоменклатуры) = Неопределено Тогда\n\t\t\tНоваяСтрока = Результат.Добавить();\n\t\t\tНоваяСтрока.Номенклатура = ЭлементНоменклатуры;\n\t\t\tНоваяСтрока.Свободно = 0;\n\t\t\tСтрокиПоНоменклатуре.Вставить(ЭлементНоменклатуры, НоваяСтрока);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстаткиИРезервы.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ОстаткиИРезервы.ВНаличии) КАК ВНаличии,\n\t|\tСУММА(ОстаткиИРезервы.Зарезервировано) КАК Зарезервировано\n\t|ИЗ\n\t|\t(ВЫБРАТЬ\n\t|\t\tТоварыНаСкладахОстатки.Номенклатура КАК Номенклатура,\n\t|\t\tТоварыНаСкладахОстатки.ВНаличииОстаток КАК ВНаличии,\n\t|\t\t0 КАК Зарезервировано\n\t|\tИЗ\n\t|\t\tРегистрНакопления.ТоварыНаСкладах.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК ТоварыНаСкладахОстатки\n\t|\t\n\t|\tОБЪЕДИНИТЬ ВСЕ\n\t|\t\n\t|\tВЫБРАТЬ\n\t|\t\tРезервыОстатки.Номенклатура,\n\t|\t\t0,\n\t|\t\tРезервыОстатки.ЗарезервированоОстаток\n\t|\tИЗ\n\t|\t\tРегистрНакопления.Резервы.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК РезервыОстатки) КАК ОстаткиИРезервы\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tОстаткиИРезервы.Номенклатура\";\n\t\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\t\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tСтрокаРезультата = СтрокиПоНоменклатуре.Получить(Выборка.Номенклатура);\n\t\tЕсли СтрокаРезультата <> Неопределено Тогда\n\t\t\tСтрокаРезультата.Свободно = Выборка.ВНаличии - Выборка.Зарезервировано;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "3c67100c6a5fd97c0c19dcb2481eb189bdf579361e76a4961afd15d374333aa7",
+          "tokens_input": 517,
+          "tokens_output": 3597,
+          "tokens_total": 4114,
+          "tokens_reasoning": 651,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm working out the query logic for stock availability, considering whether to left join the reserves register onto stock balances or instead build a temporary table from the array of items first, since items with reserves but no stock would otherwise get dropped incorrectly.\n\nSo I'll union two queries—one pulling stock quantities and one pulling reserved quantities from the array of nomenclature—then group and subtract reserved from available in the outer query, filling in zeros for items with no records at all.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 7.41,
+          "elapsed_time": 22.06056046485901,
+          "cost_input": 0.001034,
+          "cost_output": 0.03597,
+          "cost_total": 0.037004,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:29:22",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3c67100c6a5fd97c0c19dcb2481eb189bdf579361e76a4961afd15d374333aa7",
+        "most_common_count": 1,
+        "hashes": [
+          "3c67100c6a5fd97c0c19dcb2481eb189bdf579361e76a4961afd15d374333aa7"
+        ]
+      },
+      "total_tokens": 4114,
+      "total_cost": 0.051500000000000004,
+      "avg_time": 22.061
     },
     {
       "task_id": "B14",
@@ -15253,6 +15947,114 @@
       "avg_time": 20.813
     },
     {
+      "task_id": "B14",
+      "task_name": "Свободный остаток с учётом резервов",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "РегистрНакопления.Резервы"
+      ],
+      "context_analysis_cost": 0.006737999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РассчитатьСвободныйОстаток(МассивНоменклатуры, Склад) Экспорт\n\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\",\n\t\tНовый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"Свободно\",\n\t\tНовый ОписаниеТипов(\"Число\"));\n\n\tЕсли МассивНоменклатуры.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tДанные.Номенклатура КАК Номенклатура,\n\t|\tСУММА(Данные.Количество) КАК Свободно\n\t|ИЗ\n\t|\t(ВЫБРАТЬ\n\t|\t\tОстатки.Номенклатура КАК Номенклатура,\n\t|\t\tОстатки.ВНаличииОстаток КАК Количество\n\t|\tИЗ\n\t|\t\tРегистрНакопления.ТоварыНаСкладах.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Остатки\n\t|\n\t|\tОБЪЕДИНИТЬ ВСЕ\n\t|\n\t|\tВЫБРАТЬ\n\t|\t\tРезервы.Номенклатура,\n\t|\t\t-Резервы.ЗарезервированоОстаток\n\t|\tИЗ\n\t|\t\tРегистрНакопления.Резервы.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Резервы) КАК Данные\n\t|СГРУППИРОВАТЬ ПО\n\t|\tДанные.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n\tСвободныеОстатки = Новый Соответствие;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\t\tСвободныеОстатки.Вставить(Выборка.Номенклатура, Выборка.Свободно);\n\tКонецЦикла;\n\n\tДобавленныеТовары = Новый Соответствие;\n\n\tДля Каждого Номенклатура Из МассивНоменклатуры Цикл\n\t\tЕсли ДобавленныеТовары.Получить(Номенклатура) <> Неопределено Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tСвободно = СвободныеОстатки.Получить(Номенклатура);\n\t\tЕсли Свободно = Неопределено Тогда\n\t\t\tСвободно = 0;\n\t\tКонецЕсли;\n\n\t\tСтрокаРезультата = Результат.Добавить();\n\t\tСтрокаРезультата.Номенклатура = Номенклатура;\n\t\tСтрокаРезультата.Свободно = Свободно;\n\n\t\tДобавленныеТовары.Вставить(Номенклатура, Истина);\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "1d8f7703d31d2a72029ee0656226d51762b3b4f4b264444979a7626642c63850",
+          "tokens_input": 365,
+          "tokens_output": 1117,
+          "tokens_total": 1482,
+          "tokens_reasoning": 277,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "**Building inventory queries**\n\nI need to decide if I should include all array products, even those with no inventory. It sounds like querying union inventories and reserves would help me produce a complete rows array. A full join or grouped union could work here, allowing me to ensure that all existing stock is captured. The key is to use a left join to include goods in stock without reserves. I’m considering how to manage duplicates as well by filtering unique query results.**Optimizing query structures**\n\nI’m considering whether adding more complexity is necessary for my query to aggregate union balances, as it could yield a comprehensive view of stock or reserves. A left join seems acceptable here, and I want all entries, including zeros, to create a strong table. I’ll need to map unique entries, using types like СписокНоменклатуры for my parameters, while also skipping duplicates in my loops. It's essential to keep things straightforward and efficient as I produce the final results.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.39,
+          "elapsed_time": 20.648789405822754,
+          "cost_input": 0.00073,
+          "cost_output": 0.01117,
+          "cost_total": 0.011899999999999999,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:47:35",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1d8f7703d31d2a72029ee0656226d51762b3b4f4b264444979a7626642c63850",
+        "most_common_count": 1,
+        "hashes": [
+          "1d8f7703d31d2a72029ee0656226d51762b3b4f4b264444979a7626642c63850"
+        ]
+      },
+      "total_tokens": 1482,
+      "total_cost": 0.018638,
+      "avg_time": 20.649
+    },
+    {
+      "task_id": "B14",
+      "task_name": "Свободный остаток с учётом резервов",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "РегистрНакопления.Резервы"
+      ],
+      "context_analysis_cost": 0.027642,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РассчитатьСвободныйОстаток(МассивНоменклатуры, Склад) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t|\tСУММА(Остатки.Количество) КАК Свободно\n\t|ИЗ\n\t|\t(ВЫБРАТЬ\n\t|\t\tТовары.Номенклатура КАК Номенклатура,\n\t|\t\tТовары.ВНаличииОстаток КАК Количество\n\t|\tИЗ\n\t|\t\tРегистрНакопления.ТоварыНаСкладах.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Товары\n\t|\n\t|\tОБЪЕДИНИТЬ ВСЕ\n\t|\n\t|\tВЫБРАТЬ\n\t|\t\tРезервы.Номенклатура,\n\t|\t\t0 - Резервы.ЗарезервированоОстаток\n\t|\tИЗ\n\t|\t\tРегистрНакопления.Резервы.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Резервы\n\t|\t) КАК Остатки\n\t|СГРУППИРОВАТЬ ПО\n\t|\tОстатки.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n\tТаблицаОстатков = Запрос.Выполнить().Выгрузить();\n\n\tДля Каждого Номенклатура Из МассивНоменклатуры Цикл\n\t\tЕсли ТаблицаОстатков.Найти(Номенклатура, \"Номенклатура\") = Неопределено Тогда\n\t\t\tНоваяСтрока = ТаблицаОстатков.Добавить();\n\t\t\tНоваяСтрока.Номенклатура = Номенклатура;\n\t\t\tНоваяСтрока.Свободно = 0;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат ТаблицаОстатков;\n\nКонецФункции",
+          "response_hash": "ae8440b92cfd3c5281741a2fd8b1562620ee65d2b6c4368a66907c7bca6fdcf1",
+          "tokens_input": 4332,
+          "tokens_output": 2043,
+          "tokens_total": 6375,
+          "tokens_reasoning": 747,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "**Looking into query optimization**\n\nI’m trying to figure out how to structure a code function for handling a query that includes an array to return all items, even if their stock is zero. So, I plan on using a union to combine stock and reserves while ensuring any reserves only return negative values. It’s about creating a robust query that handles inputs correctly, using typed columns defined through new classes. I want to keep the code efficient and avoid unnecessary complexity.**Refining query parameters**\n\nI’m looking into query parameters where both the warehouse and item arrays can return empty if needed. It’s crucial I write a single, nested union query with the right aliases and syntax. I’ll use 0 to manage reserved inventory correctly. The query name is Product Balances, where I’ll filter based on both warehouse and item arrays while summing and grouping results. I think I can iterate through the input effectively to find what I need. This approach feels solid!",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 5.82,
+          "elapsed_time": 26.36594867706299,
+          "cost_input": 0.008664,
+          "cost_output": 0.02043,
+          "cost_total": 0.029094000000000002,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:07:33",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ae8440b92cfd3c5281741a2fd8b1562620ee65d2b6c4368a66907c7bca6fdcf1",
+        "most_common_count": 1,
+        "hashes": [
+          "ae8440b92cfd3c5281741a2fd8b1562620ee65d2b6c4368a66907c7bca6fdcf1"
+        ]
+      },
+      "total_tokens": 6375,
+      "total_cost": 0.056736,
+      "avg_time": 26.366
+    },
+    {
       "task_id": "B15",
       "task_name": "ABC-классификация номенклатуры",
       "model_id": "aliceai-llm/latest",
@@ -16693,6 +17495,59 @@
       "total_tokens": 1538,
       "total_cost": 0.027887999999999996,
       "avg_time": 13.695
+    },
+    {
+      "task_id": "B15",
+      "task_name": "ABC-классификация номенклатуры",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи"
+      ],
+      "context_analysis_cost": 0.011470000000000001,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ABCКлассификацияНоменклатуры(НачалоПериода, КонецПериода) Экспорт\n\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"Класс\", Новый ОписаниеТипов(\"Строка\", , Новый КвалификаторыСтроки(1)));\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tПродажиОбороты.Номенклатура КАК Номенклатура,\n\t|\tЕСТЬNULL(ПродажиОбороты.СуммаОборот, 0) КАК Сумма\n\t|ИЗ\n\t|\tРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, , ) КАК ПродажиОбороты\n\t|\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tСумма УБЫВ\";\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tТаблицаОборотов = Запрос.Выполнить().Выгрузить();\n\tОбщийОборот = ТаблицаОборотов.Итог(\"Сумма\");\n\n\tНакоплено = 0;\n\n\tДля Каждого Строка Из ТаблицаОборотов Цикл\n\t\tНакоплено = Накоплено + Строка.Сумма;\n\n\t\tНоваяСтрока = Результат.Добавить();\n\t\tНоваяСтрока.Номенклатура = Строка.Номенклатура;\n\n\t\tЕсли ОбщийОборот <= 0 Тогда\n\t\t\tНоваяСтрока.Класс = \"C\";\n\t\tИначеЕсли Накоплено * 100 <= ОбщийОборот * 80 Тогда\n\t\t\tНоваяСтрока.Класс = \"A\";\n\t\tИначеЕсли Накоплено * 100 <= ОбщийОборот * 95 Тогда\n\t\t\tНоваяСтрока.Класс = \"B\";\n\t\tИначе\n\t\t\tНоваяСтрока.Класс = \"C\";\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n```",
+          "response_hash": "bc53e1b141f89a63613813d26bd7a56ce99c4167cfd149bfc82ead4435c05d00",
+          "tokens_input": 435,
+          "tokens_output": 1493,
+          "tokens_total": 1928,
+          "tokens_reasoning": 654,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm working out the ABC-classification logic for 1C: pulling turnover data from the РегистрНакопления.Продажи register using the Обороты virtual table, grouped by Номенклатура with Сумма as the resource, then sorting by amount and assigning class A up to 80% cumulative share, B up to 95%, and C for the remainder.\n\nWriting the query and result table...\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.16,
+          "elapsed_time": 12.57905125617981,
+          "cost_input": 0.00087,
+          "cost_output": 0.014929999999999999,
+          "cost_total": 0.015799999999999998,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:29:12",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bc53e1b141f89a63613813d26bd7a56ce99c4167cfd149bfc82ead4435c05d00",
+        "most_common_count": 1,
+        "hashes": [
+          "bc53e1b141f89a63613813d26bd7a56ce99c4167cfd149bfc82ead4435c05d00"
+        ]
+      },
+      "total_tokens": 1928,
+      "total_cost": 0.02727,
+      "avg_time": 12.579
     },
     {
       "task_id": "B15",
@@ -18308,6 +19163,114 @@
       "avg_time": 15.734
     },
     {
+      "task_id": "B15",
+      "task_name": "ABC-классификация номенклатуры",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи",
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.007158,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ABCКлассификацияНоменклатуры(НачалоПериода, КонецПериода) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tПродажиОбороты.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ПродажиОбороты.СуммаОборот) КАК Оборот\n\t|ИЗ\n\t|\tРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, , ) КАК ПродажиОбороты\n\t|СГРУППИРОВАТЬ ПО\n\t|\tПродажиОбороты.Номенклатура\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tОборот УБЫВ\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tОбороты = Запрос.Выполнить().Выгрузить();\n\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\",\n\t\tНовый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"Класс\",\n\t\tНовый ОписаниеТипов(\"Строка\", , Новый КвалификаторыСтроки(1)));\n\n\tОбщийОборот = 0;\n\tДля Каждого СтрокаОборотов Из Обороты Цикл\n\t\tОбщийОборот = ОбщийОборот + СтрокаОборотов.Оборот;\n\tКонецЦикла;\n\n\tНакопленныйОборот = 0;\n\n\tДля Каждого СтрокаОборотов Из Обороты Цикл\n\n\t\tНакопленныйОборот = НакопленныйОборот + СтрокаОборотов.Оборот;\n\n\t\tСтрокаРезультата = Результат.Добавить();\n\t\tСтрокаРезультата.Номенклатура = СтрокаОборотов.Номенклатура;\n\n\t\tЕсли ОбщийОборот = 0 Тогда\n\t\t\tСтрокаРезультата.Класс = \"C\";\n\t\tИначе\n\t\t\tНакопленнаяДоля = НакопленныйОборот / ОбщийОборот;\n\n\t\t\tЕсли НакопленнаяДоля <= 0.80 Тогда\n\t\t\t\tСтрокаРезультата.Класс = \"A\";\n\t\t\tИначеЕсли НакопленнаяДоля <= 0.95 Тогда\n\t\t\t\tСтрокаРезультата.Класс = \"B\";\n\t\t\tИначе\n\t\t\t\tСтрокаРезультата.Класс = \"C\";\n\t\t\tКонецЕсли;\n\t\tКонецЕсли;\n\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "e0610b90925aa371530f5a0b591aee9e42d93d248dfd81b36f9222e32ff61cde",
+          "tokens_input": 327,
+          "tokens_output": 897,
+          "tokens_total": 1224,
+          "tokens_reasoning": 214,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.93,
+          "elapsed_time": 20.40858244895935,
+          "cost_input": 0.000654,
+          "cost_output": 0.00897,
+          "cost_total": 0.009624,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:47:42",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e0610b90925aa371530f5a0b591aee9e42d93d248dfd81b36f9222e32ff61cde",
+        "most_common_count": 1,
+        "hashes": [
+          "e0610b90925aa371530f5a0b591aee9e42d93d248dfd81b36f9222e32ff61cde"
+        ]
+      },
+      "total_tokens": 1224,
+      "total_cost": 0.016782000000000002,
+      "avg_time": 20.409
+    },
+    {
+      "task_id": "B15",
+      "task_name": "ABC-классификация номенклатуры",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи",
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.029664,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ABCКлассификацияНоменклатуры(НачалоПериода, КонецПериода) Экспорт\n\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\",\n\t\tНовый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"Класс\", Новый ОписаниеТипов(\"Строка\"));\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tПродажи.Номенклатура КАК Номенклатура,\n\t|\tСУММА(Продажи.СуммаОборот) КАК Оборот\n\t|ИЗ\n\t|\tРегистрНакопления.Продажи.Обороты(\n\t|\t\t&НачалоПериода, &КонецПериода, , ) КАК Продажи\n\t|СГРУППИРОВАТЬ ПО\n\t|\tПродажи.Номенклатура\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tОборот УБЫВ\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tОбороты = Запрос.Выполнить().Выгрузить();\n\tОбщийОборот = Обороты.Итог(\"Оборот\");\n\tНакопленныйОборот = 0;\n\n\tДля Каждого СтрокаОборотов Из Обороты Цикл\n\t\tНакопленныйОборот = НакопленныйОборот + СтрокаОборотов.Оборот;\n\n\t\tСтрокаРезультата = Результат.Добавить();\n\t\tСтрокаРезультата.Номенклатура = СтрокаОборотов.Номенклатура;\n\n\t\tЕсли ОбщийОборот = 0 Тогда\n\t\t\tСтрокаРезультата.Класс = \"C\";\n\t\tИначе\n\t\t\tНакопленнаяДоля = НакопленныйОборот / ОбщийОборот;\n\n\t\t\tЕсли НакопленнаяДоля <= 0.8 Тогда\n\t\t\t\tСтрокаРезультата.Класс = \"A\";\n\t\t\tИначеЕсли НакопленнаяДоля <= 0.95 Тогда\n\t\t\t\tСтрокаРезультата.Класс = \"B\";\n\t\t\tИначе\n\t\t\t\tСтрокаРезультата.Класс = \"C\";\n\t\t\tКонецЕсли;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "4efe46cc2c400155ee6495d08f7926b0b98dddbdd748f215aec7fed9b31652c3",
+          "tokens_input": 4042,
+          "tokens_output": 1703,
+          "tokens_total": 5745,
+          "tokens_reasoning": 405,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 5.03,
+          "elapsed_time": 19.979711294174194,
+          "cost_input": 0.008084,
+          "cost_output": 0.01703,
+          "cost_total": 0.025113999999999997,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:08:21",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4efe46cc2c400155ee6495d08f7926b0b98dddbdd748f215aec7fed9b31652c3",
+        "most_common_count": 1,
+        "hashes": [
+          "4efe46cc2c400155ee6495d08f7926b0b98dddbdd748f215aec7fed9b31652c3"
+        ]
+      },
+      "total_tokens": 5745,
+      "total_cost": 0.05477799999999999,
+      "avg_time": 19.98
+    },
+    {
       "task_id": "B16",
       "task_name": "Договор, действующий на дату",
       "model_id": "aliceai-llm/latest",
@@ -19737,6 +20700,59 @@
       "total_tokens": 1086,
       "total_cost": 0.020696,
       "avg_time": 9.464
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры"
+      ],
+      "context_analysis_cost": 0.008654,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t|\tДоговоры.Ссылка КАК Ссылка\n\t|ИЗ\n\t|\tСправочник.Договоры КАК Договоры\n\t|ГДЕ\n\t|\tДоговоры.Владелец = &Контрагент\n\t|\tИ НЕ Договоры.ПометкаУдаления\n\t|\tИ Договоры.ДатаНачала <= &ДатаСреза\n\t|\tИ (Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1)\n\t|\t\tИЛИ Договоры.ДатаОкончания >= &ДатаСреза)\n\t|\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tДоговоры.ДатаНачала УБЫВ,\n\t|\tДоговоры.Ссылка УБЫВ\";\n\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tЗапрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\n\tРезультат = Запрос.Выполнить();\n\tЕсли Результат.Пустой() Тогда\n\t\tВозврат Неопределено;\n\tКонецЕсли;\n\n\tВыборка = Результат.Выбрать();\n\tВыборка.Следующий();\n\n\tВозврат Выборка.Ссылка;\n\nКонецФункции\n```",
+          "response_hash": "46ade18cd2c10babe173a1b05c2dd7210fc49ba1a927e76419b858f7149da58c",
+          "tokens_input": 545,
+          "tokens_output": 543,
+          "tokens_total": 1088,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.31,
+          "elapsed_time": 5.075337648391724,
+          "cost_input": 0.00109,
+          "cost_output": 0.00543,
+          "cost_total": 0.00652,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:29:22",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "46ade18cd2c10babe173a1b05c2dd7210fc49ba1a927e76419b858f7149da58c",
+        "most_common_count": 1,
+        "hashes": [
+          "46ade18cd2c10babe173a1b05c2dd7210fc49ba1a927e76419b858f7149da58c"
+        ]
+      },
+      "total_tokens": 1088,
+      "total_cost": 0.015174,
+      "avg_time": 5.075
     },
     {
       "task_id": "B16",
@@ -21351,6 +22367,114 @@
       "avg_time": 11.229
     },
     {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.007036,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t|\tДоговоры.Ссылка КАК Ссылка\n\t|ИЗ\n\t|\tСправочник.Договоры КАК Договоры\n\t|ГДЕ\n\t|\tДоговоры.Владелец = &Контрагент\n\t|\tИ Договоры.ДатаНачала <= &ДатаСреза\n\t|\tИ (Договоры.ДатаОкончания >= &ДатаСреза\n\t|\t\tИЛИ Договоры.ДатаОкончания = &ПустаяДата)\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tДоговоры.ДатаНачала УБЫВ\";\n\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tЗапрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\tЗапрос.УстановитьПараметр(\"ПустаяДата\", Дата(1, 1, 1));\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Ссылка;\n\tКонецЕсли;\n\n\tВозврат Неопределено;\n\nКонецФункции",
+          "response_hash": "28cd9fceb2e14f51d979bd8eccc8f7d77a3d2aff06bb34c53951d1e2fec83b88",
+          "tokens_input": 396,
+          "tokens_output": 416,
+          "tokens_total": 812,
+          "tokens_reasoning": 84,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.0,
+          "elapsed_time": 5.325371503829956,
+          "cost_input": 0.000792,
+          "cost_output": 0.00416,
+          "cost_total": 0.004952,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:47:52",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "28cd9fceb2e14f51d979bd8eccc8f7d77a3d2aff06bb34c53951d1e2fec83b88",
+        "most_common_count": 1,
+        "hashes": [
+          "28cd9fceb2e14f51d979bd8eccc8f7d77a3d2aff06bb34c53951d1e2fec83b88"
+        ]
+      },
+      "total_tokens": 812,
+      "total_cost": 0.011987999999999999,
+      "avg_time": 5.325
+    },
+    {
+      "task_id": "B16",
+      "task_name": "Договор, действующий на дату",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.026057999999999998,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция НайтиДействующийДоговор(Контрагент, ДатаСреза) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ ПЕРВЫЕ 1\n\t|\tДоговоры.Ссылка КАК Ссылка\n\t|ИЗ\n\t|\tСправочник.Договоры КАК Договоры\n\t|ГДЕ\n\t|\tДоговоры.Владелец = &Контрагент\n\t|\tИ Договоры.ДатаНачала <= &ДатаСреза\n\t|\tИ (Договоры.ДатаОкончания >= &ДатаСреза\n\t|\t\tИЛИ Договоры.ДатаОкончания = ДАТАВРЕМЯ(1, 1, 1))\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tДоговоры.ДатаНачала УБЫВ\";\n\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\tЗапрос.УстановитьПараметр(\"ДатаСреза\", ДатаСреза);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Ссылка;\n\tКонецЕсли;\n\n\tВозврат Неопределено;\n\nКонецФункции",
+          "response_hash": "0277c2ab2ef1773d01cbef2483cdfe83295220578900432bf236e75dabf8eab2",
+          "tokens_input": 3447,
+          "tokens_output": 876,
+          "tokens_total": 4323,
+          "tokens_reasoning": 231,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.14,
+          "elapsed_time": 14.31573224067688,
+          "cost_input": 0.006894,
+          "cost_output": 0.00876,
+          "cost_total": 0.015654,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:08:53",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "0277c2ab2ef1773d01cbef2483cdfe83295220578900432bf236e75dabf8eab2",
+        "most_common_count": 1,
+        "hashes": [
+          "0277c2ab2ef1773d01cbef2483cdfe83295220578900432bf236e75dabf8eab2"
+        ]
+      },
+      "total_tokens": 4323,
+      "total_cost": 0.041712,
+      "avg_time": 14.316
+    },
+    {
       "task_id": "B17",
       "task_name": "Долг контрагента по договорам",
       "model_id": "aliceai-llm/latest",
@@ -22803,6 +23927,60 @@
       "total_tokens": 1086,
       "total_cost": 0.027946,
       "avg_time": 11.531
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "РегистрНакопления.Взаиморасчеты"
+      ],
+      "context_analysis_cost": 0.008945999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьДолгКонтрагента(Контрагент) Экспорт\n\n\tЕсли Не ЗначениеЗаполнено(Контрагент) Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(ВзаиморасчетыОстатки.СуммаОстаток), 0) КАК Долг\n\t|ИЗ\n\t|\tРегистрНакопления.Взаиморасчеты.Остатки(\n\t|\t\t\t,\n\t|\t\t\tДоговор.Владелец = &Контрагент) КАК ВзаиморасчетыОстатки\n\t|ГДЕ\n\t|\tВзаиморасчетыОстатки.СуммаОстаток > 0\";\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n\tРезультат = Запрос.Выполнить();\n\tЕсли Результат.Пустой() Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tВыборка = Результат.Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат ?(Выборка.Долг = Неопределено, 0, Выборка.Долг);\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции\n```",
+          "response_hash": "008d55b5c861fb75dea9af5e5d9f9c4d4d17357bf9c52bd23266c6ad475435b1",
+          "tokens_input": 557,
+          "tokens_output": 477,
+          "tokens_total": 1034,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.18,
+          "elapsed_time": 5.056464433670044,
+          "cost_input": 0.001114,
+          "cost_output": 0.00477,
+          "cost_total": 0.005884,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:29:32",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "008d55b5c861fb75dea9af5e5d9f9c4d4d17357bf9c52bd23266c6ad475435b1",
+        "most_common_count": 1,
+        "hashes": [
+          "008d55b5c861fb75dea9af5e5d9f9c4d4d17357bf9c52bd23266c6ad475435b1"
+        ]
+      },
+      "total_tokens": 1034,
+      "total_cost": 0.01483,
+      "avg_time": 5.056
     },
     {
       "task_id": "B17",
@@ -24441,6 +25619,116 @@
       "avg_time": 42.752
     },
     {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "Справочник.Контрагенты",
+        "РегистрНакопления.Взаиморасчеты"
+      ],
+      "context_analysis_cost": 0.007658,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДолгКонтрагента(Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(Остатки.СуммаОстаток), 0) КАК Долг\n\t|ИЗ\n\t|\tРегистрНакопления.Взаиморасчеты.Остатки(\n\t|\t\t,\n\t|\t\tДоговор В\n\t|\t\t\t(ВЫБРАТЬ\n\t|\t\t\t\tДоговоры.Ссылка\n\t|\t\t\tИЗ\n\t|\t\t\t\tСправочник.Договоры КАК Договоры\n\t|\t\t\tГДЕ\n\t|\t\t\t\tДоговоры.Владелец = &Контрагент)\n\t|\t) КАК Остатки\n\t|ГДЕ\n\t|\tОстатки.СуммаОстаток > 0\";\n\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Долг;\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38",
+          "tokens_input": 408,
+          "tokens_output": 300,
+          "tokens_total": 708,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.77,
+          "elapsed_time": 3.8137078285217285,
+          "cost_input": 0.000816,
+          "cost_output": 0.0029999999999999996,
+          "cost_total": 0.0038159999999999995,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:47:55",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38",
+        "most_common_count": 1,
+        "hashes": [
+          "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38"
+        ]
+      },
+      "total_tokens": 708,
+      "total_cost": 0.011474,
+      "avg_time": 3.814
+    },
+    {
+      "task_id": "B17",
+      "task_name": "Долг контрагента по договорам",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Справочник.Договоры",
+        "Справочник.Контрагенты",
+        "РегистрНакопления.Взаиморасчеты"
+      ],
+      "context_analysis_cost": 0.02779,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДолгКонтрагента(Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(Остатки.СуммаОстаток), 0) КАК Долг\n\t|ИЗ\n\t|\tРегистрНакопления.Взаиморасчеты.Остатки(\n\t|\t\t,\n\t|\t\tДоговор В\n\t|\t\t\t(ВЫБРАТЬ\n\t|\t\t\t\tДоговоры.Ссылка\n\t|\t\t\tИЗ\n\t|\t\t\t\tСправочник.Договоры КАК Договоры\n\t|\t\t\tГДЕ\n\t|\t\t\t\tДоговоры.Владелец = &Контрагент)\n\t|\t) КАК Остатки\n\t|ГДЕ\n\t|\tОстатки.СуммаОстаток > 0\";\n\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Долг;\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38",
+          "tokens_input": 3206,
+          "tokens_output": 655,
+          "tokens_total": 3861,
+          "tokens_reasoning": 96,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.6,
+          "elapsed_time": 9.319660663604736,
+          "cost_input": 0.006412,
+          "cost_output": 0.00655,
+          "cost_total": 0.012962000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:09:31",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38",
+        "most_common_count": 1,
+        "hashes": [
+          "438a32fa24edd5067c78df7679ba5db96b78178360f445c3b91b98d0b7133d38"
+        ]
+      },
+      "total_tokens": 3861,
+      "total_cost": 0.040752,
+      "avg_time": 9.32
+    },
+    {
       "task_id": "B18",
       "task_name": "Выделить НДС из суммы с налогом",
       "model_id": "aliceai-llm/latest",
@@ -25856,6 +27144,59 @@
       "total_tokens": 540,
       "total_cost": 0.015258,
       "avg_time": 5.052
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.006964,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ВыделитьНДСИзСуммы(СуммаСНДС) Экспорт\n\t\n\tСтавкаНДС = Константы.СтавкаНДС.Получить();\n\t\n\tЕсли СтавкаНДС = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tСуммаНДС = Окр(СуммаСНДС * СтавкаНДС / (100 + СтавкаНДС), 2);\n\t\n\tВозврат СуммаНДС;\n\t\nКонецФункции\n```",
+          "response_hash": "05a039fcda3d9468c71499f2e1c49e59350b12aaf238f43c5e37658a17780977",
+          "tokens_input": 353,
+          "tokens_output": 188,
+          "tokens_total": 541,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.52,
+          "elapsed_time": 3.0217092037200928,
+          "cost_input": 0.000706,
+          "cost_output": 0.00188,
+          "cost_total": 0.0025859999999999998,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:29:30",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "05a039fcda3d9468c71499f2e1c49e59350b12aaf238f43c5e37658a17780977",
+        "most_common_count": 1,
+        "hashes": [
+          "05a039fcda3d9468c71499f2e1c49e59350b12aaf238f43c5e37658a17780977"
+        ]
+      },
+      "total_tokens": 541,
+      "total_cost": 0.00955,
+      "avg_time": 3.022
     },
     {
       "task_id": "B18",
@@ -27444,6 +28785,112 @@
       "avg_time": 4.906
     },
     {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.00446,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ВыделитьНДС(СуммаСНДС) Экспорт\n\tСтавкаНДС = Константы.СтавкаНДС.Получить();\n\tВозврат Окр(СуммаСНДС * СтавкаНДС / (100 + СтавкаНДС), 2);\nКонецФункции",
+          "response_hash": "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3",
+          "tokens_input": 247,
+          "tokens_output": 79,
+          "tokens_total": 326,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.26,
+          "elapsed_time": 3.2253825664520264,
+          "cost_input": 0.000494,
+          "cost_output": 0.0007899999999999999,
+          "cost_total": 0.001284,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:48:03",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3",
+        "most_common_count": 1,
+        "hashes": [
+          "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3"
+        ]
+      },
+      "total_tokens": 326,
+      "total_cost": 0.005744000000000001,
+      "avg_time": 3.225
+    },
+    {
+      "task_id": "B18",
+      "task_name": "Выделить НДС из суммы с налогом",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Константа.СтавкаНДС"
+      ],
+      "context_analysis_cost": 0.020268,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ВыделитьНДС(СуммаСНДС) Экспорт\n\tСтавкаНДС = Константы.СтавкаНДС.Получить();\n\tВозврат Окр(СуммаСНДС * СтавкаНДС / (100 + СтавкаНДС), 2);\nКонецФункции",
+          "response_hash": "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3",
+          "tokens_input": 2330,
+          "tokens_output": 173,
+          "tokens_total": 2503,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.28,
+          "elapsed_time": 7.917933702468872,
+          "cost_input": 0.00466,
+          "cost_output": 0.00173,
+          "cost_total": 0.00639,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:36:33",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3",
+        "most_common_count": 1,
+        "hashes": [
+          "f519d7f178938f6516efc887d778c131d7dcb0321c7b6007003bb5cd1ee4aeb3"
+        ]
+      },
+      "total_tokens": 2503,
+      "total_cost": 0.026658,
+      "avg_time": 7.918
+    },
+    {
       "task_id": "B19",
       "task_name": "Сальдо по счёту с учётом вида и субсчетов",
       "model_id": "aliceai-llm/latest",
@@ -28875,6 +30322,60 @@
       "total_tokens": 3545,
       "total_cost": 0.049614,
       "avg_time": 31.2
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный"
+      ],
+      "context_analysis_cost": 0.014478,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьСальдоСчета(Счет) Экспорт\n\t\n\tЕсли Не ЗначениеЗаполнено(Счет) Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(ВЫБОР\n\t|\t\t\t\tКОГДА Хозрасчетный.СчетДт В ИЕРАРХИИ (&Счет)\n\t|\t\t\t\t\tТОГДА Хозрасчетный.Сумма\n\t|\t\t\t\tИНАЧЕ 0\n\t|\t\t\tКОНЕЦ), 0) КАК ОборотДт,\n\t|\tЕСТЬNULL(СУММА(ВЫБОР\n\t|\t\t\t\tКОГДА Хозрасчетный.СчетКт В ИЕРАРХИИ (&Счет)\n\t|\t\t\t\t\tТОГДА Хозрасчетный.Сумма\n\t|\t\t\t\tИНАЧЕ 0\n\t|\t\t\tКОНЕЦ), 0) КАК ОборотКт\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный КАК Хозрасчетный\n\t|ГДЕ\n\t|\tХозрасчетный.Активность\n\t|\tИ (Хозрасчетный.СчетДт В ИЕРАРХИИ (&Счет)\n\t|\t\t\tИЛИ Хозрасчетный.СчетКт В ИЕРАРХИИ (&Счет))\";\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\t\n\tОборотДт = 0;\n\tОборотКт = 0;\n\t\n\tРезультат = Запрос.Выполнить();\n\tВыборка = Результат.Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tОборотДт = Выборка.ОборотДт;\n\t\tОборотКт = Выборка.ОборотКт;\n\tКонецЕсли;\n\t\n\tЕсли Счет.Вид = ВидСчета.Пассивный Тогда\n\t\tВозврат ОборотКт - ОборотДт;\n\tИначе\n\t\tВозврат ОборотДт - ОборотКт;\n\tКонецЕсли;\n\t\nКонецФункции\n```",
+          "response_hash": "551d626841af00f1a1903742a9d157de59f1aa423e3a33eabdfe162482617e0b",
+          "tokens_input": 693,
+          "tokens_output": 1611,
+          "tokens_total": 2304,
+          "tokens_reasoning": 822,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I need to write a function querying the accounting register turnovers. There's a virtual table for correspondence without subconto, but I'm considering using the physical register table directly instead since I need more detail.\n\nWorking through a query that sums debit amounts where the debit account falls within the hierarchy of a given account, using CASE WHEN with the \"В ИЕРАРХИИ\" hierarchy condition, filtering on either debit or credit account matching that hierarchy.\n\nAdding a filter for Активность = ИСТИНА to only count active records. For determining account type, I plan to check the account reference's Вид (passive/active) directly through Счет.Вид, with a guard to return 0 if the reference is empty.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.5,
+          "elapsed_time": 14.18204116821289,
+          "cost_input": 0.001386,
+          "cost_output": 0.01611,
+          "cost_total": 0.017495999999999998,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:29:52",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "551d626841af00f1a1903742a9d157de59f1aa423e3a33eabdfe162482617e0b",
+        "most_common_count": 1,
+        "hashes": [
+          "551d626841af00f1a1903742a9d157de59f1aa423e3a33eabdfe162482617e0b"
+        ]
+      },
+      "total_tokens": 2304,
+      "total_cost": 0.031973999999999995,
+      "avg_time": 14.182
     },
     {
       "task_id": "B19",
@@ -30489,6 +31990,114 @@
       "avg_time": 19.929
     },
     {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный"
+      ],
+      "context_analysis_cost": 0.008192,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьСальдоСчета(Счет) Экспорт\n\n\tЕсли Не ЗначениеЗаполнено(Счет) Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(Обороты.СуммаОборотДт), 0)\n\t|\t\t- ЕСТЬNULL(СУММА(Обороты.СуммаОборотКт), 0) КАК Сальдо\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный.Обороты(\n\t|\t\t,\n\t|\t\t,\n\t|\t\t,\n\t|\t\tСчет В ИЕРАРХИИ (&Счет)) КАК Обороты\";\n\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tСальдо = 0;\n\n\tЕсли Выборка.Следующий() Тогда\n\t\tСальдо = Выборка.Сальдо;\n\tКонецЕсли;\n\n\tЕсли Счет.Вид = ВидСчета.Пассивный Тогда\n\t\tСальдо = -Сальдо;\n\tКонецЕсли;\n\n\tВозврат Сальдо;\n\nКонецФункции",
+          "response_hash": "3f6b7126b817dad4b10164c8aea1c1bf4e26f865f22936a5351fc118698f18ff",
+          "tokens_input": 501,
+          "tokens_output": 638,
+          "tokens_total": 1139,
+          "tokens_reasoning": 322,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.48,
+          "elapsed_time": 8.424736261367798,
+          "cost_input": 0.001002,
+          "cost_output": 0.00638,
+          "cost_total": 0.0073820000000000005,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:48:21",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3f6b7126b817dad4b10164c8aea1c1bf4e26f865f22936a5351fc118698f18ff",
+        "most_common_count": 1,
+        "hashes": [
+          "3f6b7126b817dad4b10164c8aea1c1bf4e26f865f22936a5351fc118698f18ff"
+        ]
+      },
+      "total_tokens": 1139,
+      "total_cost": 0.015574000000000001,
+      "avg_time": 8.425
+    },
+    {
+      "task_id": "B19",
+      "task_name": "Сальдо по счёту с учётом вида и субсчетов",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "РегистрБухгалтерии.Хозрасчетный"
+      ],
+      "context_analysis_cost": 0.030094,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СальдоСчета(Счет) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(\n\t|\t\tВЫБОР\n\t|\t\t\tКОГДА Проводки.СчетДт В ИЕРАРХИИ (&Счет)\n\t|\t\t\t\tТОГДА Проводки.Сумма\n\t|\t\t\tИНАЧЕ 0\n\t|\t\tКОНЕЦ), 0)\n\t|\t-\n\t|\tЕСТЬNULL(СУММА(\n\t|\t\tВЫБОР\n\t|\t\t\tКОГДА Проводки.СчетКт В ИЕРАРХИИ (&Счет)\n\t|\t\t\t\tТОГДА Проводки.Сумма\n\t|\t\t\tИНАЧЕ 0\n\t|\t\tКОНЕЦ), 0) КАК Сальдо\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный КАК Проводки\n\t|ГДЕ\n\t|\tПроводки.Активность\n\t|\tИ (Проводки.СчетДт В ИЕРАРХИИ (&Счет)\n\t|\t\tИЛИ Проводки.СчетКт В ИЕРАРХИИ (&Счет))\";\n\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tСальдо = 0;\n\tЕсли Выборка.Следующий() Тогда\n\t\tСальдо = Выборка.Сальдо;\n\tКонецЕсли;\n\n\tЕсли Счет.Вид = ВидСчета.Пассивный Тогда\n\t\tСальдо = -Сальдо;\n\tКонецЕсли;\n\n\tВозврат Сальдо;\n\nКонецФункции",
+          "response_hash": "ec107cd46da1b9532697020fded2784942d3321869e416b90acc5b0028a29cce",
+          "tokens_input": 4502,
+          "tokens_output": 1818,
+          "tokens_total": 6320,
+          "tokens_reasoning": 957,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 5.44,
+          "elapsed_time": 26.268852710723877,
+          "cost_input": 0.009004,
+          "cost_output": 0.018179999999999998,
+          "cost_total": 0.027184,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:37:04",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ec107cd46da1b9532697020fded2784942d3321869e416b90acc5b0028a29cce",
+        "most_common_count": 1,
+        "hashes": [
+          "ec107cd46da1b9532697020fded2784942d3321869e416b90acc5b0028a29cce"
+        ]
+      },
+      "total_tokens": 6320,
+      "total_cost": 0.057277999999999996,
+      "avg_time": 26.269
+    },
+    {
       "task_id": "B1",
       "task_name": "Получение остатков товаров на складе",
       "model_id": "aliceai-llm/latest",
@@ -31947,6 +33556,61 @@
       "total_tokens": 2362,
       "total_cost": 0.040268,
       "avg_time": 19.521
+    },
+    {
+      "task_id": "B1",
+      "task_name": "Получение остатков товаров на складе",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.014419999999999999,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьОстаткиТоваровНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\t\n\tУсловияОтбора = \"Склад = &Склад\";\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\t\n\tЕсли МассивНоменклатуры <> Неопределено И МассивНоменклатуры.Количество() > 0 Тогда\n\t\tУсловияОтбора = УсловияОтбора + \" И Номенклатура В (&МассивНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\tКонецЕсли;\n\t\n\tЕсли ГруппаНоменклатуры <> Неопределено И ЗначениеЗаполнено(ГруппаНоменклатуры) Тогда\n\t\tУсловияОтбора = УсловияОтбора + \" И Номенклатура В ИЕРАРХИИ(&ГруппаНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);\n\tКонецЕсли;\n\t\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tТоварыНаСкладахОстатки.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ТоварыНаСкладахОстатки.ВНаличииОстаток) КАК Остаток\n\t|ИЗ\n\t|\tРегистрНакопления.ТоварыНаСкладах.Остатки(, \" + УсловияОтбора + \") КАК ТоварыНаСкладахОстатки\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tТоварыНаСкладахОстатки.Номенклатура\";\n\t\n\tРезультат = Запрос.Выполнить().Выгрузить();\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "80a5679029168b18285bb2271cc0288c9a17a0085da293d0af44e2d313562c9e",
+          "tokens_input": 498,
+          "tokens_output": 1602,
+          "tokens_total": 2100,
+          "tokens_reasoning": 887,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm planning a 1C function using the virtual table Остатки from the register ТоварыНаСкладах, applying hierarchy filtering by group and an array filter for specific items. If both the group and array are empty, I need to decide whether to return all warehouse items by default.\n\nWriting the query...\n\nI'll push the nomenclature array and group filters directly into the virtual table call for better performance, building the query text dynamically. The array parameter defaults to undefined when unused, the group parameter checks against ЗначениеЗаполнено, and the final result loads straight into a value table with Номенклатура and Остаток columns.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.41,
+          "elapsed_time": 12.75487756729126,
+          "cost_input": 0.000996,
+          "cost_output": 0.01602,
+          "cost_total": 0.017016,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:29:54",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "80a5679029168b18285bb2271cc0288c9a17a0085da293d0af44e2d313562c9e",
+        "most_common_count": 1,
+        "hashes": [
+          "80a5679029168b18285bb2271cc0288c9a17a0085da293d0af44e2d313562c9e"
+        ]
+      },
+      "total_tokens": 2100,
+      "total_cost": 0.031436,
+      "avg_time": 12.755
     },
     {
       "task_id": "B1",
@@ -33587,6 +35251,116 @@
       "avg_time": 11.516
     },
     {
+      "task_id": "B1",
+      "task_name": "Получение остатков товаров на складе",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.007638,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьОстаткиТоваровНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\n\tУсловие = \"Склад = &Склад\";\n\n\tЕсли МассивНоменклатуры.Количество() > 0 Тогда\n\t\tУсловие = Условие + \" И Номенклатура В (&МассивНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\tКонецЕсли;\n\n\tЕсли ЗначениеЗаполнено(ГруппаНоменклатуры) Тогда\n\t\tУсловие = Условие + \" И Номенклатура В ИЕРАРХИИ (&ГруппаНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);\n\tКонецЕсли;\n\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t\t|\tОстатки.ВНаличииОстаток КАК Остаток\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.ТоварыНаСкладах.Остатки(, \" + Условие + \") КАК Остатки\";\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "205eb2246b03b2eb2992566d70316c0d4d4a427a81a3a8043e0e163059bc6a15",
+          "tokens_input": 352,
+          "tokens_output": 612,
+          "tokens_total": 964,
+          "tokens_reasoning": 233,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.37,
+          "elapsed_time": 17.56342649459839,
+          "cost_input": 0.000704,
+          "cost_output": 0.0061200000000000004,
+          "cost_total": 0.006824,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:48:31",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "205eb2246b03b2eb2992566d70316c0d4d4a427a81a3a8043e0e163059bc6a15",
+        "most_common_count": 1,
+        "hashes": [
+          "205eb2246b03b2eb2992566d70316c0d4d4a427a81a3a8043e0e163059bc6a15"
+        ]
+      },
+      "total_tokens": 964,
+      "total_cost": 0.014462,
+      "avg_time": 17.563
+    },
+    {
+      "task_id": "B1",
+      "task_name": "Получение остатков товаров на складе",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ТоварыНаСкладах",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.028412,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьОстаткиТоваровНаСкладе(МассивНоменклатуры, Склад, ГруппаНоменклатуры = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\n\tУсловия = \"Склад = &Склад\";\n\n\tЕсли МассивНоменклатуры.Количество() > 0 Тогда\n\t\tУсловия = Условия + \" И Номенклатура В (&МассивНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\tКонецЕсли;\n\n\tЕсли ЗначениеЗаполнено(ГруппаНоменклатуры) Тогда\n\t\tУсловия = Условия + \" И Номенклатура В ИЕРАРХИИ (&ГруппаНоменклатуры)\";\n\t\tЗапрос.УстановитьПараметр(\"ГруппаНоменклатуры\", ГруппаНоменклатуры);\n\tКонецЕсли;\n\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t\t|\tОстатки.ВНаличииОстаток КАК Остаток\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.ТоварыНаСкладах.Остатки(, \" + Условия + \") КАК Остатки\";\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "0fdede2665fbcf0ccfbb8c2743da7ca5c16bdd02817f3151de3232f04fbfc8a5",
+          "tokens_input": 3539,
+          "tokens_output": 1093,
+          "tokens_total": 4632,
+          "tokens_reasoning": 302,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.61,
+          "elapsed_time": 11.922481775283813,
+          "cost_input": 0.007078,
+          "cost_output": 0.01093,
+          "cost_total": 0.018008,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:37:12",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "0fdede2665fbcf0ccfbb8c2743da7ca5c16bdd02817f3151de3232f04fbfc8a5",
+        "most_common_count": 1,
+        "hashes": [
+          "0fdede2665fbcf0ccfbb8c2743da7ca5c16bdd02817f3151de3232f04fbfc8a5"
+        ]
+      },
+      "total_tokens": 4632,
+      "total_cost": 0.04642,
+      "avg_time": 11.922
+    },
+    {
       "task_id": "B20",
       "task_name": "Оборот по счёту в разрезе субконто",
       "model_id": "aliceai-llm/latest",
@@ -35047,6 +36821,61 @@
       "total_tokens": 2158,
       "total_cost": 0.038484000000000004,
       "avg_time": 15.712
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрБухгалтерии.Хозрасчетный",
+        "ПланСчетов.Основной",
+        "ПланВидовХарактеристик.ВидыСубконто"
+      ],
+      "context_analysis_cost": 0.016738,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(Проводки.Сумма), 0) КАК Оборот\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто(,,,,,,,) КАК Проводки\n\t|ГДЕ\n\t|\tПроводки.Активность = ИСТИНА\n\t|\tИ Проводки.СчетДт = &Счет\n\t|\tИ (Проводки.СубконтоДт1 = &Контрагент\n\t|\t\tИЛИ Проводки.СубконтоДт2 = &Контрагент)\";\n\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат ?(Выборка.Оборот = Неопределено, 0, Выборка.Оборот);\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции\n```",
+          "response_hash": "02d4fded5ecd30d51bda8f066c4aa50cb9f700a62beb8482faa2d84b0e5ae615",
+          "tokens_input": 850,
+          "tokens_output": 1152,
+          "tokens_total": 2002,
+          "tokens_reasoning": 692,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I need a function that returns the debit turnover for a given account and counterparty, checking both subconto positions regardless of which one holds the counterparty value. I'll use the ДвиженияССубконто virtual table of the РегистрБухгалтерии.Хозрасчетный register, filtering by period and by a condition matching either СубконтоДт1 or СубконтоДт2 to the counterparty.\n\nSince the subconto type is composite (containing Контрагенты and Договоры), comparing a counterparty reference directly against the field should work fine without needing an explicit type expression. I'll filter the table on an exact account match for СчетДт rather than including subaccounts, and sum the amounts per matching posting rather than per subconto line, taking care to use the Активность flag to only count active records.\n\nWith the logic settled, I'll wrap the sum in a null-coalescing function to default to zero when there's no data, and now write the actual query code.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.65,
+          "elapsed_time": 11.968134880065918,
+          "cost_input": 0.0017,
+          "cost_output": 0.01152,
+          "cost_total": 0.01322,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:30:13",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "02d4fded5ecd30d51bda8f066c4aa50cb9f700a62beb8482faa2d84b0e5ae615",
+        "most_common_count": 1,
+        "hashes": [
+          "02d4fded5ecd30d51bda8f066c4aa50cb9f700a62beb8482faa2d84b0e5ae615"
+        ]
+      },
+      "total_tokens": 2002,
+      "total_cost": 0.029958,
+      "avg_time": 11.968
     },
     {
       "task_id": "B20",
@@ -36700,6 +38529,118 @@
       "avg_time": 20.536
     },
     {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "ПланВидовХарактеристик.ВидыСубконто",
+        "РегистрБухгалтерии.Хозрасчетный",
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.0102,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(Движения.Сумма), 0) КАК Оборот\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто() КАК Движения\n\t|ГДЕ\n\t|\tДвижения.СчетДт = &Счет\n\t|\tИ (Движения.СубконтоДт1 = &Контрагент\n\t|\t\tИЛИ Движения.СубконтоДт2 = &Контрагент)\";\n\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Оборот;\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "b29c241efd77f07b68cf191d36da71df5352189d8a5742a86026712c240fdbaf",
+          "tokens_input": 628,
+          "tokens_output": 386,
+          "tokens_total": 1014,
+          "tokens_reasoning": 109,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.03,
+          "elapsed_time": 5.543167591094971,
+          "cost_input": 0.001256,
+          "cost_output": 0.00386,
+          "cost_total": 0.005116,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:48:42",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b29c241efd77f07b68cf191d36da71df5352189d8a5742a86026712c240fdbaf",
+        "most_common_count": 1,
+        "hashes": [
+          "b29c241efd77f07b68cf191d36da71df5352189d8a5742a86026712c240fdbaf"
+        ]
+      },
+      "total_tokens": 1014,
+      "total_cost": 0.015316,
+      "avg_time": 5.543
+    },
+    {
+      "task_id": "B20",
+      "task_name": "Оборот по счёту в разрезе субконто",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "ПланСчетов.Основной",
+        "ПланВидовХарактеристик.ВидыСубконто",
+        "РегистрБухгалтерии.Хозрасчетный",
+        "Справочник.Контрагенты"
+      ],
+      "context_analysis_cost": 0.03308,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ДебетовыйОборотПоКонтрагенту(Счет, Контрагент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЕСТЬNULL(СУММА(Движения.Сумма), 0) КАК Оборот\n\t|ИЗ\n\t|\tРегистрБухгалтерии.Хозрасчетный.ДвиженияССубконто() КАК Движения\n\t|ГДЕ\n\t|\tДвижения.СчетДт = &Счет\n\t|\tИ (\n\t|\t\tДвижения.СубконтоДт1 = &Контрагент\n\t|\t\tИЛИ Движения.СубконтоДт2 = &Контрагент\n\t|\t)\";\n\n\tЗапрос.УстановитьПараметр(\"Счет\", Счет);\n\tЗапрос.УстановитьПараметр(\"Контрагент\", Контрагент);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Оборот;\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "c1e12572b5aeb973bbbcbcd54ce5d490ece8356442181599be73ef59eb54a832",
+          "tokens_input": 4267,
+          "tokens_output": 990,
+          "tokens_total": 5257,
+          "tokens_reasoning": 411,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.69,
+          "elapsed_time": 12.52541971206665,
+          "cost_input": 0.008534,
+          "cost_output": 0.009899999999999999,
+          "cost_total": 0.018434,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:37:49",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c1e12572b5aeb973bbbcbcd54ce5d490ece8356442181599be73ef59eb54a832",
+        "most_common_count": 1,
+        "hashes": [
+          "c1e12572b5aeb973bbbcbcd54ce5d490ece8356442181599be73ef59eb54a832"
+        ]
+      },
+      "total_tokens": 5257,
+      "total_cost": 0.051514,
+      "avg_time": 12.525
+    },
+    {
       "task_id": "B2",
       "task_name": "Заполнение цен в табличной части",
       "model_id": "aliceai-llm/latest",
@@ -38150,6 +40091,61 @@
       "total_tokens": 1060,
       "total_cost": 0.028916,
       "avg_time": 8.017
+    },
+    {
+      "task_id": "B2",
+      "task_name": "Заполнение цен в табличной части",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныНоменклатуры",
+        "Справочник.ВидыЦен",
+        "Документ.РеализацияТоваров"
+      ],
+      "context_analysis_cost": 0.017484,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nПроцедура ЗаполнитьЦеныВТабличнойЧасти(ТабличнаяЧасть, ВидЦен, Дата) Экспорт\n\n\tЕсли ТабличнаяЧасть.Количество() = 0 Тогда\n\t\tВозврат;\n\tКонецЕсли;\n\n\tМассивНоменклатуры = Новый Массив;\n\tДля Каждого Строка Из ТабличнаяЧасть Цикл\n\t\tЕсли ЗначениеЗаполнено(Строка.Номенклатура)\n\t\t\tИ МассивНоменклатуры.Найти(Строка.Номенклатура) = Неопределено Тогда\n\t\t\tМассивНоменклатуры.Добавить(Строка.Номенклатура);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЦеныСрез.Номенклатура КАК Номенклатура,\n\t|\tЦеныСрез.Цена КАК Цена\n\t|ИЗ\n\t|\tРегистрСведений.ЦеныНоменклатуры.СрезПоследних(\n\t|\t\t\t&Дата,\n\t|\t\t\tВидЦен = &ВидЦен\n\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК ЦеныСрез\";\n\tЗапрос.УстановитьПараметр(\"Дата\", Дата);\n\tЗапрос.УстановитьПараметр(\"ВидЦен\", ВидЦен);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n\tЦены = Новый Соответствие;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tЦены.Вставить(Выборка.Номенклатура, Выборка.Цена);\n\tКонецЦикла;\n\n\tДля Каждого Строка Из ТабличнаяЧасть Цикл\n\t\tЦена = Цены.Получить(Строка.Номенклатура);\n\t\tЕсли Цена = Неопределено Тогда\n\t\t\tЦена = 0;\n\t\tКонецЕсли;\n\t\tСтрока.Цена = Цена;\n\t\tСтрока.Сумма = Строка.Количество * Цена;\n\tКонецЦикла;\n\nКонецПроцедуры\n```",
+          "response_hash": "cb080069b0ffdf3b37f87f14d37cdb3a415aa2ae51e3abd41659b1c3e3093170",
+          "tokens_input": 534,
+          "tokens_output": 811,
+          "tokens_total": 1345,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.84,
+          "elapsed_time": 6.617919206619263,
+          "cost_input": 0.001068,
+          "cost_output": 0.00811,
+          "cost_total": 0.009177999999999999,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:30:11",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cb080069b0ffdf3b37f87f14d37cdb3a415aa2ae51e3abd41659b1c3e3093170",
+        "most_common_count": 1,
+        "hashes": [
+          "cb080069b0ffdf3b37f87f14d37cdb3a415aa2ae51e3abd41659b1c3e3093170"
+        ]
+      },
+      "total_tokens": 1345,
+      "total_cost": 0.026661999999999998,
+      "avg_time": 6.618
     },
     {
       "task_id": "B2",
@@ -39784,6 +41780,116 @@
       "avg_time": 10.388
     },
     {
+      "task_id": "B2",
+      "task_name": "Заполнение цен в табличной части",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныНоменклатуры",
+        "Справочник.ВидыЦен",
+        "Документ.РеализацияТоваров"
+      ],
+      "context_analysis_cost": 0.0068000000000000005,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Процедура ЗаполнитьЦеныТоваров(ТабличнаяЧасть, ВидЦен, ДатаЦен) Экспорт\n\n\tЕсли ТабличнаяЧасть.Количество() = 0 Тогда\n\t\tВозврат;\n\tКонецЕсли;\n\n\tСписокНоменклатуры = Новый Массив;\n\tДля Каждого СтрокаТоваров Из ТабличнаяЧасть Цикл\n\t\tСтрокаТоваров.Цена = 0;\n\t\tСтрокаТоваров.Сумма = 0;\n\t\tСписокНоменклатуры.Добавить(СтрокаТоваров.Номенклатура);\n\tКонецЦикла;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЦены.Номенклатура КАК Номенклатура,\n\t|\tЦены.Цена КАК Цена\n\t|ИЗ\n\t|\tРегистрСведений.ЦеныНоменклатуры.СрезПоследних(\n\t|\t\t&ДатаЦен,\n\t|\t\tВидЦен = &ВидЦен\n\t|\t\t\tИ Номенклатура В (&СписокНоменклатуры)) КАК Цены\";\n\n\tЗапрос.УстановитьПараметр(\"ДатаЦен\", ДатаЦен);\n\tЗапрос.УстановитьПараметр(\"ВидЦен\", ВидЦен);\n\tЗапрос.УстановитьПараметр(\"СписокНоменклатуры\", СписокНоменклатуры);\n\n\tЦеныПоНоменклатуре = Новый Соответствие;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\t\tЦеныПоНоменклатуре.Вставить(Выборка.Номенклатура, Выборка.Цена);\n\tКонецЦикла;\n\n\tДля Каждого СтрокаТоваров Из ТабличнаяЧасть Цикл\n\t\tЦена = ЦеныПоНоменклатуре.Получить(СтрокаТоваров.Номенклатура);\n\t\tЕсли Цена <> Неопределено Тогда\n\t\t\tСтрокаТоваров.Цена = Цена;\n\t\t\tСтрокаТоваров.Сумма = СтрокаТоваров.Количество * СтрокаТоваров.Цена;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\nКонецПроцедуры",
+          "response_hash": "4b408effaba14314963935f9fedea5411aa5550f34fa8a1d63eec98edc820348",
+          "tokens_input": 375,
+          "tokens_output": 659,
+          "tokens_total": 1034,
+          "tokens_reasoning": 99,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.47,
+          "elapsed_time": 12.416668891906738,
+          "cost_input": 0.00075,
+          "cost_output": 0.0065899999999999995,
+          "cost_total": 0.007339999999999999,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:48:55",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4b408effaba14314963935f9fedea5411aa5550f34fa8a1d63eec98edc820348",
+        "most_common_count": 1,
+        "hashes": [
+          "4b408effaba14314963935f9fedea5411aa5550f34fa8a1d63eec98edc820348"
+        ]
+      },
+      "total_tokens": 1034,
+      "total_cost": 0.01414,
+      "avg_time": 12.417
+    },
+    {
+      "task_id": "B2",
+      "task_name": "Заполнение цен в табличной части",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныНоменклатуры",
+        "Справочник.ВидыЦен",
+        "Документ.РеализацияТоваров"
+      ],
+      "context_analysis_cost": 0.025804,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Процедура ЗаполнитьЦеныТоваров(ТабличнаяЧасть, ВидЦен, ДатаЦен) Экспорт\n\n\tЕсли ТабличнаяЧасть.Количество() = 0 Тогда\n\t\tВозврат;\n\tКонецЕсли;\n\n\tСписокНоменклатуры = Новый Массив;\n\tДля Каждого СтрокаТоваров Из ТабличнаяЧасть Цикл\n\t\tСписокНоменклатуры.Добавить(СтрокаТоваров.Номенклатура);\n\tКонецЦикла;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЦены.Номенклатура КАК Номенклатура,\n\t|\tЦены.Цена КАК Цена\n\t|ИЗ\n\t|\tРегистрСведений.ЦеныНоменклатуры.СрезПоследних(\n\t|\t\t&ДатаЦен,\n\t|\t\tВидЦен = &ВидЦен\n\t|\t\t\tИ Номенклатура В (&СписокНоменклатуры)) КАК Цены\";\n\n\tЗапрос.УстановитьПараметр(\"ДатаЦен\", ДатаЦен);\n\tЗапрос.УстановитьПараметр(\"ВидЦен\", ВидЦен);\n\tЗапрос.УстановитьПараметр(\"СписокНоменклатуры\", СписокНоменклатуры);\n\n\tЦеныНоменклатуры = Новый Соответствие;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\t\tЦеныНоменклатуры.Вставить(Выборка.Номенклатура, Выборка.Цена);\n\tКонецЦикла;\n\n\tДля Каждого СтрокаТоваров Из ТабличнаяЧасть Цикл\n\t\tСтрокаТоваров.Цена = 0;\n\t\tСтрокаТоваров.Сумма = 0;\n\n\t\tЦена = ЦеныНоменклатуры.Получить(СтрокаТоваров.Номенклатура);\n\t\tЕсли Цена <> Неопределено Тогда\n\t\t\tСтрокаТоваров.Цена = Цена;\n\t\t\tСтрокаТоваров.Сумма = СтрокаТоваров.Количество * СтрокаТоваров.Цена;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\nКонецПроцедуры",
+          "response_hash": "c4a37025c91bc155b741cde40919cc47f634a916fa77f59d2387aa6183f48286",
+          "tokens_input": 3948,
+          "tokens_output": 1470,
+          "tokens_total": 5418,
+          "tokens_reasoning": 346,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 4.52,
+          "elapsed_time": 12.587810754776001,
+          "cost_input": 0.007896,
+          "cost_output": 0.0147,
+          "cost_total": 0.022595999999999998,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:37:44",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c4a37025c91bc155b741cde40919cc47f634a916fa77f59d2387aa6183f48286",
+        "most_common_count": 1,
+        "hashes": [
+          "c4a37025c91bc155b741cde40919cc47f634a916fa77f59d2387aa6183f48286"
+        ]
+      },
+      "total_tokens": 5418,
+      "total_cost": 0.0484,
+      "avg_time": 12.588
+    },
+    {
       "task_id": "B3",
       "task_name": "Списание товаров по FIFO",
       "model_id": "aliceai-llm/latest",
@@ -41237,6 +43343,61 @@
       "total_tokens": 2117,
       "total_cost": 0.043562000000000003,
       "avg_time": 17.721
+    },
+    {
+      "task_id": "B3",
+      "task_name": "Списание товаров по FIFO",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ПартииТоваровНаСкладах",
+        "Документ.ПоступлениеТоваров",
+        "Справочник.Номенклатура"
+      ],
+      "context_analysis_cost": 0.018314,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СписатьТоварыFIFO(ТаблицаТоваров, Склад) Экспорт\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"Партия\", Новый ОписаниеТипов(\"ДокументСсылка.ПоступлениеТоваров\"));\n\tРезультат.Колонки.Добавить(\"Количество\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n\tРезультат.Колонки.Добавить(\"Стоимость\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n\t\n\t// Свертка требуемых количеств по номенклатуре\n\tТребуетсяСписать = ТаблицаТоваров.Скопировать(, \"Номенклатура, Количество\");\n\tТребуетсяСписать.Свернуть(\"Номенклатура\", \"Количество\");\n\t\n\tСписокНоменклатуры = ТребуетсяСписать.ВыгрузитьКолонку(\"Номенклатура\");\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t|\tОстатки.Партия КАК Партия,\n\t|\tОстатки.Партия.Дата КАК ДатаПартии,\n\t|\tОстатки.КоличествоОстаток КАК Количество,\n\t|\tОстатки.СтоимостьОстаток КАК Стоимость\n\t|ИЗ\n\t|\tРегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n\t|\t\t\t,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура В (&СписокНоменклатуры)) КАК Остатки\n\t|ГДЕ\n\t|\tОстатки.КоличествоОстаток > 0\n\t|\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tДатаПартии,\n\t|\tПартия\";\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"СписокНоменклатуры\", СписокНоменклатуры);\n\t\n\tТаблицаОстатков = Запрос.Выполнить().Выгрузить();\n\t\n\tДля Каждого СтрокаТовара Из ТребуетсяСписать Цикл\n\t\t\n\t\tОстаток = СтрокаТовара.Количество;\n\t\tЕсли Остаток <= 0 Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\t\t\n\t\tОтбор = Новый Структура(\"Номенклатура\", СтрокаТовара.Номенклатура);\n\t\tСтрокиПартий = ТаблицаОстатков.НайтиСтроки(Отбор);\n\t\t\n\t\tДля Каждого СтрокаПартии Из СтрокиПартий Цикл\n\t\t\t\n\t\t\tЕсли Остаток <= 0 Тогда\n\t\t\t\tПрервать;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tЕсли СтрокаПартии.Количество <= Остаток Тогда\n\t\t\t\t// Партия списывается полностью\n\t\t\t\tСписатьКоличество = СтрокаПартии.Количество;\n\t\t\t\tСписатьСтоимость = СтрокаПартии.Стоимость;\n\t\t\tИначе\n\t\t\t\tСписатьКоличество = Остаток;\n\t\t\t\tСписатьСтоимость = Окр(СтрокаПартии.Стоимость * СписатьКоличество / СтрокаПартии.Количество, 2);\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tНоваяСтрока = Результат.Добавить();\n\t\t\tНоваяСтрока.Номенклатура = СтрокаТовара.Номенклатура;\n\t\t\tНоваяСтрока.Партия = СтрокаПартии.Партия;\n\t\t\tНоваяСтрока.Количество = СписатьКоличество;\n\t\t\tНоваяСтрока.Стоимость = СписатьСтоимость;\n\t\t\t\n\t\t\t// Уменьшаем доступный остаток партии\n\t\t\tСтрокаПартии.Количество = СтрокаПартии.Количество - СписатьКоличество;\n\t\t\tСтрокаПартии.Стоимость = СтрокаПартии.Стоимость - СписатьСтоимость;\n\t\t\t\n\t\t\tОстаток = Остаток - СписатьКоличество;\n\t\t\t\n\t\tКонецЦикла;\n\t\t\n\t\tЕсли Остаток > 0 Тогда\n\t\t\tВызватьИсключение \"Недостаточно остатков на складе \"\"\" + Строка(Склад)\n\t\t\t\t+ \"\"\" для номенклатуры \"\"\" + Строка(СтрокаТовара.Номенклатура)\n\t\t\t\t+ \"\"\". Не хватает: \" + Строка(Остаток);\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "3edf6d63ebe8ecf44c09d95efef71865f85915f385f8337f2014779417b9aaa7",
+          "tokens_input": 604,
+          "tokens_output": 2543,
+          "tokens_total": 3147,
+          "tokens_reasoning": 845,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm drafting a 1C function to write off inventory using FIFO logic, querying the batch registry balances by warehouse and item, ordered by batch date and reference for tie-breaking.\n\nFor each batch with a positive remaining quantity, I'll calculate unit cost as remaining cost divided by remaining quantity, then compute the write-off cost portion—taking the full remaining cost if fully consumed, otherwise rounding a proportional amount. I'll process items in the order they appear in the collapsed input table, applying FIFO sequentially within each nomenclature by loading balances into a value table and iterating.\n\nIf the total requested quantity exceeds available stock for any item, I need to throw an exception naming the nomenclature before completing the write-off, and skip entries with zero or negative quantities entirely.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 5.33,
+          "elapsed_time": 17.819159030914307,
+          "cost_input": 0.001208,
+          "cost_output": 0.02543,
+          "cost_total": 0.026638000000000002,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:30:40",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3edf6d63ebe8ecf44c09d95efef71865f85915f385f8337f2014779417b9aaa7",
+        "most_common_count": 1,
+        "hashes": [
+          "3edf6d63ebe8ecf44c09d95efef71865f85915f385f8337f2014779417b9aaa7"
+        ]
+      },
+      "total_tokens": 3147,
+      "total_cost": 0.044952000000000006,
+      "avg_time": 17.819
     },
     {
       "task_id": "B3",
@@ -42888,6 +45049,118 @@
       "avg_time": 28.521
     },
     {
+      "task_id": "B3",
+      "task_name": "Списание товаров по FIFO",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ПартииТоваровНаСкладах",
+        "Документ.ПоступлениеТоваров",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.011698,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СписатьТоварыFIFO(ТоварыКСписанию, Склад) Экспорт\n\n\tРаспределение = Новый ТаблицаЗначений;\n\tРаспределение.Колонки.Добавить(\"Номенклатура\",\n\t\tНовый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРаспределение.Колонки.Добавить(\"Партия\",\n\t\tНовый ОписаниеТипов(\"ДокументСсылка.ПоступлениеТоваров\"));\n\tРаспределение.Колонки.Добавить(\"Количество\",\n\t\tНовый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n\tРаспределение.Колонки.Добавить(\"Стоимость\",\n\t\tНовый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n\n\tДля Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n\t\tЕсли СтрокаТовара.Количество < 0 Тогда\n\t\t\tВызватьИсключение \"Отрицательное количество к списанию: \"\n\t\t\t\t+ Строка(СтрокаТовара.Номенклатура);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tЕсли ТоварыКСписанию.Количество() = 0 Тогда\n\t\tВозврат Распределение;\n\tКонецЕсли;\n\n\tПотребности = ТоварыКСписанию.Скопировать(, \"Номенклатура, Количество\");\n\tПотребности.Свернуть(\"Номенклатура\", \"Количество\");\n\n\tПотребностиПоНоменклатуре = Новый Соответствие;\n\tДля Каждого Потребность Из Потребности Цикл\n\t\tПотребностиПоНоменклатуре.Вставить(\n\t\t\tПотребность.Номенклатура, Потребность);\n\tКонецЦикла;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t|\tОстатки.Партия КАК Партия,\n\t|\tОстатки.Партия.Дата КАК ДатаПартии,\n\t|\tОстатки.КоличествоОстаток КАК КоличествоОстаток,\n\t|\tОстатки.СтоимостьОстаток КАК СтоимостьОстаток\n\t|ИЗ\n\t|\tРегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n\t|\t\t,\n\t|\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&Номенклатура)) КАК Остатки\n\t|ГДЕ\n\t|\tОстатки.КоличествоОстаток > 0\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tДатаПартии,\n\t|\tПартия,\n\t|\tНоменклатура\";\n\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"Номенклатура\",\n\t\tПотребности.ВыгрузитьКолонку(\"Номенклатура\"));\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\n\t\tПотребность = ПотребностиПоНоменклатуре.Получить(Выборка.Номенклатура);\n\n\t\tЕсли Потребность.Количество <= 0 Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tКоличествоСписания = Мин(\n\t\t\tПотребность.Количество, Выборка.КоличествоОстаток);\n\n\t\tЕсли КоличествоСписания = Выборка.КоличествоОстаток Тогда\n\t\t\tСтоимостьСписания = Выборка.СтоимостьОстаток;\n\t\tИначе\n\t\t\tСтоимостьСписания = Окр(\n\t\t\t\tВыборка.СтоимостьОстаток\n\t\t\t\t\t* КоличествоСписания / Выборка.КоличествоОстаток, 2);\n\t\tКонецЕсли;\n\n\t\tСтрокаРаспределения = Распределение.Добавить();\n\t\tСтрокаРаспределения.Номенклатура = Выборка.Номенклатура;\n\t\tСтрокаРаспределения.Партия = Выборка.Партия;\n\t\tСтрокаРаспределения.Количество = КоличествоСписания;\n\t\tСтрокаРаспределения.Стоимость = СтоимостьСписания;\n\n\t\tПотребность.Количество = Потребность.Количество - КоличествоСписания;\n\n\tКонецЦикла;\n\n\tДля Каждого Потребность Из Потребности Цикл\n\t\tЕсли Потребность.Количество > 0 Тогда\n\t\t\tВызватьИсключение \"Недостаточно остатков на складе для номенклатуры: \"\n\t\t\t\t+ Строка(Потребность.Номенклатура)\n\t\t\t\t+ \". Недостающее количество: \"\n\t\t\t\t+ Строка(Потребность.Количество);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Распределение;\n\nКонецФункции",
+          "response_hash": "84cd68fe0086dd617f459eabdbc78267835f03261a87028774d62d49a9a58778",
+          "tokens_input": 437,
+          "tokens_output": 1953,
+          "tokens_total": 2390,
+          "tokens_reasoning": 757,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 4.09,
+          "elapsed_time": 26.014302492141724,
+          "cost_input": 0.000874,
+          "cost_output": 0.019530000000000002,
+          "cost_total": 0.020404000000000002,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:49:25",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "84cd68fe0086dd617f459eabdbc78267835f03261a87028774d62d49a9a58778",
+        "most_common_count": 1,
+        "hashes": [
+          "84cd68fe0086dd617f459eabdbc78267835f03261a87028774d62d49a9a58778"
+        ]
+      },
+      "total_tokens": 2390,
+      "total_cost": 0.032102000000000006,
+      "avg_time": 26.014
+    },
+    {
+      "task_id": "B3",
+      "task_name": "Списание товаров по FIFO",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ПартииТоваровНаСкладах",
+        "Документ.ПоступлениеТоваров",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.034464,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РаспределитьТоварыПоФИФО(ТоварыКСписанию, Склад) Экспорт\n\n\tРаспределение = Новый ТаблицаЗначений;\n\tРаспределение.Колонки.Добавить(\"Номенклатура\",\n\t\tНовый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРаспределение.Колонки.Добавить(\"Партия\",\n\t\tНовый ОписаниеТипов(\"ДокументСсылка.ПоступлениеТоваров\"));\n\tРаспределение.Колонки.Добавить(\"Количество\",\n\t\tНовый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 3)));\n\tРаспределение.Колонки.Добавить(\"Стоимость\",\n\t\tНовый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n\n\tДля Каждого СтрокаТовара Из ТоварыКСписанию Цикл\n\t\tЕсли СтрокаТовара.Количество < 0 Тогда\n\t\t\tВызватьИсключение \"Отрицательное количество к списанию: \"\n\t\t\t\t+ СтрокаТовара.Номенклатура.Наименование;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tПотребности = ТоварыКСписанию.Скопировать(, \"Номенклатура, Количество\");\n\tПотребности.Свернуть(\"Номенклатура\", \"Количество\");\n\n\tЕсли Потребности.Количество() = 0 Тогда\n\t\tВозврат Распределение;\n\tКонецЕсли;\n\n\tОсталосьСписать = Новый Соответствие;\n\tДля Каждого Потребность Из Потребности Цикл\n\t\tОсталосьСписать.Вставить(Потребность.Номенклатура, Потребность.Количество);\n\tКонецЦикла;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t|\tОстатки.Партия КАК Партия,\n\t|\tОстатки.КоличествоОстаток КАК Количество,\n\t|\tОстатки.СтоимостьОстаток КАК Стоимость\n\t|ИЗ\n\t|\tРегистрНакопления.ПартииТоваровНаСкладах.Остатки(\n\t|\t\t,\n\t|\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&Номенклатура)) КАК Остатки\n\t|ГДЕ\n\t|\tОстатки.КоличествоОстаток > 0\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tОстатки.Партия.Дата,\n\t|\tОстатки.Партия,\n\t|\tОстатки.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"Номенклатура\",\n\t\tПотребности.ВыгрузитьКолонку(\"Номенклатура\"));\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\n\t\tПотребноеКоличество = ОсталосьСписать.Получить(Выборка.Номенклатура);\n\t\tЕсли ПотребноеКоличество <= 0 Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tКоличествоСписания = Мин(ПотребноеКоличество, Выборка.Количество);\n\n\t\tЕсли КоличествоСписания = Выборка.Количество Тогда\n\t\t\tСтоимостьСписания = Выборка.Стоимость;\n\t\tИначе\n\t\t\tСтоимостьСписания = Окр(\n\t\t\t\tВыборка.Стоимость * КоличествоСписания / Выборка.Количество, 2);\n\t\tКонецЕсли;\n\n\t\tСтрокаРаспределения = Распределение.Добавить();\n\t\tСтрокаРаспределения.Номенклатура = Выборка.Номенклатура;\n\t\tСтрокаРаспределения.Партия = Выборка.Партия;\n\t\tСтрокаРаспределения.Количество = КоличествоСписания;\n\t\tСтрокаРаспределения.Стоимость = СтоимостьСписания;\n\n\t\tОсталосьСписать.Вставить(Выборка.Номенклатура,\n\t\t\tПотребноеКоличество - КоличествоСписания);\n\n\tКонецЦикла;\n\n\tДля Каждого Потребность Из Потребности Цикл\n\t\tЕсли ОсталосьСписать.Получить(Потребность.Номенклатура) > 0 Тогда\n\t\t\tВызватьИсключение \"Недостаточно остатков на складе для номенклатуры: \"\n\t\t\t\t+ Потребность.Номенклатура.Наименование;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Распределение;\n\nКонецФункции",
+          "response_hash": "6df07f5c0622739bd3731936b0f44fa42cdce40ca3cd37eedbbd405b0d9e50c3",
+          "tokens_input": 6163,
+          "tokens_output": 3612,
+          "tokens_total": 9775,
+          "tokens_reasoning": 1162,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "**Calculating cost proportions**\n\nI’m trying to figure out how to calculate the cost proportions while keeping the original quantities in mind. If the input is a whole number, I’ll use the full cost; otherwise, I’ll round it to two decimal places. I need to consider that each nomenclature should only appear once in the calculation to avoid any discrepancies. It’s a bit tricky, but I think I've got a clear path forward!**Querying quantities and conditions**\n\nI’m focusing on querying quantities greater than zero and checking the warehouse conditions in a virtual table. I need to ensure I capture current balances and use a cost query while validating numeric counts. I'll add a rejection for any negative numbers with a specific text name and make sure to properly handle exceptions for names and quantities. I’m also organizing global party orders by date and delivering within the time budget. It’s all about precision!",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 9.69,
+          "elapsed_time": 30.79077458381653,
+          "cost_input": 0.012326,
+          "cost_output": 0.03612,
+          "cost_total": 0.048446,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:38:38",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "6df07f5c0622739bd3731936b0f44fa42cdce40ca3cd37eedbbd405b0d9e50c3",
+        "most_common_count": 1,
+        "hashes": [
+          "6df07f5c0622739bd3731936b0f44fa42cdce40ca3cd37eedbbd405b0d9e50c3"
+        ]
+      },
+      "total_tokens": 9775,
+      "total_cost": 0.08291000000000001,
+      "avg_time": 30.791
+    },
+    {
       "task_id": "B4",
       "task_name": "Расчёт себестоимости продажи",
       "model_id": "aliceai-llm/latest",
@@ -44327,6 +46600,60 @@
       "total_tokens": 1555,
       "total_cost": 0.030382,
       "avg_time": 13.415
+    },
+    {
+      "task_id": "B4",
+      "task_name": "Расчёт себестоимости продажи",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.СтоимостьТоваров",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.013502,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция РассчитатьСредневзвешеннуюСебестоимость(МассивНоменклатуры, Склад, Дата) Экспорт\n\t\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\", Новый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"СредняяЦена\", Новый ОписаниеТипов(\"Число\", Новый КвалификаторыЧисла(15, 2)));\n\t\n\tЕсли МассивНоменклатуры = Неопределено ИЛИ МассивНоменклатуры.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tСтоимостьТоваровОстатки.Номенклатура КАК Номенклатура,\n\t|\tСУММА(СтоимостьТоваровОстатки.КоличествоОстаток) КАК КоличествоОстаток,\n\t|\tСУММА(СтоимостьТоваровОстатки.СтоимостьОстаток) КАК СтоимостьОстаток\n\t|ИЗ\n\t|\tРегистрНакопления.СтоимостьТоваров.Остатки(\n\t|\t\t\t&Дата,\n\t|\t\t\tСклад = &Склад\n\t|\t\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК СтоимостьТоваровОстатки\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tСтоимостьТоваровОстатки.Номенклатура\";\n\t\n\tЗапрос.УстановитьПараметр(\"Дата\", Дата);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\t\n\tОстатки = Новый Соответствие;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tЕсли Выборка.КоличествоОстаток <> 0 Тогда\n\t\t\tОстатки.Вставить(Выборка.Номенклатура, Окр(Выборка.СтоимостьОстаток / Выборка.КоличествоОстаток, 2));\n\t\tИначе\n\t\t\tОстатки.Вставить(Выборка.Номенклатура, 0);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tОбработанные = Новый Соответствие;\n\tДля Каждого Позиция Из МассивНоменклатуры Цикл\n\t\tЕсли Обработанные.Получить(Позиция) <> Неопределено Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\t\tОбработанные.Вставить(Позиция, Истина);\n\t\t\n\t\tНоваяСтрока = Результат.Добавить();\n\t\tНоваяСтрока.Номенклатура = Позиция;\n\t\tСредняяЦена = Остатки.Получить(Позиция);\n\t\tНоваяСтрока.СредняяЦена = ?(СредняяЦена = Неопределено, 0, СредняяЦена);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "4d021e72c218db42e0c0aa3f08293f09232f303add8ff9ad680c57279e3fa50e",
+          "tokens_input": 470,
+          "tokens_output": 1146,
+          "tokens_total": 1616,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.48,
+          "elapsed_time": 8.165893077850342,
+          "cost_input": 0.00094,
+          "cost_output": 0.011460000000000001,
+          "cost_total": 0.012400000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:30:30",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "4d021e72c218db42e0c0aa3f08293f09232f303add8ff9ad680c57279e3fa50e",
+        "most_common_count": 1,
+        "hashes": [
+          "4d021e72c218db42e0c0aa3f08293f09232f303add8ff9ad680c57279e3fa50e"
+        ]
+      },
+      "total_tokens": 1616,
+      "total_cost": 0.025902,
+      "avg_time": 8.166
     },
     {
       "task_id": "B4",
@@ -45945,6 +48272,114 @@
       "avg_time": 13.651
     },
     {
+      "task_id": "B4",
+      "task_name": "Расчёт себестоимости продажи",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.СтоимостьТоваров"
+      ],
+      "context_analysis_cost": 0.005632,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РассчитатьСреднююСебестоимость(МассивНоменклатуры, Склад, ДатаРасчета) Экспорт\n\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\",\n\t\tНовый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"СредняяЦена\", Новый ОписаниеТипов(\"Число\"));\n\n\tЕсли МассивНоменклатуры.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t|\tОстатки.КоличествоОстаток КАК Количество,\n\t|\tОстатки.СтоимостьОстаток КАК Стоимость\n\t|ИЗ\n\t|\tРегистрНакопления.СтоимостьТоваров.Остатки(\n\t|\t\t&ДатаРасчета,\n\t|\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Остатки\";\n\n\tЗапрос.УстановитьПараметр(\"ДатаРасчета\", ДатаРасчета);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n\tСредниеЦены = Новый Соответствие;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\t\tСредняяЦена = 0;\n\t\tЕсли Выборка.Количество <> 0 Тогда\n\t\t\tСредняяЦена = Выборка.Стоимость / Выборка.Количество;\n\t\tКонецЕсли;\n\t\tСредниеЦены.Вставить(Выборка.Номенклатура, СредняяЦена);\n\tКонецЦикла;\n\n\tДля Каждого Номенклатура Из МассивНоменклатуры Цикл\n\t\tСтрокаРезультата = Результат.Добавить();\n\t\tСтрокаРезультата.Номенклатура = Номенклатура;\n\n\t\tСредняяЦена = СредниеЦены.Получить(Номенклатура);\n\t\tЕсли СредняяЦена = Неопределено Тогда\n\t\t\tСредняяЦена = 0;\n\t\tКонецЕсли;\n\n\t\tСтрокаРезультата.СредняяЦена = СредняяЦена;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "8e7ceadf69c05e4ba06fa6da97b2b9bd35d842730c42e688007825eeed1c9cd5",
+          "tokens_input": 307,
+          "tokens_output": 900,
+          "tokens_total": 1207,
+          "tokens_reasoning": 269,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.93,
+          "elapsed_time": 19.45462918281555,
+          "cost_input": 0.000614,
+          "cost_output": 0.009,
+          "cost_total": 0.009614,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:49:25",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "8e7ceadf69c05e4ba06fa6da97b2b9bd35d842730c42e688007825eeed1c9cd5",
+        "most_common_count": 1,
+        "hashes": [
+          "8e7ceadf69c05e4ba06fa6da97b2b9bd35d842730c42e688007825eeed1c9cd5"
+        ]
+      },
+      "total_tokens": 1207,
+      "total_cost": 0.015246,
+      "avg_time": 19.455
+    },
+    {
+      "task_id": "B4",
+      "task_name": "Расчёт себестоимости продажи",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.СтоимостьТоваров",
+        "Справочник.Номенклатура",
+        "Справочник.Склады"
+      ],
+      "context_analysis_cost": 0.034722,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РассчитатьСредневзвешеннуюСтоимость(МассивНоменклатуры, Склад, Дата) Экспорт\n\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"Номенклатура\",\n\t\tНовый ОписаниеТипов(\"СправочникСсылка.Номенклатура\"));\n\tРезультат.Колонки.Добавить(\"СредняяЦена\", Новый ОписаниеТипов(\"Число\"));\n\n\tЕсли МассивНоменклатуры.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОстатки.Номенклатура КАК Номенклатура,\n\t|\tОстатки.КоличествоОстаток КАК Количество,\n\t|\tОстатки.СтоимостьОстаток КАК Стоимость\n\t|ИЗ\n\t|\tРегистрНакопления.СтоимостьТоваров.Остатки(\n\t|\t\t&Дата,\n\t|\t\tСклад = &Склад\n\t|\t\t\tИ Номенклатура В (&МассивНоменклатуры)) КАК Остатки\";\n\n\tЗапрос.УстановитьПараметр(\"Дата\", Дата);\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tЗапрос.УстановитьПараметр(\"МассивНоменклатуры\", МассивНоменклатуры);\n\n\tСредниеЦены = Новый Соответствие;\n\tВыборка = Запрос.Выполнить().Выбрать();\n\n\tПока Выборка.Следующий() Цикл\n\t\tСредняяЦена = 0;\n\t\tЕсли Выборка.Количество <> 0 Тогда\n\t\t\tСредняяЦена = Выборка.Стоимость / Выборка.Количество;\n\t\tКонецЕсли;\n\t\tСредниеЦены.Вставить(Выборка.Номенклатура, СредняяЦена);\n\tКонецЦикла;\n\n\tДля Каждого Номенклатура Из МассивНоменклатуры Цикл\n\t\tСтрокаРезультата = Результат.Добавить();\n\t\tСтрокаРезультата.Номенклатура = Номенклатура;\n\n\t\tСредняяЦена = СредниеЦены.Получить(Номенклатура);\n\t\tЕсли СредняяЦена = Неопределено Тогда\n\t\t\tСтрокаРезультата.СредняяЦена = 0;\n\t\tИначе\n\t\t\tСтрокаРезультата.СредняяЦена = СредняяЦена;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "ce35f70ccb5db41379e79d9e03f6a5d17d6abb8d74b1d79648a6d3574191db5b",
+          "tokens_input": 4262,
+          "tokens_output": 1839,
+          "tokens_total": 6101,
+          "tokens_reasoning": 545,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 5.39,
+          "elapsed_time": 22.05013346672058,
+          "cost_input": 0.008524,
+          "cost_output": 0.01839,
+          "cost_total": 0.026914,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:38:41",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ce35f70ccb5db41379e79d9e03f6a5d17d6abb8d74b1d79648a6d3574191db5b",
+        "most_common_count": 1,
+        "hashes": [
+          "ce35f70ccb5db41379e79d9e03f6a5d17d6abb8d74b1d79648a6d3574191db5b"
+        ]
+      },
+      "total_tokens": 6101,
+      "total_cost": 0.061636,
+      "avg_time": 22.05
+    },
+    {
       "task_id": "B5",
       "task_name": "Пересчёт валютных сумм",
       "model_id": "aliceai-llm/latest",
@@ -47403,6 +49838,60 @@
       "total_tokens": 2060,
       "total_cost": 0.046894,
       "avg_time": 17.4
+    },
+    {
+      "task_id": "B5",
+      "task_name": "Пересчёт валютных сумм",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.КурсыВалют",
+        "Справочник.Валюты"
+      ],
+      "context_analysis_cost": 0.01415,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьКурсКБазовойВалюте(Валюта, ДатаКурса)\n\t\n\tДанныеКурса = РегистрыСведений.КурсыВалют.ПолучитьПоследнее(ДатаКурса, Новый Структура(\"Валюта\", Валюта));\n\t\n\tЕсли НЕ ЗначениеЗаполнено(ДанныеКурса.Курс) ИЛИ НЕ ЗначениеЗаполнено(ДанныеКурса.Кратность) Тогда\n\t\tВызватьИсключение СтрШаблон(\n\t\t\t\"Не задан курс валюты \"\"%1\"\" на дату %2\",\n\t\t\tСтрока(Валюта),\n\t\t\tФормат(ДатаКурса, \"ДЛФ=D\"));\n\tКонецЕсли;\n\t\n\t// Стоимость одной единицы валюты в базовой валюте с учётом кратности\n\tВозврат ДанныеКурса.Курс / ДанныеКурса.Кратность;\n\t\nКонецФункции\n\nПроцедура ПересчитатьСуммыПриСменеВалюты(Товары, ВалютаИсходная, ВалютаНовая, ДатаКурса)\n\t\n\tЕсли ВалютаИсходная = ВалютаНовая Тогда\n\t\tВозврат;\n\tКонецЕсли;\n\t\n\t// Проверяем наличие курсов обеих валют до начала пересчёта\n\tКурсИсходной = ПолучитьКурсКБазовойВалюте(ВалютаИсходная, ДатаКурса);\n\tКурсНовой    = ПолучитьКурсКБазовойВалюте(ВалютаНовая, ДатаКурса);\n\t\n\t// Кросс-курс: сколько единиц новой валюты в одной единице исходной\n\tКроссКурс = КурсИсходной / КурсНовой;\n\t\n\tДля Каждого СтрокаТовара Из Товары Цикл\n\t\tСтрокаТовара.Цена  = Окр(СтрокаТовара.Цена * КроссКурс, 2);\n\t\tСтрокаТовара.Сумма = Окр(СтрокаТовара.Сумма * КроссКурс, 2);\n\tКонецЦикла;\n\t\nКонецПроцедуры\n```",
+          "response_hash": "e06cf86ca6f631c69229456b801c3db277fc74fc0308318eff7ca5abb762f961",
+          "tokens_input": 453,
+          "tokens_output": 1600,
+          "tokens_total": 2053,
+          "tokens_reasoning": 833,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "Looking at the metadata, I need a procedure working with the КурсыВалют register (dimension Валюта, resources Курс, Кратность) and the Валюты catalog. I'll assume the Товары table part has row attributes like Цена, Сумма, and Количество since they're not explicitly specified.\n\nSince the task says not to invent fields unnecessarily, I'll work with just Цена and Сумма and multiply them by a conversion coefficient instead of recalculating from quantity. The cross-rate logic: convert via base currency using Курс/Кратность for each currency, raising an exception if either currency's rate is missing. I'm getting rates through РегистрыСведений.КурсыВалют.ПолучитьПоследнее, checking if the returned structure's Курс field is filled, and then building the main procedure ПересчитатьСуммыПриСменеВалюты that takes the table part, source currency, target currency, and rate date as parameters.\n\nIf the two currencies are equal, I'll just exit early without doing anything, and I'll iterate through the table part (whether it's a real tabular section or a form data collection) with a Для Каждого loop, throwing a descriptive exception identifying exactly which currency is missing a rate when needed.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.39,
+          "elapsed_time": 12.234443426132202,
+          "cost_input": 0.000906,
+          "cost_output": 0.016,
+          "cost_total": 0.016906,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:30:52",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e06cf86ca6f631c69229456b801c3db277fc74fc0308318eff7ca5abb762f961",
+        "most_common_count": 1,
+        "hashes": [
+          "e06cf86ca6f631c69229456b801c3db277fc74fc0308318eff7ca5abb762f961"
+        ]
+      },
+      "total_tokens": 2053,
+      "total_cost": 0.031056,
+      "avg_time": 12.234
     },
     {
       "task_id": "B5",
@@ -49048,6 +51537,116 @@
       "avg_time": 14.432
     },
     {
+      "task_id": "B5",
+      "task_name": "Пересчёт валютных сумм",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.КурсыВалют",
+        "Справочник.Валюты",
+        "Документ.ЗаказКлиента"
+      ],
+      "context_analysis_cost": 0.007306,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Процедура ПересчитатьСуммыПриСменеВалюты(Товары, ИсходнаяВалюта, НоваяВалюта, ДатаКурса) Экспорт\n\n\tКурсИсходнойВалюты = Неопределено;\n\tКратностьИсходнойВалюты = Неопределено;\n\tКурсНовойВалюты = Неопределено;\n\tКратностьНовойВалюты = Неопределено;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tКурсы.Валюта КАК Валюта,\n\t|\tКурсы.Курс КАК Курс,\n\t|\tКурсы.Кратность КАК Кратность\n\t|ИЗ\n\t|\tРегистрСведений.КурсыВалют.СрезПоследних(\n\t|\t\t&ДатаКурса,\n\t|\t\tВалюта В (&ИсходнаяВалюта, &НоваяВалюта)) КАК Курсы\";\n\n\tЗапрос.УстановитьПараметр(\"ДатаКурса\", КонецДня(ДатаКурса));\n\tЗапрос.УстановитьПараметр(\"ИсходнаяВалюта\", ИсходнаяВалюта);\n\tЗапрос.УстановитьПараметр(\"НоваяВалюта\", НоваяВалюта);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tЕсли Выборка.Валюта = ИсходнаяВалюта Тогда\n\t\t\tКурсИсходнойВалюты = Выборка.Курс;\n\t\t\tКратностьИсходнойВалюты = Выборка.Кратность;\n\t\tКонецЕсли;\n\n\t\tЕсли Выборка.Валюта = НоваяВалюта Тогда\n\t\t\tКурсНовойВалюты = Выборка.Курс;\n\t\t\tКратностьНовойВалюты = Выборка.Кратность;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tЕсли КурсИсходнойВалюты = Неопределено Тогда\n\t\tВызватьИсключение \"Отсутствует курс валюты: \" + Строка(ИсходнаяВалюта);\n\tКонецЕсли;\n\n\tЕсли КурсНовойВалюты = Неопределено Тогда\n\t\tВызватьИсключение \"Отсутствует курс валюты: \" + Строка(НоваяВалюта);\n\tКонецЕсли;\n\n\tЕсли КурсИсходнойВалюты <= 0 Или КратностьИсходнойВалюты <= 0 Тогда\n\t\tВызватьИсключение \"Некорректный курс или кратность валюты: \" + Строка(ИсходнаяВалюта);\n\tКонецЕсли;\n\n\tЕсли КурсНовойВалюты <= 0 Или КратностьНовойВалюты <= 0 Тогда\n\t\tВызватьИсключение \"Некорректный курс или кратность валюты: \" + Строка(НоваяВалюта);\n\tКонецЕсли;\n\n\tКроссКурс = (КурсИсходнойВалюты / КратностьИсходнойВалюты)\n\t\t/ (КурсНовойВалюты / КратностьНовойВалюты);\n\n\tДля Каждого СтрокаТоваров Из Товары Цикл\n\t\tСтрокаТоваров.Цена = Окр(СтрокаТоваров.Цена * КроссКурс, 2);\n\t\tСтрокаТоваров.Сумма = Окр(СтрокаТоваров.Количество * СтрокаТоваров.Цена, 2);\n\tКонецЦикла;\n\nКонецПроцедуры",
+          "response_hash": "f2d38c7f8350f9ebe9c65df67618a0d02c5ad70fc016767748265a6ab1089d04",
+          "tokens_input": 388,
+          "tokens_output": 1118,
+          "tokens_total": 1506,
+          "tokens_reasoning": 247,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.4,
+          "elapsed_time": 21.876664638519287,
+          "cost_input": 0.000776,
+          "cost_output": 0.01118,
+          "cost_total": 0.011956000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:49:58",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f2d38c7f8350f9ebe9c65df67618a0d02c5ad70fc016767748265a6ab1089d04",
+        "most_common_count": 1,
+        "hashes": [
+          "f2d38c7f8350f9ebe9c65df67618a0d02c5ad70fc016767748265a6ab1089d04"
+        ]
+      },
+      "total_tokens": 1506,
+      "total_cost": 0.019262,
+      "avg_time": 21.877
+    },
+    {
+      "task_id": "B5",
+      "task_name": "Пересчёт валютных сумм",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.КурсыВалют",
+        "Справочник.Валюты",
+        "Документ.ЗаказКлиента"
+      ],
+      "context_analysis_cost": 0.026774,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Процедура ПересчитатьСуммыПриСменеВалюты(Товары, ИсходнаяВалюта, НоваяВалюта, ДатаКурса) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tКурсы.Валюта КАК Валюта,\n\t\t|\tКурсы.Курс КАК Курс,\n\t\t|\tКурсы.Кратность КАК Кратность\n\t\t|ИЗ\n\t\t|\tРегистрСведений.КурсыВалют.СрезПоследних(\n\t\t|\t\t&ДатаКурса,\n\t\t|\t\tВалюта = &ИсходнаяВалюта\n\t\t|\t\t\tИЛИ Валюта = &НоваяВалюта) КАК Курсы\";\n\n\tЗапрос.УстановитьПараметр(\"ДатаКурса\", ДатаКурса);\n\tЗапрос.УстановитьПараметр(\"ИсходнаяВалюта\", ИсходнаяВалюта);\n\tЗапрос.УстановитьПараметр(\"НоваяВалюта\", НоваяВалюта);\n\n\tКурсИсходнойВалюты = Неопределено;\n\tКратностьИсходнойВалюты = Неопределено;\n\tКурсНовойВалюты = Неопределено;\n\tКратностьНовойВалюты = Неопределено;\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tПока Выборка.Следующий() Цикл\n\t\tЕсли Выборка.Валюта = ИсходнаяВалюта Тогда\n\t\t\tКурсИсходнойВалюты = Выборка.Курс;\n\t\t\tКратностьИсходнойВалюты = Выборка.Кратность;\n\t\tКонецЕсли;\n\t\tЕсли Выборка.Валюта = НоваяВалюта Тогда\n\t\t\tКурсНовойВалюты = Выборка.Курс;\n\t\t\tКратностьНовойВалюты = Выборка.Кратность;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tЕсли КурсИсходнойВалюты = Неопределено Тогда\n\t\tВызватьИсключение \"Отсутствует курс валюты \"\"\" + ИсходнаяВалюта.Наименование\n\t\t\t+ \"\"\" на дату \" + Формат(ДатаКурса, \"ДФ=dd.MM.yyyy\");\n\tКонецЕсли;\n\n\tЕсли КурсНовойВалюты = Неопределено Тогда\n\t\tВызватьИсключение \"Отсутствует курс валюты \"\"\" + НоваяВалюта.Наименование\n\t\t\t+ \"\"\" на дату \" + Формат(ДатаКурса, \"ДФ=dd.MM.yyyy\");\n\tКонецЕсли;\n\n\tЕсли КурсИсходнойВалюты <= 0 Или КратностьИсходнойВалюты <= 0 Тогда\n\t\tВызватьИсключение \"Некорректный курс или кратность валюты \"\"\"\n\t\t\t+ ИсходнаяВалюта.Наименование + \"\"\"\";\n\tКонецЕсли;\n\n\tЕсли КурсНовойВалюты <= 0 Или КратностьНовойВалюты <= 0 Тогда\n\t\tВызватьИсключение \"Некорректный курс или кратность валюты \"\"\"\n\t\t\t+ НоваяВалюта.Наименование + \"\"\"\";\n\tКонецЕсли;\n\n\tКроссКурс = (КурсИсходнойВалюты / КратностьИсходнойВалюты)\n\t\t/ (КурсНовойВалюты / КратностьНовойВалюты);\n\n\tДля Каждого СтрокаТовары Из Товары Цикл\n\t\tСтрокаТовары.Цена = Окр(СтрокаТовары.Цена * КроссКурс, 2);\n\t\tСтрокаТовары.Сумма = Окр(СтрокаТовары.Количество * СтрокаТовары.Цена, 2);\n\tКонецЦикла;\n\nКонецПроцедуры",
+          "response_hash": "b1940fafe66bacabb4278f49204ef9451723802082de5c5b32c8d1d9d86f7e43",
+          "tokens_input": 5011,
+          "tokens_output": 2557,
+          "tokens_total": 7568,
+          "tokens_reasoning": 738,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 7.12,
+          "elapsed_time": 31.983517169952393,
+          "cost_input": 0.010022,
+          "cost_output": 0.02557,
+          "cost_total": 0.035592,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:39:33",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b1940fafe66bacabb4278f49204ef9451723802082de5c5b32c8d1d9d86f7e43",
+        "most_common_count": 1,
+        "hashes": [
+          "b1940fafe66bacabb4278f49204ef9451723802082de5c5b32c8d1d9d86f7e43"
+        ]
+      },
+      "total_tokens": 7568,
+      "total_cost": 0.062366,
+      "avg_time": 31.984
+    },
+    {
       "task_id": "B6",
       "task_name": "Обороты продаж за период",
       "model_id": "aliceai-llm/latest",
@@ -50478,6 +53077,59 @@
       "total_tokens": 1000,
       "total_cost": 0.022188,
       "avg_time": 9.525
+    },
+    {
+      "task_id": "B6",
+      "task_name": "Обороты продаж за период",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи"
+      ],
+      "context_analysis_cost": 0.010794000000000002,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьОборотыПродаж(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\t\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tПродажиОбороты.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ПродажиОбороты.КоличествоОборот) КАК Количество,\n\t|\tСУММА(ПродажиОбороты.СуммаОборот) КАК Сумма\n\t|ИЗ\n\t|\tРегистрНакопления.Продажи.Обороты(&НачалоПериода, &КонецПериода, , \n\t|\t\t&УчитыватьВсеСклады ИЛИ Склад = &Склад) КАК ПродажиОбороты\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tПродажиОбороты.Номенклатура\n\t|\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tНоменклатура\";\n\t\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\tЗапрос.УстановитьПараметр(\"УчитыватьВсеСклады\", НЕ ЗначениеЗаполнено(Склад));\n\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\t\n\tВозврат Запрос.Выполнить().Выгрузить();\n\t\nКонецФункции\n```",
+          "response_hash": "76a128110392a5d0b7ae91d231c66c8497d8c05c760e00b2620b6aa7ebe16f52",
+          "tokens_input": 411,
+          "tokens_output": 547,
+          "tokens_total": 958,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.26,
+          "elapsed_time": 5.172937870025635,
+          "cost_input": 0.000822,
+          "cost_output": 0.005469999999999999,
+          "cost_total": 0.006291999999999999,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:30:52",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "76a128110392a5d0b7ae91d231c66c8497d8c05c760e00b2620b6aa7ebe16f52",
+        "most_common_count": 1,
+        "hashes": [
+          "76a128110392a5d0b7ae91d231c66c8497d8c05c760e00b2620b6aa7ebe16f52"
+        ]
+      },
+      "total_tokens": 958,
+      "total_cost": 0.017086,
+      "avg_time": 5.173
     },
     {
       "task_id": "B6",
@@ -52086,6 +54738,112 @@
       "avg_time": 13.571
     },
     {
+      "task_id": "B6",
+      "task_name": "Обороты продаж за период",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи"
+      ],
+      "context_analysis_cost": 0.00528,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьОборотыПродаж(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\n\tОтборПоСкладу = \"\";\n\tЕсли ЗначениеЗаполнено(Склад) Тогда\n\t\tОтборПоСкладу = \"Склад = &Склад\";\n\t\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tКонецЕсли;\n\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tПродажиОбороты.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ПродажиОбороты.КоличествоОборот) КАК Количество,\n\t|\tСУММА(ПродажиОбороты.СуммаОборот) КАК Сумма\n\t|ИЗ\n\t|\tРегистрНакопления.Продажи.Обороты(\n\t|\t\t&НачалоПериода,\n\t|\t\t&КонецПериода,\n\t|\t\t,\n\t|\t\t\" + ОтборПоСкладу + \") КАК ПродажиОбороты\n\t|СГРУППИРОВАТЬ ПО\n\t|\tПродажиОбороты.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "ddfc264429c88e6f22d16ee8fb31c3ca5366d6f25c31bad650a68003b5ecf99c",
+          "tokens_input": 286,
+          "tokens_output": 496,
+          "tokens_total": 782,
+          "tokens_reasoning": 132,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.11,
+          "elapsed_time": 9.429590702056885,
+          "cost_input": 0.000572,
+          "cost_output": 0.00496,
+          "cost_total": 0.0055320000000000005,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:49:43",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ddfc264429c88e6f22d16ee8fb31c3ca5366d6f25c31bad650a68003b5ecf99c",
+        "most_common_count": 1,
+        "hashes": [
+          "ddfc264429c88e6f22d16ee8fb31c3ca5366d6f25c31bad650a68003b5ecf99c"
+        ]
+      },
+      "total_tokens": 782,
+      "total_cost": 0.010812,
+      "avg_time": 9.43
+    },
+    {
+      "task_id": "B6",
+      "task_name": "Обороты продаж за период",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.Продажи"
+      ],
+      "context_analysis_cost": 0.022114,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьОборотыПродаж(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tУсловиеСклада = \"\";\n\n\tЕсли ЗначениеЗаполнено(Склад) Тогда\n\t\tУсловиеСклада = \"Склад = &Склад\";\n\t\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tКонецЕсли;\n\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tПродажи.Номенклатура КАК Номенклатура,\n\t\t|\tСУММА(Продажи.КоличествоОборот) КАК Количество,\n\t\t|\tСУММА(Продажи.СуммаОборот) КАК Сумма\n\t\t|ИЗ\n\t\t|\tРегистрНакопления.Продажи.Обороты(\n\t\t|\t\t&НачалоПериода,\n\t\t|\t\t&КонецПериода,\n\t\t|\t\t,\n\t\t|\t\t\" + УсловиеСклада + \") КАК Продажи\n\t\t|СГРУППИРОВАТЬ ПО\n\t\t|\tПродажи.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "98efa341e18d2f7641656df620ab9b13c5766d40f1dc0cc6281c27b72dd528ca",
+          "tokens_input": 3368,
+          "tokens_output": 1128,
+          "tokens_total": 4496,
+          "tokens_reasoning": 401,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.61,
+          "elapsed_time": 13.549881935119629,
+          "cost_input": 0.006736,
+          "cost_output": 0.011280000000000002,
+          "cost_total": 0.018016,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:39:17",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "98efa341e18d2f7641656df620ab9b13c5766d40f1dc0cc6281c27b72dd528ca",
+        "most_common_count": 1,
+        "hashes": [
+          "98efa341e18d2f7641656df620ab9b13c5766d40f1dc0cc6281c27b72dd528ca"
+        ]
+      },
+      "total_tokens": 4496,
+      "total_cost": 0.04013,
+      "avg_time": 13.55
+    },
+    {
       "task_id": "B7",
       "task_name": "Цена закупки на дату (срез последних)",
       "model_id": "aliceai-llm/latest",
@@ -53514,6 +56272,59 @@
       "total_tokens": 671,
       "total_cost": 0.014942,
       "avg_time": 6.238
+    },
+    {
+      "task_id": "B7",
+      "task_name": "Цена закупки на дату (срез последних)",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныЗакупки"
+      ],
+      "context_analysis_cost": 0.010634000000000001,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьЦенуЗакупки(Номенклатура, Дата) Экспорт\n\n\tОтбор = Новый Структура(\"Номенклатура\", Номенклатура);\n\n\tЗначения = РегистрыСведений.ЦеныЗакупки.ПолучитьПоследнее(Дата, Отбор);\n\n\tЕсли Значения.Цена = Неопределено Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tВозврат Число(Значения.Цена);\n\nКонецФункции\n```",
+          "response_hash": "328ac7aad36cf24768cc55a875c4431e706895dbf8c96c8d098a948228a03868",
+          "tokens_input": 394,
+          "tokens_output": 183,
+          "tokens_total": 577,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.53,
+          "elapsed_time": 2.8398609161376953,
+          "cost_input": 0.000788,
+          "cost_output": 0.00183,
+          "cost_total": 0.002618,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:31:02",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "328ac7aad36cf24768cc55a875c4431e706895dbf8c96c8d098a948228a03868",
+        "most_common_count": 1,
+        "hashes": [
+          "328ac7aad36cf24768cc55a875c4431e706895dbf8c96c8d098a948228a03868"
+        ]
+      },
+      "total_tokens": 577,
+      "total_cost": 0.013252000000000002,
+      "avg_time": 2.84
     },
     {
       "task_id": "B7",
@@ -55113,6 +57924,112 @@
       "avg_time": 6.445
     },
     {
+      "task_id": "B7",
+      "task_name": "Цена закупки на дату (срез последних)",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныЗакупки"
+      ],
+      "context_analysis_cost": 0.004714,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьЦенуЗакупки(Номенклатура, Дата) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tЦены.Цена КАК Цена\n\t\t|ИЗ\n\t\t|\tРегистрСведений.ЦеныЗакупки.СрезПоследних(\n\t\t|\t\t&Дата,\n\t\t|\t\tНоменклатура = &Номенклатура) КАК Цены\";\n\n\tЗапрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n\tЗапрос.УстановитьПараметр(\"Дата\", Дата);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Цена;\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "e6596193543355c266deceaeae31961cbeffc564ed95cbfaf1711b69365e00df",
+          "tokens_input": 273,
+          "tokens_output": 304,
+          "tokens_total": 577,
+          "tokens_reasoning": 85,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.72,
+          "elapsed_time": 6.632376670837402,
+          "cost_input": 0.000546,
+          "cost_output": 0.00304,
+          "cost_total": 0.003586,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:49:56",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e6596193543355c266deceaeae31961cbeffc564ed95cbfaf1711b69365e00df",
+        "most_common_count": 1,
+        "hashes": [
+          "e6596193543355c266deceaeae31961cbeffc564ed95cbfaf1711b69365e00df"
+        ]
+      },
+      "total_tokens": 577,
+      "total_cost": 0.0083,
+      "avg_time": 6.632
+    },
+    {
+      "task_id": "B7",
+      "task_name": "Цена закупки на дату (срез последних)",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрСведений.ЦеныЗакупки"
+      ],
+      "context_analysis_cost": 0.020484000000000002,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьЦенуЗакупки(Номенклатура, Дата) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\t\"ВЫБРАТЬ\n\t\t|\tЦены.Цена КАК Цена\n\t\t|ИЗ\n\t\t|\tРегистрСведений.ЦеныЗакупки.СрезПоследних(\n\t\t|\t\t&Дата,\n\t\t|\t\tНоменклатура = &Номенклатура) КАК Цены\";\n\n\tЗапрос.УстановитьПараметр(\"Дата\", Дата);\n\tЗапрос.УстановитьПараметр(\"Номенклатура\", Номенклатура);\n\n\tВыборка = Запрос.Выполнить().Выбрать();\n\tЕсли Выборка.Следующий() Тогда\n\t\tВозврат Выборка.Цена;\n\tКонецЕсли;\n\n\tВозврат 0;\n\nКонецФункции",
+          "response_hash": "d7442f3f8f0bedc4849e23a41469add67c3e3cad8ae774ce549a7d7c63cbc364",
+          "tokens_input": 2848,
+          "tokens_output": 656,
+          "tokens_total": 3504,
+          "tokens_reasoning": 195,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.46,
+          "elapsed_time": 11.739461183547974,
+          "cost_input": 0.005696,
+          "cost_output": 0.00656,
+          "cost_total": 0.012256,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:39:49",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d7442f3f8f0bedc4849e23a41469add67c3e3cad8ae774ce549a7d7c63cbc364",
+        "most_common_count": 1,
+        "hashes": [
+          "d7442f3f8f0bedc4849e23a41469add67c3e3cad8ae774ce549a7d7c63cbc364"
+        ]
+      },
+      "total_tokens": 3504,
+      "total_cost": 0.032740000000000005,
+      "avg_time": 11.739
+    },
+    {
       "task_id": "B8",
       "task_name": "Остатки и обороты за период",
       "model_id": "aliceai-llm/latest",
@@ -56548,6 +59465,59 @@
       "total_tokens": 2666,
       "total_cost": 0.03758600000000001,
       "avg_time": 24.064
+    },
+    {
+      "task_id": "B8",
+      "task_name": "Остатки и обороты за период",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ДвиженияТоваров"
+      ],
+      "context_analysis_cost": 0.0115,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПолучитьОборотыПоНоменклатуре(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tТекстЗапроса =\n\t\"ВЫБРАТЬ\n\t|\tДвиженияТоваров.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ЕСТЬNULL(ДвиженияТоваров.КоличествоНачальныйОстаток, 0)) КАК НачальныйОстаток,\n\t|\tСУММА(ЕСТЬNULL(ДвиженияТоваров.КоличествоПриход, 0)) КАК Приход,\n\t|\tСУММА(ЕСТЬNULL(ДвиженияТоваров.КоличествоРасход, 0)) КАК Расход,\n\t|\tСУММА(ЕСТЬNULL(ДвиженияТоваров.КоличествоКонечныйОстаток, 0)) КАК КонечныйОстаток\n\t|ИЗ\n\t|\tРегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты(&НачалоПериода, &КонецПериода, , , &УсловиеОтбора) КАК ДвиженияТоваров\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tДвиженияТоваров.Номенклатура\n\t|\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tДвиженияТоваров.Номенклатура.Наименование\";\n\n\tЗапрос = Новый Запрос;\n\n\tЕсли ЗначениеЗаполнено(Склад) Тогда\n\t\tТекстЗапроса = СтрЗаменить(ТекстЗапроса, \"&УсловиеОтбора\", \"Склад = &Склад\");\n\t\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tИначе\n\t\tТекстЗапроса = СтрЗаменить(ТекстЗапроса, \", &УсловиеОтбора\", \"\");\n\tКонецЕсли;\n\n\tЗапрос.Текст = ТекстЗапроса;\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\", КонецПериода);\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции\n```",
+          "response_hash": "8d165eaa98457e14fed197c02f5bf2a0990a700bf0f4d055c6b62362e2d6270d",
+          "tokens_input": 419,
+          "tokens_output": 1809,
+          "tokens_total": 2228,
+          "tokens_reasoning": 985,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I need to write a function using the ОстаткиИОбороты virtual table of the ДвиженияТоваров accumulation register, taking НачалоПериода, КонецПериода, and an optional Склад parameter, querying for opening/closing balances and turnover quantities by Номенклатура.\n\nI'm thinking through handling the optional warehouse filter — adding a dynamic condition like \"Склад = &Склад\" only when the parameter is filled, so results group by Номенклатура and sum across warehouses when no warehouse is specified. I also need to account for period boundaries being inclusive by default and check ЗначениеЗаполнено for the optional parameter before building the query text.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.79,
+          "elapsed_time": 14.26522970199585,
+          "cost_input": 0.000838,
+          "cost_output": 0.018090000000000002,
+          "cost_total": 0.018928,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:31:17",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "8d165eaa98457e14fed197c02f5bf2a0990a700bf0f4d055c6b62362e2d6270d",
+        "most_common_count": 1,
+        "hashes": [
+          "8d165eaa98457e14fed197c02f5bf2a0990a700bf0f4d055c6b62362e2d6270d"
+        ]
+      },
+      "total_tokens": 2228,
+      "total_cost": 0.030428,
+      "avg_time": 14.265
     },
     {
       "task_id": "B8",
@@ -58165,6 +61135,112 @@
       "avg_time": 11.331
     },
     {
+      "task_id": "B8",
+      "task_name": "Остатки и обороты за период",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ДвиженияТоваров"
+      ],
+      "context_analysis_cost": 0.005726,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОстаткиИОборотыТоваров(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tУсловиеСклада = \"\";\n\tЕсли ЗначениеЗаполнено(Склад) Тогда\n\t\tУсловиеСклада = \"Склад = &Склад\";\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tОбороты.Номенклатура КАК Номенклатура,\n\t|\tСУММА(Обороты.КоличествоНачальныйОстаток) КАК НачальныйОстаток,\n\t|\tСУММА(Обороты.КоличествоПриход) КАК Приход,\n\t|\tСУММА(Обороты.КоличествоРасход) КАК Расход,\n\t|\tСУММА(Обороты.КоличествоКонечныйОстаток) КАК КонечныйОстаток\n\t|ИЗ\n\t|\tРегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты(\n\t|\t\t&НачалоПериода,\n\t|\t\t&КонецПериода,\n\t|\t\t,\n\t|\t\tДвиженияИГраницы,\n\t|\t\t\" + УсловиеСклада + \") КАК Обороты\n\t|СГРУППИРОВАТЬ ПО\n\t|\tОбороты.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\",\n\t\tНовый Граница(НачалоПериода, ВидГраницы.Исключая));\n\tЗапрос.УстановитьПараметр(\"КонецПериода\",\n\t\tНовый Граница(КонецПериода, ВидГраницы.Включая));\n\n\tЕсли ЗначениеЗаполнено(Склад) Тогда\n\t\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tКонецЕсли;\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "ac0dc493b80b46578a0dc3386d2e0e46bebeee480e8d6edbcd4942aa107e6041",
+          "tokens_input": 292,
+          "tokens_output": 786,
+          "tokens_total": 1078,
+          "tokens_reasoning": 304,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.69,
+          "elapsed_time": 20.2410945892334,
+          "cost_input": 0.000584,
+          "cost_output": 0.00786,
+          "cost_total": 0.008444,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:50:27",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ac0dc493b80b46578a0dc3386d2e0e46bebeee480e8d6edbcd4942aa107e6041",
+        "most_common_count": 1,
+        "hashes": [
+          "ac0dc493b80b46578a0dc3386d2e0e46bebeee480e8d6edbcd4942aa107e6041"
+        ]
+      },
+      "total_tokens": 1078,
+      "total_cost": 0.01417,
+      "avg_time": 20.241
+    },
+    {
+      "task_id": "B8",
+      "task_name": "Остатки и обороты за период",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "РегистрНакопления.ДвиженияТоваров"
+      ],
+      "context_analysis_cost": 0.023733999999999998,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПолучитьДвиженияТоваровЗаПериод(НачалоПериода, КонецПериода, Склад = Неопределено) Экспорт\n\n\tУсловиеСклада = \"\";\n\tЕсли ЗначениеЗаполнено(Склад) Тогда\n\t\tУсловиеСклада = \"Склад = &Склад\";\n\tКонецЕсли;\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tДвижения.Номенклатура КАК Номенклатура,\n\t|\tСУММА(Движения.КоличествоНачальныйОстаток) КАК НачальныйОстаток,\n\t|\tСУММА(Движения.КоличествоПриход) КАК Приход,\n\t|\tСУММА(Движения.КоличествоРасход) КАК Расход,\n\t|\tСУММА(Движения.КоличествоКонечныйОстаток) КАК КонечныйОстаток\n\t|ИЗ\n\t|\tРегистрНакопления.ДвиженияТоваров.ОстаткиИОбороты(\n\t|\t\t&НачалоПериода,\n\t|\t\t&КонецПериода,\n\t|\t\t,\n\t|\t\t,\n\t|\t\t\" + УсловиеСклада + \") КАК Движения\n\t|СГРУППИРОВАТЬ ПО\n\t|\tДвижения.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"НачалоПериода\", НачалоПериода);\n\tЗапрос.УстановитьПараметр(\"КонецПериода\",\n\t\tНовый Граница(КонецПериода, ВидГраницы.Включая));\n\n\tЕсли ЗначениеЗаполнено(Склад) Тогда\n\t\tЗапрос.УстановитьПараметр(\"Склад\", Склад);\n\tКонецЕсли;\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "2f4b7a54e17f0d9d8d59a05782a42edf011915477ba59e76d72f3389a31d0bf6",
+          "tokens_input": 3709,
+          "tokens_output": 1459,
+          "tokens_total": 5168,
+          "tokens_reasoning": 534,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 4.41,
+          "elapsed_time": 23.41005563735962,
+          "cost_input": 0.007418,
+          "cost_output": 0.01459,
+          "cost_total": 0.022008,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:40:21",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2f4b7a54e17f0d9d8d59a05782a42edf011915477ba59e76d72f3389a31d0bf6",
+        "most_common_count": 1,
+        "hashes": [
+          "2f4b7a54e17f0d9d8d59a05782a42edf011915477ba59e76d72f3389a31d0bf6"
+        ]
+      },
+      "total_tokens": 5168,
+      "total_cost": 0.045742,
+      "avg_time": 23.41
+    },
+    {
       "task_id": "B9",
       "task_name": "Свод табличной части документа",
       "model_id": "aliceai-llm/latest",
@@ -59587,6 +62663,59 @@
       "total_tokens": 746,
       "total_cost": 0.017266,
       "avg_time": 6.828
+    },
+    {
+      "task_id": "B9",
+      "task_name": "Свод табличной части документа",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": true,
+      "context_objects": [
+        "Документ.ЗаказПокупателя"
+      ],
+      "context_analysis_cost": 0.010902,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СвестиТоварыДокумента(ДокументСсылка) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tЗаказПокупателяТовары.Номенклатура КАК Номенклатура,\n\t|\tСУММА(ЗаказПокупателяТовары.Количество) КАК Количество,\n\t|\tСУММА(ЗаказПокупателяТовары.Сумма) КАК Сумма\n\t|ИЗ\n\t|\tДокумент.ЗаказПокупателя.Товары КАК ЗаказПокупателяТовары\n\t|ГДЕ\n\t|\tЗаказПокупателяТовары.Ссылка = &Ссылка\n\t|\n\t|СГРУППИРОВАТЬ ПО\n\t|\tЗаказПокупателяТовары.Номенклатура\n\t|\n\t|УПОРЯДОЧИТЬ ПО\n\t|\tНоменклатура\";\n\n\tЗапрос.УстановитьПараметр(\"Ссылка\", ДокументСсылка);\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции\n```",
+          "response_hash": "ef68050f825874901b7d3e19589bcecd335f57e874133ceed034ca78224a48ba",
+          "tokens_input": 386,
+          "tokens_output": 412,
+          "tokens_total": 798,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.98,
+          "elapsed_time": 4.349092483520508,
+          "cost_input": 0.000772,
+          "cost_output": 0.0041199999999999995,
+          "cost_total": 0.004892,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:31:15",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ef68050f825874901b7d3e19589bcecd335f57e874133ceed034ca78224a48ba",
+        "most_common_count": 1,
+        "hashes": [
+          "ef68050f825874901b7d3e19589bcecd335f57e874133ceed034ca78224a48ba"
+        ]
+      },
+      "total_tokens": 798,
+      "total_cost": 0.015794,
+      "avg_time": 4.349
     },
     {
       "task_id": "B9",
@@ -61182,9 +64311,115 @@
       "total_tokens": 1064,
       "total_cost": 0.0006985000000000001,
       "avg_time": 6.21
+    },
+    {
+      "task_id": "B9",
+      "task_name": "Свод табличной части документа",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": true,
+      "context_objects": [
+        "Документ.ЗаказПокупателя"
+      ],
+      "context_analysis_cost": 0.004762,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СводТоваров(СсылкаНаДокумент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tТовары.Номенклатура КАК Номенклатура,\n\t|\tСУММА(Товары.Количество) КАК Количество,\n\t|\tСУММА(Товары.Сумма) КАК Сумма\n\t|ИЗ\n\t|\tДокумент.ЗаказПокупателя.Товары КАК Товары\n\t|ГДЕ\n\t|\tТовары.Ссылка = &СсылкаНаДокумент\n\t|СГРУППИРОВАТЬ ПО\n\t|\tТовары.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"СсылкаНаДокумент\", СсылкаНаДокумент);\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c",
+          "tokens_input": 277,
+          "tokens_output": 303,
+          "tokens_total": 580,
+          "tokens_reasoning": 79,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.72,
+          "elapsed_time": 8.882901430130005,
+          "cost_input": 0.000554,
+          "cost_output": 0.0030299999999999997,
+          "cost_total": 0.0035839999999999995,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:50:17",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c",
+        "most_common_count": 1,
+        "hashes": [
+          "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c"
+        ]
+      },
+      "total_tokens": 580,
+      "total_cost": 0.008346,
+      "avg_time": 8.883
+    },
+    {
+      "task_id": "B9",
+      "task_name": "Свод табличной части документа",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": true,
+      "context_objects": [
+        "Документ.ЗаказПокупателя"
+      ],
+      "context_analysis_cost": 0.02071,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СводТоваров(СсылкаНаДокумент) Экспорт\n\n\tЗапрос = Новый Запрос;\n\tЗапрос.Текст =\n\t\"ВЫБРАТЬ\n\t|\tТовары.Номенклатура КАК Номенклатура,\n\t|\tСУММА(Товары.Количество) КАК Количество,\n\t|\tСУММА(Товары.Сумма) КАК Сумма\n\t|ИЗ\n\t|\tДокумент.ЗаказПокупателя.Товары КАК Товары\n\t|ГДЕ\n\t|\tТовары.Ссылка = &СсылкаНаДокумент\n\t|СГРУППИРОВАТЬ ПО\n\t|\tТовары.Номенклатура\";\n\n\tЗапрос.УстановитьПараметр(\"СсылкаНаДокумент\", СсылкаНаДокумент);\n\n\tВозврат Запрос.Выполнить().Выгрузить();\n\nКонецФункции",
+          "response_hash": "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c",
+          "tokens_input": 2841,
+          "tokens_output": 607,
+          "tokens_total": 3448,
+          "tokens_reasoning": 144,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.36,
+          "elapsed_time": 15.101152420043945,
+          "cost_input": 0.005682,
+          "cost_output": 0.00607,
+          "cost_total": 0.011752,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:40:23",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c",
+        "most_common_count": 1,
+        "hashes": [
+          "7d30a5f9aebb088b843e6f189feea134f94a5b833e2566a31d2b7094ba45f59c"
+        ]
+      },
+      "total_tokens": 3448,
+      "total_cost": 0.032462,
+      "avg_time": 15.101
     }
   ],
-  "total_tokens": 3666237,
-  "total_cost": 26.342557114999998,
+  "total_tokens": 3813617,
+  "total_cost": 27.995931115,
   "total_time": 0.0
 }

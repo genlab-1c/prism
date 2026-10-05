@@ -1,7 +1,7 @@
 {
   "experiment_name": "experiment_A_20260617_031633",
   "category": "A",
-  "timestamp": "2026-09-25T02:36:17.800239",
+  "timestamp": "2026-10-05T15:45:20.373259",
   "models_used": [
     "Alice AI LLM",
     "Gemini 2.5 Flash Lite",
@@ -30,6 +30,7 @@
     "Grok Build 0.1",
     "Grok 4.3",
     "Claude Sonnet 5",
+    "Claude Sonnet 5.5",
     "GPT-5.6 Terra",
     "GPT-5.6 Sol",
     "Seed 2.0 Code",
@@ -59,7 +60,9 @@
     "MiMo-V2.6 Pro",
     "Claude Opus 5.5",
     "GPT-6 Sol",
-    "GPT-6 Luna"
+    "GPT-6 Luna",
+    "GPT-6.1 Sol",
+    "GPT-6.1 Sol Pro"
   ],
   "tasks_count": 15,
   "runs_per_task": 1,
@@ -1440,6 +1443,57 @@
       "total_tokens": 551,
       "total_cost": 0.003214,
       "avg_time": 5.219
+    },
+    {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОбъединитьИОтсортировать(ИсходныйМассив, НовыеЗначения) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли ИсходныйМассив = Неопределено Тогда\n\t\tИсходныйМассив = Новый Массив;\n\tКонецЕсли;\n\t\n\tЕсли НовыеЗначения = Неопределено Тогда\n\t\tНовыеЗначения = Новый Массив;\n\tКонецЕсли;\n\t\n\t// Сортировка копии новых значений (исходный массив не изменяется)\n\tСписокНовых = Новый СписокЗначений;\n\tСписокНовых.ЗагрузитьЗначения(НовыеЗначения);\n\tСписокНовых.СортироватьПоЗначению(НаправлениеСортировки.Возр);\n\t\n\tКоличествоИсходных = ИсходныйМассив.Количество();\n\tКоличествоНовых = СписокНовых.Количество();\n\t\n\t// Слияние двух отсортированных последовательностей\n\ti = 0;\n\tj = 0;\n\t\n\tПока i < КоличествоИсходных И j < КоличествоНовых Цикл\n\t\tЗначениеИсходного = ИсходныйМассив[i];\n\t\tЗначениеНового = СписокНовых[j].Значение;\n\t\t\n\t\tЕсли ЗначениеИсходного <= ЗначениеНового Тогда\n\t\t\tРезультат.Добавить(ЗначениеИсходного);\n\t\t\ti = i + 1;\n\t\tИначе\n\t\t\tРезультат.Добавить(ЗначениеНового);\n\t\t\tj = j + 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tПока i < КоличествоИсходных Цикл\n\t\tРезультат.Добавить(ИсходныйМассив[i]);\n\t\ti = i + 1;\n\tКонецЦикла;\n\t\n\tПока j < КоличествоНовых Цикл\n\t\tРезультат.Добавить(СписокНовых[j].Значение);\n\t\tj = j + 1;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "f676be37f0bc5d8e4a1174ff54736e9a996c1921dc657c12f6b932e1908f97b3",
+          "tokens_input": 289,
+          "tokens_output": 943,
+          "tokens_total": 1232,
+          "tokens_reasoning": 223,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm planning a 1C function that merges a sorted array with new values: I'll copy the new values into a value list, sort it, then merge with a two-pointer approach against the already-sorted original array.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.01,
+          "elapsed_time": 7.322208881378174,
+          "cost_input": 0.000578,
+          "cost_output": 0.009430000000000001,
+          "cost_total": 0.010008000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:35",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f676be37f0bc5d8e4a1174ff54736e9a996c1921dc657c12f6b932e1908f97b3",
+        "most_common_count": 1,
+        "hashes": [
+          "f676be37f0bc5d8e4a1174ff54736e9a996c1921dc657c12f6b932e1908f97b3"
+        ]
+      },
+      "total_tokens": 1232,
+      "total_cost": 0.010008000000000001,
+      "avg_time": 7.322
     },
     {
       "task_id": "A10",
@@ -2972,6 +3026,108 @@
       "avg_time": 7.651
     },
     {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьМассивыПоВозрастанию(ИсходныйМассив, НовыеЗначения) Экспорт\n\n\tТаблицаНовыхЗначений = Новый ТаблицаЗначений;\n\tТаблицаНовыхЗначений.Колонки.Добавить(\"Значение\");\n\n\tДля Каждого Число Из НовыеЗначения Цикл\n\t\tСтрокаТаблицы = ТаблицаНовыхЗначений.Добавить();\n\t\tСтрокаТаблицы.Значение = Число;\n\tКонецЦикла;\n\n\tТаблицаНовыхЗначений.Сортировать(\"Значение Возр\");\n\tОтсортированныеНовые = ТаблицаНовыхЗначений.ВыгрузитьКолонку(\"Значение\");\n\n\tРезультат = Новый Массив;\n\tИндексИсходного = 0;\n\tИндексНового = 0;\n\tКоличествоИсходных = ИсходныйМассив.Количество();\n\tКоличествоНовых = ОтсортированныеНовые.Количество();\n\n\tПока ИндексИсходного < КоличествоИсходных\n\t\tИ ИндексНового < КоличествоНовых Цикл\n\n\t\tЕсли ИсходныйМассив[ИндексИсходного] <= ОтсортированныеНовые[ИндексНового] Тогда\n\t\t\tРезультат.Добавить(ИсходныйМассив[ИндексИсходного]);\n\t\t\tИндексИсходного = ИндексИсходного + 1;\n\t\tИначе\n\t\t\tРезультат.Добавить(ОтсортированныеНовые[ИндексНового]);\n\t\t\tИндексНового = ИндексНового + 1;\n\t\tКонецЕсли;\n\n\tКонецЦикла;\n\n\tПока ИндексИсходного < КоличествоИсходных Цикл\n\t\tРезультат.Добавить(ИсходныйМассив[ИндексИсходного]);\n\t\tИндексИсходного = ИндексИсходного + 1;\n\tКонецЦикла;\n\n\tПока ИндексНового < КоличествоНовых Цикл\n\t\tРезультат.Добавить(ОтсортированныеНовые[ИндексНового]);\n\t\tИндексНового = ИндексНового + 1;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "2bd61cbb52db37fda170727850b2d18d28bc1a97f509f76ca929ba298e366521",
+          "tokens_input": 193,
+          "tokens_output": 778,
+          "tokens_total": 971,
+          "tokens_reasoning": 243,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.64,
+          "elapsed_time": 10.64808964729309,
+          "cost_input": 0.000386,
+          "cost_output": 0.0077800000000000005,
+          "cost_total": 0.008166,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:45:31",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2bd61cbb52db37fda170727850b2d18d28bc1a97f509f76ca929ba298e366521",
+        "most_common_count": 1,
+        "hashes": [
+          "2bd61cbb52db37fda170727850b2d18d28bc1a97f509f76ca929ba298e366521"
+        ]
+      },
+      "total_tokens": 971,
+      "total_cost": 0.008166,
+      "avg_time": 10.648
+    },
+    {
+      "task_id": "A10",
+      "task_name": "Вставка в отсортированный массив",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьОтсортированныеМассивы(ИсходныйМассив, НовыеЗначения) Экспорт\n\n\tТаблицаНовыхЗначений = Новый ТаблицаЗначений;\n\tТаблицаНовыхЗначений.Колонки.Добавить(\"Значение\");\n\n\tДля Каждого Значение Из НовыеЗначения Цикл\n\t\tСтрокаТаблицы = ТаблицаНовыхЗначений.Добавить();\n\t\tСтрокаТаблицы.Значение = Значение;\n\tКонецЦикла;\n\n\tТаблицаНовыхЗначений.Сортировать(\"Значение Возр\");\n\tОтсортированныеНовые = ТаблицаНовыхЗначений.ВыгрузитьКолонку(\"Значение\");\n\n\tРезультат = Новый Массив;\n\tИндексИсходного = 0;\n\tИндексНового = 0;\n\tКоличествоИсходных = ИсходныйМассив.Количество();\n\tКоличествоНовых = ОтсортированныеНовые.Количество();\n\n\tПока ИндексИсходного < КоличествоИсходных\n\t\tИ ИндексНового < КоличествоНовых Цикл\n\n\t\tЕсли ИсходныйМассив[ИндексИсходного] <= ОтсортированныеНовые[ИндексНового] Тогда\n\t\t\tРезультат.Добавить(ИсходныйМассив[ИндексИсходного]);\n\t\t\tИндексИсходного = ИндексИсходного + 1;\n\t\tИначе\n\t\t\tРезультат.Добавить(ОтсортированныеНовые[ИндексНового]);\n\t\t\tИндексНового = ИндексНового + 1;\n\t\tКонецЕсли;\n\n\tКонецЦикла;\n\n\tПока ИндексИсходного < КоличествоИсходных Цикл\n\t\tРезультат.Добавить(ИсходныйМассив[ИндексИсходного]);\n\t\tИндексИсходного = ИндексИсходного + 1;\n\tКонецЦикла;\n\n\tПока ИндексНового < КоличествоНовых Цикл\n\t\tРезультат.Добавить(ОтсортированныеНовые[ИндексНового]);\n\t\tИндексНового = ИндексНового + 1;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "664ce39f3016e4b8b3952ed6e0c669d2299846d986c0527cb7ba73b40be3f8e0",
+          "tokens_input": 3475,
+          "tokens_output": 1585,
+          "tokens_total": 5060,
+          "tokens_reasoning": 522,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "**Considering sorting methods in 1C**\n\nI need to sort a new column in a table using either table sort or merge sort, focusing on the most concise values. For instance, I’ll incorporate the function to merge sorted arrays, which is crucial. I also aim to avoid manual merging due to potential inefficiencies, particularly since sorting can lead to O(m²) complexities. The code should be about 45 lines, ensuring it can handle negative values while preserving the original sorted structure.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 4.57,
+          "elapsed_time": 16.174968957901,
+          "cost_input": 0.00695,
+          "cost_output": 0.01585,
+          "cost_total": 0.0228,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:58:34",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "664ce39f3016e4b8b3952ed6e0c669d2299846d986c0527cb7ba73b40be3f8e0",
+        "most_common_count": 1,
+        "hashes": [
+          "664ce39f3016e4b8b3952ed6e0c669d2299846d986c0527cb7ba73b40be3f8e0"
+        ]
+      },
+      "total_tokens": 5060,
+      "total_cost": 0.0228,
+      "avg_time": 16.175
+    },
+    {
       "task_id": "A11",
       "task_name": "Рабочие дни между датами",
       "model_id": "aliceai-llm/latest",
@@ -4347,6 +4503,57 @@
       "total_tokens": 851,
       "total_cost": 0.006406,
       "avg_time": 7.909
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция КоличествоРабочихДней(НачалоПериода, КонецПериода, Праздники) Экспорт\n\n\tСекунд = 86400;\n\n\tНачало = НачалоДня(НачалоПериода);\n\tКонец = НачалоДня(КонецПериода);\n\n\tЕсли Конец < Начало Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tВсегоДней = Окр((Конец - Начало) / Секунд, 0) + 1;\n\n\tПолныхНедель = Цел(ВсегоДней / 7);\n\tРабочих = ПолныхНедель * 5;\n\n\tОстаток = ВсегоДней - ПолныхНедель * 7;\n\tТекущийДень = Начало + ПолныхНедель * 7 * Секунд;\n\n\tДля Индекс = 1 По Остаток Цикл\n\t\tЕсли ДеньНедели(ТекущийДень) <= 5 Тогда\n\t\t\tРабочих = Рабочих + 1;\n\t\tКонецЕсли;\n\t\tТекущийДень = ТекущийДень + Секунд;\n\tКонецЦикла;\n\n\tЕсли Праздники <> Неопределено Тогда\n\t\tУчтенные = Новый Соответствие;\n\t\tДля Каждого Праздник Из Праздники Цикл\n\t\t\tЕсли ТипЗнч(Праздник) <> Тип(\"Дата\") Или Не ЗначениеЗаполнено(Праздник) Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\t\tДень = НачалоДня(Праздник);\n\t\t\tЕсли День < Начало Или День > Конец Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\t\tЕсли ДеньНедели(День) > 5 Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\t\tЕсли Учтенные.Получить(День) = Истина Тогда\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\t\tУчтенные.Вставить(День, Истина);\n\t\t\tРабочих = Рабочих - 1;\n\t\tКонецЦикла;\n\tКонецЕсли;\n\n\tВозврат Рабочих;\n\nКонецФункции\n```",
+          "response_hash": "cb874ed89808da2afa51601802c77e03373ae52cf14d13702feaff1c13fbeb82",
+          "tokens_input": 265,
+          "tokens_output": 1344,
+          "tokens_total": 1609,
+          "tokens_reasoning": 619,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I need to write a 1C function counting weekdays excluding holidays, deduplicating holiday dates and normalizing them to start-of-day for comparison. I'm weighing whether to loop day-by-day or use arithmetic with full weeks plus a correction for unique holidays falling on weekdays, leaning toward the arithmetic approach for robustness over long periods.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.8,
+          "elapsed_time": 10.618000507354736,
+          "cost_input": 0.00053,
+          "cost_output": 0.013439999999999999,
+          "cost_total": 0.013969999999999998,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:38",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "cb874ed89808da2afa51601802c77e03373ae52cf14d13702feaff1c13fbeb82",
+        "most_common_count": 1,
+        "hashes": [
+          "cb874ed89808da2afa51601802c77e03373ae52cf14d13702feaff1c13fbeb82"
+        ]
+      },
+      "total_tokens": 1609,
+      "total_cost": 0.013969999999999998,
+      "avg_time": 10.618
     },
     {
       "task_id": "A11",
@@ -5879,6 +6086,108 @@
       "avg_time": 13.619
     },
     {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция КоличествоРабочихДней(ДатаНачала, ДатаОкончания, ДатыПраздников) Экспорт\n\n\tЕсли ДатаОкончания < ДатаНачала Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tНачалоПериода = НачалоДня(ДатаНачала);\n\tКонецПериода = НачалоДня(ДатаОкончания);\n\n\tКоличествоДней = Цел((КонецПериода - НачалоПериода) / 86400) + 1;\n\tПолныхНедель = Цел(КоличествоДней / 7);\n\tРабочихДней = ПолныхНедель * 5;\n\tОстатокДней = КоличествоДней - ПолныхНедель * 7;\n\n\tТекущаяДата = НачалоПериода + ПолныхНедель * 7 * 86400;\n\n\tПока ОстатокДней > 0 Цикл\n\t\tЕсли ДеньНедели(ТекущаяДата) <= 5 Тогда\n\t\t\tРабочихДней = РабочихДней + 1;\n\t\tКонецЕсли;\n\n\t\tТекущаяДата = ТекущаяДата + 86400;\n\t\tОстатокДней = ОстатокДней - 1;\n\tКонецЦикла;\n\n\tУчтенныеПраздники = Новый Соответствие;\n\n\tДля Каждого ДатаПраздника Из ДатыПраздников Цикл\n\t\tДеньПраздника = НачалоДня(ДатаПраздника);\n\n\t\tЕсли ДеньПраздника < НачалоПериода\n\t\t\tИли ДеньПраздника > КонецПериода Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tЕсли ДеньНедели(ДеньПраздника) > 5 Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tЕсли УчтенныеПраздники.Получить(ДеньПраздника) = Неопределено Тогда\n\t\t\tУчтенныеПраздники.Вставить(ДеньПраздника, Истина);\n\t\t\tРабочихДней = РабочихДней - 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат РабочихДней;\n\nКонецФункции",
+          "response_hash": "6c9035c8fec133133d609657bdbe2ef948a4b62b7d53a8eff2c6cd4858c9d66b",
+          "tokens_input": 184,
+          "tokens_output": 738,
+          "tokens_total": 922,
+          "tokens_reasoning": 206,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.55,
+          "elapsed_time": 10.153935670852661,
+          "cost_input": 0.000368,
+          "cost_output": 0.00738,
+          "cost_total": 0.0077480000000000005,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:45:30",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "6c9035c8fec133133d609657bdbe2ef948a4b62b7d53a8eff2c6cd4858c9d66b",
+        "most_common_count": 1,
+        "hashes": [
+          "6c9035c8fec133133d609657bdbe2ef948a4b62b7d53a8eff2c6cd4858c9d66b"
+        ]
+      },
+      "total_tokens": 922,
+      "total_cost": 0.0077480000000000005,
+      "avg_time": 10.154
+    },
+    {
+      "task_id": "A11",
+      "task_name": "Рабочие дни между датами",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция КоличествоРабочихДней(ДатаНачала, ДатаОкончания, ДатыПраздников) Экспорт\n\n\tНачалоПериода = НачалоДня(ДатаНачала);\n\tКонецПериода = НачалоДня(ДатаОкончания);\n\n\tЕсли КонецПериода < НачалоПериода Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tКоличествоДней = Цел((КонецПериода - НачалоПериода) / 86400) + 1;\n\tПолныхНедель = Цел(КоличествоДней / 7);\n\tОстатокДней = КоличествоДней - ПолныхНедель * 7;\n\tРабочихДней = ПолныхНедель * 5;\n\n\tЕсли ОстатокДней > 0 Тогда\n\t\tДля Смещение = 0 По ОстатокДней - 1 Цикл\n\t\t\tТекущаяДата = НачалоПериода + (ПолныхНедель * 7 + Смещение) * 86400;\n\t\t\tЕсли ДеньНедели(ТекущаяДата) <= 5 Тогда\n\t\t\t\tРабочихДней = РабочихДней + 1;\n\t\t\tКонецЕсли;\n\t\tКонецЦикла;\n\tКонецЕсли;\n\n\tУчтенныеПраздники = Новый Соответствие;\n\n\tДля Каждого Праздник Из ДатыПраздников Цикл\n\t\tДатаПраздника = НачалоДня(Праздник);\n\n\t\tЕсли ДатаПраздника < НачалоПериода Или ДатаПраздника > КонецПериода Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tЕсли ДеньНедели(ДатаПраздника) > 5 Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tЕсли УчтенныеПраздники.Получить(ДатаПраздника) = Неопределено Тогда\n\t\t\tУчтенныеПраздники.Вставить(ДатаПраздника, Истина);\n\t\t\tРабочихДней = РабочихДней - 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат РабочихДней;\n\nКонецФункции",
+          "response_hash": "bdfd6b55e03113e11bd4dfc091274345a2800a336f3727710da51bf2852c9b54",
+          "tokens_input": 3459,
+          "tokens_output": 1551,
+          "tokens_total": 5010,
+          "tokens_reasoning": 535,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 4.49,
+          "elapsed_time": 14.79525637626648,
+          "cost_input": 0.006918,
+          "cost_output": 0.015510000000000001,
+          "cost_total": 0.022428,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:58:33",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bdfd6b55e03113e11bd4dfc091274345a2800a336f3727710da51bf2852c9b54",
+        "most_common_count": 1,
+        "hashes": [
+          "bdfd6b55e03113e11bd4dfc091274345a2800a336f3727710da51bf2852c9b54"
+        ]
+      },
+      "total_tokens": 5010,
+      "total_cost": 0.022428,
+      "avg_time": 14.795
+    },
+    {
       "task_id": "A12",
       "task_name": "Убрать все вхождения значения",
       "model_id": "aliceai-llm/latest",
@@ -7254,6 +7563,57 @@
       "total_tokens": 393,
       "total_cost": 0.0020740000000000003,
       "avg_time": 4.044
+    },
+    {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция УдалитьЭлементыИзМассива(ИсходныйМассив, УдаляемоеЗначение) Экспорт\n\t\n\tНовыйМассив = Новый Массив;\n\t\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\t\n\t\tЕсли ТипЗнч(Элемент) = ТипЗнч(УдаляемоеЗначение) И Элемент = УдаляемоеЗначение Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\t\t\n\t\tНовыйМассив.Добавить(Элемент);\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат НовыйМассив;\n\t\nКонецФункции\n```",
+          "response_hash": "c4fe904b465b642e878e5c13cc1b399fb9968ff9280f11c8503bcef657addca4",
+          "tokens_input": 234,
+          "tokens_output": 241,
+          "tokens_total": 475,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.58,
+          "elapsed_time": 3.56913161277771,
+          "cost_input": 0.000468,
+          "cost_output": 0.00241,
+          "cost_total": 0.002878,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:39",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c4fe904b465b642e878e5c13cc1b399fb9968ff9280f11c8503bcef657addca4",
+        "most_common_count": 1,
+        "hashes": [
+          "c4fe904b465b642e878e5c13cc1b399fb9968ff9280f11c8503bcef657addca4"
+        ]
+      },
+      "total_tokens": 475,
+      "total_cost": 0.002878,
+      "avg_time": 3.569
     },
     {
       "task_id": "A12",
@@ -8786,6 +9146,108 @@
       "avg_time": 5.811
     },
     {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МассивБезЗначения(ИсходныйМассив, УдаляемоеЗначение) Экспорт\n\tРезультат = Новый Массив;\n\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Элемент <> УдаляемоеЗначение Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "c80d3a1731957deb1c38b86e4bcd063b14068230d27793705331b0f1260ea99c",
+          "tokens_input": 149,
+          "tokens_output": 114,
+          "tokens_total": 263,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.29,
+          "elapsed_time": 4.551407098770142,
+          "cost_input": 0.000298,
+          "cost_output": 0.00114,
+          "cost_total": 0.001438,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:45:35",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c80d3a1731957deb1c38b86e4bcd063b14068230d27793705331b0f1260ea99c",
+        "most_common_count": 1,
+        "hashes": [
+          "c80d3a1731957deb1c38b86e4bcd063b14068230d27793705331b0f1260ea99c"
+        ]
+      },
+      "total_tokens": 263,
+      "total_cost": 0.001438,
+      "avg_time": 4.551
+    },
+    {
+      "task_id": "A12",
+      "task_name": "Убрать все вхождения значения",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МассивБезЗначения(ИсходныйМассив, УдаляемоеЗначение) Экспорт\n\tРезультат = Новый Массив;\n\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Элемент <> УдаляемоеЗначение Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "c80d3a1731957deb1c38b86e4bcd063b14068230d27793705331b0f1260ea99c",
+          "tokens_input": 2100,
+          "tokens_output": 243,
+          "tokens_total": 2343,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.33,
+          "elapsed_time": 4.12320351600647,
+          "cost_input": 0.0042,
+          "cost_output": 0.00243,
+          "cost_total": 0.00663,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:58:37",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c80d3a1731957deb1c38b86e4bcd063b14068230d27793705331b0f1260ea99c",
+        "most_common_count": 1,
+        "hashes": [
+          "c80d3a1731957deb1c38b86e4bcd063b14068230d27793705331b0f1260ea99c"
+        ]
+      },
+      "total_tokens": 2343,
+      "total_cost": 0.00663,
+      "avg_time": 4.123
+    },
+    {
       "task_id": "A13",
       "task_name": "Максимальная сумма подмассива",
       "model_id": "aliceai-llm/latest",
@@ -10161,6 +10623,57 @@
       "total_tokens": 618,
       "total_cost": 0.004068,
       "avg_time": 5.499
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция МаксимальнаяСуммаПодмассива(Массив) Экспорт\n\t\n\tЕсли Массив = Неопределено Или Массив.Количество() = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tТекущаяСумма = Массив[0];\n\tМаксСумма = Массив[0];\n\t\n\tДля Индекс = 1 По Массив.ВГраница() Цикл\n\t\tЭлемент = Массив[Индекс];\n\t\tТекущаяСумма = Макс(Элемент, ТекущаяСумма + Элемент);\n\t\tМаксСумма = Макс(МаксСумма, ТекущаяСумма);\n\tКонецЦикла;\n\t\n\tВозврат МаксСумма;\n\t\nКонецФункции\n\n// Пример использования\nПроцедура Проверка()\n\t\n\tДанные = Новый Массив;\n\tДанные.Добавить(-2);\n\tДанные.Добавить(1);\n\tДанные.Добавить(-3);\n\tДанные.Добавить(4);\n\tДанные.Добавить(-1);\n\tДанные.Добавить(2);\n\tДанные.Добавить(1);\n\tДанные.Добавить(-5);\n\tДанные.Добавить(4);\n\t\n\tРезультат = МаксимальнаяСуммаПодмассива(Данные); // 6\n\tСообщить(Результат);\n\t\nКонецПроцедуры\n```",
+          "response_hash": "acf018e3cddde1b882f7439d05864c3708239a082a28c621822f0a36be37c1d1",
+          "tokens_input": 266,
+          "tokens_output": 481,
+          "tokens_total": 747,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.07,
+          "elapsed_time": 5.40265154838562,
+          "cost_input": 0.000532,
+          "cost_output": 0.00481,
+          "cost_total": 0.005342,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:44",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "acf018e3cddde1b882f7439d05864c3708239a082a28c621822f0a36be37c1d1",
+        "most_common_count": 1,
+        "hashes": [
+          "acf018e3cddde1b882f7439d05864c3708239a082a28c621822f0a36be37c1d1"
+        ]
+      },
+      "total_tokens": 747,
+      "total_cost": 0.005342,
+      "avg_time": 5.403
     },
     {
       "task_id": "A13",
@@ -11693,6 +12206,108 @@
       "avg_time": 6.332
     },
     {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МаксимальнаяСуммаПодмассива(Числа) Экспорт\n\tЕсли Числа.Количество() = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tТекущаяСумма = Числа[0];\n\tМаксимальнаяСумма = ТекущаяСумма;\n\n\tДля Индекс = 1 По Числа.Количество() - 1 Цикл\n\t\tТекущаяСумма = Макс(Числа[Индекс], ТекущаяСумма + Числа[Индекс]);\n\t\tМаксимальнаяСумма = Макс(МаксимальнаяСумма, ТекущаяСумма);\n\tКонецЦикла;\n\n\tВозврат МаксимальнаяСумма;\nКонецФункции",
+          "response_hash": "43519cd2bfd094a93a776dc5a299b074502398c121e557b3a026e75327818609",
+          "tokens_input": 190,
+          "tokens_output": 185,
+          "tokens_total": 375,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.45,
+          "elapsed_time": 10.054545879364014,
+          "cost_input": 0.00038,
+          "cost_output": 0.00185,
+          "cost_total": 0.00223,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:45:41",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "43519cd2bfd094a93a776dc5a299b074502398c121e557b3a026e75327818609",
+        "most_common_count": 1,
+        "hashes": [
+          "43519cd2bfd094a93a776dc5a299b074502398c121e557b3a026e75327818609"
+        ]
+      },
+      "total_tokens": 375,
+      "total_cost": 0.00223,
+      "avg_time": 10.055
+    },
+    {
+      "task_id": "A13",
+      "task_name": "Максимальная сумма подмассива",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция МаксимальнаяСуммаПодмассива(Числа) Экспорт\n\tЕсли Числа.Количество() = 0 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tТекущаяСумма = Числа[0];\n\tМаксимальнаяСумма = ТекущаяСумма;\n\n\tДля Индекс = 1 По Числа.Количество() - 1 Цикл\n\t\tЧисло = Числа[Индекс];\n\t\tТекущаяСумма = Макс(Число, ТекущаяСумма + Число);\n\t\tМаксимальнаяСумма = Макс(МаксимальнаяСумма, ТекущаяСумма);\n\tКонецЦикла;\n\n\tВозврат МаксимальнаяСумма;\nКонецФункции",
+          "response_hash": "d711059e8ee232fc80d6e267d7db343b6620b07999dd4a16362b35ff6ad5cd51",
+          "tokens_input": 2394,
+          "tokens_output": 441,
+          "tokens_total": 2835,
+          "tokens_reasoning": 25,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.84,
+          "elapsed_time": 7.576812744140625,
+          "cost_input": 0.004788,
+          "cost_output": 0.00441,
+          "cost_total": 0.009198,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:58:41",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d711059e8ee232fc80d6e267d7db343b6620b07999dd4a16362b35ff6ad5cd51",
+        "most_common_count": 1,
+        "hashes": [
+          "d711059e8ee232fc80d6e267d7db343b6620b07999dd4a16362b35ff6ad5cd51"
+        ]
+      },
+      "total_tokens": 2835,
+      "total_cost": 0.009198,
+      "avg_time": 7.577
+    },
+    {
       "task_id": "A14",
       "task_name": "Развернуть порядок слов",
       "model_id": "aliceai-llm/latest",
@@ -13068,6 +13683,57 @@
       "total_tokens": 894,
       "total_cost": 0.006771999999999999,
       "avg_time": 9.238
+    },
+    {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОбратныйПорядокСлов(Знач Строка) Экспорт\n\n\tРезультат = \"\";\n\t\n\t// Заменяем все пробельные символы на обычный пробел\n\tСтрока = СтрЗаменить(Строка, Символы.ПС, \" \");\n\tСтрока = СтрЗаменить(Строка, Символы.ВК, \" \");\n\tСтрока = СтрЗаменить(Строка, Символы.Таб, \" \");\n\tСтрока = СтрЗаменить(Строка, Символы.НБСП, \" \");\n\t\n\tСлова = СтрРазделить(Строка, \" \", Ложь);\n\t\n\tДля Индекс = 1 По Слова.Количество() Цикл\n\t\tСлово = Слова[Слова.Количество() - Индекс];\n\t\tРезультат = Результат + ?(Результат = \"\", \"\", \" \") + Слово;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\nКонецФункции\n\n// Пример использования\nРезультат = ОбратныйПорядокСлов(\"  привет   мир  друзья \");\n// Результат: \"друзья мир привет\"\n```",
+          "response_hash": "7cdc9180452ea5aff7ccf50c9f25855efd9d107567a8bf9a01a0f108e2f4a92c",
+          "tokens_input": 273,
+          "tokens_output": 381,
+          "tokens_total": 654,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.88,
+          "elapsed_time": 5.130268335342407,
+          "cost_input": 0.000546,
+          "cost_output": 0.00381,
+          "cost_total": 0.0043560000000000005,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:44",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7cdc9180452ea5aff7ccf50c9f25855efd9d107567a8bf9a01a0f108e2f4a92c",
+        "most_common_count": 1,
+        "hashes": [
+          "7cdc9180452ea5aff7ccf50c9f25855efd9d107567a8bf9a01a0f108e2f4a92c"
+        ]
+      },
+      "total_tokens": 654,
+      "total_cost": 0.0043560000000000005,
+      "avg_time": 5.13
     },
     {
       "task_id": "A14",
@@ -14600,6 +15266,108 @@
       "avg_time": 10.412
     },
     {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбратныйПорядокСлов(ИсходнаяСтрока) Экспорт\n\tСлова = СтрРазделить(ИсходнаяСтрока, \" \", Ложь);\n\tОбратныеСлова = Новый Массив;\n\n\tИндекс = Слова.Количество() - 1;\n\tПока Индекс >= 0 Цикл\n\t\tОбратныеСлова.Добавить(Слова[Индекс]);\n\t\tИндекс = Индекс - 1;\n\tКонецЦикла;\n\n\tВозврат СтрСоединить(ОбратныеСлова, \" \");\nКонецФункции",
+          "response_hash": "bcb96e9668d8a317e792da9c35047e8302543f8ae8d991a3752faec9b29c4e8e",
+          "tokens_input": 191,
+          "tokens_output": 308,
+          "tokens_total": 499,
+          "tokens_reasoning": 162,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.7,
+          "elapsed_time": 7.282971382141113,
+          "cost_input": 0.000382,
+          "cost_output": 0.0030800000000000003,
+          "cost_total": 0.0034620000000000002,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:45:42",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bcb96e9668d8a317e792da9c35047e8302543f8ae8d991a3752faec9b29c4e8e",
+        "most_common_count": 1,
+        "hashes": [
+          "bcb96e9668d8a317e792da9c35047e8302543f8ae8d991a3752faec9b29c4e8e"
+        ]
+      },
+      "total_tokens": 499,
+      "total_cost": 0.0034620000000000002,
+      "avg_time": 7.283
+    },
+    {
+      "task_id": "A14",
+      "task_name": "Развернуть порядок слов",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбратныйПорядокСлов(ИсходнаяСтрока) Экспорт\n\tСлова = СтрРазделить(ИсходнаяСтрока, \" \", Ложь);\n\tОбратныеСлова = Новый Массив;\n\n\tИндекс = Слова.Количество() - 1;\n\tПока Индекс >= 0 Цикл\n\t\tОбратныеСлова.Добавить(Слова[Индекс]);\n\t\tИндекс = Индекс - 1;\n\tКонецЦикла;\n\n\tВозврат СтрСоединить(ОбратныеСлова, \" \");\nКонецФункции",
+          "response_hash": "bcb96e9668d8a317e792da9c35047e8302543f8ae8d991a3752faec9b29c4e8e",
+          "tokens_input": 2599,
+          "tokens_output": 642,
+          "tokens_total": 3241,
+          "tokens_reasoning": 334,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.33,
+          "elapsed_time": 10.63445782661438,
+          "cost_input": 0.005198,
+          "cost_output": 0.00642,
+          "cost_total": 0.011618,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:58:47",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bcb96e9668d8a317e792da9c35047e8302543f8ae8d991a3752faec9b29c4e8e",
+        "most_common_count": 1,
+        "hashes": [
+          "bcb96e9668d8a317e792da9c35047e8302543f8ae8d991a3752faec9b29c4e8e"
+        ]
+      },
+      "total_tokens": 3241,
+      "total_cost": 0.011618,
+      "avg_time": 10.634
+    },
+    {
       "task_id": "A15",
       "task_name": "Возведение в степень по модулю",
       "model_id": "aliceai-llm/latest",
@@ -15975,6 +16743,57 @@
       "total_tokens": 555,
       "total_cost": 0.003134,
       "avg_time": 4.435
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОстатокОтДеления(Делимое, Делитель)\n\t\n\tРезультат = Делимое - Цел(Делимое / Делитель) * Делитель;\n\t\n\tПока Результат < 0 Цикл\n\t\tРезультат = Результат + Делитель;\n\tКонецЦикла;\n\t\n\tПока Результат >= Делитель Цикл\n\t\tРезультат = Результат - Делитель;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n\nФункция СтепеньПоМодулю(Основание, Показатель, Модуль) Экспорт\n\t\n\tЕсли Модуль = 1 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\t\n\tРезультат = 1;\n\tБаза = ОстатокОтДеления(Основание, Модуль);\n\tСтепень = Показатель;\n\t\n\tПока Степень > 0 Цикл\n\t\tЕсли ОстатокОтДеления(Степень, 2) = 1 Тогда\n\t\t\tРезультат = ОстатокОтДеления(Результат * База, Модуль);\n\t\tКонецЕсли;\n\t\tБаза = ОстатокОтДеления(База * База, Модуль);\n\t\tСтепень = Цел(Степень / 2);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "d47616316329af9a5668f29e89edf7bc9ecf353ce957b9be0671d88c74efe031",
+          "tokens_input": 304,
+          "tokens_output": 801,
+          "tokens_total": 1105,
+          "tokens_reasoning": 350,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I need a fast exponentiation function in 1C, since there's no modulo operator there I'll compute the remainder manually using subtraction after integer division, keeping in mind 1C's decimal precision limits could cause inexact results for very large numbers but should be fine for moderate modulus values.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.73,
+          "elapsed_time": 7.542457818984985,
+          "cost_input": 0.000608,
+          "cost_output": 0.00801,
+          "cost_total": 0.008618,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:51",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "d47616316329af9a5668f29e89edf7bc9ecf353ce957b9be0671d88c74efe031",
+        "most_common_count": 1,
+        "hashes": [
+          "d47616316329af9a5668f29e89edf7bc9ecf353ce957b9be0671d88c74efe031"
+        ]
+      },
+      "total_tokens": 1105,
+      "total_cost": 0.008618,
+      "avg_time": 7.542
     },
     {
       "task_id": "A15",
@@ -17507,6 +18326,108 @@
       "avg_time": 10.493
     },
     {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СтепеньПоМодулю(Основание, Показатель, Модуль) Экспорт\n\n\tЕсли Модуль = 1 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tРезультат = 1;\n\tМножитель = Основание % Модуль;\n\tОставшийсяПоказатель = Показатель;\n\n\tПока ОставшийсяПоказатель > 0 Цикл\n\t\tНечетность = ОставшийсяПоказатель % 2;\n\n\t\tЕсли Нечетность = 1 Тогда\n\t\t\tРезультат = УмножениеПоМодулю(Результат, Множитель, Модуль);\n\t\tКонецЕсли;\n\n\t\tОставшийсяПоказатель = (ОставшийсяПоказатель - Нечетность) / 2;\n\n\t\tЕсли ОставшийсяПоказатель > 0 Тогда\n\t\t\tМножитель = УмножениеПоМодулю(Множитель, Множитель, Модуль);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n\nФункция УмножениеПоМодулю(ПервыйМножитель, ВторойМножитель, Модуль)\n\n\tРезультат = 0;\n\tСлагаемое = ПервыйМножитель % Модуль;\n\tМножитель = ВторойМножитель % Модуль;\n\n\tПока Множитель > 0 Цикл\n\t\tНечетность = Множитель % 2;\n\n\t\tЕсли Нечетность = 1 Тогда\n\t\t\tРезультат = СложениеПоМодулю(Результат, Слагаемое, Модуль);\n\t\tКонецЕсли;\n\n\t\tМножитель = (Множитель - Нечетность) / 2;\n\n\t\tЕсли Множитель > 0 Тогда\n\t\t\tСлагаемое = СложениеПоМодулю(Слагаемое, Слагаемое, Модуль);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n\nФункция СложениеПоМодулю(ПервоеСлагаемое, ВтороеСлагаемое, Модуль)\n\n\tДоМодуля = Модуль - ВтороеСлагаемое;\n\n\tЕсли ПервоеСлагаемое >= ДоМодуля Тогда\n\t\tВозврат ПервоеСлагаемое - ДоМодуля;\n\tКонецЕсли;\n\n\tВозврат ПервоеСлагаемое + ВтороеСлагаемое;\n\nКонецФункции",
+          "response_hash": "81549610bd2a63be9eacacec4e924ae658dc5ccbd333b52e6c9ff7b638142c22",
+          "tokens_input": 224,
+          "tokens_output": 969,
+          "tokens_total": 1193,
+          "tokens_reasoning": 371,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "**Considering modular exponentiation issues**\n\nI need to write a Russian code for modular exponentiation while being cautious about maintaining precision with 1c and a maximum of 38 digits. It looks like large module multiplication might lead to overflows. I could employ the modulo operator (%) and ensure the multiplication is overflow-safe. I'll need to implement modular multiplication to prevent this and address division precision issues, especially when approaching 38 digits. It’s a bit complex, but it’ll be robust for the task.**Designing modular functions**\n\nI'm working on a modular exponentiation implementation where the modulo operator reduces the base first, and I want to ensure safety through clear logic. I’ll add three reusable helper functions for multiplication and addition, naming them clearly. Each multiplication step will be flagged to avoid unnecessary calculations. The exponent function will elegantly handle integer division and modulo precedence. I plan to export only the main functions since the standard algorithm is likely sufficient, aiming for efficiency with O(log exp log module). I'll name the helper functions uniquely, ensuring clarity and correctness!",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.03,
+          "elapsed_time": 20.01469874382019,
+          "cost_input": 0.000448,
+          "cost_output": 0.00969,
+          "cost_total": 0.010138000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:01",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "81549610bd2a63be9eacacec4e924ae658dc5ccbd333b52e6c9ff7b638142c22",
+        "most_common_count": 1,
+        "hashes": [
+          "81549610bd2a63be9eacacec4e924ae658dc5ccbd333b52e6c9ff7b638142c22"
+        ]
+      },
+      "total_tokens": 1193,
+      "total_cost": 0.010138000000000001,
+      "avg_time": 20.015
+    },
+    {
+      "task_id": "A15",
+      "task_name": "Возведение в степень по модулю",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СтепеньПоМодулю(Основание, Показатель, Модуль) Экспорт\n\n\tЕсли Модуль = 1 Тогда\n\t\tВозврат 0;\n\tКонецЕсли;\n\n\tРезультат = 1;\n\tМножитель = Основание % Модуль;\n\tОставшийсяПоказатель = Показатель;\n\n\tПока ОставшийсяПоказатель > 0 Цикл\n\t\tБит = ОставшийсяПоказатель % 2;\n\n\t\tЕсли Бит = 1 Тогда\n\t\t\tРезультат = УмножениеПоМодулю(Результат, Множитель, Модуль);\n\t\tКонецЕсли;\n\n\t\tОставшийсяПоказатель = (ОставшийсяПоказатель - Бит) / 2;\n\n\t\tЕсли ОставшийсяПоказатель > 0 Тогда\n\t\t\tМножитель = УмножениеПоМодулю(Множитель, Множитель, Модуль);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n\nФункция УмножениеПоМодулю(ПервыйМножитель, ВторойМножитель, Модуль)\n\n\tРезультат = 0;\n\tСлагаемое = ПервыйМножитель % Модуль;\n\tОставшийсяМножитель = ВторойМножитель % Модуль;\n\n\tПока ОставшийсяМножитель > 0 Цикл\n\t\tБит = ОставшийсяМножитель % 2;\n\n\t\tЕсли Бит = 1 Тогда\n\t\t\tРезультат = СложениеПоМодулю(Результат, Слагаемое, Модуль);\n\t\tКонецЕсли;\n\n\t\tОставшийсяМножитель = (ОставшийсяМножитель - Бит) / 2;\n\n\t\tЕсли ОставшийсяМножитель > 0 Тогда\n\t\t\tСлагаемое = СложениеПоМодулю(Слагаемое, Слагаемое, Модуль);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n\nФункция СложениеПоМодулю(ПервоеСлагаемое, ВтороеСлагаемое, Модуль)\n\n\tДоМодуля = Модуль - ВтороеСлагаемое;\n\n\tЕсли ПервоеСлагаемое >= ДоМодуля Тогда\n\t\tВозврат ПервоеСлагаемое - ДоМодуля;\n\tИначе\n\t\tВозврат ПервоеСлагаемое + ВтороеСлагаемое;\n\tКонецЕсли;\n\nКонецФункции",
+          "response_hash": "2e52a8644f5c0204c04b4fefcba008fbf76a0d6fa5fb8dd0362fd87b9a096603",
+          "tokens_input": 3806,
+          "tokens_output": 1786,
+          "tokens_total": 5592,
+          "tokens_reasoning": 605,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 5.1,
+          "elapsed_time": 32.52936840057373,
+          "cost_input": 0.007612,
+          "cost_output": 0.01786,
+          "cost_total": 0.025472,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:14",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2e52a8644f5c0204c04b4fefcba008fbf76a0d6fa5fb8dd0362fd87b9a096603",
+        "most_common_count": 1,
+        "hashes": [
+          "2e52a8644f5c0204c04b4fefcba008fbf76a0d6fa5fb8dd0362fd87b9a096603"
+        ]
+      },
+      "total_tokens": 5592,
+      "total_cost": 0.025472,
+      "avg_time": 32.529
+    },
+    {
       "task_id": "A1",
       "task_name": "Группировка таблицы значений",
       "model_id": "aliceai-llm/latest",
@@ -18882,6 +19803,57 @@
       "total_tokens": 611,
       "total_cost": 0.004397999999999999,
       "avg_time": 6.899
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СгруппироватьТаблицуЗначений(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяКолонкиСуммы) Экспорт\n\n\t// Копируем только нужные колонки, чтобы исходная таблица не изменялась\n\tКопияТаблицы = ИсходнаяТаблица.Скопировать(, ИмяКолонкиГруппировки + \",\" + ИмяКолонкиСуммы);\n\tКопияТаблицы.Свернуть(ИмяКолонкиГруппировки, ИмяКолонкиСуммы);\n\n\t// Формируем результирующую таблицу с двумя колонками\n\tРезультат = Новый ТаблицаЗначений;\n\tРезультат.Колонки.Добавить(\"ЗначениеГруппировки\");\n\tРезультат.Колонки.Добавить(\"Сумма\", Новый ОписаниеТипов(\"Число\"));\n\n\tДля Каждого Строка Из КопияТаблицы Цикл\n\t\tНоваяСтрока = Результат.Добавить();\n\t\tНоваяСтрока.ЗначениеГруппировки = Строка[ИмяКолонкиГруппировки];\n\t\tНоваяСтрока.Сумма = Строка[ИмяКолонкиСуммы];\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n```",
+          "response_hash": "caa0d9fd4ea02dc9761bdff6d31e62bf6224d166e9facf0c0a2b5321e249b1e6",
+          "tokens_input": 216,
+          "tokens_output": 469,
+          "tokens_total": 685,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.03,
+          "elapsed_time": 4.437143564224243,
+          "cost_input": 0.000432,
+          "cost_output": 0.00469,
+          "cost_total": 0.005122,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:48",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "caa0d9fd4ea02dc9761bdff6d31e62bf6224d166e9facf0c0a2b5321e249b1e6",
+        "most_common_count": 1,
+        "hashes": [
+          "caa0d9fd4ea02dc9761bdff6d31e62bf6224d166e9facf0c0a2b5321e249b1e6"
+        ]
+      },
+      "total_tokens": 685,
+      "total_cost": 0.005122,
+      "avg_time": 4.437
     },
     {
       "task_id": "A1",
@@ -20414,6 +21386,108 @@
       "avg_time": 14.155
     },
     {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ГруппироватьТаблицуЗначений(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяКолонкиСуммирования) Экспорт\n\t\n\tИменаКолонок = ИмяКолонкиГруппировки + \",\" + ИмяКолонкиСуммирования;\n\tРезультат = ИсходнаяТаблица.Скопировать(, ИменаКолонок);\n\tРезультат.Свернуть(ИмяКолонкиГруппировки, ИмяКолонкиСуммирования);\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "053ad240789807971411571ec19fb99d308a00a28969490fdb243a9a690abd85",
+          "tokens_input": 150,
+          "tokens_output": 283,
+          "tokens_total": 433,
+          "tokens_reasoning": 144,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.63,
+          "elapsed_time": 9.353924036026001,
+          "cost_input": 0.0003,
+          "cost_output": 0.00283,
+          "cost_total": 0.00313,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:45:51",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "053ad240789807971411571ec19fb99d308a00a28969490fdb243a9a690abd85",
+        "most_common_count": 1,
+        "hashes": [
+          "053ad240789807971411571ec19fb99d308a00a28969490fdb243a9a690abd85"
+        ]
+      },
+      "total_tokens": 433,
+      "total_cost": 0.00313,
+      "avg_time": 9.354
+    },
+    {
+      "task_id": "A1",
+      "task_name": "Группировка таблицы значений",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СгруппироватьТаблицуЗначений(ИсходнаяТаблица, ИмяКолонкиГруппировки, ИмяЧисловойКолонки) Экспорт\n\n\tРезультат = ИсходнаяТаблица.Скопировать(\n\t\t, ИмяКолонкиГруппировки + \",\" + ИмяЧисловойКолонки);\n\n\tРезультат.Свернуть(ИмяКолонкиГруппировки, ИмяЧисловойКолонки);\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "ebd30a96248650efd72706f066e22e8e5c1ddfafd68135922ef3708c6b828159",
+          "tokens_input": 2324,
+          "tokens_output": 508,
+          "tokens_total": 2832,
+          "tokens_reasoning": 238,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.95,
+          "elapsed_time": 10.44783067703247,
+          "cost_input": 0.004648,
+          "cost_output": 0.0050799999999999994,
+          "cost_total": 0.009728,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:58:58",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ebd30a96248650efd72706f066e22e8e5c1ddfafd68135922ef3708c6b828159",
+        "most_common_count": 1,
+        "hashes": [
+          "ebd30a96248650efd72706f066e22e8e5c1ddfafd68135922ef3708c6b828159"
+        ]
+      },
+      "total_tokens": 2832,
+      "total_cost": 0.009728,
+      "avg_time": 10.448
+    },
+    {
       "task_id": "A2",
       "task_name": "Уникальные элементы массива",
       "model_id": "aliceai-llm/latest",
@@ -21789,6 +22863,57 @@
       "total_tokens": 407,
       "total_cost": 0.0024860000000000004,
       "avg_time": 4.921
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция УникальныеЭлементыМассива(Массив) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tЕсли Массив = Неопределено Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tВстречались = Новый Соответствие;\n\n\tДля Каждого Элемент Из Массив Цикл\n\t\tЕсли Встречались.Получить(Элемент) = Неопределено Тогда\n\t\t\tВстречались.Вставить(Элемент, Истина);\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции\n```",
+          "response_hash": "474651bf63c1b692f5a1fda811d1b75d9227912fe9b54af108273edfe06354ab",
+          "tokens_input": 200,
+          "tokens_output": 395,
+          "tokens_total": 595,
+          "tokens_reasoning": 171,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm planning to write a 1C function that returns an array with unique values while keeping the original order of first occurrences, using a Соответствие as a lookup for speed since it handles key comparisons for primitives, references, and even Неопределено or NULL as keys.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.87,
+          "elapsed_time": 5.4604268074035645,
+          "cost_input": 0.0004,
+          "cost_output": 0.00395,
+          "cost_total": 0.004350000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:54",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "474651bf63c1b692f5a1fda811d1b75d9227912fe9b54af108273edfe06354ab",
+        "most_common_count": 1,
+        "hashes": [
+          "474651bf63c1b692f5a1fda811d1b75d9227912fe9b54af108273edfe06354ab"
+        ]
+      },
+      "total_tokens": 595,
+      "total_cost": 0.004350000000000001,
+      "avg_time": 5.46
     },
     {
       "task_id": "A2",
@@ -23321,6 +24446,108 @@
       "avg_time": 4.96
     },
     {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УникальныеЭлементыМассива(ИсходныйМассив) Экспорт\n\tРезультат = Новый Массив;\n\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Результат.Найти(Элемент) = Неопределено Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\nКонецФункции",
+          "response_hash": "76eef2755e746312cba1ef8059d7042fabef7ef946bef5322cb58db11b917892",
+          "tokens_input": 130,
+          "tokens_output": 277,
+          "tokens_total": 407,
+          "tokens_reasoning": 162,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.61,
+          "elapsed_time": 5.596779823303223,
+          "cost_input": 0.00026,
+          "cost_output": 0.00277,
+          "cost_total": 0.0030299999999999997,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:45:57",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "76eef2755e746312cba1ef8059d7042fabef7ef946bef5322cb58db11b917892",
+        "most_common_count": 1,
+        "hashes": [
+          "76eef2755e746312cba1ef8059d7042fabef7ef946bef5322cb58db11b917892"
+        ]
+      },
+      "total_tokens": 407,
+      "total_cost": 0.0030299999999999997,
+      "avg_time": 5.597
+    },
+    {
+      "task_id": "A2",
+      "task_name": "Уникальные элементы массива",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция УникальныеЭлементыМассива(ИсходныйМассив) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tДля Каждого Элемент Из ИсходныйМассив Цикл\n\t\tЕсли Результат.Найти(Элемент) = Неопределено Тогда\n\t\t\tРезультат.Добавить(Элемент);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции",
+          "response_hash": "18475b35709dcfe689869508b92068fc4a921cd1dcafeb6ae11038495b527a40",
+          "tokens_input": 2226,
+          "tokens_output": 439,
+          "tokens_total": 2665,
+          "tokens_reasoning": 188,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.77,
+          "elapsed_time": 8.885921478271484,
+          "cost_input": 0.004452,
+          "cost_output": 0.00439,
+          "cost_total": 0.008842,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:07",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "18475b35709dcfe689869508b92068fc4a921cd1dcafeb6ae11038495b527a40",
+        "most_common_count": 1,
+        "hashes": [
+          "18475b35709dcfe689869508b92068fc4a921cd1dcafeb6ae11038495b527a40"
+        ]
+      },
+      "total_tokens": 2665,
+      "total_cost": 0.008842,
+      "avg_time": 8.886
+    },
+    {
       "task_id": "A3",
       "task_name": "Объединение пересекающихся интервалов",
       "model_id": "aliceai-llm/latest",
@@ -24696,6 +25923,57 @@
       "total_tokens": 1447,
       "total_cost": 0.012245999999999998,
       "avg_time": 13.023
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ОбъединитьИнтервалы(Интервалы) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли Интервалы = Неопределено ИЛИ Интервалы.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\tТаблица = Новый ТаблицаЗначений;\n\tТаблица.Колонки.Добавить(\"Начало\", Новый ОписаниеТипов(\"Число\"));\n\tТаблица.Колонки.Добавить(\"Конец\", Новый ОписаниеТипов(\"Число\"));\n\t\n\tДля Каждого Интервал Из Интервалы Цикл\n\t\tНоваяСтрока = Таблица.Добавить();\n\t\tНоваяСтрока.Начало = Интервал[0];\n\t\tНоваяСтрока.Конец = Интервал[1];\n\tКонецЦикла;\n\t\n\tТаблица.Сортировать(\"Начало, Конец\");\n\t\n\tТекНачало = Таблица[0].Начало;\n\tТекКонец = Таблица[0].Конец;\n\t\n\tДля Индекс = 1 По Таблица.Количество() - 1 Цикл\n\t\t\n\t\tСтрока = Таблица[Индекс];\n\t\t\n\t\tЕсли Строка.Начало <= ТекКонец Тогда\n\t\t\tЕсли Строка.Конец > ТекКонец Тогда\n\t\t\t\tТекКонец = Строка.Конец;\n\t\t\tКонецЕсли;\n\t\tИначе\n\t\t\tЭлемент = Новый Массив;\n\t\t\tЭлемент.Добавить(ТекНачало);\n\t\t\tЭлемент.Добавить(ТекКонец);\n\t\t\tРезультат.Добавить(Элемент);\n\t\t\t\n\t\t\tТекНачало = Строка.Начало;\n\t\t\tТекКонец = Строка.Конец;\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tЭлемент = Новый Массив;\n\tЭлемент.Добавить(ТекНачало);\n\tЭлемент.Добавить(ТекКонец);\n\tРезультат.Добавить(Элемент);\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "5b9e869baab790a68075689d72f2edd1a49f32b2e26d8d38d041ca856f0d5e22",
+          "tokens_input": 280,
+          "tokens_output": 1359,
+          "tokens_total": 1639,
+          "tokens_reasoning": 635,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I need to write a 1C function that merges overlapping intervals, returning only the code. Intervals touch when the start is less than or equal to the current end, so [1,3] and [3,5] merge but [1,2] and [3,4] don't. I'm planning to sort the intervals using a value table with Start and End columns, ordered first by Start then End, then iterate through to merge overlapping ranges.\n\nStill writing function...\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.83,
+          "elapsed_time": 9.5044105052948,
+          "cost_input": 0.00056,
+          "cost_output": 0.01359,
+          "cost_total": 0.01415,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:01",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5b9e869baab790a68075689d72f2edd1a49f32b2e26d8d38d041ca856f0d5e22",
+        "most_common_count": 1,
+        "hashes": [
+          "5b9e869baab790a68075689d72f2edd1a49f32b2e26d8d38d041ca856f0d5e22"
+        ]
+      },
+      "total_tokens": 1639,
+      "total_cost": 0.01415,
+      "avg_time": 9.504
     },
     {
       "task_id": "A3",
@@ -26228,6 +27506,108 @@
       "avg_time": 15.224
     },
     {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИнтервалы(Интервалы) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tЕсли Интервалы.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tОтсортированныеИнтервалы = Новый ТаблицаЗначений;\n\tОтсортированныеИнтервалы.Колонки.Добавить(\"Начало\");\n\tОтсортированныеИнтервалы.Колонки.Добавить(\"Конец\");\n\n\tДля Каждого Интервал Из Интервалы Цикл\n\t\tСтрокаИнтервала = ОтсортированныеИнтервалы.Добавить();\n\t\tСтрокаИнтервала.Начало = Интервал[0];\n\t\tСтрокаИнтервала.Конец = Интервал[1];\n\tКонецЦикла;\n\n\tОтсортированныеИнтервалы.Сортировать(\"Начало Возр, Конец Возр\");\n\n\tТекущийИнтервал = Неопределено;\n\n\tДля Каждого СтрокаИнтервала Из ОтсортированныеИнтервалы Цикл\n\t\tЕсли ТекущийИнтервал = Неопределено Тогда\n\t\t\tТекущийИнтервал = Новый Массив;\n\t\t\tТекущийИнтервал.Добавить(СтрокаИнтервала.Начало);\n\t\t\tТекущийИнтервал.Добавить(СтрокаИнтервала.Конец);\n\t\t\tРезультат.Добавить(ТекущийИнтервал);\n\t\tИначеЕсли СтрокаИнтервала.Начало <= ТекущийИнтервал[1] Тогда\n\t\t\tТекущийИнтервал[1] = Макс(ТекущийИнтервал[1], СтрокаИнтервала.Конец);\n\t\tИначе\n\t\t\tТекущийИнтервал = Новый Массив;\n\t\t\tТекущийИнтервал.Добавить(СтрокаИнтервала.Начало);\n\t\t\tТекущийИнтервал.Добавить(СтрокаИнтервала.Конец);\n\t\t\tРезультат.Добавить(ТекущийИнтервал);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "7cd5db97d4ebadd0e57e4355ae13c6b5cf7986ed700e9ed51f5ee5db9f39e244",
+          "tokens_input": 194,
+          "tokens_output": 729,
+          "tokens_total": 923,
+          "tokens_reasoning": 219,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.54,
+          "elapsed_time": 13.925051212310791,
+          "cost_input": 0.000388,
+          "cost_output": 0.0072900000000000005,
+          "cost_total": 0.007678000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:11",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7cd5db97d4ebadd0e57e4355ae13c6b5cf7986ed700e9ed51f5ee5db9f39e244",
+        "most_common_count": 1,
+        "hashes": [
+          "7cd5db97d4ebadd0e57e4355ae13c6b5cf7986ed700e9ed51f5ee5db9f39e244"
+        ]
+      },
+      "total_tokens": 923,
+      "total_cost": 0.007678000000000001,
+      "avg_time": 13.925
+    },
+    {
+      "task_id": "A3",
+      "task_name": "Объединение пересекающихся интервалов",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ОбъединитьИнтервалы(Интервалы) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tЕсли Интервалы.Количество() = 0 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tТаблицаИнтервалов = Новый ТаблицаЗначений;\n\tТаблицаИнтервалов.Колонки.Добавить(\"Начало\");\n\tТаблицаИнтервалов.Колонки.Добавить(\"Конец\");\n\n\tДля Каждого Интервал Из Интервалы Цикл\n\t\tСтрокаИнтервала = ТаблицаИнтервалов.Добавить();\n\t\tСтрокаИнтервала.Начало = Интервал[0];\n\t\tСтрокаИнтервала.Конец = Интервал[1];\n\tКонецЦикла;\n\n\tТаблицаИнтервалов.Сортировать(\"Начало Возр, Конец Возр\");\n\n\tТекущийИнтервал = Неопределено;\n\n\tДля Каждого СтрокаИнтервала Из ТаблицаИнтервалов Цикл\n\n\t\tЕсли ТекущийИнтервал <> Неопределено Тогда\n\t\t\tЕсли СтрокаИнтервала.Начало <= ТекущийИнтервал[1] Тогда\n\t\t\t\tТекущийИнтервал[1] = Макс(ТекущийИнтервал[1], СтрокаИнтервала.Конец);\n\t\t\t\tПродолжить;\n\t\t\tКонецЕсли;\n\t\tКонецЕсли;\n\n\t\tТекущийИнтервал = Новый Массив;\n\t\tТекущийИнтервал.Добавить(СтрокаИнтервала.Начало);\n\t\tТекущийИнтервал.Добавить(СтрокаИнтервала.Конец);\n\t\tРезультат.Добавить(ТекущийИнтервал);\n\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "3bfb443210aef62b386c479309eaba63105b50624d154ba8bbd0e6fbe76dc11c",
+          "tokens_input": 3462,
+          "tokens_output": 1523,
+          "tokens_total": 4985,
+          "tokens_reasoning": 553,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 4.44,
+          "elapsed_time": 18.79877805709839,
+          "cost_input": 0.006924,
+          "cost_output": 0.01523,
+          "cost_total": 0.022154,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:25",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "3bfb443210aef62b386c479309eaba63105b50624d154ba8bbd0e6fbe76dc11c",
+        "most_common_count": 1,
+        "hashes": [
+          "3bfb443210aef62b386c479309eaba63105b50624d154ba8bbd0e6fbe76dc11c"
+        ]
+      },
+      "total_tokens": 4985,
+      "total_cost": 0.022154,
+      "avg_time": 18.799
+    },
+    {
       "task_id": "A4",
       "task_name": "Скользящее среднее",
       "model_id": "aliceai-llm/latest",
@@ -27603,6 +28983,57 @@
       "total_tokens": 534,
       "total_cost": 0.003516,
       "avg_time": 5.799
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СкользящееСреднее(Массив, Окно) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tКоличество = Массив.Количество();\n\t\n\tЕсли Окно < 1 Или Окно > Количество Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Сумма первого окна\n\tСумма = 0;\n\tДля Индекс = 0 По Окно - 1 Do\n\t\tСумма = Сумма + Массив[Индекс];\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(Сумма / Окно);\n\t\n\t// Скользящее обновление суммы\n\tДля Индекс = Окно По Количество - 1 Цикл\n\t\tСумма = Сумма + Массив[Индекс] - Массив[Индекс - Окно];\n\t\tРезультат.Добавить(Сумма / Окно);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```\n\nИсправленная версия (в первой строке цикла допущена опечатка):\n\n```bsl\nФункция СкользящееСреднее(Массив, Окно) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tКоличество = Массив.Количество();\n\t\n\tЕсли Окно < 1 Или Окно > Количество Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Сумма первого окна\n\tСумма = 0;\n\tДля Индекс = 0 По Окно - 1 Цикл\n\t\tСумма = Сумма + Массив[Индекс];\n\tКонецЦикла;\n\t\n\tРезультат.Добавить(Сумма / Окно);\n\t\n\t// Скользящее обновление суммы\n\tДля Индекс = Окно По Количество - 1 Цикл\n\t\tСумма = Сумма + Массив[Индекс] - Массив[Индекс - Окно];\n\t\tРезультат.Добавить(Сумма / Окно);\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "91b9e335a36a7129bcf379ddba8c6408a1cc551db3dc2eacc578930aa91e59f9",
+          "tokens_input": 230,
+          "tokens_output": 698,
+          "tokens_total": 928,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.49,
+          "elapsed_time": 5.043230772018433,
+          "cost_input": 0.00046,
+          "cost_output": 0.00698,
+          "cost_total": 0.00744,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:27:59",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "91b9e335a36a7129bcf379ddba8c6408a1cc551db3dc2eacc578930aa91e59f9",
+        "most_common_count": 1,
+        "hashes": [
+          "91b9e335a36a7129bcf379ddba8c6408a1cc551db3dc2eacc578930aa91e59f9"
+        ]
+      },
+      "total_tokens": 928,
+      "total_cost": 0.00744,
+      "avg_time": 5.043
     },
     {
       "task_id": "A4",
@@ -29135,6 +30566,108 @@
       "avg_time": 6.369
     },
     {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СкользящиеСредние(Числа, Окно) Экспорт\n\n    Результат = Новый Массив;\n    КоличествоЭлементов = Числа.Количество();\n\n    Если Окно > КоличествоЭлементов Тогда\n        Возврат Результат;\n    КонецЕсли;\n\n    СуммаОкна = 0;\n    Для Индекс = 0 По Окно - 1 Цикл\n        СуммаОкна = СуммаОкна + Числа[Индекс];\n    КонецЦикла;\n\n    Результат.Добавить(СуммаОкна / Окно);\n\n    Для Индекс = Окно По КоличествоЭлементов - 1 Цикл\n        СуммаОкна = СуммаОкна - Числа[Индекс - Окно] + Числа[Индекс];\n        Результат.Добавить(СуммаОкна / Окно);\n    КонецЦикла;\n\n    Возврат Результат;\n\nКонецФункции",
+          "response_hash": "f684971e93832f8c06932ca69e9c17f5a1dcdc1afedd31473d141c6f83d29ee4",
+          "tokens_input": 157,
+          "tokens_output": 344,
+          "tokens_total": 501,
+          "tokens_reasoning": 98,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.76,
+          "elapsed_time": 6.221564292907715,
+          "cost_input": 0.000314,
+          "cost_output": 0.0034400000000000003,
+          "cost_total": 0.0037540000000000004,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:07",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "f684971e93832f8c06932ca69e9c17f5a1dcdc1afedd31473d141c6f83d29ee4",
+        "most_common_count": 1,
+        "hashes": [
+          "f684971e93832f8c06932ca69e9c17f5a1dcdc1afedd31473d141c6f83d29ee4"
+        ]
+      },
+      "total_tokens": 501,
+      "total_cost": 0.0037540000000000004,
+      "avg_time": 6.222
+    },
+    {
+      "task_id": "A4",
+      "task_name": "Скользящее среднее",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СкользящиеСредние(Числа, Окно) Экспорт\n\n\tРезультат = Новый Массив;\n\tКоличество = Числа.Количество();\n\n\tЕсли Окно > Количество Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tСумма = 0;\n\tДля Индекс = 0 По Окно - 1 Цикл\n\t\tСумма = Сумма + Числа[Индекс];\n\tКонецЦикла;\n\n\tРезультат.Добавить(Сумма / Окно);\n\n\tДля Индекс = Окно По Количество - 1 Цикл\n\t\tСумма = Сумма - Числа[Индекс - Окно] + Числа[Индекс];\n\t\tРезультат.Добавить(Сумма / Окно);\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "69f0a62cbc08822aa51410a86e0bfef1ef4f02487161036335d426699b84d784",
+          "tokens_input": 2557,
+          "tokens_output": 713,
+          "tokens_total": 3270,
+          "tokens_reasoning": 228,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.45,
+          "elapsed_time": 7.544094085693359,
+          "cost_input": 0.005114,
+          "cost_output": 0.00713,
+          "cost_total": 0.012244,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:22",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "69f0a62cbc08822aa51410a86e0bfef1ef4f02487161036335d426699b84d784",
+        "most_common_count": 1,
+        "hashes": [
+          "69f0a62cbc08822aa51410a86e0bfef1ef4f02487161036335d426699b84d784"
+        ]
+      },
+      "total_tokens": 3270,
+      "total_cost": 0.012244,
+      "avg_time": 7.544
+    },
+    {
       "task_id": "A5",
       "task_name": "Частота слов",
       "model_id": "aliceai-llm/latest",
@@ -30510,6 +32043,57 @@
       "total_tokens": 1094,
       "total_cost": 0.009164,
       "avg_time": 11.956
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПодсчитатьСлова(Знач Текст) Экспорт\n\t\n\tРезультат = Новый Структура;\n\tСлово = \"\";\n\tТекст = НРег(Текст);\n\tДлина = СтрДлина(Текст);\n\t\n\t// Проход до Длина + 1 нужен, чтобы обработать последнее слово\n\tДля Индекс = 1 По Длина + 1 Цикл\n\t\t\n\t\tЭтоСимволСлова = Ложь;\n\t\tСимвол = \"\";\n\t\t\n\t\tЕсли Индекс <= Длина Тогда\n\t\t\tСимвол = Сред(Текст, Индекс, 1);\n\t\t\tЭтоБуква = (ВРег(Символ) <> НРег(Символ));\n\t\t\tЭтоЦифра = (Найти(\"0123456789\", Символ) > 0);\n\t\t\tЭтоСимволСлова = ЭтоБуква Или ЭтоЦифра Или Символ = \"_\";\n\t\tКонецЕсли;\n\t\t\n\t\tЕсли ЭтоСимволСлова Тогда\n\t\t\tСлово = Слово + Символ;\n\t\tИначеЕсли Слово <> \"\" Тогда\n\t\t\t// Ключ структуры должен быть корректным идентификатором:\n\t\t\t// слова, начинающиеся с цифры, пропускаются\n\t\t\tЕсли Найти(\"0123456789\", Лев(Слово, 1)) = 0 Тогда\n\t\t\t\tТекущееКоличество = 0;\n\t\t\t\tЕсли Результат.Свойство(Слово, ТекущееКоличество) Тогда\n\t\t\t\t\tРезультат.Вставить(Слово, ТекущееКоличество + 1);\n\t\t\t\tИначе\n\t\t\t\t\tРезультат.Вставить(Слово, 1);\n\t\t\t\tКонецЕсли;\n\t\t\tКонецЕсли;\n\t\t\tСлово = \"\";\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "2016d7fe27d8a517e9ca84bc0479b987fb76156704ad0780583784f9f47e590c",
+          "tokens_input": 224,
+          "tokens_output": 1732,
+          "tokens_total": 1956,
+          "tokens_reasoning": 1100,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm thinking through how to build a 1C Structure keyed by words, but since Structure keys must be valid identifiers, I need to handle cases where words start with digits or contain invalid characters—maybe by prefixing or filtering to letters/digits/underscore only.\n\nWriting word-counting function...\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.56,
+          "elapsed_time": 14.144655704498291,
+          "cost_input": 0.000448,
+          "cost_output": 0.017320000000000002,
+          "cost_total": 0.017768000000000003,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:13",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2016d7fe27d8a517e9ca84bc0479b987fb76156704ad0780583784f9f47e590c",
+        "most_common_count": 1,
+        "hashes": [
+          "2016d7fe27d8a517e9ca84bc0479b987fb76156704ad0780583784f9f47e590c"
+        ]
+      },
+      "total_tokens": 1956,
+      "total_cost": 0.017768000000000003,
+      "avg_time": 14.145
     },
     {
       "task_id": "A5",
@@ -32042,6 +33626,108 @@
       "avg_time": 14.915
     },
     {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПодсчитатьСлова(Текст) Экспорт\n\n\tРезультат = Новый Структура;\n\tТекст = НРег(Текст);\n\n\tРазделители = \" .,;:!?…—–-()[]{}<>/\\|\"\"'«»„“”‘’`~@#$%^&*_+=№\"\n\t\t+ Символы.Пробел\n\t\t+ Символы.Таб\n\t\t+ Символы.ПС\n\t\t+ Символы.ВК\n\t\t+ Символ(11)\n\t\t+ Символ(12)\n\t\t+ Символ(160)\n\t\t+ Символ(8239);\n\n\tСлово = \"\";\n\n\tДля Позиция = 1 По СтрДлина(Текст) + 1 Цикл\n\n\t\tЕсли Позиция <= СтрДлина(Текст) Тогда\n\t\t\tТекущийСимвол = Сред(Текст, Позиция, 1);\n\t\tИначе\n\t\t\tТекущийСимвол = \" \";\n\t\tКонецЕсли;\n\n\t\tЕсли СтрНайти(Разделители, ТекущийСимвол) = 0 Тогда\n\t\t\tСлово = Слово + ТекущийСимвол;\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tЕсли Слово = \"\" Тогда\n\t\t\tПродолжить;\n\t\tКонецЕсли;\n\n\t\tПопытка\n\t\t\tКоличество = 0;\n\t\t\tЕсли Результат.Свойство(Слово, Количество) Тогда\n\t\t\t\tРезультат.Вставить(Слово, Количество + 1);\n\t\t\tИначе\n\t\t\t\tРезультат.Вставить(Слово, 1);\n\t\t\tКонецЕсли;\n\t\tИсключение\n\t\t\tВызватьИсключение \"Слово \"\"\" + Слово\n\t\t\t\t+ \"\"\" недопустимо как ключ Структуры. \"\n\t\t\t\t+ \"Для произвольных слов необходимо использовать Соответствие.\";\n\t\tКонецПопытки;\n\n\t\tСлово = \"\";\n\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "10f5cee064be1edb871a5b729c7f910fca062fbe2cd4ef7ff7751c05136cd168",
+          "tokens_input": 151,
+          "tokens_output": 925,
+          "tokens_total": 1076,
+          "tokens_reasoning": 440,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "**Addressing code structure issues**\n\nI need to create a function that handles an arbitrary structure of keys, which can sometimes use invalid identifiers like words or numbers. Implementing valid identifiers is tricky, especially when text includes numeric keys. I need a robust method for handling punctuation, iterating through Unicode characters. There's also the unavoidable issue with keys starting with digits. It might be useful to try exceptions, allowing for character sets like Cyrillic and Latin while raising clear errors for invalid keys.**Creating a robust function**\n\nI need to build a function that handles both Russian and Latin letters, digits, and combining characters. For this, I'll establish a list of delimiters, including various punctuation and whitespace. I want to ensure a way to escape quotes in strings and create a helper for incrementing inserts based on properties. During processing, I’ll test for separators and non-breaking space characters. The goal is to return a structure where words are stored correctly, including handling invalid symbols gracefully. This needs to be comprehensive while still considering valid characters.**Defining the function and syntax**\n\nI'm working on a function called ПодсчитатьСлова. For this, I need to ensure proper handling of punctuation, where backslashes and double quotes are correctly managed. I’ll have a string for separators, formatted with double quotes, and I’m considering whether to add a comment about intrinsic constraints—though comments are generally best avoided. I should validate inputs to throw descriptive errors using try-catch blocks for cases with invalid digits. Keeping the code concise and direct will be key here.",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.92,
+          "elapsed_time": 15.900330066680908,
+          "cost_input": 0.000302,
+          "cost_output": 0.009250000000000001,
+          "cost_total": 0.009552000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:23",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "10f5cee064be1edb871a5b729c7f910fca062fbe2cd4ef7ff7751c05136cd168",
+        "most_common_count": 1,
+        "hashes": [
+          "10f5cee064be1edb871a5b729c7f910fca062fbe2cd4ef7ff7751c05136cd168"
+        ]
+      },
+      "total_tokens": 1076,
+      "total_cost": 0.009552000000000001,
+      "avg_time": 15.9
+    },
+    {
+      "task_id": "A5",
+      "task_name": "Частота слов",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПодсчитатьСлова(Текст) Экспорт\n\n\tРезультат = Новый Структура;\n\n\tРазделители = \" .,;:!?…—–-()[]{}<>«»„“”\"\"'/\\|@#$%^&*+=~`_\"\n\t\t+ Символы.Таб + Символы.ПС + Символы.ВК\n\t\t+ Символ(160) + Символ(8239);\n\n\tСлова = СтрРазделить(НРег(Текст), Разделители, Ложь);\n\n\tДля Каждого Слово Из Слова Цикл\n\t\tКоличество = 0;\n\n\t\tЕсли Результат.Свойство(Слово, Количество) Тогда\n\t\t\tРезультат.Вставить(Слово, Количество + 1);\n\t\tИначе\n\t\t\tРезультат.Вставить(Слово, 1);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "8c32c923d489c2d0b6187a884e0469bed096cd05ac63322858b8fd6242f5a71e",
+          "tokens_input": 3233,
+          "tokens_output": 1482,
+          "tokens_total": 4715,
+          "tokens_reasoning": 847,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 4.26,
+          "elapsed_time": 22.090411901474,
+          "cost_input": 0.006466,
+          "cost_output": 0.01482,
+          "cost_total": 0.021286,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:44",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "8c32c923d489c2d0b6187a884e0469bed096cd05ac63322858b8fd6242f5a71e",
+        "most_common_count": 1,
+        "hashes": [
+          "8c32c923d489c2d0b6187a884e0469bed096cd05ac63322858b8fd6242f5a71e"
+        ]
+      },
+      "total_tokens": 4715,
+      "total_cost": 0.021286,
+      "avg_time": 22.09
+    },
+    {
       "task_id": "A6",
       "task_name": "Расстояние Левенштейна",
       "model_id": "aliceai-llm/latest",
@@ -33417,6 +35103,57 @@
       "total_tokens": 877,
       "total_cost": 0.0072580000000000006,
       "avg_time": 7.508
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция РасстояниеЛевенштейна(Строка1, Строка2) Экспорт\n\t\n\tДлина1 = СтрДлина(Строка1);\n\tДлина2 = СтрДлина(Строка2);\n\t\n\tЕсли Длина1 = 0 Тогда\n\t\tВозврат Длина2;\n\tКонецЕсли;\n\t\n\tЕсли Длина2 = 0 Тогда\n\t\tВозврат Длина1;\n\tКонецЕсли;\n\t\n\tПредыдущая = Новый Массив(Длина2 + 1);\n\tТекущая = Новый Массив(Длина2 + 1);\n\t\n\tДля j = 0 По Длина2 Цикл\n\t\tПредыдущая[j] = j;\n\tКонецЦикла;\n\t\n\tДля i = 1 По Длина1 Цикл\n\t\t\n\t\tТекущая[0] = i;\n\t\tСимвол1 = Сред(Строка1, i, 1);\n\t\t\n\t\tДля j = 1 По Длина2 Цикл\n\t\t\t\n\t\t\tЕсли Символ1 = Сред(Строка2, j, 1) Тогда\n\t\t\t\tСтоимость = 0;\n\t\t\tИначе\n\t\t\t\tСтоимость = 1;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tУдаление = Предыдущая[j] + 1;\n\t\t\tВставка = Текущая[j - 1] + 1;\n\t\t\tЗамена = Предыдущая[j - 1] + Стоимость;\n\t\t\t\n\t\t\tМинимум = Удаление;\n\t\t\tЕсли Вставка < Минимум Тогда\n\t\t\t\tМинимум = Вставка;\n\t\t\tКонецЕсли;\n\t\t\tЕсли Замена < Минимум Тогда\n\t\t\t\tМинимум = Замена;\n\t\t\tКонецЕсли;\n\t\t\t\n\t\t\tТекущая[j] = Минимум;\n\t\t\t\n\t\tКонецЦикла;\n\t\t\n\t\tБуфер = Предыдущая;\n\t\tПредыдущая = Текущая;\n\t\tТекущая = Буфер;\n\t\t\n\tКонецЦикла;\n\t\n\tВозврат Предыдущая[Длина2];\n\t\nКонецФункции\n```",
+          "response_hash": "7a5f8c05ca05f1e1b55ba9bb717dfc0969b8b1ec48f89c3253f3a73b841c97b3",
+          "tokens_input": 191,
+          "tokens_output": 674,
+          "tokens_total": 865,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.43,
+          "elapsed_time": 5.198814630508423,
+          "cost_input": 0.000382,
+          "cost_output": 0.00674,
+          "cost_total": 0.007122000000000001,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:06",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "7a5f8c05ca05f1e1b55ba9bb717dfc0969b8b1ec48f89c3253f3a73b841c97b3",
+        "most_common_count": 1,
+        "hashes": [
+          "7a5f8c05ca05f1e1b55ba9bb717dfc0969b8b1ec48f89c3253f3a73b841c97b3"
+        ]
+      },
+      "total_tokens": 865,
+      "total_cost": 0.007122000000000001,
+      "avg_time": 5.199
     },
     {
       "task_id": "A6",
@@ -34949,6 +36686,108 @@
       "avg_time": 6.761
     },
     {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(Знач Строка1, Знач Строка2) Экспорт\n\n\tДлина1 = СтрДлина(Строка1);\n\tДлина2 = СтрДлина(Строка2);\n\n\tЕсли Длина1 = 0 Тогда\n\t\tВозврат Длина2;\n\tКонецЕсли;\n\n\tЕсли Длина2 = 0 Тогда\n\t\tВозврат Длина1;\n\tКонецЕсли;\n\n\tПредыдущаяСтрока = Новый Массив;\n\tТекущаяСтрока = Новый Массив;\n\n\tДля Индекс2 = 0 По Длина2 Цикл\n\t\tПредыдущаяСтрока.Добавить(Индекс2);\n\t\tТекущаяСтрока.Добавить(0);\n\tКонецЦикла;\n\n\tДля Индекс1 = 1 По Длина1 Цикл\n\t\tТекущаяСтрока[0] = Индекс1;\n\t\tСимвол1 = Сред(Строка1, Индекс1, 1);\n\n\t\tДля Индекс2 = 1 По Длина2 Цикл\n\t\t\tЕсли Символ1 = Сред(Строка2, Индекс2, 1) Тогда\n\t\t\t\tСтоимостьЗамены = 0;\n\t\t\tИначе\n\t\t\t\tСтоимостьЗамены = 1;\n\t\t\tКонецЕсли;\n\n\t\t\tТекущаяСтрока[Индекс2] = Мин(\n\t\t\t\tПредыдущаяСтрока[Индекс2] + 1,\n\t\t\t\tТекущаяСтрока[Индекс2 - 1] + 1,\n\t\t\t\tПредыдущаяСтрока[Индекс2 - 1] + СтоимостьЗамены);\n\t\tКонецЦикла;\n\n\t\tВременнаяСтрока = ПредыдущаяСтрока;\n\t\tПредыдущаяСтрока = ТекущаяСтрока;\n\t\tТекущаяСтрока = ВременнаяСтрока;\n\tКонецЦикла;\n\n\tВозврат ПредыдущаяСтрока[Длина2];\n\nКонецФункции",
+          "response_hash": "1e270ddddf81fe160aa7a5e1103a9387458b6842f18ba3fcd5984801b4708026",
+          "tokens_input": 129,
+          "tokens_output": 630,
+          "tokens_total": 759,
+          "tokens_reasoning": 151,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.32,
+          "elapsed_time": 11.800557613372803,
+          "cost_input": 0.000258,
+          "cost_output": 0.0063,
+          "cost_total": 0.006558,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:23",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "1e270ddddf81fe160aa7a5e1103a9387458b6842f18ba3fcd5984801b4708026",
+        "most_common_count": 1,
+        "hashes": [
+          "1e270ddddf81fe160aa7a5e1103a9387458b6842f18ba3fcd5984801b4708026"
+        ]
+      },
+      "total_tokens": 759,
+      "total_cost": 0.006558,
+      "avg_time": 11.801
+    },
+    {
+      "task_id": "A6",
+      "task_name": "Расстояние Левенштейна",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция РасстояниеЛевенштейна(Знач ПерваяСтрока, Знач ВтораяСтрока) Экспорт\n\n\tЕсли СтрДлина(ПерваяСтрока) < СтрДлина(ВтораяСтрока) Тогда\n\t\tВременнаяСтрока = ПерваяСтрока;\n\t\tПерваяСтрока = ВтораяСтрока;\n\t\tВтораяСтрока = ВременнаяСтрока;\n\tКонецЕсли;\n\n\tДлинаПервой = СтрДлина(ПерваяСтрока);\n\tДлинаВторой = СтрДлина(ВтораяСтрока);\n\n\tЕсли ДлинаВторой = 0 Тогда\n\t\tВозврат ДлинаПервой;\n\tКонецЕсли;\n\n\tРасстояния = Новый Массив;\n\tДля Индекс = 0 По ДлинаВторой Цикл\n\t\tРасстояния.Добавить(Индекс);\n\tКонецЦикла;\n\n\tДля ИндексПервой = 1 По ДлинаПервой Цикл\n\t\tДиагональноеРасстояние = Расстояния[0];\n\t\tРасстояния[0] = ИндексПервой;\n\t\tСимволПервой = Сред(ПерваяСтрока, ИндексПервой, 1);\n\n\t\tДля ИндексВторой = 1 По ДлинаВторой Цикл\n\t\t\tПредыдущееРасстояние = Расстояния[ИндексВторой];\n\n\t\t\tЕсли СимволПервой = Сред(ВтораяСтрока, ИндексВторой, 1) Тогда\n\t\t\t\tСтоимостьЗамены = 0;\n\t\t\tИначе\n\t\t\t\tСтоимостьЗамены = 1;\n\t\t\tКонецЕсли;\n\n\t\t\tРасстояния[ИндексВторой] = Мин(\n\t\t\t\tПредыдущееРасстояние + 1,\n\t\t\t\tРасстояния[ИндексВторой - 1] + 1,\n\t\t\t\tДиагональноеРасстояние + СтоимостьЗамены);\n\n\t\t\tДиагональноеРасстояние = ПредыдущееРасстояние;\n\t\tКонецЦикла;\n\tКонецЦикла;\n\n\tВозврат Расстояния[ДлинаВторой];\n\nКонецФункции",
+          "response_hash": "2be57a746520341dd426aa8918a51552e699b13a151a0c97fb78f4688886c548",
+          "tokens_input": 3082,
+          "tokens_output": 1353,
+          "tokens_total": 4435,
+          "tokens_reasoning": 323,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.94,
+          "elapsed_time": 16.49090313911438,
+          "cost_input": 0.006164,
+          "cost_output": 0.01353,
+          "cost_total": 0.019694,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:42",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "2be57a746520341dd426aa8918a51552e699b13a151a0c97fb78f4688886c548",
+        "most_common_count": 1,
+        "hashes": [
+          "2be57a746520341dd426aa8918a51552e699b13a151a0c97fb78f4688886c548"
+        ]
+      },
+      "total_tokens": 4435,
+      "total_cost": 0.019694,
+      "avg_time": 16.491
+    },
+    {
       "task_id": "A7",
       "task_name": "RLE-сжатие строки",
       "model_id": "aliceai-llm/latest",
@@ -36324,6 +38163,57 @@
       "total_tokens": 596,
       "total_cost": 0.003984,
       "avg_time": 7.88
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция СжатьRLE(Знач Строка) Экспорт\n\t\n\tДлина = СтрДлина(Строка);\n\t\n\tЕсли Длина = 0 Тогда\n\t\tВозврат \"\";\n\tКонецЕсли;\n\t\n\tЧасти = Новый Массив;\n\tТекущийСимвол = Сред(Строка, 1, 1);\n\tСчетчик = 1;\n\t\n\tДля Индекс = 2 По Длина Цикл\n\t\t\n\t\tСимвол = Сред(Строка, Индекс, 1);\n\t\t\n\t\tЕсли Символ = ТекущийСимвол Тогда\n\t\t\tСчетчик = Счетчик + 1;\n\t\tИначе\n\t\t\tЧасти.Добавить(ТекущийСимвол);\n\t\t\tЧасти.Добавить(XMLСтрока(Счетчик));\n\t\t\tТекущийСимвол = Символ;\n\t\t\tСчетчик = 1;\n\t\tКонецЕсли;\n\t\t\n\tКонецЦикла;\n\t\n\tЧасти.Добавить(ТекущийСимвол);\n\tЧасти.Добавить(XMLСтрока(Счетчик));\n\t\n\tВозврат СтрСоединить(Части, \"\");\n\t\nКонецФункции\n```",
+          "response_hash": "be9745046c9cf526b46e191b9d71aa4122c26fc454325701e0a743a2d6af910e",
+          "tokens_input": 249,
+          "tokens_output": 782,
+          "tokens_total": 1031,
+          "tokens_reasoning": 384,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "I'm writing a 1C function to RLE-compress a string, using XML string conversion for formatting counts and handling case-sensitive character comparisons.\n\n",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.67,
+          "elapsed_time": 6.435716867446899,
+          "cost_input": 0.000498,
+          "cost_output": 0.00782,
+          "cost_total": 0.008318,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:12",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "be9745046c9cf526b46e191b9d71aa4122c26fc454325701e0a743a2d6af910e",
+        "most_common_count": 1,
+        "hashes": [
+          "be9745046c9cf526b46e191b9d71aa4122c26fc454325701e0a743a2d6af910e"
+        ]
+      },
+      "total_tokens": 1031,
+      "total_cost": 0.008318,
+      "avg_time": 6.436
     },
     {
       "task_id": "A7",
@@ -37856,6 +39746,108 @@
       "avg_time": 5.988
     },
     {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СжатьRLE(ИсходнаяСтрока) Экспорт\n\tДлинаСтроки = СтрДлина(ИсходнаяСтрока);\n\tЕсли ДлинаСтроки = 0 Тогда\n\t\tВозврат \"\";\n\tКонецЕсли;\n\n\tРезультат = \"\";\n\tТекущийСимвол = Сред(ИсходнаяСтрока, 1, 1);\n\tКоличество = 1;\n\n\tДля Позиция = 2 По ДлинаСтроки Цикл\n\t\tСимвол = Сред(ИсходнаяСтрока, Позиция, 1);\n\t\tЕсли КодСимвола(Символ) = КодСимвола(ТекущийСимвол) Тогда\n\t\t\tКоличество = Количество + 1;\n\t\tИначе\n\t\t\tРезультат = Результат + ТекущийСимвол + Формат(Количество, \"ЧГ=0\");\n\t\t\tТекущийСимвол = Символ;\n\t\t\tКоличество = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат + ТекущийСимвол + Формат(Количество, \"ЧГ=0\");\nКонецФункции",
+          "response_hash": "ff00117e7ca415a947fd22f8d2bd5b1a7950c7912550f679050e64d9ea105132",
+          "tokens_input": 169,
+          "tokens_output": 275,
+          "tokens_total": 444,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.62,
+          "elapsed_time": 4.509142160415649,
+          "cost_input": 0.000338,
+          "cost_output": 0.0027500000000000003,
+          "cost_total": 0.0030880000000000005,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:27",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "ff00117e7ca415a947fd22f8d2bd5b1a7950c7912550f679050e64d9ea105132",
+        "most_common_count": 1,
+        "hashes": [
+          "ff00117e7ca415a947fd22f8d2bd5b1a7950c7912550f679050e64d9ea105132"
+        ]
+      },
+      "total_tokens": 444,
+      "total_cost": 0.0030880000000000005,
+      "avg_time": 4.509
+    },
+    {
+      "task_id": "A7",
+      "task_name": "RLE-сжатие строки",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция СжатьRLE(ИсходнаяСтрока) Экспорт\n\n\tДлинаСтроки = СтрДлина(ИсходнаяСтрока);\n\tЕсли ДлинаСтроки = 0 Тогда\n\t\tВозврат \"\";\n\tКонецЕсли;\n\n\tРезультат = \"\";\n\tСимволСерии = Сред(ИсходнаяСтрока, 1, 1);\n\tКоличество = 1;\n\n\tДля Позиция = 2 По ДлинаСтроки Цикл\n\t\tТекущийСимвол = Сред(ИсходнаяСтрока, Позиция, 1);\n\n\t\tЕсли КодСимвола(ТекущийСимвол) = КодСимвола(СимволСерии) Тогда\n\t\t\tКоличество = Количество + 1;\n\t\tИначе\n\t\t\tРезультат = Результат + СимволСерии + Формат(Количество, \"ЧГ=0;ЧДЦ=0\");\n\t\t\tСимволСерии = ТекущийСимвол;\n\t\t\tКоличество = 1;\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tРезультат = Результат + СимволСерии + Формат(Количество, \"ЧГ=0;ЧДЦ=0\");\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "b194397650ea74e8f08b8119c5d349baaff1fe29b49ef01e68d5d735a6522da4",
+          "tokens_input": 3069,
+          "tokens_output": 1240,
+          "tokens_total": 4309,
+          "tokens_reasoning": 602,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.71,
+          "elapsed_time": 11.767667531967163,
+          "cost_input": 0.006138,
+          "cost_output": 0.0124,
+          "cost_total": 0.018538,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:54",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "b194397650ea74e8f08b8119c5d349baaff1fe29b49ef01e68d5d735a6522da4",
+        "most_common_count": 1,
+        "hashes": [
+          "b194397650ea74e8f08b8119c5d349baaff1fe29b49ef01e68d5d735a6522da4"
+        ]
+      },
+      "total_tokens": 4309,
+      "total_cost": 0.018538,
+      "avg_time": 11.768
+    },
+    {
       "task_id": "A8",
       "task_name": "Проверка анаграмм",
       "model_id": "aliceai-llm/latest",
@@ -39231,6 +41223,57 @@
       "total_tokens": 742,
       "total_cost": 0.005764,
       "avg_time": 9.94
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ЯвляютсяАнаграммами(Строка1, Строка2) Экспорт\n\t\n\tПодготовленная1 = ВРег(СтрЗаменить(Строка1, \" \", \"\"));\n\tПодготовленная2 = ВРег(СтрЗаменить(Строка2, \" \", \"\"));\n\t\n\tЕсли СтрДлина(Подготовленная1) <> СтрДлина(Подготовленная2) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\t\n\tСчетчики = Новый Соответствие;\n\t\n\tДля Индекс = 1 По СтрДлина(Подготовленная1) Цикл\n\t\tСимвол = Сред(Подготовленная1, Индекс, 1);\n\t\tКоличество = Счетчики.Получить(Символ);\n\t\tЕсли Количество = Неопределено Тогда\n\t\t\tКоличество = 0;\n\t\tКонецЕсли;\n\t\tСчетчики.Вставить(Символ, Количество + 1);\n\tКонецЦикла;\n\t\n\tДля Индекс = 1 По СтрДлина(Подготовленная2) Цикл\n\t\tСимвол = Сред(Подготовленная2, Индекс, 1);\n\t\tКоличество = Счетчики.Получить(Символ);\n\t\tЕсли Количество = Неопределено ИЛИ Количество = 0 Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\t\tСчетчики.Вставить(Символ, Количество - 1);\n\tКонецЦикла;\n\t\n\tВозврат Истина;\n\t\nКонецФункции\n```",
+          "response_hash": "85986c0e24e3840cbc3128eaa0788719235cd6ebd520808955171b937dce27e0",
+          "tokens_input": 209,
+          "tokens_output": 534,
+          "tokens_total": 743,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.16,
+          "elapsed_time": 5.5340776443481445,
+          "cost_input": 0.000418,
+          "cost_output": 0.005339999999999999,
+          "cost_total": 0.005757999999999999,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:18",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "85986c0e24e3840cbc3128eaa0788719235cd6ebd520808955171b937dce27e0",
+        "most_common_count": 1,
+        "hashes": [
+          "85986c0e24e3840cbc3128eaa0788719235cd6ebd520808955171b937dce27e0"
+        ]
+      },
+      "total_tokens": 743,
+      "total_cost": 0.005757999999999999,
+      "avg_time": 5.534
     },
     {
       "task_id": "A8",
@@ -40763,6 +42806,108 @@
       "avg_time": 8.619
     },
     {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЭтоАнаграммы(Строка1, Строка2) Экспорт\n\n\tПерваяСтрока = НРег(СтрЗамен(Строка1, \" \", \"\"));\n\tВтораяСтрока = НРег(СтрЗамен(Строка2, \" \", \"\"));\n\n\tЕсли СтрДлина(ПерваяСтрока) <> СтрДлина(ВтораяСтрока) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\n\tКоличествоБукв = Новый Соответствие;\n\n\tДля Индекс = 1 По СтрДлина(ПерваяСтрока) Цикл\n\t\tБуква = Сред(ПерваяСтрока, Индекс, 1);\n\t\tКоличество = КоличествоБукв.Получить(Буква);\n\n\t\tЕсли Количество = Неопределено Тогда\n\t\t\tКоличество = 0;\n\t\tКонецЕсли;\n\n\t\tКоличествоБукв.Вставить(Буква, Количество + 1);\n\tКонецЦикла;\n\n\tДля Индекс = 1 По СтрДлина(ВтораяСтрока) Цикл\n\t\tБуква = Сред(ВтораяСтрока, Индекс, 1);\n\t\tКоличество = КоличествоБукв.Получить(Буква);\n\n\t\tЕсли Количество = Неопределено Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\n\t\tЕсли Количество = 0 Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\n\t\tКоличествоБукв.Вставить(Буква, Количество - 1);\n\tКонецЦикла;\n\n\tВозврат Истина;\n\nКонецФункции",
+          "response_hash": "267c4c7ec99d5e510b3ce679f26ac4b3986d56e2b8421e37c3e7f7d51e6140dc",
+          "tokens_input": 135,
+          "tokens_output": 506,
+          "tokens_total": 641,
+          "tokens_reasoning": 116,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.07,
+          "elapsed_time": 7.187140464782715,
+          "cost_input": 0.00027,
+          "cost_output": 0.00506,
+          "cost_total": 0.0053300000000000005,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:30",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "267c4c7ec99d5e510b3ce679f26ac4b3986d56e2b8421e37c3e7f7d51e6140dc",
+        "most_common_count": 1,
+        "hashes": [
+          "267c4c7ec99d5e510b3ce679f26ac4b3986d56e2b8421e37c3e7f7d51e6140dc"
+        ]
+      },
+      "total_tokens": 641,
+      "total_cost": 0.0053300000000000005,
+      "avg_time": 7.187
+    },
+    {
+      "task_id": "A8",
+      "task_name": "Проверка анаграмм",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ЭтоАнаграммы(Строка1, Строка2) Экспорт\n\n\tПерваяСтрока = ВРег(СтрЗамен(Строка1, \" \", \"\"));\n\tВтораяСтрока = ВРег(СтрЗамен(Строка2, \" \", \"\"));\n\n\tЕсли СтрДлина(ПерваяСтрока) <> СтрДлина(ВтораяСтрока) Тогда\n\t\tВозврат Ложь;\n\tКонецЕсли;\n\n\tКоличествоБукв = Новый Соответствие;\n\n\tДля Индекс = 1 По СтрДлина(ПерваяСтрока) Цикл\n\t\tБуква = Сред(ПерваяСтрока, Индекс, 1);\n\t\tКоличество = КоличествоБукв.Получить(Буква);\n\n\t\tЕсли Количество = Неопределено Тогда\n\t\t\tКоличество = 0;\n\t\tКонецЕсли;\n\n\t\tКоличествоБукв.Вставить(Буква, Количество + 1);\n\tКонецЦикла;\n\n\tДля Индекс = 1 По СтрДлина(ВтораяСтрока) Цикл\n\t\tБуква = Сред(ВтораяСтрока, Индекс, 1);\n\t\tКоличество = КоличествоБукв.Получить(Буква);\n\n\t\tЕсли Количество = Неопределено Или Количество = 0 Тогда\n\t\t\tВозврат Ложь;\n\t\tКонецЕсли;\n\n\t\tКоличествоБукв.Вставить(Буква, Количество - 1);\n\tКонецЦикла;\n\n\tВозврат Истина;\n\nКонецФункции",
+          "response_hash": "5da81c1af2d7c73beeff2f33a649049f51a4b6f5da35dffeac42fde4ced98ecd",
+          "tokens_input": 2824,
+          "tokens_output": 1058,
+          "tokens_total": 3882,
+          "tokens_reasoning": 272,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 3.25,
+          "elapsed_time": 14.96498703956604,
+          "cost_input": 0.005648,
+          "cost_output": 0.010579999999999999,
+          "cost_total": 0.016228,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:59:59",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "5da81c1af2d7c73beeff2f33a649049f51a4b6f5da35dffeac42fde4ced98ecd",
+        "most_common_count": 1,
+        "hashes": [
+          "5da81c1af2d7c73beeff2f33a649049f51a4b6f5da35dffeac42fde4ced98ecd"
+        ]
+      },
+      "total_tokens": 3882,
+      "total_cost": 0.016228,
+      "avg_time": 14.965
+    },
+    {
       "task_id": "A9",
       "task_name": "Простые числа до границы",
       "model_id": "aliceai-llm/latest",
@@ -42138,6 +44283,57 @@
       "total_tokens": 658,
       "total_cost": 0.004924,
       "avg_time": 8.838
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "claude-sonnet-5.5",
+      "model_name": "Claude Sonnet 5.5",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "```bsl\nФункция ПростыеЧисла(Граница) Экспорт\n\t\n\tРезультат = Новый Массив;\n\t\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\t\n\t// Индекс массива соответствует числу; Истина - число считается простым\n\tРешето = Новый Массив(Граница + 1);\n\tДля Индекс = 0 По Граница Цикл\n\t\tРешето[Индекс] = Истина;\n\tКонецЦикла;\n\t\n\tРешето[0] = Ложь;\n\tРешето[1] = Ложь;\n\t\n\tДелитель = 2;\n\tПока Делитель * Делитель <= Граница Цикл\n\t\tЕсли Решето[Делитель] Тогда\n\t\t\tКратное = Делитель * Делитель;\n\t\t\tПока Кратное <= Граница Цикл\n\t\t\t\tРешето[Кратное] = Ложь;\n\t\t\t\tКратное = Кратное + Делитель;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\t\tДелитель = Делитель + 1;\n\tКонецЦикла;\n\t\n\tДля Индекс = 2 По Граница Цикл\n\t\tЕсли Решето[Индекс] Тогда\n\t\t\tРезультат.Добавить(Индекс);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\t\n\tВозврат Результат;\n\t\nКонецФункции\n```",
+          "response_hash": "c1fb9a369fb08bdf2e5e8a74c9815c331c820d60411841192ffda017e17b6d79",
+          "tokens_input": 209,
+          "tokens_output": 468,
+          "tokens_total": 677,
+          "tokens_reasoning": 0,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 1.02,
+          "elapsed_time": 4.702492713928223,
+          "cost_input": 0.000418,
+          "cost_output": 0.00468,
+          "cost_total": 0.005098,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:28:18",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "c1fb9a369fb08bdf2e5e8a74c9815c331c820d60411841192ffda017e17b6d79",
+        "most_common_count": 1,
+        "hashes": [
+          "c1fb9a369fb08bdf2e5e8a74c9815c331c820d60411841192ffda017e17b6d79"
+        ]
+      },
+      "total_tokens": 677,
+      "total_cost": 0.005098,
+      "avg_time": 4.702
     },
     {
       "task_id": "A9",
@@ -43668,9 +45864,111 @@
       "total_tokens": 1079,
       "total_cost": 0.00048150000000000005,
       "avg_time": 38.615
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "gpt-6.1-sol",
+      "model_name": "GPT-6.1 Sol",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПростыеЧислаДоГраницы(Граница) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tРешето = Новый Массив(Граница + 1);\n\n\tДля Число = 2 По Граница Цикл\n\t\tРешето[Число] = Истина;\n\tКонецЦикла;\n\n\tДелитель = 2;\n\tПока Делитель * Делитель <= Граница Цикл\n\t\tЕсли Решето[Делитель] Тогда\n\t\t\tКратное = Делитель * Делитель;\n\t\t\tПока Кратное <= Граница Цикл\n\t\t\t\tРешето[Кратное] = Ложь;\n\t\t\t\tКратное = Кратное + Делитель;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\t\tДелитель = Делитель + 1;\n\tКонецЦикла;\n\n\tДля Число = 2 По Граница Цикл\n\t\tЕсли Решето[Число] Тогда\n\t\t\tРезультат.Добавить(Число);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "bbb3c80387be21811d97a4419ccb5e44df603c2042dd9c92b06201f00b21f7e2",
+          "tokens_input": 145,
+          "tokens_output": 462,
+          "tokens_total": 607,
+          "tokens_reasoning": 164,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 0.99,
+          "elapsed_time": 11.94439959526062,
+          "cost_input": 0.00029,
+          "cost_output": 0.00462,
+          "cost_total": 0.00491,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T15:46:39",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "bbb3c80387be21811d97a4419ccb5e44df603c2042dd9c92b06201f00b21f7e2",
+        "most_common_count": 1,
+        "hashes": [
+          "bbb3c80387be21811d97a4419ccb5e44df603c2042dd9c92b06201f00b21f7e2"
+        ]
+      },
+      "total_tokens": 607,
+      "total_cost": 0.00491,
+      "avg_time": 11.944
+    },
+    {
+      "task_id": "A9",
+      "task_name": "Простые числа до границы",
+      "model_id": "gpt-6.1-sol-pro",
+      "model_name": "GPT-6.1 Sol Pro",
+      "context_loaded": false,
+      "context_objects": [],
+      "context_analysis_cost": 0.0,
+      "runs": [
+        {
+          "run_index": 0,
+          "seed": null,
+          "temperature": 0.1,
+          "response": "Функция ПростыеЧислаДоГраницы(Граница) Экспорт\n\n\tРезультат = Новый Массив;\n\n\tЕсли Граница < 2 Тогда\n\t\tВозврат Результат;\n\tКонецЕсли;\n\n\tРешето = Новый Массив;\n\tДля Число = 0 По Граница Цикл\n\t\tРешето.Добавить(Истина);\n\tКонецЦикла;\n\n\tРешето[0] = Ложь;\n\tРешето[1] = Ложь;\n\n\tДелитель = 2;\n\tПока Делитель * Делитель <= Граница Цикл\n\t\tЕсли Решето[Делитель] Тогда\n\t\t\tКратное = Делитель * Делитель;\n\t\t\tПока Кратное <= Граница Цикл\n\t\t\t\tРешето[Кратное] = Ложь;\n\t\t\t\tКратное = Кратное + Делитель;\n\t\t\tКонецЦикла;\n\t\tКонецЕсли;\n\t\tДелитель = Делитель + 1;\n\tКонецЦикла;\n\n\tДля Число = 2 По Граница Цикл\n\t\tЕсли Решето[Число] Тогда\n\t\t\tРезультат.Добавить(Число);\n\t\tКонецЕсли;\n\tКонецЦикла;\n\n\tВозврат Результат;\n\nКонецФункции",
+          "response_hash": "e0858cb06398d1326333f72562c399ae2c7ede08fb3f37c50f26c197220244b4",
+          "tokens_input": 2740,
+          "tokens_output": 934,
+          "tokens_total": 3674,
+          "tokens_reasoning": 299,
+          "tokens_cached": 0,
+          "tokens_cache_write": 0,
+          "reasoning": "",
+          "finish_reason": "stop",
+          "system_fingerprint": "",
+          "cost_reported": 2.97,
+          "elapsed_time": 12.788043737411499,
+          "cost_input": 0.00548,
+          "cost_output": 0.009340000000000001,
+          "cost_total": 0.01482,
+          "success": true,
+          "error": null,
+          "max_tokens": 16384,
+          "reasoning_effort": "",
+          "generated_at": "2026-10-05T16:00:07",
+          "provenance": ""
+        }
+      ],
+      "determinism": {
+        "total_runs": 1,
+        "unique_responses": 1,
+        "match_rate": 1.0,
+        "most_common_hash": "e0858cb06398d1326333f72562c399ae2c7ede08fb3f37c50f26c197220244b4",
+        "most_common_count": 1,
+        "hashes": [
+          "e0858cb06398d1326333f72562c399ae2c7ede08fb3f37c50f26c197220244b4"
+        ]
+      },
+      "total_tokens": 3674,
+      "total_cost": 0.01482,
+      "avg_time": 12.788
     }
   ],
-  "total_tokens": 1553982,
-  "total_cost": 7.222082285000003,
+  "total_tokens": 1637785,
+  "total_cost": 7.664272285000002,
   "total_time": 0.0
 }
