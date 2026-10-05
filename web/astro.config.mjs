@@ -1,4 +1,5 @@
 // @ts-check
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -50,4 +51,14 @@ export default defineConfig({
   redirects: { '/docs/status': '/docs/validity', '/docs/status/': '/docs/validity' },
   integrations: [react(), sitemap()],
   markdown: { rehypePlugins: [rehypeTableScroll] },
+  // Серверный рендер React берём из браузерной сборки, а не из Node-сборки. В Node-сборке
+  // React 18.3.1 (последняя в ветке 18) ошибка в writeStringChunk: строку, не влезшую в
+  // буфер на 2048 байт, он дописывает через encodeInto и отправляет буфер ЦЕЛИКОМ. Если на
+  // стыке русская буква (2 байта), а места остался 1 байт, в HTML уходит нулевой байт, и
+  // браузер показывает его как «�» («поиск �модели…», «ос�ей»). Браузерная сборка кодирует
+  // строку целиком через TextEncoder.encode, ошибки там нет; Astro сам переключается на
+  // renderToReadableStream, который в ней есть. Убрать после перехода на React 19.
+  vite: {
+    resolve: { alias: [{ find: /^react-dom\/server$/, replacement: fileURLToPath(new URL('./src/lib/react-dom-server.mjs', import.meta.url)) }] },
+  },
 });
