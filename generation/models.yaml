@@ -390,7 +390,7 @@ models:
       supports_tools: true
 
   sonnet55:
-    id: "claude-sonnet-5-5"              # канал — AITUNNEL (openai_compat); id как в Anthropic API, по GET /v1/models AITUNNEL не сверен
+    id: "claude-sonnet-5.5"              # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
     name: "Claude Sonnet 5.5"
     vendor: anthropic
     weights: proprietary

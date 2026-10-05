@@ -6,9 +6,9 @@
 ## [Unreleased]
 
 ### Добавлено
-- Ключ модели `sonnet55` (Claude Sonnet 5.5, `claude-sonnet-5-5`, $2/$10) рядом с `sonnet5`: старые
-  результаты `sonnet5` остаются сравнимыми. Через адаптер `claude -p` id проверен 29.09.2026, по
-  каналу AITUNNEL (`GET /v1/models`) не сверен.
+- Ключ модели `sonnet55` (Claude Sonnet 5.5, `claude-sonnet-5.5`, $2/$10) рядом с `sonnet5`: старые
+  результаты `sonnet5` остаются сравнимыми. Id сверен по каталогу AITUNNEL (`GET /v1/models`).
+  Прогона пока нет.
 
 ## [1.10.0] — 2026-09-19
 
