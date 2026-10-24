@@ -59039,6 +59039,4997 @@
           }
         }
       ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e8a8369296037161a8da1c792ba08a1c5dc4d4014a3e82cffc0edcef14cbad0a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2406,
+                4806,
+                9606,
+                19206
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьИОтсортироватьМассивы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bb1bdf31d27c0902e2e40ac2afcff458217dc271e1e8cc469bfd26377a2e289d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.0,
+              "p_opt": 1.0,
+              "ops": [
+                241845,
+                996481,
+                3878193,
+                15473673
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьОтсортированныеМассивы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "68fd3aef929ef0f2ff2bd680b74a5752fd730401344ca96a9938cbb5af9e3960",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                8414,
+                16814,
+                33614,
+                67214
+              ],
+              "sizes": [
+                400,
+                800,
+                1600,
+                3200
+              ],
+              "entry_point": "ОбъединитьМассивы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8118bce090617b6cea160c8bc0cd11522d858ff9e81d643cfb873716da08036f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 2,
+            "P": null,
+            "Q": 7.33
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "ОбъединитьИОтсортировать",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [
+                1197432,
+                4827668,
+                19220580
+              ],
+              "sizes": [
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИОтсортировать",
+              "note": "исчерпан бюджет процессорного времени на размере 3200 — слишком медленно",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A10",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e258f75d62a0bae466f6f062add2338dbed6c945acf382d4be31dbad1cac9826",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 10,
+              "entry_point": "ОбъединитьМассивы",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 4 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 7 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 8 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}",
+                "PRISM_ERR 9 {Модуль /sandbox/cand.test.os / Error in line: 12 / Method not found (Сортировать)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ОбъединитьМассивы",
+              "note": "не исполнился на размере 400: строка 12 кода модели · Method not found (Сортировать)",
+              "fail_size": 400,
+              "fail_line": 12,
+              "fail_message": "Method not found (Сортировать)",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0decbb86e5d0bf2979600764ed0ff4d9ff7c864588dd0db42da1ef5a68a1587f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6829,
+                13614,
+                27184,
+                54329
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ПолучитьКоличествоРабочихДней",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8e8099aac0a81a41aedd8a46c0cc01ae9ec99aa1a663a8903823f326275509d5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "РабочиеДниВПериоде",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6326,
+                12611,
+                25181,
+                50326
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "РабочиеДниВПериоде",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7fed4a058d08ceafe7d41835c1bf3b3dbfc057653222ad133e5e13facc196d3d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6334,
+                12619,
+                25189,
+                50334
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cd5ae27dc4be6bb675d11229ac53da655cff5a4acab8e2744345bc90f6f4b97e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "РабочиеДниВПериоде",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                6827,
+                13612,
+                27182,
+                54327
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "РабочиеДниВПериоде",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A11",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3f1fbf49e45c689fb7ffbba0c15a0d8ab8f2560b89601652b9fb5e4077675c99",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 12,
+              "total": 12,
+              "entry_point": "КоличествоРабочихДней",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 0.0,
+              "ops": [
+                13452,
+                26877,
+                53727,
+                107452
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "КоличествоРабочихДней",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "6b5698cee39d393c1e676bcff3dd55b5d173527aceb2aa3b232fed4727a8efcb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "МассивБезЗначения",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "МассивБезЗначения",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "19335294bbe340bed60adf7c27c727e6b8eb97e2325d30b9b9abd79238149be0",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0d7844365181ae6bce0b246e1fe82b10ef2c5c43872d1429fe4886a51576e258",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "548ae14b113412642bf5ae3ec0ff9fa9c25ce97614d1f86c166b68d6a897ea29",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЭлементыИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЭлементыИзМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A12",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "0d7844365181ae6bce0b246e1fe82b10ef2c5c43872d1429fe4886a51576e258",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 10,
+              "total": 10,
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2004,
+                4004,
+                8004,
+                16004
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "УдалитьЗначениеИзМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8b30d1e8586d7b097a5df3f9bba66e713f9cb36e9eb6d423346f2fa54fa8e54e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1002,
+                2002,
+                4002,
+                8002
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "121a874430be59425fc7ddc5208ad5976d6dd018eacbac574ce0ff9edeee9f55",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2219,
+                4415,
+                8826,
+                17644
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c3b6e4aef1829f17d7be15e461f676a0f205e1ab282506828d233fc6b1c3b358",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2418,
+                4814,
+                9625,
+                19243
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a3a8177a3fa2423a27bd67d07427b8fa500087dc5b3fe09ac3ed80074c6a72a2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                2240,
+                4441,
+                8852,
+                17670
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A13",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "a43bb93db018149b7a9aa0805e0377cff8079295dd5df493de4224247c28a013",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                2240,
+                4441,
+                8852,
+                17670
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "МаксимальнаяСуммаПодмассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "04c26ff177804fb0097bf33917ff5f54fb2ea33e3ba295dc48b5800f01389dd2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ПеревернутьПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.0,
+              "ops": [
+                827,
+                1627,
+                3227,
+                6427
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПеревернутьПорядокСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9c157fe15f1df7eda1c83ad771a2ed3d1a0b5dfc6620435b638785eb6e46b440",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ОбратныйПорядокСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1607,
+                3207,
+                6407,
+                12807
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбратныйПорядокСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "2423698ea69b10fe381841c2ff39220bc9a0ebe473efc2817f5e380bb8e2d310",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 2,
+            "P": null,
+            "Q": 7.33
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "СловаВОбратномПорядке",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [
+                1049479,
+                4288279,
+                17245879
+              ],
+              "sizes": [
+                200,
+                400,
+                800
+              ],
+              "entry_point": "СловаВОбратномПорядке",
+              "note": "исчерпан бюджет процессорного времени на размере 1600 — слишком медленно",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "5edf7d4e8260637ab2baac2a81ad1b0f13f10066da018808bde41fe4559e8350",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ПеревернутьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                806,
+                1606,
+                3206,
+                6406
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПеревернутьСлова",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A14",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7d5c31aa5267f9b3881365fcf2a2e1008714836920c6cee011a059f8065d9a35",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 9,
+              "total": 9,
+              "entry_point": "ПеревернутьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.05,
+              "p_opt": 1.0,
+              "ops": [
+                524251,
+                2143151,
+                8620951,
+                36878648
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ПеревернутьСлова",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "637de82f1e0c998a356b7a5102475f9936fbeb6e00ceedd4cc371461932c4201",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                73,
+                79,
+                85,
+                91
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e980bca613125bdbd82d46e7bdf70a02192613a39facb9f61bb9ccbb6ea0f248",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                72,
+                78,
+                84,
+                90
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1fbbd26dbc1c28c08f29e6a6bd4b7f2841764f12ccfea67f5168f42c5fe1d68a",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.11,
+              "p_opt": 0.0,
+              "ops": [
+                93,
+                101,
+                109,
+                117
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "f81b9f2ea7c4243df342301f7a1f230fcf88b6e5c60c643e191a58975185b912",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 11,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.1,
+              "p_opt": 0.0,
+              "ops": [
+                74,
+                80,
+                86,
+                92
+              ],
+              "sizes": [
+                1000,
+                2000,
+                4000,
+                8000
+              ],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A15",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "496a3601c03fb786560989ff9eddc46e9bae55bab7f6860802a8fee845d5b04f",
+          "scores": {
+            "S": 6,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 3.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 1,
+              "parse_error_clusters": 1,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [
+                "ParseError"
+              ],
+              "engine_parsed": false,
+              "engine_error": "{Модуль /sandbox/cand.check.os / Error in line 15,27 / Неизвестный символ \\}"
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 11,
+              "entry_point": "СтепеньПоМодулю",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 15,27 / Неизвестный символ \\}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 0.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СтепеньПоМодулю",
+              "note": "не исполнился на размере 1000: строка 15 кода модели · Неизвестный символ \\",
+              "fail_size": 1000,
+              "fail_line": 15,
+              "fail_message": "Неизвестный символ \\",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "38644c76395056469a9f2bf601567fad0ce5b26127d28847725ff07f75035c54",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 7 / Wrong column name 'Массив'}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 7 / Wrong column name 'Массив'}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 7 / Wrong column name 'Массив'}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: строка 7 кода модели · Wrong column name 'Массив'",
+              "fail_size": 200,
+              "fail_line": 7,
+              "fail_message": "Wrong column name 'Массив'",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b56c9d2095f6a76d4ee4fb80ee03a88a615ee5140333599bf69f18f66efad751",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3393,
+                6823,
+                13551,
+                26930
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "80978d4bf36e41c8b0a5a41afdde51ab3de3e3c80bf6a92db2c223ec64d49c0d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.0,
+              "p_opt": 1.0,
+              "ops": [
+                4,
+                4,
+                4,
+                4
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "abd127dbf631317d640734e3c9288694d2861382bad81b9a812963709ef1301b",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 0,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 14 / Object property is not found (Тип)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 14 / Object property is not found (Тип)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 14 / Object property is not found (Тип)}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "СгруппироватьТаблицуЗначений",
+              "note": "не исполнился на размере 200: строка 14 кода модели · Object property is not found (Тип)",
+              "fail_size": 200,
+              "fail_line": 14,
+              "fail_message": "Object property is not found (Тип)",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A1",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "075ab3618b91a65b1d03e5a531a9697ec052ada6b14154c61cd78178c3b7da6e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 3,
+              "entry_point": "СгруппироватьТаблицу",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3764,
+                7544,
+                15032,
+                29966
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СгруппироватьТаблицу",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "131143e98290d1d9b62297a2b088e0e91a6c5efb6e44f71900fc395f5588cef4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2605,
+                5205,
+                10405,
+                20796
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "eb49ae96da455cf945b5be807214947b287e1bb38dd5205518dbe973b25b6e98",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2605,
+                5205,
+                10405,
+                20796
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "643856c9d1a4b92b90a855e80a65a12f73922c16b66964173238dcdcc6da766b",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.98,
+              "p_opt": 1.0,
+              "ops": [
+                62504,
+                245004,
+                970004,
+                3859673
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ВыделитьУникальныеЭлементы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fdb1e20ea1662f0c0c32cf12aa26e0ef6a51b62ee45030fb6d33c7b7d14a9f95",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементыМассива",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.98,
+              "p_opt": 1.0,
+              "ops": [
+                62506,
+                245006,
+                970006,
+                3859675
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементыМассива",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A2",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "544c3f6bf60d68cbdb8b961e87f36c820fdd86443fd4c120fcb9e008d5b59a7d",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 5,
+              "total": 5,
+              "entry_point": "УникальныеЭлементы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2605,
+                5205,
+                10405,
+                20796
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "УникальныеЭлементы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4f7c04b4f7ddb50676be64ce6c190e269c3096764a805d96c2c5ce9a9bccce57",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3196,
+                6369,
+                12701,
+                25185
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7df40a6a3abb0f40db5d2748546d0d29e8c71b0683c63704b5ed7582dce0e043",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3196,
+                6369,
+                12701,
+                25185
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "620a28be438a570bd3ef874ebf1926fd3533e1f2c40bd4b5ac22ec747d1ac760",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.99,
+              "p_opt": 1.1,
+              "ops": [
+                3196,
+                6369,
+                12701,
+                25185
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "9d206168589632b79ff5509dfcf6a83b016bddcca4c176d67bc52c4c7c0f3f3f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 2.0,
+              "p_opt": 1.1,
+              "ops": [
+                89539,
+                353743,
+                1476672,
+                5781122
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A3",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "27e436285f126f42821723062c5f52f4413c9b517df05f524e5ecd3694579509",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ОбъединитьИнтервалы",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.98,
+              "p_opt": 1.1,
+              "ops": [
+                42191,
+                161992,
+                665816,
+                2588244
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "ОбъединитьИнтервалы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "553663fd7781d727fa44c7584ac178c5d302b55de0f665078cb1167852dafb96",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "РассчитатьСкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                960,
+                1910,
+                3810,
+                7610
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "РассчитатьСкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d7178b59d199ba1d1c7f5ae2c2661c685d1356a5cbf0f5540949c31d06c45ceb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                1560,
+                3110,
+                6210,
+                12410
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "44947f87004608bf2890a74b0fa9cb119eca2a413f0ea58f41319b180f6e4dc3",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                960,
+                1910,
+                3810,
+                7610
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "cb8829f497d35dcfa0aeb8ba21ace26596f31b89932669419340c47816f56c85",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53611,
+                212211,
+                844411,
+                3368811
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A4",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "eeecc0ff61366c18b005cf57054fa4e8dce867fc5e735337b47fea48d5443a1c",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СкользящиеСредние",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.99,
+              "p_opt": 1.0,
+              "ops": [
+                53611,
+                212211,
+                844411,
+                3368811
+              ],
+              "sizes": [
+                200,
+                400,
+                800,
+                1600
+              ],
+              "entry_point": "СкользящиеСредние",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "91e7c6e619f4cb9de5d71bb64bdc369b5fa7c783f1d6d4702277f495d2987a73",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                516,
+                1101,
+                2271,
+                4520
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьЧастотуСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ddeb43649ade995fb7913fafaadb205f403263d5592656b8aa2e4cf8fbc48973",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7867,
+                15484,
+                31099,
+                63235
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "1ed0e97a3b429250b8315d9004b518e4d60402744e2d6b653407e212cb0b9bc4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ЧастотаСлов",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                7443,
+                14625,
+                29372,
+                59790
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ЧастотаСлов",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "415528ccc5ec75350ad5b713c1e67ec9946c98e8e318d2bdd12c511deee50b7e",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.9,
+              "p_opt": 1.0,
+              "ops": [
+                619,
+                1141,
+                2157,
+                4007
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A5",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b0b513fb71dbaa45c70a5857ef3f53728734e2fa75528fcc207098f438c1a4c4",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 4,
+              "entry_point": "ПодсчитатьСлова",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 0.91,
+              "p_opt": 1.0,
+              "ops": [
+                547,
+                1024,
+                1950,
+                3627
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "ПодсчитатьСлова",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c13d9cc8659d495520994a23c1a41ef671de1e1898c7007538497a1920d0b5d1",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.82,
+              "p_opt": 2.0,
+              "ops": [
+                351,
+                639,
+                1015,
+                1479
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "052370c932c65b09929781dee35f8df9de41d3a0fa3e228512a65f3230fddf1e",
+          "scores": {
+            "S": 10,
+            "M": 5.7,
+            "O": 10,
+            "P": null,
+            "Q": 8.57
+          },
+          "bands": {
+            "M": 4,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 4,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [
+                "PRISM_FAIL 0",
+                "PRISM_FAIL 1",
+                "PRISM_FAIL 6"
+              ],
+              "band": 4
+            },
+            "O": {
+              "growth": 1.88,
+              "p_opt": 2.0,
+              "ops": [
+                505,
+                939,
+                1509,
+                2215
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "25abe84165b0930c622059d582f98fd3650ab415029110f7a31898342e498f24",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.86,
+              "p_opt": 2.0,
+              "ops": [
+                435,
+                804,
+                1291,
+                1892
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "b675abe11ea384e97af209cb98a77196884c7b3bfb1a5b850d567c00ecbcfcc5",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.88,
+              "p_opt": 2.0,
+              "ops": [
+                454,
+                845,
+                1362,
+                2001
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A6",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "fad0ee91eacf4bd0aa23d3afd29d0090f9e0a04bb82fc29111964a04f68943a6",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "РасстояниеЛевенштейна",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.71,
+              "p_opt": 2.0,
+              "ops": [
+                228,
+                396,
+                612,
+                876
+              ],
+              "sizes": [
+                5,
+                7,
+                9,
+                11
+              ],
+              "entry_point": "РасстояниеЛевенштейна",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "da1b66ce2e79bf4df4a395d77de9194f8ff0ed2c9e61348104a34ee1c6e3bf16",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                2548,
+                5108,
+                10242,
+                20474
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "7ffd357a8246b2d435e77c143585a3a79779ff2ae5dbf74b83f7c401d04d9940",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжатие",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158043,
+                606323,
+                2336962,
+                9362618
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжатие",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "bd30e786a5a6f6b2ae1445d8836a05e88d568d5faeb1ec9ac909e5f5ac9d2516",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьСтрокуRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                3074,
+                6154,
+                12321,
+                24637
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьСтрокуRLE",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "c1cb494ed7509eae8ac2608cb46c5c1fd9e44165efd6e142c22cb65d9d4682e7",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "RLEСжать",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "RLEСжать",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A7",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4ec840ca858cc41387725c312fc8d8a1e135d78d57185cbca226f3bd183ed40f",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 4,
+            "P": null,
+            "Q": 8.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "СжатьRLE",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.96,
+              "p_opt": 1.0,
+              "ops": [
+                158042,
+                606322,
+                2336961,
+                9362617
+              ],
+              "sizes": [
+                300,
+                600,
+                1200,
+                2400
+              ],
+              "entry_point": "СжатьRLE",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ed9f5f0357585431683b9b6cb6b515c5038f85f6955952801d286f1d32ae1813",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                14010,
+                28010,
+                56010,
+                112010
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "39128ba2ed60975e259d9e19921f4d192000a245dca6cf91a1506983820c88cb",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                14523,
+                29023,
+                58023,
+                116023
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "e814976f3423b391a3d7bdfab747148975d16296815218d0fff158af3cdd0fb2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 7,
+              "total": 7,
+              "entry_point": "ЭтоАнаграмма",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                14509,
+                29009,
+                58009,
+                116009
+              ],
+              "sizes": [
+                500,
+                1000,
+                2000,
+                4000
+              ],
+              "entry_point": "ЭтоАнаграмма",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "8c69ea51f5a62457304b0d0cfffa1e9a2b320d5e1b292f140e361b8424f11f83",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "ЯвляетсяАнаграммой",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляетсяАнаграммой",
+              "note": "не исполнился на размере 500: строка 18 кода модели · Method not found (Сортировать)",
+              "fail_size": 500,
+              "fail_line": 18,
+              "fail_message": "Method not found (Сортировать)",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A8",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "d18a8648280cb1be9468d962d6b7f456c9cdfd71e6e40b37bd564e6ebe1c70de",
+          "scores": {
+            "S": 10,
+            "M": 1.4,
+            "O": null,
+            "P": null,
+            "Q": 5.7
+          },
+          "bands": {
+            "M": 2,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 1,
+              "total": 7,
+              "entry_point": "ЯвляютсяАнаграммами",
+              "errors": [
+                "PRISM_ERR 0 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 1 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 2 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 3 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 5 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}",
+                "PRISM_ERR 6 {Модуль /sandbox/cand.test.os / Error in line: 18 / Method not found (Сортировать)}"
+              ],
+              "band": 2
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ЯвляютсяАнаграммами",
+              "note": "не исполнился на размере 500: строка 18 кода модели · Method not found (Сортировать)",
+              "fail_size": 500,
+              "fail_line": 18,
+              "fail_message": "Method not found (Сортировать)",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "gemini-4-argon",
+      "model_name": "Gemini 4 Argon",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "4aa1bb65ebca7fa80bec0ee99532b1c024f5d0ad754bbe68003affe2cfa073e2",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "РешетоЭратосфена",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38769,
+                80067,
+                164978,
+                339210
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "РешетоЭратосфена",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "claude-haiku-5.5",
+      "model_name": "Claude Haiku 5.5",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "25b7044a2b2889e990d3cc4e5ab38d7df16215873193a174818007fa94dd8e32",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 17,27 / Symbol not found Корень}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: строка 17 кода модели · Symbol not found Корень",
+              "fail_size": 2000,
+              "fail_line": 17,
+              "fail_message": "Symbol not found Корень",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "kimi-k3.1-pro",
+      "model_name": "Kimi K3.1 Pro",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "ae6f9b2e9842a958c481cd8bc58598752ae52485cf8f1d2e0ae2fc3373308d55",
+          "scores": {
+            "S": 10,
+            "M": 10.0,
+            "O": 10,
+            "P": null,
+            "Q": 10.0
+          },
+          "bands": {
+            "M": 10,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 6,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДо",
+              "errors": [],
+              "band": 10
+            },
+            "O": {
+              "growth": 1.04,
+              "p_opt": 1.0,
+              "ops": [
+                38769,
+                80067,
+                164978,
+                339210
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДо",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "deepseek-v4.1-flash-1017",
+      "model_name": "DeepSeek V4.1 Flash 1017",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "baad2219dda727f696abbbb37470b575f4b046f25d654dae8296c174810dd074",
+          "scores": {
+            "S": 10,
+            "M": 5.0,
+            "O": 10,
+            "P": null,
+            "Q": 8.33
+          },
+          "bands": {
+            "M": 4,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": true,
+              "passed": 3,
+              "total": 6,
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "errors": [
+                "PRISM_FAIL 0",
+                "PRISM_FAIL 4",
+                "PRISM_FAIL 5"
+              ],
+              "band": 4
+            },
+            "O": {
+              "growth": 1.0,
+              "p_opt": 1.0,
+              "ops": [
+                26155,
+                52231,
+                104335,
+                208483
+              ],
+              "sizes": [
+                2000,
+                4000,
+                8000,
+                16000
+              ],
+              "entry_point": "ПростыеЧислаДоГраницы",
+              "note": "",
+              "fail_size": null,
+              "fail_line": null,
+              "fail_message": "",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 3,
+              "applicable": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "task_id": "A9",
+      "model_id": "mistral-large-4-0",
+      "model_name": "Mistral Large 4",
+      "runs": [
+        {
+          "run_index": 0,
+          "response_hash": "3b60d8f6e11f275e61a61143caf8e3f0ec5d2cf51c78bd02b40c96ea18fe8d33",
+          "scores": {
+            "S": 10,
+            "M": 0.0,
+            "O": null,
+            "P": null,
+            "Q": 5.0
+          },
+          "bands": {
+            "M": 0,
+            "P": null
+          },
+          "detail": {
+            "S": {
+              "root_causes": 0,
+              "parse_error_clusters": 0,
+              "blockers": 0,
+              "balanced": true,
+              "balance_detail": {},
+              "error_codes": [],
+              "engine_parsed": true
+            },
+            "M": {
+              "executed": false,
+              "passed": 0,
+              "total": 6,
+              "entry_point": "ПолучитьПростыеЧисла",
+              "errors": [
+                "compile_error: {Модуль /sandbox/cand.test.os / Error in line 16,15 / Symbol not found КвадратныйКорень}"
+              ],
+              "band": 0
+            },
+            "O": {
+              "growth": null,
+              "p_opt": 1.0,
+              "ops": [],
+              "sizes": [],
+              "entry_point": "ПолучитьПростыеЧисла",
+              "note": "не исполнился на размере 2000: строка 16 кода модели · Symbol not found КвадратныйКорень",
+              "fail_size": 2000,
+              "fail_line": 16,
+              "fail_message": "Symbol not found КвадратныйКорень",
+              "leg": "O-исп"
+            },
+            "coverage": {
+              "measured": 2,
+              "applicable": 3
+            }
+          }
+        }
+      ]
     }
   ]
 }
