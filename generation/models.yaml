@@ -858,6 +858,77 @@ models:
       supports_seed: false
       supports_tools: true
 
+  gemini4_argon:
+    id: "gemini-4-argon"                 # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Gemini 4 Argon"
+    vendor: google
+    weights: proprietary
+    released: "2026-10-13"               # дата появления в AITUNNEL (created в /v1/models), не сверена с вендором
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000            # 1M по карточке AITUNNEL
+      supports_seed: false
+      supports_tools: true               # флагман, вывод 4000 ₽/1M: гонять с низким параллелизмом (предоплата по max_tokens)
+
+  haiku55:
+    id: "claude-haiku-5.5"               # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Claude Haiku 5.5"
+    vendor: anthropic
+    weights: proprietary
+    released: "2026-10-07"               # дата появления в AITUNNEL (created в /v1/models), не сверена с вендором
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000            # 1M по карточке AITUNNEL
+      supports_seed: false
+      supports_tools: true
+
+  kimi31_pro:
+    id: "kimi-k3.1-pro"                  # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Kimi K3.1 Pro"
+    vendor: moonshot
+    weights: open                        # open-weight по описанию OpenRouter
+    released: "2026-10-23"               # дата появления в AITUNNEL (created в /v1/models), не сверена с вендором
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000            # 1M по карточке AITUNNEL
+      supports_seed: false
+      supports_tools: true
+
+  deepseek_flash_41_1017:
+    id: "deepseek-v4.1-flash-1017"       # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "DeepSeek V4.1 Flash 1017"
+    vendor: deepseek
+    weights: open
+    released: "2026-10-17"               # закреплённый снимок от 17.10; пара к deepseek_flash_41 для дрейфа версий
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1000000
+      supports_seed: false
+      supports_tools: true
+
+  mistral_large4:
+    id: "mistral-large-4-0"              # канал — AITUNNEL (openai_compat); id сверен по GET /v1/models
+    name: "Mistral Large 4"
+    vendor: mistral
+    weights: open                        # заявлена open-weight; на 25.10 только API-превью, веса обещаны
+                                         # к концу октября под своей лицензией (не Apache, как у Large 3)
+    released: "2026-10-06"               # дата появления в AITUNNEL (created в /v1/models), не сверена с вендором
+    access:
+      adapter: openai_compat
+      endpoint: "https://api.aitunnel.ru/v1"
+    capabilities:
+      context_window: 1048576            # по OpenRouter
+      supports_seed: false
+      supports_tools: true
+
 # Примеры будущих записей (раскомментировать при подключении адаптера):
 #
 #  qwen-local:

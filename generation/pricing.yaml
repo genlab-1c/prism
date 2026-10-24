@@ -8,8 +8,10 @@
 #
 # Обновление: правьте as_of + source при сверке с тарифами. Это снимок, не истина.
 
-as_of: "2026-09-18"
-source: "Снимок 2026-09-18 — сверена строка qwen3.6-35b-a3b: модель переехала с Yandex AI Studio\n  на AITUNNEL (квота Яндекса исчерпана), тариф взят из розницы канала за неимением прайса вендора.\n  Ранее, 2026-09-07 — сверены только новые строки (gemini-3.8-flash, qwen3.8-max-0902, gpt-6-astra).
+as_of: "2026-10-25"
+source: "Снимок 2026-10-25 — добавлены строки gemini-4-argon, claude-haiku-5.5, kimi-k3.1-pro,
+  deepseek-v4.1-flash-1017, mistral-large-4-0 (OpenRouter API + обзоры, страницы вендоров напрямую не открывались).
+  Ранее, 2026-09-18 — сверена строка qwen3.6-35b-a3b: модель переехала с Yandex AI Studio\n  на AITUNNEL (квота Яндекса исчерпана), тариф взят из розницы канала за неимением прайса вендора.\n  Ранее, 2026-09-07 — сверены только новые строки (gemini-3.8-flash, qwen3.8-max-0902, gpt-6-astra).
   Ранее, 2026-08-13, сверены deepseek-v4-pro-0813 и qwen3.8-max.
   Ранее, 2026-08-01, пересверен тир OpenAI GPT-5.6 после снижения прайса 30.07.2026 (Luna −80%
   1.0/6.0→0.2/1.2, Terra −20% 2.5/15→2/12, Sol без изменений). Прочие строки — снимок 2026-07-08,
@@ -83,3 +85,10 @@ prices:
   "gpt-6-luna":                    { input: 0.1,  output: 0.5 }   # OpenAI, прайс-лист (developers.openai.com/api/docs/pricing)
   "gpt-6.1-sol":                   { input: 2.0,  output: 10.0 }  # OpenAI, прайс-лист (developers.openai.com/api/docs/pricing), сверено 2026-10-05; кеш входа 0.1
   "gpt-6.1-sol-pro":               { input: 2.0,  output: 10.0 }  # в прайсе OpenAI строки нет: та же gpt-6.1-sol с reasoning.mode=pro, тариф тот же (каталог OpenRouter, 2026-10-05); токенов жжёт в разы больше
+  "gemini-4-argon":                { input: 2.0,  output: 10.0 }  # Google, ВВОДНАЯ цена до 2026-11-30 (OpenRouter google/gemini-4-argon, обзоры); с 01.12.2026 → 4.0/20.0
+  "claude-haiku-5.5":              { input: 0.1,  output: 0.5 }   # Anthropic, промпт ≤100K (наши все); свыше 100K 0.5/2.5. OpenRouter совпадает
+  "kimi-k3.1-pro":                 { input: 2.0,  output: 10.0 }  # = OpenRouter moonshotai/kimi-k3.1-pro; прайс Moonshot на K3.1 Pro не найден
+  "deepseek-v4.1-flash-1017":      { input: 0.3,  output: 1.2 }   # снимок того же SKU deepseek-flash → базовый тариф как у deepseek-v4.1-flash;
+                                                                  # OpenRouter даёт 0.15/0.60, это непиковая цена, её не берём (см. строку выше)
+  "mistral-large-4-0":             { input: 1.36, output: 4.18 }  # Mistral, прайс-лист docs.mistral.ai (по обзорам на 17.10); OpenRouter совпадает.
+                                                                  # 0.68/2.09 у агрегаторов — двухнедельная скидка запуска, закончилась ~19.10

@@ -78,3 +78,10 @@ defaults:
     gpt61_sol: { temperature: 0.1, runs: 1, max_tokens: 16384 }      # GPT-6.1 Sol через AITUNNEL (reasoning).
     gpt61_sol_pro: { temperature: 0.1, runs: 1, max_tokens: 16384 }  # GPT-6.1 Sol Pro через AITUNNEL (reasoning).
       # Обеим потолок как у GPT-6 Sol: предоплата по потолку при 2000 ₽/1M вывода = ~33 ₽ на запрос
+    gemini4_argon: { temperature: 0.1, runs: 1, max_tokens: 16384 }  # Gemini 4 Argon через AITUNNEL.
+      # Потолок как у Opus 5.5: при 4000 ₽/1M вывода 65536 = ~260 ₽ заморозки на запрос, больше баланса
+    kimi31_pro:    { temperature: 0.1, runs: 1, max_tokens: 16384 }  # Kimi K3.1 Pro через AITUNNEL.
+      # Потолок урезан: 2000 ₽/1M вывода, факт Kimi K3 ~2–3 тыс. ток/задачу
+    haiku55:                { temperature: 0.1, runs: 1 } # Claude Haiku 5.5 через AITUNNEL
+    deepseek_flash_41_1017: { temperature: 0.1, runs: 1 } # DeepSeek V4.1 Flash 1017 (снимок 17.10) через AITUNNEL
+    mistral_large4:         { temperature: 0.1, runs: 1 } # Mistral Large 4 через AITUNNEL
