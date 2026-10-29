@@ -12,6 +12,7 @@ import { EconomyView } from './Economy.jsx';
 import { LeaderChart, TableExport, SummaryTableSvg, ScoresTableSvg } from '../prism/LeaderChart.jsx';
 import { useIsMobile } from '../../lib/useMediaQuery.js';
 import { DONATE_URL } from '../../lib/links.js';
+import { EditionNotice } from '../prism/EditionNotice.jsx';
 
 const BASE = import.meta.env.BASE_URL;
 
@@ -80,8 +81,8 @@ function ChangelogModal({ entries, releases, onClose }) {
         </div>
         <div className="cl-modal-body">
           <p className="cl-modal-intro">
-            Мы регулярно добавляем новые модели и задачи и пересчитываем оценки —
-            поэтому <b>лидерборд постоянно меняется</b>. Здесь видно, что и когда поменялось.
+            Здесь собраны <b>основные события PRISM</b>: новые модели, задачи,
+            пересчёты оценок и итоги выпусков.
           </p>
           <div className="changelog-list">
             {mergeTimeline(entries, releases).map((e, i) => e.kind === 'release' ? (
@@ -1014,6 +1015,8 @@ export function LeaderboardScreen({ navigate = () => {}, models = [], meta = {} 
             style={{ color: 'var(--brand)', textDecoration: 'none', fontWeight: 600 }}>Поддержать проект</a>
         </p>
       </section>
+
+      <EditionNotice models={models} />
 
       <div style={{ display: 'flex', gap: isMobile ? 4 : 28, borderBottom: '1px solid var(--line)', marginBottom: isMobile ? 18 : 24 }}>
         <Tab label="Сводка" short="Сводка" sub="кто лучше в целом" compact={isMobile} active={view === 'summary'} onClick={() => setView('summary')} />

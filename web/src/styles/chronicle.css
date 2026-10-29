@@ -1,0 +1,37 @@
+.chr-card { min-width: 0; --chr-purple: #a78bfa; }
+[data-theme="light"] .chr-card { --chr-purple: #7c3aed; }
+.chr-top { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4px 16px; }
+.chr-top h3 { margin: 0; color: var(--ink-100); font-size: 14px; font-weight: 600; }
+.chr-period { color: var(--ink-300); font-size: 11px; white-space: nowrap; }
+.chr-description { margin: 5px 0 0; color: var(--ink-300); font-size: 12px; line-height: 1.5; }
+.chr-legend { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 12px; font-size: 11px; }
+.chr-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.chr-legend i { width: 14px; height: 2px; background: currentColor; }
+.chr-cyan { color: var(--brand); }
+.chr-purple { color: var(--chr-purple); }
+.chr-plot { width: 100%; margin-top: 8px; }
+.chr-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chr-grid { stroke: var(--line); }
+.chr-tick { fill: var(--ink-300); font: 10px var(--font-mono); }
+.chr-tick--active { fill: var(--ink-100); }
+.chr-area { fill: var(--axis-m-soft); }
+.chr-guide { stroke: var(--ink-400); stroke-opacity: .5; stroke-dasharray: 3 4; }
+.chr-line { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.chr-point { fill: currentColor; stroke: var(--surface); stroke-width: 1.5; }
+.chr-end { fill: currentColor; font: 600 12px var(--font-mono); }
+.chr-end-label { font: 10px var(--font-sans); }
+.chr-hit { fill: transparent; cursor: pointer; }
+.chr-hit:focus-visible { outline: none; stroke: var(--brand); stroke-width: 1; rx: 3; }
+.chr-selection { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; margin-top: 4px; font-size: 12px; color: var(--ink-300); }
+.chr-selection strong { color: var(--ink-100); font-weight: 500; }
+.chr-selection b { font-family: var(--font-mono); font-weight: 500; }
+.chr-note { max-width: 850px; margin: 10px 0 0; color: var(--ink-300); font-size: 10.5px; line-height: 1.6; }
+@media (max-width: 500px) {
+  .chr-top h3 { font-size: 12px; }
+  .chr-period { font-size: 10px; }
+  .chr-description { margin-top: 4px; font-size: 11px; }
+  .chr-legend { margin-top: 9px; gap: 6px 14px; font-size: 10px; }
+  .chr-end { font-size: 11px; }
+  .chr-selection { gap: 3px 10px; font-size: 10px; }
+  .chr-note { margin-top: 8px; font-size: 10px; line-height: 1.5; }
+}
