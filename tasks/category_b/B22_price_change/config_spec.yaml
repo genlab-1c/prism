@@ -1,0 +1,12 @@
+# Синтетическая конфигурация B22: цены продажи — периодический регистр сведений.
+catalogs:
+  Номенклатура:
+    hierarchical: false
+
+information_registers:
+  ЦеныПродажи:
+    periodicity: Day
+    dimensions:
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Цена: { type: Число, length: 15, precision: 2 }

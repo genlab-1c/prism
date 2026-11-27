@@ -1,0 +1,19 @@
+# Синтетическая конфигурация B24: иерархическая номенклатура и остатки по складам.
+catalogs:
+  Номенклатура:
+    hierarchical: true
+  Склады:
+    hierarchical: false
+
+documents:
+  ДвижениеТоваров:
+    registers: [ТоварыНаСкладах]
+
+accumulation_registers:
+  ТоварыНаСкладах:
+    register_type: Balance
+    dimensions:
+      Склад: { type: СправочникСсылка.Склады }
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Количество: { type: Число, length: 15, precision: 3 }

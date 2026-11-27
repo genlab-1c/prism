@@ -1,0 +1,19 @@
+# Синтетическая конфигурация B23: продажи — оборотный регистр накопления по покупателям и товарам.
+catalogs:
+  Контрагенты:
+    hierarchical: false
+  Номенклатура:
+    hierarchical: false
+
+documents:
+  РеализацияТоваров:
+    registers: [Продажи]
+
+accumulation_registers:
+  Продажи:
+    register_type: Turnovers
+    dimensions:
+      Контрагент: { type: СправочникСсылка.Контрагенты }
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Сумма: { type: Число, length: 15, precision: 2 }
