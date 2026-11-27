@@ -1,0 +1,12 @@
+# Синтетическая конфигурация B26: штрихкоды — непериодический независимый регистр сведений.
+catalogs:
+  Номенклатура:
+    hierarchical: false
+
+information_registers:
+  Штрихкоды:
+    periodicity: Nonperiodical
+    dimensions:
+      Штрихкод: { type: Строка, length: 20 }
+    resources:
+      Номенклатура: { type: СправочникСсылка.Номенклатура }

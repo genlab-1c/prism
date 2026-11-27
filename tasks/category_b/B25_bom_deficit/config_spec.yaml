@@ -1,0 +1,24 @@
+# Синтетическая конфигурация B25: спецификации с табличной частью материалов и остатки материалов.
+catalogs:
+  Номенклатура:
+    hierarchical: false
+  Спецификации:
+    hierarchical: false
+    attributes: {}
+    tabular_sections:
+      Материалы:
+        attributes:
+          Материал: { type: СправочникСсылка.Номенклатура }
+          Количество: { type: Число, length: 15, precision: 3 }
+
+documents:
+  ВводОстатков:
+    registers: [ТоварыНаСкладах]
+
+accumulation_registers:
+  ТоварыНаСкладах:
+    register_type: Balance
+    dimensions:
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Количество: { type: Число, length: 15, precision: 3 }

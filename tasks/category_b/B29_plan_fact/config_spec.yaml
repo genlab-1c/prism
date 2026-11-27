@@ -1,0 +1,24 @@
+# Синтетическая конфигурация B29: два оборотных регистра — план и факт продаж.
+catalogs:
+  Номенклатура:
+    hierarchical: false
+
+documents:
+  ПланированиеПродаж:
+    registers: [ПланПродаж]
+  РеализацияТоваров:
+    registers: [Продажи]
+
+accumulation_registers:
+  ПланПродаж:
+    register_type: Turnovers
+    dimensions:
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Сумма: { type: Число, length: 15, precision: 2 }
+  Продажи:
+    register_type: Turnovers
+    dimensions:
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Сумма: { type: Число, length: 15, precision: 2 }

@@ -1,0 +1,16 @@
+# Синтетическая конфигурация B28: один регистр остатков, нужны и остатки, и сами движения с видом движения.
+catalogs:
+  Номенклатура:
+    hierarchical: false
+
+documents:
+  ДвижениеТоваров:
+    registers: [ТоварыНаСкладах]
+
+accumulation_registers:
+  ТоварыНаСкладах:
+    register_type: Balance
+    dimensions:
+      Номенклатура: { type: СправочникСсылка.Номенклатура }
+    resources:
+      Количество: { type: Число, length: 15, precision: 3 }

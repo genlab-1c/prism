@@ -1,0 +1,18 @@
+# Синтетическая конфигурация B27: измерение регистра составного типа (контрагент или сотрудник).
+catalogs:
+  Контрагенты:
+    hierarchical: false
+  Сотрудники:
+    hierarchical: false
+
+documents:
+  КорректировкаДолга:
+    registers: [Взаиморасчеты]
+
+accumulation_registers:
+  Взаиморасчеты:
+    register_type: Balance
+    dimensions:
+      Должник: { type: [СправочникСсылка.Контрагенты, СправочникСсылка.Сотрудники] }
+    resources:
+      Сумма: { type: Число, length: 15, precision: 2 }
